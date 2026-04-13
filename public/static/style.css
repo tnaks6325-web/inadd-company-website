@@ -430,7 +430,7 @@ em {
   text-shadow: 0 0 50px rgba(41,121,255,0.3);
 }
 
-/* 커서 — 현재 타이핑 중인 줄 끝에 */
+/* 커서 — 현재 미사용, 호환성 유지 */
 .typing-cursor {
   display: inline-block;
   width: 3px;
@@ -439,12 +439,8 @@ em {
   margin-left: 5px;
   vertical-align: middle;
   border-radius: 2px;
-  animation: cursorBlink 0.8s step-end infinite;
 }
-@keyframes cursorBlink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
-}
+/* cursorBlink 제거 — 더 이상 타이핑 방식 미사용 */
 
 /* Sub copy */
 .hero-sub {
@@ -577,6 +573,14 @@ em {
   right: 36px;
   bottom: 40px;
   z-index: 20;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.hero-scroll-cue.hide {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+.hero-scroll-cue {
   display: flex;
   flex-direction: column;
   align-items: center;

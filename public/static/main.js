@@ -1,21 +1,34 @@
 /* ============================================
    NOVA STUDIO — Main JS
 
-   ★ 히어로 & 로고 섹션 동작 설계 ★
+   ★ 인트로 시퀀스 설계 ★
    ────────────────────────────────────────────
-   [히어로 섹션 — IntersectionObserver]
-   • 히어로가 화면에 50% 이상 보일 때 → 텍스트 시퀀스 (재)시작
-   • 히어로가 뷰포트를 벗어나면 → 텍스트/타이머 모두 리셋
-   • 즉, 스크롤로 내려갔다가 올라오면 처음부터 다시 재생
+   [상태]
+     STATE_HERO : 영상 + 텍스트 문구 표시
+     STATE_LOGO : 검은 커튼 + 로고 + CTA 표시
 
-   [로고 섹션 — 스크롤 두 번째 뷰]
-   • hero 바로 아래에 100vh 풀스크린 검은 배경 섹션
-   • IntersectionObserver로 60% 진입 시 .visible 부여 → 로고 등장
-   • 섹션을 벗어나면 .visible 제거 → 다음에 다시 들어올 때 재등장
+   [전환 규칙]
+     • 텍스트 완성(1.5s) 후 → 휠 다운 가능 상태
+     • 휠 다운 → STATE_HERO → STATE_LOGO
+       1) 영상/텍스트 위로 검은 커튼 fade-in (0.6s)
+       2) 로고 레이어 등장 (마크 스케일업 + 이름 슬라이드업)
+       3) CTA 아래서 올라오며 등장
+     • 휠 업 (로고 화면에서) → STATE_LOGO → STATE_HERO
+       1) 로고 레이어 fade-out
+       2) 커튼 fade-out → 영상 다시 보임
+       3) 텍스트 시퀀스 재시작
+     • 새로고침 → STATE_HERO 에서 시작, 텍스트 재시작
+
+   [텍스트 시퀀스 — 1.5초 안에 전부]
+     0ms   : eyebrow 등장
+     100ms : 1번 줄 글자 동시 fade-in (타이핑 아님, 한 번에)
+     400ms : 2번 줄 fade-in
+     700ms : 3번 줄 fade-in
+     1000ms: 서브카피 fade-in
+     1300ms: CTA fade-in → 시퀀스 완료 (1.3s ≤ 1.5s)
 
    [슬라이드 전환]
-   • 6초마다 크로스페이드 dissolve 전환
-   • 텍스트 시퀀스와 독립 실행
+     6초마다 크로스페이드 dissolve
    ────────────────────────────────────────────
    ============================================ */
 
@@ -60,27 +73,27 @@ if (menuToggle && mainNav) {
 }
 
 /* ══════════════════════════════════════════════
-   4. HERO SLIDER + 텍스트 시퀀스
+   4. INTRO 시퀀스 (히어로 ↔ 로고 전환)
    ══════════════════════════════════════════════ */
-(function initSlider() {
-  const sliderEl = document.getElementById('heroSlider');
-  if (!sliderEl) return;
+(function initIntro() {
 
-  const slides = Array.from(document.querySelectorAll('.yt-slide'));
-  const TOTAL  = slides.length;
-  if (TOTAL === 0) return;
+  /* ─── DOM ─── */
+  const introWrap   = document.getElementById('introWrap');
+  const introSpacer = document.getElementById('introSpacer');
+  if (!introWrap) return;
 
-  /* ─── 타이밍 상수 ─── */
-  const SLIDE_INTERVAL = 6000;  // 슬라이드 전환 주기
-  const FADE_DURATION  = 1000;  // dissolve 시간 (CSS와 동일)
-
-  /* ─── 텍스트 DOM ─── */
-  const eyebrow  = sliderEl.querySelector('.hero-eyebrow');
-  const hlLine1  = document.getElementById('hlLine1');
-  const hlLine2  = document.getElementById('hlLine2');
-  const hlLine3  = document.getElementById('hlLine3');
-  const heroSub  = document.getElementById('heroSub');
-  const heroCta  = document.getElementById('heroCta');
+  const slides      = Array.from(document.querySelectorAll('.yt-slide'));
+  const TOTAL       = slides.length;
+  const blackCurtain = document.getElementById('blackCurtain');
+  const textLayer   = document.getElementById('heroTextLayer');
+  const eyebrow     = introWrap.querySelector('.hero-eyebrow');
+  const hlLine1     = document.getElementById('hlLine1');
+  const hlLine2     = document.getElementById('hlLine2');
+  const hlLine3     = document.getElementById('hlLine3');
+  const heroSub     = document.getElementById('heroSub');
+  const heroCta     = document.getElementById('heroCta');
+  const logoLayer   = document.getElementById('logoLayer');
+  const scrollCue   = document.getElementById('scrollCue');
 
   /* ─── 카피 ─── */
   const COPY = {
@@ -90,118 +103,198 @@ if (menuToggle && mainNav) {
     sub: '데이터가 말하고, 크리에이티브가 설득하고,\n전략이 전환을 만듭니다.'
   };
 
-  /* ─── 타이핑 커서 ─── */
-  const cursor = Object.assign(document.createElement('span'), { className: 'typing-cursor' });
-  const killCursor = () => { if (cursor.parentNode) cursor.parentNode.removeChild(cursor); };
+  /* ─── 상태 ─── */
+  const STATE_HERO = 'hero';
+  const STATE_LOGO = 'logo';
+  let state        = STATE_HERO;
+  let transitioning = false;     // 전환 중 중복 방지
+  let seqReady     = false;      // 텍스트 완성 후 휠 허용
+  let seqTimers    = [];
 
-  /* ─── 텍스트 전체 리셋 ─── */
+  /* ─── intro-wrap: fixed + 100vh ───
+     spacer가 200vh를 잡아서 스크롤 트랙 제공 */
+  introWrap.style.position = 'fixed';
+  introWrap.style.top      = '0';
+  introWrap.style.left     = '0';
+  introWrap.style.width    = '100%';
+  introWrap.style.height   = '100vh';
+  introWrap.style.zIndex   = '10';
+  if (introSpacer) {
+    introSpacer.style.height = '200vh';  // 두 화면분 스크롤 공간
+  }
+
+  /* ─── 텍스트 리셋 ─── */
   function resetText() {
-    killCursor();
-    [hlLine1, hlLine2, hlLine3].forEach(el => {
-      if (!el) return;
-      el.innerHTML = '';
-      el.classList.remove('show');
-    });
-    if (eyebrow)  eyebrow.classList.remove('show');
-    if (heroSub)  { heroSub.textContent = ''; heroSub.classList.remove('show'); }
-    if (heroCta)  heroCta.classList.remove('show');
-  }
-
-  /* ─── 한 줄 타이핑 ─── */
-  function typeInto(el, text, charMs, onDone) {
-    el.innerHTML = '';
-    el.appendChild(cursor);
-    el.classList.add('show');
-    let idx = 0;
-    function tick() {
-      if (!activeSeqId) return; // 시퀀스가 취소되면 즉시 중단
-      if (idx < text.length) {
-        el.insertBefore(document.createTextNode(text[idx++]), cursor);
-        seqTimers.push(setTimeout(tick, charMs));
-      } else {
-        killCursor();
-        if (onDone) onDone();
-      }
-    }
-    tick();
-  }
-
-  /* ─── 텍스트 시퀀스 관리 ─── */
-  let seqTimers   = [];   // 현재 진행 중인 타이머 ID 목록
-  let activeSeqId = 0;    // 현재 시퀀스 버전 ID (취소 판별)
-
-  function clearSeq() {
-    activeSeqId = 0;
     seqTimers.forEach(clearTimeout);
     seqTimers = [];
+    seqReady  = false;
+    [hlLine1, hlLine2, hlLine3].forEach(el => {
+      if (!el) return;
+      el.textContent = '';
+      el.classList.remove('show');
+    });
+    if (eyebrow) eyebrow.classList.remove('show');
+    if (heroSub) { heroSub.textContent = ''; heroSub.classList.remove('show'); }
+    if (heroCta) heroCta.classList.remove('show');
   }
 
-  /* ─── 텍스트 시퀀스 실행 ───
-     히어로가 뷰포트에 진입할 때마다 리셋 후 재실행 */
+  /* ─── 텍스트 시퀀스 (1.5s 내 완성) ───
+     각 줄은 타이핑 없이 한 번에 fade-in (빠른 연출) */
   function runTextSequence() {
-    clearSeq();
     resetText();
 
-    const seqId = ++activeSeqId;  // 이 시퀀스의 고유 ID
-    const push  = (fn, ms) => {
-      const t = setTimeout(() => {
-        if (activeSeqId !== seqId) return; // 취소됐으면 무시
-        fn();
-      }, ms);
+    const push = (fn, ms) => {
+      const t = setTimeout(fn, ms);
       seqTimers.push(t);
-      return t;
     };
 
-    const CHAR_MS  = 80;
-    const LINE_GAP = 2000;
+    // eyebrow: 0ms
+    push(() => { if (eyebrow) eyebrow.classList.add('show'); }, 0);
 
-    // 0.4s: eyebrow
-    push(() => eyebrow && eyebrow.classList.add('show'), 400);
-
-    // 1.0s: 1번 줄 타이핑
+    // 1번 줄: 100ms — 텍스트 세팅 후 show
     push(() => {
-      typeInto(hlLine1, COPY.l1, CHAR_MS, () => {
-        // 타이핑 완료 → LINE_GAP 후 2번 줄
-        push(() => {
-          typeInto(hlLine2, COPY.l2, CHAR_MS, () => {
-            push(() => {
-              typeInto(hlLine3, COPY.l3, CHAR_MS, () => {
-                // 마지막 줄 완료 → 0.8s 후 서브카피+CTA
-                push(() => {
-                  if (heroSub) {
-                    heroSub.textContent = COPY.sub;
-                    heroSub.classList.add('show');
-                  }
-                  push(() => heroCta && heroCta.classList.add('show'), 350);
-                }, 800);
-              });
-            }, LINE_GAP);
-          });
-        }, LINE_GAP);
-      });
+      if (hlLine1) { hlLine1.textContent = COPY.l1; hlLine1.classList.add('show'); }
+    }, 100);
+
+    // 2번 줄: 400ms
+    push(() => {
+      if (hlLine2) { hlLine2.textContent = COPY.l2; hlLine2.classList.add('show'); }
+    }, 400);
+
+    // 3번 줄: 700ms
+    push(() => {
+      if (hlLine3) { hlLine3.textContent = COPY.l3; hlLine3.classList.add('show'); }
+    }, 700);
+
+    // 서브카피: 1000ms
+    push(() => {
+      if (heroSub) { heroSub.textContent = COPY.sub; heroSub.classList.add('show'); }
     }, 1000);
+
+    // CTA: 1300ms → 완료
+    push(() => {
+      if (heroCta) heroCta.classList.add('show');
+      seqReady = true;   // 이제 휠 다운 허용
+    }, 1300);
   }
 
-  /* ─── 히어로 뷰포트 감지 ───
-     히어로가 40% 이상 보이면 시퀀스 시작
-     히어로가 완전히 벗어나면 리셋 (다음 복귀 때 재시작 준비) */
-  const heroObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        // 히어로 진입 → 시퀀스 (재)시작
-        runTextSequence();
-      } else {
-        // 히어로 이탈 → 리셋 (다음 복귀 때 재시작)
-        clearSeq();
-        resetText();
+  /* ──────────────────────────────────────────
+     STATE_HERO → STATE_LOGO (휠 다운)
+     1) 커튼 fade-in 0.6s
+     2) 커튼 완료 후: 로고 레이어 등장, 텍스트 레이어 숨김
+     ────────────────────────────────────────── */
+  function toLogoState() {
+    if (transitioning || state === STATE_LOGO) return;
+    transitioning = true;
+    state = STATE_LOGO;
+
+    // 스크롤 위치를 100vh로 고정 (intro-spacer 내 로고 영역)
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+
+    // 커튼 올리기
+    if (blackCurtain) blackCurtain.classList.add('show');
+    if (scrollCue)    scrollCue.classList.add('hide');
+
+    // 0.45s 후 로고 레이어 등장
+    setTimeout(() => {
+      if (textLayer)  textLayer.classList.add('hidden');
+      if (logoLayer)  logoLayer.classList.add('show');
+      transitioning = false;
+    }, 450);
+  }
+
+  /* ──────────────────────────────────────────
+     STATE_LOGO → STATE_HERO (휠 업)
+     1) 로고 레이어 fade-out
+     2) 커튼 fade-out
+     3) 스크롤 맨 위로 복귀
+     4) 텍스트 시퀀스 재시작
+     ────────────────────────────────────────── */
+  function toHeroState() {
+    if (transitioning || state === STATE_HERO) return;
+    transitioning = true;
+    state = STATE_HERO;
+
+    // 로고 레이어 숨기기
+    if (logoLayer)  logoLayer.classList.remove('show');
+
+    // 0.3s 후 커튼 내리기
+    setTimeout(() => {
+      if (blackCurtain) blackCurtain.classList.remove('show');
+      if (textLayer)    textLayer.classList.remove('hidden');
+      if (scrollCue)    scrollCue.classList.remove('hide');
+      // 스크롤 맨 위로
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 300);
+
+    // 0.7s 후 텍스트 시퀀스 재시작
+    setTimeout(() => {
+      runTextSequence();
+      transitioning = false;
+    }, 700);
+  }
+
+  /* ─── 휠 이벤트 핸들러 ─── */
+  let wheelCooldown = false;
+
+  function onWheel(e) {
+    // 메뉴가 열려있으면 무시
+    if (mainNav && mainNav.classList.contains('open')) return;
+
+    const delta = e.deltaY;
+
+    if (delta > 0) {
+      // 다운 — 히어로에서 로고로
+      if (state === STATE_HERO && seqReady && !transitioning) {
+        e.preventDefault();
+        if (wheelCooldown) return;
+        wheelCooldown = true;
+        setTimeout(() => { wheelCooldown = false; }, 1200);
+        toLogoState();
       }
-    });
-  }, {
-    threshold: 0.4   // 40% 이상 보일 때 진입 판정
-  });
-  heroObserver.observe(sliderEl);
+      // 로고 상태에서 아래로 → 일반 스크롤 허용 (body content)
+      if (state === STATE_LOGO) {
+        // introSpacer를 지나 아래 컨텐츠로 이동
+        // → 페이지 스크롤 허용 (preventDefault 안함)
+      }
+    } else if (delta < 0) {
+      // 업 — 로고에서 히어로로
+      if (state === STATE_LOGO && !transitioning) {
+        // 현재 스크롤이 로고 영역(100vh~200vh) 안이면
+        if (window.scrollY <= window.innerHeight * 1.2) {
+          e.preventDefault();
+          if (wheelCooldown) return;
+          wheelCooldown = true;
+          setTimeout(() => { wheelCooldown = false; }, 1200);
+          toHeroState();
+        }
+      }
+    }
+  }
+
+  /* 히어로 상태일 때만 기본 스크롤 방지 */
+  window.addEventListener('wheel', onWheel, { passive: false });
+
+  /* 터치 스와이프 지원 */
+  let touchStartY = 0;
+  window.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+  window.addEventListener('touchend', e => {
+    const dy = touchStartY - e.changedTouches[0].clientY;
+    if (Math.abs(dy) < 40) return;
+    if (dy > 0 && state === STATE_HERO && seqReady && !transitioning) {
+      toLogoState();
+    } else if (dy < 0 && state === STATE_LOGO && !transitioning) {
+      toHeroState();
+    }
+  }, { passive: true });
+
+  /* 새로고침 시 맨 위로 */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
 
   /* ─── 슬라이드 전환 (크로스페이드 dissolve) ─── */
+  const SLIDE_INTERVAL = 6000;
+  const FADE_DURATION  = 1000;
   let current    = 0;
   let isChanging = false;
   let slideTimer = null;
@@ -230,40 +323,14 @@ if (menuToggle && mainNav) {
 
   /* ─── 초기화 ─── */
   slides.forEach(s => s.classList.remove('active', 'leaving'));
-  slides[0].classList.add('active');
-  scheduleNext();  // 슬라이드 전환은 항상 실행 (텍스트와 독립)
+  if (slides[0]) slides[0].classList.add('active');
+  scheduleNext();
+  runTextSequence();   // 페이지 로드 시 즉시 시작
 
 })();
 
 
-/* ══════════════════════════════════════════════
-   5. LOGO SECTION — 스크롤 두 번째 뷰 등장
-   ══════════════════════════════════════════════ */
-(function initLogoSection() {
-  const section = document.getElementById('logoSection');
-  if (!section) return;
-
-  const inner = section.querySelector('.ls-inner');
-
-  /* 섹션이 60% 이상 진입하면 .visible → 로고 등장
-     섹션을 벗어나면 .visible 제거 → 다음에 다시 들어오면 재등장 */
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        section.classList.add('visible');
-      } else {
-        section.classList.remove('visible');
-      }
-    });
-  }, {
-    threshold: 0.6   // 60% 보일 때 등장
-  });
-
-  observer.observe(section);
-})();
-
-
-/* ── 6. Count-up animation ── */
+/* ── 5. Count-up animation ── */
 {
   const cs = document.querySelectorAll('[data-count]');
   if (cs.length) {
@@ -286,7 +353,7 @@ if (menuToggle && mainNav) {
   }
 }
 
-/* ── 7. Scroll reveal ── */
+/* ── 6. Scroll reveal ── */
 {
   const els = document.querySelectorAll(
     '.svc-card, .testi-card, .stat-block, .work-feat, .wf-thumb'
