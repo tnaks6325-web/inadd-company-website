@@ -1,250 +1,304 @@
 export const HomePage = () => (
   <>
-    {/* Hero Section */}
-    <section class="hero" id="hero">
-      <div class="hero-bg">
-        <div class="hero-grid"></div>
-        <div class="hero-glow glow-1"></div>
-        <div class="hero-glow glow-2"></div>
-      </div>
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span class="badge-dot"></span>
-          <span>새로운 마케팅 패러다임</span>
-        </div>
-        <h1 class="hero-title">
-          <span class="title-line">브랜드를</span>
-          <span class="title-line accent">움직이는</span>
-          <span class="title-line">힘</span>
-        </h1>
-        <p class="hero-desc">
-          데이터가 말하고, 크리에이티브가 설득하고,<br />
-          전략이 전환을 만듭니다.<br />
-          NOVA STUDIO는 숫자와 감성의 교차점에서 답을 찾습니다.
-        </p>
-        <div class="hero-actions">
-          <a href="/works" class="btn btn-primary">포트폴리오 보기</a>
-          <a href="/contact" class="btn btn-ghost">문의하기 <span class="arrow">→</span></a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-num" data-count="320">0</span>
-            <span class="stat-unit">+</span>
-            <span class="stat-label">프로젝트</span>
+    {/* ============ HERO: YouTube Fullscreen Slider ============ */}
+    <section class="hero-slider" id="heroSlider">
+
+      {/* YouTube 영상 슬라이드들 */}
+      <div class="yt-slides" id="ytSlides">
+        {[
+          'HZaDW00sldo',
+          'yiWPCX7Qwug',
+          'Qh6H3hRXEcs',
+          'mdinL3IgKG8',
+          '4Vlqt4F1lGY',
+          'SjiizDuxmK0'
+        ].map((id, i) => (
+          <div class={`yt-slide${i === 0 ? ' active' : ''}`} data-index={i}>
+            <div class="yt-iframe-wrap">
+              <iframe
+                id={`yt-player-${i}`}
+                class="yt-iframe"
+                src={`https://www.youtube.com/embed/${id}?autoplay=${i === 0 ? 1 : 0}&mute=1&controls=0&loop=1&playlist=${id}&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1`}
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+                loading={i === 0 ? 'eager' : 'lazy'}
+              ></iframe>
+            </div>
+            {/* 다크 오버레이 */}
+            <div class="yt-overlay"></div>
           </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-num" data-count="98">0</span>
-            <span class="stat-unit">%</span>
-            <span class="stat-label">클라이언트 재계약률</span>
+        ))}
+      </div>
+
+      {/* 슬라이드 진행 바 */}
+      <div class="slide-progress-bar">
+        <div class="slide-progress-fill" id="slideProgressFill"></div>
+      </div>
+
+      {/* 슬라이드 인디케이터 (우측) */}
+      <div class="slide-indicators" id="slideIndicators">
+        {[0,1,2,3,4,5].map(i => (
+          <button
+            class={`slide-dot${i === 0 ? ' active' : ''}`}
+            data-slide={i}
+            aria-label={`슬라이드 ${i+1}`}
+          ></button>
+        ))}
+      </div>
+
+      {/* 슬라이드 카운터 */}
+      <div class="slide-counter">
+        <span class="slide-current" id="slideCurrentNum">01</span>
+        <span class="slide-sep">/</span>
+        <span class="slide-total">06</span>
+      </div>
+
+      {/* 메인 텍스트 오버레이 */}
+      <div class="hero-text-layer" id="heroTextLayer">
+        <div class="hero-text-inner">
+
+          {/* 태그라인 */}
+          <div class="hero-eyebrow" id="heroEyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">MARKETING STUDIO</span>
           </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-num" data-count="12">0</span>
-            <span class="stat-unit">년</span>
-            <span class="stat-label">업력</span>
+
+          {/* 메인 헤드라인 - 슬라이드마다 바뀜 */}
+          <div class="hero-headline-wrap">
+            <h1 class="hero-headline" id="heroHeadline">
+              <span class="hl-word" id="hlWord1">콘텐츠가</span>
+              <span class="hl-word hl-accent" id="hlWord2">바이럴이</span>
+              <span class="hl-word" id="hlWord3">되는 순간</span>
+            </h1>
+          </div>
+
+          {/* 서브 카피 */}
+          <p class="hero-sub" id="heroSub">
+            보여지는 것을 넘어, 퍼지게 만드는 전략
+          </p>
+
+          {/* CTA */}
+          <div class="hero-cta-group" id="heroCta">
+            <a href="/works" class="hero-cta-btn primary">
+              <span>포트폴리오 보기</span>
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="/contact" class="hero-cta-btn ghost">
+              <span>무료 상담 신청</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      {/* 최종 슬라이드: 회사 로고 & 이름 등장 */}
+      <div class="hero-brand-reveal" id="heroBrandReveal">
+        <div class="brand-reveal-inner">
+          <div class="brand-logo-mark">N</div>
+          <div class="brand-name-wrap">
+            <span class="brand-name-main">NOVA STUDIO</span>
+            <span class="brand-name-sub">브랜드를 움직이는 힘</span>
           </div>
         </div>
       </div>
-      <div class="hero-scroll-hint">
-        <span>Scroll</span>
-        <div class="scroll-line"></div>
+
+      {/* 스크롤 힌트 */}
+      <div class="hero-scroll-cue">
+        <div class="scroll-cue-line"></div>
+        <span>SCROLL</span>
       </div>
+
     </section>
 
-    {/* Marquee */}
-    <div class="marquee-wrap">
+    {/* ============ MARQUEE ============ */}
+    <div class="marquee-band">
       <div class="marquee-track">
-        {['Brand Strategy', 'Content Marketing', 'Viral Campaign', 'Data Analytics', 'Social Media', 'Performance Marketing', 'Creative Direction', 'Brand Identity'].map(item => (
-          <span class="marquee-item">{item} <span class="marquee-dot">✦</span></span>
+        {['Brand Strategy','Viral Marketing','Content Creation','Performance Marketing','Data Analytics','Social Media','Creative Direction','Brand Identity','Viral Marketing','Content Creation'].map(item => (
+          <span class="marquee-item">{item}<span class="marquee-sep">✦</span></span>
         ))}
-        {['Brand Strategy', 'Content Marketing', 'Viral Campaign', 'Data Analytics', 'Social Media', 'Performance Marketing', 'Creative Direction', 'Brand Identity'].map(item => (
-          <span class="marquee-item">{item} <span class="marquee-dot">✦</span></span>
+        {['Brand Strategy','Viral Marketing','Content Creation','Performance Marketing','Data Analytics','Social Media','Creative Direction','Brand Identity','Viral Marketing','Content Creation'].map(item => (
+          <span class="marquee-item">{item}<span class="marquee-sep">✦</span></span>
         ))}
       </div>
     </div>
 
-    {/* Service Section */}
-    <section class="services section" id="services">
+    {/* ============ SERVICES ============ */}
+    <section class="section services-section" id="services">
       <div class="container">
-        <div class="section-header">
-          <span class="section-label">What We Do</span>
-          <h2 class="section-title">전략부터 실행까지<br /><em>원스톱 마케팅</em></h2>
+        <div class="section-head">
+          <span class="sec-label">What We Do</span>
+          <h2 class="sec-title">전략부터 실행까지<br /><em>원스톱 마케팅</em></h2>
         </div>
         <div class="services-grid">
-          <article class="service-card" data-index="01">
-            <div class="service-icon">
+          <article class="svc-card">
+            <div class="svc-num">01</div>
+            <div class="svc-icon">
               <svg viewBox="0 0 48 48" fill="none">
-                <path d="M8 40L24 8L40 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M14 28H34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M8 40L24 8L40 40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14 28H34" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               </svg>
             </div>
             <h3>브랜드 전략</h3>
-            <p>시장과 소비자를 분석해 브랜드만의 포지셔닝을 설계합니다. 단순한 슬로건이 아닌 살아있는 전략을 만듭니다.</p>
-            <a href="/about" class="card-link">더 알아보기 →</a>
+            <p>시장과 소비자를 분석해 브랜드만의 포지셔닝을 설계합니다. 감이 아닌 근거로 방향을 설정합니다.</p>
+            <a href="/about" class="svc-link">더 알아보기 <span>→</span></a>
           </article>
-          <article class="service-card" data-index="02">
-            <div class="service-icon">
+          <article class="svc-card">
+            <div class="svc-num">02</div>
+            <div class="svc-icon">
               <svg viewBox="0 0 48 48" fill="none">
-                <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2.5"/>
-                <path d="M24 8V24L34 30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2"/>
+                <path d="M24 8V24L34 30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               </svg>
             </div>
             <h3>퍼포먼스 마케팅</h3>
-            <p>클릭부터 구매까지 모든 퍼널을 데이터로 추적하고 최적화합니다. ROI를 극대화하는 과학적 접근법.</p>
-            <a href="/works" class="card-link">더 알아보기 →</a>
+            <p>클릭부터 구매까지 모든 퍼널을 데이터로 추적하고 최적화합니다. ROI를 극대화하는 과학적 접근.</p>
+            <a href="/works" class="svc-link">더 알아보기 <span>→</span></a>
           </article>
-          <article class="service-card" data-index="03">
-            <div class="service-icon">
+          <article class="svc-card">
+            <div class="svc-num">03</div>
+            <div class="svc-icon">
               <svg viewBox="0 0 48 48" fill="none">
-                <path d="M6 38C6 38 12 24 24 24C36 24 42 10 42 10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M6 38C6 38 12 24 24 24C36 24 42 10 42 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 <circle cx="24" cy="24" r="4" fill="currentColor"/>
               </svg>
             </div>
             <h3>바이럴 콘텐츠</h3>
             <p>공유되고 검색되고 구매로 연결되는 콘텐츠 생태계를 구축합니다. 광고처럼 보이지 않는 광고.</p>
-            <a href="/viral" class="card-link">더 알아보기 →</a>
+            <a href="/viral" class="svc-link">더 알아보기 <span>→</span></a>
           </article>
-          <article class="service-card" data-index="04">
-            <div class="service-icon">
+          <article class="svc-card">
+            <div class="svc-num">04</div>
+            <div class="svc-icon">
               <svg viewBox="0 0 48 48" fill="none">
-                <rect x="6" y="6" width="36" height="36" rx="4" stroke="currentColor" stroke-width="2.5"/>
-                <path d="M16 32L22 22L28 28L34 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="6" y="6" width="36" height="36" rx="4" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 32L22 22L28 28L34 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
             <h3>데이터 인사이트</h3>
             <p>숫자 뒤에 숨겨진 패턴을 발굴합니다. 인사이트가 전략이 되고, 전략이 성과가 되는 사이클.</p>
-            <a href="/insight" class="card-link">더 알아보기 →</a>
+            <a href="/insight" class="svc-link">더 알아보기 <span>→</span></a>
           </article>
         </div>
       </div>
     </section>
 
-    {/* Process Section */}
-    <section class="process section">
+    {/* ============ STATS ============ */}
+    <section class="stats-section">
       <div class="container">
-        <div class="section-header">
-          <span class="section-label">How We Work</span>
-          <h2 class="section-title">성과가 나오는<br /><em>우리만의 방식</em></h2>
-        </div>
-        <div class="process-steps">
-          <div class="process-step">
-            <div class="step-number">01</div>
-            <div class="step-content">
-              <h3>Discovery</h3>
-              <p>브랜드, 시장, 경쟁사, 타깃 소비자를 깊이 분석합니다. 직관이 아닌 데이터로 현황을 진단합니다.</p>
-            </div>
+        <div class="stats-grid">
+          <div class="stat-block">
+            <div class="stat-num-big" data-count="320">0</div>
+            <div class="stat-unit-big">+</div>
+            <div class="stat-desc">완료 프로젝트</div>
           </div>
-          <div class="process-connector"></div>
-          <div class="process-step">
-            <div class="step-number">02</div>
-            <div class="step-content">
-              <h3>Strategy</h3>
-              <p>발견한 인사이트를 바탕으로 실행 가능한 전략을 설계합니다. 목표와 KPI를 명확히 정의합니다.</p>
-            </div>
+          <div class="stat-divider-v"></div>
+          <div class="stat-block">
+            <div class="stat-num-big" data-count="98">0</div>
+            <div class="stat-unit-big">%</div>
+            <div class="stat-desc">클라이언트 재계약률</div>
           </div>
-          <div class="process-connector"></div>
-          <div class="process-step">
-            <div class="step-number">03</div>
-            <div class="step-content">
-              <h3>Creative</h3>
-              <p>전략에 감성을 입힙니다. 클릭을 유도하는 비주얼과 전환을 만드는 카피라이팅.</p>
-            </div>
+          <div class="stat-divider-v"></div>
+          <div class="stat-block">
+            <div class="stat-num-big" data-count="12">0</div>
+            <div class="stat-unit-big">년</div>
+            <div class="stat-desc">업계 경험</div>
           </div>
-          <div class="process-connector"></div>
-          <div class="process-step">
-            <div class="step-number">04</div>
-            <div class="step-content">
-              <h3>Optimize</h3>
-              <p>실행 후 데이터를 분석하고 지속적으로 개선합니다. 성과가 나올 때까지 멈추지 않습니다.</p>
-            </div>
+          <div class="stat-divider-v"></div>
+          <div class="stat-block">
+            <div class="stat-num-big" data-count="50">0</div>
+            <div class="stat-unit-big">+</div>
+            <div class="stat-desc">파트너 브랜드</div>
           </div>
         </div>
       </div>
     </section>
 
-    {/* Featured Work */}
-    <section class="featured section">
+    {/* ============ FEATURED WORKS ============ */}
+    <section class="section works-section">
       <div class="container">
-        <div class="section-header">
-          <span class="section-label">Featured Work</span>
-          <h2 class="section-title">우리가 만든<br /><em>변화들</em></h2>
+        <div class="section-head section-head--row">
+          <div>
+            <span class="sec-label">Featured Work</span>
+            <h2 class="sec-title">우리가 만든<br /><em>변화들</em></h2>
+          </div>
+          <a href="/works" class="all-works-link">모든 작업물 보기 →</a>
         </div>
-        <div class="work-showcase">
-          <article class="work-item work-item--large">
-            <div class="work-thumb" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
-              <div class="work-thumb-inner">
-                <div class="work-thumb-tag">Brand Campaign</div>
-                <div class="work-thumb-visual">
-                  <div class="visual-circle"></div>
-                  <div class="visual-line"></div>
-                </div>
+        <div class="works-showcase">
+          <article class="work-feat work-feat--main">
+            <div class="wf-thumb" style="background:linear-gradient(135deg,#0a0a14 0%,#0d1f3c 60%,#0f3460 100%)">
+              <div class="wf-thumb-tag">Brand Campaign</div>
+              <div class="wf-thumb-deco">
+                <div class="wf-circle"></div>
               </div>
+              <div class="wf-overlay"><span>케이스 스터디 →</span></div>
             </div>
-            <div class="work-info">
-              <span class="work-category">F&B 브랜드</span>
+            <div class="wf-info">
+              <span class="wf-cat">F&B 브랜드</span>
               <h3>리브랜딩으로 매출 340% 성장</h3>
-              <p>오프라인 중심 브랜드를 SNS 네이티브 브랜드로 전환한 전략적 리브랜딩 프로젝트</p>
-              <a href="/works" class="btn btn-outline">케이스 스터디 →</a>
+              <p>오프라인 중심 브랜드를 SNS 네이티브로 전환한 리브랜딩 프로젝트</p>
+              <div class="wf-meta">
+                <span class="wf-result">+340%</span>
+                <span class="wf-period">18개월</span>
+              </div>
             </div>
           </article>
-          <div class="work-grid-side">
-            <article class="work-item">
-              <div class="work-thumb" style="background: linear-gradient(135deg, #0d0d0d 0%, #1a0033 100%);">
-                <div class="work-thumb-inner">
-                  <div class="work-thumb-tag">Viral</div>
-                </div>
+          <div class="works-side">
+            <article class="work-feat">
+              <div class="wf-thumb wf-thumb--sm" style="background:linear-gradient(135deg,#050510 0%,#110022 100%)">
+                <div class="wf-thumb-tag">Viral</div>
+                <div class="wf-overlay"><span>케이스 스터디 →</span></div>
               </div>
-              <div class="work-info">
-                <span class="work-category">뷰티 스타트업</span>
+              <div class="wf-info">
+                <span class="wf-cat">뷰티 스타트업</span>
                 <h3>조회수 2,800만 바이럴</h3>
                 <p>7일만에 브랜드 검색량 1,200% 폭발 성장</p>
+                <div class="wf-meta"><span class="wf-result">2,800만</span></div>
               </div>
             </article>
-            <article class="work-item">
-              <div class="work-thumb" style="background: linear-gradient(135deg, #001a0d 0%, #003322 100%);">
-                <div class="work-thumb-inner">
-                  <div class="work-thumb-tag">Performance</div>
-                </div>
+            <article class="work-feat">
+              <div class="wf-thumb wf-thumb--sm" style="background:linear-gradient(135deg,#040d06 0%,#0a2010 100%)">
+                <div class="wf-thumb-tag">Performance</div>
+                <div class="wf-overlay"><span>케이스 스터디 →</span></div>
               </div>
-              <div class="work-info">
-                <span class="work-category">이커머스</span>
+              <div class="wf-info">
+                <span class="wf-cat">이커머스</span>
                 <h3>ROAS 1,850% 달성</h3>
-                <p>데이터 기반 퍼포먼스 마케팅으로 광고비 대비 수익 극대화</p>
+                <p>데이터 기반 광고비 대비 수익 극대화</p>
+                <div class="wf-meta"><span class="wf-result">1,850%</span></div>
               </div>
             </article>
           </div>
         </div>
-        <div class="center-action">
-          <a href="/works" class="btn btn-primary">모든 작업물 보기</a>
-        </div>
       </div>
     </section>
 
-    {/* Testimonial */}
-    <section class="testimonials section">
+    {/* ============ TESTIMONIALS ============ */}
+    <section class="section testimonials-section">
       <div class="container">
-        <div class="section-header">
-          <span class="section-label">Client Voice</span>
-          <h2 class="section-title">함께한<br /><em>클라이언트의 이야기</em></h2>
+        <div class="section-head">
+          <span class="sec-label">Client Voice</span>
+          <h2 class="sec-title">클라이언트가<br /><em>직접 말합니다</em></h2>
         </div>
-        <div class="testimonials-grid">
-          <blockquote class="testimonial-card">
-            <p>"단순히 예쁜 디자인이 아니라 실제 매출로 이어지는 마케팅을 처음 경험했습니다. 캠페인 후 첫 달 매출이 3배 뛰었어요."</p>
+        <div class="testi-grid">
+          <blockquote class="testi-card">
+            <div class="testi-quote">"</div>
+            <p>단순히 예쁜 디자인이 아니라 실제 매출로 이어지는 마케팅을 처음 경험했습니다. 캠페인 후 첫 달 매출이 3배 뛰었어요.</p>
             <footer>
               <strong>김○○ 대표</strong>
               <span>라이프스타일 브랜드</span>
             </footer>
           </blockquote>
-          <blockquote class="testimonial-card">
-            <p>"바이럴 마케팅이 이렇게 정교하게 설계될 수 있다는 걸 몰랐습니다. 우연처럼 보이지만 모두 전략이었더라고요."</p>
+          <blockquote class="testi-card">
+            <div class="testi-quote">"</div>
+            <p>바이럴 마케팅이 이렇게 정교하게 설계될 수 있다는 걸 몰랐습니다. 우연처럼 보이지만 모두 전략이었더라고요.</p>
             <footer>
               <strong>이○○ CMO</strong>
               <span>테크 스타트업</span>
             </footer>
           </blockquote>
-          <blockquote class="testimonial-card">
-            <p>"인사이트 리포트를 받고 마케팅 방향이 완전히 바뀌었습니다. 데이터를 이렇게 해석해주는 파트너는 처음이에요."</p>
+          <blockquote class="testi-card">
+            <div class="testi-quote">"</div>
+            <p>인사이트 리포트를 받고 마케팅 방향이 완전히 바뀌었습니다. 데이터를 이렇게 해석해주는 파트너는 처음이에요.</p>
             <footer>
               <strong>박○○ 마케팅팀장</strong>
               <span>유통 기업</span>
@@ -254,16 +308,19 @@ export const HomePage = () => (
       </div>
     </section>
 
-    {/* CTA Section */}
-    <section class="cta-section">
-      <div class="cta-bg">
-        <div class="cta-glow"></div>
+    {/* ============ CTA ============ */}
+    <section class="home-cta">
+      <div class="home-cta-bg">
+        <div class="hcta-glow"></div>
       </div>
       <div class="container">
-        <div class="cta-content">
-          <h2>지금 당신의 브랜드에<br />필요한 것은 무엇인가요?</h2>
+        <div class="home-cta-inner">
+          <h2>지금 당신의 브랜드에<br /><em>필요한 것은 무엇인가요?</em></h2>
           <p>NOVA STUDIO와 함께라면 시작이 달라집니다.</p>
-          <a href="/contact" class="btn btn-primary btn-lg">무료 상담 신청하기</a>
+          <a href="/contact" class="hero-cta-btn primary">
+            <span>무료 상담 신청하기</span>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </div>
     </section>

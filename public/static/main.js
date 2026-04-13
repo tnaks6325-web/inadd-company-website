@@ -1,29 +1,29 @@
 /* ============================================
-   NOVA STUDIO — Main JavaScript
+   NOVA STUDIO — Main JS
+   YouTube Slider + Animations
    ============================================ */
 
-// --- Header scroll effect ---
+'use strict';
+
+// ── 1. Header scroll ─────────────────────────
 const header = document.getElementById('site-header');
 if (header) {
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 60) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  });
+  const onScroll = () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 }
 
-// --- Mobile menu toggle ---
+// ── 2. Mobile menu ───────────────────────────
 const menuToggle = document.getElementById('menuToggle');
-const mainNav = document.getElementById('mainNav');
+const mainNav    = document.getElementById('mainNav');
 if (menuToggle && mainNav) {
   menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('open');
-    mainNav.classList.toggle('open');
-    document.body.style.overflow = mainNav.classList.contains('open') ? 'hidden' : '';
+    const open = menuToggle.classList.toggle('open');
+    mainNav.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
   });
-  // Close on nav link click
   mainNav.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
       menuToggle.classList.remove('open');
@@ -33,176 +33,233 @@ if (menuToggle && mainNav) {
   });
 }
 
-// --- Active nav link ---
-const currentPath = window.location.pathname;
-document.querySelectorAll('.nav-link').forEach(link => {
-  const href = link.getAttribute('href');
-  if (href === currentPath || (href !== '/' && currentPath.startsWith(href))) {
-    link.style.color = 'var(--accent-2)';
-    link.style.background = 'rgba(94,234,212,0.08)';
+// ── 3. Active nav ────────────────────────────
+const path = window.location.pathname;
+document.querySelectorAll('.nav-link').forEach(a => {
+  const href = a.getAttribute('href');
+  if (href === path || (href !== '/' && path.startsWith(href))) {
+    a.style.color    = 'var(--blue-light)';
+    a.style.background = 'rgba(26,107,255,0.08)';
   }
 });
 
-// --- Count-up animation ---
-function animateCounter(el) {
-  const target = parseInt(el.getAttribute('data-count'));
+
+// ── 4. YouTube Slider ─────────────────────────
+(function initSlider() {
+  const sliderEl      = document.getElementById('heroSlider');
+  if (!sliderEl) return;
+
+  const slides        = Array.from(document.querySelectorAll('.yt-slide'));
+  const dots          = Array.from(document.querySelectorAll('.slide-dot'));
+  const progressFill  = document.getElementById('slideProgressFill');
+  const currentNumEl  = document.getElementById('slideCurrentNum');
+  const brandReveal   = document.getElementById('heroBrandReveal');
+
+  const TOTAL         = slides.length;
+  const SLIDE_DURATION = 7000;   // ms per slide
+  const TRANSITION_MS  = 900;    // CSS transition duration
+
+  let current   = 0;
+  let timer     = null;
+  let progTimer = null;
+  let progStart = null;
+  let paused    = false;
+
+  // 슬라이드 카피 데이터
+  const copies = [
+    { w1: '콘텐츠가',   w2: '바이럴이',   w3: '되는 순간',     sub: '보여지는 것을 넘어, 퍼지게 만드는 전략' },
+    { w1: '데이터가',   w2: '전략이',     w3: '되는 방법',     sub: '숫자와 감성이 만나는 마케팅의 교차점' },
+    { w1: '브랜드를',   w2: '움직이는',   w3: '힘',           sub: '12년의 경험이 만드는 결과의 차이' },
+    { w1: '성과로',     w2: '이어지는',   w3: '크리에이티브', sub: '아름다운 것이 아닌, 팔리는 것을 만듭니다' },
+    { w1: '플랫폼을',   w2: '지배하는',   w3: '콘텐츠',       sub: '알고리즘이 먼저 찾는 콘텐츠 설계' },
+    { w1: '',           w2: '',           w3: '',             sub: '' }, // 마지막: 브랜드 리빌
+  ];
+
+  const heroHeadline = document.getElementById('heroHeadline');
+  const hlWord1      = document.getElementById('hlWord1');
+  const hlWord2      = document.getElementById('hlWord2');
+  const hlWord3      = document.getElementById('hlWord3');
+  const heroSub      = document.getElementById('heroSub');
+  const heroEyebrow  = document.getElementById('heroEyebrow');
+  const heroCta      = document.getElementById('heroCta');
+
+  // 텍스트 업데이트
+  function updateCopy(idx) {
+    const c = copies[idx];
+    const isBrand = (idx === TOTAL - 1);
+
+    if (hlWord1) hlWord1.textContent = c.w1;
+    if (hlWord2) hlWord2.textContent = c.w2;
+    if (hlWord3) hlWord3.textContent = c.w3;
+    if (heroSub)  heroSub.textContent = c.sub;
+  }
+
+  // 텍스트 애니메이션 in
+  function animateTextIn(idx) {
+    const isBrand = (idx === TOTAL - 1);
+
+    // 텍스트 숨김
+    [heroEyebrow, hlWord1, hlWord2, hlWord3, heroSub, heroCta].forEach(el => {
+      if (!el) return;
+      el.classList.remove('visible');
+    });
+
+    if (isBrand) {
+      // 브랜드 리빌 모드
+      sliderEl.classList.add('brand-mode');
+      setTimeout(() => {
+        if (brandReveal) brandReveal.classList.add('show');
+      }, 300);
+      return;
+    }
+
+    // 일반 슬라이드
+    sliderEl.classList.remove('brand-mode');
+    if (brandReveal) brandReveal.classList.remove('show');
+
+    updateCopy(idx);
+
+    // 순차 등장
+    setTimeout(() => { if (heroEyebrow) heroEyebrow.classList.add('visible'); }, 200);
+    setTimeout(() => { if (hlWord1)     hlWord1.classList.add('visible'); },     350);
+    setTimeout(() => { if (hlWord2) { hlWord2.classList.add('visible'); } }, 500);
+    setTimeout(() => { if (hlWord3)     hlWord3.classList.add('visible'); },     650);
+    setTimeout(() => { if (heroSub)     heroSub.classList.add('visible'); },     700);
+    setTimeout(() => { if (heroCta)     heroCta.classList.add('visible'); },     800);
+  }
+
+  // 슬라이드 전환
+  function goTo(idx, direction = 'next') {
+    if (idx === current) return;
+
+    const prev = current;
+    current = idx;
+
+    // 이전 슬라이드: active → prev (좌측으로 빠짐)
+    slides[prev].classList.remove('active');
+    slides[prev].classList.add('prev');
+    setTimeout(() => slides[prev].classList.remove('prev'), TRANSITION_MS + 50);
+
+    // 새 슬라이드: active
+    slides[current].classList.remove('prev');
+    slides[current].classList.add('active');
+
+    // 인디케이터
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+
+    // 카운터
+    if (currentNumEl) {
+      currentNumEl.textContent = String(current + 1).padStart(2, '0');
+    }
+
+    // 텍스트
+    animateTextIn(current);
+
+    // 프로그레스 재시작
+    restartProgress();
+  }
+
+  function nextSlide() {
+    const next = (current + 1) % TOTAL;
+    goTo(next, 'next');
+  }
+
+  // 자동 진행 타이머
+  function startTimer() {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (!paused) nextSlide();
+    }, SLIDE_DURATION);
+  }
+
+  // 진행 바 애니메이션
+  function restartProgress() {
+    if (!progressFill) return;
+    clearInterval(progTimer);
+    progressFill.style.transition = 'none';
+    progressFill.style.width = '0%';
+
+    progStart = performance.now();
+    progTimer = requestAnimationFrame(function tick(now) {
+      if (paused) { progTimer = requestAnimationFrame(tick); return; }
+      const elapsed = now - progStart;
+      const pct = Math.min((elapsed / SLIDE_DURATION) * 100, 100);
+      progressFill.style.transition = 'none';
+      progressFill.style.width = pct + '%';
+      if (pct < 100) {
+        progTimer = requestAnimationFrame(tick);
+      }
+    });
+
+    startTimer();
+  }
+
+  // 인디케이터 클릭
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      clearTimeout(timer);
+      goTo(i);
+    });
+  });
+
+  // Hover pause
+  sliderEl.addEventListener('mouseenter', () => { paused = true; });
+  sliderEl.addEventListener('mouseleave', () => {
+    paused = false;
+    progStart = performance.now() - (parseFloat(progressFill?.style.width || '0') / 100) * SLIDE_DURATION;
+  });
+
+  // 초기화
+  slides.forEach(s => s.classList.remove('active', 'prev'));
+  slides[0].classList.add('active');
+  dots[0]?.classList.add('active');
+  animateTextIn(0);
+  restartProgress();
+
+})(); // end initSlider
+
+
+// ── 5. Count-up Animation ────────────────────
+function countUp(el) {
+  const target = parseInt(el.getAttribute('data-count'), 10);
   if (isNaN(target)) return;
-  const duration = 2000;
+  const dur = 1800;
   const start = performance.now();
-  const step = (now) => {
-    const elapsed = now - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.floor(eased * target).toLocaleString();
-    if (progress < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
+  (function step(now) {
+    const t = Math.min((now - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.floor(ease * target).toLocaleString();
+    if (t < 1) requestAnimationFrame(step);
+  })(start);
 }
 
 const counters = document.querySelectorAll('[data-count]');
-if (counters.length > 0) {
-  const observer = new IntersectionObserver((entries) => {
+if (counters.length) {
+  const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        animateCounter(entry.target);
-        observer.unobserve(entry.target);
+        countUp(entry.target);
+        io.unobserve(entry.target);
       }
     });
   }, { threshold: 0.5 });
-  counters.forEach(c => observer.observe(c));
+  counters.forEach(c => io.observe(c));
 }
 
-// --- Works filter ---
-const filterBtns = document.querySelectorAll('#worksFilter .filter-btn');
-const workCards = document.querySelectorAll('#worksGrid .work-card');
-if (filterBtns.length > 0 && workCards.length > 0) {
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.getAttribute('data-filter');
-      workCards.forEach(card => {
-        if (filter === 'all' || card.getAttribute('data-category') === filter) {
-          card.style.display = '';
-          card.style.animation = 'fadeIn 0.4s ease';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  });
-}
 
-// --- Insight filter ---
-const insightFilterBtns = document.querySelectorAll('.insight-filter .filter-btn');
-const articleCards = document.querySelectorAll('.articles-grid .article-card');
-if (insightFilterBtns.length > 0) {
-  insightFilterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      insightFilterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.getAttribute('data-filter');
-      articleCards.forEach(card => {
-        if (filter === 'all' || card.getAttribute('data-category') === filter) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  });
-}
-
-// --- FAQ Toggle ---
-window.toggleFaq = function(btn) {
-  const item = btn.parentElement;
-  const answer = item.querySelector('.faq-a');
-  const isOpen = btn.classList.contains('open');
-
-  // Close all
-  document.querySelectorAll('.faq-q').forEach(q => q.classList.remove('open'));
-  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
-
-  if (!isOpen) {
-    btn.classList.add('open');
-    answer.classList.add('open');
-  }
-};
-
-// --- Contact Form ---
-window.handleContact = function(e) {
-  e.preventDefault();
-  const form = document.getElementById('contactForm');
-  const success = document.getElementById('contactSuccess');
-  if (form && success) {
-    form.style.display = 'none';
-    success.style.display = 'block';
-  }
-  return false;
-};
-
-// --- Scroll reveal animation ---
-const revealEls = document.querySelectorAll('.service-card, .work-card, .article-card, .team-card, .phil-item, .vs-card, .testimonial-card, .mission-card');
-if (revealEls.length > 0) {
-  const revealObserver = new IntersectionObserver((entries) => {
+// ── 6. Scroll Reveal ────────────────────────
+const revealTargets = document.querySelectorAll(
+  '.svc-card, .wf-thumb, .testi-card, .stat-block, .work-feat'
+);
+if (revealTargets.length) {
+  revealTargets.forEach(el => el.classList.add('reveal'));
+  const revealIO = new IntersectionObserver(entries => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }, i * 60);
-        revealObserver.unobserve(entry.target);
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        revealIO.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
-
-  revealEls.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    revealObserver.observe(el);
-  });
-}
-
-// --- Viral particles effect ---
-const viralParticles = document.getElementById('viralParticles');
-if (viralParticles) {
-  for (let i = 0; i < 20; i++) {
-    const particle = document.createElement('div');
-    particle.style.cssText = `
-      position: absolute;
-      width: ${Math.random() * 4 + 2}px;
-      height: ${Math.random() * 4 + 2}px;
-      background: ${Math.random() > 0.5 ? 'rgba(124,92,252,0.6)' : 'rgba(94,234,212,0.6)'};
-      border-radius: 50%;
-      left: ${Math.random() * 100}%;
-      top: ${Math.random() * 100}%;
-      animation: float ${Math.random() * 6 + 4}s ease-in-out infinite;
-      animation-delay: ${Math.random() * 4}s;
-    `;
-    viralParticles.appendChild(particle);
-  }
-
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
-      50% { transform: translateY(-${Math.random() * 30 + 10}px) scale(1.2); opacity: 1; }
-    }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  `;
-  document.head.appendChild(style);
-}
-
-// --- Hero parallax subtle ---
-const heroEl = document.querySelector('.hero');
-if (heroEl) {
-  window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const glows = heroEl.querySelectorAll('.hero-glow');
-    glows.forEach((glow, i) => {
-      const speed = i === 0 ? 0.15 : 0.08;
-      glow.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-  }, { passive: true });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  revealTargets.forEach(el => revealIO.observe(el));
 }
