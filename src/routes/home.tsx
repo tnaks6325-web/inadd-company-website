@@ -324,94 +324,100 @@ export const HomePage = () => (
     {/* ============ HISTORY ============ */}
     <section class="section history-section" id="history">
       <div class="container">
-        <div class="section-head">
-          <span class="sec-label">Our Journey</span>
-          <h2 class="sec-title">인애드컴퍼니의<br /><em>성장 이야기</em></h2>
+
+        {/* 헤더 */}
+        <div class="hist-head">
+          <div>
+            <span class="sec-label">Company Growth</span>
+            <h2 class="sec-title hist-title">IN AD <em>HISTORY</em></h2>
+            <p class="hist-subtitle">2019 – 2026 Continuous Growth</p>
+          </div>
         </div>
 
-        <div class="history-layout">
+        {/* SVG 성장 곡선 + 노드 컨테이너 */}
+        <div class="hist-track-wrap" id="histTrackWrap">
 
-          {/* 왼쪽: 타임라인 */}
-          <div class="history-timeline">
-            <div class="htl-line"></div>
+          {/* 배경 SVG 곡선 */}
+          <svg class="hist-curve-svg" viewBox="0 0 1200 260" preserveAspectRatio="none" aria-hidden="true">
+            {/* 글로우 선 */}
+            <path class="hist-curve-glow"
+              d="M 0,220 C 100,210 180,200 250,185 C 330,168 390,148 470,128 C 550,108 610,92 690,75 C 770,58 840,44 920,32 C 980,22 1050,16 1200,12"
+              fill="none" />
+            {/* 메인 선 */}
+            <path class="hist-curve-line"
+              d="M 0,220 C 100,210 180,200 250,185 C 330,168 390,148 470,128 C 550,108 610,92 690,75 C 770,58 840,44 920,32 C 980,22 1050,16 1200,12"
+              fill="none" />
+          </svg>
 
-            <div class="htl-item" data-year="2013">
-              <div class="htl-dot"><span></span></div>
-              <div class="htl-content">
-                <div class="htl-year">2013</div>
-                <div class="htl-title">인애드컴퍼니 창립</div>
-                <p class="htl-desc">소셜 미디어 마케팅 전문 에이전시로 출발. 바이럴 마케팅의 새로운 패러다임을 제시하다.</p>
+          {/* 노드 8개 — 각 연도 */}
+          {[
+            {
+              year: '2019', label: '설립 및 런칭', pos: 12,
+              items: ['인아드컴퍼니 설립', '카페침투 마케팅 런칭'],
+              now: false
+            },
+            {
+              year: '2020', label: '서비스 확장', pos: 24,
+              items: ['확장 이전', 'SNS 채널 런칭', '커뮤니티 바이럴 런칭'],
+              now: false
+            },
+            {
+              year: '2021', label: '브랜드 재정립', pos: 36,
+              items: ['"인애드컴퍼니" 사명 변경'],
+              now: false
+            },
+            {
+              year: '2022', label: '법인 전환 & 도약', pos: 48,
+              items: ['주식회사 전환', '유튜브 마케팅 런칭', '2차 가공 콘텐츠 런칭'],
+              now: false
+            },
+            {
+              year: '2023', label: '조직 전문화', pos: 60,
+              items: ['확장 이전', '유튜브 에이전시 팀'],
+              now: false
+            },
+            {
+              year: '2024', label: '시스템 고도화', pos: 72,
+              items: ['퍼스널 마케팅 구축', '브랜딩 TF팀 구축', '유튜브 릴리즈 개발'],
+              now: false
+            },
+            {
+              year: '2025', label: '업무 시스템 자동화', pos: 84,
+              items: ['사내 인트라넷 구축', '카피하우스 자동화 개발'],
+              now: false
+            },
+            {
+              year: '2026', label: '글로벌 & 퍼포먼스', pos: 96,
+              items: ['콘텐츠 마케팅 정립', '글로벌 마케팅 런칭', '퍼포먼스 마케팅 런칭'],
+              now: true
+            }
+          ].map((node) => (
+            <div
+              class={`hn-node${node.now ? ' hn-node--future' : ''}`}
+              style={`left:${node.pos}%`}
+              data-year={node.year}
+            >
+              {/* 동그라미 */}
+              <div class="hn-circle">
+                <span class="hn-circle-inner"></span>
+                <span class="hn-pulse"></span>
               </div>
-            </div>
 
-            <div class="htl-item" data-year="2015">
-              <div class="htl-dot"><span></span></div>
-              <div class="htl-content">
-                <div class="htl-year">2015</div>
-                <div class="htl-title">누적 프로젝트 100건 돌파</div>
-                <p class="htl-desc">F&amp;B·뷰티·패션 분야 클라이언트 확대. 커뮤니티 기반 바이럴 캠페인 전문성 확보.</p>
+              {/* 툴팁 카드 */}
+              <div class="hn-card">
+                <div class="hn-card-year">{node.year}{node.now && <span class="hn-future-badge">예정</span>}</div>
+                <div class="hn-card-title">{node.label}</div>
+                <ul class="hn-card-list">
+                  {node.items.map(item => <li>{item}</li>)}
+                </ul>
               </div>
-            </div>
 
-            <div class="htl-item" data-year="2017">
-              <div class="htl-dot"><span></span></div>
-              <div class="htl-content">
-                <div class="htl-year">2017</div>
-                <div class="htl-title">인플루언서 마케팅 사업부 신설</div>
-                <p class="htl-desc">유튜브·인스타그램 인플루언서 1,200+ 네트워크 구축. 크리에이터 이코노미 선제적 진입.</p>
-              </div>
+              {/* 연도 라벨 (평소에 보임) */}
+              <span class="hn-year-label">{node.year}</span>
             </div>
+          ))}
 
-            <div class="htl-item" data-year="2019">
-              <div class="htl-dot"><span></span></div>
-              <div class="htl-content">
-                <div class="htl-year">2019</div>
-                <div class="htl-title">SEO · 퍼포먼스 마케팅 확장</div>
-                <p class="htl-desc">데이터 기반 검색 최적화 및 광고 운용으로 클라이언트 ROAS 평균 1,850% 달성.</p>
-              </div>
-            </div>
-
-            <div class="htl-item" data-year="2021">
-              <div class="htl-dot"><span></span></div>
-              <div class="htl-content">
-                <div class="htl-year">2021</div>
-                <div class="htl-title">올리브영 전문 마케팅 파트너 선정</div>
-                <p class="htl-desc">K-뷰티 채널 공식 파트너십 체결. 입점·노출·리뷰 통합 솔루션으로 채널 매출 340% 성장 달성.</p>
-              </div>
-            </div>
-
-            <div class="htl-item htl-item--now" data-year="2024">
-              <div class="htl-dot"><span></span></div>
-              <div class="htl-content">
-                <div class="htl-year">2024 <span class="htl-badge">NOW</span></div>
-                <div class="htl-title">누적 320+ 프로젝트, 재계약률 98%</div>
-                <p class="htl-desc">바이럴·인플루언서·SEO·시딩·PPL 등 7대 마케팅 솔루션으로 브랜드 성장을 종합 설계합니다.</p>
-              </div>
-            </div>
-
-          </div>{/* /history-timeline */}
-
-          {/* 오른쪽: 숫자 하이라이트 카드 */}
-          <div class="history-stats">
-            <div class="hstat-item">
-              <span class="hstat-num">320<em>+</em></span>
-              <span class="hstat-label">완료 프로젝트</span>
-            </div>
-            <div class="hstat-item">
-              <span class="hstat-num">98<em>%</em></span>
-              <span class="hstat-label">클라이언트 재계약률</span>
-            </div>
-            <div class="hstat-item">
-              <span class="hstat-num">12<em>년</em></span>
-              <span class="hstat-label">업계 경험</span>
-            </div>
-            <div class="hstat-item">
-              <span class="hstat-num">50<em>+</em></span>
-              <span class="hstat-label">파트너 브랜드</span>
-            </div>
-          </div>
-
-        </div>{/* /history-layout */}
+        </div>{/* /hist-track-wrap */}
       </div>
     </section>
 

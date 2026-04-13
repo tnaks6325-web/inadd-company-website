@@ -421,7 +421,7 @@ if (menuToggle && mainNav) {
 /* ── 7. Scroll reveal ── */
 {
   const els = document.querySelectorAll(
-    '.svc-card, .testi-card, .work-feat, .wf-thumb, .hstat-item'
+    '.svc-card, .testi-card, .work-feat, .wf-thumb'
   );
   if (els.length) {
     els.forEach(el => {
@@ -441,22 +441,32 @@ if (menuToggle && mainNav) {
     }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
     els.forEach(el => io.observe(el));
   }
-
-  /* 타임라인 항목: visible 클래스 토글 */
-  const tlItems = document.querySelectorAll('.htl-item');
-  if (tlItems.length) {
-    const tlObs = new IntersectionObserver(entries => {
-      entries.forEach((e, i) => {
-        if (!e.isIntersecting) return;
-        setTimeout(() => e.target.classList.add('visible'), i * 120);
-        tlObs.unobserve(e.target);
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-    tlItems.forEach(el => tlObs.observe(el));
-  }
 }
 
-/* ── 8. 서비스 인터랙티브 리스트 ── */
+/* ── 8. History 노드 — 터치 디바이스 토글 지원 ── */
+(function initHistoryNodes() {
+  const nodes = document.querySelectorAll('.hn-node');
+  if (!nodes.length) return;
+
+  /* 터치 기기에서 탭 → active 토글 */
+  nodes.forEach(node => {
+    node.addEventListener('click', (e) => {
+      const isActive = node.classList.contains('active');
+      /* 다른 모두 닫기 */
+      nodes.forEach(n => n.classList.remove('active'));
+      if (!isActive) node.classList.add('active');
+    });
+  });
+
+  /* 외부 클릭 시 닫기 */
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.hn-node')) {
+      nodes.forEach(n => n.classList.remove('active'));
+    }
+  });
+})()
+
+/* ── 9. 서비스 인터랙티브 리스트 ── */
 (function initSvcInteractive() {
   const items  = document.querySelectorAll('.svc-list-item');
   const panels = document.querySelectorAll('.svc-panel');
