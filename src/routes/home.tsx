@@ -294,6 +294,33 @@ export const HomePage = () => (
       </div>
     </section>
 
+    {/* ============ STATS ============ */}
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-block">
+            <div class="stat-num-wrap"><span class="stat-num-big" data-count="320">0</span><span class="stat-unit-big">+</span></div>
+            <div class="stat-desc">완료 프로젝트</div>
+          </div>
+          <div class="stat-divider-v"></div>
+          <div class="stat-block">
+            <div class="stat-num-wrap"><span class="stat-num-big" data-count="98">0</span><span class="stat-unit-big">%</span></div>
+            <div class="stat-desc">클라이언트 재계약률</div>
+          </div>
+          <div class="stat-divider-v"></div>
+          <div class="stat-block">
+            <div class="stat-num-wrap"><span class="stat-num-big" data-count="12">0</span><span class="stat-unit-big">년</span></div>
+            <div class="stat-desc">업계 경험</div>
+          </div>
+          <div class="stat-divider-v"></div>
+          <div class="stat-block">
+            <div class="stat-num-wrap"><span class="stat-num-big" data-count="50">0</span><span class="stat-unit-big">+</span></div>
+            <div class="stat-desc">파트너 브랜드</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     {/* ============ HISTORY ============ */}
     <section class="section history-section" id="history">
       <div class="container">
@@ -304,31 +331,11 @@ export const HomePage = () => (
 
         <div class="history-layout">
 
-          {/* 왼쪽: 숫자 하이라이트 */}
-          <div class="history-stats">
-            <div class="hstat-item reveal">
-              <span class="hstat-num">320<em>+</em></span>
-              <span class="hstat-label">완료 프로젝트</span>
-            </div>
-            <div class="hstat-item reveal">
-              <span class="hstat-num">98<em>%</em></span>
-              <span class="hstat-label">클라이언트 재계약률</span>
-            </div>
-            <div class="hstat-item reveal">
-              <span class="hstat-num">12<em>년</em></span>
-              <span class="hstat-label">업계 경험</span>
-            </div>
-            <div class="hstat-item reveal">
-              <span class="hstat-num">50<em>+</em></span>
-              <span class="hstat-label">파트너 브랜드</span>
-            </div>
-          </div>
-
-          {/* 오른쪽: 타임라인 */}
+          {/* 왼쪽: 타임라인 */}
           <div class="history-timeline">
             <div class="htl-line"></div>
 
-            <div class="htl-item reveal" data-year="2013">
+            <div class="htl-item" data-year="2013">
               <div class="htl-dot"><span></span></div>
               <div class="htl-content">
                 <div class="htl-year">2013</div>
@@ -337,7 +344,7 @@ export const HomePage = () => (
               </div>
             </div>
 
-            <div class="htl-item reveal" data-year="2015">
+            <div class="htl-item" data-year="2015">
               <div class="htl-dot"><span></span></div>
               <div class="htl-content">
                 <div class="htl-year">2015</div>
@@ -346,7 +353,7 @@ export const HomePage = () => (
               </div>
             </div>
 
-            <div class="htl-item reveal" data-year="2017">
+            <div class="htl-item" data-year="2017">
               <div class="htl-dot"><span></span></div>
               <div class="htl-content">
                 <div class="htl-year">2017</div>
@@ -355,7 +362,7 @@ export const HomePage = () => (
               </div>
             </div>
 
-            <div class="htl-item reveal" data-year="2019">
+            <div class="htl-item" data-year="2019">
               <div class="htl-dot"><span></span></div>
               <div class="htl-content">
                 <div class="htl-year">2019</div>
@@ -364,7 +371,7 @@ export const HomePage = () => (
               </div>
             </div>
 
-            <div class="htl-item reveal" data-year="2021">
+            <div class="htl-item" data-year="2021">
               <div class="htl-dot"><span></span></div>
               <div class="htl-content">
                 <div class="htl-year">2021</div>
@@ -373,7 +380,7 @@ export const HomePage = () => (
               </div>
             </div>
 
-            <div class="htl-item reveal htl-item--now" data-year="2024">
+            <div class="htl-item htl-item--now" data-year="2024">
               <div class="htl-dot"><span></span></div>
               <div class="htl-content">
                 <div class="htl-year">2024 <span class="htl-badge">NOW</span></div>
@@ -383,61 +390,28 @@ export const HomePage = () => (
             </div>
 
           </div>{/* /history-timeline */}
-        </div>{/* /history-layout */}
-      </div>
-    </section>
 
-    {/* ============ FEATURED WORKS ============ */}
-    <section class="section works-section">
-      <div class="container">
-        <div class="section-head section-head--row">
-          <div>
-            <span class="sec-label">Featured Work</span>
-            <h2 class="sec-title">우리가 만든<br /><em>변화들</em></h2>
-          </div>
-          <a href="/works" class="all-works-link">모든 작업물 보기 →</a>
-        </div>
-        <div class="works-showcase">
-          <article class="work-feat work-feat--main">
-            <div class="wf-thumb" style="background:linear-gradient(135deg,#0a0a14 0%,#0d1f3c 60%,#0f3460 100%)">
-              <div class="wf-thumb-tag">Brand Campaign</div>
-              <div class="wf-thumb-deco"><div class="wf-circle"></div></div>
-              <div class="wf-overlay"><span>케이스 스터디 →</span></div>
+          {/* 오른쪽: 숫자 하이라이트 카드 */}
+          <div class="history-stats">
+            <div class="hstat-item">
+              <span class="hstat-num">320<em>+</em></span>
+              <span class="hstat-label">완료 프로젝트</span>
             </div>
-            <div class="wf-info">
-              <span class="wf-cat">F&B 브랜드</span>
-              <h3>리브랜딩으로 매출 340% 성장</h3>
-              <p>오프라인 중심 브랜드를 SNS 네이티브로 전환한 리브랜딩 프로젝트</p>
-              <div class="wf-meta"><span class="wf-result">+340%</span><span class="wf-period">18개월</span></div>
+            <div class="hstat-item">
+              <span class="hstat-num">98<em>%</em></span>
+              <span class="hstat-label">클라이언트 재계약률</span>
             </div>
-          </article>
-          <div class="works-side">
-            <article class="work-feat">
-              <div class="wf-thumb wf-thumb--sm" style="background:linear-gradient(135deg,#050510 0%,#110022 100%)">
-                <div class="wf-thumb-tag">Viral</div>
-                <div class="wf-overlay"><span>케이스 스터디 →</span></div>
-              </div>
-              <div class="wf-info">
-                <span class="wf-cat">뷰티 스타트업</span>
-                <h3>조회수 2,800만 바이럴</h3>
-                <p>7일만에 브랜드 검색량 1,200% 폭발 성장</p>
-                <div class="wf-meta"><span class="wf-result">2,800만</span></div>
-              </div>
-            </article>
-            <article class="work-feat">
-              <div class="wf-thumb wf-thumb--sm" style="background:linear-gradient(135deg,#040d06 0%,#0a2010 100%)">
-                <div class="wf-thumb-tag">Performance</div>
-                <div class="wf-overlay"><span>케이스 스터디 →</span></div>
-              </div>
-              <div class="wf-info">
-                <span class="wf-cat">이커머스</span>
-                <h3>ROAS 1,850% 달성</h3>
-                <p>데이터 기반 광고비 대비 수익 극대화</p>
-                <div class="wf-meta"><span class="wf-result">1,850%</span></div>
-              </div>
-            </article>
+            <div class="hstat-item">
+              <span class="hstat-num">12<em>년</em></span>
+              <span class="hstat-label">업계 경험</span>
+            </div>
+            <div class="hstat-item">
+              <span class="hstat-num">50<em>+</em></span>
+              <span class="hstat-label">파트너 브랜드</span>
+            </div>
           </div>
-        </div>
+
+        </div>{/* /history-layout */}
       </div>
     </section>
 

@@ -909,6 +909,63 @@ em {
 }
 
 /* ============================================
+   STATS SECTION
+   ============================================ */
+.stats-section {
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--black-2);
+}
+.stats-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+.stat-block {
+  flex: 1;
+  text-align: center;
+  padding: 20px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.stat-num-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+}
+.stat-num-big {
+  font-size: clamp(40px, 4.5vw, 64px);
+  font-weight: 900;
+  color: var(--white);
+  font-family: 'Space Grotesk', sans-serif;
+  line-height: 1;
+  display: inline;
+}
+.stat-unit-big {
+  display: inline;
+  font-size: clamp(22px, 2.5vw, 34px);
+  font-weight: 700;
+  color: var(--blue);
+}
+.stat-desc {
+  font-size: 13px;
+  color: var(--gray-3);
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+.stat-divider-v {
+  width: 1px;
+  height: 72px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* ============================================
    HISTORY SECTION
    ============================================ */
 .history-section {
@@ -931,12 +988,12 @@ em {
 /* ── 2단 레이아웃 ── */
 .history-layout {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 80px;
+  grid-template-columns: 1fr 260px;
+  gap: 64px;
   align-items: start;
 }
 
-/* ── 왼쪽: 숫자 하이라이트 ── */
+/* ── 오른쪽: 숫자 하이라이트 ── */
 .history-stats {
   position: sticky;
   top: 100px;
@@ -1465,6 +1522,9 @@ em {
 
   /* Sections */
   .services-grid { grid-template-columns: 1fr; }
+  .stats-grid { flex-wrap: wrap; justify-content: center; gap: 0; }
+  .stat-block { min-width: 45%; }
+  .stat-divider-v { display: none; }
   .testi-grid { grid-template-columns: 1fr; }
   .works-side { grid-template-columns: 1fr; }
   .section-head--row { flex-direction: column; align-items: flex-start; gap: 16px; }
