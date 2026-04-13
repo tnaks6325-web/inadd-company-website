@@ -1203,3 +1203,52 @@ em {
 @media (max-width: 480px) {
   .hero-headline { font-size: 42px; letter-spacing: -1px; }
 }
+
+/* ============================================
+   MOUSE FOG CURSOR
+   마우스를 따라오는 반투명 안개 효과
+   ============================================ */
+
+/* 메인 안개 (작고 밝은 핵) */
+#fogCursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(26, 107, 255, 0.22) 0%,
+    rgba(26, 107, 255, 0.10) 35%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  transition: opacity 0.4s ease;
+  mix-blend-mode: screen;
+}
+
+/* 보조 후광 (크고 느린 번짐) */
+#fogAura {
+  position: fixed;
+  top: 0; left: 0;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(41, 121, 255, 0.09) 0%,
+    rgba(26, 107, 255, 0.04) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 9998;
+  will-change: transform;
+  transition: opacity 0.4s ease;
+  mix-blend-mode: screen;
+  filter: blur(18px);
+}
+
+/* 모바일에서는 숨김 */
+@media (hover: none) {
+  #fogCursor, #fogAura { display: none; }
+}

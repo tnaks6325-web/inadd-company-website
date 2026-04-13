@@ -318,7 +318,59 @@ if (menuToggle && mainNav) {
 })();
 
 
-/* ── 5. Count-up animation ── */
+/* ── 5. 마우스 안개 커서 ── */
+(function initFogCursor() {
+  /* 안개 레이어 생성 */
+  const fog = document.createElement('div');
+  fog.id = 'fogCursor';
+  document.body.appendChild(fog);
+
+  /* 보조 후광 (좀 더 큰 원) */
+  const aura = document.createElement('div');
+  aura.id = 'fogAura';
+  document.body.appendChild(aura);
+
+  let mx = -300, my = -300;   // 마우스 실제 위치
+  let fx = -300, fy = -300;   // fog 현재 위치 (lerp)
+  let ax = -300, ay = -300;   // aura 현재 위치 (lerp, 더 느리게)
+  let raf = null;
+
+  const FOG_LERP  = 0.18;   // fog 추적 속도
+  const AURA_LERP = 0.08;   // aura 추적 속도 (더 늦게 따라옴)
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function tick() {
+    fx = lerp(fx, mx, FOG_LERP);
+    fy = lerp(fy, my, FOG_LERP);
+    ax = lerp(ax, mx, AURA_LERP);
+    ay = lerp(ay, my, AURA_LERP);
+
+    fog.style.transform  = `translate(${fx}px, ${fy}px) translate(-50%, -50%)`;
+    aura.style.transform = `translate(${ax}px, ${ay}px) translate(-50%, -50%)`;
+
+    raf = requestAnimationFrame(tick);
+  }
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+  });
+
+  /* 마우스가 창 밖으로 나가면 숨김 */
+  document.addEventListener('mouseleave', () => {
+    fog.style.opacity  = '0';
+    aura.style.opacity = '0';
+  });
+  document.addEventListener('mouseenter', () => {
+    fog.style.opacity  = '';
+    aura.style.opacity = '';
+  });
+
+  tick();
+})();
+
+/* ── 6. Count-up animation ── */
 {
   const cs = document.querySelectorAll('[data-count]');
   if (cs.length) {
@@ -341,7 +393,7 @@ if (menuToggle && mainNav) {
   }
 }
 
-/* ── 6. Scroll reveal ── */
+/* ── 7. Scroll reveal ── */
 {
   const els = document.querySelectorAll(
     '.svc-card, .testi-card, .stat-block, .work-feat, .wf-thumb'
