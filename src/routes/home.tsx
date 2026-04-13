@@ -37,7 +37,7 @@ export const HomePage = () => (
         <div class="hero-text-inner">
           <div class="hero-eyebrow">
             <span class="eyebrow-line"></span>
-            <span class="eyebrow-text">MARKETING STUDIO</span>
+            <span class="eyebrow-text">THE CREATIVE MARKETING AGENCY</span>
           </div>
           <div class="hero-headline-wrap">
             <h1 class="hero-headline">
@@ -64,10 +64,12 @@ export const HomePage = () => (
 
       {/* ── 로고 레이어 (커튼 위에, 스크롤 다운 시 등장) ── */}
       <div id="logoLayer" class="logo-layer">
-        <div class="ll-mark">N</div>
+        <div class="ll-mark">
+          <img src="/static/logo.png" alt="인애드컴퍼니 로고" />
+        </div>
         <div class="ll-name-wrap">
-          <span class="ll-name">NOVA STUDIO</span>
-          <span class="ll-sub">브랜드를 움직이는 힘</span>
+          <span class="ll-name">인애드컴퍼니</span>
+          <span class="ll-sub">IN AD COMPANY · THE CREATIVE MARKETING AGENCY</span>
         </div>
         <div class="ll-cta">
           <a href="/works" class="hero-cta-btn primary">
@@ -105,7 +107,7 @@ export const HomePage = () => (
       <div class="container">
         <div class="section-head">
           <span class="sec-label">What We Do</span>
-          <h2 class="sec-title">전략부터 실행까지<br /><em>원스톱 마케팅</em></h2>
+          <h2 class="sec-title">전략부터 실행까지<br /><em>인애드컴퍼니가 옵니다</em></h2>
         </div>
         <div class="services-grid">
           <article class="svc-card">
@@ -274,7 +276,7 @@ export const HomePage = () => (
       <div class="container">
         <div class="home-cta-inner">
           <h2>지금 당신의 브랜드에<br /><em>필요한 것은 무엇인가요?</em></h2>
-          <p>NOVA STUDIO와 함께라면 시작이 달라집니다.</p>
+          <p>인애드컴퍼니와 함께라면 시작이 달라집니다.</p>
           <a href="/contact" class="hero-cta-btn primary">
             <span>무료 상담 신청하기</span>
             <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>

@@ -12,8 +12,8 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{title ? `${title} | NOVA STUDIO` : 'NOVA STUDIO — 브랜드를 움직이는 힘'}</title>
-        <meta name="description" content={description || '데이터 기반 전략과 감성 크리에이티브가 만나는 마케팅 스튜디오 NOVA STUDIO'} />
+        <title>{title ? `${title} | 인애드컴퍼니` : '인애드컴퍼니 — THE CREATIVE MARKETING AGENCY'}</title>
+        <meta name="description" content={description || '크리에이티브와 데이터가 만나는 마케팅 에이전시 인애드컴퍼니 (IN AD COMPANY)'} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -23,8 +23,8 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
         <header class="site-header" id="site-header">
           <div class="header-inner">
             <a href="/" class="logo">
-              <span class="logo-mark">N</span>
-              <span class="logo-text">NOVA<br /><span class="logo-sub">STUDIO</span></span>
+              <img src="/static/logo.png" class="logo-img" alt="인애드컴퍼니" />
+              <span class="logo-text">인애드컴퍼니<br /><span class="logo-sub">IN AD COMPANY</span></span>
             </a>
             <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기">
               <span></span><span></span><span></span>
@@ -43,10 +43,10 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
           <div class="footer-inner">
             <div class="footer-brand">
               <a href="/" class="logo">
-                <span class="logo-mark">N</span>
-                <span class="logo-text">NOVA<br /><span class="logo-sub">STUDIO</span></span>
+                <img src="/static/logo.png" class="logo-img" alt="인애드컴퍼니" />
+                <span class="logo-text">인애드컴퍼니<br /><span class="logo-sub">IN AD COMPANY</span></span>
               </a>
-              <p class="footer-desc">브랜드의 가능성을 발굴하고<br />성과로 연결하는 마케팅 스튜디오</p>
+              <p class="footer-desc">크리에이티브와 데이터가 만나는<br />THE CREATIVE MARKETING AGENCY</p>
             </div>
             <div class="footer-links">
               <div class="footer-col">
@@ -63,7 +63,7 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
             </div>
           </div>
           <div class="footer-bottom">
-            <p>© 2025 NOVA STUDIO. All rights reserved.</p>
+            <p>© 2025 인애드컴퍼니 (IN AD COMPANY). All rights reserved.</p>
             <p class="footer-legal">대표 : 홍길동 | 사업자번호 : 000-00-00000 | 서울특별시 강남구 테헤란로 123</p>
           </div>
         </footer>
