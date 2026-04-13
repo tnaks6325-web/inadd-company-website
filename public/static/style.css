@@ -1205,50 +1205,73 @@ em {
 }
 
 /* ============================================
-   MOUSE FOG CURSOR
-   마우스를 따라오는 반투명 안개 효과
+   MOUSE FOG CURSOR — 3레이어 물결 안개
+   core  : 작고 밝은 중심점
+   fog   : 중간 안개 (물결로 흔들림)
+   aura  : 크고 느린 후광 번짐
    ============================================ */
 
-/* 메인 안개 (작고 밝은 핵) */
-#fogCursor {
+/* ── core : 가장 밝고 선명한 중심 ── */
+#fogCore {
   position: fixed;
   top: 0; left: 0;
-  width: 180px; height: 180px;
+  width: 90px; height: 90px;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(26, 107, 255, 0.22) 0%,
-    rgba(26, 107, 255, 0.10) 35%,
+    rgba(80, 160, 255, 0.65) 0%,
+    rgba(41, 121, 255, 0.30) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 10001;
+  will-change: transform;
+  transition: opacity 0.35s ease;
+  mix-blend-mode: screen;
+  filter: blur(4px);
+}
+
+/* ── fog : 중간 크기, 물결로 흔들림 ── */
+#fogCursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(41, 121, 255, 0.40) 0%,
+    rgba(26, 107, 255, 0.18) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 10000;
+  will-change: transform;
+  transition: opacity 0.35s ease;
+  mix-blend-mode: screen;
+  filter: blur(10px);
+}
+
+/* ── aura : 가장 크고 느린 후광 번짐 ── */
+#fogAura {
+  position: fixed;
+  top: 0; left: 0;
+  width: 560px; height: 560px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(26, 107, 255, 0.20) 0%,
+    rgba(13,  71, 214, 0.08) 45%,
     transparent 70%
   );
   pointer-events: none;
   z-index: 9999;
   will-change: transform;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.35s ease;
   mix-blend-mode: screen;
-}
-
-/* 보조 후광 (크고 느린 번짐) */
-#fogAura {
-  position: fixed;
-  top: 0; left: 0;
-  width: 420px; height: 420px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(41, 121, 255, 0.09) 0%,
-    rgba(26, 107, 255, 0.04) 45%,
-    transparent 70%
-  );
-  pointer-events: none;
-  z-index: 9998;
-  will-change: transform;
-  transition: opacity 0.4s ease;
-  mix-blend-mode: screen;
-  filter: blur(18px);
+  filter: blur(32px);
 }
 
 /* 모바일에서는 숨김 */
 @media (hover: none) {
-  #fogCursor, #fogAura { display: none; }
+  #fogCore, #fogCursor, #fogAura { display: none; }
 }

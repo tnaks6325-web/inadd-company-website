@@ -320,36 +320,60 @@ if (menuToggle && mainNav) {
 
 /* ── 5. 마우스 안개 커서 ── */
 (function initFogCursor() {
-  /* 안개 레이어 생성 */
-  const fog = document.createElement('div');
-  fog.id = 'fogCursor';
-  document.body.appendChild(fog);
 
-  /* 보조 후광 (좀 더 큰 원) */
-  const aura = document.createElement('div');
-  aura.id = 'fogAura';
-  document.body.appendChild(aura);
+  /* ── 레이어 3개 생성 ──
+     core  : 가장 밝은 중심점 (작고 선명)
+     fog   : 중간 안개 레이어 (물결 흔들림)
+     aura  : 가장 크고 느린 후광 (번짐)
+  */
+  function makeEl(id) {
+    const el = document.createElement('div');
+    el.id = id;
+    document.body.appendChild(el);
+    return el;
+  }
+  const core = makeEl('fogCore');
+  const fog  = makeEl('fogCursor');
+  const aura = makeEl('fogAura');
 
-  let mx = -300, my = -300;   // 마우스 실제 위치
-  let fx = -300, fy = -300;   // fog 현재 위치 (lerp)
-  let ax = -300, ay = -300;   // aura 현재 위치 (lerp, 더 느리게)
-  let raf = null;
+  let mx = -500, my = -500;   // 마우스 실제 위치
 
-  const FOG_LERP  = 0.18;   // fog 추적 속도
-  const AURA_LERP = 0.08;   // aura 추적 속도 (더 늦게 따라옴)
+  // 각 레이어의 현재 위치
+  let cx = -500, cy = -500;   // core  (빠름)
+  let fx = -500, fy = -500;   // fog   (중간 + 물결)
+  let ax = -500, ay = -500;   // aura  (느림)
+
+  // 물결용 오프셋 (사인파)
+  let waveT = 0;
 
   function lerp(a, b, t) { return a + (b - a) * t; }
 
   function tick() {
-    fx = lerp(fx, mx, FOG_LERP);
-    fy = lerp(fy, my, FOG_LERP);
-    ax = lerp(ax, mx, AURA_LERP);
-    ay = lerp(ay, my, AURA_LERP);
+    waveT += 0.04;  // 물결 시간 진행
 
-    fog.style.transform  = `translate(${fx}px, ${fy}px) translate(-50%, -50%)`;
-    aura.style.transform = `translate(${ax}px, ${ay}px) translate(-50%, -50%)`;
+    // 위치 lerp
+    cx = lerp(cx, mx, 0.25);
+    cy = lerp(cy, my, 0.25);
 
-    raf = requestAnimationFrame(tick);
+    fx = lerp(fx, mx, 0.10);
+    fy = lerp(fy, my, 0.10);
+
+    ax = lerp(ax, mx, 0.05);
+    ay = lerp(ay, my, 0.05);
+
+    // fog 레이어에 물결 오프셋 적용
+    const wx = Math.sin(waveT * 1.1) * 10;
+    const wy = Math.cos(waveT * 0.9) * 8;
+
+    // aura 레이어에 더 큰 물결 (느리게)
+    const awx = Math.sin(waveT * 0.6) * 18;
+    const awy = Math.cos(waveT * 0.5) * 14;
+
+    core.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+    fog.style.transform  = `translate(${fx + wx}px, ${fy + wy}px) translate(-50%, -50%)`;
+    aura.style.transform = `translate(${ax + awx}px, ${ay + awy}px) translate(-50%, -50%)`;
+
+    requestAnimationFrame(tick);
   }
 
   document.addEventListener('mousemove', e => {
@@ -357,12 +381,13 @@ if (menuToggle && mainNav) {
     my = e.clientY;
   });
 
-  /* 마우스가 창 밖으로 나가면 숨김 */
   document.addEventListener('mouseleave', () => {
+    core.style.opacity = '0';
     fog.style.opacity  = '0';
     aura.style.opacity = '0';
   });
   document.addEventListener('mouseenter', () => {
+    core.style.opacity = '';
     fog.style.opacity  = '';
     aura.style.opacity = '';
   });
