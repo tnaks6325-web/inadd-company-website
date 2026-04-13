@@ -721,86 +721,192 @@ em {
 
 
 /* ============================================
-   SERVICES SECTION
+   SERVICES SECTION — 인터랙티브 리스트 + 비주얼
    ============================================ */
 .services-section { background: var(--black); }
 
-.services-grid {
+/* 좌우 2열 레이아웃 */
+.svc-interactive {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  overflow: hidden;
-}
-/* 7번째 카드 — 2컬럼에서 단독 가로 full */
-.services-grid .svc-card:last-child:nth-child(odd) {
-  grid-column: 1 / -1;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 60px;
+  align-items: center;
+  min-height: 580px;
 }
 
-.svc-card {
-  background: var(--black-3);
-  padding: 48px 44px;
+/* ── 왼쪽: 키워드 리스트 ── */
+.svc-list {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.svc-list-item a {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 14px 0;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: gap 0.3s ease;
+  cursor: pointer;
+}
+.svc-list-item:last-child a { border-bottom: none; }
+
+.svc-list-num {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--gray-4);
+  font-family: 'Space Grotesk', sans-serif;
+  transition: color 0.3s ease;
+  min-width: 24px;
+}
+
+.svc-list-name {
+  font-size: clamp(28px, 3.8vw, 52px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1;
+  color: var(--gray-4);
+  font-family: 'Space Grotesk', sans-serif;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* 호버 */
+.svc-list-item a:hover .svc-list-name {
+  color: var(--blue-light);
+}
+.svc-list-item a:hover .svc-list-num {
+  color: var(--blue);
+}
+
+/* 활성 상태 */
+.svc-list-item.active .svc-list-name {
+  color: var(--white);
+  text-shadow: 0 0 40px rgba(26,107,255,0.6), 0 0 80px rgba(26,107,255,0.2);
+}
+.svc-list-item.active .svc-list-num {
+  color: var(--blue-light);
+}
+.svc-list-item.active a {
+  gap: 24px;
+}
+
+/* ── 오른쪽: 비주얼 패널 ── */
+.svc-visual {
   position: relative;
-  transition: background var(--t) var(--ease);
-  overflow: hidden;
+  height: 500px;
 }
 
-.svc-card::after {
-  content: '';
+.svc-panel {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(26,107,255,0.06) 0%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   opacity: 0;
-  transition: opacity var(--t) var(--ease);
   pointer-events: none;
+  transition: opacity 0.45s ease;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.svc-panel.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.svc-card:hover { background: var(--black-4); }
-.svc-card:hover::after { opacity: 1; }
+/* 이미지 영역 (반투명) */
+.svc-panel-img {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
 
-.svc-num {
-  font-size: 11px;
+/* 노이즈 오버레이 — 반투명 효과 */
+.svc-panel-noise {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1;
+}
+
+/* SVG 차트 */
+.svc-panel-chart {
+  position: absolute;
+  inset: 16px;
+  z-index: 2;
+  opacity: 0.85;
+}
+.svc-panel-chart svg {
+  width: 100%; height: 100%;
+}
+
+/* 정보 영역 */
+.svc-panel-info {
+  background: rgba(10,12,24,0.92);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(26,107,255,0.2);
+  padding: 22px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 3;
+}
+
+.svc-panel-tag {
+  display: inline-block;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--blue);
-  margin-bottom: 20px;
-}
-
-.svc-icon {
-  width: 44px; height: 44px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
   color: var(--blue-light);
-  margin-bottom: 22px;
-  transition: color var(--t) var(--ease);
-}
-.svc-card:hover .svc-icon { color: var(--blue-bright); }
-.svc-icon svg { width: 100%; height: 100%; }
-
-.svc-card h3 {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: 12px;
+  background: rgba(26,107,255,0.12);
+  border: 1px solid rgba(26,107,255,0.25);
+  padding: 4px 10px;
+  border-radius: 20px;
+  width: fit-content;
 }
 
-.svc-card p {
-  font-size: 14px;
-  color: var(--gray-2);
-  line-height: 1.7;
-  margin-bottom: 28px;
-}
-
-.svc-link {
+.svc-panel-desc {
   font-size: 13px;
-  font-weight: 600;
-  color: var(--blue-light);
-  transition: color var(--t) var(--ease), letter-spacing var(--t) var(--ease);
+  line-height: 1.7;
+  color: var(--gray-2);
+  margin: 0;
 }
-.svc-link:hover { color: var(--white); letter-spacing: 0.5px; }
-.svc-link span { transition: transform var(--t) var(--ease); display: inline-block; }
-.svc-link:hover span { transform: translateX(4px); }
 
+.svc-panel-kpi {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+.svc-panel-kpi span {
+  font-size: 11px;
+  color: var(--gray-3);
+  letter-spacing: 0.5px;
+}
+.svc-panel-kpi strong {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--white);
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.5px;
+}
+
+/* 모바일 — 세로 스택 */
+@media (max-width: 768px) {
+  .svc-interactive {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    min-height: auto;
+  }
+  .svc-visual { height: 360px; }
+  .svc-list-name { font-size: 26px; }
+}
 
 /* ============================================
    STATS SECTION

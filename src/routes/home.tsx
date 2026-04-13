@@ -102,107 +102,195 @@ export const HomePage = () => (
       </div>
     </div>
 
-    {/* ============ SERVICES ============ */}
+    {/* ============ SERVICES — 인터랙티브 리스트 + 비주얼 패널 ============ */}
     <section class="section services-section" id="services">
       <div class="container">
+
+        {/* ── 헤드 ── */}
         <div class="section-head">
           <span class="sec-label">What We Do</span>
           <h2 class="sec-title">당신은 아직 <em>진짜 마케팅의 힘</em>을<br />만나지 못했습니다</h2>
           <p class="sec-sub">단순한 노출을 넘어 브랜드의 가치를 전달하고<br />실질적인 성과로 이어지는 인애드만의 솔루션을 경험해보세요</p>
         </div>
-        <div class="services-grid">
-          <article class="svc-card">
-            <div class="svc-num">01</div>
-            <div class="svc-icon">
-              <svg viewBox="0 0 48 48" fill="none">
-                <path d="M6 38C6 38 12 24 24 24C36 24 42 10 42 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <circle cx="24" cy="24" r="4" fill="currentColor"/>
-              </svg>
+
+        {/* ── 서비스 인터랙티브 ── */}
+        <div class="svc-interactive" id="svcInteractive">
+
+          {/* 왼쪽: 키워드 리스트 */}
+          <ul class="svc-list">
+            <li class="svc-list-item active" data-svc="0">
+              <a href="/viral"><span class="svc-list-num">01</span><span class="svc-list-name">VIRAL</span></a>
+            </li>
+            <li class="svc-list-item" data-svc="1">
+              <a href="/works"><span class="svc-list-num">02</span><span class="svc-list-name">INFLUENCER</span></a>
+            </li>
+            <li class="svc-list-item" data-svc="2">
+              <a href="/works"><span class="svc-list-num">03</span><span class="svc-list-name">SEEDING</span></a>
+            </li>
+            <li class="svc-list-item" data-svc="3">
+              <a href="/insight"><span class="svc-list-num">04</span><span class="svc-list-name">SEO</span></a>
+            </li>
+            <li class="svc-list-item" data-svc="4">
+              <a href="/works"><span class="svc-list-num">05</span><span class="svc-list-name">REVIEW</span></a>
+            </li>
+            <li class="svc-list-item" data-svc="5">
+              <a href="/works"><span class="svc-list-num">06</span><span class="svc-list-name">OLIVE YOUNG</span></a>
+            </li>
+            <li class="svc-list-item" data-svc="6">
+              <a href="/viral"><span class="svc-list-num">07</span><span class="svc-list-name">PPL</span></a>
+            </li>
+          </ul>
+
+          {/* 오른쪽: 비주얼 패널 */}
+          <div class="svc-visual">
+
+            {/* 패널 0 — VIRAL */}
+            <div class="svc-panel active" data-panel="0">
+              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 60% 40%, rgba(26,107,255,0.25) 0%, transparent 70%), linear-gradient(135deg,#050510 0%,#0a1228 100%)">
+                <div class="svc-panel-noise"></div>
+                <div class="svc-panel-chart">
+                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
+                    <polyline points="10,85 40,60 70,70 100,35 130,45 160,15 190,20" stroke="rgba(26,107,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <polyline points="10,90 40,75 70,80 100,55 130,60 160,40 190,45" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">Viral Marketing</span>
+                <p class="svc-panel-desc">맘카페·커뮤니티 기반 바이럴 캠페인을 기획·운영합니다. 광고처럼 보이지 않는 자연스러운 확산으로 브랜드 인지도를 폭발적으로 높입니다.</p>
+                <div class="svc-panel-kpi"><span>평균 도달</span><strong>2,800만+</strong></div>
+              </div>
             </div>
-            <h3>Viral Marketing</h3>
-            <p>공유되고 검색되고 구매로 연결되는 바이럴 콘텐츠 생태계를 구축합니다. 광고처럼 보이지 않는 광고.</p>
-            <a href="/viral" class="svc-link">Learn More <span>→</span></a>
-          </article>
-          <article class="svc-card">
-            <div class="svc-num">02</div>
-            <div class="svc-icon">
-              <svg viewBox="0 0 48 48" fill="none">
-                <circle cx="16" cy="36" r="6" stroke="currentColor" stroke-width="2"/>
-                <circle cx="36" cy="12" r="6" stroke="currentColor" stroke-width="2"/>
-                <path d="M22 33L30 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <circle cx="36" cy="36" r="4" stroke="currentColor" stroke-width="2"/>
-                <path d="M22 36H32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
+
+            {/* 패널 1 — INFLUENCER */}
+            <div class="svc-panel" data-panel="1">
+              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 40% 60%, rgba(41,121,255,0.22) 0%, transparent 65%), linear-gradient(135deg,#060510 0%,#100820 100%)">
+                <div class="svc-panel-noise"></div>
+                <div class="svc-panel-chart">
+                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
+                    <circle cx="50" cy="50" r="30" stroke="rgba(26,107,255,0.4)" stroke-width="1.5" stroke-dasharray="4 3"/>
+                    <circle cx="130" cy="40" r="20" stroke="rgba(26,107,255,0.3)" stroke-width="1.5" stroke-dasharray="4 3"/>
+                    <line x1="50" y1="50" x2="130" y2="40" stroke="rgba(26,107,255,0.35)" stroke-width="1"/>
+                    <circle cx="90" cy="70" r="12" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-dasharray="3 2"/>
+                    <line x1="50" y1="50" x2="90" y2="70" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">Influencer &amp; YouTube</span>
+                <p class="svc-panel-desc">검증된 인플루언서·유튜버 네트워크를 통해 타겟 소비자에게 진정성 있는 브랜드 메시지를 전달합니다. 팔로워 수보다 영향력을 봅니다.</p>
+                <div class="svc-panel-kpi"><span>파트너 크리에이터</span><strong>1,200+</strong></div>
+              </div>
             </div>
-            <h3>Influencer &amp; YouTube</h3>
-            <p>검증된 인플루언서·유튜버 네트워크를 통해 타겟 소비자에게 진정성 있는 브랜드 메시지를 전달합니다.</p>
-            <a href="/works" class="svc-link">Learn More <span>→</span></a>
-          </article>
-          <article class="svc-card">
-            <div class="svc-num">03</div>
-            <div class="svc-icon">
-              <svg viewBox="0 0 48 48" fill="none">
-                <path d="M24 6L28 18H40L30 26L34 38L24 30L14 38L18 26L8 18H20L24 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+
+            {/* 패널 2 — SEEDING */}
+            <div class="svc-panel" data-panel="2">
+              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 50% 50%, rgba(26,107,255,0.18) 0%, transparent 60%), linear-gradient(135deg,#040408 0%,#0c0c1c 100%)">
+                <div class="svc-panel-noise"></div>
+                <div class="svc-panel-chart">
+                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
+                    <path d="M100 50 C70 20 30 35 20 65" stroke="rgba(26,107,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M100 50 C130 20 170 35 180 65" stroke="rgba(26,107,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M100 50 C100 20 115 10 130 25" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-linecap="round"/>
+                    <circle cx="100" cy="50" r="5" fill="rgba(26,107,255,0.7)"/>
+                    <circle cx="20" cy="65" r="3" fill="rgba(255,255,255,0.3)"/>
+                    <circle cx="180" cy="65" r="3" fill="rgba(255,255,255,0.3)"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">Seeding Campaign</span>
+                <p class="svc-panel-desc">브랜드 샘플을 핵심 타겟에게 자연스럽게 전달해 진정성 있는 후기와 입소문을 만들어냅니다. 소비자가 먼저 말하게 합니다.</p>
+                <div class="svc-panel-kpi"><span>후기 전환율</span><strong>68%</strong></div>
+              </div>
             </div>
-            <h3>Seeding Campaign</h3>
-            <p>브랜드 샘플을 핵심 타겟에게 자연스럽게 전달해 진정성 있는 후기와 입소문을 만들어냅니다.</p>
-            <a href="/works" class="svc-link">Learn More <span>→</span></a>
-          </article>
-          <article class="svc-card">
-            <div class="svc-num">04</div>
-            <div class="svc-icon">
-              <svg viewBox="0 0 48 48" fill="none">
-                <circle cx="24" cy="20" r="10" stroke="currentColor" stroke-width="2"/>
-                <path d="M24 30V42M18 42H30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M16 16L20 20L24 14L28 20L32 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+
+            {/* 패널 3 — SEO */}
+            <div class="svc-panel" data-panel="3">
+              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 30% 70%, rgba(26,107,255,0.2) 0%, transparent 65%), linear-gradient(135deg,#060810 0%,#0a1018 100%)">
+                <div class="svc-panel-noise"></div>
+                <div class="svc-panel-chart">
+                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
+                    <rect x="20" y="70" width="20" height="20" fill="rgba(26,107,255,0.25)" rx="2"/>
+                    <rect x="50" y="55" width="20" height="35" fill="rgba(26,107,255,0.35)" rx="2"/>
+                    <rect x="80" y="40" width="20" height="50" fill="rgba(26,107,255,0.5)" rx="2"/>
+                    <rect x="110" y="25" width="20" height="65" fill="rgba(26,107,255,0.65)" rx="2"/>
+                    <rect x="140" y="10" width="20" height="80" fill="rgba(26,107,255,0.8)" rx="2"/>
+                    <polyline points="20,65 50,50 80,35 110,20 140,5 170,2" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-dasharray="4 3"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">SEO Marketing</span>
+                <p class="svc-panel-desc">검색 상위 노출로 브랜드를 먼저 발견되게 만듭니다. 키워드 전략부터 콘텐츠 최적화까지 장기적 유입을 설계합니다.</p>
+                <div class="svc-panel-kpi"><span>검색 순위 상승</span><strong>TOP 3</strong></div>
+              </div>
             </div>
-            <h3>SEO Marketing</h3>
-            <p>검색 상위 노출로 브랜드를 먼저 발견되게 만듭니다. 장기적인 유입과 전환율을 동시에 높입니다.</p>
-            <a href="/insight" class="svc-link">Learn More <span>→</span></a>
-          </article>
-          <article class="svc-card">
-            <div class="svc-num">05</div>
-            <div class="svc-icon">
-              <svg viewBox="0 0 48 48" fill="none">
-                <path d="M8 14H40V38H8V14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M8 20H40" stroke="currentColor" stroke-width="2"/>
-                <path d="M16 14V20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M20 28L22 30L28 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+
+            {/* 패널 4 — REVIEW */}
+            <div class="svc-panel" data-panel="4">
+              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 60% 30%, rgba(26,107,255,0.2) 0%, transparent 60%), linear-gradient(135deg,#050808 0%,#0a1014 100%)">
+                <div class="svc-panel-noise"></div>
+                <div class="svc-panel-chart">
+                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
+                    <path d="M20 80 Q50 20 100 50 Q150 80 180 20" stroke="rgba(26,107,255,0.5)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M30 85 L30 65 M60 85 L60 50 M90 85 L90 60 M120 85 L120 45 M150 85 L150 55 M170 85 L170 35" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">Customer Review</span>
+                <p class="svc-panel-desc">실구매자의 신뢰 리뷰를 체계적으로 확보·관리합니다. 구매 결정에 직접 영향을 주는 소셜 프루프를 브랜드 자산으로 쌓습니다.</p>
+                <div class="svc-panel-kpi"><span>리뷰 전환 효과</span><strong>+230%</strong></div>
+              </div>
             </div>
-            <h3>Customer Review Marketing</h3>
-            <p>실구매자의 신뢰 리뷰를 체계적으로 확보하고 관리합니다. 구매 결정에 직접 영향을 주는 소셜 프루프.</p>
-            <a href="/works" class="svc-link">Learn More <span>→</span></a>
-          </article>
-          <article class="svc-card">
-            <div class="svc-num">06</div>
-            <div class="svc-icon">
-              <svg viewBox="0 0 48 48" fill="none">
-                <rect x="6" y="10" width="36" height="28" rx="4" stroke="currentColor" stroke-width="2"/>
-                <path d="M16 24H32M16 30H26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <circle cx="34" cy="30" r="3" stroke="currentColor" stroke-width="2"/>
-              </svg>
+
+            {/* 패널 5 — OLIVE YOUNG */}
+            <div class="svc-panel" data-panel="5">
+              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 50% 50%, rgba(26,107,255,0.22) 0%, transparent 65%), linear-gradient(135deg,#040a06 0%,#081410 100%)">
+                <div class="svc-panel-noise"></div>
+                <div class="svc-panel-chart">
+                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
+                    <rect x="15" y="20" width="170" height="60" rx="8" stroke="rgba(26,107,255,0.35)" stroke-width="1.5"/>
+                    <path d="M15 45H185" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                    <path d="M60 20V80" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                    <circle cx="38" cy="35" r="8" fill="rgba(26,107,255,0.4)"/>
+                    <circle cx="38" cy="60" r="6" fill="rgba(26,107,255,0.25)"/>
+                    <rect x="70" y="27" width="80" height="8" rx="2" fill="rgba(255,255,255,0.2)"/>
+                    <rect x="70" y="54" width="55" height="8" rx="2" fill="rgba(255,255,255,0.1)"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">Olive Young Marketing</span>
+                <p class="svc-panel-desc">올리브영 입점부터 노출 최적화, 리뷰 관리까지. K-뷰티·헬스 브랜드의 온오프라인 채널 매출을 함께 성장시킵니다.</p>
+                <div class="svc-panel-kpi"><span>채널 매출 증가</span><strong>+340%</strong></div>
+              </div>
             </div>
-            <h3>Olive Young Marketing</h3>
-            <p>올리브영 입점부터 노출 최적화까지. K-뷰티·헬스 브랜드의 온오프라인 매출을 함께 성장시킵니다.</p>
-            <a href="/works" class="svc-link">Learn More <span>→</span></a>
-          </article>
-          <article class="svc-card">
-            <div class="svc-num">07</div>
-            <div class="svc-icon">
-              <svg viewBox="0 0 48 48" fill="none">
-                <rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/>
-                <path d="M16 24L21 19L26 24L32 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="34" cy="14" r="4" fill="var(--blue)" stroke="currentColor" stroke-width="1.5"/>
-              </svg>
+
+            {/* 패널 6 — PPL */}
+            <div class="svc-panel" data-panel="6">
+              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 45% 55%, rgba(26,107,255,0.2) 0%, transparent 60%), linear-gradient(135deg,#080608 0%,#140a18 100%)">
+                <div class="svc-panel-noise"></div>
+                <div class="svc-panel-chart">
+                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
+                    <rect x="15" y="15" width="170" height="70" rx="6" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/>
+                    <circle cx="100" cy="50" r="18" stroke="rgba(26,107,255,0.5)" stroke-width="1.5"/>
+                    <polygon points="94,42 94,58 112,50" fill="rgba(26,107,255,0.6)"/>
+                    <path d="M15 85 Q55 60 100 68 Q145 75 185 50" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" stroke-dasharray="4 3"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">PPL</span>
+                <p class="svc-panel-desc">드라마·영화·웹콘텐츠 속 자연스러운 브랜드 노출. 수천만 시청자에게 거부감 없이 브랜드를 각인시키는 강력한 노출 전략.</p>
+                <div class="svc-panel-kpi"><span>누적 시청자</span><strong>5,000만+</strong></div>
+              </div>
             </div>
-            <h3>PPL</h3>
-            <p>드라마·영화·웹콘텐츠 속 자연스러운 브랜드 노출. 수천만 시청자에게 거부감 없이 브랜드를 각인시킵니다.</p>
-            <a href="/viral" class="svc-link">Learn More <span>→</span></a>
-          </article>
-        </div>
+
+          </div>{/* /svc-visual */}
+        </div>{/* /svc-interactive */}
+
       </div>
     </section>
 

@@ -442,3 +442,35 @@ if (menuToggle && mainNav) {
     els.forEach(el => io.observe(el));
   }
 }
+
+/* ── 8. 서비스 인터랙티브 리스트 ── */
+(function initSvcInteractive() {
+  const items  = document.querySelectorAll('.svc-list-item');
+  const panels = document.querySelectorAll('.svc-panel');
+  if (!items.length || !panels.length) return;
+
+  function activate(idx) {
+    items.forEach((el, i) => el.classList.toggle('active', i === idx));
+    panels.forEach((el, i) => el.classList.toggle('active', i === idx));
+  }
+
+  items.forEach((item, idx) => {
+    /* 호버 시 패널 전환 */
+    item.addEventListener('mouseenter', () => activate(idx));
+    /* 클릭 시 해당 링크로 이동 */
+    item.addEventListener('click', (e) => {
+      const link = item.querySelector('a');
+      if (link && !e.target.closest('a')) {
+        window.location.href = link.getAttribute('href');
+      }
+    });
+  });
+
+  /* 마우스가 리스트 밖으로 나가면 마지막 활성 유지 */
+  const list = document.querySelector('.svc-list');
+  if (list) {
+    list.addEventListener('mouseleave', () => {
+      /* 현재 active 아이템 유지 — 별도 처리 불필요 */
+    });
+  }
+})();
