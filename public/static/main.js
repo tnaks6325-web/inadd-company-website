@@ -464,7 +464,7 @@ if (menuToggle && mainNav) {
       nodes.forEach(n => n.classList.remove('active'));
     }
   });
-})()
+})();
 
 /* ── 9. 서비스 인터랙티브 리스트 ── */
 (function initSvcInteractive() {

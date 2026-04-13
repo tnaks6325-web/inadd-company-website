@@ -777,19 +777,19 @@ em {
 
 /* 호버 */
 .svc-list-item a:hover .svc-list-name {
-  color: var(--blue-light);
+  color: rgba(100,160,255,0.7);
 }
 .svc-list-item a:hover .svc-list-num {
   color: var(--blue);
 }
 
-/* 활성 상태 */
+/* 활성 상태 — 파란 강조색 */
 .svc-list-item.active .svc-list-name {
-  color: var(--white);
-  text-shadow: 0 0 40px rgba(26,107,255,0.6), 0 0 80px rgba(26,107,255,0.2);
+  color: var(--blue-bright);
+  text-shadow: 0 0 30px rgba(41,121,255,0.6), 0 0 60px rgba(26,107,255,0.25);
 }
 .svc-list-item.active .svc-list-num {
-  color: var(--blue-light);
+  color: var(--blue);
 }
 .svc-list-item.active a {
   gap: 24px;
