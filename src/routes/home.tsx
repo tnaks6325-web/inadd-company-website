@@ -3,7 +3,7 @@ export const HomePage = () => (
     {/* ============ HERO: YouTube Fullscreen Slider ============ */}
     <section class="hero-slider" id="heroSlider">
 
-      {/* YouTube 영상 슬라이드들 */}
+      {/* YouTube 영상 슬라이드들 — 모두 autoplay+mute */}
       <div class="yt-slides" id="ytSlides">
         {[
           'HZaDW00sldo',
@@ -13,71 +13,41 @@ export const HomePage = () => (
           '4Vlqt4F1lGY',
           'SjiizDuxmK0'
         ].map((id, i) => (
-          <div class={`yt-slide${i === 0 ? ' active' : ''}`} data-index={i}>
+          <div class={`yt-slide${i === 0 ? ' active' : ''}`} data-index={i} data-vid={id}>
             <div class="yt-iframe-wrap">
               <iframe
                 id={`yt-player-${i}`}
                 class="yt-iframe"
-                src={`https://www.youtube.com/embed/${id}?autoplay=${i === 0 ? 1 : 0}&mute=1&controls=0&loop=1&playlist=${id}&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1`}
+                src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&controls=0&loop=1&playlist=${id}&playsinline=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1`}
                 allow="autoplay; encrypted-media"
                 allowfullscreen
-                loading={i === 0 ? 'eager' : 'lazy'}
               ></iframe>
             </div>
-            {/* 다크 오버레이 */}
             <div class="yt-overlay"></div>
           </div>
         ))}
-      </div>
-
-      {/* 슬라이드 진행 바 */}
-      <div class="slide-progress-bar">
-        <div class="slide-progress-fill" id="slideProgressFill"></div>
-      </div>
-
-      {/* 슬라이드 인디케이터 (우측) */}
-      <div class="slide-indicators" id="slideIndicators">
-        {[0,1,2,3,4,5].map(i => (
-          <button
-            class={`slide-dot${i === 0 ? ' active' : ''}`}
-            data-slide={i}
-            aria-label={`슬라이드 ${i+1}`}
-          ></button>
-        ))}
-      </div>
-
-      {/* 슬라이드 카운터 */}
-      <div class="slide-counter">
-        <span class="slide-current" id="slideCurrentNum">01</span>
-        <span class="slide-sep">/</span>
-        <span class="slide-total">06</span>
       </div>
 
       {/* 메인 텍스트 오버레이 */}
       <div class="hero-text-layer" id="heroTextLayer">
         <div class="hero-text-inner">
 
-          {/* 태그라인 */}
-          <div class="hero-eyebrow" id="heroEyebrow">
+          <div class="hero-eyebrow">
             <span class="eyebrow-line"></span>
             <span class="eyebrow-text">MARKETING STUDIO</span>
           </div>
 
-          {/* 메인 헤드라인 - 슬라이드마다 바뀜 */}
+          {/* 타이핑 텍스트 영역 */}
           <div class="hero-headline-wrap">
-            <h1 class="hero-headline" id="heroHeadline">
-              <span class="hl-word" id="hlWord1">콘텐츠가</span>
-              <span class="hl-word hl-accent" id="hlWord2">바이럴이</span>
-              <span class="hl-word" id="hlWord3">되는 순간</span>
+            <h1 class="hero-headline">
+              <span class="hl-line" id="hlLine1"></span>
+              <span class="hl-line hl-accent" id="hlLine2"></span>
+              <span class="hl-line" id="hlLine3"></span>
             </h1>
           </div>
 
-          {/* 서브 카피 */}
-          <p class="hero-sub" id="heroSub">
-            보여지는 것을 넘어, 퍼지게 만드는 전략
-          </p>
+          <p class="hero-sub" id="heroSub"></p>
 
-          {/* CTA */}
           <div class="hero-cta-group" id="heroCta">
             <a href="/works" class="hero-cta-btn primary">
               <span>포트폴리오 보기</span>
@@ -91,13 +61,13 @@ export const HomePage = () => (
         </div>
       </div>
 
-      {/* 최종 슬라이드: 회사 로고 & 이름 등장 */}
-      <div class="hero-brand-reveal" id="heroBrandReveal">
-        <div class="brand-reveal-inner">
-          <div class="brand-logo-mark">N</div>
-          <div class="brand-name-wrap">
-            <span class="brand-name-main">NOVA STUDIO</span>
-            <span class="brand-name-sub">브랜드를 움직이는 힘</span>
+      {/* 로고 오버레이 — 5초 후 등장 */}
+      <div class="hero-logo-overlay" id="heroLogoOverlay">
+        <div class="hlo-inner">
+          <div class="hlo-mark">N</div>
+          <div class="hlo-texts">
+            <span class="hlo-name">NOVA STUDIO</span>
+            <span class="hlo-sub">브랜드를 움직이는 힘</span>
           </div>
         </div>
       </div>
@@ -113,10 +83,10 @@ export const HomePage = () => (
     {/* ============ MARQUEE ============ */}
     <div class="marquee-band">
       <div class="marquee-track">
-        {['Brand Strategy','Viral Marketing','Content Creation','Performance Marketing','Data Analytics','Social Media','Creative Direction','Brand Identity','Viral Marketing','Content Creation'].map(item => (
+        {['Brand Strategy','Viral Marketing','Content Creation','Performance Marketing','Data Analytics','Social Media','Creative Direction','Brand Identity'].map(item => (
           <span class="marquee-item">{item}<span class="marquee-sep">✦</span></span>
         ))}
-        {['Brand Strategy','Viral Marketing','Content Creation','Performance Marketing','Data Analytics','Social Media','Creative Direction','Brand Identity','Viral Marketing','Content Creation'].map(item => (
+        {['Brand Strategy','Viral Marketing','Content Creation','Performance Marketing','Data Analytics','Social Media','Creative Direction','Brand Identity'].map(item => (
           <span class="marquee-item">{item}<span class="marquee-sep">✦</span></span>
         ))}
       </div>
@@ -187,26 +157,22 @@ export const HomePage = () => (
       <div class="container">
         <div class="stats-grid">
           <div class="stat-block">
-            <div class="stat-num-big" data-count="320">0</div>
-            <div class="stat-unit-big">+</div>
+            <div class="stat-num-wrap"><span class="stat-num-big" data-count="320">0</span><span class="stat-unit-big">+</span></div>
             <div class="stat-desc">완료 프로젝트</div>
           </div>
           <div class="stat-divider-v"></div>
           <div class="stat-block">
-            <div class="stat-num-big" data-count="98">0</div>
-            <div class="stat-unit-big">%</div>
+            <div class="stat-num-wrap"><span class="stat-num-big" data-count="98">0</span><span class="stat-unit-big">%</span></div>
             <div class="stat-desc">클라이언트 재계약률</div>
           </div>
           <div class="stat-divider-v"></div>
           <div class="stat-block">
-            <div class="stat-num-big" data-count="12">0</div>
-            <div class="stat-unit-big">년</div>
+            <div class="stat-num-wrap"><span class="stat-num-big" data-count="12">0</span><span class="stat-unit-big">년</span></div>
             <div class="stat-desc">업계 경험</div>
           </div>
           <div class="stat-divider-v"></div>
           <div class="stat-block">
-            <div class="stat-num-big" data-count="50">0</div>
-            <div class="stat-unit-big">+</div>
+            <div class="stat-num-wrap"><span class="stat-num-big" data-count="50">0</span><span class="stat-unit-big">+</span></div>
             <div class="stat-desc">파트너 브랜드</div>
           </div>
         </div>
@@ -227,19 +193,14 @@ export const HomePage = () => (
           <article class="work-feat work-feat--main">
             <div class="wf-thumb" style="background:linear-gradient(135deg,#0a0a14 0%,#0d1f3c 60%,#0f3460 100%)">
               <div class="wf-thumb-tag">Brand Campaign</div>
-              <div class="wf-thumb-deco">
-                <div class="wf-circle"></div>
-              </div>
+              <div class="wf-thumb-deco"><div class="wf-circle"></div></div>
               <div class="wf-overlay"><span>케이스 스터디 →</span></div>
             </div>
             <div class="wf-info">
               <span class="wf-cat">F&B 브랜드</span>
               <h3>리브랜딩으로 매출 340% 성장</h3>
               <p>오프라인 중심 브랜드를 SNS 네이티브로 전환한 리브랜딩 프로젝트</p>
-              <div class="wf-meta">
-                <span class="wf-result">+340%</span>
-                <span class="wf-period">18개월</span>
-              </div>
+              <div class="wf-meta"><span class="wf-result">+340%</span><span class="wf-period">18개월</span></div>
             </div>
           </article>
           <div class="works-side">
@@ -283,26 +244,17 @@ export const HomePage = () => (
           <blockquote class="testi-card">
             <div class="testi-quote">"</div>
             <p>단순히 예쁜 디자인이 아니라 실제 매출로 이어지는 마케팅을 처음 경험했습니다. 캠페인 후 첫 달 매출이 3배 뛰었어요.</p>
-            <footer>
-              <strong>김○○ 대표</strong>
-              <span>라이프스타일 브랜드</span>
-            </footer>
+            <footer><strong>김○○ 대표</strong><span>라이프스타일 브랜드</span></footer>
           </blockquote>
           <blockquote class="testi-card">
             <div class="testi-quote">"</div>
             <p>바이럴 마케팅이 이렇게 정교하게 설계될 수 있다는 걸 몰랐습니다. 우연처럼 보이지만 모두 전략이었더라고요.</p>
-            <footer>
-              <strong>이○○ CMO</strong>
-              <span>테크 스타트업</span>
-            </footer>
+            <footer><strong>이○○ CMO</strong><span>테크 스타트업</span></footer>
           </blockquote>
           <blockquote class="testi-card">
             <div class="testi-quote">"</div>
             <p>인사이트 리포트를 받고 마케팅 방향이 완전히 바뀌었습니다. 데이터를 이렇게 해석해주는 파트너는 처음이에요.</p>
-            <footer>
-              <strong>박○○ 마케팅팀장</strong>
-              <span>유통 기업</span>
-            </footer>
+            <footer><strong>박○○ 마케팅팀장</strong><span>유통 기업</span></footer>
           </blockquote>
         </div>
       </div>
@@ -310,9 +262,7 @@ export const HomePage = () => (
 
     {/* ============ CTA ============ */}
     <section class="home-cta">
-      <div class="home-cta-bg">
-        <div class="hcta-glow"></div>
-      </div>
+      <div class="home-cta-bg"><div class="hcta-glow"></div></div>
       <div class="container">
         <div class="home-cta-inner">
           <h2>지금 당신의 브랜드에<br /><em>필요한 것은 무엇인가요?</em></h2>

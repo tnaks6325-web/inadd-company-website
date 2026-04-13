@@ -288,30 +288,35 @@ em {
   inset: 0;
 }
 
+/* 기본: 오른쪽 대기 */
 .yt-slide {
   position: absolute;
   inset: 0;
   opacity: 0;
-  /* 슬라이드 전환: translateX + opacity */
-  transform: translateX(60px);
+  transform: translateX(100%);
+  /* 촤르륵: 0.25s */
   transition:
-    opacity 0.9s var(--ease),
-    transform 0.9s var(--ease);
+    opacity 0.25s ease,
+    transform 0.25s ease;
   pointer-events: none;
+  will-change: transform, opacity;
 }
 
+/* 현재 슬라이드 */
 .yt-slide.active {
   opacity: 1;
   transform: translateX(0);
   pointer-events: auto;
 }
 
-.yt-slide.prev {
+/* 나가는 슬라이드: 왼쪽으로 */
+.yt-slide.leaving {
   opacity: 0;
-  transform: translateX(-60px);
+  transform: translateX(-100%);
+  pointer-events: none;
 }
 
-/* YouTube iframe wrapper — scale to cover */
+/* YouTube iframe wrapper */
 .yt-iframe-wrap {
   position: absolute;
   inset: 0;
@@ -320,114 +325,47 @@ em {
 
 .yt-iframe {
   position: absolute;
-  /* 유튜브 4:3 비율 영역을 16:9 화면에 맞게 꽉 채움 */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 177.78vh;   /* 16/9 * 100vh */
-  height: 56.25vw;   /* 9/16 * 100vw */
+  /* 16:9 영상을 화면에 꽉 채우기 */
+  width: 177.78vh;
+  height: 56.25vw;
   min-width: 100%;
   min-height: 100%;
   border: none;
   pointer-events: none;
 }
 
-/* 오버레이 — 영상 위 어두운 레이어 */
+/* 오버레이 */
 .yt-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.15) 0%,
-    rgba(0,0,0,0.40) 40%,
-    rgba(0,0,0,0.65) 80%,
-    rgba(0,0,0,0.85) 100%
+    160deg,
+    rgba(0,0,0,0.10) 0%,
+    rgba(0,0,0,0.45) 50%,
+    rgba(0,0,0,0.80) 100%
   );
 }
 
-/* --- Progress Bar (하단) --- */
-.slide-progress-bar {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: rgba(255,255,255,0.1);
-  z-index: 20;
-}
-.slide-progress-fill {
-  height: 100%;
-  width: 0%;
-  background: var(--blue);
-  transition: none;
-  box-shadow: 0 0 8px var(--blue-glow);
-}
-
-/* --- Slide Indicators (우측) --- */
-.slide-indicators {
-  position: absolute;
-  right: 36px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 20;
-}
-
-.slide-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.3);
-  transition: all 0.4s var(--ease);
-  cursor: pointer;
-  border: none;
-  padding: 0;
-}
-.slide-dot.active {
-  background: var(--blue);
-  width: 5px;
-  height: 28px;
-  border-radius: 3px;
-  box-shadow: 0 0 10px var(--blue-glow);
-}
-.slide-dot:hover:not(.active) { background: rgba(255,255,255,0.6); }
-
-/* --- Slide Counter (좌하단) --- */
-.slide-counter {
-  position: absolute;
-  left: 36px;
-  bottom: 40px;
-  z-index: 20;
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  font-family: 'Space Grotesk', sans-serif;
-}
-.slide-current {
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--white);
-  line-height: 1;
-  transition: opacity 0.3s;
-}
-.slide-sep { font-size: 14px; color: var(--gray-3); }
-.slide-total { font-size: 14px; color: var(--gray-3); }
-
-/* --- Hero Text Layer (중앙 왼쪽) --- */
+/* --- Hero Text Layer --- */
 .hero-text-layer {
   position: absolute;
   inset: 0;
   z-index: 15;
   display: flex;
   align-items: center;
+  pointer-events: none;
 }
 
 .hero-text-inner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 48px;
   width: 100%;
-  padding-top: 80px; /* header 높이 보정 */
+  padding-top: 80px;
+  pointer-events: auto;
 }
 
 /* Eyebrow */
@@ -435,18 +373,19 @@ em {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+.hero-eyebrow.show { opacity: 1; transform: translateY(0); }
 
 .eyebrow-line {
   display: block;
   width: 32px; height: 2px;
   background: var(--blue);
   box-shadow: 0 0 8px var(--blue-glow);
+  flex-shrink: 0;
 }
 .eyebrow-text {
   font-size: 11px;
@@ -458,132 +397,167 @@ em {
 
 /* Headline */
 .hero-headline-wrap {
-  overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .hero-headline {
   display: block;
-  font-size: clamp(48px, 6.5vw, 96px);
+  font-size: clamp(52px, 7vw, 100px);
   font-weight: 900;
   line-height: 1.0;
-  letter-spacing: -2px;
+  letter-spacing: -3px;
+  min-height: 1.1em; /* 타이핑 중 레이아웃 고정 */
 }
 
-.hl-word {
+/* 타이핑 텍스트 줄 */
+.hl-line {
   display: block;
-  opacity: 0;
-  transform: translateY(80px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  min-height: 1.05em;
+  color: var(--white);
 }
-.hl-word.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.hl-word.hl-accent {
+.hl-line.hl-accent {
   color: var(--blue-bright);
-  text-shadow: 0 0 60px rgba(41,121,255,0.4);
+  text-shadow: 0 0 60px rgba(41,121,255,0.35);
 }
 
-/* Sub */
+/* 타이핑 커서 */
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  background: var(--blue);
+  margin-left: 4px;
+  vertical-align: middle;
+  border-radius: 2px;
+  animation: cursorBlink 0.75s step-end infinite;
+}
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Sub copy */
 .hero-sub {
-  font-size: 17px;
+  font-size: 18px;
   color: var(--gray-2);
-  margin-bottom: 44px;
+  margin-bottom: 48px;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s var(--ease) 0.5s, transform 0.6s var(--ease) 0.5s;
-  max-width: 480px;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  max-width: 500px;
+  line-height: 1.6;
+  min-height: 1.6em;
 }
-.hero-sub.visible { opacity: 1; transform: translateY(0); }
+.hero-sub.show { opacity: 1; transform: translateY(0); }
 
-/* CTA */
+/* CTA group */
 .hero-cta-group {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s var(--ease) 0.7s, transform 0.6s var(--ease) 0.7s;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.hero-cta-group.visible { opacity: 1; transform: translateY(0); }
+.hero-cta-group.show { opacity: 1; transform: translateY(0); }
 
 
-/* --- Brand Reveal (마지막 슬라이드 전용) --- */
-.hero-brand-reveal {
+/* --- 로고 오버레이 (5초 후 등장) --- */
+.hero-logo-overlay {
   position: absolute;
   inset: 0;
-  z-index: 16;
+  z-index: 18;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.8s var(--ease);
+  /* 나타날 때 부드럽게 */
+  transition: opacity 0.7s ease;
 }
-.hero-brand-reveal.show {
+.hero-logo-overlay.show {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* 브랜드 리빌 시 텍스트 레이어 숨김 */
-.hero-slider.brand-mode .hero-text-layer {
-  opacity: 0;
+/* 로고 오버레이 배경: 중앙 글로우 */
+.hero-logo-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    rgba(26,107,255,0.12) 0%,
+    transparent 70%
+  );
   pointer-events: none;
-  transition: opacity 0.5s;
 }
 
-.brand-reveal-inner {
-  text-align: center;
+.hlo-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 28px;
+  position: relative;
 }
 
-.brand-logo-mark {
-  width: 100px; height: 100px;
+.hlo-mark {
+  width: 96px; height: 96px;
   background: var(--blue);
   border-radius: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 52px;
+  font-size: 50px;
   font-weight: 900;
   color: #fff;
-  box-shadow: 0 0 80px rgba(26,107,255,0.6);
+  box-shadow:
+    0 0 0 1px rgba(26,107,255,0.4),
+    0 0 60px rgba(26,107,255,0.55);
+  /* 등장 애니메이션 */
   opacity: 0;
-  transform: scale(0.5);
-  transition: opacity 0.6s var(--ease) 0.2s, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
+  transform: scale(0.6);
+  transition: opacity 0.55s cubic-bezier(0.34,1.56,0.64,1) 0.1s,
+              transform 0.55s cubic-bezier(0.34,1.56,0.64,1) 0.1s;
 }
-.hero-brand-reveal.show .brand-logo-mark {
+.hero-logo-overlay.show .hlo-mark {
   opacity: 1;
   transform: scale(1);
 }
 
-.brand-name-wrap {
+.hlo-texts {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s var(--ease) 0.5s, transform 0.6s var(--ease) 0.5s;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease 0.4s, transform 0.55s ease 0.4s;
 }
-.hero-brand-reveal.show .brand-name-wrap { opacity: 1; transform: translateY(0); }
+.hero-logo-overlay.show .hlo-texts { opacity: 1; transform: translateY(0); }
 
-.brand-name-main {
-  font-size: clamp(40px, 5vw, 72px);
+.hlo-name {
+  font-size: clamp(36px, 5vw, 68px);
   font-weight: 900;
   letter-spacing: -1px;
   color: var(--white);
+  line-height: 1;
 }
-.brand-name-sub {
-  font-size: 16px;
+.hlo-sub {
+  font-size: 15px;
   color: var(--blue-light);
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   font-weight: 400;
+  text-transform: uppercase;
 }
+
+/* 로고 표시 중 텍스트 레이어 페이드아웃 */
+.hero-text-layer.hide-for-logo {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
 
 /* --- Scroll Cue --- */
 .hero-scroll-cue {
@@ -602,10 +576,10 @@ em {
   animation: scrollCueAnim 1.8s ease-in-out infinite;
 }
 @keyframes scrollCueAnim {
-  0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
-  50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
   51%  { transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; opacity: 0.3; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
 }
 .hero-scroll-cue span {
   font-size: 9px;
@@ -756,6 +730,13 @@ em {
   flex-direction: column;
   align-items: center;
   gap: 6px;
+}
+
+.stat-num-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
 }
 
 .stat-num-big {
