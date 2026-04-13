@@ -1,17 +1,14 @@
 export const HomePage = () => (
   <>
     {/* ============================================================
-        INTRO WRAP — fixed 풀스크린 컨테이너
-        히어로(영상+문구)와 로고 화면을 하나의 fixed 레이어로 관리.
-        JS가 wheel 이벤트를 잡아서 두 상태를 전환한다.
-        상태1(기본): 영상 + 텍스트 문구 보임
-        상태2(스크롤다운): 검은 배경 + 로고 + CTA 보임
-        상태1로 복귀 시 텍스트 시퀀스 재시작
-        실제 스크롤(body 이하)은 로고 화면 이후에만 허용.
+        HERO SLIDER — 100vh 풀스크린
+        안에 영상, 텍스트, 검은 커튼, 로고 레이어를 모두 absolute로 포개어 놓음.
+        스크롤 다운 시: 커튼 fade-in → 로고 등장 (히어로 섹션 내부에서 전환)
+        스크롤 업 / 새로고침: 커튼 fade-out → 텍스트 재시작
         ============================================================ */}
-    <div id="introWrap" class="intro-wrap">
+    <section class="hero-slider" id="heroSlider">
 
-      {/* ── 영상 레이어 (항상 배경에 존재) ── */}
+      {/* ── 영상 슬라이드 ── */}
       <div class="yt-slides" id="ytSlides">
         {[
           'HZaDW00sldo',
@@ -35,10 +32,7 @@ export const HomePage = () => (
         ))}
       </div>
 
-      {/* ── 검은 전환 커튼 (스크롤 다운 시 fade-in) ── */}
-      <div id="blackCurtain" class="black-curtain"></div>
-
-      {/* ── 상태1: 메인 텍스트 ── */}
+      {/* ── 메인 텍스트 레이어 ── */}
       <div class="hero-text-layer" id="heroTextLayer">
         <div class="hero-text-inner">
           <div class="hero-eyebrow">
@@ -53,7 +47,6 @@ export const HomePage = () => (
             </h1>
           </div>
           <p class="hero-sub" id="heroSub"></p>
-          {/* CTA — 히어로에서도 보이고, 로고 화면에선 로고 아래로 이동 */}
           <div class="hero-cta-group" id="heroCta">
             <a href="/works" class="hero-cta-btn primary">
               <span>포트폴리오 보기</span>
@@ -66,14 +59,16 @@ export const HomePage = () => (
         </div>
       </div>
 
-      {/* ── 상태2: 로고 레이어 (스크롤 다운 시 등장) ── */}
+      {/* ── 검은 커튼 (스크롤 다운 시 fade-in) ── */}
+      <div id="blackCurtain" class="black-curtain"></div>
+
+      {/* ── 로고 레이어 (커튼 위에, 스크롤 다운 시 등장) ── */}
       <div id="logoLayer" class="logo-layer">
         <div class="ll-mark">N</div>
         <div class="ll-name-wrap">
           <span class="ll-name">NOVA STUDIO</span>
           <span class="ll-sub">브랜드를 움직이는 힘</span>
         </div>
-        {/* CTA 복사본 — 로고 아래 위치 */}
         <div class="ll-cta">
           <a href="/works" class="hero-cta-btn primary">
             <span>포트폴리오 보기</span>
@@ -91,11 +86,7 @@ export const HomePage = () => (
         <span>SCROLL</span>
       </div>
 
-    </div>
-
-    {/* ============ intro-wrap 높이만큼 공백 (스크롤 가능하게) ============ */}
-    {/* 이 spacer가 있어야 body 스크롤이 생긴다 */}
-    <div id="introSpacer" class="intro-spacer"></div>
+    </section>
 
     {/* ============ MARQUEE ============ */}
     <div class="marquee-band">
