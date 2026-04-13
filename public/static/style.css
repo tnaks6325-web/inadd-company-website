@@ -282,38 +282,44 @@ em {
   background: var(--black);
 }
 
-/* --- YouTube Slides --- */
+/* --- YouTube Slides 컨테이너 --- */
 .yt-slides {
   position: absolute;
   inset: 0;
 }
 
-/* 기본: 오른쪽 대기 */
+/* ── 크로스페이드 Dissolve ──
+   기본 상태:  opacity 0, z-index 1  → 투명하게 대기
+   .active  :  opacity 1, z-index 2  → 보임 (enter)
+   .leaving :  opacity 0, z-index 3  → 위에서 fade-out (leave)
+
+   leave 슬라이드가 z-index 3으로 active(2) 위에서
+   1.0s 동안 opacity 0으로 사라지므로 두 영상이
+   겹치며 자연스럽게 녹아드는 dissolve 효과를 만들어냄. */
+
 .yt-slide {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: translateX(100%);
-  /* 촤르륵: 0.25s */
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
+  z-index: 1;
+  transition: opacity 1.0s ease;
   pointer-events: none;
-  will-change: transform, opacity;
+  will-change: opacity;
 }
 
-/* 현재 슬라이드 */
+/* enter 슬라이드 */
 .yt-slide.active {
   opacity: 1;
-  transform: translateX(0);
+  z-index: 2;
   pointer-events: auto;
 }
 
-/* 나가는 슬라이드: 왼쪽으로 */
+/* leave 슬라이드: z-index 3으로 올린 뒤 fade-out → dissolve 완성 */
 .yt-slide.leaving {
   opacity: 0;
-  transform: translateX(-100%);
+  z-index: 3;
   pointer-events: none;
+  transition: opacity 1.0s ease;
 }
 
 /* YouTube iframe wrapper */
@@ -323,30 +329,27 @@ em {
   overflow: hidden;
 }
 
+/* 16:9 영상을 화면에 항상 꽉 채우기 */
 .yt-iframe {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* 16:9 영상을 화면에 꽉 채우기 */
-  width: 177.78vh;
-  height: 56.25vw;
+  width: 177.78vh;   /* 화면 높이 기준 16:9 */
+  height: 56.25vw;   /* 화면 너비 기준 16:9 */
   min-width: 100%;
   min-height: 100%;
   border: none;
   pointer-events: none;
 }
 
-/* 오버레이 */
+/* 텍스트 가독성을 위한 어두운 그라디언트 오버레이 */
 .yt-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    160deg,
-    rgba(0,0,0,0.10) 0%,
-    rgba(0,0,0,0.45) 50%,
-    rgba(0,0,0,0.80) 100%
-  );
+  background:
+    linear-gradient(to right,  rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.08) 65%),
+    linear-gradient(to top,    rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.00) 55%);
 }
 
 /* --- Hero Text Layer --- */
@@ -373,10 +376,10 @@ em {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(12px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .hero-eyebrow.show { opacity: 1; transform: translateY(0); }
 
@@ -397,39 +400,46 @@ em {
 
 /* Headline */
 .hero-headline-wrap {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .hero-headline {
   display: block;
   font-size: clamp(52px, 7vw, 100px);
   font-weight: 900;
-  line-height: 1.0;
+  line-height: 1.05;
   letter-spacing: -3px;
-  min-height: 1.1em; /* 타이핑 중 레이아웃 고정 */
 }
 
-/* 타이핑 텍스트 줄 */
+/* 각 텍스트 줄 — 초기 숨김, 개별 fade-up */
 .hl-line {
   display: block;
-  min-height: 1.05em;
   color: var(--white);
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  /* 최소 높이로 레이아웃 점프 방지 */
+  min-height: 1.1em;
+}
+.hl-line.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 .hl-line.hl-accent {
   color: var(--blue-bright);
-  text-shadow: 0 0 60px rgba(41,121,255,0.35);
+  text-shadow: 0 0 50px rgba(41,121,255,0.3);
 }
 
-/* 타이핑 커서 */
+/* 커서 — 현재 타이핑 중인 줄 끝에 */
 .typing-cursor {
   display: inline-block;
   width: 3px;
-  height: 0.85em;
+  height: 0.82em;
   background: var(--blue);
-  margin-left: 4px;
+  margin-left: 5px;
   vertical-align: middle;
   border-radius: 2px;
-  animation: cursorBlink 0.75s step-end infinite;
+  animation: cursorBlink 0.8s step-end infinite;
 }
 @keyframes cursorBlink {
   0%, 100% { opacity: 1; }
@@ -462,7 +472,9 @@ em {
 .hero-cta-group.show { opacity: 1; transform: translateY(0); }
 
 
-/* --- 로고 오버레이 (5초 후 등장) --- */
+/* ─── 로고 오버레이 ───
+   텍스트 시퀀스 마지막 줄 완료 후 0.7s 딜레이로 등장
+   텍스트 레이어와 공존 (텍스트 사라지지 않음) */
 .hero-logo-overlay {
   position: absolute;
   inset: 0;
@@ -472,22 +484,21 @@ em {
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  /* 나타날 때 부드럽게 */
-  transition: opacity 0.7s ease;
+  transition: opacity 0.8s ease;
 }
 .hero-logo-overlay.show {
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: none;  /* 텍스트 CTA 버튼 클릭 방해하지 않음 */
 }
 
-/* 로고 오버레이 배경: 중앙 글로우 */
+/* 중앙 방사형 블루 글로우 */
 .hero-logo-overlay::before {
   content: '';
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    ellipse 60% 50% at 50% 50%,
-    rgba(26,107,255,0.12) 0%,
+    ellipse 50% 45% at 50% 50%,
+    rgba(26,107,255,0.10) 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -497,65 +508,59 @@ em {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
+  gap: 24px;
   position: relative;
 }
 
+/* 로고 마크 */
 .hlo-mark {
-  width: 96px; height: 96px;
+  width: 88px; height: 88px;
   background: var(--blue);
-  border-radius: 22px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 50px;
+  font-size: 46px;
   font-weight: 900;
   color: #fff;
   box-shadow:
     0 0 0 1px rgba(26,107,255,0.4),
-    0 0 60px rgba(26,107,255,0.55);
-  /* 등장 애니메이션 */
+    0 0 50px rgba(26,107,255,0.50);
   opacity: 0;
-  transform: scale(0.6);
-  transition: opacity 0.55s cubic-bezier(0.34,1.56,0.64,1) 0.1s,
-              transform 0.55s cubic-bezier(0.34,1.56,0.64,1) 0.1s;
+  transform: scale(0.65);
+  transition: opacity 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.15s,
+              transform 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.15s;
 }
 .hero-logo-overlay.show .hlo-mark {
   opacity: 1;
   transform: scale(1);
 }
 
+/* 텍스트 그룹 */
 .hlo-texts {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.55s ease 0.4s, transform 0.55s ease 0.4s;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease 0.45s, transform 0.5s ease 0.45s;
 }
 .hero-logo-overlay.show .hlo-texts { opacity: 1; transform: translateY(0); }
 
 .hlo-name {
-  font-size: clamp(36px, 5vw, 68px);
+  font-size: clamp(32px, 4.5vw, 60px);
   font-weight: 900;
-  letter-spacing: -1px;
+  letter-spacing: 0px;
   color: var(--white);
   line-height: 1;
 }
 .hlo-sub {
-  font-size: 15px;
+  font-size: 13px;
   color: var(--blue-light);
-  letter-spacing: 2.5px;
-  font-weight: 400;
+  letter-spacing: 3px;
+  font-weight: 500;
   text-transform: uppercase;
-}
-
-/* 로고 표시 중 텍스트 레이어 페이드아웃 */
-.hero-text-layer.hide-for-logo {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
 }
 
 
