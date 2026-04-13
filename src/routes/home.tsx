@@ -421,28 +421,335 @@ export const HomePage = () => (
       </div>
     </section>
 
-    {/* ============ TESTIMONIALS ============ */}
-    <section class="section testimonials-section">
+    {/* ============ TESTIMONIALS — 두 줄 무한 슬라이드 ============ */}
+    <section class="testimonials-section">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head testi-head">
           <span class="sec-label">Client Voice</span>
           <h2 class="sec-title">클라이언트가<br /><em>직접 말합니다</em></h2>
         </div>
-        <div class="testi-grid">
+      </div>
+
+      {/* ── 1행: 왼쪽으로 흐름 ── */}
+      <div class="testi-row-wrap">
+        <div class="testi-row testi-row--ltr">
+          {/* Row 1 원본 */}
           <blockquote class="testi-card">
-            <div class="testi-quote">"</div>
-            <p>단순히 예쁜 디자인이 아니라 실제 매출로 이어지는 마케팅을 처음 경험했습니다. 캠페인 후 첫 달 매출이 3배 뛰었어요.</p>
-            <footer><strong>김○○ 대표</strong><span>라이프스타일 브랜드</span></footer>
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Viral Marketing</span>
+            </div>
+            <p class="testi-body">단순히 예쁜 디자인이 아니라 실제 매출로 이어지는 마케팅을 처음 경험했습니다. 캠페인 후 첫 달 매출이 3배 뛰었어요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">김</div>
+              <div class="testi-info"><strong>김○○ 대표</strong><span>라이프스타일 브랜드</span></div>
+            </footer>
           </blockquote>
           <blockquote class="testi-card">
-            <div class="testi-quote">"</div>
-            <p>바이럴 마케팅이 이렇게 정교하게 설계될 수 있다는 걸 몰랐습니다. 우연처럼 보이지만 모두 전략이었더라고요.</p>
-            <footer><strong>이○○ CMO</strong><span>테크 스타트업</span></footer>
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Influencer Marketing</span>
+            </div>
+            <p class="testi-body">바이럴 마케팅이 이렇게 정교하게 설계될 수 있다는 걸 몰랐습니다. 우연처럼 보이지만 모두 전략이었더라고요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">이</div>
+              <div class="testi-info"><strong>이○○ CMO</strong><span>테크 스타트업</span></div>
+            </footer>
           </blockquote>
           <blockquote class="testi-card">
-            <div class="testi-quote">"</div>
-            <p>인사이트 리포트를 받고 마케팅 방향이 완전히 바뀌었습니다. 데이터를 이렇게 해석해주는 파트너는 처음이에요.</p>
-            <footer><strong>박○○ 마케팅팀장</strong><span>유통 기업</span></footer>
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Data Insight</span>
+            </div>
+            <p class="testi-body">인사이트 리포트를 받고 마케팅 방향이 완전히 바뀌었습니다. 데이터를 이렇게 해석해주는 파트너는 처음이에요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">박</div>
+              <div class="testi-info"><strong>박○○ 마케팅팀장</strong><span>유통 기업</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Olive Young Marketing</span>
+            </div>
+            <p class="testi-body">올리브영 입점 후 첫 달부터 리뷰가 쌓이기 시작했고, 3개월 만에 채널 매출이 2.4배 성장했습니다.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">최</div>
+              <div class="testi-info"><strong>최○○ 대표</strong><span>K-뷰티 브랜드</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">YouTube Marketing</span>
+            </div>
+            <p class="testi-body">유튜브 영상 하나로 브랜드 검색량이 1,200% 폭발했습니다. 인애드 없이는 불가능했을 결과예요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">정</div>
+              <div class="testi-info"><strong>정○○ 마케터</strong><span>뷰티 스타트업</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">SEO Marketing</span>
+            </div>
+            <p class="testi-body">SEO 작업 후 주요 키워드 TOP3 진입. 광고비 없이도 매달 유기적 유입이 꾸준히 늘고 있습니다.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">강</div>
+              <div class="testi-info"><strong>강○○ 이사</strong><span>IT 서비스</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Seeding Campaign</span>
+            </div>
+            <p class="testi-body">시딩 캠페인으로 진짜 소비자 후기를 확보했고, 전환율이 68% 향상됐습니다. 퀄리티가 달랐어요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">윤</div>
+              <div class="testi-info"><strong>윤○○ 팀장</strong><span>생활용품 브랜드</span></div>
+            </footer>
+          </blockquote>
+          {/* Row 1 복제 (무한루프) */}
+          <blockquote class="testi-card" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Viral Marketing</span>
+            </div>
+            <p class="testi-body">단순히 예쁜 디자인이 아니라 실제 매출로 이어지는 마케팅을 처음 경험했습니다. 캠페인 후 첫 달 매출이 3배 뛰었어요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">김</div>
+              <div class="testi-info"><strong>김○○ 대표</strong><span>라이프스타일 브랜드</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Influencer Marketing</span>
+            </div>
+            <p class="testi-body">바이럴 마케팅이 이렇게 정교하게 설계될 수 있다는 걸 몰랐습니다. 우연처럼 보이지만 모두 전략이었더라고요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">이</div>
+              <div class="testi-info"><strong>이○○ CMO</strong><span>테크 스타트업</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Data Insight</span>
+            </div>
+            <p class="testi-body">인사이트 리포트를 받고 마케팅 방향이 완전히 바뀌었습니다. 데이터를 이렇게 해석해주는 파트너는 처음이에요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">박</div>
+              <div class="testi-info"><strong>박○○ 마케팅팀장</strong><span>유통 기업</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Olive Young Marketing</span>
+            </div>
+            <p class="testi-body">올리브영 입점 후 첫 달부터 리뷰가 쌓이기 시작했고, 3개월 만에 채널 매출이 2.4배 성장했습니다.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">최</div>
+              <div class="testi-info"><strong>최○○ 대표</strong><span>K-뷰티 브랜드</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">YouTube Marketing</span>
+            </div>
+            <p class="testi-body">유튜브 영상 하나로 브랜드 검색량이 1,200% 폭발했습니다. 인애드 없이는 불가능했을 결과예요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">정</div>
+              <div class="testi-info"><strong>정○○ 마케터</strong><span>뷰티 스타트업</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">SEO Marketing</span>
+            </div>
+            <p class="testi-body">SEO 작업 후 주요 키워드 TOP3 진입. 광고비 없이도 매달 유기적 유입이 꾸준히 늘고 있습니다.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">강</div>
+              <div class="testi-info"><strong>강○○ 이사</strong><span>IT 서비스</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Seeding Campaign</span>
+            </div>
+            <p class="testi-body">시딩 캠페인으로 진짜 소비자 후기를 확보했고, 전환율이 68% 향상됐습니다. 퀄리티가 달랐어요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">윤</div>
+              <div class="testi-info"><strong>윤○○ 팀장</strong><span>생활용품 브랜드</span></div>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+
+      {/* ── 2행: 오른쪽으로 흐름 (반대 방향) ── */}
+      <div class="testi-row-wrap">
+        <div class="testi-row testi-row--rtl">
+          {/* Row 2 원본 */}
+          <blockquote class="testi-card testi-card--alt">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Performance Marketing</span>
+            </div>
+            <p class="testi-body">퍼포먼스 광고 최적화로 ROAS 1,850%를 달성했습니다. 데이터 기반 접근이 이런 차이를 만드는군요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">한</div>
+              <div class="testi-info"><strong>한○○ 대표</strong><span>이커머스 브랜드</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card testi-card--alt">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Brand Strategy</span>
+            </div>
+            <p class="testi-body">브랜드 포지셔닝 전략을 새로 수립하고 나서 경쟁사 대비 인지도가 확연히 달라졌습니다. 전략적 사고가 다릅니다.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">오</div>
+              <div class="testi-info"><strong>오○○ 브랜드팀장</strong><span>패션 기업</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card testi-card--alt">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Community Viral</span>
+            </div>
+            <p class="testi-body">맘카페 바이럴 이후 자연 구전이 폭발적으로 늘었습니다. 진짜 후기가 광고보다 훨씬 강력하다는 걸 체감했어요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">서</div>
+              <div class="testi-info"><strong>서○○ 마케터</strong><span>육아용품 브랜드</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card testi-card--alt">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">PPL Campaign</span>
+            </div>
+            <p class="testi-body">PPL 콘텐츠가 자연스럽게 녹아들어 거부감이 없었습니다. 노출 대비 전환율이 기존 광고의 3배였어요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">문</div>
+              <div class="testi-info"><strong>문○○ 콘텐츠팀장</strong><span>F&amp;B 브랜드</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card testi-card--alt">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Review Marketing</span>
+            </div>
+            <p class="testi-body">리뷰 마케팅으로 신뢰도가 급격히 올라갔습니다. 소비자들이 먼저 브랜드를 찾기 시작했어요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">임</div>
+              <div class="testi-info"><strong>임○○ 대표</strong><span>헬스케어 브랜드</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card testi-card--alt">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">IMC Strategy</span>
+            </div>
+            <p class="testi-body">통합 마케팅 커뮤니케이션으로 모든 채널이 일관된 메시지를 전달했습니다. 브랜드 신뢰도가 눈에 띄게 올라갔어요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">조</div>
+              <div class="testi-info"><strong>조○○ CMO</strong><span>대형 유통사</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card testi-card--alt">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Viral Content</span>
+            </div>
+            <p class="testi-body">콘텐츠 하나가 일주일 만에 2,800만 뷰를 달성했습니다. 기획부터 실행까지 완벽한 파트너입니다.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">류</div>
+              <div class="testi-info"><strong>류○○ 대표</strong><span>뷰티 스타트업</span></div>
+            </footer>
+          </blockquote>
+          {/* Row 2 복제 (무한루프) */}
+          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Performance Marketing</span>
+            </div>
+            <p class="testi-body">퍼포먼스 광고 최적화로 ROAS 1,850%를 달성했습니다. 데이터 기반 접근이 이런 차이를 만드는군요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">한</div>
+              <div class="testi-info"><strong>한○○ 대표</strong><span>이커머스 브랜드</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Brand Strategy</span>
+            </div>
+            <p class="testi-body">브랜드 포지셔닝 전략을 새로 수립하고 나서 경쟁사 대비 인지도가 확연히 달라졌습니다. 전략적 사고가 다릅니다.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">오</div>
+              <div class="testi-info"><strong>오○○ 브랜드팀장</strong><span>패션 기업</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Community Viral</span>
+            </div>
+            <p class="testi-body">맘카페 바이럴 이후 자연 구전이 폭발적으로 늘었습니다. 진짜 후기가 광고보다 훨씬 강력하다는 걸 체감했어요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">서</div>
+              <div class="testi-info"><strong>서○○ 마케터</strong><span>육아용품 브랜드</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">PPL Campaign</span>
+            </div>
+            <p class="testi-body">PPL 콘텐츠가 자연스럽게 녹아들어 거부감이 없었습니다. 노출 대비 전환율이 기존 광고의 3배였어요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">문</div>
+              <div class="testi-info"><strong>문○○ 콘텐츠팀장</strong><span>F&amp;B 브랜드</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Review Marketing</span>
+            </div>
+            <p class="testi-body">리뷰 마케팅으로 신뢰도가 급격히 올라갔습니다. 소비자들이 먼저 브랜드를 찾기 시작했어요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">임</div>
+              <div class="testi-info"><strong>임○○ 대표</strong><span>헬스케어 브랜드</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">IMC Strategy</span>
+            </div>
+            <p class="testi-body">통합 마케팅 커뮤니케이션으로 모든 채널이 일관된 메시지를 전달했습니다. 브랜드 신뢰도가 눈에 띄게 올라갔어요.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">조</div>
+              <div class="testi-info"><strong>조○○ CMO</strong><span>대형 유통사</span></div>
+            </footer>
+          </blockquote>
+          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
+            <div class="testi-card-top">
+              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+              <span class="testi-tag">Viral Content</span>
+            </div>
+            <p class="testi-body">콘텐츠 하나가 일주일 만에 2,800만 뷰를 달성했습니다. 기획부터 실행까지 완벽한 파트너입니다.</p>
+            <footer class="testi-footer">
+              <div class="testi-avatar">류</div>
+              <div class="testi-info"><strong>류○○ 대표</strong><span>뷰티 스타트업</span></div>
+            </footer>
           </blockquote>
         </div>
       </div>

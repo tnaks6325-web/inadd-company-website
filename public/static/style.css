@@ -1390,65 +1390,174 @@ em {
 
 
 /* ============================================
-   TESTIMONIALS
+   TESTIMONIALS  –  두 줄 무한 슬라이드
    ============================================ */
-.testimonials-section { background: var(--black-2); }
-
-.testi-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+.testimonials-section {
+  background: var(--black-2);
+  padding: 100px 0 0;
+  overflow: hidden;
 }
 
+/* 헤더 */
+.testi-head {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+/* 각 행 래퍼 – 좌우 페이드 마스크 */
+.testi-row-wrap {
+  overflow: hidden;
+  padding: 10px 0;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+
+.testi-row-wrap:first-of-type  { margin-bottom: 20px; }
+.testi-row-wrap:last-of-type   { margin-bottom: 100px; }
+
+/* 무한 흐르는 트랙 */
+.testi-row {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  will-change: transform;
+}
+
+/* 1행: 왼쪽 방향 */
+@keyframes testi-scroll-ltr {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.testi-row--ltr {
+  animation: testi-scroll-ltr 40s linear infinite;
+}
+.testi-row--ltr:hover {
+  animation-play-state: paused;
+}
+
+/* 2행: 오른쪽 방향 (역방향) */
+@keyframes testi-scroll-rtl {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+.testi-row--rtl {
+  animation: testi-scroll-rtl 38s linear infinite;
+}
+.testi-row--rtl:hover {
+  animation-play-state: paused;
+}
+
+/* 카드 */
 .testi-card {
+  flex: 0 0 340px;
   background: var(--black-3);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: 36px;
+  padding: 28px 28px 24px;
   position: relative;
-  transition: border-color var(--t) var(--ease), transform var(--t) var(--ease);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
 }
 
 .testi-card:hover {
   border-color: var(--blue);
   transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(26,107,255,0.18);
 }
 
-.testi-quote {
-  font-size: 60px;
-  line-height: 0.8;
-  color: var(--blue);
-  font-weight: 900;
+/* 2행 카드 – 약간 다른 배경 톤 */
+.testi-card--alt {
+  background: rgba(255,255,255,0.03);
+}
+
+/* 카드 상단 – 별점 + 태그 */
+.testi-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 16px;
-  opacity: 0.7;
 }
 
-.testi-card p {
-  font-size: 14px;
+.testi-stars {
+  display: flex;
+  gap: 2px;
+  color: #f5c518;
+  font-size: 13px;
+}
+
+.testi-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--blue-light);
+  background: rgba(26,107,255,0.1);
+  border: 1px solid rgba(26,107,255,0.25);
+  border-radius: 20px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+.testi-body {
+  font-size: 13.5px;
   color: var(--gray-1);
-  line-height: 1.8;
-  margin-bottom: 24px;
+  line-height: 1.75;
+  margin-bottom: 20px;
   font-style: italic;
 }
 
-.testi-card footer {
+.testi-footer {
   display: flex;
-  flex-direction: column;
-  gap: 3px;
+  align-items: center;
+  gap: 12px;
   border-top: 1px solid var(--border);
   padding-top: 16px;
 }
 
-.testi-card strong {
+.testi-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.testi-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.testi-info strong {
+  font-size: 13px;
   color: var(--white);
   font-weight: 600;
 }
 
-.testi-card span {
-  font-size: 12px;
+.testi-info span {
+  font-size: 11px;
   color: var(--gray-3);
 }
+
+/* 구 .testi-quote, .testi-card p, .testi-card footer 등 레거시 – 제거됨 */
 
 
 /* ============================================
