@@ -214,38 +214,45 @@ if (menuToggle && mainNav) {
   /* ─── 휠 이벤트 핸들러 ─── */
   let wheelCooldown = false;
 
+  // 히어로 섹션 높이 (= 100vh)
+  function heroHeight() { return heroSlider.offsetHeight; }
+
   function onWheel(e) {
     if (mainNav && mainNav.classList.contains('open')) return;
 
-    const delta = e.deltaY;
+    const delta    = e.deltaY;
+    const scrollY  = window.scrollY;
+    const heroH    = heroHeight();
 
-    if (state === STATE_HERO) {
-      // 히어로 상태: 아래 스크롤 잠금 + 전환
-      if (delta > 0 && seqReady && !transitioning) {
-        e.preventDefault();
-        if (wheelCooldown) return;
-        wheelCooldown = true;
-        setTimeout(() => { wheelCooldown = false; }, 1200);
-        toLogoState();
-      } else if (delta > 0) {
-        // 텍스트 아직 안끝났으면 스크롤 막기
-        e.preventDefault();
-      } else if (delta < 0) {
-        // 히어로에서 위로 스크롤 — 맨 위이므로 막기
-        e.preventDefault();
+    /* ── 히어로 영역 안(scrollY ≈ 0) ── */
+    if (scrollY < heroH * 0.5) {
+      if (state === STATE_HERO) {
+        if (delta > 0 && seqReady && !transitioning) {
+          // 아래 → 로고 전환
+          e.preventDefault();
+          if (wheelCooldown) return;
+          wheelCooldown = true;
+          setTimeout(() => { wheelCooldown = false; }, 1200);
+          toLogoState();
+        } else if (delta > 0) {
+          // 텍스트 미완성이면 잠금
+          e.preventDefault();
+        }
+        // 위 스크롤은 막지 않음 (맨 위라 어차피 안 움직임)
+      } else if (state === STATE_LOGO) {
+        if (delta < 0 && !transitioning) {
+          // 로고 화면에서 위 → 히어로 복귀
+          e.preventDefault();
+          if (wheelCooldown) return;
+          wheelCooldown = true;
+          setTimeout(() => { wheelCooldown = false; }, 1200);
+          toHeroState();
+        }
+        // 아래 → 자연 스크롤 허용 (하위 콘텐츠로 이동)
       }
-    } else if (state === STATE_LOGO) {
-      // 로고 상태: 위로 스크롤 → 히어로 복귀
-      if (delta < 0 && !transitioning) {
-        e.preventDefault();
-        if (wheelCooldown) return;
-        wheelCooldown = true;
-        setTimeout(() => { wheelCooldown = false; }, 1200);
-        toHeroState();
-      }
-      // 로고 상태에서 아래로 스크롤 → 아래 콘텐츠로 이동 허용
-      // (preventDefault 하지 않음)
     }
+    /* ── 히어로 아래(하위 콘텐츠 영역) ──
+       어떤 상태든 wheel 가로채지 않음 → 완전 자연 스크롤 */
   }
 
   window.addEventListener('wheel', onWheel, { passive: false });
@@ -256,8 +263,12 @@ if (menuToggle && mainNav) {
     touchStartY = e.touches[0].clientY;
   }, { passive: true });
   window.addEventListener('touchend', e => {
-    const dy = touchStartY - e.changedTouches[0].clientY;
+    const dy     = touchStartY - e.changedTouches[0].clientY;
+    const heroH  = heroHeight();
+    const scrollY = window.scrollY;
     if (Math.abs(dy) < 40) return;
+    // 히어로 영역 안에서만 가로채기
+    if (scrollY >= heroH * 0.5) return;
     if (dy > 0 && state === STATE_HERO && seqReady && !transitioning) {
       toLogoState();
     } else if (dy < 0 && state === STATE_LOGO && !transitioning) {
