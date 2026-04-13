@@ -61,23 +61,25 @@ export const HomePage = () => (
         </div>
       </div>
 
-      {/* 로고 오버레이 — 5초 후 등장 */}
-      <div class="hero-logo-overlay" id="heroLogoOverlay">
-        <div class="hlo-inner">
-          <div class="hlo-mark">N</div>
-          <div class="hlo-texts">
-            <span class="hlo-name">NOVA STUDIO</span>
-            <span class="hlo-sub">브랜드를 움직이는 힘</span>
-          </div>
-        </div>
-      </div>
-
       {/* 스크롤 힌트 */}
       <div class="hero-scroll-cue">
         <div class="scroll-cue-line"></div>
         <span>SCROLL</span>
       </div>
 
+    </section>
+
+    {/* ============ LOGO SECTION — 스크롤 두 번째 뷰 ============
+        검은 배경 + 로고 중앙 배치
+        JS의 IntersectionObserver가 감지해서 .visible 클래스 부여 */}
+    <section class="logo-section" id="logoSection">
+      <div class="ls-inner">
+        <div class="ls-mark" id="lsMark">N</div>
+        <div class="ls-texts" id="lsTexts">
+          <span class="ls-name">NOVA STUDIO</span>
+          <span class="ls-sub">브랜드를 움직이는 힘</span>
+        </div>
+      </div>
     </section>
 
     {/* ============ MARQUEE ============ */}

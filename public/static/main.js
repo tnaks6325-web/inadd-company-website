@@ -1,26 +1,21 @@
 /* ============================================
    NOVA STUDIO — Main JS
 
-   ★ 슬라이더 동작 설계 ★
+   ★ 히어로 & 로고 섹션 동작 설계 ★
    ────────────────────────────────────────────
-   [텍스트 시퀀스 — 최초 1회 실행]
-     0.4s  → eyebrow 페이드인
-     1.0s  → 1번 줄 한 글자씩 등장 (타이핑)
-             타이핑 완료 후 2초 유지
-     +2s   → 2번 줄 (강조색) 한 글자씩 등장
-             타이핑 완료 후 2초 유지
-     +2s   → 3번 줄 한 글자씩 등장
-             타이핑 완료 후 0.8s 유지
-     +0.8s → 서브카피 + CTA 페이드인
-     텍스트 시퀀스 종료 이후: 텍스트 freeze
-                              영상 전환만 반복
+   [히어로 섹션 — IntersectionObserver]
+   • 히어로가 화면에 50% 이상 보일 때 → 텍스트 시퀀스 (재)시작
+   • 히어로가 뷰포트를 벗어나면 → 텍스트/타이머 모두 리셋
+   • 즉, 스크롤로 내려갔다가 올라오면 처음부터 다시 재생
 
-   [슬라이드 전환 — 부드러운 크로스페이드]
-     SLIDE_INTERVAL = 6000ms (6초)
-     FADE_DURATION  = 1000ms (dissolve 1초)
-     leave 슬라이드: z-index 높게 유지 + opacity 0으로 fade-out
-     enter 슬라이드: z-index 낮게 대기  + opacity 1로 드러남
-     → 두 슬라이드가 겹치며 녹아드는 dissolve 효과
+   [로고 섹션 — 스크롤 두 번째 뷰]
+   • hero 바로 아래에 100vh 풀스크린 검은 배경 섹션
+   • IntersectionObserver로 60% 진입 시 .visible 부여 → 로고 등장
+   • 섹션을 벗어나면 .visible 제거 → 다음에 다시 들어올 때 재등장
+
+   [슬라이드 전환]
+   • 6초마다 크로스페이드 dissolve 전환
+   • 텍스트 시퀀스와 독립 실행
    ────────────────────────────────────────────
    ============================================ */
 
@@ -65,7 +60,7 @@ if (menuToggle && mainNav) {
 }
 
 /* ══════════════════════════════════════════════
-   4. HERO SLIDER
+   4. HERO SLIDER + 텍스트 시퀀스
    ══════════════════════════════════════════════ */
 (function initSlider() {
   const sliderEl = document.getElementById('heroSlider');
@@ -76,20 +71,18 @@ if (menuToggle && mainNav) {
   if (TOTAL === 0) return;
 
   /* ─── 타이밍 상수 ─── */
-  const SLIDE_INTERVAL = 6000;   // 슬라이드 전환 주기 (ms)
-  const FADE_DURATION  = 1000;   // 크로스페이드 길이 (ms) — CSS transition과 일치
+  const SLIDE_INTERVAL = 6000;  // 슬라이드 전환 주기
+  const FADE_DURATION  = 1000;  // dissolve 시간 (CSS와 동일)
 
   /* ─── 텍스트 DOM ─── */
-  const textLayer   = document.getElementById('heroTextLayer');
-  const eyebrow     = sliderEl.querySelector('.hero-eyebrow');
-  const hlLine1     = document.getElementById('hlLine1');
-  const hlLine2     = document.getElementById('hlLine2');
-  const hlLine3     = document.getElementById('hlLine3');
-  const heroSub     = document.getElementById('heroSub');
-  const heroCta     = document.getElementById('heroCta');
-  const logoOverlay = document.getElementById('heroLogoOverlay');
+  const eyebrow  = sliderEl.querySelector('.hero-eyebrow');
+  const hlLine1  = document.getElementById('hlLine1');
+  const hlLine2  = document.getElementById('hlLine2');
+  const hlLine3  = document.getElementById('hlLine3');
+  const heroSub  = document.getElementById('heroSub');
+  const heroCta  = document.getElementById('heroCta');
 
-  /* ─── 고정 카피 ─── */
+  /* ─── 카피 ─── */
   const COPY = {
     l1:  '브랜드를',
     l2:  '움직이는',
@@ -101,21 +94,30 @@ if (menuToggle && mainNav) {
   const cursor = Object.assign(document.createElement('span'), { className: 'typing-cursor' });
   const killCursor = () => { if (cursor.parentNode) cursor.parentNode.removeChild(cursor); };
 
-  /* ─── 한 줄 타이핑 ───
-     el        : 대상 span
-     text      : 문자열
-     charMs    : 글자 간격 (ms)
-     onDone    : 완료 콜백                */
+  /* ─── 텍스트 전체 리셋 ─── */
+  function resetText() {
+    killCursor();
+    [hlLine1, hlLine2, hlLine3].forEach(el => {
+      if (!el) return;
+      el.innerHTML = '';
+      el.classList.remove('show');
+    });
+    if (eyebrow)  eyebrow.classList.remove('show');
+    if (heroSub)  { heroSub.textContent = ''; heroSub.classList.remove('show'); }
+    if (heroCta)  heroCta.classList.remove('show');
+  }
+
+  /* ─── 한 줄 타이핑 ─── */
   function typeInto(el, text, charMs, onDone) {
     el.innerHTML = '';
     el.appendChild(cursor);
-    el.classList.add('show');   // CSS: opacity 0→1, translateY 사라짐
-
+    el.classList.add('show');
     let idx = 0;
     function tick() {
+      if (!activeSeqId) return; // 시퀀스가 취소되면 즉시 중단
       if (idx < text.length) {
         el.insertBefore(document.createTextNode(text[idx++]), cursor);
-        setTimeout(tick, charMs);
+        seqTimers.push(setTimeout(tick, charMs));
       } else {
         killCursor();
         if (onDone) onDone();
@@ -124,47 +126,53 @@ if (menuToggle && mainNav) {
     tick();
   }
 
-  /* ─── 텍스트 시퀀스 (최초 1회) ───
-     각 줄이 타이핑 완료 → 2초 유지 → 다음 줄
-     마지막 줄 완료 → 0.8s 후 서브카피 + CTA + 로고 동시 등장
-     그 이후 텍스트는 고정 (영상만 계속 전환)                   */
-  let seqDone = false;
+  /* ─── 텍스트 시퀀스 관리 ─── */
+  let seqTimers   = [];   // 현재 진행 중인 타이머 ID 목록
+  let activeSeqId = 0;    // 현재 시퀀스 버전 ID (취소 판별)
 
+  function clearSeq() {
+    activeSeqId = 0;
+    seqTimers.forEach(clearTimeout);
+    seqTimers = [];
+  }
+
+  /* ─── 텍스트 시퀀스 실행 ───
+     히어로가 뷰포트에 진입할 때마다 리셋 후 재실행 */
   function runTextSequence() {
-    const CHAR_MS  = 80;    // 글자당 80ms — 자연스러운 타이핑 속도
-    const LINE_GAP = 2000;  // 줄 등장 후 다음 줄까지 대기 (ms)
+    clearSeq();
+    resetText();
 
-    /* 0.4s — eyebrow */
-    setTimeout(() => {
-      if (eyebrow) eyebrow.classList.add('show');
-    }, 400);
+    const seqId = ++activeSeqId;  // 이 시퀀스의 고유 ID
+    const push  = (fn, ms) => {
+      const t = setTimeout(() => {
+        if (activeSeqId !== seqId) return; // 취소됐으면 무시
+        fn();
+      }, ms);
+      seqTimers.push(t);
+      return t;
+    };
 
-    /* 1.0s — 1번 줄 */
-    setTimeout(() => {
+    const CHAR_MS  = 80;
+    const LINE_GAP = 2000;
+
+    // 0.4s: eyebrow
+    push(() => eyebrow && eyebrow.classList.add('show'), 400);
+
+    // 1.0s: 1번 줄 타이핑
+    push(() => {
       typeInto(hlLine1, COPY.l1, CHAR_MS, () => {
         // 타이핑 완료 → LINE_GAP 후 2번 줄
-        setTimeout(() => {
+        push(() => {
           typeInto(hlLine2, COPY.l2, CHAR_MS, () => {
-            // LINE_GAP 후 3번 줄
-            setTimeout(() => {
+            push(() => {
               typeInto(hlLine3, COPY.l3, CHAR_MS, () => {
-                // 마지막 줄 타이핑 완료 → 0.8s 유지 → 서브카피+CTA+로고
-                setTimeout(() => {
-                  /* 서브카피 */
+                // 마지막 줄 완료 → 0.8s 후 서브카피+CTA
+                push(() => {
                   if (heroSub) {
                     heroSub.textContent = COPY.sub;
                     heroSub.classList.add('show');
                   }
-                  /* CTA — 0.35s 딜레이 */
-                  setTimeout(() => {
-                    if (heroCta) heroCta.classList.add('show');
-                  }, 350);
-                  /* 로고 오버레이 — 0.7s 딜레이 */
-                  setTimeout(() => {
-                    if (logoOverlay) logoOverlay.classList.add('show');
-                  }, 700);
-
-                  seqDone = true; // 이후 영상 전환만 진행
+                  push(() => heroCta && heroCta.classList.add('show'), 350);
                 }, 800);
               });
             }, LINE_GAP);
@@ -174,10 +182,26 @@ if (menuToggle && mainNav) {
     }, 1000);
   }
 
-  /* ─── 슬라이드 전환 (크로스페이드 dissolve) ───
-     leave: z-index를 active보다 위(3)로 올린 채 opacity 0 → 페이드아웃처럼 보임
-     enter: z-index 2로 이미 렌더링된 상태에서 드러남
-     결과: 두 영상이 겹치며 자연스럽게 녹아드는 dissolve 효과              */
+  /* ─── 히어로 뷰포트 감지 ───
+     히어로가 40% 이상 보이면 시퀀스 시작
+     히어로가 완전히 벗어나면 리셋 (다음 복귀 때 재시작 준비) */
+  const heroObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // 히어로 진입 → 시퀀스 (재)시작
+        runTextSequence();
+      } else {
+        // 히어로 이탈 → 리셋 (다음 복귀 때 재시작)
+        clearSeq();
+        resetText();
+      }
+    });
+  }, {
+    threshold: 0.4   // 40% 이상 보일 때 진입 판정
+  });
+  heroObserver.observe(sliderEl);
+
+  /* ─── 슬라이드 전환 (크로스페이드 dissolve) ─── */
   let current    = 0;
   let isChanging = false;
   let slideTimer = null;
@@ -185,18 +209,11 @@ if (menuToggle && mainNav) {
   function goTo(next) {
     if (isChanging || next === current) return;
     isChanging = true;
-
     const prev = current;
     current    = next;
-
-    /* enter: 미리 보여줄 슬라이드 z-index 2 (leave 뒤) */
     slides[current].classList.add('active');
-
-    /* leave: z-index 3으로 올려서 위에서 페이드아웃 */
     slides[prev].classList.add('leaving');
     slides[prev].classList.remove('active');
-
-    /* FADE_DURATION 후 leaving 클래스 제거 */
     setTimeout(() => {
       slides[prev].classList.remove('leaving');
       isChanging = false;
@@ -214,14 +231,39 @@ if (menuToggle && mainNav) {
   /* ─── 초기화 ─── */
   slides.forEach(s => s.classList.remove('active', 'leaving'));
   slides[0].classList.add('active');
-
-  runTextSequence();   // 텍스트 시퀀스 시작 (1회)
-  scheduleNext();      // 슬라이드 자동 전환 시작
+  scheduleNext();  // 슬라이드 전환은 항상 실행 (텍스트와 독립)
 
 })();
 
 
-/* ── 5. Count-up animation ── */
+/* ══════════════════════════════════════════════
+   5. LOGO SECTION — 스크롤 두 번째 뷰 등장
+   ══════════════════════════════════════════════ */
+(function initLogoSection() {
+  const section = document.getElementById('logoSection');
+  if (!section) return;
+
+  const inner = section.querySelector('.ls-inner');
+
+  /* 섹션이 60% 이상 진입하면 .visible → 로고 등장
+     섹션을 벗어나면 .visible 제거 → 다음에 다시 들어오면 재등장 */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        section.classList.add('visible');
+      } else {
+        section.classList.remove('visible');
+      }
+    });
+  }, {
+    threshold: 0.6   // 60% 보일 때 등장
+  });
+
+  observer.observe(section);
+})();
+
+
+/* ── 6. Count-up animation ── */
 {
   const cs = document.querySelectorAll('[data-count]');
   if (cs.length) {
@@ -244,7 +286,7 @@ if (menuToggle && mainNav) {
   }
 }
 
-/* ── 6. Scroll reveal ── */
+/* ── 7. Scroll reveal ── */
 {
   const els = document.querySelectorAll(
     '.svc-card, .testi-card, .stat-block, .work-feat, .wf-thumb'
