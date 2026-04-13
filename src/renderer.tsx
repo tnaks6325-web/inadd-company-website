@@ -23,8 +23,7 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
         <header class="site-header" id="site-header">
           <div class="header-inner">
             <a href="/" class="logo">
-              <img src="/static/logo.png" class="logo-img" alt="인애드컴퍼니" />
-              <span class="logo-text">인애드컴퍼니<br /><span class="logo-sub">IN AD COMPANY</span></span>
+              <span class="logo-wordmark">IN AD COMPANY</span>
             </a>
             <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기">
               <span></span><span></span><span></span>

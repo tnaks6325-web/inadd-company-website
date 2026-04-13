@@ -104,6 +104,15 @@ em {
   color: var(--white);
 }
 
+/* 섹션 서브카피 */
+.sec-sub {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--gray-2);
+  font-weight: 400;
+}
+
 /* ============================================
    HEADER
    ============================================ */
@@ -148,8 +157,20 @@ em {
   height: 32px;
   object-fit: contain;
   flex-shrink: 0;
-  /* 흰 배경 로고를 다크 배경에서 반전 */
   filter: invert(1) brightness(2);
+}
+
+/* 헤더 워드마크 — IN AD COMPANY 텍스트 전용 */
+.logo-wordmark {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--white);
+  white-space: nowrap;
+  line-height: 1;
+  text-transform: uppercase;
+  flex-shrink: 0;
 }
 
 .logo-mark {
@@ -712,6 +733,10 @@ em {
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   overflow: hidden;
+}
+/* 7번째 카드 — 2컬럼에서 단독 가로 full */
+.services-grid .svc-card:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
 }
 
 .svc-card {

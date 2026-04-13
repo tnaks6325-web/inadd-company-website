@@ -93,10 +93,10 @@ export const HomePage = () => (
     {/* ============ MARQUEE ============ */}
     <div class="marquee-band">
       <div class="marquee-track">
-        {['Brand Strategy','Viral Marketing','Content Creation','Performance Marketing','Data Analytics','Social Media','Creative Direction','Brand Identity'].map(item => (
+        {['Viral Marketing','Influencer & YouTube Marketing','Seeding Campaign','SEO Marketing','Customer Review Marketing','Olive Young Marketing','PPL'].map(item => (
           <span class="marquee-item">{item}<span class="marquee-sep">✦</span></span>
         ))}
-        {['Brand Strategy','Viral Marketing','Content Creation','Performance Marketing','Data Analytics','Social Media','Creative Direction','Brand Identity'].map(item => (
+        {['Viral Marketing','Influencer & YouTube Marketing','Seeding Campaign','SEO Marketing','Customer Review Marketing','Olive Young Marketing','PPL'].map(item => (
           <span class="marquee-item">{item}<span class="marquee-sep">✦</span></span>
         ))}
       </div>
@@ -107,56 +107,100 @@ export const HomePage = () => (
       <div class="container">
         <div class="section-head">
           <span class="sec-label">What We Do</span>
-          <h2 class="sec-title">전략부터 실행까지<br /><em>인애드컴퍼니가 옵니다</em></h2>
+          <h2 class="sec-title">당신은 아직 <em>진짜 마케팅의 힘</em>을<br />만나지 못했습니다</h2>
+          <p class="sec-sub">단순한 노출을 넘어 브랜드의 가치를 전달하고<br />실질적인 성과로 이어지는 인애드만의 솔루션을 경험해보세요</p>
         </div>
         <div class="services-grid">
           <article class="svc-card">
             <div class="svc-num">01</div>
             <div class="svc-icon">
               <svg viewBox="0 0 48 48" fill="none">
-                <path d="M8 40L24 8L40 40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M14 28H34" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M6 38C6 38 12 24 24 24C36 24 42 10 42 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="24" cy="24" r="4" fill="currentColor"/>
               </svg>
             </div>
-            <h3>브랜드 전략</h3>
-            <p>시장과 소비자를 분석해 브랜드만의 포지셔닝을 설계합니다. 감이 아닌 근거로 방향을 설정합니다.</p>
-            <a href="/about" class="svc-link">더 알아보기 <span>→</span></a>
+            <h3>Viral Marketing</h3>
+            <p>공유되고 검색되고 구매로 연결되는 바이럴 콘텐츠 생태계를 구축합니다. 광고처럼 보이지 않는 광고.</p>
+            <a href="/viral" class="svc-link">Learn More <span>→</span></a>
           </article>
           <article class="svc-card">
             <div class="svc-num">02</div>
             <div class="svc-icon">
               <svg viewBox="0 0 48 48" fill="none">
-                <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2"/>
-                <path d="M24 8V24L34 30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="16" cy="36" r="6" stroke="currentColor" stroke-width="2"/>
+                <circle cx="36" cy="12" r="6" stroke="currentColor" stroke-width="2"/>
+                <path d="M22 33L30 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="36" cy="36" r="4" stroke="currentColor" stroke-width="2"/>
+                <path d="M22 36H32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               </svg>
             </div>
-            <h3>퍼포먼스 마케팅</h3>
-            <p>클릭부터 구매까지 모든 퍼널을 데이터로 추적하고 최적화합니다. ROI를 극대화하는 과학적 접근.</p>
-            <a href="/works" class="svc-link">더 알아보기 <span>→</span></a>
+            <h3>Influencer &amp; YouTube</h3>
+            <p>검증된 인플루언서·유튜버 네트워크를 통해 타겟 소비자에게 진정성 있는 브랜드 메시지를 전달합니다.</p>
+            <a href="/works" class="svc-link">Learn More <span>→</span></a>
           </article>
           <article class="svc-card">
             <div class="svc-num">03</div>
             <div class="svc-icon">
               <svg viewBox="0 0 48 48" fill="none">
-                <path d="M6 38C6 38 12 24 24 24C36 24 42 10 42 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <circle cx="24" cy="24" r="4" fill="currentColor"/>
+                <path d="M24 6L28 18H40L30 26L34 38L24 30L14 38L18 26L8 18H20L24 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <h3>바이럴 콘텐츠</h3>
-            <p>공유되고 검색되고 구매로 연결되는 콘텐츠 생태계를 구축합니다. 광고처럼 보이지 않는 광고.</p>
-            <a href="/viral" class="svc-link">더 알아보기 <span>→</span></a>
+            <h3>Seeding Campaign</h3>
+            <p>브랜드 샘플을 핵심 타겟에게 자연스럽게 전달해 진정성 있는 후기와 입소문을 만들어냅니다.</p>
+            <a href="/works" class="svc-link">Learn More <span>→</span></a>
           </article>
           <article class="svc-card">
             <div class="svc-num">04</div>
             <div class="svc-icon">
               <svg viewBox="0 0 48 48" fill="none">
-                <rect x="6" y="6" width="36" height="36" rx="4" stroke="currentColor" stroke-width="2"/>
-                <path d="M16 32L22 22L28 28L34 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="24" cy="20" r="10" stroke="currentColor" stroke-width="2"/>
+                <path d="M24 30V42M18 42H30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M16 16L20 20L24 14L28 20L32 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <h3>데이터 인사이트</h3>
-            <p>숫자 뒤에 숨겨진 패턴을 발굴합니다. 인사이트가 전략이 되고, 전략이 성과가 되는 사이클.</p>
-            <a href="/insight" class="svc-link">더 알아보기 <span>→</span></a>
+            <h3>SEO Marketing</h3>
+            <p>검색 상위 노출로 브랜드를 먼저 발견되게 만듭니다. 장기적인 유입과 전환율을 동시에 높입니다.</p>
+            <a href="/insight" class="svc-link">Learn More <span>→</span></a>
+          </article>
+          <article class="svc-card">
+            <div class="svc-num">05</div>
+            <div class="svc-icon">
+              <svg viewBox="0 0 48 48" fill="none">
+                <path d="M8 14H40V38H8V14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 20H40" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 14V20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M20 28L22 30L28 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Customer Review Marketing</h3>
+            <p>실구매자의 신뢰 리뷰를 체계적으로 확보하고 관리합니다. 구매 결정에 직접 영향을 주는 소셜 프루프.</p>
+            <a href="/works" class="svc-link">Learn More <span>→</span></a>
+          </article>
+          <article class="svc-card">
+            <div class="svc-num">06</div>
+            <div class="svc-icon">
+              <svg viewBox="0 0 48 48" fill="none">
+                <rect x="6" y="10" width="36" height="28" rx="4" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 24H32M16 30H26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="34" cy="30" r="3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <h3>Olive Young Marketing</h3>
+            <p>올리브영 입점부터 노출 최적화까지. K-뷰티·헬스 브랜드의 온오프라인 매출을 함께 성장시킵니다.</p>
+            <a href="/works" class="svc-link">Learn More <span>→</span></a>
+          </article>
+          <article class="svc-card">
+            <div class="svc-num">07</div>
+            <div class="svc-icon">
+              <svg viewBox="0 0 48 48" fill="none">
+                <rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 24L21 19L26 24L32 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="34" cy="14" r="4" fill="var(--blue)" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <h3>PPL</h3>
+            <p>드라마·영화·웹콘텐츠 속 자연스러운 브랜드 노출. 수천만 시청자에게 거부감 없이 브랜드를 각인시킵니다.</p>
+            <a href="/viral" class="svc-link">Learn More <span>→</span></a>
           </article>
         </div>
       </div>
