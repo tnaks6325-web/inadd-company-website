@@ -302,7 +302,7 @@ em {
   inset: 0;
   opacity: 0;
   z-index: 1;
-  transition: opacity 1.0s ease;
+  transition: opacity 0.5s ease;
   pointer-events: none;
   will-change: opacity;
 }
@@ -319,7 +319,7 @@ em {
   opacity: 0;
   z-index: 3;
   pointer-events: none;
-  transition: opacity 1.0s ease;
+  transition: opacity 0.5s ease;
 }
 
 /* YouTube iframe wrapper */

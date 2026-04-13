@@ -281,8 +281,8 @@ if (menuToggle && mainNav) {
   window.scrollTo(0, 0);
 
   /* ─── 슬라이드 전환 ─── */
-  const SLIDE_INTERVAL = 6000;
-  const FADE_DURATION  = 1000;
+  const SLIDE_INTERVAL = 1000;
+  const FADE_DURATION  = 600;
   let current    = 0;
   let isChanging = false;
   let slideTimer = null;
