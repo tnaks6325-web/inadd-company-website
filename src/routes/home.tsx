@@ -294,30 +294,96 @@ export const HomePage = () => (
       </div>
     </section>
 
-    {/* ============ STATS ============ */}
-    <section class="stats-section">
+    {/* ============ HISTORY ============ */}
+    <section class="section history-section" id="history">
       <div class="container">
-        <div class="stats-grid">
-          <div class="stat-block">
-            <div class="stat-num-wrap"><span class="stat-num-big" data-count="320">0</span><span class="stat-unit-big">+</span></div>
-            <div class="stat-desc">완료 프로젝트</div>
-          </div>
-          <div class="stat-divider-v"></div>
-          <div class="stat-block">
-            <div class="stat-num-wrap"><span class="stat-num-big" data-count="98">0</span><span class="stat-unit-big">%</span></div>
-            <div class="stat-desc">클라이언트 재계약률</div>
-          </div>
-          <div class="stat-divider-v"></div>
-          <div class="stat-block">
-            <div class="stat-num-wrap"><span class="stat-num-big" data-count="12">0</span><span class="stat-unit-big">년</span></div>
-            <div class="stat-desc">업계 경험</div>
-          </div>
-          <div class="stat-divider-v"></div>
-          <div class="stat-block">
-            <div class="stat-num-wrap"><span class="stat-num-big" data-count="50">0</span><span class="stat-unit-big">+</span></div>
-            <div class="stat-desc">파트너 브랜드</div>
-          </div>
+        <div class="section-head">
+          <span class="sec-label">Our Journey</span>
+          <h2 class="sec-title">인애드컴퍼니의<br /><em>성장 이야기</em></h2>
         </div>
+
+        <div class="history-layout">
+
+          {/* 왼쪽: 숫자 하이라이트 */}
+          <div class="history-stats">
+            <div class="hstat-item reveal">
+              <span class="hstat-num">320<em>+</em></span>
+              <span class="hstat-label">완료 프로젝트</span>
+            </div>
+            <div class="hstat-item reveal">
+              <span class="hstat-num">98<em>%</em></span>
+              <span class="hstat-label">클라이언트 재계약률</span>
+            </div>
+            <div class="hstat-item reveal">
+              <span class="hstat-num">12<em>년</em></span>
+              <span class="hstat-label">업계 경험</span>
+            </div>
+            <div class="hstat-item reveal">
+              <span class="hstat-num">50<em>+</em></span>
+              <span class="hstat-label">파트너 브랜드</span>
+            </div>
+          </div>
+
+          {/* 오른쪽: 타임라인 */}
+          <div class="history-timeline">
+            <div class="htl-line"></div>
+
+            <div class="htl-item reveal" data-year="2013">
+              <div class="htl-dot"><span></span></div>
+              <div class="htl-content">
+                <div class="htl-year">2013</div>
+                <div class="htl-title">인애드컴퍼니 창립</div>
+                <p class="htl-desc">소셜 미디어 마케팅 전문 에이전시로 출발. 바이럴 마케팅의 새로운 패러다임을 제시하다.</p>
+              </div>
+            </div>
+
+            <div class="htl-item reveal" data-year="2015">
+              <div class="htl-dot"><span></span></div>
+              <div class="htl-content">
+                <div class="htl-year">2015</div>
+                <div class="htl-title">누적 프로젝트 100건 돌파</div>
+                <p class="htl-desc">F&amp;B·뷰티·패션 분야 클라이언트 확대. 커뮤니티 기반 바이럴 캠페인 전문성 확보.</p>
+              </div>
+            </div>
+
+            <div class="htl-item reveal" data-year="2017">
+              <div class="htl-dot"><span></span></div>
+              <div class="htl-content">
+                <div class="htl-year">2017</div>
+                <div class="htl-title">인플루언서 마케팅 사업부 신설</div>
+                <p class="htl-desc">유튜브·인스타그램 인플루언서 1,200+ 네트워크 구축. 크리에이터 이코노미 선제적 진입.</p>
+              </div>
+            </div>
+
+            <div class="htl-item reveal" data-year="2019">
+              <div class="htl-dot"><span></span></div>
+              <div class="htl-content">
+                <div class="htl-year">2019</div>
+                <div class="htl-title">SEO · 퍼포먼스 마케팅 확장</div>
+                <p class="htl-desc">데이터 기반 검색 최적화 및 광고 운용으로 클라이언트 ROAS 평균 1,850% 달성.</p>
+              </div>
+            </div>
+
+            <div class="htl-item reveal" data-year="2021">
+              <div class="htl-dot"><span></span></div>
+              <div class="htl-content">
+                <div class="htl-year">2021</div>
+                <div class="htl-title">올리브영 전문 마케팅 파트너 선정</div>
+                <p class="htl-desc">K-뷰티 채널 공식 파트너십 체결. 입점·노출·리뷰 통합 솔루션으로 채널 매출 340% 성장 달성.</p>
+              </div>
+            </div>
+
+            <div class="htl-item reveal htl-item--now" data-year="2024">
+              <div class="htl-dot"><span></span></div>
+              <div class="htl-content">
+                <div class="htl-year">2024 <span class="htl-badge">NOW</span></div>
+                <div class="htl-title">누적 320+ 프로젝트, 재계약률 98%</div>
+                <p class="htl-desc">바이럴·인플루언서·SEO·시딩·PPL 등 7대 마케팅 솔루션으로 브랜드 성장을 종합 설계합니다.</p>
+              </div>
+            </div>
+
+          </div>{/* /history-timeline */}
+        </div>{/* /history-layout */}
       </div>
     </section>
 

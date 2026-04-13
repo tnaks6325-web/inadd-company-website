@@ -421,7 +421,7 @@ if (menuToggle && mainNav) {
 /* ── 7. Scroll reveal ── */
 {
   const els = document.querySelectorAll(
-    '.svc-card, .testi-card, .stat-block, .work-feat, .wf-thumb'
+    '.svc-card, .testi-card, .work-feat, .wf-thumb, .hstat-item'
   );
   if (els.length) {
     els.forEach(el => {
@@ -440,6 +440,19 @@ if (menuToggle && mainNav) {
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
     els.forEach(el => io.observe(el));
+  }
+
+  /* 타임라인 항목: visible 클래스 토글 */
+  const tlItems = document.querySelectorAll('.htl-item');
+  if (tlItems.length) {
+    const tlObs = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('visible'), i * 120);
+        tlObs.unobserve(e.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    tlItems.forEach(el => tlObs.observe(el));
   }
 }
 
