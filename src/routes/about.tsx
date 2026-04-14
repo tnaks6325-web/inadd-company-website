@@ -38,7 +38,7 @@ export const AboutPage = () => (
         <div class="vs-scene-bg vs-scene-bg--glow"></div>
         <div class="vs-cta-wrap">
           <span class="sec-label">IN AD COMPANY</span>
-          <p class="vs-text vs-text--cta"><em>시각을 뒤집는</em> 인애드와<br />함께 합시다</p>
+          <p class="vs-text vs-text--cta"><em>시각을 뒤집는</em> 인애드가<br />함께 하겠습니다.</p>
           <div class="vs-scroll-hint">
             <span>인애드컴퍼니 더 알아보기</span>
             <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -130,6 +130,50 @@ export const AboutPage = () => (
       </div>
     </section>
 
+    {/* ── 비즈니스 파트너 섹션 ── */}
+    <section class="section about-partner-section">
+      <div class="container">
+        <div class="aptn-formula">
+          <div class="aptn-item">
+            <div class="aptn-icon">💡</div>
+            <strong>차별화 된<br />솔루션 제공</strong>
+          </div>
+          <div class="aptn-plus">+</div>
+          <div class="aptn-item">
+            <div class="aptn-icon">📈</div>
+            <strong>사업 성장<br />유도</strong>
+          </div>
+          <div class="aptn-plus">+</div>
+          <div class="aptn-item">
+            <div class="aptn-icon">🎯</div>
+            <strong>브랜딩<br />강화</strong>
+          </div>
+        </div>
+
+        <div class="aptn-arrow">
+          <svg viewBox="0 0 24 24" fill="none" width="36" height="36">
+            <path d="M12 5v14M5 12l7 7 7-7" stroke="#1a6bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="aptn-result">
+          <h2 class="aptn-result-title">비즈니스 파트너</h2>
+        </div>
+
+        <div class="aptn-vm-grid">
+          <div class="aptn-vm-card aptn-vm-card--vision">
+            <span class="aptn-vm-label">VISION</span>
+            <p>"고객사 비즈니스의 <strong>성공</strong>만을 위한,<br />효과적인 <strong>퍼널 솔루션</strong>을 제공합니다."</p>
+          </div>
+          <div class="aptn-vm-divider"></div>
+          <div class="aptn-vm-card aptn-vm-card--mission">
+            <span class="aptn-vm-label">MISSION</span>
+            <p>"고객사의 <strong>성장</strong>에 전력을 다하는<br />진정한 <strong>비즈니스 파트너</strong>가 됩니다."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     {/* ── 핵심 가치 ── */}
     <section class="section about-values-section">
       <div class="container">
@@ -140,18 +184,18 @@ export const AboutPage = () => (
         <div class="values-grid">
           <div class="value-card">
             <div class="value-num">01</div>
-            <h3>자연스러운 확산<br /><em>Natural Spreading</em></h3>
-            <p>광고처럼 보이지 않는 콘텐츠. 소비자가 스스로 공유하고 싶어지는 구조를 설계합니다. 경험은 공유되고, 공유는 검색되고, 검색은 구매로 이어집니다.</p>
+            <h3>차별화된 솔루션<br /><em>Differentiated Solution</em></h3>
+            <p>단순 노출이 아닌, 브랜드 고유의 포지셔닝에서 출발합니다. 광고처럼 보이지 않는 자연스러운 확산 구조를 설계해 소비자가 스스로 브랜드를 선택하도록 만듭니다.</p>
           </div>
           <div class="value-card">
             <div class="value-num">02</div>
-            <h3>성과 중심 전략<br /><em>Performance Driven</em></h3>
-            <p>보여지는 것에서 멈추지 않습니다. 좋아요와 공유를 넘어 실질적인 구매와 전환까지 연결되는 마케팅 퍼널을 설계합니다.</p>
+            <h3>성과로 이어지는 성장<br /><em>Result-Driven Growth</em></h3>
+            <p>보여지는 것에서 멈추지 않습니다. 인지도·신뢰·검색·구매까지 연결되는 퍼널을 설계하고, 고객사의 실질적인 사업 성장을 함께 만들어갑니다.</p>
           </div>
           <div class="value-card">
             <div class="value-num">03</div>
             <h3>브랜드와의 동반성장<br /><em>True Partnership</em></h3>
-            <p>납품 업체가 아닌 진정한 파트너입니다. 클라이언트의 비즈니스를 깊이 이해하고 함께 성장하는 관계를 만들어갑니다.</p>
+            <p>납품 업체가 아닌 진정한 비즈니스 파트너입니다. 고객사의 성장에 전력을 다하며, 브랜딩 강화부터 장기적 신뢰 구축까지 함께 성장하는 관계를 만들어갑니다.</p>
           </div>
         </div>
       </div>
