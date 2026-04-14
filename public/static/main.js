@@ -595,3 +595,44 @@ function handleContact(e) {
   }
   return false;
 }
+
+// ===== NAV DROPDOWN =====
+(function() {
+  var dropdown = document.getElementById('navDropdown');
+  var trigger = document.getElementById('navDropdownTrigger');
+  var menu = document.getElementById('navDropdownMenu');
+  if (!dropdown || !trigger || !menu) return;
+
+  var closeTimer;
+
+  function openDropdown() {
+    clearTimeout(closeTimer);
+    dropdown.classList.add('open');
+  }
+  function closeDropdown() {
+    closeTimer = setTimeout(function() {
+      dropdown.classList.remove('open');
+    }, 120);
+  }
+
+  // 마우스 호버
+  dropdown.addEventListener('mouseenter', openDropdown);
+  dropdown.addEventListener('mouseleave', closeDropdown);
+  menu.addEventListener('mouseenter', openDropdown);
+  menu.addEventListener('mouseleave', closeDropdown);
+
+  // 클릭 토글 (모바일)
+  trigger.addEventListener('click', function(e) {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      dropdown.classList.toggle('open');
+    }
+  });
+
+  // 외부 클릭 시 닫기
+  document.addEventListener('click', function(e) {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('open');
+    }
+  });
+})();

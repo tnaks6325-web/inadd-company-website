@@ -33,7 +33,68 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
               <a href="/about" class="nav-link">About</a>
               <a href="/works" class="nav-link">Works</a>
               <a href="/insight" class="nav-link">Insight</a>
-              <a href="/viral" class="nav-link">Marketing</a>
+              {/* Marketing 드롭다운 */}
+              <div class="nav-dropdown" id="navDropdown">
+                <a href="/marketing" class="nav-link nav-dropdown-trigger" id="navDropdownTrigger">
+                  Marketing
+                  <svg class="nav-arrow" viewBox="0 0 12 8" fill="none">
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+                <div class="nav-dropdown-menu" id="navDropdownMenu">
+                  <div class="ndm-inner">
+                    <a href="/marketing/viral" class="ndm-item">
+                      <span class="ndm-icon">🔥</span>
+                      <span class="ndm-text">
+                        <strong>바이럴 마케팅</strong>
+                        <em>커뮤니티 기반 자연확산</em>
+                      </span>
+                    </a>
+                    <a href="/marketing/influencer" class="ndm-item">
+                      <span class="ndm-icon">⭐</span>
+                      <span class="ndm-text">
+                        <strong>인플루언서 마케팅</strong>
+                        <em>1,200+ 크리에이터 네트워크</em>
+                      </span>
+                    </a>
+                    <a href="/marketing/seeding" class="ndm-item">
+                      <span class="ndm-icon">🌱</span>
+                      <span class="ndm-text">
+                        <strong>시딩 캠페인</strong>
+                        <em>샘플 배포 & 후기 수집</em>
+                      </span>
+                    </a>
+                    <a href="/marketing/seo" class="ndm-item">
+                      <span class="ndm-icon">🔍</span>
+                      <span class="ndm-text">
+                        <strong>SEO 마케팅</strong>
+                        <em>검색 상위 노출 최적화</em>
+                      </span>
+                    </a>
+                    <a href="/marketing/review" class="ndm-item">
+                      <span class="ndm-icon">💬</span>
+                      <span class="ndm-text">
+                        <strong>리뷰 마케팅</strong>
+                        <em>브랜드 신뢰 & 전환율 향상</em>
+                      </span>
+                    </a>
+                    <a href="/marketing/oliveyoung" class="ndm-item">
+                      <span class="ndm-icon">💚</span>
+                      <span class="ndm-text">
+                        <strong>올리브영 마케팅</strong>
+                        <em>H&B 채널 랭킹 최적화</em>
+                      </span>
+                    </a>
+                    <a href="/marketing/ppl" class="ndm-item">
+                      <span class="ndm-icon">🎬</span>
+                      <span class="ndm-text">
+                        <strong>PPL 마케팅</strong>
+                        <em>콘텐츠 속 자연스러운 노출</em>
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </div>
               <a href="/contact" class="nav-link nav-cta">Contact</a>
             </nav>
           </div>
@@ -50,14 +111,20 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
             </div>
             <div class="footer-links">
               <div class="footer-col">
-                <h4>Service</h4>
-                <a href="/works">Works</a>
-                <a href="/viral">Marketing</a>
-                <a href="/insight">Insight</a>
+                <h4>Marketing</h4>
+                <a href="/marketing/viral">바이럴 마케팅</a>
+                <a href="/marketing/influencer">인플루언서 마케팅</a>
+                <a href="/marketing/seeding">시딩 캠페인</a>
+                <a href="/marketing/seo">SEO 마케팅</a>
+                <a href="/marketing/review">리뷰 마케팅</a>
+                <a href="/marketing/oliveyoung">올리브영 마케팅</a>
+                <a href="/marketing/ppl">PPL 마케팅</a>
               </div>
               <div class="footer-col">
                 <h4>Company</h4>
                 <a href="/about">About</a>
+                <a href="/works">Works</a>
+                <a href="/insight">Insight</a>
                 <a href="/contact">Contact</a>
               </div>
             </div>
