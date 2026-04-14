@@ -96,17 +96,9 @@ export const AboutPage = () => (
           <div class="about-intro-text">
             <span class="sec-label">Company</span>
             <h2 class="sec-title">인애드컴퍼니<br /><em>IN AD COMPANY</em></h2>
-            <p>2019년 설립된 인애드컴퍼니는 바이럴 마케팅, 인플루언서·유튜브 마케팅, 시딩 캠페인, SEO, 고객 리뷰 마케팅, 올리브영 마케팅, PPL 등 전방위적 마케팅 솔루션을 제공하는 크리에이티브 마케팅 에이전시입니다.</p>
+            <p>2019년 설립된 인애드컴퍼니는 바이럴 마케팅, 인플루언서·유튜브 마케팅, 시딩 캠페인, SEO, 고객 리뷰 마케팅, 올리브영 마케팅, PPL 등 전방위적 퍼널 마케팅 솔루션을 제공하는 크리에이티브 마케팅 에이전시입니다.</p>
             <p>광고처럼 보이지 않는 자연스러운 확산 구조를 설계해 브랜드 인지도를 높이고, 소비자가 먼저 찾게 만드는 지속적인 마케팅 생태계를 구축합니다.</p>
-            <div class="about-badges">
-              <span class="about-badge">바이럴 마케팅</span>
-              <span class="about-badge">인플루언서</span>
-              <span class="about-badge">유튜브 마케팅</span>
-              <span class="about-badge">SEO</span>
-              <span class="about-badge">올리브영</span>
-              <span class="about-badge">PPL</span>
-              <span class="about-badge">시딩 캠페인</span>
-            </div>
+
           </div>
           <div class="about-stats-grid">
             <div class="astat-card">
@@ -130,9 +122,14 @@ export const AboutPage = () => (
       </div>
     </section>
 
-    {/* ── 비즈니스 파트너 섹션 ── */}
-    <section class="section about-partner-section">
+    {/* ── 인애드가 추구하는 가치 (비즈니스 파트너) ── */}
+    <section class="section about-values-section about-partner-section">
       <div class="container">
+        <div class="section-head">
+          <span class="sec-label">Our Values</span>
+          <h2 class="sec-title">인애드가<br /><em>추구하는 가치</em></h2>
+        </div>
+
         <div class="aptn-formula">
           <div class="aptn-item">
             <div class="aptn-icon">💡</div>
@@ -169,33 +166,6 @@ export const AboutPage = () => (
           <div class="aptn-vm-card aptn-vm-card--mission">
             <span class="aptn-vm-label">MISSION</span>
             <p>"고객사의 <strong>성장</strong>에 전력을 다하는<br />진정한 <strong>비즈니스 파트너</strong>가 됩니다."</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* ── 핵심 가치 ── */}
-    <section class="section about-values-section">
-      <div class="container">
-        <div class="section-head">
-          <span class="sec-label">Our Values</span>
-          <h2 class="sec-title">인애드가<br /><em>추구하는 가치</em></h2>
-        </div>
-        <div class="values-grid">
-          <div class="value-card">
-            <div class="value-num">01</div>
-            <h3>차별화된 솔루션<br /><em>Differentiated Solution</em></h3>
-            <p>단순 노출이 아닌, 브랜드 고유의 포지셔닝에서 출발합니다. 광고처럼 보이지 않는 자연스러운 확산 구조를 설계해 소비자가 스스로 브랜드를 선택하도록 만듭니다.</p>
-          </div>
-          <div class="value-card">
-            <div class="value-num">02</div>
-            <h3>성과로 이어지는 성장<br /><em>Result-Driven Growth</em></h3>
-            <p>보여지는 것에서 멈추지 않습니다. 인지도·신뢰·검색·구매까지 연결되는 퍼널을 설계하고, 고객사의 실질적인 사업 성장을 함께 만들어갑니다.</p>
-          </div>
-          <div class="value-card">
-            <div class="value-num">03</div>
-            <h3>브랜드와의 동반성장<br /><em>True Partnership</em></h3>
-            <p>납품 업체가 아닌 진정한 비즈니스 파트너입니다. 고객사의 성장에 전력을 다하며, 브랜딩 강화부터 장기적 신뢰 구축까지 함께 성장하는 관계를 만들어갑니다.</p>
           </div>
         </div>
       </div>

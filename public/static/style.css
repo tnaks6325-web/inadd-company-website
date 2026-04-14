@@ -1956,11 +1956,13 @@ em {
 .astat-unit { font-size: 20px; color: rgba(26,107,255,0.8); }
 .astat-card p { font-size: 13px; color: var(--gray-3); }
 
-/* ── Business Partner Section ── */
+/* ── Business Partner / Values Section ── */
 .about-partner-section {
-  background: var(--black);
-  padding: 100px 0;
-  text-align: center;
+  background: var(--black-2);
+}
+/* section-head 아래 formula까지 간격 */
+.about-partner-section .section-head {
+  margin-bottom: 52px;
 }
 
 /* 수식 행 */
