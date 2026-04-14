@@ -166,6 +166,25 @@ export const AboutPage = () => (
       </div>
     </section>
 
+    {/* ── 클라이언트 파트너스 ── */}
+    <section class="section about-clients-section">
+      <div class="container">
+        <h2 class="about-clients-title">PARTNERS</h2>
+        <div class="about-clients-grid">
+          {[
+            'lg','cj','cocacola','maeil','daangn','harim','knotted','gmarket',
+            'bodylab','madeu','snp','yakson','secretage','medience','pulio','petitelin',
+            'dailyco','airmade','echo','bon','bobsnu','elravie','jangsoo','suvid',
+            'ofmom','happyprince','nutseline','woori',
+          ].map(name => (
+            <div class="acl-item">
+              <img src={`/static/logos/${name}.png`} alt={name} class="acl-logo" loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
     {/* ── 오시는 길 ── */}
     <section class="section about-location-section" id="location">
       <div class="container">
