@@ -1,24 +1,54 @@
 export const SvcViralPage = () => (
   <>
-    <section class="page-hero svc-hero">
-      <div class="page-hero-bg"><div class="hero-glow glow-1"></div><div class="hero-glow glow-2"></div></div>
-      <div class="container">
-        <a href="/marketing" class="svc-back-link">← Marketing 서비스 전체보기</a>
-        <span class="sec-label">Viral Marketing</span>
-        <h1 class="page-title">바이럴 마케팅</h1>
-        <p class="page-desc">맘카페·온라인 커뮤니티 기반의 자연스러운 확산으로<br />브랜드 인지도를 폭발적으로 높입니다.</p>
-        <div class="svc-hero-kpi">
-          <div class="shk-item"><strong>2,800만+</strong><span>평균 캠페인 도달</span></div>
-          <div class="shk-divider"></div>
-          <div class="shk-item"><strong>48시간</strong><span>최단 바이럴 달성</span></div>
-          <div class="shk-divider"></div>
-          <div class="shk-item"><strong>98%</strong><span>재계약률</span></div>
+    {/* ============ SCROLL STORY INTRO ============ */}
+    <section class="viral-story">
+
+      {/* Scene 1 */}
+      <div class="vs-scene" id="vs1">
+        <div class="vs-scene-bg"></div>
+        <p class="vs-text vs-text--large">에너지드링크,<br /><em>어떻게 플레이 할까요?</em></p>
+      </div>
+
+      {/* Scene 2 */}
+      <div class="vs-scene" id="vs2">
+        <div class="vs-scene-bg"></div>
+        <p class="vs-text">99%는 에너지드링크만 생각하며<br />콘텐츠를 구상합니다</p>
+      </div>
+
+      {/* Scene 3 */}
+      <div class="vs-scene" id="vs3">
+        <div class="vs-scene-bg"></div>
+        <p class="vs-text vs-text--accent">하지만</p>
+      </div>
+
+      {/* Scene 4 */}
+      <div class="vs-scene" id="vs4">
+        <div class="vs-scene-bg"></div>
+        <p class="vs-text vs-text--em">1%만<br />에너지드링크를 <em>마시는 사람</em>으로<br />구상합니다</p>
+      </div>
+
+      {/* Scene 5 */}
+      <div class="vs-scene" id="vs5">
+        <div class="vs-scene-bg"></div>
+        <p class="vs-text">고객의 모든 검색환경에서부터<br />시작합니다.</p>
+      </div>
+
+      {/* Scene 6 — CTA */}
+      <div class="vs-scene vs-scene--cta" id="vs6">
+        <div class="vs-scene-bg vs-scene-bg--glow"></div>
+        <div class="vs-cta-wrap">
+          <span class="sec-label">Viral Marketing</span>
+          <p class="vs-text vs-text--cta"><em>시각을 뒤집는</em> 인애드와<br />함께 합시다</p>
+          <div class="vs-scroll-hint">
+            <span>서비스 자세히 보기</span>
+            <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
         </div>
       </div>
     </section>
 
-    {/* 서비스 소개 */}
-    <section class="section svc-intro-section">
+    {/* ============ 서비스 소개 ============ */}
+    <section class="section svc-intro-section" id="viral-content">
       <div class="container">
         <div class="svc-intro-grid">
           <div class="svc-intro-text">
@@ -56,7 +86,34 @@ export const SvcViralPage = () => (
       </div>
     </section>
 
-    {/* 진행 프로세스 */}
+    {/* ============ 상품 라인업 ============ */}
+    <section class="section viral-products-section">
+      <div class="container">
+        <div class="section-head">
+          <span class="sec-label">Service Products</span>
+          <h2 class="sec-title">바이럴 마케팅<br /><em>상품 라인업</em></h2>
+        </div>
+        <div class="vp-grid">
+          {[
+            { icon:'☕', name:'카페 침투 마케팅', sub:'Cafe Viral', desc:'맘카페·네이버카페 등 소비자가 모이는 커뮤니티에 자연스럽게 스며드는 바이럴 콘텐츠 기획·운영' },
+            { icon:'💬', name:'커뮤니티 바이럴', sub:'Community Viral', desc:'온라인 커뮤니티 내 이슈화로 브랜드 검색량과 자연 유입을 폭발적으로 증가시킵니다' },
+            { icon:'📱', name:'SNS 바이럴', sub:'SNS Viral', desc:'인스타그램·틱톡·유튜브 등 SNS 채널에서의 자연스러운 확산 구조를 설계합니다' },
+            { icon:'📰', name:'언론 바이럴', sub:'Press Viral', desc:'뉴스·매체 배포를 통해 브랜드의 공신력과 검색 노출을 동시에 강화합니다' },
+          ].map(p => (
+            <div class="vp-card">
+              <div class="vp-icon">{p.icon}</div>
+              <div class="vp-body">
+                <h3>{p.name}</h3>
+                <span class="vp-sub">{p.sub}</span>
+                <p>{p.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============ 진행 프로세스 ============ */}
     <section class="section svc-process-section">
       <div class="container">
         <div class="section-head">
@@ -84,7 +141,7 @@ export const SvcViralPage = () => (
       </div>
     </section>
 
-    {/* 성과 사례 */}
+    {/* ============ 성과 사례 ============ */}
     <section class="section svc-results-section">
       <div class="container">
         <div class="section-head">
@@ -121,7 +178,7 @@ export const SvcViralPage = () => (
       </div>
     </section>
 
-    {/* CTA */}
+    {/* ============ CTA ============ */}
     <section class="svc-cta-section">
       <div class="container">
         <div class="svc-cta-inner">
@@ -139,5 +196,46 @@ export const SvcViralPage = () => (
         </div>
       </div>
     </section>
+
+    {/* ============ 스크롤 스토리 JS ============ */}
+    <script dangerouslySetInnerHTML={{__html: `
+(function() {
+  // 헤더 숨기기 (스토리 섹션에서)
+  var story = document.querySelector('.viral-story');
+  var header = document.querySelector('.site-header');
+  var scenes = document.querySelectorAll('.vs-scene');
+  var totalScenes = scenes.length;
+  if (!story || totalScenes === 0) return;
+
+  // IntersectionObserver로 각 씬 페이드인
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      var txt = entry.target.querySelector('.vs-text, .vs-cta-wrap');
+      if (!txt) return;
+      if (entry.isIntersecting) {
+        txt.classList.add('vs-visible');
+      } else {
+        txt.classList.remove('vs-visible');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  scenes.forEach(function(s) { io.observe(s); });
+
+  // 헤더 투명도 처리
+  var storyBottom = 0;
+  function updateHeader() {
+    storyBottom = story.offsetTop + story.offsetHeight;
+    var scrollY = window.scrollY || window.pageYOffset;
+    if (scrollY < storyBottom - 80) {
+      header && header.classList.add('header--hidden');
+    } else {
+      header && header.classList.remove('header--hidden');
+    }
+  }
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
+})();
+    `}} />
   </>
 )

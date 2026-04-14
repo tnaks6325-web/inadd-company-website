@@ -3924,3 +3924,189 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .clogo-item { width: 120px; height: 60px; padding: 10px 14px; }
   .cmarq-inner { gap: 14px; }
 }
+
+/* ===== VIRAL STORY SCROLL INTRO ===== */
+.viral-story {
+  position: relative;
+}
+
+/* 각 씬: 풀스크린 + 스냅 */
+.vs-scene {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 배경 오버레이 */
+.vs-scene-bg {
+  position: absolute;
+  inset: 0;
+  background: #050508;
+  z-index: 0;
+}
+.vs-scene-bg--glow {
+  background: radial-gradient(ellipse at 50% 60%, rgba(26,107,255,0.18) 0%, transparent 65%), #050508;
+}
+
+/* 텍스트 공통 */
+.vs-text {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  font-size: clamp(28px, 4.5vw, 60px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  padding: 0 24px;
+  /* 초기 상태: 투명 + 살짝 아래 */
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1);
+}
+.vs-text.vs-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 크기 변형 */
+.vs-text--large {
+  font-size: clamp(32px, 5.5vw, 72px);
+}
+.vs-text--accent {
+  font-size: clamp(48px, 9vw, 120px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: rgba(255,255,255,0.12);
+  text-shadow: 0 0 80px rgba(26,107,255,0.5);
+}
+.vs-text--em {
+  font-size: clamp(28px, 4.2vw, 58px);
+}
+.vs-text em {
+  color: var(--accent);
+  font-style: normal;
+}
+
+/* 씬6 CTA */
+.vs-scene--cta {
+  flex-direction: column;
+  gap: 0;
+}
+.vs-cta-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+  /* 초기 상태 */
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1);
+}
+.vs-cta-wrap.vs-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.vs-text--cta {
+  /* 이 요소는 vs-cta-wrap 안에 있으므로 자체 opacity/transform 제거 */
+  opacity: 1 !important;
+  transform: none !important;
+  font-size: clamp(30px, 5vw, 64px);
+}
+.vs-scroll-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.45);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  animation: vsHintBounce 2s ease-in-out infinite;
+}
+@keyframes vsHintBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* 헤더 숨기기 */
+.header--hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.4s ease !important;
+}
+.site-header {
+  transition: opacity 0.4s ease;
+}
+
+/* ===== VIRAL PRODUCTS GRID ===== */
+.viral-products-section {
+  background: rgba(255,255,255,0.015);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.vp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 56px;
+}
+.vp-card {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 28px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.vp-card:hover {
+  background: rgba(26,107,255,0.08);
+  border-color: rgba(26,107,255,0.25);
+  transform: translateY(-3px);
+}
+.vp-icon {
+  font-size: 28px;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26,107,255,0.12);
+  border: 1px solid rgba(26,107,255,0.25);
+  border-radius: 14px;
+}
+.vp-body h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4px;
+  letter-spacing: -0.02em;
+}
+.vp-sub {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 10px;
+}
+.vp-body p {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--gray-2);
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .vp-grid { grid-template-columns: 1fr; }
+  .vs-text--accent { font-size: clamp(48px, 16vw, 80px); }
+}
