@@ -755,6 +755,62 @@ export const HomePage = () => (
       </div>
     </section>
 
+    {/* ============ CLIENT LOGO MARQUEE ============ */}
+    <section class="client-marquee-section">
+      <div class="container">
+        <div class="section-head">
+          <span class="sec-label">Our Clients</span>
+          <h2 class="sec-title">함께한<br /><em>브랜드들</em></h2>
+          <p class="sec-sub">국내 주요 브랜드들이 인애드컴퍼니와 함께 성장했습니다.</p>
+        </div>
+      </div>
+
+      {/* ── 1행: 왼쪽으로 흐름 ── */}
+      <div class="cmarq-track-wrap">
+        <div class="cmarq-row cmarq-row--ltr">
+          <div class="cmarq-inner" id="cmarqRow1">
+            {['LG 생활건강','CJ 제일제당','Coca-Cola','Maeil','당근마켓','하림','Knotted','G마켓'].map(name => (
+              <div class="cmarq-chip">{name}</div>
+            ))}
+            {['LG 생활건강','CJ 제일제당','Coca-Cola','Maeil','당근마켓','하림','Knotted','G마켓'].map(name => (
+              <div class="cmarq-chip" aria-hidden="true">{name}</div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── 2행: 오른쪽으로 흐름 ── */}
+        <div class="cmarq-row cmarq-row--rtl">
+          <div class="cmarq-inner" id="cmarqRow2">
+            {['bodylab','MADE U','Snp','약손명가','SECRET AGE','medience','Pulio','Petit Elin'].map(name => (
+              <div class="cmarq-chip">{name}</div>
+            ))}
+            {['bodylab','MADE U','Snp','약손명가','SECRET AGE','medience','Pulio','Petit Elin'].map(name => (
+              <div class="cmarq-chip" aria-hidden="true">{name}</div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── 3행: 왼쪽으로 흐름 ── */}
+        <div class="cmarq-row cmarq-row--ltr cmarq-row--slow">
+          <div class="cmarq-inner" id="cmarqRow3">
+            {['Daily & Co.','AIRMADE','ECHO MARKETING','BON','BOBSNU','Elravie Premier','장수침대','수비드림','Ofmom','HAPPY PRINCE','nutseline','우리금융그룹'].map(name => (
+              <div class="cmarq-chip">{name}</div>
+            ))}
+            {['Daily & Co.','AIRMADE','ECHO MARKETING','BON','BOBSNU','Elravie Premier','장수침대','수비드림','Ofmom','HAPPY PRINCE','nutseline','우리금융그룹'].map(name => (
+              <div class="cmarq-chip" aria-hidden="true">{name}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── 클라이언트 로고 이미지 전체 (반투명 패널) ── */}
+      <div class="cmarq-logo-panel">
+        <div class="cmarq-logo-inner">
+          <img src="/static/clients.png" alt="인애드컴퍼니 클라이언트 브랜드 전체" class="cmarq-logo-img" />
+        </div>
+      </div>
+    </section>
+
     {/* ============ CTA ============ */}
     <section class="home-cta">
       <div class="home-cta-bg"><div class="hcta-glow"></div></div>

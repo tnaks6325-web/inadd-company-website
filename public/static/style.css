@@ -3734,3 +3734,124 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   background: rgba(50,125,255,1);
   transform: translateY(-2px);
 }
+
+/* ===== CLIENT LOGO MARQUEE SECTION ===== */
+.client-marquee-section {
+  padding: 100px 0 80px;
+  overflow: hidden;
+}
+.cmarq-track-wrap {
+  margin-top: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+}
+.cmarq-row {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+.cmarq-inner {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+}
+/* 왼쪽으로 */
+.cmarq-row--ltr .cmarq-inner {
+  animation: marqLtr 28s linear infinite;
+}
+/* 오른쪽으로 */
+.cmarq-row--rtl .cmarq-inner {
+  animation: marqRtl 32s linear infinite;
+}
+/* 느린 버전 */
+.cmarq-row--slow .cmarq-inner {
+  animation: marqLtr 40s linear infinite;
+}
+/* 호버 시 일시정지 */
+.cmarq-row:hover .cmarq-inner {
+  animation-play-state: paused;
+}
+@keyframes marqLtr {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marqRtl {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* 칩 스타일 */
+.cmarq-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 22px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.65);
+  white-space: nowrap;
+  cursor: default;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  letter-spacing: 0.01em;
+}
+.cmarq-chip:hover {
+  background: rgba(26,107,255,0.12);
+  border-color: rgba(26,107,255,0.35);
+  color: #fff;
+}
+
+/* 로고 이미지 패널 */
+.cmarq-logo-panel {
+  margin-top: 60px;
+  padding: 0 max(24px, calc((100% - 1280px) / 2));
+}
+.cmarq-logo-inner {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 40px 48px;
+  overflow: hidden;
+  position: relative;
+}
+/* 좌우 페이드 마스크 */
+.cmarq-logo-inner::before,
+.cmarq-logo-inner::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+.cmarq-logo-inner::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(10,11,18,0.85), transparent);
+}
+.cmarq-logo-inner::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(10,11,18,0.85), transparent);
+}
+.cmarq-logo-img {
+  display: block;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  /* 반투명 처리 */
+  opacity: 0.72;
+  filter: grayscale(30%) brightness(1.05);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+  mix-blend-mode: lighten;
+}
+.cmarq-logo-inner:hover .cmarq-logo-img {
+  opacity: 0.92;
+  filter: grayscale(0%) brightness(1.1);
+}
+
+@media (max-width: 768px) {
+  .cmarq-logo-inner { padding: 24px 20px; }
+  .cmarq-chip { font-size: 13px; padding: 8px 16px; }
+}
