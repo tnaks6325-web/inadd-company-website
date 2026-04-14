@@ -1,5 +1,84 @@
 export const AboutPage = () => (
   <>
+    {/* ============ SCROLL STORY INTRO ============ */}
+    <section class="viral-story">
+
+      {/* Scene 1 */}
+      <div class="vs-scene" id="vs1">
+        <div class="vs-scene-bg"></div>
+        <p class="vs-text vs-text--large">에너지드링크,<br /><em>어떻게 플레이 할까요?</em></p>
+      </div>
+
+      {/* Scene 2 */}
+      <div class="vs-scene" id="vs2">
+        <div class="vs-scene-bg"></div>
+        <p class="vs-text">99%는 에너지드링크만 생각하며<br />콘텐츠를 구상합니다</p>
+      </div>
+
+      {/* Scene 3 */}
+      <div class="vs-scene" id="vs3">
+        <div class="vs-scene-bg"></div>
+        <p class="vs-text vs-text--accent">하지만</p>
+      </div>
+
+      {/* Scene 4 */}
+      <div class="vs-scene" id="vs4">
+        <div class="vs-scene-bg"></div>
+        <p class="vs-text vs-text--em">1%만<br />에너지드링크를 <em>마시는 사람</em>으로<br />구상합니다</p>
+      </div>
+
+      {/* Scene 5 */}
+      <div class="vs-scene" id="vs5">
+        <div class="vs-scene-bg"></div>
+        <p class="vs-text">고객의 모든 검색환경에서부터<br />시작합니다.</p>
+      </div>
+
+      {/* Scene 6 — CTA */}
+      <div class="vs-scene vs-scene--cta" id="vs6">
+        <div class="vs-scene-bg vs-scene-bg--glow"></div>
+        <div class="vs-cta-wrap">
+          <span class="sec-label">IN AD COMPANY</span>
+          <p class="vs-text vs-text--cta"><em>시각을 뒤집는</em> 인애드와<br />함께 합시다</p>
+          <div class="vs-scroll-hint">
+            <span>인애드컴퍼니 더 알아보기</span>
+            <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 스크롤 스토리 JS */}
+    <script dangerouslySetInnerHTML={{__html: `
+(function() {
+  var story = document.querySelector('.viral-story');
+  var header = document.querySelector('.site-header');
+  var scenes = document.querySelectorAll('.vs-scene');
+  if (!story || scenes.length === 0) return;
+
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      var el = entry.target.querySelector('.vs-text, .vs-cta-wrap');
+      if (!el) return;
+      if (entry.isIntersecting) { el.classList.add('vs-visible'); }
+      else { el.classList.remove('vs-visible'); }
+    });
+  }, { threshold: 0.5 });
+
+  scenes.forEach(function(s) { io.observe(s); });
+
+  function updateHeader() {
+    var storyBottom = story.offsetTop + story.offsetHeight;
+    var scrollY = window.scrollY || window.pageYOffset;
+    if (header) {
+      if (scrollY < storyBottom - 80) { header.classList.add('header--hidden'); }
+      else { header.classList.remove('header--hidden'); }
+    }
+  }
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
+})();
+    `}} />
+
     {/* ── Page Hero ── */}
     <section class="page-hero about-hero">
       <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
