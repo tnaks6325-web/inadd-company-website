@@ -166,18 +166,34 @@ export const AboutPage = () => (
       </div>
     </section>
 
-    {/* ── 클라이언트 파트너스 ── */}
+    {/* ── 클라이언트 ── */}
     <section class="section about-clients-section">
       <div class="container">
-        <h2 class="about-clients-title">PARTNERS</h2>
-        <div class="about-clients-grid">
+        <h2 class="about-clients-title">클라이언트</h2>
+      </div>
+      <div class="acl-marquee-outer">
+        {/* Row 1: left → (seamless: items repeated twice) */}
+        <div class="acl-marquee-track">
           {[
             'lg','cj','cocacola','maeil','daangn','harim','knotted','gmarket',
             'bodylab','madeu','snp','yakson','secretage','medience','pulio','petitelin',
-            'dailyco','airmade','echo','bon','bobsnu','elravie','jangsoo','suvid',
-            'ofmom','happyprince','nutseline','woori',
-          ].map(name => (
-            <div class="acl-item">
+            'lg','cj','cocacola','maeil','daangn','harim','knotted','gmarket',
+            'bodylab','madeu','snp','yakson','secretage','medience','pulio','petitelin',
+          ].map((name, i) => (
+            <div class="acl-item" key={i}>
+              <img src={`/static/logos/${name}.png`} alt={name} class="acl-logo" loading="lazy" />
+            </div>
+          ))}
+        </div>
+        {/* Row 2: right → (seamless: items repeated twice, reversed order) */}
+        <div class="acl-marquee-track acl-marquee-track--reverse">
+          {[
+            'petitelin','pulio','medience','secretage','yakson','snp','madeu','bodylab',
+            'gmarket','knotted','harim','daangn','maeil','cocacola','cj','lg',
+            'petitelin','pulio','medience','secretage','yakson','snp','madeu','bodylab',
+            'gmarket','knotted','harim','daangn','maeil','cocacola','cj','lg',
+          ].map((name, i) => (
+            <div class="acl-item" key={i}>
               <img src={`/static/logos/${name}.png`} alt={name} class="acl-logo" loading="lazy" />
             </div>
           ))}
