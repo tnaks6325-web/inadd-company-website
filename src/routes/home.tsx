@@ -157,8 +157,13 @@ export const HomePage = () => (
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Viral Marketing</span>
-                <p class="svc-panel-desc">맘카페·커뮤니티 기반 바이럴 캠페인을 기획·운영합니다. 광고처럼 보이지 않는 자연스러운 확산으로 브랜드 인지도를 폭발적으로 높입니다.</p>
-                <div class="svc-panel-kpi"><span>평균 도달</span><strong>2,800만+</strong></div>
+                <p class="svc-panel-desc">단순한 광고를 넘어, 브랜드와 소비자의 진짜 연결을 만듭니다.<br />콘텐츠의 시작부터 소비자의 기억에 남는 순간까지.<br />온라인 채널 속 깊숙이 파고들어 정교한 마케팅으로 기획, 전략, 실행을 모두 아우르며 브랜드의 가치를 확산시키고 성과로 이어지는 퍼포먼스를 만들어 냅니다.</p>
+                <div class="svc-panel-tags">
+                  <span class="svc-ptag">☕ 카페 침투 마케팅</span>
+                  <span class="svc-ptag">💬 커뮤니티 바이럴</span>
+                  <span class="svc-ptag">📱 SNS 바이럴</span>
+                  <span class="svc-ptag">📰 언론 바이럴</span>
+                </div>
               </div>
             </div>
 
