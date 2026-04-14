@@ -134,9 +134,7 @@ export const SvcViralPage = () => (
               <span>무료 상담 신청하기</span>
               <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <a href="tel:010-9186-9944" class="hero-cta-btn ghost">
-              <span>📞 바로 전화하기</span>
-            </a>
+            <button type="button" class="hero-cta-btn ghost" onclick="openCallModal()"><span>📞 바로 전화하기</span></button>
           </div>
         </div>
       </div>

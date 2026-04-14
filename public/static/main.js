@@ -636,3 +636,35 @@ function handleContact(e) {
     }
   });
 })();
+
+// ===== CALL MODAL =====
+function openCallModal() {
+  var overlay = document.getElementById('callModalOverlay');
+  if (!overlay) return;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCallModal() {
+  var overlay = document.getElementById('callModalOverlay');
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+(function() {
+  var overlay = document.getElementById('callModalOverlay');
+  var closeBtn = document.getElementById('callModalClose');
+  if (!overlay) return;
+
+  // 닫기 버튼
+  if (closeBtn) closeBtn.addEventListener('click', closeCallModal);
+
+  // 오버레이 배경 클릭 시 닫기
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeCallModal();
+  });
+
+  // ESC 키로 닫기
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeCallModal();
+  });
+})();

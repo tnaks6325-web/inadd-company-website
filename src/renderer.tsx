@@ -134,6 +134,20 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
             <p class="footer-legal">대표 : 김수만 | 연락처 : 010-9186-9944 | 경기도 안산시 단원구 고잔로 51, 타워아이즈빌 2F, 204호</p>
           </div>
         </footer>
+        {/* 전화 모달 - 전역 공통 */}
+        <div class="call-modal-overlay" id="callModalOverlay" aria-modal="true" role="dialog" aria-label="전화 상담">
+          <div class="call-modal">
+            <button class="call-modal-close" id="callModalClose" aria-label="닫기">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </button>
+            <div class="call-modal-icon">📞</div>
+            <p class="call-modal-label">대표 직통 연락처</p>
+            <h2 class="call-modal-name">김수만 대표</h2>
+            <a href="tel:010-9186-9944" class="call-modal-number">010-9186-9944</a>
+            <p class="call-modal-hours">운영시간 · 평일 09:00 – 18:00</p>
+            <a href="tel:010-9186-9944" class="call-modal-btn">지금 전화하기</a>
+          </div>
+        </div>
         <script src="/static/main.js"></script>
       </body>
     </html>
