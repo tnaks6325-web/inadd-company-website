@@ -761,52 +761,103 @@ export const HomePage = () => (
         <div class="section-head">
           <span class="sec-label">Our Clients</span>
           <h2 class="sec-title">함께한<br /><em>브랜드들</em></h2>
-          <p class="sec-sub">국내 주요 브랜드들이 인애드컴퍼니와 함께 성장했습니다.</p>
         </div>
       </div>
 
-      {/* ── 1행: 왼쪽으로 흐름 ── */}
+      {/* ── 1행: 왼쪽으로 흐름 (LG ~ G마켓) ── */}
       <div class="cmarq-track-wrap">
         <div class="cmarq-row cmarq-row--ltr">
-          <div class="cmarq-inner" id="cmarqRow1">
-            {['LG 생활건강','CJ 제일제당','Coca-Cola','Maeil','당근마켓','하림','Knotted','G마켓'].map(name => (
-              <div class="cmarq-chip">{name}</div>
-            ))}
-            {['LG 생활건강','CJ 제일제당','Coca-Cola','Maeil','당근마켓','하림','Knotted','G마켓'].map(name => (
-              <div class="cmarq-chip" aria-hidden="true">{name}</div>
+          <div class="cmarq-inner">
+            {[
+              {file:'lg.png', name:'LG생활건강'},
+              {file:'cj.png', name:'CJ제일제당'},
+              {file:'cocacola.png', name:'Coca-Cola'},
+              {file:'maeil.png', name:'Maeil'},
+              {file:'daangn.png', name:'당근마켓'},
+              {file:'harim.png', name:'하림'},
+              {file:'knotted.png', name:'Knotted'},
+              {file:'gmarket.png', name:'G마켓'},
+            ].concat([
+              {file:'lg.png', name:'LG생활건강'},
+              {file:'cj.png', name:'CJ제일제당'},
+              {file:'cocacola.png', name:'Coca-Cola'},
+              {file:'maeil.png', name:'Maeil'},
+              {file:'daangn.png', name:'당근마켓'},
+              {file:'harim.png', name:'하림'},
+              {file:'knotted.png', name:'Knotted'},
+              {file:'gmarket.png', name:'G마켓'},
+            ]).map((brand, i) => (
+              <div class="clogo-item" key={i} aria-hidden={i >= 8 ? 'true' : undefined}>
+                <img src={`/static/logos/${brand.file}`} alt={brand.name} loading="lazy" />
+              </div>
             ))}
           </div>
         </div>
 
-        {/* ── 2행: 오른쪽으로 흐름 ── */}
+        {/* ── 2행: 오른쪽으로 흐름 (bodylab ~ Petit Elin) ── */}
         <div class="cmarq-row cmarq-row--rtl">
-          <div class="cmarq-inner" id="cmarqRow2">
-            {['bodylab','MADE U','Snp','약손명가','SECRET AGE','medience','Pulio','Petit Elin'].map(name => (
-              <div class="cmarq-chip">{name}</div>
-            ))}
-            {['bodylab','MADE U','Snp','약손명가','SECRET AGE','medience','Pulio','Petit Elin'].map(name => (
-              <div class="cmarq-chip" aria-hidden="true">{name}</div>
+          <div class="cmarq-inner">
+            {[
+              {file:'bodylab.png', name:'bodylab'},
+              {file:'madeu.png', name:'MADE U'},
+              {file:'snp.png', name:'Snp'},
+              {file:'yakson.png', name:'약손명가'},
+              {file:'secretage.png', name:'SECRET AGE'},
+              {file:'medience.png', name:'medience'},
+              {file:'pulio.png', name:'Pulio'},
+              {file:'petitelin.png', name:'Petit Elin'},
+            ].concat([
+              {file:'bodylab.png', name:'bodylab'},
+              {file:'madeu.png', name:'MADE U'},
+              {file:'snp.png', name:'Snp'},
+              {file:'yakson.png', name:'약손명가'},
+              {file:'secretage.png', name:'SECRET AGE'},
+              {file:'medience.png', name:'medience'},
+              {file:'pulio.png', name:'Pulio'},
+              {file:'petitelin.png', name:'Petit Elin'},
+            ]).map((brand, i) => (
+              <div class="clogo-item" key={i} aria-hidden={i >= 8 ? 'true' : undefined}>
+                <img src={`/static/logos/${brand.file}`} alt={brand.name} loading="lazy" />
+              </div>
             ))}
           </div>
         </div>
 
-        {/* ── 3행: 왼쪽으로 흐름 ── */}
+        {/* ── 3행: 왼쪽으로 흐름 (Daily & Co. ~ 우리금융) ── */}
         <div class="cmarq-row cmarq-row--ltr cmarq-row--slow">
-          <div class="cmarq-inner" id="cmarqRow3">
-            {['Daily & Co.','AIRMADE','ECHO MARKETING','BON','BOBSNU','Elravie Premier','장수침대','수비드림','Ofmom','HAPPY PRINCE','nutseline','우리금융그룹'].map(name => (
-              <div class="cmarq-chip">{name}</div>
-            ))}
-            {['Daily & Co.','AIRMADE','ECHO MARKETING','BON','BOBSNU','Elravie Premier','장수침대','수비드림','Ofmom','HAPPY PRINCE','nutseline','우리금융그룹'].map(name => (
-              <div class="cmarq-chip" aria-hidden="true">{name}</div>
+          <div class="cmarq-inner">
+            {[
+              {file:'dailyco.png', name:'Daily & Co.'},
+              {file:'airmade.png', name:'AIRMADE'},
+              {file:'echo.png', name:'ECHO MARKETING'},
+              {file:'bon.png', name:'BON'},
+              {file:'bobsnu.png', name:'BOBSNU'},
+              {file:'elravie.png', name:'Elravie Premier'},
+              {file:'jangsoo.png', name:'장수침대'},
+              {file:'suvid.png', name:'수비드림'},
+              {file:'ofmom.png', name:'Ofmom'},
+              {file:'happyprince.png', name:'HAPPY PRINCE'},
+              {file:'nutseline.png', name:'nutseline'},
+              {file:'woori.png', name:'우리금융그룹'},
+            ].concat([
+              {file:'dailyco.png', name:'Daily & Co.'},
+              {file:'airmade.png', name:'AIRMADE'},
+              {file:'echo.png', name:'ECHO MARKETING'},
+              {file:'bon.png', name:'BON'},
+              {file:'bobsnu.png', name:'BOBSNU'},
+              {file:'elravie.png', name:'Elravie Premier'},
+              {file:'jangsoo.png', name:'장수침대'},
+              {file:'suvid.png', name:'수비드림'},
+              {file:'ofmom.png', name:'Ofmom'},
+              {file:'happyprince.png', name:'HAPPY PRINCE'},
+              {file:'nutseline.png', name:'nutseline'},
+              {file:'woori.png', name:'우리금융그룹'},
+            ]).map((brand, i) => (
+              <div class="clogo-item" key={i} aria-hidden={i >= 12 ? 'true' : undefined}>
+                <img src={`/static/logos/${brand.file}`} alt={brand.name} loading="lazy" />
+              </div>
             ))}
           </div>
-        </div>
-      </div>
-
-      {/* ── 클라이언트 로고 이미지 전체 (반투명 패널) ── */}
-      <div class="cmarq-logo-panel">
-        <div class="cmarq-logo-inner">
-          <img src="/static/clients.png" alt="인애드컴퍼니 클라이언트 브랜드 전체" class="cmarq-logo-img" />
         </div>
       </div>
     </section>
