@@ -877,6 +877,10 @@ em {
   color: var(--gray-2);
   margin: 0;
 }
+.svc-panel-desc strong {
+  color: #fff;
+  font-weight: 700;
+}
 
 .svc-panel-kpi {
   display: flex;
@@ -899,29 +903,46 @@ em {
 
 /* 서비스 패널 상품 태그 */
 .svc-panel-tags {
+  margin-top: 20px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 12px;
+}
+/* "SERVICE KEYWORDS" / "KEY STRATEGY" 레이블 */
+.svc-ptag-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(26,107,255,0.25);
+  margin: 0;
+}
+/* 2열 그리드 */
+.svc-ptag-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
-  margin-top: 16px;
 }
 .svc-ptag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  background: rgba(26,107,255,0.10);
-  border: 1px solid rgba(26,107,255,0.28);
-  border-radius: 8px;
-  font-size: 12px;
+  gap: 8px;
+  padding: 9px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  font-size: 13px;
   font-weight: 600;
-  color: rgba(255,255,255,0.82);
+  color: rgba(255,255,255,0.78);
   letter-spacing: 0.01em;
   white-space: nowrap;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 .svc-ptag:hover {
-  background: rgba(26,107,255,0.22);
-  border-color: rgba(26,107,255,0.55);
+  background: rgba(26,107,255,0.14);
+  border-color: rgba(26,107,255,0.4);
   color: #fff;
 }
 

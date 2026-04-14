@@ -159,10 +159,13 @@ export const HomePage = () => (
                 <span class="svc-panel-tag">Viral Marketing</span>
                 <p class="svc-panel-desc">단순한 광고를 넘어, 브랜드와 소비자의 진짜 연결을 만듭니다.<br />콘텐츠의 시작부터 소비자의 기억에 남는 순간까지.<br />온라인 채널 속 깊숙이 파고들어 정교한 마케팅으로 기획, 전략, 실행을 모두 아우르며 브랜드의 가치를 확산시키고 성과로 이어지는 퍼포먼스를 만들어 냅니다.</p>
                 <div class="svc-panel-tags">
-                  <span class="svc-ptag">☕ 카페 침투 마케팅</span>
-                  <span class="svc-ptag">💬 커뮤니티 바이럴</span>
-                  <span class="svc-ptag">📱 SNS 바이럴</span>
-                  <span class="svc-ptag">📰 언론 바이럴</span>
+                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
+                  <div class="svc-ptag-grid">
+                    <span class="svc-ptag">☕ 카페 침투 마케팅</span>
+                    <span class="svc-ptag">💬 커뮤니티 바이럴</span>
+                    <span class="svc-ptag">📱 SNS 바이럴</span>
+                    <span class="svc-ptag">📰 언론 바이럴</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -183,8 +186,16 @@ export const HomePage = () => (
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Influencer &amp; YouTube</span>
-                <p class="svc-panel-desc">검증된 인플루언서·유튜버 네트워크를 통해 타겟 소비자에게 진정성 있는 브랜드 메시지를 전달합니다. 팔로워 수보다 영향력을 봅니다.</p>
-                <div class="svc-panel-kpi"><span>파트너 크리에이터</span><strong>1,200+</strong></div>
+                <p class="svc-panel-desc">'좋은것 같다'는 추측이 아닌 <strong>'이겁니다'</strong>를 말해드립니다.<br />인애드만의 <strong>인플루언서 분석 프로그램</strong>을 통해 필터링 후 브랜드 메시지와 크리에이터 핏을 비교 및 제안합니다.<br /><br />데이터 기반의 정교한 매칭으로 최고의 퍼포먼스를 창출합니다.</p>
+                <div class="svc-panel-tags">
+                  <p class="svc-ptag-label">KEY STRATEGY</p>
+                  <div class="svc-ptag-grid">
+                    <span class="svc-ptag">📊 데이터 기반 분석</span>
+                    <span class="svc-ptag">🔽 정교한 필터링</span>
+                    <span class="svc-ptag">🤝 크리에이터 매칭</span>
+                    <span class="svc-ptag">📈 최고의 퍼포먼스</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -205,8 +216,14 @@ export const HomePage = () => (
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Seeding Campaign</span>
-                <p class="svc-panel-desc">브랜드 샘플을 핵심 타겟에게 자연스럽게 전달해 진정성 있는 후기와 입소문을 만들어냅니다. 소비자가 먼저 말하게 합니다.</p>
-                <div class="svc-panel-kpi"><span>후기 전환율</span><strong>68%</strong></div>
+                <p class="svc-panel-desc">브랜드의 씨앗을 심어 자연스러운 성장을 유도합니다.<br /><strong>검색 최적화와 브랜드 신뢰도 구축</strong>을 위한 전략적 콘텐츠 배포로, 소비자가 브랜드를 스스로 발견하고 경험하도록 만듭니다.<br /><br />다양한 플랫폼에 최적화된 시딩 전략으로 강력한 바이럴 효과를 창출합니다.</p>
+                <div class="svc-panel-tags">
+                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
+                  <div class="svc-ptag-grid">
+                    <span class="svc-ptag">📝 네이버 블로그 시딩</span>
+                    <span class="svc-ptag">📸 인스타그램 시딩</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -227,8 +244,16 @@ export const HomePage = () => (
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">SEO Marketing</span>
-                <p class="svc-panel-desc">검색 상위 노출로 브랜드를 먼저 발견되게 만듭니다. 키워드 전략부터 콘텐츠 최적화까지 장기적 유입을 설계합니다.</p>
-                <div class="svc-panel-kpi"><span>검색 순위 상승</span><strong>TOP 3</strong></div>
+                <p class="svc-panel-desc">검색 엔진 최적화로 <strong>브랜드의 온라인 가시성</strong>을 극대화하고 타겟 고객과의 접점을 확대합니다.<br /><br />네이버 플레이스부터 자동완성까지, 소비자의 검색 여정 전반을 장악하여 실질적인 유입과 전환을 이끌어내는 정교한 SEO 전략을 제안합니다.</p>
+                <div class="svc-panel-tags">
+                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
+                  <div class="svc-ptag-grid">
+                    <span class="svc-ptag">📍 네이버 플레이스</span>
+                    <span class="svc-ptag">⌨️ 검색어 자동완성</span>
+                    <span class="svc-ptag">▶️ 유튜브 SEO</span>
+                    <span class="svc-ptag">📸 인스타 검색</span>
+                  </div>
+                </div>
               </div>
             </div>
 
