@@ -157,7 +157,7 @@ em {
   height: 32px;
   object-fit: contain;
   flex-shrink: 0;
-  filter: invert(1) brightness(2);
+  filter: none;
 }
 
 /* 헤더 워드마크 — IN AD COMPANY 텍스트 전용 */

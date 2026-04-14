@@ -51,7 +51,7 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
               <div class="footer-col">
                 <h4>Service</h4>
                 <a href="/works">Works</a>
-                <a href="/viral">Viral Marketing</a>
+                <a href="/viral">Marketing</a>
                 <a href="/insight">Insight</a>
               </div>
               <div class="footer-col">
@@ -63,7 +63,7 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
           </div>
           <div class="footer-bottom">
             <p>© 2025 인애드컴퍼니 (IN AD COMPANY). All rights reserved.</p>
-            <p class="footer-legal">대표 : 홍길동 | 사업자번호 : 000-00-00000 | 서울특별시 강남구 테헤란로 123</p>
+            <p class="footer-legal">대표 : 김수만 | 연락처 : 010-9186-9944 | 경기도 안산시 단원구 고잔로 51, 타워아이즈빌 2F, 204호</p>
           </div>
         </footer>
         <script src="/static/main.js"></script>
