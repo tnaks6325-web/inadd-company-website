@@ -946,6 +946,55 @@ em {
   color: #fff;
 }
 
+/* 3열 그리드 */
+.svc-ptag-grid--3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* 카드형 태그 (아이콘 + 한글명 + 영문 서브) */
+.svc-ptag--card {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  white-space: normal;
+}
+.svc-ptag-icon {
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26,107,255,0.15);
+  border: 1px solid rgba(26,107,255,0.3);
+  border-radius: 50%;
+  line-height: 1;
+}
+.svc-ptag-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.svc-ptag-text strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.svc-ptag-text em {
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  color: rgba(255,255,255,0.42);
+  letter-spacing: 0.02em;
+}
+.svc-ptag--card:hover .svc-ptag-icon {
+  background: rgba(26,107,255,0.28);
+  border-color: rgba(26,107,255,0.6);
+}
+
 /* 모바일 — 세로 스택 */
 @media (max-width: 768px) {
   .svc-interactive {

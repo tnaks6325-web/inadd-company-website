@@ -270,8 +270,33 @@ export const HomePage = () => (
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Customer Review</span>
-                <p class="svc-panel-desc">실구매자의 신뢰 리뷰를 체계적으로 확보·관리합니다. 구매 결정에 직접 영향을 주는 소셜 프루프를 브랜드 자산으로 쌓습니다.</p>
-                <div class="svc-panel-kpi"><span>리뷰 전환 효과</span><strong>+230%</strong></div>
+                <p class="svc-panel-desc">소비자의 직접 경험을 콘텐츠화하여 <strong>신뢰 기반 구매 전환</strong>을 만들어냅니다.<br /><br />단순 리뷰 수집을 넘어 플랫폼별 최적화 전략으로 브랜드 평판을 설계하고, 구매 결정에 직접 영향을 주는 리뷰 자산을 구축합니다.</p>
+                <div class="svc-panel-tags">
+                  <p class="svc-ptag-label">SERVICE TYPES</p>
+                  <div class="svc-ptag-grid svc-ptag-grid--3">
+                    <span class="svc-ptag svc-ptag--card">
+                      <span class="svc-ptag-icon">✍️</span>
+                      <span class="svc-ptag-text">
+                        <strong>기획형 리뷰</strong>
+                        <em>Planning Review</em>
+                      </span>
+                    </span>
+                    <span class="svc-ptag svc-ptag--card">
+                      <span class="svc-ptag-icon">💬</span>
+                      <span class="svc-ptag-text">
+                        <strong>단순 리뷰</strong>
+                        <em>Simple Review</em>
+                      </span>
+                    </span>
+                    <span class="svc-ptag svc-ptag--card">
+                      <span class="svc-ptag-icon">👑</span>
+                      <span class="svc-ptag-text">
+                        <strong>프리미엄 리뷰</strong>
+                        <em>Premium Review</em>
+                      </span>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -293,8 +318,16 @@ export const HomePage = () => (
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Olive Young Marketing</span>
-                <p class="svc-panel-desc">올리브영 입점부터 노출 최적화, 리뷰 관리까지. K-뷰티·헬스 브랜드의 온오프라인 채널 매출을 함께 성장시킵니다.</p>
-                <div class="svc-panel-kpi"><span>채널 매출 증가</span><strong>+340%</strong></div>
+                <p class="svc-panel-desc">올리브영 채널을 전략적으로 공략하여 <strong>브랜드 매출과 인지도를 동시에</strong> 끌어올립니다.<br /><br />입점 기획부터 상위 노출, 리뷰 관리, 기획전 참여까지 올리브영 내 모든 접점을 통합 관리하여 K-뷰티 브랜드의 채널 성과를 극대화합니다.</p>
+                <div class="svc-panel-tags">
+                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
+                  <div class="svc-ptag-grid">
+                    <span class="svc-ptag">🛒 입점 기획</span>
+                    <span class="svc-ptag">📊 상위 노출 최적화</span>
+                    <span class="svc-ptag">💬 리뷰 관리</span>
+                    <span class="svc-ptag">🎪 기획전 참여</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -313,8 +346,16 @@ export const HomePage = () => (
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">PPL</span>
-                <p class="svc-panel-desc">드라마·영화·웹콘텐츠 속 자연스러운 브랜드 노출. 수천만 시청자에게 거부감 없이 브랜드를 각인시키는 강력한 노출 전략.</p>
-                <div class="svc-panel-kpi"><span>누적 시청자</span><strong>5,000만+</strong></div>
+                <p class="svc-panel-desc">방송 콘텐츠 속 <strong>자연스러운 브랜드 노출</strong>로 대중의 신뢰와 관심을 확보하는 프리미엄 광고 전략입니다.<br /><br />단순한 노출을 넘어 스토리텔링과 결합하여 브랜드 인지도를 높이고 시청자의 마음속에 깊이 각인됩니다.</p>
+                <div class="svc-panel-tags">
+                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
+                  <div class="svc-ptag-grid">
+                    <span class="svc-ptag">📡 방송사 협찬</span>
+                    <span class="svc-ptag">🎬 에피소드 기획</span>
+                    <span class="svc-ptag">👁 자연스러운 노출</span>
+                    <span class="svc-ptag">🎯 브랜드 신뢰도</span>
+                  </div>
+                </div>
               </div>
             </div>
 
