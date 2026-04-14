@@ -3004,3 +3004,61 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .cf-row--2 { flex-direction: column; }
   .cct-btn { padding: 20px 20px; }
 }
+
+/* ============================================
+   PAGE HERO — 서브페이지 공통 히어로 섹션
+   헤더(fixed, ~74px)와 겹치지 않도록
+   padding-top으로 충분한 여백 확보
+   ============================================ */
+.page-hero {
+  position: relative;
+  padding: 160px 0 100px;
+  overflow: hidden;
+}
+
+.page-hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page-hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.page-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(36px, 5vw, 72px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--white);
+  margin: 16px 0 20px;
+}
+
+.page-title em {
+  color: rgba(26,107,255,0.9);
+  font-style: normal;
+}
+
+.page-desc {
+  font-size: clamp(14px, 1.5vw, 17px);
+  color: var(--gray-2);
+  line-height: 1.75;
+  max-width: 560px;
+}
+
+/* 모바일 */
+@media (max-width: 768px) {
+  .page-hero {
+    padding: 130px 0 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-hero {
+    padding: 110px 0 60px;
+  }
+}
