@@ -125,11 +125,6 @@ export const AboutPage = () => (
     {/* ── 인애드가 추구하는 가치 (비즈니스 파트너) ── */}
     <section class="section about-values-section about-partner-section">
       <div class="container">
-        <div class="section-head">
-          <span class="sec-label">Our Values</span>
-          <h2 class="sec-title">인애드가<br /><em>추구하는 가치</em></h2>
-        </div>
-
         <div class="aptn-formula">
           <div class="aptn-item">
             <div class="aptn-icon">💡</div>
@@ -153,7 +148,7 @@ export const AboutPage = () => (
           </svg>
         </div>
 
-        <div class="aptn-result">
+        <div class="aptn-result aptn-result--center">
           <h2 class="aptn-result-title">비즈니스 파트너</h2>
         </div>
 

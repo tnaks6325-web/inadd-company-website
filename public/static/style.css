@@ -1959,8 +1959,9 @@ em {
 /* ── Business Partner / Values Section ── */
 .about-partner-section {
   background: var(--black-2);
+  text-align: center;
 }
-/* section-head 아래 formula까지 간격 */
+/* section-head 아래 formula까지 간격 — section-head 제거로 불필요해졌으나 유지 */
 .about-partner-section .section-head {
   margin-bottom: 52px;
 }
@@ -2017,6 +2018,9 @@ em {
 /* 결과 타이틀 */
 .aptn-result {
   margin-bottom: 56px;
+}
+.aptn-result--center {
+  text-align: center;
 }
 .aptn-result-title {
   font-family: 'Space Grotesk', sans-serif;
