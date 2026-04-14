@@ -29,10 +29,11 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
               <span></span><span></span><span></span>
             </button>
             <nav class="main-nav" id="mainNav">
+              <a href="/" class="nav-link">Home</a>
               <a href="/about" class="nav-link">About</a>
               <a href="/works" class="nav-link">Works</a>
               <a href="/insight" class="nav-link">Insight</a>
-              <a href="/viral" class="nav-link">Viral</a>
+              <a href="/viral" class="nav-link">Marketing</a>
               <a href="/contact" class="nav-link nav-cta">Contact</a>
             </nav>
           </div>
