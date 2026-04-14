@@ -1,206 +1,193 @@
 export const WorksPage = () => (
   <>
+    {/* ── Page Hero ── */}
     <section class="page-hero">
       <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
       <div class="container">
-        <span class="section-label">Our Works</span>
-        <h1 class="page-title">숫자가 증명하는<br /><em>우리의 작업</em></h1>
-        <p class="page-desc">모든 프로젝트에는 명확한 목표가 있었고,<br />우리는 그 목표를 초과 달성했습니다.</p>
+        <span class="sec-label">Our Works</span>
+        <h1 class="page-title">[ WORKS ]</h1>
+        <p class="page-desc">인애드컴퍼니가 함께한 브랜드들의 마케팅 성과입니다.</p>
       </div>
     </section>
 
-    {/* Filter */}
-    <section class="section">
-      <div class="container">
+    {/* ── Works Grid ── */}
+    <section class="section works-gallery-section">
+      <div class="container works-container">
+
+        {/* Filter */}
         <div class="works-filter" id="worksFilter">
-          <button class="filter-btn active" data-filter="all">전체</button>
-          <button class="filter-btn" data-filter="brand">브랜드 전략</button>
-          <button class="filter-btn" data-filter="performance">퍼포먼스</button>
-          <button class="filter-btn" data-filter="viral">바이럴</button>
-          <button class="filter-btn" data-filter="content">콘텐츠</button>
+          <button class="wf-btn active" data-filter="all">전체</button>
+          <button class="wf-btn" data-filter="viral">바이럴</button>
+          <button class="wf-btn" data-filter="influencer">인플루언서</button>
+          <button class="wf-btn" data-filter="seeding">시딩</button>
+          <button class="wf-btn" data-filter="seo">SEO</button>
+          <button class="wf-btn" data-filter="review">리뷰</button>
+          <button class="wf-btn" data-filter="oliveyoung">올리브영</button>
+          <button class="wf-btn" data-filter="ppl">PPL</button>
         </div>
 
-        <div class="works-grid" id="worksGrid">
-          {/* Work 1 */}
-          <article class="work-card" data-category="brand">
-            <div class="wc-thumb" style="background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);">
-              <div class="wc-thumb-content">
-                <div class="wc-thumb-icon">🚀</div>
-              </div>
-              <div class="wc-overlay">
-                <span>Case Study →</span>
+        {/* Grid */}
+        <div class="wg-grid" id="worksGrid">
+
+          {/* Card 1 - papa recipe */}
+          <article class="wg-card" data-cat="viral influencer">
+            <div class="wg-thumb">
+              <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80" alt="파파레시피 캠페인" loading="lazy" />
+              <div class="wg-overlay">
+                <div class="wg-overlay-logo">
+                  <span>papa recipe</span>
+                </div>
               </div>
             </div>
-            <div class="wc-body">
-              <div class="wc-tags">
-                <span class="tag">브랜드 전략</span>
-                <span class="tag">리브랜딩</span>
-              </div>
-              <h3>지역 카페 체인의 전국 브랜드 전환</h3>
-              <p>3개 도시 로컬 카페를 SNS 바이럴 전략으로 전국 프랜차이즈로 성장시킨 리브랜딩 프로젝트</p>
-              <div class="wc-result">
-                <div class="result-item">
-                  <span class="result-num">340%</span>
-                  <span class="result-label">매출 성장</span>
-                </div>
-                <div class="result-item">
-                  <span class="result-num">18개월</span>
-                  <span class="result-label">달성 기간</span>
-                </div>
-              </div>
+            <div class="wg-meta">
+              <span class="wg-brand">파파레시피</span>
+              <p class="wg-tags-text">프로모션 바이럴 · 브랜드 콘텐츠 제작 · PPL</p>
             </div>
           </article>
 
-          {/* Work 2 */}
-          <article class="work-card" data-category="viral">
-            <div class="wc-thumb" style="background: linear-gradient(135deg, #0d0d0d 0%, #1a0033 100%);">
-              <div class="wc-thumb-content">
-                <div class="wc-thumb-icon">⚡</div>
+          {/* Card 2 - 빼빼로 */}
+          <article class="wg-card" data-cat="viral">
+            <div class="wg-thumb">
+              <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="빼빼로 캠페인" loading="lazy" />
+              <div class="wg-overlay">
+                <div class="wg-overlay-logo">
+                  <span>빼빼로</span>
+                </div>
               </div>
-              <div class="wc-overlay"><span>Case Study →</span></div>
             </div>
-            <div class="wc-body">
-              <div class="wc-tags">
-                <span class="tag">바이럴</span>
-                <span class="tag">인스타그램</span>
-              </div>
-              <h3>뷰티 신제품 출시 바이럴 캠페인</h3>
-              <p>인플루언서 없이 순수 콘텐츠 기획만으로 2,800만 조회수를 달성한 언박싱 챌린지 캠페인</p>
-              <div class="wc-result">
-                <div class="result-item">
-                  <span class="result-num">2,800만</span>
-                  <span class="result-label">조회수</span>
-                </div>
-                <div class="result-item">
-                  <span class="result-num">7일</span>
-                  <span class="result-label">달성 기간</span>
-                </div>
-              </div>
+            <div class="wg-meta">
+              <span class="wg-brand">롯데제과</span>
+              <p class="wg-tags-text">프로모션 바이럴 · 브랜드 콘텐츠 제작 · 신제품 런칭 홍보</p>
             </div>
           </article>
 
-          {/* Work 3 */}
-          <article class="work-card" data-category="performance">
-            <div class="wc-thumb" style="background: linear-gradient(135deg, #001a0d 0%, #003322 100%);">
-              <div class="wc-thumb-content">
-                <div class="wc-thumb-icon">📈</div>
+          {/* Card 3 - G마켓 */}
+          <article class="wg-card" data-cat="influencer seo">
+            <div class="wg-thumb">
+              <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80" alt="G마켓 캠페인" loading="lazy" />
+              <div class="wg-overlay">
+                <div class="wg-overlay-logo">
+                  <span>G market</span>
+                </div>
               </div>
-              <div class="wc-overlay"><span>Case Study →</span></div>
             </div>
-            <div class="wc-body">
-              <div class="wc-tags">
-                <span class="tag">퍼포먼스</span>
-                <span class="tag">이커머스</span>
-              </div>
-              <h3>패션 이커머스 광고 효율 최적화</h3>
-              <p>기존 대비 광고비 40% 절감, ROAS 1,850% 달성. Meta 및 Google 통합 퍼포먼스 마케팅.</p>
-              <div class="wc-result">
-                <div class="result-item">
-                  <span class="result-num">1,850%</span>
-                  <span class="result-label">ROAS</span>
-                </div>
-                <div class="result-item">
-                  <span class="result-num">-40%</span>
-                  <span class="result-label">광고비 절감</span>
-                </div>
-              </div>
+            <div class="wg-meta">
+              <span class="wg-brand">지마켓</span>
+              <p class="wg-tags-text">프로모션 바이럴 · 마케팅 기획</p>
             </div>
           </article>
 
-          {/* Work 4 */}
-          <article class="work-card" data-category="content">
-            <div class="wc-thumb" style="background: linear-gradient(135deg, #1a0f00 0%, #3d2700 100%);">
-              <div class="wc-thumb-content">
-                <div class="wc-thumb-icon">✍️</div>
+          {/* Card 4 - LG */}
+          <article class="wg-card" data-cat="influencer seeding">
+            <div class="wg-thumb">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="LG 캠페인" loading="lazy" />
+              <div class="wg-overlay">
+                <div class="wg-overlay-logo">
+                  <span>LG</span>
+                </div>
               </div>
-              <div class="wc-overlay"><span>Case Study →</span></div>
             </div>
-            <div class="wc-body">
-              <div class="wc-tags">
-                <span class="tag">콘텐츠</span>
-                <span class="tag">유튜브</span>
-              </div>
-              <h3>B2B 기업의 유튜브 채널 성장</h3>
-              <p>딱딱한 B2B 제조업 브랜드를 유튜브 구독자 12만 채널로 성장시킨 콘텐츠 전략</p>
-              <div class="wc-result">
-                <div class="result-item">
-                  <span class="result-num">12만</span>
-                  <span class="result-label">구독자</span>
-                </div>
-                <div class="result-item">
-                  <span class="result-num">8개월</span>
-                  <span class="result-label">달성 기간</span>
-                </div>
-              </div>
+            <div class="wg-meta">
+              <span class="wg-brand">LG전자</span>
+              <p class="wg-tags-text">브랜드 런레포 제작 · 소셜미디어 체험단 · 프로모션 바이럴</p>
             </div>
           </article>
 
-          {/* Work 5 */}
-          <article class="work-card" data-category="brand">
-            <div class="wc-thumb" style="background: linear-gradient(135deg, #0a0a1f 0%, #1a1040 100%);">
-              <div class="wc-thumb-content">
-                <div class="wc-thumb-icon">🎯</div>
+          {/* Card 5 - 식품 */}
+          <article class="wg-card" data-cat="review seeding">
+            <div class="wg-thumb">
+              <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=80" alt="식품 캠페인" loading="lazy" />
+              <div class="wg-overlay">
+                <div class="wg-overlay-logo">
+                  <span>F&amp;B</span>
+                </div>
               </div>
-              <div class="wc-overlay"><span>Case Study →</span></div>
             </div>
-            <div class="wc-body">
-              <div class="wc-tags">
-                <span class="tag">브랜드 전략</span>
-                <span class="tag">네이밍</span>
-              </div>
-              <h3>헬스케어 스타트업 브랜드 론칭</h3>
-              <p>네이밍부터 BI, 디지털 마케팅까지 제로에서 시작해 시리즈 A 투자 유치에 성공한 브랜딩</p>
-              <div class="wc-result">
-                <div class="result-item">
-                  <span class="result-num">50억</span>
-                  <span class="result-label">투자 유치</span>
-                </div>
-                <div class="result-item">
-                  <span class="result-num">6개월</span>
-                  <span class="result-label">론칭 기간</span>
-                </div>
-              </div>
+            <div class="wg-meta">
+              <span class="wg-brand">식품 브랜드</span>
+              <p class="wg-tags-text">소셜미디어 제품단 · 프로모션 바이럴 · 신제품 런칭 홍보</p>
             </div>
           </article>
 
-          {/* Work 6 */}
-          <article class="work-card" data-category="performance">
-            <div class="wc-thumb" style="background: linear-gradient(135deg, #1f0a0a 0%, #3d1010 100%);">
-              <div class="wc-thumb-content">
-                <div class="wc-thumb-icon">💎</div>
+          {/* Card 6 - 종근당건강 */}
+          <article class="wg-card" data-cat="oliveyoung review">
+            <div class="wg-thumb">
+              <img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?w=600&q=80" alt="종근당건강 캠페인" loading="lazy" />
+              <div class="wg-overlay">
+                <div class="wg-overlay-logo">
+                  <span>종근당건강</span>
+                </div>
               </div>
-              <div class="wc-overlay"><span>Case Study →</span></div>
             </div>
-            <div class="wc-body">
-              <div class="wc-tags">
-                <span class="tag">퍼포먼스</span>
-                <span class="tag">D2C</span>
-              </div>
-              <h3>식품 D2C 브랜드 구독 전환 최적화</h3>
-              <p>일회성 구매 고객을 구독 고객으로 전환하는 CRM 기반 마케팅 자동화 시스템 구축</p>
-              <div class="wc-result">
-                <div class="result-item">
-                  <span class="result-num">280%</span>
-                  <span class="result-label">구독 전환율 증가</span>
-                </div>
-                <div class="result-item">
-                  <span class="result-num">3.2배</span>
-                  <span class="result-label">LTV 향상</span>
-                </div>
-              </div>
+            <div class="wg-meta">
+              <span class="wg-brand">종근당건강</span>
+              <p class="wg-tags-text">소셜미디어 제품단 · 프로모션 바이럴 · 신제품 런칭 홍보</p>
             </div>
           </article>
-        </div>
+
+          {/* Card 7 - 뷰티 */}
+          <article class="wg-card" data-cat="oliveyoung influencer">
+            <div class="wg-thumb">
+              <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80" alt="뷰티 캠페인" loading="lazy" />
+              <div class="wg-overlay">
+                <div class="wg-overlay-logo">
+                  <span>K-BEAUTY</span>
+                </div>
+              </div>
+            </div>
+            <div class="wg-meta">
+              <span class="wg-brand">K-뷰티 브랜드</span>
+              <p class="wg-tags-text">올리브영 마케팅 · 인플루언서 협업 · 시딩 캠페인</p>
+            </div>
+          </article>
+
+          {/* Card 8 - 헬스케어 */}
+          <article class="wg-card" data-cat="seo review">
+            <div class="wg-thumb">
+              <img src="https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?w=600&q=80" alt="헬스케어 캠페인" loading="lazy" />
+              <div class="wg-overlay">
+                <div class="wg-overlay-logo">
+                  <span>HEALTHCARE</span>
+                </div>
+              </div>
+            </div>
+            <div class="wg-meta">
+              <span class="wg-brand">헬스케어 브랜드</span>
+              <p class="wg-tags-text">SEO 마케팅 · 리뷰 마케팅 · 커뮤니티 바이럴</p>
+            </div>
+          </article>
+
+          {/* Card 9 - 패션 */}
+          <article class="wg-card" data-cat="ppl influencer">
+            <div class="wg-thumb">
+              <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&q=80" alt="패션 PPL" loading="lazy" />
+              <div class="wg-overlay">
+                <div class="wg-overlay-logo">
+                  <span>FASHION</span>
+                </div>
+              </div>
+            </div>
+            <div class="wg-meta">
+              <span class="wg-brand">패션 브랜드</span>
+              <p class="wg-tags-text">PPL · 인플루언서 마케팅 · 브랜드 콘텐츠</p>
+            </div>
+          </article>
+
+        </div>{/* /wg-grid */}
       </div>
     </section>
 
-    <section class="cta-section">
-      <div class="cta-bg"><div class="cta-glow"></div></div>
+    {/* ── CTA ── */}
+    <section class="home-cta">
+      <div class="home-cta-bg"><div class="hcta-glow"></div></div>
       <div class="container">
-        <div class="cta-content">
-          <h2>다음 성공 케이스는<br />당신의 브랜드입니다</h2>
-          <p>지금 NOVA STUDIO와 함께 시작하세요.</p>
-          <a href="/contact" class="btn btn-primary btn-lg">프로젝트 문의하기</a>
+        <div class="home-cta-inner">
+          <h2>다음 성공 케이스는<br /><em>당신의 브랜드입니다</em></h2>
+          <p>인애드컴퍼니와 함께 시작해보세요.</p>
+          <a href="/contact" class="hero-cta-btn primary">
+            <span>무료 상담 신청하기</span>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </div>
     </section>

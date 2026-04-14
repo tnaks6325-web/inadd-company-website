@@ -497,3 +497,101 @@ if (menuToggle && mainNav) {
     });
   }
 })();
+
+/* ============================================
+   WORKS GALLERY — 필터링
+   ============================================ */
+(function() {
+  const filterBtns = document.querySelectorAll('.wf-btn');
+  const cards = document.querySelectorAll('.wg-card');
+  if (!filterBtns.length) return;
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        const cats = (card.dataset.cat || '').split(' ');
+        if (filter === 'all' || cats.includes(filter)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+})();
+
+/* ============================================
+   CONTACT FORM 핸들러
+   ============================================ */
+function handleContact(e) {
+  e.preventDefault();
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('contactSuccess');
+  if (form && success) {
+    form.style.display = 'none';
+    success.style.display = 'block';
+  }
+  return false;
+}
+
+
+/* ── Insight 필터 ── */
+(function initInsightFilter() {
+  const filterBar = document.getElementById('insightFilter');
+  const grid = document.getElementById('insightGrid');
+  if (!filterBar || !grid) return;
+
+  filterBar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.inf-btn');
+    if (!btn) return;
+    filterBar.querySelectorAll('.inf-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    grid.querySelectorAll('.ins-card').forEach(card => {
+      const cat = card.dataset.cat || '';
+      card.classList.toggle('hidden', filter !== 'all' && !cat.includes(filter));
+    });
+  });
+
+  const loadBtn = document.getElementById('insLoadMore');
+  if (loadBtn) {
+    loadBtn.addEventListener('click', () => {
+      loadBtn.style.opacity = '0.5';
+      loadBtn.disabled = true;
+      setTimeout(() => {
+        loadBtn.innerHTML = '<span>모든 인사이트를 불러왔습니다</span>';
+        loadBtn.style.opacity = '0.5';
+        loadBtn.style.cursor = 'default';
+      }, 600);
+    });
+  }
+})();
+
+/* ── Newsletter 폼 ── */
+function handleNewsletter(e) {
+  e.preventDefault();
+  const form = e.target;
+  const success = document.getElementById('nlSuccess');
+  if (success) {
+    form.querySelector('.ins-nl-input-wrap').style.display = 'none';
+    form.querySelector('.ins-nl-note').style.display = 'none';
+    success.style.display = 'flex';
+  }
+  return false;
+}
+
+/* ── Contact 폼 ── */
+function handleContact(e) {
+  e.preventDefault();
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('contactSuccess');
+  if (form && success) {
+    form.style.display = 'none';
+    success.style.display = 'block';
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  return false;
+}
