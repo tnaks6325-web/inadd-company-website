@@ -34,16 +34,8 @@ export const SvcSeedingPage = () => (
             </ul>
           </div>
           <div class="svc-intro-visual">
-            <div class="siv-card">
-              <div class="siv-icon">
-                <svg viewBox="0 0 80 80" fill="none">
-                  <circle cx="40" cy="40" r="38" stroke="rgba(26,107,255,0.2)" stroke-width="1.5"/>
-                  <path d="M28 42 L34 48 L52 32" stroke="rgba(26,107,255,0.8)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <circle cx="40" cy="40" r="18" stroke="rgba(26,107,255,0.3)" stroke-width="1"/>
-                </svg>
-              </div>
-              <h3>진정성 기반 시딩</h3>
-              <p>실제 사용자의 경험이 담긴 후기가 구매 결정의 마지막 단계를 움직입니다</p>
+            <div class="siv-img-wrap">
+              <img src="/static/svc-images/seeding.png" alt="시딩 캠페인 비주얼" class="siv-photo" loading="lazy" />
             </div>
           </div>
         </div>

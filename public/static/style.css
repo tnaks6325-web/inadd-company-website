@@ -3351,7 +3351,36 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   background: rgba(26,107,255,0.7);
   flex-shrink: 0;
 }
-.svc-intro-visual { display: flex; justify-content: center; }
+.svc-intro-visual { display: flex; justify-content: center; align-items: flex-start; }
+
+/* 이미지 비주얼 래퍼 */
+.siv-img-wrap {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.45);
+  position: relative;
+}
+.siv-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(26,107,255,0.15);
+  pointer-events: none;
+}
+.siv-photo {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.siv-img-wrap:hover .siv-photo {
+  transform: scale(1.03);
+}
+
 .siv-card {
   background: var(--card-bg);
   border: 1px solid var(--border);

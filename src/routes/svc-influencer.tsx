@@ -34,21 +34,8 @@ export const SvcInfluencerPage = () => (
             </ul>
           </div>
           <div class="svc-intro-visual">
-            <div class="siv-card">
-              <div class="siv-icon">
-                <svg viewBox="0 0 80 80" fill="none">
-                  <circle cx="40" cy="40" r="38" stroke="rgba(26,107,255,0.2)" stroke-width="1.5"/>
-                  <circle cx="40" cy="28" r="10" stroke="rgba(26,107,255,0.6)" stroke-width="1.5"/>
-                  <circle cx="20" cy="52" r="7" stroke="rgba(26,107,255,0.4)" stroke-width="1.5"/>
-                  <circle cx="60" cy="52" r="7" stroke="rgba(26,107,255,0.4)" stroke-width="1.5"/>
-                  <circle cx="40" cy="60" r="6" stroke="rgba(26,107,255,0.5)" stroke-width="1.5"/>
-                  <line x1="33" y1="34" x2="25" y2="46" stroke="rgba(26,107,255,0.3)" stroke-width="1"/>
-                  <line x1="47" y1="34" x2="55" y2="46" stroke="rgba(26,107,255,0.3)" stroke-width="1"/>
-                  <line x1="40" y1="38" x2="40" y2="54" stroke="rgba(26,107,255,0.3)" stroke-width="1"/>
-                </svg>
-              </div>
-              <h3>크리에이터 네트워크</h3>
-              <p>1,200+ 검증된 크리에이터와 함께 브랜드 메시지를 진정성 있게 전달합니다</p>
+            <div class="siv-img-wrap">
+              <img src="/static/svc-images/influencer.png" alt="인플루언서 마케팅 비주얼" class="siv-photo" loading="lazy" />
             </div>
           </div>
         </div>

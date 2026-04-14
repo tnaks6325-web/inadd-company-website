@@ -35,18 +35,8 @@ export const SvcReviewPage = () => (
             </ul>
           </div>
           <div class="svc-intro-visual">
-            <div class="siv-card">
-              <div class="siv-icon">
-                <svg viewBox="0 0 80 80" fill="none">
-                  <rect x="12" y="18" width="56" height="44" rx="8" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/>
-                  <path d="M26 34 L34 42 L54 22" stroke="rgba(26,107,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <circle cx="40" cy="40" r="26" stroke="rgba(26,107,255,0.15)" stroke-width="1"/>
-                  <path d="M22 50 H36" stroke="rgba(26,107,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
-                  <path d="M22 56 H32" stroke="rgba(26,107,255,0.2)" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <h3>리뷰 신뢰 설계</h3>
-              <p>진정성 있는 리뷰가 쌓이면 브랜드 신뢰가 되고, 신뢰는 구매로 이어집니다</p>
+            <div class="siv-img-wrap">
+              <img src="/static/svc-images/review.png" alt="리뷰 마케팅 비주얼" class="siv-photo" loading="lazy" />
             </div>
           </div>
         </div>

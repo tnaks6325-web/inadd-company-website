@@ -36,21 +36,8 @@ export const SvcViralPage = () => (
             </ul>
           </div>
           <div class="svc-intro-visual">
-            <div class="siv-card">
-              <div class="siv-icon">
-                <svg viewBox="0 0 80 80" fill="none">
-                  <circle cx="40" cy="40" r="38" stroke="rgba(26,107,255,0.2)" stroke-width="1.5"/>
-                  <circle cx="20" cy="30" r="8" stroke="rgba(26,107,255,0.5)" stroke-width="1.5"/>
-                  <circle cx="55" cy="22" r="6" stroke="rgba(26,107,255,0.6)" stroke-width="1.5"/>
-                  <circle cx="62" cy="52" r="7" stroke="rgba(26,107,255,0.5)" stroke-width="1.5"/>
-                  <circle cx="30" cy="58" r="5" stroke="rgba(26,107,255,0.4)" stroke-width="1.5"/>
-                  <line x1="27" y1="33" x2="50" y2="24" stroke="rgba(26,107,255,0.4)" stroke-width="1"/>
-                  <line x1="60" y1="28" x2="60" y2="46" stroke="rgba(26,107,255,0.4)" stroke-width="1"/>
-                  <line x1="56" y1="56" x2="34" y2="60" stroke="rgba(26,107,255,0.4)" stroke-width="1"/>
-                </svg>
-              </div>
-              <h3>바이럴 확산 구조</h3>
-              <p>한 명의 진정성 있는 후기가 수백만 명에게 도달하는 구조를 설계합니다</p>
+            <div class="siv-img-wrap">
+              <img src="/static/svc-images/viral.png" alt="바이럴 마케팅 비주얼" class="siv-photo" loading="lazy" />
             </div>
           </div>
         </div>

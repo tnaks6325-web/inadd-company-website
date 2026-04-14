@@ -34,18 +34,8 @@ export const SvcSeoPage = () => (
             </ul>
           </div>
           <div class="svc-intro-visual">
-            <div class="siv-card">
-              <div class="siv-icon">
-                <svg viewBox="0 0 80 80" fill="none">
-                  <circle cx="40" cy="40" r="38" stroke="rgba(26,107,255,0.2)" stroke-width="1.5"/>
-                  <circle cx="35" cy="35" r="14" stroke="rgba(26,107,255,0.6)" stroke-width="2"/>
-                  <line x1="45" y1="45" x2="58" y2="58" stroke="rgba(26,107,255,0.8)" stroke-width="2.5" stroke-linecap="round"/>
-                  <line x1="29" y1="32" x2="42" y2="32" stroke="rgba(26,107,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
-                  <line x1="29" y1="37" x2="38" y2="37" stroke="rgba(26,107,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <h3>검색 상위 최적화</h3>
-              <p>소비자가 검색하는 순간 브랜드가 먼저 발견되는 구조를 만듭니다</p>
+            <div class="siv-img-wrap">
+              <img src="/static/svc-images/seo.png" alt="SEO 마케팅 비주얼" class="siv-photo" loading="lazy" />
             </div>
           </div>
         </div>

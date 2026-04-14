@@ -35,20 +35,8 @@ export const SvcOliveYoungPage = () => (
             </ul>
           </div>
           <div class="svc-intro-visual">
-            <div class="siv-card">
-              <div class="siv-icon">
-                <svg viewBox="0 0 80 80" fill="none">
-                  <circle cx="40" cy="40" r="28" stroke="rgba(26,107,255,0.2)" stroke-width="1.5"/>
-                  <path d="M25 45 Q40 20 55 45" stroke="rgba(26,107,255,0.6)" stroke-width="2" fill="none" stroke-linecap="round"/>
-                  <circle cx="40" cy="40" r="4" fill="rgba(26,107,255,0.5)"/>
-                  <path d="M40 20 L40 16" stroke="rgba(26,107,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-                  <path d="M55 33 L58 30" stroke="rgba(26,107,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-                  <path d="M25 33 L22 30" stroke="rgba(26,107,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-                  <rect x="32" y="48" width="16" height="14" rx="3" stroke="rgba(26,107,255,0.4)" stroke-width="1.5"/>
-                </svg>
-              </div>
-              <h3>올리브영 성장 전략</h3>
-              <p>알고리즘 이해 기반의 랭킹 최적화로 카테고리 TOP을 달성합니다</p>
+            <div class="siv-img-wrap">
+              <img src="/static/svc-images/oliveyoung.png" alt="올리브영 마케팅 비주얼" class="siv-photo" loading="lazy" />
             </div>
           </div>
         </div>

@@ -35,20 +35,8 @@ export const SvcPplPage = () => (
             </ul>
           </div>
           <div class="svc-intro-visual">
-            <div class="siv-card">
-              <div class="siv-icon">
-                <svg viewBox="0 0 80 80" fill="none">
-                  <rect x="10" y="20" width="60" height="38" rx="6" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/>
-                  <rect x="10" y="20" width="60" height="38" rx="6" fill="rgba(26,107,255,0.05)"/>
-                  <circle cx="35" cy="39" r="10" stroke="rgba(26,107,255,0.5)" stroke-width="1.5"/>
-                  <path d="M32 39 L38 35 L38 43 Z" fill="rgba(26,107,255,0.5)"/>
-                  <rect x="50" y="30" width="14" height="6" rx="2" fill="rgba(26,107,255,0.3)"/>
-                  <rect x="50" y="40" width="10" height="4" rx="1" fill="rgba(26,107,255,0.2)"/>
-                  <rect x="22" y="62" width="36" height="6" rx="3" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/>
-                </svg>
-              </div>
-              <h3>콘텐츠 속 브랜드</h3>
-              <p>시청자의 일상 속에 자연스럽게 스며드는 브랜드 경험을 설계합니다</p>
+            <div class="siv-img-wrap">
+              <img src="/static/svc-images/ppl.png" alt="PPL 마케팅 비주얼" class="siv-photo" loading="lazy" />
             </div>
           </div>
         </div>
