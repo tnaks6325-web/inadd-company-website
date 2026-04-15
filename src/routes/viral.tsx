@@ -20,7 +20,120 @@ export const ViralPage = () => (
       </div>
     </section>
 
-    {/* 서비스 소개 */}
+    {/* ── WHY 인애드컴퍼니 ── */}
+    <section class="section why-inadco-section">
+      <div class="container">
+
+        {/* 헤더 */}
+        <div class="why-header">
+          <div class="why-header-left">
+            <span class="sec-label">MARKET ANALYSIS</span>
+            <h2 class="why-title">WHY? 인애드컴퍼니</h2>
+            <p class="why-desc">모든 프로세스를 시스템화하여 휴먼 에러를 <strong>구조적으로 최소화</strong>하고,<br />데이터 기반의 안정적인 프로젝트 운영을 보장합니다.</p>
+          </div>
+          <div class="why-badge-track">
+            <div class="wbt-item wbt-item--dim">
+              <span class="wbt-label">RISK</span>
+              <div class="wbt-dot"></div>
+            </div>
+            <div class="wbt-line"></div>
+            <div class="wbt-item wbt-item--active">
+              <span class="wbt-label">SYSTEM</span>
+              <div class="wbt-dot wbt-dot--active"></div>
+            </div>
+            <div class="wbt-line"></div>
+            <div class="wbt-item wbt-item--blue">
+              <span class="wbt-label wbt-label--blue">STABILITY</span>
+              <div class="wbt-dot wbt-dot--blue"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* 6개 카드 그리드 */}
+        <div class="why-cards-grid">
+          {[
+            {
+              badge: '시스템 모듈',
+              icon: '🗄️',
+              title: '사내 인트라넷 모듈',
+              desc: '프로젝트 통합 관리 및 문서 아카이빙으로 히스토리 영구 보존 및 권한별 접근 제어',
+              highlight: false,
+            },
+            {
+              badge: '운영 관리',
+              icon: '📅',
+              title: '데일리 일정 관리',
+              desc: '캠페인별 체크포인트 자동 알림 및 데일리 운영 보고로 일정 지연 최소화',
+              highlight: false,
+            },
+            {
+              badge: '운영 관리',
+              icon: '📊',
+              title: '프로젝트별 전담 관리',
+              desc: '광고주별 전용 대시보드 및 히스토리 관리로 담당자 변경 시에도 업무 연속성 유지',
+              highlight: false,
+            },
+            {
+              badge: '데이터 필터링',
+              icon: '🔽',
+              title: 'DB 필터링 시스템',
+              desc: '자체 보유 크리에이터 DB 및 블랙리스트 필터링으로 섭외 리스크 사전 예방',
+              highlight: false,
+            },
+            {
+              badge: '전문 운영',
+              icon: '👤',
+              title: '시니어 PM 운영',
+              desc: '각 파트별 최소 5년차 이상 팀장급 PM 배정으로 전문적인 커뮤니케이션 및 핸들링',
+              highlight: true,
+            },
+            {
+              badge: '리스크 대응',
+              icon: '🔔',
+              title: '이슈 즉각 대응',
+              desc: '새벽/주말 이슈 대응 프로세스 및 상황별 가이드 보유로 돌발 상황 신속 해결',
+              highlight: true,
+            },
+          ].map(card => (
+            <div class={`why-card${card.highlight ? ' why-card--highlight' : ''}`}>
+              <div class="why-card-top">
+                <span class="why-card-badge">{card.badge}</span>
+                <div class={`why-card-icon-wrap${card.highlight ? ' why-card-icon-wrap--blue' : ''}`}>
+                  <span class="why-card-icon">{card.icon}</span>
+                </div>
+              </div>
+              <h4 class="why-card-title">{card.title}</h4>
+              <p class="why-card-desc">{card.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* OUTCOME 하단 바 */}
+        <div class="why-outcome-bar">
+          <div class="why-outcome-checks">
+            <span class="woc-item">
+              <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><circle cx="10" cy="10" r="9" fill="rgba(26,107,255,0.9)"/><path d="M6 10l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              체계적 시스템화
+            </span>
+            <span class="woc-item">
+              <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><circle cx="10" cy="10" r="9" fill="rgba(26,107,255,0.9)"/><path d="M6 10l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              시니어 PM 전담
+            </span>
+            <span class="woc-item">
+              <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><circle cx="10" cy="10" r="9" fill="rgba(26,107,255,0.9)"/><path d="M6 10l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              실시간 리스크 대응
+            </span>
+          </div>
+          <div class="why-outcome-result">
+            <span class="why-outcome-badge">OUTCOME</span>
+            <span class="why-outcome-text">운영 리스크를 구조적으로 낮춥니다.</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    {/* ── 서비스 선택 ── */}
     <section class="section">
       <div class="container">
         <div class="section-head">
@@ -96,34 +209,6 @@ export const ViralPage = () => (
               </div>
               <span class="msc-arrow">→</span>
             </a>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    {/* Why 인애드컴퍼니 */}
-    <section class="section" style="background:var(--black-2)">
-      <div class="container">
-        <div class="section-head">
-          <span class="sec-label">Why Us</span>
-          <h2 class="sec-title">왜 인애드컴퍼니인가</h2>
-        </div>
-        <div class="svc-process-steps">
-          {[
-            { num:'01', title:'데이터 기반 전략', desc:'감으로 하는 마케팅이 아닙니다. 소비자 데이터와 시장 분석을 기반으로 최적 전략을 수립합니다.' },
-            { num:'02', title:'통합 마케팅 운영', desc:'바이럴·SEO·리뷰·PPL을 단독이 아닌 통합 관점으로 운영해 시너지 효과를 극대화합니다.' },
-            { num:'03', title:'투명한 성과 리포팅', desc:'매주·매월 상세한 성과 리포트를 제공합니다. 숫자로 증명하는 마케팅 결과를 직접 확인하세요.' },
-            { num:'04', title:'전담 팀 운영', desc:'캠페인 시작부터 완료까지 전담 마케터가 책임지고 운영합니다. 98% 재계약률이 증명합니다.' },
-            { num:'05', title:'업종별 전문성', desc:'뷰티·식품·헬스케어·패션·생활용품 등 다양한 업종에서 320+ 프로젝트 경험을 보유합니다.' },
-            { num:'06', title:'빠른 실행력', desc:'전략 수립 후 1주일 이내 캠페인 시작. 빠른 시장 대응으로 골든타임을 놓치지 않습니다.' },
-          ].map(s => (
-            <div class="sps-step">
-              <div class="sps-num">{s.num}</div>
-              <div class="sps-body">
-                <h4>{s.title}</h4>
-                <p>{s.desc}</p>
-              </div>
-            </div>
           ))}
         </div>
       </div>
