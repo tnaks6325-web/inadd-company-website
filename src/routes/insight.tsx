@@ -1,7 +1,18 @@
-import { INSIGHT_ARTICLES } from '../data/insight-articles'
+import { INSIGHT_ARTICLES, CONTENT_SUB_LABELS, type ContentSubCategory } from '../data/insight-articles'
 
 export const InsightPage = () => {
   const articles = INSIGHT_ARTICLES
+
+  // 콘텐츠 별 전략 세부 탭 목록 (서비스 순서 그대로)
+  const subTabs: { key: ContentSubCategory; label: string }[] = [
+    { key: 'viral',      label: '바이럴 마케팅' },
+    { key: 'influencer', label: '인플루언서 마케팅' },
+    { key: 'seeding',    label: '시딩 캠페인' },
+    { key: 'seo',        label: 'SEO 마케팅' },
+    { key: 'review',     label: '리뷰 마케팅' },
+    { key: 'oliveyoung', label: '올리브영 마케팅' },
+    { key: 'ppl',        label: 'PPL 마케팅' },
+  ]
 
   return (
     <>
@@ -19,11 +30,19 @@ export const InsightPage = () => {
       <section class="section insight-list-section">
         <div class="container">
 
-          {/* ── 카테고리 탭 ── */}
-          <nav class="ins2-tab-bar" id="ins2Tabs">
-            <button class="ins2-tab active" data-cat="all">All</button>
-            <button class="ins2-tab" data-cat="content-strategy">콘텐츠 별 전략</button>
-            <button class="ins2-tab" data-cat="case-study">실전 사례</button>
+          {/* ── 1단계: 메인 탭 ── */}
+          <nav class="ins2-tab-bar" id="ins2MainTabs">
+            <button class="ins2-tab active" data-main="all">All</button>
+            <button class="ins2-tab" data-main="content-strategy">콘텐츠 별 전략</button>
+            <button class="ins2-tab" data-main="case-study">실전 사례</button>
+          </nav>
+
+          {/* ── 2단계: 콘텐츠 별 전략 세부 탭 (기본 hidden) ── */}
+          <nav class="ins2-sub-tab-bar" id="ins2SubTabs" style="display:none;">
+            <button class="ins2-sub-tab active" data-sub="all-strategy">전체</button>
+            {subTabs.map(t => (
+              <button class="ins2-sub-tab" data-sub={t.key} key={t.key}>{t.label}</button>
+            ))}
           </nav>
 
           {/* ── 카드 그리드 ── */}
@@ -33,7 +52,8 @@ export const InsightPage = () => {
                 key={article.id}
                 href={`/insight/${article.id}`}
                 class="ins2-card"
-                data-cat={article.category}
+                data-main-cat={article.category}
+                data-sub-cat={article.subCategory ?? ''}
               >
                 {/* 썸네일 */}
                 <div class="ins2-thumb">
@@ -52,7 +72,7 @@ export const InsightPage = () => {
                   <h3 class="ins2-title">{article.title}</h3>
                   <p class="ins2-summary">{article.summary}</p>
                   <div class="ins2-meta">
-                    <span class="ins2-date">{article.date.replace(/-/g, '-')}</span>
+                    <span class="ins2-date">{article.date}</span>
                     <span class="ins2-views">조회수 {article.views}</span>
                   </div>
                 </div>
@@ -68,35 +88,78 @@ export const InsightPage = () => {
         </div>
       </section>
 
-      {/* 탭 필터 JS */}
+      {/* ── 탭 필터 JS ── */}
       <script dangerouslySetInnerHTML={{__html: `
 (function() {
-  var tabs = document.querySelectorAll('.ins2-tab');
-  var cards = document.querySelectorAll('.ins2-card');
-  var empty = document.getElementById('ins2Empty');
+  var mainTabs   = document.querySelectorAll('.ins2-tab');
+  var subTabBar  = document.getElementById('ins2SubTabs');
+  var subTabs    = document.querySelectorAll('.ins2-sub-tab');
+  var cards      = document.querySelectorAll('.ins2-card');
+  var empty      = document.getElementById('ins2Empty');
 
-  tabs.forEach(function(tab) {
+  var currentMain = 'all';
+  var currentSub  = 'all-strategy';
+
+  function applyFilter() {
+    var visible = 0;
+    cards.forEach(function(card) {
+      var mainCat = card.getAttribute('data-main-cat');
+      var subCat  = card.getAttribute('data-sub-cat');
+
+      var showMain = currentMain === 'all' || mainCat === currentMain;
+      var showSub  = true;
+
+      // 콘텐츠별전략 탭이 활성일 때만 세부 필터 적용
+      if (currentMain === 'content-strategy' && currentSub !== 'all-strategy') {
+        showSub = subCat === currentSub;
+      }
+
+      if (showMain && showSub) {
+        card.style.display = '';
+        visible++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  // 메인 탭 클릭
+  mainTabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
-      var cat = this.getAttribute('data-cat');
+      currentMain = this.getAttribute('data-main');
 
-      // 탭 active
-      tabs.forEach(function(t) { t.classList.remove('active'); });
+      mainTabs.forEach(function(t) { t.classList.remove('active'); });
       this.classList.add('active');
 
-      // 카드 필터
-      var visible = 0;
-      cards.forEach(function(card) {
-        if (cat === 'all' || card.getAttribute('data-cat') === cat) {
-          card.style.display = '';
-          visible++;
-        } else {
-          card.style.display = 'none';
-        }
-      });
+      // 콘텐츠별전략 선택 시 서브탭 표시
+      if (currentMain === 'content-strategy') {
+        subTabBar.style.display = 'flex';
+      } else {
+        subTabBar.style.display = 'none';
+        // 서브탭 초기화
+        currentSub = 'all-strategy';
+        subTabs.forEach(function(t) { t.classList.remove('active'); });
+        subTabs[0] && subTabs[0].classList.add('active');
+      }
 
-      if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+      applyFilter();
     });
   });
+
+  // 서브 탭 클릭
+  subTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      currentSub = this.getAttribute('data-sub');
+      subTabs.forEach(function(t) { t.classList.remove('active'); });
+      this.classList.add('active');
+      applyFilter();
+    });
+  });
+
+  // 초기 렌더
+  applyFilter();
 })();
       `}} />
 

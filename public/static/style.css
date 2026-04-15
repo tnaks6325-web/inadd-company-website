@@ -4393,6 +4393,42 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   font-weight: 700;
 }
 
+/* ── 서브 탭 (콘텐츠 별 전략 세부 카테고리) ── */
+.ins2-sub-tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 40px;
+  padding: 16px 20px;
+  background: rgba(26,107,255,0.05);
+  border: 1px solid rgba(26,107,255,0.12);
+  border-radius: 12px;
+}
+.ins2-sub-tab {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-3);
+  padding: 7px 16px;
+  border-radius: 20px;
+  transition: all 0.2s;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+.ins2-sub-tab:hover {
+  color: var(--white);
+  border-color: rgba(26,107,255,0.4);
+  background: rgba(26,107,255,0.08);
+}
+.ins2-sub-tab.active {
+  color: var(--white);
+  background: rgba(26,107,255,0.2);
+  border-color: rgba(26,107,255,0.6);
+  font-weight: 600;
+}
+
 /* ── 카드 그리드 ── */
 .ins2-grid {
   display: grid;
@@ -4663,6 +4699,8 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .ins2-grid { grid-template-columns: 1fr; gap: 20px; }
   .ins2-tab-bar { gap: 4px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0; }
   .ins2-tab { font-size: 13px; padding: 10px 14px; white-space: nowrap; }
+  .ins2-sub-tab-bar { gap: 6px; padding: 12px 14px; }
+  .ins2-sub-tab { font-size: 12px; padding: 6px 12px; }
   .ins-detail-body { padding-top: 36px; }
   .ins-detail-content { font-size: 15px; }
 }

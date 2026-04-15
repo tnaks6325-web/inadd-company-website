@@ -1,14 +1,40 @@
 // ─────────────────────────────────────────────
 //  인사이트 아티클 데이터
 //  관리자가 여기에 글을 추가합니다.
-//  카테고리: 'content-strategy' | 'case-study'
+//
+//  category:
+//    'content-strategy' : 콘텐츠 별 전략
+//    'case-study'        : 실전 사례 (세부 카테고리 없음)
+//
+//  subCategory (content-strategy 전용):
+//    'viral' | 'influencer' | 'seeding' | 'seo' | 'review' | 'oliveyoung' | 'ppl'
 // ─────────────────────────────────────────────
 
 export type InsightCategory = 'content-strategy' | 'case-study'
 
+export type ContentSubCategory =
+  | 'viral'
+  | 'influencer'
+  | 'seeding'
+  | 'seo'
+  | 'review'
+  | 'oliveyoung'
+  | 'ppl'
+
+export const CONTENT_SUB_LABELS: Record<ContentSubCategory, string> = {
+  viral:       '바이럴 마케팅',
+  influencer:  '인플루언서 마케팅',
+  seeding:     '시딩 캠페인',
+  seo:         'SEO 마케팅',
+  review:      '리뷰 마케팅',
+  oliveyoung:  '올리브영 마케팅',
+  ppl:         'PPL 마케팅',
+}
+
 export interface InsightArticle {
   id: string
   category: InsightCategory
+  subCategory?: ContentSubCategory  // content-strategy 일 때만 사용
   title: string
   summary: string          // 썸네일에 보이는 한 줄 요약
   date: string             // 'YYYY-MM-DD'
@@ -19,6 +45,7 @@ export interface InsightArticle {
 }
 
 export const INSIGHT_ARTICLES: InsightArticle[] = [
+
   // ─── 실전 사례 ───────────────────────────────
   {
     id: 'hotdeal-sales-curve',
@@ -28,7 +55,7 @@ export const INSIGHT_ARTICLES: InsightArticle[] = [
     date: '2025-08-25',
     views: 130,
     thumbnail: '/static/insight/hotdeal.png',
-    tags: ['실전 사례', '바이럴'],
+    tags: ['실전 사례'],
     content: `
 <h2>대부분의 광고주는 "한 방에 매출을 끌어올릴 수 있는 방법 없을까요?"에 대한 고민을 한 번쯤은 하기 마련입니다.</h2>
 <p>브랜딩은 장기적 접근이 필요하지만, 단기 성과가 필요한 시점에서는 즉각적인 매출 폭발이 중요한 과제입니다. 이때 가장 강력한 카드가 바로 핫딜 바이럴입니다. 그러나 이런 의문 또한 동시에 가지게 됩니다.</p>
@@ -61,16 +88,17 @@ export const INSIGHT_ARTICLES: InsightArticle[] = [
 `,
   },
 
-  // ─── 콘텐츠 별 전략 ──────────────────────────
+  // ─── 콘텐츠 별 전략 — 바이럴 마케팅 ────────────
   {
     id: 'shortform-purchase-funnel',
     category: 'content-strategy',
+    subCategory: 'viral',
     title: '숏폼이 바꾼 소비자 구매 여정',
     summary: '틱톡·릴스·쇼츠. 숏폼이 구매 퍼널을 어떻게 재편하고 있는지 분석합니다.',
     date: '2025-03-15',
     views: 214,
     thumbnail: '/static/insight/shortform.png',
-    tags: ['콘텐츠 전략', '숏폼'],
+    tags: ['바이럴 마케팅'],
     content: `
 <h2>숏폼이 구매 퍼널을 바꿨습니다</h2>
 <p>불과 3년 전까지만 해도 소비자 구매 여정은 <strong>검색 → 비교 → 구매</strong>의 선형 구조였습니다. 그러나 숏폼의 등장으로 이 구조가 완전히 재편되고 있습니다.</p>
@@ -93,15 +121,17 @@ export const INSIGHT_ARTICLES: InsightArticle[] = [
 `,
   },
 
+  // ─── 콘텐츠 별 전략 — 커뮤니티/바이럴 ──────────
   {
     id: 'community-viral-strategy',
     category: 'content-strategy',
+    subCategory: 'viral',
     title: '맘카페·커뮤니티 바이럴의 힘',
     summary: '광고가 통하지 않는 공간, 커뮤니티. 실제 소비자들이 모이는 공간에서 브랜드를 확산시키는 전략.',
     date: '2025-03-10',
     views: 189,
     thumbnail: '/static/insight/community.png',
-    tags: ['콘텐츠 전략', '커뮤니티'],
+    tags: ['바이럴 마케팅'],
     content: `
 <h2>왜 커뮤니티 마케팅인가?</h2>
 <p>맘카페, 디시인사이드, 보배드림, 클리앙 — 이 공간들의 공통점은 <strong>광고에 극도로 예민한 유저들</strong>이 모여 있다는 점입니다. 동시에, 한번 신뢰를 얻으면 <strong>자발적 추천이 폭발적으로 확산</strong>됩니다.</p>
@@ -117,4 +147,5 @@ export const INSIGHT_ARTICLES: InsightArticle[] = [
 <p>뷰티 브랜드 A사: 맘카페 커뮤니티 바이럴 집행 후 <strong>2주 내 검색량 +840%</strong>, 월 매출 3배 증가</p>
 `,
   },
+
 ]
