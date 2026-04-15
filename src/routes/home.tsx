@@ -666,18 +666,7 @@ export const HomePage = () => (
       {/* ── 2행: 오른쪽으로 흐름 (반대 방향) ── */}
       <div class="testi-row-wrap">
         <div class="testi-row testi-row--rtl">
-          {/* Row 2 원본 */}
-          <blockquote class="testi-card testi-card--alt">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Performance Marketing</span>
-            </div>
-            <p class="testi-body">퍼포먼스 광고 최적화로 ROAS 1,850%를 달성했습니다. 데이터 기반 접근이 이런 차이를 만드는군요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">한</div>
-              <div class="testi-info"><strong>한○○ 대표</strong><span>이커머스 브랜드</span></div>
-            </footer>
-          </blockquote>
+          {/* Row 2 원본 — 퍼포먼스 마케팅 제거됨 */}
           <blockquote class="testi-card testi-card--alt">
             <div class="testi-card-top">
               <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
@@ -744,18 +733,7 @@ export const HomePage = () => (
               <div class="testi-info"><strong>류○○ 대표</strong><span>뷰티 스타트업</span></div>
             </footer>
           </blockquote>
-          {/* Row 2 복제 (무한루프) */}
-          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Performance Marketing</span>
-            </div>
-            <p class="testi-body">퍼포먼스 광고 최적화로 ROAS 1,850%를 달성했습니다. 데이터 기반 접근이 이런 차이를 만드는군요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">한</div>
-              <div class="testi-info"><strong>한○○ 대표</strong><span>이커머스 브랜드</span></div>
-            </footer>
-          </blockquote>
+          {/* Row 2 복제 — 퍼포먼스 마케팅 제거됨 */}
           <blockquote class="testi-card testi-card--alt" aria-hidden="true">
             <div class="testi-card-top">
               <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
@@ -1009,20 +987,111 @@ export const HomePage = () => (
   revealEls.forEach(function(el){ io.observe(el); });
 })();
 
+/* ─────────────────────────────────────────────
+   5. HOME CTA — 스크롤 진입 이펙트 + 파티클
+───────────────────────────────────────────── */
+───────────────────────────────────────────── */
+(function(){
+  var cta = document.getElementById('homeCta');
+  if(!cta) return;
+  var triggered = false;
+
+  // 진입 시 각 요소 visible 클래스 추가
+  function revealCta(){
+    if(triggered) return;
+    var rect = cta.getBoundingClientRect();
+    if(rect.top > window.innerHeight - 100) return;
+    triggered = true;
+    var els = cta.querySelectorAll('.hcta-badge, .hcta-line, .hcta-desc, .hcta-kpi, .hcta-btns');
+    els.forEach(function(el){ el.classList.add('visible'); });
+  }
+  window.addEventListener('scroll', revealCta, { passive: true });
+  revealCta();
+
+  // CTA 파티클
+  var canvas = document.getElementById('ctaParticle');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W, H, pts = [];
+  function resize(){ W = canvas.width = cta.offsetWidth; H = canvas.height = cta.offsetHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  for(var i=0; i<50; i++){
+    pts.push({
+      x: Math.random()*1400, y: Math.random()*500,
+      r: Math.random()*1.2+0.2,
+      dx: (Math.random()-0.5)*0.25, dy: (Math.random()-0.5)*0.25,
+      o: Math.random()*0.35+0.05
+    });
+  }
+  function drawCta(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(function(p){
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(100,160,255,'+p.o+')';
+      ctx.fill();
+      p.x+=p.dx; p.y+=p.dy;
+      if(p.x<0||p.x>W) p.dx*=-1;
+      if(p.y<0||p.y>H) p.dy*=-1;
+    });
+    requestAnimationFrame(drawCta);
+  }
+  drawCta();
+})();
+
 })();
     `}} />
 
     {/* ============ CTA ============ */}
-    <section class="home-cta">
-      <div class="home-cta-bg"><div class="hcta-glow"></div></div>
+    <section class="home-cta" id="homeCta">
+      <div class="home-cta-bg">
+        <div class="hcta-glow"></div>
+        {/* 파티클 캔버스 */}
+        <canvas id="ctaParticle" class="hcta-canvas"></canvas>
+        {/* 글로우 오브 */}
+        <div class="hcta-orb hcta-orb--1"></div>
+        <div class="hcta-orb hcta-orb--2"></div>
+      </div>
       <div class="container">
         <div class="home-cta-inner">
-          <h2>지금 당신의 브랜드에<br /><em>필요한 것은 무엇인가요?</em></h2>
-          <p>인애드컴퍼니와 함께라면 시작이 달라집니다.</p>
-          <a href="/contact" class="hero-cta-btn primary">
-            <span>무료 상담 신청하기</span>
-            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          {/* 상단 뱃지 */}
+          <div class="hcta-badge">
+            <span class="hcta-badge-dot"></span>
+            FREE CONSULTATION
+          </div>
+          <h2 class="hcta-title">
+            <span class="hcta-line hcta-line--1">지금 당신의 브랜드에</span>
+            <em class="hcta-line hcta-line--2">필요한 것은 무엇인가요?</em>
+          </h2>
+          <p class="hcta-desc">
+            인애드컴퍼니와 함께라면 시작이 달라집니다.<br />
+            <span class="hcta-desc-sub">검색 → 발견 → 신뢰 → 구매 → 재방문, 퍼널 전 단계를 책임집니다.</span>
+          </p>
+          {/* KPI 수치 */}
+          <div class="hcta-kpi">
+            <div class="hcta-kpi-item">
+              <strong>320+</strong><span>완료 프로젝트</span>
+            </div>
+            <div class="hcta-kpi-divider"></div>
+            <div class="hcta-kpi-item">
+              <strong>98%</strong><span>재계약률</span>
+            </div>
+            <div class="hcta-kpi-divider"></div>
+            <div class="hcta-kpi-item">
+              <strong>6년+</strong><span>업계 경험</span>
+            </div>
+          </div>
+          {/* 버튼 그룹 */}
+          <div class="hcta-btns">
+            <a href="/contact" class="hero-cta-btn primary hcta-btn-main">
+              <span>무료 상담 신청하기</span>
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <button type="button" class="hero-cta-btn ghost hcta-btn-call" onclick="openCallModal()">
+              <span>📞 바로 전화하기</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>

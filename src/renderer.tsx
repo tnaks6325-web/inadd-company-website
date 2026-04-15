@@ -145,7 +145,6 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
             <h2 class="call-modal-name">김수만 대표</h2>
             <a href="tel:010-9186-9944" class="call-modal-number">010-9186-9944</a>
             <p class="call-modal-hours">운영시간 · 평일 09:00 – 18:00</p>
-            <a href="tel:010-9186-9944" class="call-modal-btn">지금 전화하기</a>
           </div>
         </div>
         <script src="/static/main.js"></script>
