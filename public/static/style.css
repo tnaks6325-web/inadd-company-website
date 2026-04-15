@@ -3871,6 +3871,20 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   position: relative;
   overflow: hidden;
 }
+/* 반투명 배경 이미지 레이어 */
+.msc-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.08;
+  transition: opacity 0.35s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+.mkt-svc-card:hover .msc-bg { opacity: 0.15; }
+/* 카드 내용 z-index 올리기 */
+.msc-icon, .msc-body, .msc-kpi, .msc-arrow { position: relative; z-index: 1; }
 .mkt-svc-card::after {
   content: '';
   position: absolute;
