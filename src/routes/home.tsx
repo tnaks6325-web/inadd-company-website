@@ -119,25 +119,25 @@ export const HomePage = () => (
           {/* 왼쪽: 키워드 리스트 */}
           <ul class="svc-list">
             <li class="svc-list-item active" data-svc="0">
-              <a href="/viral"><span class="svc-list-num">01</span><span class="svc-list-name">VIRAL</span></a>
+              <a href="/marketing/viral"><span class="svc-list-num">01</span><span class="svc-list-name">VIRAL</span></a>
             </li>
             <li class="svc-list-item" data-svc="1">
-              <a href="/works"><span class="svc-list-num">02</span><span class="svc-list-name">INFLUENCER</span></a>
+              <a href="/marketing/influencer"><span class="svc-list-num">02</span><span class="svc-list-name">INFLUENCER</span></a>
             </li>
             <li class="svc-list-item" data-svc="2">
-              <a href="/works"><span class="svc-list-num">03</span><span class="svc-list-name">SEEDING</span></a>
+              <a href="/marketing/seeding"><span class="svc-list-num">03</span><span class="svc-list-name">SEEDING</span></a>
             </li>
             <li class="svc-list-item" data-svc="3">
-              <a href="/insight"><span class="svc-list-num">04</span><span class="svc-list-name">SEO</span></a>
+              <a href="/marketing/seo"><span class="svc-list-num">04</span><span class="svc-list-name">SEO</span></a>
             </li>
             <li class="svc-list-item" data-svc="4">
-              <a href="/works"><span class="svc-list-num">05</span><span class="svc-list-name">REVIEW</span></a>
+              <a href="/marketing/review"><span class="svc-list-num">05</span><span class="svc-list-name">REVIEW</span></a>
             </li>
             <li class="svc-list-item" data-svc="5">
-              <a href="/works"><span class="svc-list-num">06</span><span class="svc-list-name">OLIVE YOUNG</span></a>
+              <a href="/marketing/oliveyoung"><span class="svc-list-num">06</span><span class="svc-list-name">OLIVE YOUNG</span></a>
             </li>
             <li class="svc-list-item" data-svc="6">
-              <a href="/viral"><span class="svc-list-num">07</span><span class="svc-list-name">PPL</span></a>
+              <a href="/marketing/ppl"><span class="svc-list-num">07</span><span class="svc-list-name">PPL</span></a>
             </li>
           </ul>
 
@@ -380,8 +380,8 @@ export const HomePage = () => (
           </div>
           <div class="stat-divider-v"></div>
           <div class="stat-block">
-            <div class="stat-num-wrap"><span class="stat-num-big" data-count="12">0</span><span class="stat-unit-big">년</span></div>
-            <div class="stat-desc">업계 경험</div>
+            <div class="stat-num-wrap"><span class="stat-num-big" data-count="6">0</span><span class="stat-unit-big">년+</span></div>
+            <div class="stat-desc">업계 경험 (2019~)</div>
           </div>
           <div class="stat-divider-v"></div>
           <div class="stat-block">
