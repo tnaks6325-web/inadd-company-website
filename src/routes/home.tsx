@@ -826,6 +826,192 @@ export const HomePage = () => (
       </div>
     </section>
 
+    {/* ============ HOME PAGE — 인터랙티브 JS ============ */}
+    <script dangerouslySetInnerHTML={{__html: `
+(function(){
+
+/* ─────────────────────────────────────────────
+   1. WHAT WE DO — 서비스 리스트 인터랙션
+   마우스 오버 시 오른쪽 패널 교체 + 글로우 이펙트
+───────────────────────────────────────────── */
+(function(){
+  var items = document.querySelectorAll('.svc-list-item');
+  var panels = document.querySelectorAll('.svc-panel');
+  if(!items.length || !panels.length) return;
+
+  function activate(idx){
+    items.forEach(function(el){ el.classList.remove('active'); });
+    panels.forEach(function(el){ el.classList.remove('active'); el.classList.add('exiting'); });
+    items[idx].classList.add('active');
+    // 패널 교체 — 페이드+슬라이드
+    setTimeout(function(){
+      panels.forEach(function(el){ el.classList.remove('exiting'); });
+      var target = document.querySelector('.svc-panel[data-panel="'+idx+'"]');
+      if(target) target.classList.add('active');
+    }, 180);
+  }
+
+  items.forEach(function(item, idx){
+    // 호버 시 미리보기
+    item.addEventListener('mouseenter', function(){ activate(idx); });
+  });
+
+  // 클릭도 동일하게 (모바일 대응)
+  items.forEach(function(item, idx){
+    item.addEventListener('click', function(e){
+      var href = item.querySelector('a') && item.querySelector('a').getAttribute('href');
+      if(href && href !== '#'){
+        // 링크 이동
+      }
+    });
+  });
+})();
+
+/* ─────────────────────────────────────────────
+   2. STATS — 숫자 카운팅 + stagger fade-up
+───────────────────────────────────────────── */
+(function(){
+  var statSection = document.querySelector('.stats-section');
+  if(!statSection) return;
+  var triggered = false;
+
+  // 각 stat-block에 fade-up 클래스 추가
+  var blocks = statSection.querySelectorAll('.stat-block');
+  blocks.forEach(function(b, i){
+    b.style.opacity = '0';
+    b.style.transform = 'translateY(32px)';
+    b.style.transition = 'opacity 0.6s cubic-bezier(0.16,1,0.3,1) '+(i*0.12)+'s, transform 0.6s cubic-bezier(0.16,1,0.3,1) '+(i*0.12)+'s';
+  });
+
+  function countUp(){
+    if(triggered) return;
+    var rect = statSection.getBoundingClientRect();
+    if(rect.top > window.innerHeight - 100) return;
+    triggered = true;
+
+    // fade-up 실행
+    blocks.forEach(function(b){
+      b.style.opacity = '1';
+      b.style.transform = 'translateY(0)';
+    });
+
+    // 숫자 카운팅
+    var nums = statSection.querySelectorAll('.stat-num-big');
+    nums.forEach(function(el){
+      var target = parseInt(el.getAttribute('data-count') || '0', 10);
+      var duration = 1800;
+      var start = null;
+      function step(ts){
+        if(!start) start = ts;
+        var prog = Math.min((ts - start) / duration, 1);
+        var ease = 1 - Math.pow(1 - prog, 4); // easeOutQuart
+        el.textContent = Math.floor(ease * target);
+        if(prog < 1){
+          requestAnimationFrame(step);
+        } else {
+          el.textContent = target;
+        }
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  window.addEventListener('scroll', countUp, { passive: true });
+  countUp();
+})();
+
+/* ─────────────────────────────────────────────
+   3. HISTORY — 곡선 드로잉 + 노드 순차 등장
+───────────────────────────────────────────── */
+(function(){
+  var histSection = document.querySelector('.history-section');
+  if(!histSection) return;
+  var triggered = false;
+
+  // 노드들 초기 숨김
+  var nodes = histSection.querySelectorAll('.hn-node');
+  nodes.forEach(function(n){
+    n.style.opacity = '0';
+    n.style.transform = 'translateY(20px) scale(0.8)';
+    n.style.transition = 'none';
+  });
+
+  // 곡선 경로 길이 측정
+  var line = histSection.querySelector('.hist-curve-line');
+  if(line){
+    var len = line.getTotalLength ? line.getTotalLength() : 1800;
+    line.style.strokeDasharray = len;
+    line.style.strokeDashoffset = len;
+    line.style.transition = 'none';
+  }
+  var glow = histSection.querySelector('.hist-curve-glow');
+  if(glow){
+    var glen = glow.getTotalLength ? glow.getTotalLength() : 1800;
+    glow.style.strokeDasharray = glen;
+    glow.style.strokeDashoffset = glen;
+    glow.style.transition = 'none';
+  }
+
+  function runAnim(){
+    if(triggered) return;
+    var rect = histSection.getBoundingClientRect();
+    if(rect.top > window.innerHeight - 80) return;
+    triggered = true;
+
+    // 곡선 드로잉
+    if(line){
+      line.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.4,0,0.2,1)';
+      line.style.strokeDashoffset = '0';
+    }
+    if(glow){
+      glow.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.4,0,0.2,1) 0.1s';
+      glow.style.strokeDashoffset = '0';
+    }
+
+    // 노드 순차 등장 (곡선 드로잉과 함께)
+    nodes.forEach(function(n, i){
+      var delay = 0.3 + i * 0.18;
+      setTimeout(function(){
+        n.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1)';
+        n.style.opacity = '1';
+        n.style.transform = 'translateY(0) scale(1)';
+      }, delay * 1000);
+    });
+  }
+
+  window.addEventListener('scroll', runAnim, { passive: true });
+  runAnim();
+})();
+
+/* ─────────────────────────────────────────────
+   4. 전체 섹션 스크롤 reveal (section-head 등)
+───────────────────────────────────────────── */
+(function(){
+  var revealEls = document.querySelectorAll('.section-head, .hist-head, .testi-head');
+  if(!('IntersectionObserver' in window)){
+    revealEls.forEach(function(el){ el.style.opacity='1'; el.style.transform='none'; });
+    return;
+  }
+  revealEls.forEach(function(el){
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1)';
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(function(el){ io.observe(el); });
+})();
+
+})();
+    `}} />
+
     {/* ============ CTA ============ */}
     <section class="home-cta">
       <div class="home-cta-bg"><div class="hcta-glow"></div></div>

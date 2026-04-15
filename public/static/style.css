@@ -809,7 +809,8 @@ em {
   gap: 0;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.45s ease;
+  transform: translateY(12px) scale(0.98);
+  transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1);
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.07);
@@ -817,6 +818,12 @@ em {
 .svc-panel.active {
   opacity: 1;
   pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+.svc-panel.exiting {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.98);
+  transition: opacity 0.18s ease, transform 0.18s ease;
 }
 
 /* 이미지 영역 (반투명) */
@@ -5553,4 +5560,128 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
     grid-template-columns: 1fr;
   }
   .msig-card { aspect-ratio: 16 / 9; }
+}
+
+/* ══════════════════════════════════════════════════
+   HOME — 서비스 리스트 호버 글로우 이펙트
+══════════════════════════════════════════════════ */
+
+/* 리스트 아이템 — 호버/활성 글로우 바 */
+.svc-list-item a {
+  position: relative;
+}
+.svc-list-item a::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%) scaleY(0);
+  width: 3px;
+  height: 60%;
+  background: #1a6bff;
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(26,107,255,0.8);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.svc-list-item.active a::before,
+.svc-list-item a:hover::before {
+  transform: translateY(-50%) scaleY(1);
+}
+
+/* 활성 아이템 배경 글로우 */
+.svc-list-item.active a {
+  background: linear-gradient(90deg, rgba(26,107,255,0.08) 0%, transparent 100%);
+}
+
+/* ══════════════════════════════════════════════════
+   HOME — STATS 카운팅 섹션 강화
+══════════════════════════════════════════════════ */
+
+.stats-section {
+  position: relative;
+  overflow: hidden;
+}
+.stats-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(26,107,255,0.03) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* 구분선 글로우 */
+.stat-divider-v {
+  position: relative;
+}
+.stat-divider-v::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, rgba(26,107,255,0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.stats-section:hover .stat-divider-v::after {
+  opacity: 1;
+}
+
+/* stat-block 호버 강조 */
+.stat-block {
+  cursor: default;
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.stat-block:hover {
+  transform: translateY(-4px);
+}
+.stat-block:hover .stat-num-big {
+  color: #5a9fff;
+  text-shadow: 0 0 20px rgba(26,107,255,0.5);
+}
+
+/* ══════════════════════════════════════════════════
+   HOME — HISTORY 곡선 드로잉 이펙트
+══════════════════════════════════════════════════ */
+
+/* 메인 곡선 — 드로잉 준비 (JS로 strokeDasharray 세팅됨) */
+.hist-curve-line {
+  stroke: rgba(26,107,255,0.7);
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px rgba(26,107,255,0.4));
+}
+
+/* 글로우 곡선 */
+.hist-curve-glow {
+  stroke: rgba(26,107,255,0.25);
+  stroke-width: 8;
+  stroke-linecap: round;
+  filter: blur(3px);
+}
+
+/* 노드 서클 호버 펄스 강화 */
+.hn-node:hover .hn-circle {
+  box-shadow: 0 0 0 6px rgba(26,107,255,0.2), 0 0 20px rgba(26,107,255,0.4);
+}
+
+/* 히스토리 헤더 블루 글로우 */
+.hist-title em {
+  position: relative;
+  display: inline-block;
+}
+.hist-title em::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #1a6bff, #5a9fff, transparent);
+  border-radius: 2px;
+  animation: slideRight 2.5s ease-in-out infinite;
+}
+@keyframes slideRight {
+  0%   { transform: scaleX(0); transform-origin: left; }
+  50%  { transform: scaleX(1); transform-origin: left; }
+  51%  { transform: scaleX(1); transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
 }
