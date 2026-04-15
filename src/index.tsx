@@ -5,6 +5,7 @@ import { HomePage } from './routes/home'
 import { AboutPage } from './routes/about'
 import { WorksPage } from './routes/works'
 import { InsightPage } from './routes/insight'
+import { InsightDetailPage } from './routes/insight-detail'
 import { ViralPage } from './routes/viral'
 import { ContactPage } from './routes/contact'
 import { SvcViralPage } from './routes/svc-viral'
@@ -38,6 +39,11 @@ app.get('/works', (c) => {
 
 app.get('/insight', (c) => {
   return c.render(<InsightPage />, { title: 'Marketing Insight' })
+})
+
+app.get('/insight/:id', (c) => {
+  const id = c.req.param('id')
+  return c.render(<InsightDetailPage id={id} />, { title: 'Insight' })
 })
 
 // Marketing 메인 (서비스 목록 페이지)
