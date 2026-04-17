@@ -228,6 +228,7 @@ export const ViralPage = () => (
               desc: '핵심 타겟에게 샘플을 전달해 진정성 있는 후기와 입소문 생태계를 구축합니다.',
               kpis: [{ val: '68%', label: '후기 전환율' }, { val: '+230%', label: '리뷰 전환 효과' }],
               img: '/static/svc-images/seeding.png',
+              imgPos: 'center center',
             },
             {
               icon: '🔍',
@@ -237,6 +238,7 @@ export const ViralPage = () => (
               desc: '소비자가 검색하는 순간 브랜드가 먼저 보이도록 키워드부터 콘텐츠까지 설계합니다.',
               kpis: [{ val: 'TOP3', label: '검색 순위 달성' }, { val: '+1,200%', label: '검색량 증가' }],
               img: '/static/svc-images/seo.png',
+              imgPos: 'right center',
             },
             {
               icon: '💬',
@@ -268,7 +270,7 @@ export const ViralPage = () => (
           ].map((s, i) => (
             <a href={s.href} class="msig-card reveal-up" style={`transition-delay:${i * 0.08}s`} key={s.href}>
               {/* 배경 이미지 — 호버 시 줌 */}
-              <div class="msig-img" style={`background-image:url('${s.img}')`}></div>
+              <div class="msig-img" style={`background-image:url('${s.img}');background-position:${'imgPos' in s ? (s as any).imgPos : 'center center'}`}></div>
               {/* 그라디언트 오버레이 */}
               <div class="msig-overlay"></div>
               {/* 상단 태그 */}
