@@ -80,18 +80,25 @@ export const SvcViralPage = () => (
         </div>
         <div class="svc-process-steps">
           {[
-            { num:'01', title:'브랜드 분석', desc:'브랜드 특성, 타겟 소비자, 경쟁 환경을 분석해 바이럴 포인트를 발굴합니다.' },
-            { num:'02', title:'채널 전략 수립', desc:'맘카페, 커뮤니티, SNS 등 타겟이 모이는 최적 채널과 확산 시나리오를 설계합니다.' },
-            { num:'03', title:'콘텐츠 제작', desc:'광고처럼 느껴지지 않는 자연스러운 경험 콘텐츠를 기획·제작합니다.' },
-            { num:'04', title:'시드 배포', desc:'핵심 커뮤니티에 콘텐츠를 전략적으로 배포하고 초기 반응을 모니터링합니다.' },
-            { num:'05', title:'확산 관리', desc:'버즈가 확산되는 과정을 실시간 모니터링하고 추가 확산 전략을 실행합니다.' },
-            { num:'06', title:'성과 리포팅', desc:'도달, 공유, 검색량 변화, 매출 연계 등 종합 성과 리포트를 제공합니다.' },
+            { num:'01', title:'브랜드 분석', desc:'브랜드 특성, 타겟 소비자, 경쟁 환경을 분석해 바이럴 포인트를 발굴합니다.', img:'/static/process-images/process-01.png', accent:'#1a6bff' },
+            { num:'02', title:'채널 전략 수립', desc:'맘카페, 커뮤니티, SNS 등 타겟이 모이는 최적 채널과 확산 시나리오를 설계합니다.', img:'/static/process-images/process-02.png', accent:'#7c3aed' },
+            { num:'03', title:'콘텐츠 제작', desc:'광고처럼 느껴지지 않는 자연스러운 경험 콘텐츠를 기획·제작합니다.', img:'/static/process-images/process-03.png', accent:'#059669' },
+            { num:'04', title:'시드 배포', desc:'핵심 커뮤니티에 콘텐츠를 전략적으로 배포하고 초기 반응을 모니터링합니다.', img:'/static/process-images/process-04.png', accent:'#0891b2' },
+            { num:'05', title:'확산 관리', desc:'버즈가 확산되는 과정을 실시간 모니터링하고 추가 확산 전략을 실행합니다.', img:'/static/process-images/process-05.png', accent:'#dc2626' },
+            { num:'06', title:'성과 리포팅', desc:'도달, 공유, 검색량 변화, 매출 연계 등 종합 성과 리포트를 제공합니다.', img:'/static/process-images/process-06.png', accent:'#d97706' },
           ].map(s => (
             <div class="sps-step">
-              <div class="sps-num">{s.num}</div>
-              <div class="sps-body">
-                <h4>{s.title}</h4>
-                <p>{s.desc}</p>
+              <div class="sps-img-wrap">
+                <img src={s.img} alt={s.title} class="sps-img" loading="lazy" />
+                <div class="sps-img-dim"></div>
+              </div>
+              <div class="sps-content">
+                <div class="sps-num" style={`color:${s.accent}`}>{s.num}</div>
+                <div class="sps-body">
+                  <h4>{s.title}</h4>
+                  <p>{s.desc}</p>
+                </div>
+                <div class="sps-accent-bar" style={`background:${s.accent}`}></div>
               </div>
             </div>
           ))}
