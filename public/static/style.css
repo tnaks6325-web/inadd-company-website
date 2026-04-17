@@ -6095,3 +6095,270 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .type-card-body strong { font-size: 17px; }
   .type-card-badge { display: none; }
 }
+
+/* =============================================
+   CONTACT SPLIT SCREEN v3
+   ============================================= */
+
+/* 네비게이션 바 숨김용 — 스플릿 화면에선 헤더 아래부터 꽉 채움 */
+.ct-split-screen {
+  display: flex;
+  width: 100%;
+  /* 헤더 높이(64px) 제외하고 뷰포트 꽉 채움 */
+  min-height: calc(100vh - 64px);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── 각 패널 ── */
+.ct-split-panel {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: flex 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 호버 시 60:40으로 확장 */
+.ct-split-panel.ct-active  { flex: 1.4; }
+.ct-split-panel.ct-shrink  { flex: 0.6; }
+
+/* ── 배경 레이어 ── */
+.ct-panel-bg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s ease, opacity 0.4s ease;
+}
+.ct-panel--agency .ct-panel-bg {
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 50%, rgba(26,107,255,0.35) 0%, transparent 70%),
+    linear-gradient(135deg, #040d1f 0%, #071230 50%, #050a1a 100%);
+}
+.ct-panel--brand .ct-panel-bg {
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 50%, rgba(100,210,140,0.25) 0%, transparent 70%),
+    linear-gradient(135deg, #050a1a 0%, #071a10 50%, #040d1f 100%);
+}
+.ct-split-panel.ct-active .ct-panel-bg {
+  transform: scale(1.04);
+}
+
+/* ── 콘텐츠 ── */
+.ct-panel-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 48px 40px;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+.ct-split-panel.ct-shrink .ct-panel-content {
+  opacity: 0.5;
+  transform: scale(0.95);
+}
+
+.ct-panel-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 20px;
+}
+.ct-panel--agency.ct-active .ct-panel-label { color: rgba(26,107,255,0.8); }
+.ct-panel--brand.ct-active  .ct-panel-label { color: rgba(100,210,140,0.8); }
+
+.ct-panel-title {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.ct-panel-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+  margin-bottom: 36px;
+}
+.ct-split-panel.ct-active .ct-panel-desc {
+  color: rgba(255,255,255,0.7);
+}
+
+/* CTA 버튼 */
+.ct-panel-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.6);
+  transition: all 0.35s ease;
+  opacity: 0;
+  transform: translateY(10px);
+}
+.ct-split-panel.ct-active .ct-panel-cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+.ct-panel--agency.ct-active .ct-panel-cta {
+  background: rgba(26,107,255,0.15);
+  border-color: rgba(26,107,255,0.5);
+  color: #fff;
+  box-shadow: 0 0 24px rgba(26,107,255,0.3);
+}
+.ct-panel--brand.ct-active .ct-panel-cta {
+  background: rgba(100,210,140,0.12);
+  border-color: rgba(100,210,140,0.45);
+  color: #fff;
+  box-shadow: 0 0 24px rgba(100,210,140,0.2);
+}
+.ct-panel-cta svg { width: 18px; height: 18px; }
+
+/* 큰 배경 숫자 */
+.ct-panel-num {
+  position: absolute;
+  bottom: 32px;
+  right: 40px;
+  font-size: clamp(80px, 12vw, 160px);
+  font-weight: 900;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  z-index: 1;
+  pointer-events: none;
+  transition: color 0.4s ease;
+  user-select: none;
+}
+.ct-split-panel.ct-active .ct-panel-num {
+  color: rgba(255,255,255,0.07);
+}
+
+/* ── 가운데 구분선 + OR ── */
+.ct-split-divider {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.ct-split-divider span {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.4);
+  backdrop-filter: blur(8px);
+}
+/* 세로 구분선 */
+.ct-split-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1px;
+  height: 100vh;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1) 20%, rgba(255,255,255,0.1) 80%, transparent);
+  z-index: -1;
+}
+
+/* ── 전환 애니메이션 ── */
+@keyframes ctSplitOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(1.03); }
+}
+@keyframes ctFormIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 폼 화면 히어로 내 배지·백버튼 ── */
+.ct-form-hero .step-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 7px 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.2s ease;
+}
+.ct-form-hero .step-back-btn:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.25);
+}
+.ct-form-hero .step-back-btn svg { width: 15px; height: 15px; }
+
+.ct-form-type-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 20px;
+  padding: 5px 14px;
+  margin-bottom: 12px;
+}
+.ct-badge--agency {
+  color: rgba(26,107,255,0.9);
+  background: rgba(26,107,255,0.1);
+  border: 1px solid rgba(26,107,255,0.25);
+}
+.ct-badge--brand {
+  color: rgba(100,210,140,0.9);
+  background: rgba(100,210,140,0.08);
+  border: 1px solid rgba(100,210,140,0.2);
+}
+
+/* 예산 직접입력 */
+.cf-budget-wrap { display: flex; flex-direction: column; gap: 10px; }
+.cf-custom-budget input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.25s;
+}
+.cf-custom-budget input:focus {
+  border-color: rgba(26,107,255,0.5);
+  background: rgba(26,107,255,0.05);
+}
+.cf-custom-budget input::placeholder { color: rgba(255,255,255,0.3); }
+
+/* ── 반응형 ── */
+@media (max-width: 768px) {
+  .ct-split-screen { flex-direction: column; min-height: calc(100vh - 64px); }
+  .ct-split-panel  { flex: 1; min-height: 50%; }
+  .ct-split-panel.ct-active  { flex: 1.3; }
+  .ct-split-panel.ct-shrink  { flex: 0.7; }
+  .ct-split-divider::before  { width: 100vw; height: 1px; }
+  .ct-panel-title { font-size: 32px; }
+  .ct-panel-num   { font-size: 80px; }
+}
