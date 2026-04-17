@@ -130,59 +130,79 @@ export const ViralPage = () => (
     <section class="mkt-funnel-story">
       <div class="container">
         <div class="mfs-header reveal-up">
-          <span class="sec-label">THE FUNNEL</span>
-          <h2 class="sec-title">광고를 보는 것과<br /><em>행동하게 만드는 것</em>은 다릅니다</h2>
-          <p class="sec-sub">인애드컴퍼니는 단순 노출이 아닌, 소비자가 자연스럽게 구매로 이동하는<br />퍼널 구조 전체를 설계하고 실행합니다.</p>
+          <span class="sec-label">HOW WE WORK</span>
+          <h2 class="sec-title">바이럴 마케팅<br /><em>진행 프로세스</em></h2>
+          <p class="sec-sub">전략 수립부터 성과 리포트까지, 인애드컴퍼니의 6단계 체계적 프로세스로<br />브랜드의 지속 성장을 실현합니다.</p>
         </div>
 
-        <div class="mfs-steps">
+        <div class="mfs-steps-v2">
           {[
             {
               step: '01',
-              phase: '인지 · AWARENESS',
-              title: '소비자가 먼저 찾아오게 합니다',
-              desc: '바이럴·인플루언서·PPL을 통해 브랜드가 자연스럽게 소비자의 일상에 스며듭니다. 광고처럼 보이지 않는 콘텐츠가 진짜 인지도를 만듭니다.',
-              icon: '🔥',
-              color: 'rgba(255,80,80,0.15)',
-              border: 'rgba(255,80,80,0.3)',
+              phase: 'BRAND STRATEGY',
+              title: '브랜드 포지셔닝 & 전략 수립',
+              desc: '시장 분석과 경쟁사 리서치를 바탕으로 브랜드만의 포지셔닝을 설계합니다. 데이터 기반의 전략이 모든 캠페인의 출발점이 됩니다.',
+              accent: '#1a6bff',
+              img: '/static/process-images/process-01.png',
             },
             {
               step: '02',
-              phase: '탐색 · CONSIDERATION',
-              title: '검색하면 반드시 우리가 나옵니다',
-              desc: 'SEO·블로그·커뮤니티 최적화로 소비자가 정보를 찾는 모든 접점에서 브랜드가 노출됩니다. 검색 = 발견 = 관심으로 이어집니다.',
-              icon: '🔍',
-              color: 'rgba(80,160,255,0.15)',
-              border: 'rgba(80,160,255,0.3)',
+              phase: 'CHANNEL PLANNING',
+              title: '채널 전략 & 캠페인 플로우 설계',
+              desc: 'Instagram·YouTube·카카오·블로그 등 최적 채널을 선정하고 Awareness → Consideration → Conversion → Retention 전 단계를 설계합니다.',
+              accent: '#7c3aed',
+              img: '/static/process-images/process-02.png',
             },
             {
               step: '03',
-              phase: '신뢰 · TRUST',
-              title: '리뷰와 후기가 구매를 결정합니다',
-              desc: '시딩·리뷰 마케팅으로 실제 사용자의 진정성 있는 목소리를 만들어냅니다. 소비자는 광고보다 같은 소비자의 말을 믿습니다.',
-              icon: '💬',
-              color: 'rgba(80,200,120,0.15)',
-              border: 'rgba(80,200,120,0.3)',
+              phase: 'CONTENT CREATION',
+              title: '콘텐츠 기획 & 크리에이티브 제작',
+              desc: '브랜드 아이덴티티를 살린 비주얼과 카피를 기획합니다. 영상·사진·텍스트 콘텐츠가 소비자의 감성에 자연스럽게 스며듭니다.',
+              accent: '#059669',
+              img: '/static/process-images/process-03.png',
             },
             {
               step: '04',
-              phase: '전환 · CONVERSION',
-              title: '올리브영·플랫폼 최적화로 매출을 폭발시킵니다',
-              desc: '올리브영 마케팅·리뷰 관리·플랫폼 SEO로 장바구니 담기부터 결제까지의 여정을 최적화합니다. 같은 유입으로 더 많이 팝니다.',
-              icon: '🛒',
-              color: 'rgba(255,180,50,0.15)',
-              border: 'rgba(255,180,50,0.3)',
+              phase: 'EXECUTION & MONITORING',
+              title: '콘텐츠 배포 & 실시간 성과 모니터링',
+              desc: '확정된 채널에 콘텐츠를 동시 배포하고, 실시간 트래픽·참여율·전환율 대시보드로 캠페인 현황을 24시간 추적합니다.',
+              accent: '#0891b2',
+              img: '/static/process-images/process-04.png',
+            },
+            {
+              step: '05',
+              phase: 'OPTIMIZATION',
+              title: '데이터 분석 & 캠페인 최적화',
+              desc: '수집된 데이터를 기반으로 성과를 분석하고 실시간 최적화를 실행합니다. KPI를 함께 설정하고 목표 달성까지 지속적으로 개선합니다.',
+              accent: '#dc2626',
+              img: '/static/process-images/process-05.png',
+            },
+            {
+              step: '06',
+              phase: 'REPORTING',
+              title: '성과 리포트 & 다음 전략 제안',
+              desc: '캠페인 종료 후 상세 성과 보고서를 제공합니다. 인사이트를 바탕으로 다음 캠페인 전략을 제안하며 장기적 브랜드 성장을 지원합니다.',
+              accent: '#d97706',
+              img: '/static/process-images/process-06.png',
             },
           ].map((s, i) => (
-            <div class={`mfs-step reveal-side reveal-side--${i % 2 === 0 ? 'left' : 'right'}`} key={s.step}>
-              <div class="mfs-step-num">{s.step}</div>
-              <div class="mfs-step-card" style={`background:${s.color};border-color:${s.border}`}>
-                <div class="mfs-step-icon">{s.icon}</div>
-                <div class="mfs-step-body">
-                  <span class="mfs-phase">{s.phase}</span>
-                  <h3 class="mfs-title">{s.title}</h3>
-                  <p class="mfs-desc">{s.desc}</p>
+            <div class={`mfs-item ${i % 2 === 0 ? 'mfs-item--normal' : 'mfs-item--reverse'} reveal-up`} key={s.step}>
+              {/* 이미지 패널 */}
+              <div class="mfs-img-panel">
+                <div class="mfs-img-wrap">
+                  <img src={s.img} alt={s.title} class="mfs-img" loading="lazy" />
+                  <div class="mfs-img-overlay" style={`--accent:${s.accent}`}></div>
                 </div>
+              </div>
+              {/* 텍스트 패널 */}
+              <div class="mfs-text-panel">
+                <div class="mfs-step-badge" style={`background:${s.accent}22;border-color:${s.accent}55;color:${s.accent}`}>
+                  <span class="mfs-step-badge-num">STEP {s.step}</span>
+                </div>
+                <span class="mfs-phase-v2" style={`color:${s.accent}`}>{s.phase}</span>
+                <h3 class="mfs-title-v2">{s.title}</h3>
+                <p class="mfs-desc-v2">{s.desc}</p>
+                <div class="mfs-divider" style={`background:${s.accent}`}></div>
               </div>
             </div>
           ))}
