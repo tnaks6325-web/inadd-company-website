@@ -238,7 +238,7 @@ export const ViralPage = () => (
               desc: '소비자가 검색하는 순간 브랜드가 먼저 보이도록 키워드부터 콘텐츠까지 설계합니다.',
               kpis: [{ val: 'TOP3', label: '검색 순위 달성' }, { val: '+1,200%', label: '검색량 증가' }],
               img: '/static/svc-images/seo.png',
-              imgPos: 'right center',
+              imgPos: 'center center',
             },
             {
               icon: '💬',
