@@ -6515,3 +6515,26 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .cf-privacy-group {
   width: 100%;
 }
+
+/* ── Contact 폼 화면: 히어로·폼·FAQ 모두 720px 기준 왼쪽 정렬 통일 ── */
+.ct-form-screen .page-hero .container,
+.ct-form-screen .contact-main-section .container {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+.ct-form-screen .contact-layout {
+  grid-template-columns: 1fr !important;
+  max-width: 100%;
+  gap: 0;
+}
+.ct-form-screen .contact-form-wrap,
+.ct-faq-section {
+  max-width: 100%;
+}
+/* 히어로 패딩 줄임 (너무 넓지 않게) */
+.ct-form-screen .page-hero {
+  padding: 80px 0 60px;
+}
