@@ -2110,85 +2110,123 @@ em {
 .value-card p { font-size: 14px; color: var(--gray-3); line-height: 1.8; }
 
 /* ── About Clients / 클라이언트 ── */
-.about-clients-section {
-  background: var(--black);
-  padding: 80px 0;
+/* ═══════════════════════════════════════════════
+   클라이언트 섹션 — 흰 배경 + 로고 마퀴 (레뷰 스타일)
+   ═══════════════════════════════════════════════ */
+.acl-section {
+  background: #ffffff;
+  padding: 80px 0 72px;
   overflow: hidden;
 }
-.about-clients-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 5px;
-  color: rgba(255,255,255,0.3);
+
+/* 헤더 */
+.acl-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 56px;
+  padding: 0 24px;
+}
+.acl-eyebrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #1a6bff;
+  margin: 0 0 14px;
   text-transform: uppercase;
 }
+.acl-heading {
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 900;
+  color: #0a0a14;
+  margin: 0 0 14px;
+  letter-spacing: -1px;
+  line-height: 1.15;
+}
+.acl-sub {
+  font-size: 15px;
+  color: #666;
+  margin: 0;
+  line-height: 1.6;
+}
 
-/* Marquee outer wrapper */
-.acl-marquee-outer {
+/* 마퀴 래퍼 */
+.acl-marquee-wrap {
   display: flex;
   flex-direction: column;
   gap: 0;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
 }
 
-/* Each marquee row */
-.acl-marquee-track {
+/* 각 행 */
+.acl-row {
+  overflow: hidden;
+  border-top: 1px solid #ebebeb;
+}
+.acl-row:last-child {
+  border-bottom: 1px solid #ebebeb;
+}
+
+/* 스크롤 트랙 */
+.acl-track {
   display: flex;
   width: max-content;
-  border-top: 1px solid rgba(255,255,255,0.07);
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  animation: aclScroll 28s linear infinite;
+  align-items: center;
 }
-.acl-marquee-track:nth-child(2) {
-  border-top: none;
+.acl-track--fwd {
+  animation: aclFwd 30s linear infinite;
 }
-.acl-marquee-track--reverse {
-  animation-direction: reverse;
-  animation-duration: 32s;
+.acl-track--rev {
+  animation: aclFwd 35s linear infinite reverse;
 }
 
-@keyframes aclScroll {
+@keyframes aclFwd {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-/* Duplicate content for seamless loop */
-.acl-item {
+/* 로고 박스 */
+.acl-logo-box {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 22px 36px;
-  border-right: 1px solid rgba(255,255,255,0.07);
+  padding: 28px 44px;
+  border-right: 1px solid #ebebeb;
   flex-shrink: 0;
-  background: transparent;
+  transition: background 0.2s;
 }
-.acl-logo {
-  width: auto;
-  max-width: 120px;
-  height: 44px;
-  object-fit: contain;
-  filter: grayscale(100%) brightness(0) invert(0.5);
-  opacity: 0.7;
-  transition: filter 0.25s, opacity 0.25s;
-}
-.acl-item:hover .acl-logo {
-  filter: grayscale(100%) brightness(0) invert(0.9);
-  opacity: 1;
+.acl-logo-box:hover {
+  background: #f5f7ff;
 }
 
-/* Pause on hover */
-.acl-marquee-outer:hover .acl-marquee-track {
+/* 로고 이미지 */
+.acl-logo-img {
+  width: auto;
+  max-width: 130px;
+  height: 48px;
+  object-fit: contain;
+  /* 흰 배경 위 — 원본 색상 그대로 + grayscale */
+  filter: grayscale(100%) contrast(0.8) brightness(0.85);
+  opacity: 0.75;
+  transition: filter 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
+}
+.acl-logo-box:hover .acl-logo-img {
+  filter: grayscale(0%) contrast(1) brightness(1);
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+/* 호버 시 마퀴 일시 정지 */
+.acl-marquee-wrap:hover .acl-track {
   animation-play-state: paused;
 }
 
 @media (max-width: 768px) {
-  .acl-logo { height: 36px; max-width: 90px; }
-  .acl-item { padding: 18px 24px; }
+  .acl-section { padding: 60px 0 56px; }
+  .acl-logo-img { height: 36px; max-width: 90px; }
+  .acl-logo-box { padding: 20px 28px; }
+  .acl-header { margin-bottom: 40px; }
 }
 
 /* Location */
