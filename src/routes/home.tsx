@@ -146,14 +146,8 @@ export const HomePage = () => (
 
             {/* 패널 0 — VIRAL */}
             <div class="svc-panel active" data-panel="0">
-              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 60% 40%, rgba(26,107,255,0.25) 0%, transparent 70%), linear-gradient(135deg,#050510 0%,#0a1228 100%)">
-                <div class="svc-panel-noise"></div>
-                <div class="svc-panel-chart">
-                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
-                    <polyline points="10,85 40,60 70,70 100,35 130,45 160,15 190,20" stroke="rgba(26,107,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <polyline points="10,90 40,75 70,80 100,55 130,60 160,40 190,45" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
+              <div class="svc-panel-img" style="background-image:url('/static/svc-images/viral.png'); background-size:cover; background-position:center; position:relative;">
+                <div class="svc-real-img-overlay"></div>
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Viral Marketing</span>
@@ -172,17 +166,8 @@ export const HomePage = () => (
 
             {/* 패널 1 — INFLUENCER */}
             <div class="svc-panel" data-panel="1">
-              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 40% 60%, rgba(41,121,255,0.22) 0%, transparent 65%), linear-gradient(135deg,#060510 0%,#100820 100%)">
-                <div class="svc-panel-noise"></div>
-                <div class="svc-panel-chart">
-                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
-                    <circle cx="50" cy="50" r="30" stroke="rgba(26,107,255,0.4)" stroke-width="1.5" stroke-dasharray="4 3"/>
-                    <circle cx="130" cy="40" r="20" stroke="rgba(26,107,255,0.3)" stroke-width="1.5" stroke-dasharray="4 3"/>
-                    <line x1="50" y1="50" x2="130" y2="40" stroke="rgba(26,107,255,0.35)" stroke-width="1"/>
-                    <circle cx="90" cy="70" r="12" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-dasharray="3 2"/>
-                    <line x1="50" y1="50" x2="90" y2="70" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                  </svg>
-                </div>
+              <div class="svc-panel-img" style="background-image:url('/static/svc-images/influencer.png'); background-size:cover; background-position:center; position:relative;">
+                <div class="svc-real-img-overlay"></div>
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Influencer &amp; YouTube</span>
@@ -276,19 +261,8 @@ export const HomePage = () => (
 
             {/* 패널 5 — OLIVE YOUNG */}
             <div class="svc-panel" data-panel="5">
-              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 50% 50%, rgba(26,107,255,0.22) 0%, transparent 65%), linear-gradient(135deg,#040a06 0%,#081410 100%)">
-                <div class="svc-panel-noise"></div>
-                <div class="svc-panel-chart">
-                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
-                    <rect x="15" y="20" width="170" height="60" rx="8" stroke="rgba(26,107,255,0.35)" stroke-width="1.5"/>
-                    <path d="M15 45H185" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-                    <path d="M60 20V80" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-                    <circle cx="38" cy="35" r="8" fill="rgba(26,107,255,0.4)"/>
-                    <circle cx="38" cy="60" r="6" fill="rgba(26,107,255,0.25)"/>
-                    <rect x="70" y="27" width="80" height="8" rx="2" fill="rgba(255,255,255,0.2)"/>
-                    <rect x="70" y="54" width="55" height="8" rx="2" fill="rgba(255,255,255,0.1)"/>
-                  </svg>
-                </div>
+              <div class="svc-panel-img" style="background-image:url('/static/svc-images/oliveyoung.png'); background-size:cover; background-position:center; position:relative;">
+                <div class="svc-real-img-overlay"></div>
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Olive Young Marketing</span>
@@ -307,16 +281,8 @@ export const HomePage = () => (
 
             {/* 패널 6 — PPL */}
             <div class="svc-panel" data-panel="6">
-              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 45% 55%, rgba(26,107,255,0.2) 0%, transparent 60%), linear-gradient(135deg,#080608 0%,#140a18 100%)">
-                <div class="svc-panel-noise"></div>
-                <div class="svc-panel-chart">
-                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
-                    <rect x="15" y="15" width="170" height="70" rx="6" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/>
-                    <circle cx="100" cy="50" r="18" stroke="rgba(26,107,255,0.5)" stroke-width="1.5"/>
-                    <polygon points="94,42 94,58 112,50" fill="rgba(26,107,255,0.6)"/>
-                    <path d="M15 85 Q55 60 100 68 Q145 75 185 50" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" stroke-dasharray="4 3"/>
-                  </svg>
-                </div>
+              <div class="svc-panel-img" style="background-image:url('/static/svc-images/ppl.png'); background-size:cover; background-position:center; position:relative;">
+                <div class="svc-real-img-overlay"></div>
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">PPL</span>
