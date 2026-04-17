@@ -295,77 +295,46 @@ export const ContactPage = () => (
 
             </div>{/* /contact-form-wrap */}
 
-            {/* 사이드바 */}
-            <aside class="contact-sidebar">
-              <div class="csb-card">
-                <h3 class="csb-title">연락처 정보</h3>
-                <ul class="csb-list">
-                  <li class="csb-item">
-                    <div class="csb-icon">
-                      <svg viewBox="0 0 24 24" fill="none"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="currentColor"/></svg>
-                    </div>
-                    <div>
-                      <span class="csb-label">대표 연락처</span>
-                      <a href="tel:010-9186-9944" class="csb-value csb-link">010-9186-9944</a>
-                    </div>
-                  </li>
-                  <li class="csb-item">
-                    <div class="csb-icon">
-                      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/></svg>
-                    </div>
-                    <div>
-                      <span class="csb-label">주소</span>
-                      <p class="csb-value">경기도 안산시 단원구 고잔로 51<br />타워아이즈빌 2F, 204호</p>
-                    </div>
-                  </li>
-                  <li class="csb-item">
-                    <div class="csb-icon">
-                      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </div>
-                    <div>
-                      <span class="csb-label">운영시간</span>
-                      <p class="csb-value">평일 09:00 – 18:00<br /><span class="csb-note">주말 및 공휴일 휴무</span></p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+          </div>{/* /contact-layout (폼 영역만) */}
 
-              <div class="csb-card">
-                <h3 class="csb-title">자주 묻는 질문</h3>
-                <div class="csb-faq">
-                  <div class="faq-item">
-                    <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
-                      <span>프로젝트 기간은 얼마나 걸리나요?</span>
-                      <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </button>
-                    <div class="faq-a">프로젝트 규모에 따라 다르지만, 일반적으로 전략 수립 1~2주, 실행 및 운영 1~3개월입니다.</div>
-                  </div>
-                  <div class="faq-item">
-                    <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
-                      <span>최소 예산이 있나요?</span>
-                      <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </button>
-                    <div class="faq-a">단발성 캠페인은 300만원~, 월 운영 계약은 월 150만원~부터 협의 가능합니다.</div>
-                  </div>
-                  <div class="faq-item">
-                    <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
-                      <span>성과 보장이 되나요?</span>
-                      <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </button>
-                    <div class="faq-a">명확한 KPI를 함께 설정하고 지속 최적화합니다. 재계약률 98%가 그 결과입니다.</div>
-                  </div>
-                  <div class="faq-item">
-                    <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
-                      <span>어떤 업종과 주로 일하나요?</span>
-                      <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </button>
-                    <div class="faq-a">뷰티, 식품, 헬스케어, 이커머스, 패션, 생활용품 등 다양한 업종과 함께하고 있습니다.</div>
-                  </div>
-                </div>
+          {/* ── 자주 묻는 질문 — 폼 아래 풀 너비 ── */}
+          <div class="ct-faq-section">
+            <div class="ct-faq-head">
+              <span class="sec-label">FAQ</span>
+              <h3>자주 묻는 질문</h3>
+            </div>
+            <div class="ct-faq-list">
+              <div class="faq-item">
+                <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+                  <span>프로젝트 기간은 얼마나 걸리나요?</span>
+                  <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <div class="faq-a">프로젝트 규모에 따라 다르지만, 일반적으로 전략 수립 1~2주, 실행 및 운영 1~3개월입니다. 초기 상담에서 상세 일정을 협의합니다.</div>
               </div>
-            </aside>
-
+              <div class="faq-item">
+                <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+                  <span>최소 예산이 있나요?</span>
+                  <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <div class="faq-a">단발성 캠페인은 300만원~, 월 운영 계약은 월 150만원~부터 협의 가능합니다.</div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+                  <span>성과 보장이 되나요?</span>
+                  <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <div class="faq-a">명확한 KPI를 함께 설정하고 지속 최적화합니다. 인애드컴퍼니의 재계약률 98%가 그 결과입니다.</div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+                  <span>어떤 업종과 주로 일하나요?</span>
+                  <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <div class="faq-a">뷰티, 식품, 헬스케어, 이커머스, 패션, 생활용품 등 다양한 업종과 함께하고 있습니다.</div>
+              </div>
+            </div>
           </div>
+
         </div>
       </section>
     </div>{/* /ct-form-screen */}

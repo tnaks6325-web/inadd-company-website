@@ -6362,3 +6362,99 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .ct-panel-title { font-size: 32px; }
   .ct-panel-num   { font-size: 80px; }
 }
+
+/* =============================================
+   CONTACT — FAQ 풀너비 섹션 (폼 아래)
+   ============================================= */
+
+/* 폼 화면의 contact-layout은 1컬럼으로 */
+.ct-form-screen .contact-layout {
+  grid-template-columns: 1fr !important;
+  max-width: 720px;
+}
+
+/* FAQ 섹션 */
+.ct-faq-section {
+  max-width: 720px;
+  margin: 56px auto 0;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.ct-faq-head {
+  margin-bottom: 28px;
+}
+.ct-faq-head h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 8px;
+}
+
+/* FAQ 리스트 — 한 줄씩 */
+.ct-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ct-faq-list .faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  border-top: none;
+}
+.ct-faq-list .faq-item:first-child {
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.ct-faq-list .faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255,255,255,0.7);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+  gap: 16px;
+  transition: color 0.2s ease;
+}
+.ct-faq-list .faq-q:hover { color: #fff; }
+
+.ct-faq-list .faq-q span { flex: 1; }
+
+.ct-faq-list .faq-arr {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.ct-faq-list .faq-arr svg { width: 10px; height: 10px; display: block; }
+.ct-faq-list .faq-item.open .faq-arr {
+  transform: rotate(180deg);
+  border-color: rgba(26,107,255,0.5);
+  background: rgba(26,107,255,0.1);
+}
+.ct-faq-list .faq-item.open .faq-q { color: #fff; }
+
+.ct-faq-list .faq-a {
+  max-height: 0;
+  overflow: hidden;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+  padding: 0 4px;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+}
+.ct-faq-list .faq-item.open .faq-a {
+  max-height: 200px;
+  padding-bottom: 20px;
+}
