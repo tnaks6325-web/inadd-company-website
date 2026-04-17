@@ -4443,18 +4443,31 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 }
 .vp-card {
   display: flex;
-  gap: 18px;
-  align-items: flex-start;
+  flex-direction: column;
   padding: 28px;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px;
   transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  cursor: pointer;
+  user-select: none;
 }
 .vp-card:hover {
+  background: rgba(26,107,255,0.06);
+  border-color: rgba(26,107,255,0.2);
+}
+.vp-card--active {
   background: rgba(26,107,255,0.08);
-  border-color: rgba(26,107,255,0.25);
-  transform: translateY(-3px);
+  border-color: rgba(26,107,255,0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(26,107,255,0.12);
+}
+
+/* 카드 상단 행 */
+.vp-card-top {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
 }
 .vp-icon {
   font-size: 28px;
@@ -4467,6 +4480,9 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   background: rgba(26,107,255,0.12);
   border: 1px solid rgba(26,107,255,0.25);
   border-radius: 14px;
+}
+.vp-body {
+  flex: 1;
 }
 .vp-body h3 {
   font-size: 16px;
@@ -4489,6 +4505,66 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   line-height: 1.65;
   color: var(--gray-2);
   margin: 0;
+}
+
+/* 토글 화살표 버튼 */
+.vp-toggle-btn {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.4);
+  transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  margin-top: 2px;
+}
+.vp-toggle-btn--open {
+  transform: rotate(180deg);
+  border-color: rgba(26,107,255,0.5);
+  color: #1a6bff;
+}
+
+/* KPI 패널 (접힌 상태) */
+.vp-kpi-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+  opacity: 0;
+}
+.vp-kpi-panel--open {
+  max-height: 160px;
+  opacity: 1;
+}
+.vp-kpi-divider {
+  margin: 20px 0 16px;
+  height: 1px;
+  background: rgba(26,107,255,0.2);
+}
+.vp-kpi-row {
+  display: flex;
+  gap: 32px;
+}
+.vp-kpi-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.vp-kpi-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 800;
+  color: #1a6bff;
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+.vp-kpi-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 @media (max-width: 768px) {

@@ -53,17 +53,59 @@ export const SvcViralPage = () => (
         </div>
         <div class="vp-grid">
           {[
-            { icon:'☕', name:'카페 침투 마케팅', sub:'Cafe Viral', desc:'맘카페·네이버카페 등 소비자가 모이는 커뮤니티에 자연스럽게 스며드는 바이럴 콘텐츠 기획·운영' },
-            { icon:'💬', name:'커뮤니티 바이럴', sub:'Community Viral', desc:'온라인 커뮤니티 내 이슈화로 브랜드 검색량과 자연 유입을 폭발적으로 증가시킵니다' },
-            { icon:'📱', name:'SNS 바이럴', sub:'SNS Viral', desc:'인스타그램·틱톡·유튜브 등 SNS 채널에서의 자연스러운 확산 구조를 설계합니다' },
-            { icon:'📰', name:'언론 바이럴', sub:'Press Viral', desc:'뉴스·매체 배포를 통해 브랜드의 공신력과 검색 노출을 동시에 강화합니다' },
-          ].map(p => (
-            <div class="vp-card">
-              <div class="vp-icon">{p.icon}</div>
-              <div class="vp-body">
-                <h3>{p.name}</h3>
-                <span class="vp-sub">{p.sub}</span>
-                <p>{p.desc}</p>
+            {
+              icon:'☕', name:'카페 침투 마케팅', sub:'Cafe Viral',
+              desc:'맘카페·네이버카페 등 소비자가 모이는 커뮤니티에 자연스럽게 스며드는 바이럴 콘텐츠 기획·운영',
+              kpis:[
+                { val:'1,965개', label:'보유 카페 수' },
+                { val:'19개', label:'진행 카테고리 수' },
+              ]
+            },
+            {
+              icon:'💬', name:'커뮤니티 바이럴', sub:'Community Viral',
+              desc:'온라인 커뮤니티 내 이슈화로 브랜드 검색량과 자연 유입을 폭발적으로 증가시킵니다',
+              kpis:[
+                { val:'72+', label:'진행 가능 커뮤니티' },
+              ]
+            },
+            {
+              icon:'📱', name:'SNS 바이럴', sub:'SNS Viral',
+              desc:'인스타그램·틱톡·유튜브 등 SNS 채널에서의 자연스러운 확산 구조를 설계합니다',
+              kpis:[
+                { val:'450개+', label:'진행 가능 계정' },
+              ]
+            },
+            {
+              icon:'📰', name:'언론 바이럴', sub:'Press Viral',
+              desc:'뉴스·매체 배포를 통해 브랜드의 공신력과 검색 노출을 동시에 강화합니다',
+              kpis:[
+                { val:'153+', label:'보유 매체 수' },
+                { val:'7개', label:'보유 카테고리 수' },
+              ]
+            },
+          ].map((p, i) => (
+            <div class="vp-card" id={`vp-card-${i}`} onclick={`toggleVpCard(${i})`}>
+              <div class="vp-card-top">
+                <div class="vp-icon">{p.icon}</div>
+                <div class="vp-body">
+                  <h3>{p.name}</h3>
+                  <span class="vp-sub">{p.sub}</span>
+                  <p>{p.desc}</p>
+                </div>
+                <div class="vp-toggle-btn" id={`vp-toggle-${i}`}>
+                  <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <div class="vp-kpi-panel" id={`vp-kpi-${i}`}>
+                <div class="vp-kpi-divider"></div>
+                <div class="vp-kpi-row">
+                  {p.kpis.map(k => (
+                    <div class="vp-kpi-item">
+                      <strong class="vp-kpi-val">{k.val}</strong>
+                      <span class="vp-kpi-label">{k.label}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
@@ -145,6 +187,31 @@ export const SvcViralPage = () => (
 
     {/* ============ CTA ============ */}
     <section class="svc-cta-section">
+
+    <script dangerouslySetInnerHTML={{ __html: `
+      function toggleVpCard(idx) {
+        var panel = document.getElementById('vp-kpi-' + idx);
+        var btn   = document.getElementById('vp-toggle-' + idx);
+        var card  = document.getElementById('vp-card-' + idx);
+        if (!panel) return;
+        var isOpen = panel.classList.contains('vp-kpi-panel--open');
+        // 모든 카드 닫기
+        for (var i = 0; i < 4; i++) {
+          var p = document.getElementById('vp-kpi-' + i);
+          var b = document.getElementById('vp-toggle-' + i);
+          var c = document.getElementById('vp-card-' + i);
+          if (p) p.classList.remove('vp-kpi-panel--open');
+          if (b) b.classList.remove('vp-toggle-btn--open');
+          if (c) c.classList.remove('vp-card--active');
+        }
+        // 클릭한 카드가 닫혀있었으면 열기
+        if (!isOpen) {
+          panel.classList.add('vp-kpi-panel--open');
+          btn.classList.add('vp-toggle-btn--open');
+          card.classList.add('vp-card--active');
+        }
+      }
+    `}} />
       <div class="container">
         <div class="svc-cta-inner">
           <div class="svc-cta-text">
