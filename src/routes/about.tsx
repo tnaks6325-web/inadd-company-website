@@ -185,11 +185,9 @@ export const AboutPage = () => (
             {[
               'lg','cj','cocacola','maeil','daangn','harim','knotted','gmarket',
               'bodylab','madeu','snp','yakson','secretage','medience','pulio','petitelin',
-              'airmade','bobsnu','bon','dailyco','echo','elravie','happyprince',
               /* 루프용 복제 */
               'lg','cj','cocacola','maeil','daangn','harim','knotted','gmarket',
               'bodylab','madeu','snp','yakson','secretage','medience','pulio','petitelin',
-              'airmade','bobsnu','bon','dailyco','echo','elravie','happyprince',
             ].map((name, i) => (
               <div class="acl-logo-box" key={i}>
                 <img src={`/static/logos/${name}.png`} alt={name} class="acl-logo-img" loading="lazy" />
@@ -202,13 +200,11 @@ export const AboutPage = () => (
         <div class="acl-row">
           <div class="acl-track acl-track--rev">
             {[
-              'jangsoo','nutseline','ofmom','suvid','woori','petitelin','pulio','medience',
-              'secretage','yakson','snp','madeu','bodylab','gmarket','knotted','harim',
-              'daangn','maeil','cocacola','cj','lg','happyprince','elravie',
+              'petitelin','pulio','medience','secretage','yakson','snp','madeu','bodylab',
+              'gmarket','knotted','harim','daangn','maeil','cocacola','cj','lg',
               /* 루프용 복제 */
-              'jangsoo','nutseline','ofmom','suvid','woori','petitelin','pulio','medience',
-              'secretage','yakson','snp','madeu','bodylab','gmarket','knotted','harim',
-              'daangn','maeil','cocacola','cj','lg','happyprince','elravie',
+              'petitelin','pulio','medience','secretage','yakson','snp','madeu','bodylab',
+              'gmarket','knotted','harim','daangn','maeil','cocacola','cj','lg',
             ].map((name, i) => (
               <div class="acl-logo-box" key={i}>
                 <img src={`/static/logos/${name}.png`} alt={name} class="acl-logo-img" loading="lazy" />

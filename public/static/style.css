@@ -2200,19 +2200,18 @@ em {
   background: #f5f7ff;
 }
 
-/* 로고 이미지 */
+/* 로고 이미지 — 원본 색상 그대로 */
 .acl-logo-img {
   width: auto;
   max-width: 130px;
   height: 48px;
   object-fit: contain;
-  /* 흰 배경 위 — 원본 색상 그대로 + grayscale */
-  filter: grayscale(100%) contrast(0.8) brightness(0.85);
-  opacity: 0.75;
-  transition: filter 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
+  filter: none;
+  opacity: 0.88;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 .acl-logo-box:hover .acl-logo-img {
-  filter: grayscale(0%) contrast(1) brightness(1);
+  filter: none;
   opacity: 1;
   transform: scale(1.06);
 }
