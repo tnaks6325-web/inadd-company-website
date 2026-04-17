@@ -201,18 +201,8 @@ export const HomePage = () => (
 
             {/* 패널 2 — SEEDING */}
             <div class="svc-panel" data-panel="2">
-              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 50% 50%, rgba(26,107,255,0.18) 0%, transparent 60%), linear-gradient(135deg,#040408 0%,#0c0c1c 100%)">
-                <div class="svc-panel-noise"></div>
-                <div class="svc-panel-chart">
-                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
-                    <path d="M100 50 C70 20 30 35 20 65" stroke="rgba(26,107,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M100 50 C130 20 170 35 180 65" stroke="rgba(26,107,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M100 50 C100 20 115 10 130 25" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-linecap="round"/>
-                    <circle cx="100" cy="50" r="5" fill="rgba(26,107,255,0.7)"/>
-                    <circle cx="20" cy="65" r="3" fill="rgba(255,255,255,0.3)"/>
-                    <circle cx="180" cy="65" r="3" fill="rgba(255,255,255,0.3)"/>
-                  </svg>
-                </div>
+              <div class="svc-panel-img" style="background-image:url('/static/svc-images/seeding.png'); background-size:cover; background-position:center; position:relative;">
+                <div class="svc-real-img-overlay"></div>
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Seeding Campaign</span>
@@ -229,18 +219,8 @@ export const HomePage = () => (
 
             {/* 패널 3 — SEO */}
             <div class="svc-panel" data-panel="3">
-              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 30% 70%, rgba(26,107,255,0.2) 0%, transparent 65%), linear-gradient(135deg,#060810 0%,#0a1018 100%)">
-                <div class="svc-panel-noise"></div>
-                <div class="svc-panel-chart">
-                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
-                    <rect x="20" y="70" width="20" height="20" fill="rgba(26,107,255,0.25)" rx="2"/>
-                    <rect x="50" y="55" width="20" height="35" fill="rgba(26,107,255,0.35)" rx="2"/>
-                    <rect x="80" y="40" width="20" height="50" fill="rgba(26,107,255,0.5)" rx="2"/>
-                    <rect x="110" y="25" width="20" height="65" fill="rgba(26,107,255,0.65)" rx="2"/>
-                    <rect x="140" y="10" width="20" height="80" fill="rgba(26,107,255,0.8)" rx="2"/>
-                    <polyline points="20,65 50,50 80,35 110,20 140,5 170,2" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-dasharray="4 3"/>
-                  </svg>
-                </div>
+              <div class="svc-panel-img" style="background-image:url('/static/svc-images/seo.png'); background-size:cover; background-position:center; position:relative;">
+                <div class="svc-real-img-overlay"></div>
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">SEO Marketing</span>
@@ -259,14 +239,8 @@ export const HomePage = () => (
 
             {/* 패널 4 — REVIEW */}
             <div class="svc-panel" data-panel="4">
-              <div class="svc-panel-img" style="background:radial-gradient(ellipse at 60% 30%, rgba(26,107,255,0.2) 0%, transparent 60%), linear-gradient(135deg,#050808 0%,#0a1014 100%)">
-                <div class="svc-panel-noise"></div>
-                <div class="svc-panel-chart">
-                  <svg viewBox="0 0 200 100" fill="none" preserveAspectRatio="none">
-                    <path d="M20 80 Q50 20 100 50 Q150 80 180 20" stroke="rgba(26,107,255,0.5)" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M30 85 L30 65 M60 85 L60 50 M90 85 L90 60 M120 85 L120 45 M150 85 L150 55 M170 85 L170 35" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-linecap="round"/>
-                  </svg>
-                </div>
+              <div class="svc-panel-img" style="background-image:url('/static/svc-images/review.png'); background-size:cover; background-position:center; position:relative;">
+                <div class="svc-real-img-overlay"></div>
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Customer Review</span>
