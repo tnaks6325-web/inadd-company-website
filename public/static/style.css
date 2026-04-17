@@ -3187,15 +3187,50 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 12px;
-  color: var(--gray-3);
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
   cursor: pointer;
+  width: 100%;
+}
+/* 기본 checkbox 완전히 숨김 */
+.cf-privacy-check input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
 }
 .cf-privacy-box {
-  width: 16px; height: 16px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 5px;
   flex-shrink: 0;
+  background: rgba(255,255,255,0.04);
+  position: relative;
+  transition: border-color 0.2s, background 0.2s;
+}
+/* 체크 시 스타일 */
+.cf-privacy-check input[type="checkbox"]:checked ~ .cf-privacy-box {
+  background: rgba(26,107,255,0.85);
+  border-color: rgba(26,107,255,0.9);
+}
+.cf-privacy-check input[type="checkbox"]:checked ~ .cf-privacy-box::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 2px;
+  width: 6px;
+  height: 9px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+/* 텍스트 */
+.cf-privacy-check > span:last-child {
+  flex: 1;
+  line-height: 1.5;
 }
 
 /* Submit button */
@@ -6457,4 +6492,26 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .ct-faq-list .faq-item.open .faq-a {
   max-height: 200px;
   padding-bottom: 20px;
+}
+
+/* ── Contact 폼 영역 + FAQ 너비/정렬 통일 ── */
+.ct-form-screen .contact-layout {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.ct-form-screen .contact-form-wrap {
+  width: 100%;
+  max-width: 720px;
+}
+/* contact-form 내 모든 input/select/textarea 너비 100% */
+.ct-form-screen .cf-group input,
+.ct-form-screen .cf-group select,
+.ct-form-screen .cf-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+/* 개인정보 동의 줄 정렬 */
+.cf-privacy-group {
+  width: 100%;
 }
