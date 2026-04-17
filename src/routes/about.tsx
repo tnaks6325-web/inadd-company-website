@@ -232,7 +232,7 @@ export const AboutPage = () => (
           {/* 지도 영역 */}
           <div class="location-map-wrap">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3172.123456!2d126.8206!3d37.3219!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b61b1c1234567%3A0xabcdef1234567890!2z6rK96riw64-Z7JWZ7ISc7Jq4IOuTnOuwlOuCrOq1rCDqtIDsnpDroZwgNTE!5e0!3m2!1sko!2skr!4v1700000000000!5m2!1sko!2skr"
+              src="https://maps.google.com/maps?q=%EA%B2%BD%EA%B8%B0%EB%8F%84+%EC%95%88%EC%82%B0%EC%8B%9C+%EB%8B%A8%EC%9B%90%EA%B5%AC+%EA%B3%A0%EC%9E%94%EB%A1%9C+51+%ED%83%80%EC%9B%8C%EC%95%84%EC%9D%B4%EC%A6%88%EB%B9%8C&t=&z=17&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style="border:0; border-radius: 12px;"
