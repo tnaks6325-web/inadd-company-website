@@ -185,9 +185,11 @@ export const AboutPage = () => (
             {[
               'lg','cj','cocacola','maeil','daangn','harim','knotted','gmarket',
               'bodylab','madeu','snp','yakson','secretage','medience','pulio','petitelin',
+              'airmade','echo','bon','bobsnu','elravie','dailyco','happyprince',
               /* 루프용 복제 */
               'lg','cj','cocacola','maeil','daangn','harim','knotted','gmarket',
               'bodylab','madeu','snp','yakson','secretage','medience','pulio','petitelin',
+              'airmade','echo','bon','bobsnu','elravie','dailyco','happyprince',
             ].map((name, i) => (
               <div class="acl-logo-box" key={i}>
                 <img src={`/static/logos/${name}.png`} alt={name} class="acl-logo-img" loading="lazy" />
@@ -202,9 +204,11 @@ export const AboutPage = () => (
             {[
               'petitelin','pulio','medience','secretage','yakson','snp','madeu','bodylab',
               'gmarket','knotted','harim','daangn','maeil','cocacola','cj','lg',
+              'jangsoo','suvid','ofmom','nutseline','woori',
               /* 루프용 복제 */
               'petitelin','pulio','medience','secretage','yakson','snp','madeu','bodylab',
               'gmarket','knotted','harim','daangn','maeil','cocacola','cj','lg',
+              'jangsoo','suvid','ofmom','nutseline','woori',
             ].map((name, i) => (
               <div class="acl-logo-box" key={i}>
                 <img src={`/static/logos/${name}.png`} alt={name} class="acl-logo-img" loading="lazy" />
