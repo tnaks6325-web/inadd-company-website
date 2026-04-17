@@ -178,6 +178,7 @@ export const ContactPage = () => (
                     <span class="cf-privacy-box"></span>
                     <span>개인정보 수집 및 이용에 동의합니다.</span>
                   </label>
+                  <button type="button" class="cf-privacy-view-btn" onclick="openPrivacyModal()">내용 확인</button>
                 </div>
 
                 <button type="submit" class="cf-submit">
@@ -276,6 +277,7 @@ export const ContactPage = () => (
                     <span class="cf-privacy-box"></span>
                     <span>개인정보 수집 및 이용에 동의합니다.</span>
                   </label>
+                  <button type="button" class="cf-privacy-view-btn" onclick="openPrivacyModal()">내용 확인</button>
                 </div>
 
                 <button type="submit" class="cf-submit">
@@ -338,6 +340,110 @@ export const ContactPage = () => (
         </div>
       </section>
     </div>{/* /ct-form-screen */}
+
+    {/* ── 개인정보 처리방침 모달 ── */}
+    <div id="privacy-modal" class="prv-modal-overlay" onclick="if(event.target===this)closePrivacyModal()" style="display:none;">
+      <div class="prv-modal-box">
+        <div class="prv-modal-header">
+          <h2>개인정보 수집 및 이용 동의</h2>
+          <button class="prv-modal-close" onclick="closePrivacyModal()" aria-label="닫기">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="prv-modal-body">
+
+          <section class="prv-section">
+            <h3>■ 개인정보 수집 및 이용 동의</h3>
+            <p>인애드컴퍼니(이하 "회사")는 「개인정보 보호법」 제15조 및 제22조에 따라 아래와 같이 개인정보를 수집·이용하며, 정보주체의 동의를 받습니다.</p>
+          </section>
+
+          <section class="prv-section">
+            <h3>■ 수집·이용 목적</h3>
+            <ul>
+              <li>마케팅 서비스 상담 및 견적 안내</li>
+              <li>상담 신청에 대한 회신 및 후속 연락</li>
+              <li>서비스 제공 및 계약 이행</li>
+              <li>민원 처리 및 분쟁 해결</li>
+            </ul>
+          </section>
+
+          <section class="prv-section">
+            <h3>■ 수집하는 개인정보 항목</h3>
+            <table class="prv-table">
+              <thead><tr><th>구분</th><th>필수 항목</th><th>선택 항목</th></tr></thead>
+              <tbody>
+                <tr><td>대행사</td><td>담당자 이름, 직급, 연락처, 이메일, 회사명, 담당 브랜드</td><td>회사 URL, 브랜드 URL, 예산, 문의 내용</td></tr>
+                <tr><td>브랜드</td><td>담당자 이름, 직급, 연락처, 이메일, 회사명</td><td>회사 URL, 예산, 문의 내용</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="prv-section">
+            <h3>■ 수집 방법</h3>
+            <p>홈페이지 상담 신청 폼을 통한 직접 입력</p>
+          </section>
+
+          <section class="prv-section">
+            <h3>■ 보유 및 이용 기간</h3>
+            <p>동의일로부터 <strong>1년</strong>간 보유 후 파기합니다. 단, 관련 법령에 따라 보존할 필요가 있는 경우 해당 기간 동안 보관합니다. 보유 기간 만료 후 <strong>5영업일 이내</strong> 파기합니다.</p>
+          </section>
+
+          <section class="prv-section">
+            <h3>■ 제3자 제공</h3>
+            <p>회사는 원칙적으로 수집한 개인정보를 제3자에게 제공하지 않습니다. 단, 정보주체의 별도 동의가 있거나 법령에 따른 경우는 예외로 합니다.</p>
+          </section>
+
+          <section class="prv-section">
+            <h3>■ 개인정보 파기 절차 및 방법</h3>
+            <p>보유 기간이 경과하거나 처리 목적이 달성된 개인정보는 지체 없이 파기합니다.</p>
+            <ul>
+              <li><strong>전자적 파일:</strong> 복구 불가능한 방법으로 영구 삭제</li>
+              <li><strong>종이 서류:</strong> 분쇄 또는 소각 처리</li>
+            </ul>
+          </section>
+
+          <section class="prv-section">
+            <h3>■ 정보주체의 권리</h3>
+            <p>정보주체는 언제든지 개인정보 열람, 정정, 삭제, 처리 정지를 요구할 수 있습니다. 요청은 아래 개인정보 보호 책임자에게 연락하시기 바랍니다.</p>
+          </section>
+
+          <section class="prv-section">
+            <h3>■ 개인정보 보호 책임자</h3>
+            <table class="prv-table">
+              <tbody>
+                <tr><td>책임자</td><td>김주희</td></tr>
+                <tr><td>담당자</td><td>이승노</td></tr>
+                <tr><td>웹사이트</td><td><a href="https://www.majestade.co.kr" target="_blank" rel="noopener">www.majestade.co.kr</a></td></tr>
+                <tr><td>이메일</td><td><a href="mailto:maze_official@majestade.co.kr">maze_official@majestade.co.kr</a></td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="prv-section">
+            <h3>■ 기술적·관리적 보호 조치</h3>
+            <ul>
+              <li>개인정보에 대한 접근 권한 관리 및 최소화</li>
+              <li>HTTPS 암호화 통신 적용</li>
+              <li>개인정보 취급자 교육 및 내부 관리 계획 수립·시행</li>
+            </ul>
+          </section>
+
+          <section class="prv-section">
+            <h3>■ 고지 의무</h3>
+            <p>개인정보 처리방침을 변경하는 경우 시행일로부터 최소 7일 전 홈페이지를 통해 공지합니다.</p>
+          </section>
+
+          <section class="prv-section prv-section--foot">
+            <p>시행일: <strong>2019년 02월 01일</strong></p>
+            <p>동의를 거부할 권리가 있으며, 거부 시 상담 신청 서비스 이용이 제한될 수 있습니다.</p>
+          </section>
+
+        </div>
+        <div class="prv-modal-footer">
+          <button class="prv-agree-btn" onclick="closePrivacyModal()">확인</button>
+        </div>
+      </div>
+    </div>
 
     {/* ── JS ── */}
     <script dangerouslySetInnerHTML={{__html: `
@@ -420,6 +526,28 @@ export const ContactPage = () => (
           }, 300);
           return false;
         }
+        // 개인정보 모달
+        function openPrivacyModal() {
+          var m = document.getElementById('privacy-modal');
+          if (!m) return;
+          m.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+          requestAnimationFrame(function() { m.classList.add('prv-open'); });
+        }
+        function closePrivacyModal() {
+          var m = document.getElementById('privacy-modal');
+          if (!m) return;
+          m.classList.remove('prv-open');
+          setTimeout(function() {
+            m.style.display = 'none';
+            document.body.style.overflow = '';
+          }, 260);
+        }
+        // ESC 키 닫기
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') closePrivacyModal();
+        });
+
         // 전역 노출
         window.hoverPanel = hoverPanel;
         window.resetPanel = resetPanel;
@@ -427,6 +555,8 @@ export const ContactPage = () => (
         window.backToSelect = backToSelect;
         window.toggleCustomBudget = toggleCustomBudget;
         window.handleContactSubmit = handleContactSubmit;
+        window.openPrivacyModal = openPrivacyModal;
+        window.closePrivacyModal = closePrivacyModal;
       })();
     `}} />
   </>
