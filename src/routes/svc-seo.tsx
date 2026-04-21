@@ -18,6 +18,7 @@ export const SvcSeoPage = () => (
     </section>
 
     <section class="section svc-intro-section">
+      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div></div>
       <div class="container">
         <div class="svc-intro-grid">
           <div class="svc-intro-text">
@@ -43,6 +44,7 @@ export const SvcSeoPage = () => (
     </section>
 
     <section class="section svc-process-section">
+      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-left"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
           <span class="sec-label">Process</span>
@@ -67,6 +69,7 @@ export const SvcSeoPage = () => (
     </section>
 
     <section class="section svc-results-section">
+      <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
           <span class="sec-label">Results</span>

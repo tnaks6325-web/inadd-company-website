@@ -20,6 +20,7 @@ export const SvcViralPage = () => (
 
     {/* ============ 서비스 소개 ============ */}
     <section class="section svc-intro-section" id="viral-content">
+      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div></div>
       <div class="container">
         <div class="svc-intro-grid">
           <div class="svc-intro-text">
@@ -46,6 +47,7 @@ export const SvcViralPage = () => (
 
     {/* ============ 상품 라인업 ============ */}
     <section class="section viral-products-section">
+      <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-section-glow-top"></div><div class="svc-float-dots"></div></div>
       <div class="container">
         <div class="section-head">
           <span class="sec-label">Service Products</span>
@@ -126,6 +128,7 @@ export const SvcViralPage = () => (
 
     {/* ============ 진행 프로세스 ============ */}
     <section class="section svc-process-section">
+      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-left"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
           <span class="sec-label">Process</span>
@@ -161,6 +164,7 @@ export const SvcViralPage = () => (
 
     {/* ============ 성과 사례 ============ */}
     <section class="section svc-results-section">
+      <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
           <span class="sec-label">Results</span>

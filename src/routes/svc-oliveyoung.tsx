@@ -19,6 +19,7 @@ export const SvcOliveYoungPage = () => (
 
     {/* 서비스 소개 */}
     <section class="section svc-intro-section">
+      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div></div>
       <div class="container">
         <div class="svc-intro-grid">
           <div class="svc-intro-text">
@@ -45,6 +46,7 @@ export const SvcOliveYoungPage = () => (
 
     {/* 올리브영 성장 4단계 */}
     <section class="section" style="background:var(--black-2)">
+      <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-float-dots"></div></div>
       <div class="container">
         <div class="section-head">
           <span class="sec-label">Growth Formula</span>
@@ -70,6 +72,7 @@ export const SvcOliveYoungPage = () => (
 
     {/* 진행 프로세스 */}
     <section class="section svc-process-section">
+      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-left"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
           <span class="sec-label">Process</span>
@@ -98,6 +101,7 @@ export const SvcOliveYoungPage = () => (
 
     {/* 성과 사례 */}
     <section class="section svc-results-section">
+      <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
           <span class="sec-label">Results</span>
