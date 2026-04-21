@@ -9198,3 +9198,135 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .ifl2-proc-section { padding: 80px 0 90px; }
   .ifl2-proc-head { margin-bottom: 52px; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   IFL2 — PROCESS 카드 그리드 v2 (4+3 레이아웃)
+══════════════════════════════════════════════════════════════ */
+
+/* ── 행 레이아웃 ── */
+.ifl2-proc-row {
+  display: grid;
+  gap: 20px;
+  position: relative; z-index: 1;
+}
+.ifl2-proc-row--4 { grid-template-columns: repeat(4, 1fr); }
+.ifl2-proc-row--3 { grid-template-columns: repeat(3, 1fr); }
+
+/* ── 행 사이 연결 화살표 ── */
+.ifl2-proc-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 0 14px;
+  position: relative; z-index: 1;
+}
+.ifl2-proc-connector-line {
+  width: 1.5px;
+  height: 20px;
+  background: linear-gradient(180deg, rgba(168,85,247,0.4), rgba(168,85,247,0.1));
+}
+
+/* ── 카드 ── */
+.ifl2-ps-card {
+  position: relative;
+  background: var(--card-bg, rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 28px 24px 24px;
+  overflow: hidden;
+  transition: transform .35s cubic-bezier(.25,.46,.45,.94),
+              border-color .35s, box-shadow .35s;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.ifl2-ps-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--ps-accent, rgba(168,85,247,0.4));
+  box-shadow: 0 20px 48px rgba(0,0,0,0.45),
+              0 0 28px color-mix(in srgb, var(--ps-accent,#a855f7) 12%, transparent);
+}
+
+/* 상단 아이콘 + 번호 */
+.ifl2-ps-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.ifl2-ps-icon {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--ps-accent,#a855f7) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ps-accent,#a855f7) 22%, transparent);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ps-accent, rgba(168,85,247,0.85));
+  flex-shrink: 0;
+}
+.ifl2-ps-icon svg { width: 18px; height: 18px; }
+.ifl2-ps-num {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 28px; font-weight: 900;
+  color: rgba(255,255,255,0.04);
+  letter-spacing: -1px;
+  line-height: 1;
+  user-select: none;
+}
+
+/* 제목 */
+.ifl2-ps-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px; font-weight: 700;
+  color: rgba(255,255,255,0.92);
+  line-height: 1.3;
+  margin: 0 0 10px;
+}
+
+/* 설명 */
+.ifl2-ps-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.42);
+  line-height: 1.75;
+  margin: 0 0 20px;
+  flex: 1;
+}
+
+/* 하단 컬러 바 */
+.ifl2-ps-bar {
+  width: 28px; height: 2px;
+  border-radius: 2px;
+  background: var(--ps-accent, rgba(168,85,247,0.7));
+  opacity: .65;
+  margin-top: auto;
+  transition: width .35s;
+}
+.ifl2-ps-card:hover .ifl2-ps-bar { width: 48px; }
+
+/* 배경 글로우 */
+.ifl2-ps-glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 70% 40% at 50% 0%,
+    color-mix(in srgb, var(--ps-accent,#a855f7) 8%, transparent) 0%,
+    transparent 70%);
+  transition: opacity .35s;
+  opacity: 0;
+}
+.ifl2-ps-card:hover .ifl2-ps-glow { opacity: 1; }
+
+/* wide 카드 (3열 행) - 좀 더 여유있게 */
+.ifl2-ps-card--wide {
+  padding: 32px 28px 28px;
+}
+.ifl2-ps-card--wide .ifl2-ps-title { font-size: 16px; }
+.ifl2-ps-card--wide .ifl2-ps-desc  { font-size: 13.5px; }
+
+/* ── 반응형 ── */
+@media (max-width: 1024px) {
+  .ifl2-proc-row--4 { grid-template-columns: repeat(2, 1fr); }
+  .ifl2-proc-row--3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .ifl2-proc-row--4,
+  .ifl2-proc-row--3 { grid-template-columns: 1fr; }
+}

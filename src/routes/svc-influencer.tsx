@@ -591,106 +591,71 @@ export const SvcInfluencerPage = () => (
     </section>
 
     {/* ══ PROCESS ══ */}
-    <section class="ifl2-proc-section">
-      <div class="ifl2-proc-bg">
-        <div class="ifl2-proc-orb ifl2-proc-orb--a"></div>
-        <div class="ifl2-proc-orb ifl2-proc-orb--b"></div>
-        <div class="ifl2-proc-grid"></div>
-      </div>
+    <section class="section svc-process-section">
+      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-left"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
-        <div class="ifl2-proc-head">
-          <span class="ifl2-slabel">Process</span>
-          <h2 class="ifl2-proc-title">인플루언서 마케팅<br /><em>진행 프로세스</em></h2>
-          <p class="ifl2-proc-sub">상담부터 리포팅까지, 7단계의 정교한 프로세스로 브랜드 성과를 만들어냅니다.</p>
+        <div class="section-head">
+          <span class="sec-label">Process</span>
+          <h2 class="sec-title">인플루언서 마케팅<br /><em>진행 프로세스</em></h2>
+          <p class="sec-sub">상담부터 리포팅까지, 7단계의 정교한 프로세스로 브랜드 성과를 만들어냅니다.</p>
         </div>
 
-        <div class="ifl2-proc-track">
-          {/* 연결선 */}
-          <div class="ifl2-proc-line"></div>
-
+        {/* ── 1행: 4단계 ── */}
+        <div class="ifl2-proc-row ifl2-proc-row--4">
           {[
-            {
-              num: '01',
-              title: '상담 진행',
-              desc: '브랜드 목표, 예산, 타겟 소비자를 파악합니다. 캠페인 방향성과 기대 성과를 함께 설계합니다.',
-              icon: (
-                <svg viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-              ),
-              accent: '#1a6bff',
-            },
-            {
-              num: '02',
-              title: '계약 진행',
-              desc: '캠페인 범위, 일정, 성과 지표를 명확히 정의한 계약을 체결합니다. 투명한 집행 구조를 보장합니다.',
-              icon: (
-                <svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 0 0 1.946-.806 3.42 3.42 0 0 1 4.438 0 3.42 3.42 0 0 0 1.946.806 3.42 3.42 0 0 1 3.138 3.138 3.42 3.42 0 0 0 .806 1.946 3.42 3.42 0 0 1 0 4.438 3.42 3.42 0 0 0-.806 1.946 3.42 3.42 0 0 1-3.138 3.138 3.42 3.42 0 0 0-1.946.806 3.42 3.42 0 0 1-4.438 0 3.42 3.42 0 0 0-1.946-.806 3.42 3.42 0 0 1-3.138-3.138 3.42 3.42 0 0 0-.806-1.946 3.42 3.42 0 0 1 0-4.438 3.42 3.42 0 0 0 .806-1.946 3.42 3.42 0 0 1 3.138-3.138z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-              ),
-              accent: '#7c3aed',
-            },
-            {
-              num: '03',
-              title: '가이드라인 작성',
-              desc: '브랜드 메시지, 금지 표현, 콘텐츠 톤앤매너를 담은 크리에이터용 브리핑 가이드를 제작합니다.',
-              icon: (
-                <svg viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              ),
-              accent: '#059669',
-            },
-            {
-              num: '04',
-              title: '인플루언서 리스트업 및 매칭',
-              desc: '1,200+ 크리에이터 DB에서 타겟 적합성·퍼포먼스·단가를 종합 분석해 최적 인플루언서를 선별합니다.',
-              icon: (
-                <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11 8v6M8 11h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              ),
-              accent: '#0891b2',
-            },
-            {
-              num: '05',
-              title: '콘텐츠 제작',
-              desc: '가이드라인 기반으로 크리에이터가 콘텐츠를 제작하고, 검수·피드백 후 최종 승인합니다.',
-              icon: (
-                <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l5-3-5-3v6z" fill="currentColor" opacity=".7"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              ),
-              accent: '#d97706',
-            },
-            {
-              num: '06',
-              title: '연계 바이럴 확산',
-              desc: '최적 시간에 콘텐츠를 게시하고 커뮤니티·SNS 연계 확산 전략을 병행 실행합니다.',
-              icon: (
-                <svg viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              ),
-              accent: '#dc2626',
-            },
-            {
-              num: '07',
-              title: '리포팅',
-              desc: '조회수, 도달, 클릭, 전환, 매출까지 전 과정의 성과 데이터를 투명하게 리포팅합니다.',
-              icon: (
-                <svg viewBox="0 0 24 24" fill="none"><path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              ),
-              accent: '#a855f7',
-            },
-          ].map((s, i) => (
-            <div class={`ifl2-proc-step ifl2-proc-step--${(i % 2 === 0) ? 'top' : 'bot'}`}>
-              <div class="ifl2-proc-node" style={`--step-accent:${s.accent}`}>
-                <div class="ifl2-proc-node-ring"></div>
-                <div class="ifl2-proc-node-dot"></div>
+            { num:'01', title:'상담 진행',        desc:'브랜드 목표, 예산, 타겟 소비자를 파악합니다. 캠페인 방향성과 기대 성과를 함께 설계합니다.',                                      accent:'#1a6bff',
+              icon:<svg viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> },
+            { num:'02', title:'계약 진행',        desc:'캠페인 범위, 일정, 성과 지표를 명확히 정의하고 계약을 체결합니다. 투명한 집행 구조를 보장합니다.',                              accent:'#7c3aed',
+              icon:<svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/></svg> },
+            { num:'03', title:'가이드라인 작성',  desc:'브랜드 메시지, 금지 표현, 톤앤매너를 담은 크리에이터용 브리핑 가이드를 제작합니다.',                                          accent:'#059669',
+              icon:<svg viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> },
+            { num:'04', title:'리스트업 및 매칭', desc:'1,200+ 크리에이터 DB에서 타겟 적합성·퍼포먼스·단가를 종합 분석해 최적 인플루언서를 선별합니다.',                              accent:'#0891b2',
+              icon:<svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M16 3.13a4 4 0 0 1 0 7.75M21 21v-2a4 4 0 0 0-3-3.85" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> },
+          ].map(s => (
+            <div class="ifl2-ps-card" style={`--ps-accent:${s.accent}`}>
+              <div class="ifl2-ps-top">
+                <div class="ifl2-ps-icon">{s.icon}</div>
+                <span class="ifl2-ps-num">{s.num}</span>
               </div>
-              <div class="ifl2-proc-card" style={`--step-accent:${s.accent}`}>
-                <div class="ifl2-proc-card-glow"></div>
-                <div class="ifl2-proc-card-top">
-                  <div class="ifl2-proc-icon">{s.icon}</div>
-                  <div class="ifl2-proc-num">{s.num}</div>
-                </div>
-                <h4 class="ifl2-proc-card-title">{s.title}</h4>
-                <p class="ifl2-proc-card-desc">{s.desc}</p>
-                <div class="ifl2-proc-card-bar"></div>
-              </div>
+              <h4 class="ifl2-ps-title">{s.title}</h4>
+              <p class="ifl2-ps-desc">{s.desc}</p>
+              <div class="ifl2-ps-bar"></div>
+              <div class="ifl2-ps-glow"></div>
             </div>
           ))}
         </div>
+
+        {/* ── 화살표 연결 ── */}
+        <div class="ifl2-proc-connector">
+          <div class="ifl2-proc-connector-line"></div>
+          <svg class="ifl2-proc-connector-arrow" viewBox="0 0 24 24" fill="none" width="20" height="20">
+            <path d="M12 5v14M5 12l7 7 7-7" stroke="rgba(168,85,247,0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        {/* ── 2행: 3단계 ── */}
+        <div class="ifl2-proc-row ifl2-proc-row--3">
+          {[
+            { num:'05', title:'콘텐츠 제작',      desc:'가이드라인 기반으로 크리에이터가 콘텐츠를 제작합니다. 브랜드 검수·피드백을 거쳐 최종 승인합니다.',                             accent:'#d97706',
+              icon:<svg viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M10 9.5l5 2.5-5 2.5V9.5z" fill="currentColor" opacity=".7"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> },
+            { num:'06', title:'연계 바이럴 확산', desc:'최적 시간에 콘텐츠를 게시하고 커뮤니티·SNS 연계 확산 전략을 병행 실행합니다.',                                               accent:'#dc2626',
+              icon:<svg viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> },
+            { num:'07', title:'리포팅',            desc:'조회수, 도달, 클릭, 전환, 매출까지 전 과정의 성과 데이터를 투명하게 리포팅합니다.',                                          accent:'#a855f7',
+              icon:<svg viewBox="0 0 24 24" fill="none"><path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> },
+          ].map(s => (
+            <div class="ifl2-ps-card ifl2-ps-card--wide" style={`--ps-accent:${s.accent}`}>
+              <div class="ifl2-ps-top">
+                <div class="ifl2-ps-icon">{s.icon}</div>
+                <span class="ifl2-ps-num">{s.num}</span>
+              </div>
+              <h4 class="ifl2-ps-title">{s.title}</h4>
+              <p class="ifl2-ps-desc">{s.desc}</p>
+              <div class="ifl2-ps-bar"></div>
+              <div class="ifl2-ps-glow"></div>
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
 
