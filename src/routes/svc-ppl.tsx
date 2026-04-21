@@ -1,20 +1,86 @@
 export const SvcPplPage = () => (
   <>
-    <section class="page-hero svc-hero">
-      <div class="page-hero-bg"><div class="hero-glow glow-1"></div><div class="hero-glow glow-2"></div></div>
-      <div class="container">
-        <a href="/marketing" class="svc-back-link">← Marketing 서비스 전체보기</a>
-        <span class="sec-label">PPL Marketing</span>
-        <h1 class="page-title">PPL 마케팅</h1>
-        <p class="page-desc">드라마·유튜브·콘텐츠 속 자연스러운 브랜드 노출로<br />5,000만+ 누적 시청자에게 도달합니다.</p>
-        <div class="svc-hero-kpi">
-          <div class="shk-item"><strong>5,000만+</strong><span>누적 시청자 수</span></div>
-          <div class="shk-divider"></div>
-          <div class="shk-item"><strong>3×</strong><span>광고 전환율 향상</span></div>
-          <div class="shk-divider"></div>
-          <div class="shk-item"><strong>98%</strong><span>재계약률</span></div>
+    <section class="vh-hero">
+      <canvas id="vhCanvas5" class="vh-canvas"></canvas>
+      <div class="vh-bg">
+        <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(239,68,68,0.22) 0%,transparent 70%)"></div>
+        <div class="vh-orb vh-orb--2" style="background:radial-gradient(circle,rgba(251,146,60,0.18) 0%,transparent 70%)"></div>
+        <div class="vh-orb vh-orb--3" style="background:radial-gradient(circle,rgba(168,85,247,0.16) 0%,transparent 70%)"></div>
+        <div class="vh-grid"></div>
+        <div class="vh-noise"></div>
+      </div>
+
+      <div class="container vh-inner">
+        <a href="/marketing" class="svc-back-link vh-back">← Marketing 전체보기</a>
+
+        <div class="vh-badge" style="color:rgba(239,68,68,0.95);border-color:rgba(239,68,68,0.35);background:rgba(239,68,68,0.08)">
+          <span class="vh-badge-dot" style="background:rgba(239,68,68,1);box-shadow:0 0 8px rgba(239,68,68,0.9)"></span>
+          <span>PPL MARKETING</span>
+        </div>
+
+        <h1 class="vh-title">
+          <span class="vh-tline" id="ppL1">방송 콘텐츠 속 자연스러운 브랜드 노출로</span>
+          <span class="vh-tline" id="ppL2" style="background:linear-gradient(135deg,#fff 20%,rgba(239,68,68,0.95) 55%,rgba(251,146,60,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">대중의 신뢰와 관심을 확보하는 프리미엄 광고 전략입니다.</span>
+        </h1>
+
+        <div class="vh-sub-wrap" id="ppSub">
+          <p class="vh-sub">단순한 노출을 넘어 <strong style="color:rgba(255,255,255,0.9)">스토리텔링과 결합하여</strong></p>
+          <p class="vh-sub"><strong style="color:rgba(255,255,255,0.9)">브랜드 인지도</strong>를 높이고 시청자의 마음속에 깊이 각인됩니다.</p>
+          <p class="vh-sub" style="margin-top:12px"><span style="color:rgba(239,68,68,0.9);font-weight:600">5,000만+ 누적 시청자</span>에게 브랜드를 자연스럽게 경험시킵니다.</p>
+        </div>
+
+        <div class="vh-kpi-strip" id="ppKpi">
+          <div class="vh-kpi-item">
+            <strong class="vh-kpi-num" style="color:#ef4444">5,000만+</strong>
+            <span class="vh-kpi-label">누적 시청자 수</span>
+          </div>
+          <div class="vh-kpi-sep"></div>
+          <div class="vh-kpi-item">
+            <strong class="vh-kpi-num">3×</strong>
+            <span class="vh-kpi-label">광고 전환율 향상</span>
+          </div>
+          <div class="vh-kpi-sep"></div>
+          <div class="vh-kpi-item">
+            <strong class="vh-kpi-num">98%</strong>
+            <span class="vh-kpi-label">재계약률</span>
+          </div>
+        </div>
+
+        <div class="vh-btns" id="ppBtns">
+          <a href="/contact" class="hero-cta-btn primary">
+            <span>무료 전략 상담받기</span>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#svc-intro" class="vh-scroll-btn">
+            <span>자세히 보기</span>
+            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </div>
+
+      <div class="vh-scroll-hint">
+        <div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div>
+      </div>
+
+      <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  var cvs=document.getElementById('vhCanvas5'); if(!cvs)return;
+  var ctx=cvs.getContext('2d'),W,H,pts=[];
+  function resize(){W=cvs.width=window.innerWidth;H=cvs.height=cvs.closest('section').offsetHeight||window.innerHeight;}
+  function mkPt(){return{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.38,vy:(Math.random()-.5)*.38,r:Math.random()*1.8+.3,a:Math.random(),color:Math.random()>.6?'239,68,68':(Math.random()>.5?'251,146,60':'168,85,247')};}
+  function init(){resize();pts=[];var n=Math.min(Math.floor(W*H/8000),130);for(var i=0;i<n;i++)pts.push(mkPt());}
+  function draw(){ctx.clearRect(0,0,W,H);pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.a+=(Math.random()-.5)*.01;if(p.a<.1)p.a=.1;if(p.a>.9)p.a=.9;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba('+p.color+','+(p.a*.55)+')';ctx.fill();});
+  for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<115){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle='rgba(239,68,68,'+(0.12*(1-d/115))+')';ctx.lineWidth=.5;ctx.stroke();}}}
+  requestAnimationFrame(draw);}
+  init();draw();window.addEventListener('resize',init);
+  function anim(el,delay,dir){if(!el)return;el.style.opacity='0';el.style.transform=dir==='up'?'translateY(32px)':'translateX(-32px)';el.style.transition='opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)';setTimeout(function(){el.style.opacity='1';el.style.transform='none';},delay);}
+  anim(document.getElementById('ppL1'),200,'left');
+  anim(document.getElementById('ppL2'),440,'left');
+  anim(document.getElementById('ppSub'),700,'up');
+  anim(document.getElementById('ppKpi'),940,'up');
+  anim(document.getElementById('ppBtns'),1140,'up');
+})();
+      `}} />
     </section>
 
     {/* 서비스 소개 */}

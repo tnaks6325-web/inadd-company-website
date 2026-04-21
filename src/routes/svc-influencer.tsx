@@ -1,20 +1,86 @@
 export const SvcInfluencerPage = () => (
   <>
-    <section class="page-hero svc-hero">
-      <div class="page-hero-bg"><div class="hero-glow glow-1"></div><div class="hero-glow glow-2"></div></div>
-      <div class="container">
-        <a href="/marketing" class="svc-back-link">← Marketing 서비스 전체보기</a>
-        <span class="sec-label">Influencer & YouTube Marketing</span>
-        <h1 class="page-title">인플루언서 &amp;<br /><em>유튜브 마케팅</em></h1>
-        <p class="page-desc">검증된 1,200+ 크리에이터 네트워크로 타겟 소비자에게<br />진정성 있는 브랜드 메시지를 전달합니다.</p>
-        <div class="svc-hero-kpi">
-          <div class="shk-item"><strong>1,200+</strong><span>파트너 크리에이터</span></div>
-          <div class="shk-divider"></div>
-          <div class="shk-item"><strong>+580%</strong><span>최대 매출 증가</span></div>
-          <div class="shk-divider"></div>
-          <div class="shk-item"><strong>98%</strong><span>재계약률</span></div>
+    <section class="vh-hero">
+      <canvas id="vhCanvas2" class="vh-canvas"></canvas>
+      <div class="vh-bg">
+        <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(168,85,247,0.26) 0%,transparent 70%)"></div>
+        <div class="vh-orb vh-orb--2" style="background:radial-gradient(circle,rgba(236,72,153,0.18) 0%,transparent 70%)"></div>
+        <div class="vh-orb vh-orb--3" style="background:radial-gradient(circle,rgba(26,107,255,0.20) 0%,transparent 70%)"></div>
+        <div class="vh-grid"></div>
+        <div class="vh-noise"></div>
+      </div>
+
+      <div class="container vh-inner">
+        <a href="/marketing" class="svc-back-link vh-back">← Marketing 전체보기</a>
+
+        <div class="vh-badge" style="color:rgba(168,85,247,0.95);border-color:rgba(168,85,247,0.35);background:rgba(168,85,247,0.08)">
+          <span class="vh-badge-dot" style="background:rgba(168,85,247,1);box-shadow:0 0 8px rgba(168,85,247,0.9)"></span>
+          <span>INFLUENCER &amp; YOUTUBE MARKETING</span>
+        </div>
+
+        <h1 class="vh-title">
+          <span class="vh-tline" id="ifL1">'좋은것 같다'는 추측이 아닌,</span>
+          <span class="vh-tline" id="ifL2" style="background:linear-gradient(135deg,#fff 20%,rgba(168,85,247,0.95) 60%,rgba(236,72,153,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">'이겁니다'를 말해드립니다.</span>
+        </h1>
+
+        <div class="vh-sub-wrap" id="ifSub">
+          <p class="vh-sub">인애드만의 <strong style="color:rgba(255,255,255,0.9)">인플루언서 분석 프로그램</strong>을 통해 필터링 후</p>
+          <p class="vh-sub">브랜드 메시지와 크리에이터 핏을 비교 및 제안합니다.</p>
+          <p class="vh-sub" style="margin-top:12px">데이터 기반의 정교한 매칭으로 <span style="color:rgba(168,85,247,0.9);font-weight:600">최고의 퍼포먼스를 창출합니다.</span></p>
+        </div>
+
+        <div class="vh-kpi-strip" id="ifKpi">
+          <div class="vh-kpi-item">
+            <strong class="vh-kpi-num" style="color:#a855f7">1,200+</strong>
+            <span class="vh-kpi-label">파트너 크리에이터</span>
+          </div>
+          <div class="vh-kpi-sep"></div>
+          <div class="vh-kpi-item">
+            <strong class="vh-kpi-num">+580%</strong>
+            <span class="vh-kpi-label">최대 매출 증가</span>
+          </div>
+          <div class="vh-kpi-sep"></div>
+          <div class="vh-kpi-item">
+            <strong class="vh-kpi-num">98%</strong>
+            <span class="vh-kpi-label">재계약률</span>
+          </div>
+        </div>
+
+        <div class="vh-btns" id="ifBtns">
+          <a href="/contact" class="hero-cta-btn primary">
+            <span>무료 전략 상담받기</span>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#svc-intro" class="vh-scroll-btn">
+            <span>자세히 보기</span>
+            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </div>
+
+      <div class="vh-scroll-hint">
+        <div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div>
+      </div>
+
+      <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  var cvs=document.getElementById('vhCanvas2'); if(!cvs)return;
+  var ctx=cvs.getContext('2d'),W,H,pts=[];
+  function resize(){W=cvs.width=window.innerWidth;H=cvs.height=cvs.closest('section').offsetHeight||window.innerHeight;}
+  function mkPt(){return{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.38,vy:(Math.random()-.5)*.38,r:Math.random()*1.8+.3,a:Math.random(),color:Math.random()>.6?'168,85,247':(Math.random()>.5?'236,72,153':'100,120,255')};}
+  function init(){resize();pts=[];var n=Math.min(Math.floor(W*H/8000),130);for(var i=0;i<n;i++)pts.push(mkPt());}
+  function draw(){ctx.clearRect(0,0,W,H);pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.a+=(Math.random()-.5)*.01;if(p.a<.1)p.a=.1;if(p.a>.9)p.a=.9;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba('+p.color+','+(p.a*.55)+')';ctx.fill();});
+  for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<115){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle='rgba(168,85,247,'+(0.13*(1-d/115))+')';ctx.lineWidth=.5;ctx.stroke();}}}
+  requestAnimationFrame(draw);}
+  init();draw();window.addEventListener('resize',init);
+  function anim(el,delay,dir){if(!el)return;el.style.opacity='0';el.style.transform=dir==='up'?'translateY(32px)':'translateX(-32px)';el.style.transition='opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)';setTimeout(function(){el.style.opacity='1';el.style.transform='none';},delay);}
+  anim(document.getElementById('ifL1'),200,'left');
+  anim(document.getElementById('ifL2'),440,'left');
+  anim(document.getElementById('ifSub'),700,'up');
+  anim(document.getElementById('ifKpi'),940,'up');
+  anim(document.getElementById('ifBtns'),1140,'up');
+})();
+      `}} />
     </section>
 
     <section class="section svc-intro-section">
