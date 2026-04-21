@@ -1,5 +1,6 @@
 export const SvcInfluencerPage = () => (
   <>
+    {/* ══ HERO ══ */}
     <section class="vh-hero">
       <canvas id="vhCanvas2" class="vh-canvas"></canvas>
       <div class="vh-bg">
@@ -51,8 +52,8 @@ export const SvcInfluencerPage = () => (
             <span>무료 전략 상담받기</span>
             <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href="#svc-intro" class="vh-scroll-btn">
-            <span>자세히 보기</span>
+          <a href="#ifl-services" class="vh-scroll-btn">
+            <span>서비스 보기</span>
             <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
@@ -83,158 +84,389 @@ export const SvcInfluencerPage = () => (
       `}} />
     </section>
 
-    <section class="section svc-intro-section">
-      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div></div>
-      <div class="container">
-        <div class="svc-intro-grid">
-          <div class="svc-intro-text">
-            <span class="sec-label">What We Do</span>
-            <h2 class="sec-title">팔로워 수보다<br /><em>영향력이 중요합니다</em></h2>
-            <p>대형 인플루언서 1명보다, 정교하게 타겟팅된 마이크로 인플루언서 10명이 더 높은 전환율을 만들어냅니다. 인애드컴퍼니는 팔로워 수가 아닌 실질적 구매 영향력을 기준으로 크리에이터를 선별합니다.</p>
-            <p>유튜브, 인스타그램, 블로그까지 각 플랫폼 특성에 맞는 최적의 콘텐츠 방향성을 제공하고 성과를 측정합니다.</p>
-            <ul class="svc-feature-list">
-              <li><span class="sfl-dot"></span>마이크로~메가 인플루언서 맞춤 캐스팅</li>
-              <li><span class="sfl-dot"></span>유튜브 리뷰·브랜디드 콘텐츠 기획</li>
-              <li><span class="sfl-dot"></span>협업 시나리오 제작 및 방향성 가이드</li>
-              <li><span class="sfl-dot"></span>성과 측정 및 ROI 리포팅</li>
-              <li><span class="sfl-dot"></span>부정적 리뷰 리스크 관리</li>
-            </ul>
-          </div>
-          <div class="svc-intro-visual">
-            <div class="siv-img-wrap">
-              <img src="/static/svc-images/influencer.png" alt="인플루언서 마케팅 비주얼" class="siv-photo" loading="lazy" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    {/* ══ 서비스 앵커 ══ */}
+    <div id="ifl-services"></div>
 
-    <section class="section svc-process-section">
-      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-left"></div><div class="svc-section-glow-top"></div></div>
+    {/* ══════════════════════════════════════════
+        SERVICE 01 — 연예인 & 인플루언서 섭외/협찬
+    ══════════════════════════════════════════ */}
+    <section class="ifl2-section ifl2-section--casting">
+      <div class="ifl2-bg">
+        <div class="ifl2-orb ifl2-orb--purple"></div>
+        <div class="ifl2-orb ifl2-orb--pink"></div>
+        <div class="ifl2-grid-lines"></div>
+      </div>
       <div class="container">
-        <div class="section-head">
-          <span class="sec-label">Process</span>
-          <h2 class="sec-title">인플루언서 마케팅<br /><em>진행 프로세스</em></h2>
+        <div class="ifl2-section-head">
+          <div class="ifl2-snum">01</div>
+          <div class="ifl2-stitle-wrap">
+            <span class="ifl2-slabel">Creator Casting</span>
+            <h2 class="ifl2-stitle">연예인 &amp; 인플루언서 <em>섭외 / 협찬</em></h2>
+            <p class="ifl2-slead">브랜드 예산과 목적에 맞게, <strong>최적의 인플루언서 전략</strong>을 정밀하게 설계합니다.</p>
+          </div>
         </div>
-        <div class="svc-process-steps">
-          {[
-            { num:'01', title:'타겟 분석', desc:'브랜드 타겟 소비자를 분석하고 최적의 인플루언서 유형과 규모를 결정합니다.' },
-            { num:'02', title:'크리에이터 선별', desc:'1,200+ DB에서 타겟 적합성, 진정성 지수, 전환율 데이터 기반으로 크리에이터를 선별합니다.' },
-            { num:'03', title:'콘텐츠 브리핑', desc:'브랜드 메시지를 자연스럽게 담을 수 있는 콘텐츠 방향성과 시나리오를 제공합니다.' },
-            { num:'04', title:'콘텐츠 제작·검수', desc:'크리에이터가 제작한 콘텐츠를 검수하고 브랜드 가이드에 맞게 피드백합니다.' },
-            { num:'05', title:'게시 및 모니터링', desc:'최적 시간에 콘텐츠를 게시하고 댓글, 반응, 트래픽을 실시간 모니터링합니다.' },
-            { num:'06', title:'ROI 리포팅', desc:'조회수, 도달, 클릭, 전환, 매출 등 전 과정의 ROI를 투명하게 리포팅합니다.' },
-          ].map(s => (
-            <div class="sps-step">
-              <div class="sps-num">{s.num}</div>
-              <div class="sps-body">
-                <h4>{s.title}</h4>
-                <p>{s.desc}</p>
+
+        <div class="ifl2-casting-grid">
+          {/* 연예인 */}
+          <div class="ifl2-casting-card ifl2-casting-card--star">
+            <div class="ifl2-cc-glow"></div>
+            <div class="ifl2-cc-header">
+              <div class="ifl2-cc-index">01</div>
+              <div class="ifl2-cc-icon">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 3L19.5 12.5H29.5L21.5 18L24.5 28L16 22.5L7.5 28L10.5 18L2.5 12.5H12.5L16 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
               </div>
             </div>
-          ))}
+            <h3 class="ifl2-cc-title">연예인<br />섭외 / 협찬</h3>
+            <p class="ifl2-cc-desc">연예인의 강력한 <strong>팬덤과 채널 콘텐츠</strong>를 동시에 활용해 팬층을 집중 공략하고, 브랜드 인지도를 폭발적으로 확장합니다.</p>
+            <div class="ifl2-cc-tags">
+              <span>브랜딩 강화</span><span>팬덤 마케팅</span><span>퍼포먼스 광고</span><span>판매 촉진</span>
+            </div>
+            <div class="ifl2-cc-line"></div>
+          </div>
+
+          {/* 인플루언서 */}
+          <div class="ifl2-casting-card ifl2-casting-card--infl">
+            <div class="ifl2-cc-glow"></div>
+            <div class="ifl2-cc-header">
+              <div class="ifl2-cc-index">02</div>
+              <div class="ifl2-cc-icon">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <circle cx="12" cy="9" r="4" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M4 26c0-4.4 3.6-8 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <circle cx="22" cy="11" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M16 26c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+            <h3 class="ifl2-cc-title">인플루언서<br />섭외 / 협찬</h3>
+            <p class="ifl2-cc-desc">연예인 대비 <strong>합리적인 비용으로 고효율</strong>을 끌어내는 전략. 높은 영향력을 보유한 인플루언서로 정확한 타겟에게 도달합니다.</p>
+            <div class="ifl2-cc-tags">
+              <span>인지도 상승</span><span>시청층 타겟</span><span>판매 촉진</span>
+            </div>
+            <div class="ifl2-cc-line"></div>
+          </div>
+
+          {/* 인스타 피드 */}
+          <div class="ifl2-casting-card ifl2-casting-card--insta">
+            <div class="ifl2-cc-glow"></div>
+            <div class="ifl2-cc-header">
+              <div class="ifl2-cc-index">03</div>
+              <div class="ifl2-cc-icon">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <rect x="3" y="3" width="26" height="26" rx="7" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="16" cy="16" r="5.5" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="23" cy="9" r="1.5" fill="currentColor"/>
+                </svg>
+              </div>
+            </div>
+            <h3 class="ifl2-cc-title">인스타 피드<br />연계</h3>
+            <p class="ifl2-cc-desc">단순 노출을 넘어 <strong>팬덤 소통과 브랜드 친밀감</strong>을 동시에 강화. 정교한 피드 전략으로 진정성 있는 팬층을 공략합니다.</p>
+            <div class="ifl2-cc-tags">
+              <span>브랜딩 강화</span><span>팬덤 확산</span><span>친밀감 상승</span>
+            </div>
+            <div class="ifl2-cc-line"></div>
+          </div>
         </div>
       </div>
     </section>
 
-    {/* ══ 인플루언서 서비스 라인업 ══ */}
-    <section class="ifl-section">
-      <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-left" style="background:radial-gradient(circle,rgba(168,85,247,0.10) 0%,transparent 70%)"></div><div class="svc-section-glow-top" style="background:linear-gradient(90deg,transparent,rgba(168,85,247,0.35),transparent)"></div></div>
-      <div class="container" style="position:relative;z-index:1">
-        <div class="section-head">
-          <span class="sec-label">Service Lineup</span>
-          <h2 class="sec-title">인플루언서 마케팅<br /><em>7가지 서비스</em></h2>
-          <p class="sec-sub" style="margin-top:14px;color:rgba(255,255,255,0.5);font-size:15px;max-width:540px">브랜드 목표와 예산에 맞는 최적의 인플루언서 서비스를 제안드립니다.<br />상담을 통해 구체적인 서비스 방향을 함께 설계합니다.</p>
-        </div>
+    {/* ══════════════════════════════════════════
+        SERVICE 02 + 03 — 브랜디드 / 기획 PPL
+    ══════════════════════════════════════════ */}
+    <section class="ifl2-section ifl2-section--content">
+      <div class="ifl2-bg">
+        <div class="ifl2-orb ifl2-orb--blue"></div>
+        <div class="ifl2-orb ifl2-orb--cyan"></div>
+        <div class="ifl2-dot-field"></div>
+      </div>
+      <div class="container">
+        <div class="ifl2-content-pair">
 
-        <div class="ifl-grid">
-
-          {/* 01 크리에이터 섭외/협찬 */}
-          <div class="ifl-card">
-            <div class="ifl-icon">🤝</div>
-            <h3 class="ifl-card-title">크리에이터 섭외/협찬</h3>
-            <ul class="ifl-tags">
-              <li>유튜버 섭외/협찬</li>
-              <li>연예인/인플루언서 섭외</li>
-              <li>인스타 피드 연계</li>
+          {/* 브랜디드 */}
+          <div class="ifl2-pair-card ifl2-pair-card--branded">
+            <div class="ifl2-pair-num">02</div>
+            <div class="ifl2-pair-category">Branded Content</div>
+            <h3 class="ifl2-pair-title">브랜디드 콘텐츠</h3>
+            <p class="ifl2-pair-desc">브랜드 메시지를 콘텐츠 그 자체로 승화시킵니다. 광고라는 인식 없이 크리에이터의 세계관과 브랜드 스토리가 완벽하게 융합된 <strong>프리미엄 콘텐츠</strong>를 제작합니다.</p>
+            <ul class="ifl2-pair-list">
+              <li>
+                <span class="ifl2-pair-icon">
+                  <svg viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                크리에이터 세계관 연계 기획
+              </li>
+              <li>
+                <span class="ifl2-pair-icon">
+                  <svg viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                브랜드 스토리텔링 극대화
+              </li>
+              <li>
+                <span class="ifl2-pair-icon">
+                  <svg viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                자연스러운 메시지 임베딩
+              </li>
             </ul>
-            <div class="ifl-card-accent"></div>
+            <div class="ifl2-pair-shimmer"></div>
           </div>
 
-          {/* 02 브랜디드 콘텐츠 */}
-          <div class="ifl-card">
-            <div class="ifl-icon">📣</div>
-            <h3 class="ifl-card-title">브랜디드</h3>
-            <ul class="ifl-tags">
-              <li>브랜드 중심 콘텐츠</li>
+          {/* 기획 PPL */}
+          <div class="ifl2-pair-card ifl2-pair-card--ppl">
+            <div class="ifl2-pair-num">03</div>
+            <div class="ifl2-pair-category">Planned PPL</div>
+            <h3 class="ifl2-pair-title">기획 PPL</h3>
+            <p class="ifl2-pair-desc">소비자가 광고임을 인식하지 못한 채 브랜드를 자연스럽게 경험하게 하는 가장 효과적인 방식. 콘텐츠 흐름 안에 제품을 녹여내어 <strong>거부감 없이 브랜드 인지도</strong>를 높입니다.</p>
+            <ul class="ifl2-pair-list">
+              <li>
+                <span class="ifl2-pair-icon">
+                  <svg viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                콘텐츠 흐름 내 자연스러운 제품 노출
+              </li>
+              <li>
+                <span class="ifl2-pair-icon">
+                  <svg viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                시청자 이탈률 최소화
+              </li>
+              <li>
+                <span class="ifl2-pair-icon">
+                  <svg viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                브랜드 친밀감 및 신뢰 형성
+              </li>
             </ul>
-            <div class="ifl-card-accent"></div>
-          </div>
-
-          {/* 03 기획 PPL */}
-          <div class="ifl-card">
-            <div class="ifl-icon">🎬</div>
-            <h3 class="ifl-card-title">기획 PPL</h3>
-            <ul class="ifl-tags">
-              <li>자연스러운 제품 노출</li>
-            </ul>
-            <div class="ifl-card-accent"></div>
-          </div>
-
-          {/* 04 숏폼 */}
-          <div class="ifl-card">
-            <div class="ifl-icon">📱</div>
-            <h3 class="ifl-card-title">숏폼</h3>
-            <ul class="ifl-tags">
-              <li>숏폼 영상 제작</li>
-            </ul>
-            <div class="ifl-card-accent"></div>
-          </div>
-
-          {/* 05 유튜브 콘텐츠 제작 */}
-          <div class="ifl-card">
-            <div class="ifl-icon">🎥</div>
-            <h3 class="ifl-card-title">유튜브 콘텐츠 제작</h3>
-            <ul class="ifl-tags">
-              <li>롱폼 영상 제작</li>
-              <li>숏폼 영상 제작</li>
-              <li>유튜브 관리</li>
-            </ul>
-            <div class="ifl-card-accent"></div>
-          </div>
-
-          {/* 06 모델 */}
-          <div class="ifl-card">
-            <div class="ifl-icon">🧑‍🤝‍🧑</div>
-            <h3 class="ifl-card-title">모델</h3>
-            <ul class="ifl-tags">
-              <li>유튜버 모델</li>
-              <li>일반 모델</li>
-              <li>연예인 모델</li>
-            </ul>
-            <div class="ifl-card-accent"></div>
-          </div>
-
-          {/* 07 2차 가공 콘텐츠 */}
-          <div class="ifl-card">
-            <div class="ifl-icon">✂️</div>
-            <h3 class="ifl-card-title">2차 가공 콘텐츠</h3>
-            <ul class="ifl-tags">
-              <li>미디어믹스 활용</li>
-            </ul>
-            <div class="ifl-card-accent"></div>
-          </div>
-
-          {/* More */}
-          <div class="ifl-card ifl-card--more">
-            <div class="ifl-more-icon">＋</div>
-            <span>More Services</span>
+            <div class="ifl2-pair-shimmer"></div>
           </div>
 
         </div>
       </div>
     </section>
 
+    {/* ══════════════════════════════════════════
+        SERVICE 04 + 05 — 숏폼 & 유튜브 콘텐츠 제작
+    ══════════════════════════════════════════ */}
+    <section class="ifl2-section ifl2-section--youtube">
+      <div class="ifl2-bg">
+        <div class="ifl2-orb ifl2-orb--red"></div>
+        <div class="ifl2-orb ifl2-orb--orange"></div>
+        <div class="ifl2-grid-lines"></div>
+      </div>
+      <div class="container">
+        <div class="ifl2-section-head">
+          <div class="ifl2-snum">04 — 05</div>
+          <div class="ifl2-stitle-wrap">
+            <span class="ifl2-slabel">YouTube &amp; Short-form Content</span>
+            <h2 class="ifl2-stitle">숏폼 &amp; 유튜브 <em>콘텐츠 제작</em></h2>
+            <p class="ifl2-slead">플랫폼 특성과 예산에 맞는 <strong>4가지 영상 제작 솔루션</strong>을 제공합니다.</p>
+          </div>
+        </div>
+
+        <div class="ifl2-yt-grid">
+          <div class="ifl2-yt-card">
+            <div class="ifl2-yt-top">
+              <div class="ifl2-yt-badge ifl2-yt-badge--premium">PREMIUM</div>
+              <div class="ifl2-yt-type">롱폼</div>
+            </div>
+            <div class="ifl2-yt-visual">
+              <svg viewBox="0 0 48 48" fill="none">
+                <rect x="4" y="8" width="40" height="28" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M20 18l10 6-10 6V18z" fill="currentColor" opacity=".7"/>
+                <path d="M16 40h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h4>롱폼 영상 제작</h4>
+            <p>정통 고품질 영상 제작. 브랜드 스토리와 제품을 깊이 있게 담아내는 <strong>프리미엄 전략</strong>에 최적화됩니다.</p>
+            <div class="ifl2-yt-chips"><span>#고퀄리티</span><span>#프리미엄전략</span></div>
+          </div>
+
+          <div class="ifl2-yt-card">
+            <div class="ifl2-yt-top">
+              <div class="ifl2-yt-badge ifl2-yt-badge--ai">AI</div>
+              <div class="ifl2-yt-type">롱폼</div>
+            </div>
+            <div class="ifl2-yt-visual">
+              <svg viewBox="0 0 48 48" fill="none">
+                <rect x="4" y="8" width="40" height="28" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="16" cy="20" r="3" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M26 16l6 4-6 4V16z" fill="currentColor" opacity=".7"/>
+                <path d="M26 26h8M16 28h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M16 40h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h4>AI 롱폼 영상 제작</h4>
+            <p>AI 기술로 일반 롱폼 대비 <strong>합리적인 단가</strong>로 진행. 방향 설계가 핵심인 스마트한 제작 방식입니다.</p>
+            <div class="ifl2-yt-chips"><span>#합리적단가</span><span>#AI제작</span></div>
+          </div>
+
+          <div class="ifl2-yt-card">
+            <div class="ifl2-yt-top">
+              <div class="ifl2-yt-badge ifl2-yt-badge--trend">TREND</div>
+              <div class="ifl2-yt-type">숏폼</div>
+            </div>
+            <div class="ifl2-yt-visual">
+              <svg viewBox="0 0 48 48" fill="none">
+                <rect x="14" y="4" width="20" height="36" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M21 19l8 5-8 5V19z" fill="currentColor" opacity=".7"/>
+                <circle cx="24" cy="38" r="1.5" fill="currentColor" opacity=".5"/>
+              </svg>
+            </div>
+            <h4>전통 숏폼 콘텐츠</h4>
+            <p>유튜브 트렌드에 맞춘 숏폼 영상. 주로 <strong>광고 집행용</strong>으로 활용되며 바이럴 확산에 최적화됩니다.</p>
+            <div class="ifl2-yt-chips"><span>#트렌드적합</span><span>#광고집행용</span></div>
+          </div>
+
+          <div class="ifl2-yt-card">
+            <div class="ifl2-yt-top">
+              <div class="ifl2-yt-badge ifl2-yt-badge--ai">AI</div>
+              <div class="ifl2-yt-type">숏폼</div>
+            </div>
+            <div class="ifl2-yt-visual">
+              <svg viewBox="0 0 48 48" fill="none">
+                <rect x="14" y="4" width="20" height="36" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M24 14v8M20 18h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M19 28l5 4 5-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="24" cy="38" r="1.5" fill="currentColor" opacity=".5"/>
+              </svg>
+            </div>
+            <h4>AI 숏폼 콘텐츠</h4>
+            <p>전통 방식 대비 <strong>합리적인 금액</strong>으로 빠르게 제작. 퍼포먼스 광고 영상 제작에 특히 유리합니다.</p>
+            <div class="ifl2-yt-chips"><span>#합리적금액</span><span>#퍼포먼스특화</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════
+        SERVICE 06 — 모델
+    ══════════════════════════════════════════ */}
+    <section class="ifl2-section ifl2-section--model">
+      <div class="ifl2-bg">
+        <div class="ifl2-orb ifl2-orb--violet"></div>
+        <div class="ifl2-orb ifl2-orb--teal"></div>
+        <div class="ifl2-dot-field"></div>
+      </div>
+      <div class="container">
+        <div class="ifl2-section-head">
+          <div class="ifl2-snum">06</div>
+          <div class="ifl2-stitle-wrap">
+            <span class="ifl2-slabel">Model Service</span>
+            <h2 class="ifl2-stitle">모델</h2>
+            <p class="ifl2-slead">브랜드의 목표와 예산에 최적화된 <strong>모델 전략</strong>을 설계합니다.</p>
+          </div>
+        </div>
+
+        <div class="ifl2-model-row">
+          {/* 유튜버 모델 */}
+          <div class="ifl2-model-card">
+            <div class="ifl2-mc-top">
+              <span class="ifl2-mc-num">01</span>
+              <div class="ifl2-mc-icon ifl2-mc-icon--red">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" stroke="currentColor" stroke-width="1.5"/><path d="M9.75 15.02L15.5 12l-5.75-3.02v6.04z" fill="currentColor" opacity=".8"/></svg>
+              </div>
+            </div>
+            <h4>유튜버 모델</h4>
+            <ul class="ifl2-mc-list">
+              <li>크리에이터 커머스 활성화 &amp; 팬층 타겟 마케팅에 최적</li>
+              <li>연예인 모델 대비 <strong>합리적인 비용</strong>으로 집행 가능</li>
+              <li>미들급 연예인 이상의 퍼포먼스 창출</li>
+            </ul>
+            <div class="ifl2-mc-glow"></div>
+          </div>
+
+          {/* 연예인 모델 — 피처드 */}
+          <div class="ifl2-model-card ifl2-model-card--featured">
+            <div class="ifl2-mc-featured-tag">FEATURED</div>
+            <div class="ifl2-mc-top">
+              <span class="ifl2-mc-num">02</span>
+              <div class="ifl2-mc-icon ifl2-mc-icon--purple">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <h4>연예인 모델</h4>
+            <ul class="ifl2-mc-list">
+              <li>브랜드 확실한 <strong>이미지 제고</strong>가 필요할 때 최선택</li>
+              <li>프리미엄 금액대 형성 (고예산)</li>
+              <li>촬영 콘텐츠와 규모에 따라 탄력적 비용 구조</li>
+            </ul>
+            <div class="ifl2-mc-glow"></div>
+          </div>
+
+          {/* 일반 모델 */}
+          <div class="ifl2-model-card">
+            <div class="ifl2-mc-top">
+              <span class="ifl2-mc-num">03</span>
+              <div class="ifl2-mc-icon ifl2-mc-icon--teal">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <h4>일반 모델</h4>
+            <ul class="ifl2-mc-list">
+              <li>브랜드 제품을 <strong>시각적으로 표현</strong>할 때 최적</li>
+              <li>비교적 합리적인 비용으로 집행</li>
+              <li>모델 특색으로 제품 핵심을 고급스럽게 표현</li>
+            </ul>
+            <div class="ifl2-mc-glow"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════
+        SERVICE 07 — 미디어믹스 2차가공 콘텐츠
+    ══════════════════════════════════════════ */}
+    <section class="ifl2-section ifl2-section--confidential">
+      <canvas id="ifl2ConfCanvas" class="ifl2-conf-canvas"></canvas>
+      <div class="ifl2-conf-inner container">
+        <div class="ifl2-conf-body">
+          <div class="ifl2-conf-snum">07</div>
+          <div class="ifl2-conf-label">Media Mix Content</div>
+          <h2 class="ifl2-conf-title">미디어믹스<br /><em>2차가공 콘텐츠</em></h2>
+
+          <div class="ifl2-conf-stamp">
+            <span>CONFIDENTIAL</span>
+          </div>
+
+          <p class="ifl2-conf-sub">보안상 오픈소스에서는 공개할 수 없는 캠페인이 대부분입니다.</p>
+
+          <div class="ifl2-conf-box">
+            <div class="ifl2-conf-lock">
+              <svg viewBox="0 0 24 24" fill="none" width="28" height="28">
+                <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="12" cy="16" r="1.5" fill="currentColor"/>
+              </svg>
+            </div>
+            <p class="ifl2-conf-box-main">대기업들도 선택하는 <strong>인애드컴퍼니의 고유 마케팅 상품</strong></p>
+            <p class="ifl2-conf-box-sub">미디어믹스 2차가공 콘텐츠는<br /><strong>킥오프 미팅에서만 디테일을 공개합니다.</strong></p>
+            <div class="ifl2-conf-security">
+              <span class="ifl2-conf-dot"></span>
+              SECURITY LEVEL: HIGH · INTERNAL USE ONLY
+            </div>
+          </div>
+
+          <a href="/contact" class="hero-cta-btn primary ifl2-conf-cta">
+            <span>킥오프 미팅 신청하기</span>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  var cvs=document.getElementById('ifl2ConfCanvas'); if(!cvs)return;
+  var ctx=cvs.getContext('2d'),W,H,chars='01CONFIDENTIAL秘密機密SECURE'.split(''),drops=[];
+  function resize(){W=cvs.width=window.innerWidth;H=cvs.height=cvs.closest('section').offsetHeight||600;drops=[];var cols=Math.floor(W/22);for(var i=0;i<cols;i++)drops.push(Math.random()*H/18);}
+  function draw(){ctx.fillStyle='rgba(2,4,8,0.07)';ctx.fillRect(0,0,W,H);ctx.font='13px monospace';drops.forEach(function(y,i){var ch=chars[Math.floor(Math.random()*chars.length)];var alpha=Math.random()>.88?0.5:0.1;ctx.fillStyle='rgba(168,85,247,'+alpha+')';ctx.fillText(ch,i*22,y*18);drops[i]=y>H/18+Math.random()*20?0:y+1;});requestAnimationFrame(draw);}
+  resize();draw();window.addEventListener('resize',resize);
+})();
+      `}} />
+    </section>
+
+    {/* ══ RESULTS ══ */}
     <section class="section svc-results-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
@@ -272,6 +504,7 @@ export const SvcInfluencerPage = () => (
       </div>
     </section>
 
+    {/* ══ CTA ══ */}
     <section class="svc-cta-section">
       <div class="container">
         <div class="svc-cta-inner">
