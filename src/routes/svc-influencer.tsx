@@ -590,130 +590,78 @@ export const SvcInfluencerPage = () => (
       `}} />
     </section>
 
-    {/* ══ PROCESS ══ */}
+    {/* ══ PROCESS ══ (iflp 카드 그리드 유지) */}
     <section class="iflp-section">
-      {/* 배경 레이어 */}
       <div class="iflp-bg">
         <div class="iflp-bg-grid"></div>
         <div class="iflp-bg-orb iflp-bg-orb--a"></div>
         <div class="iflp-bg-orb iflp-bg-orb--b"></div>
         <div class="iflp-bg-orb iflp-bg-orb--c"></div>
       </div>
-
       <div class="container" style="position:relative;z-index:1">
-        {/* 헤더 */}
         <div class="iflp-head">
-          <div class="iflp-eyebrow">
-            <span class="iflp-eyebrow-dot"></span>
-            INFLUENCER MARKETING PROCESS
-            <span class="iflp-eyebrow-dot"></span>
-          </div>
+          <div class="iflp-eyebrow"><span class="iflp-eyebrow-dot"></span>INFLUENCER MARKETING PROCESS<span class="iflp-eyebrow-dot"></span></div>
           <h2 class="iflp-title">캠페인 시작부터 성과까지<br /><em>7단계 정밀 프로세스</em></h2>
           <p class="iflp-sub">단순 섭외를 넘어 — 전략 설계, 크리에이터 매칭, 콘텐츠 제작, 바이럴 확산까지<br />인애드컴퍼니가 전 과정을 책임집니다.</p>
         </div>
-
-        {/* 7단계 카드 그리드 */}
-        <div class="iflp-grid">
-          {([
-            {
-              num:'01', title:'상담 진행',
-              sub:'Strategy Consultation',
-              desc:'브랜드 목표·예산·타겟을 심층 분석합니다. 캠페인 KPI와 방향성을 함께 정의하고 맞춤 전략을 제안합니다.',
-              accent:'#2563eb', glow:'rgba(37,99,235,0.18)',
-              tags:['목표 정의', '예산 협의', 'KPI 설정'],
-              icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            },
-            {
-              num:'02', title:'계약 진행',
-              sub:'Contract & Scope',
-              desc:'진행 범위·일정·성과 지표를 명문화합니다. 투명한 비용 구조와 계약으로 신뢰를 보장합니다.',
-              accent:'#7c3aed', glow:'rgba(124,58,237,0.18)',
-              tags:['범위 확정', '일정 조율', '계약 체결'],
-              icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg>
-            },
-            {
-              num:'03', title:'가이드라인 작성',
-              sub:'Creative Briefing',
-              desc:'브랜드 메시지·금지 표현·톤앤매너를 담은 크리에이터 브리핑 가이드를 제작합니다.',
-              accent:'#059669', glow:'rgba(5,150,105,0.18)',
-              tags:['톤앤매너', '브리핑 문서', '승인 기준'],
-              icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            },
-            {
-              num:'04', title:'인플루언서 리스트업 및 매칭',
-              sub:'Creator Matching',
-              desc:'1,200+ 크리에이터 DB에서 타겟 적합성·퍼포먼스·단가를 종합 분석해 최적 크리에이터를 선별합니다.',
-              accent:'#0891b2', glow:'rgba(8,145,178,0.18)',
-              tags:['DB 분석', '적합성 검증', '단가 협의'],
-              icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75M21 21v-2a4 4 0 0 0-3-3.85"/></svg>
-            },
-            {
-              num:'05', title:'콘텐츠 제작',
-              sub:'Content Production',
-              desc:'가이드라인 기반으로 크리에이터가 콘텐츠를 제작합니다. 브랜드 검수와 피드백을 거쳐 최종 확정합니다.',
-              accent:'#d97706', glow:'rgba(217,119,6,0.18)',
-              tags:['제작 모니터링', '브랜드 검수', '최종 승인'],
-              icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M10 9.5l5 2.5-5 2.5V9.5z" fill="currentColor" opacity=".6"/><path d="M8 21h8M12 17v4"/></svg>
-            },
-            {
-              num:'06', title:'연계 바이럴 확산',
-              sub:'Viral Amplification',
-              desc:'최적 시간에 콘텐츠를 게시하고 커뮤니티·SNS 연계 확산 전략을 병행 실행합니다.',
-              accent:'#dc2626', glow:'rgba(220,38,38,0.18)',
-              tags:['SNS 확산', '커뮤니티 연계', '실시간 모니터링'],
-              icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
-            },
-            {
-              num:'07', title:'리포팅',
-              sub:'Performance Reporting',
-              desc:'조회수·도달·클릭·전환·매출까지 전 과정을 투명하게 리포팅합니다. 차기 캠페인을 위한 인사이트도 제공합니다.',
-              accent:'#a855f7', glow:'rgba(168,85,247,0.18)',
-              tags:['성과 대시보드', '인사이트 분석', '차기 전략'],
-              icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-            },
-          ] as any[]).map((s: any, i: number) => (
-            <div class="iflp-card" style={`--ac:${s.accent};--glow:${s.glow};--i:${i}`}>
-              {/* 상단 번호 + 아이콘 */}
-              <div class="iflp-card-top">
-                <div class="iflp-card-icon">{s.icon}</div>
-                <div class="iflp-card-num">{s.num}</div>
-              </div>
-              {/* 제목 */}
-              <div class="iflp-card-titles">
-                <h4 class="iflp-card-title">{s.title}</h4>
-                <span class="iflp-card-sub">{s.sub}</span>
-              </div>
-              {/* 설명 */}
-              <p class="iflp-card-desc">{s.desc}</p>
-              {/* 태그 */}
-              <div class="iflp-card-tags">
-                {(s.tags as string[]).map((t: string) => (
-                  <span class="iflp-card-tag">{t}</span>
-                ))}
-              </div>
-              {/* 하단 컬러 바 */}
-              <div class="iflp-card-bar"></div>
-              {/* 호버 글로우 */}
-              <div class="iflp-card-glow"></div>
-              {/* 호버 shimmer */}
-              <div class="iflp-card-shimmer"></div>
+        <div class="iflp2-wrap" id="iflp2Wrap">
+          <ul class="iflp2-list" id="iflp2List">
+            <li class="iflp2-item active" data-idx="0"><button><span class="iflp2-num">01</span><span class="iflp2-name">상담 진행</span><span class="iflp2-en">Strategy Consultation</span></button></li>
+            <li class="iflp2-item" data-idx="1"><button><span class="iflp2-num">02</span><span class="iflp2-name">계약 진행</span><span class="iflp2-en">Contract &amp; Scope</span></button></li>
+            <li class="iflp2-item" data-idx="2"><button><span class="iflp2-num">03</span><span class="iflp2-name">가이드라인 작성</span><span class="iflp2-en">Creative Briefing</span></button></li>
+            <li class="iflp2-item" data-idx="3"><button><span class="iflp2-num">04</span><span class="iflp2-name">인플루언서 매칭</span><span class="iflp2-en">Creator Matching</span></button></li>
+            <li class="iflp2-item" data-idx="4"><button><span class="iflp2-num">05</span><span class="iflp2-name">콘텐츠 제작</span><span class="iflp2-en">Content Production</span></button></li>
+            <li class="iflp2-item" data-idx="5"><button><span class="iflp2-num">06</span><span class="iflp2-name">연계 바이럴 확산</span><span class="iflp2-en">Viral Amplification</span></button></li>
+            <li class="iflp2-item" data-idx="6"><button><span class="iflp2-num">07</span><span class="iflp2-name">리포팅</span><span class="iflp2-en">Performance Reporting</span></button></li>
+          </ul>
+          <div class="iflp2-panels" id="iflp2Panels">
+            <div class="iflp2-panel active" data-panel="0">
+              <div class="iflp2-panel-icon" style="--pc:#2563eb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+              <span class="iflp2-panel-tag" style="--pc:#2563eb">Strategy Consultation</span>
+              <p class="iflp2-panel-desc">브랜드 목표·예산·타겟을 심층 분석합니다.<br />캠페인 KPI와 방향성을 함께 정의하고 맞춤 전략을 제안합니다.<br />단순한 견적 상담이 아닌 브랜드 성장 전략 미팅입니다.</p>
+              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#2563eb">🎯 목표 정의</span><span class="iflp2-ptag" style="--pc:#2563eb">💰 예산 협의</span><span class="iflp2-ptag" style="--pc:#2563eb">📊 KPI 설정</span><span class="iflp2-ptag" style="--pc:#2563eb">🗺 전략 방향 수립</span></div></div>
             </div>
-          ))}
-        </div>
-
-        {/* 하단 연결 라인 + CTA 힌트 */}
-        <div class="iflp-footer">
-          <div class="iflp-footer-line">
-            <div class="iflp-footer-progress">
-              <div class="iflp-footer-progress-fill"></div>
+            <div class="iflp2-panel" data-panel="1">
+              <div class="iflp2-panel-icon" style="--pc:#7c3aed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg></div>
+              <span class="iflp2-panel-tag" style="--pc:#7c3aed">Contract &amp; Scope</span>
+              <p class="iflp2-panel-desc">진행 범위·일정·성과 지표를 명문화합니다.<br />투명한 비용 구조와 명확한 계약서로 신뢰를 보장합니다.<br />모든 조건이 계약서에 명시되어 불필요한 분쟁을 방지합니다.</p>
+              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#7c3aed">📋 범위 확정</span><span class="iflp2-ptag" style="--pc:#7c3aed">📅 일정 조율</span><span class="iflp2-ptag" style="--pc:#7c3aed">✍️ 계약 체결</span><span class="iflp2-ptag" style="--pc:#7c3aed">🔒 투명한 비용</span></div></div>
+            </div>
+            <div class="iflp2-panel" data-panel="2">
+              <div class="iflp2-panel-icon" style="--pc:#059669"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+              <span class="iflp2-panel-tag" style="--pc:#059669">Creative Briefing</span>
+              <p class="iflp2-panel-desc">브랜드 메시지·금지 표현·톤앤매너를 담은 크리에이터 브리핑 가이드를 제작합니다.<br />크리에이터가 브랜드의 언어로 콘텐츠를 만들 수 있도록 상세 지침을 제공합니다.</p>
+              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#059669">🎨 톤앤매너</span><span class="iflp2-ptag" style="--pc:#059669">📄 브리핑 문서</span><span class="iflp2-ptag" style="--pc:#059669">✅ 승인 기준</span><span class="iflp2-ptag" style="--pc:#059669">🚫 금지 표현 정리</span></div></div>
+            </div>
+            <div class="iflp2-panel" data-panel="3">
+              <div class="iflp2-panel-icon" style="--pc:#0891b2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75M21 21v-2a4 4 0 0 0-3-3.85"/></svg></div>
+              <span class="iflp2-panel-tag" style="--pc:#0891b2">Creator Matching</span>
+              <p class="iflp2-panel-desc">1,200+ 크리에이터 DB에서 타겟 적합성·퍼포먼스·단가를 종합 분석합니다.<br />단순 팔로워 수가 아닌 실제 전환율과 브랜드 핏을 기준으로 최적 크리에이터를 선별합니다.</p>
+              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#0891b2">🗄 1,200+ DB 분석</span><span class="iflp2-ptag" style="--pc:#0891b2">🔍 적합성 검증</span><span class="iflp2-ptag" style="--pc:#0891b2">💹 단가 협의</span><span class="iflp2-ptag" style="--pc:#0891b2">📈 전환율 기반 선별</span></div></div>
+            </div>
+            <div class="iflp2-panel" data-panel="4">
+              <div class="iflp2-panel-icon" style="--pc:#d97706"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M10 9.5l5 2.5-5 2.5V9.5z" fill="currentColor" opacity=".6"/><path d="M8 21h8M12 17v4"/></svg></div>
+              <span class="iflp2-panel-tag" style="--pc:#d97706">Content Production</span>
+              <p class="iflp2-panel-desc">가이드라인 기반으로 크리에이터가 콘텐츠를 제작합니다.<br />브랜드 검수와 피드백을 거쳐 최종 확정합니다.<br />완성도 높은 콘텐츠가 나올 때까지 함께 조율합니다.</p>
+              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#d97706">🎬 제작 모니터링</span><span class="iflp2-ptag" style="--pc:#d97706">🔎 브랜드 검수</span><span class="iflp2-ptag" style="--pc:#d97706">✅ 최종 승인</span><span class="iflp2-ptag" style="--pc:#d97706">🔄 피드백 반영</span></div></div>
+            </div>
+            <div class="iflp2-panel" data-panel="5">
+              <div class="iflp2-panel-icon" style="--pc:#dc2626"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></div>
+              <span class="iflp2-panel-tag" style="--pc:#dc2626">Viral Amplification</span>
+              <p class="iflp2-panel-desc">최적 시간에 콘텐츠를 게시하고 커뮤니티·SNS 연계 확산 전략을 병행 실행합니다.<br />인플루언서 콘텐츠를 씨앗으로 바이럴 파급력을 극대화합니다.</p>
+              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#dc2626">📱 SNS 확산</span><span class="iflp2-ptag" style="--pc:#dc2626">💬 커뮤니티 연계</span><span class="iflp2-ptag" style="--pc:#dc2626">📡 실시간 모니터링</span><span class="iflp2-ptag" style="--pc:#dc2626">⚡ 추가 확산 실행</span></div></div>
+            </div>
+            <div class="iflp2-panel" data-panel="6">
+              <div class="iflp2-panel-icon" style="--pc:#a855f7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+              <span class="iflp2-panel-tag" style="--pc:#a855f7">Performance Reporting</span>
+              <p class="iflp2-panel-desc">조회수·도달·클릭·전환·매출까지 전 과정을 투명하게 리포팅합니다.<br />단순 수치 나열이 아닌 인사이트와 차기 캠페인 전략까지 함께 제공합니다.</p>
+              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#a855f7">📊 성과 대시보드</span><span class="iflp2-ptag" style="--pc:#a855f7">🔬 인사이트 분석</span><span class="iflp2-ptag" style="--pc:#a855f7">🚀 차기 전략 제안</span><span class="iflp2-ptag" style="--pc:#a855f7">📈 ROI 리포트</span></div></div>
             </div>
           </div>
-          <p class="iflp-footer-hint">모든 단계에서 전담 PM이 함께합니다 · 평균 캠페인 기간 4–6주</p>
         </div>
-
       </div>
+      <script dangerouslySetInnerHTML={{__html:`(function(){var items=document.querySelectorAll('#iflp2List .iflp2-item');var panels=document.querySelectorAll('#iflp2Panels .iflp2-panel');items.forEach(function(item){item.querySelector('button').addEventListener('click',function(){var idx=parseInt(item.dataset.idx);items.forEach(function(el){el.classList.remove('active');});panels.forEach(function(el){el.classList.remove('active');});item.classList.add('active');panels[idx].classList.add('active');});});})();`}} />
     </section>
-
     {/* ══ RESULTS ══ */}
     <section class="section svc-results-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
