@@ -7393,6 +7393,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  /* shimmer는 아래 @keyframes vhShimmer 에서 적용 */
 }
 
 /* ── 타이핑 커서 ── */
@@ -7561,44 +7562,19 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .vh-btns { flex-direction: column; align-items: flex-start; }
 }
 
-/* ── 글리치 애니메이션 ── */
-@keyframes vhGlitch {
-  0%   { clip-path: inset(40% 0 61% 0); transform: translate(-3px, 0); }
-  20%  { clip-path: inset(92% 0 1% 0);  transform: translate(3px, 0); }
-  40%  { clip-path: inset(43% 0 1% 0);  transform: translate(-3px, 0); }
-  60%  { clip-path: inset(25% 0 58% 0); transform: translate(3px, 0); }
-  80%  { clip-path: inset(54% 0 7% 0);  transform: translate(-3px, 0); }
-  100% { clip-path: inset(58% 0 43% 0); transform: translate(0, 0); }
+/* ── 액센트 타이틀 미세 shimmer 깜빡임 ── */
+@keyframes vhShimmer {
+  0%,100% { opacity: 1; filter: brightness(1); }
+  48%     { opacity: 1; filter: brightness(1); }
+  50%     { opacity: 0.82; filter: brightness(1.15); }
+  52%     { opacity: 1; filter: brightness(1); }
+  78%     { opacity: 1; filter: brightness(1); }
+  80%     { opacity: 0.88; filter: brightness(1.12); }
+  82%     { opacity: 1; filter: brightness(1); }
 }
-.vh-glitch-wrap {
-  position: relative;
-  display: inline-block;
-}
-.vh-glitch-wrap::before,
-.vh-glitch-wrap::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: inherit;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.vh-glitch-wrap::before {
-  left: 2px;
-  text-shadow: none;
-  background: linear-gradient(135deg, rgba(255,50,50,0.6), transparent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: vhGlitch 4s 3s steps(1) infinite;
-}
-.vh-glitch-wrap::after {
-  left: -2px;
-  background: linear-gradient(135deg, rgba(0,212,168,0.6), transparent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: vhGlitch 4s 3.2s steps(1) infinite reverse;
+.vh-tline--accent {
+  animation: vhShimmer 6s ease-in-out infinite;
+  animation-delay: 2s;
 }
 
 /* ── 카운터 업 숫자 하이라이트 ── */

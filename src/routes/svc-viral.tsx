@@ -29,9 +29,7 @@ export const SvcViralPage = () => (
         {/* 메인 카피 — 줄별 슬라이드 인 + 글리치 효과 */}
         <h1 class="vh-title">
           <span class="vh-tline" id="vhL1">단순한 광고를 넘어,</span>
-          <span class="vh-tline vh-tline--accent" id="vhL2">
-            <span class="vh-glitch-wrap" data-text="브랜드와 소비자의 진짜 연결을 만듭니다.">브랜드와 소비자의<br class="vh-br" />진짜 연결을 만듭니다.</span>
-          </span>
+          <span class="vh-tline vh-tline--accent" id="vhL2">브랜드와 소비자의<br class="vh-br" />진짜 연결을 만듭니다.</span>
         </h1>
 
         {/* 서브 카피 — 단어 단위 페이드 인 */}
