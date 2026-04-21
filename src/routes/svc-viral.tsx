@@ -73,7 +73,8 @@ export const SvcViralPage = () => (
               desc:'인스타그램·틱톡·유튜브 등 SNS 채널에서의 자연스러운 확산 구조를 설계합니다',
               kpis:[
                 { val:'450개+', label:'진행 가능 계정' },
-              ]
+              ],
+              tags:['인스타 카드뉴스','먹스타그램 배포','숏폼 배포','숏폼 제작','X (구 트위터)','스레드'],
             },
             {
               icon:'📰', name:'언론 바이럴', sub:'Press Viral',
@@ -106,6 +107,16 @@ export const SvcViralPage = () => (
                     </div>
                   ))}
                 </div>
+                {p.tags && (
+                  <div class="vp-tags-row">
+                    <span class="vp-tags-label">상품군</span>
+                    <div class="vp-tags-wrap">
+                      {p.tags.map(t => (
+                        <span class="vp-tag">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           ))}
