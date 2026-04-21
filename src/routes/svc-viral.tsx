@@ -1,21 +1,198 @@
 export const SvcViralPage = () => (
   <>
-    {/* ── Hero ── */}
-    <section class="page-hero svc-hero">
-      <div class="page-hero-bg"><div class="hero-glow glow-1"></div><div class="hero-glow glow-2"></div></div>
-      <div class="container">
-        <a href="/marketing" class="svc-back-link">← Marketing 서비스 전체보기</a>
-        <span class="sec-label">Viral Marketing</span>
-        <h1 class="page-title">바이럴 마케팅</h1>
-        <p class="page-desc">맘카페·온라인 커뮤니티 기반의 자연스러운 확산으로<br />브랜드 인지도를 폭발적으로 높입니다.</p>
-        <div class="svc-hero-kpi">
-          <div class="shk-item"><strong>2,800만+</strong><span>평균 캠페인 도달</span></div>
-          <div class="shk-divider"></div>
-          <div class="shk-item"><strong>48시간</strong><span>최단 바이럴 달성</span></div>
-          <div class="shk-divider"></div>
-          <div class="shk-item"><strong>98%</strong><span>재계약률</span></div>
+    {/* ════════════════════════════════════════
+        VIRAL HERO — 시네마틱 풀스크린
+    ════════════════════════════════════════ */}
+    <section class="vh-hero">
+      {/* 배경 캔버스 파티클 */}
+      <canvas id="vhCanvas" class="vh-canvas"></canvas>
+
+      {/* 배경 레이어 */}
+      <div class="vh-bg">
+        <div class="vh-orb vh-orb--1"></div>
+        <div class="vh-orb vh-orb--2"></div>
+        <div class="vh-orb vh-orb--3"></div>
+        <div class="vh-grid"></div>
+        <div class="vh-noise"></div>
+      </div>
+
+      {/* 콘텐츠 */}
+      <div class="container vh-inner">
+        <a href="/marketing" class="svc-back-link vh-back">← Marketing 전체보기</a>
+
+        {/* 상단 배지 */}
+        <div class="vh-badge">
+          <span class="vh-badge-dot"></span>
+          <span>VIRAL MARKETING</span>
+        </div>
+
+        {/* 메인 카피 — 줄별 슬라이드 인 + 글리치 효과 */}
+        <h1 class="vh-title">
+          <span class="vh-tline" id="vhL1">단순한 광고를 넘어,</span>
+          <span class="vh-tline vh-tline--accent" id="vhL2">
+            <span class="vh-glitch-wrap" data-text="브랜드와 소비자의 진짜 연결을 만듭니다.">브랜드와 소비자의<br class="vh-br" />진짜 연결을 만듭니다.</span>
+          </span>
+        </h1>
+
+        {/* 서브 카피 — 단어 단위 페이드 인 */}
+        <div class="vh-sub-wrap" id="vhSub">
+          <p class="vh-sub">콘텐츠의 시작부터 소비자의 기억에 남는 순간까지.</p>
+          <p class="vh-sub">온라인 채널 속 깊숙이 파고들어 정교한 마케팅으로</p>
+          <p class="vh-sub vh-sub--em">기획, 전략, 실행을 모두 아우르며</p>
+          <p class="vh-sub">브랜드의 가치를 확산시키고 성과로 이어지는</p>
+          <p class="vh-sub vh-sub--highlight">퍼포먼스를 만들어 냅니다.<span class="vh-cursor"></span></p>
+        </div>
+
+        {/* 구분선 + KPI 스트립 */}
+        <div class="vh-kpi-strip" id="vhKpi">
+          <div class="vh-kpi-item">
+            <strong class="vh-kpi-num">2,800만+</strong>
+            <span class="vh-kpi-label">평균 캠페인 도달</span>
+          </div>
+          <div class="vh-kpi-sep"></div>
+          <div class="vh-kpi-item">
+            <strong class="vh-kpi-num">48시간</strong>
+            <span class="vh-kpi-label">최단 바이럴 달성</span>
+          </div>
+          <div class="vh-kpi-sep"></div>
+          <div class="vh-kpi-item">
+            <strong class="vh-kpi-num">98%</strong>
+            <span class="vh-kpi-label">재계약률</span>
+          </div>
+          <div class="vh-kpi-sep"></div>
+          <div class="vh-kpi-item">
+            <strong class="vh-kpi-num">320+</strong>
+            <span class="vh-kpi-label">완료 프로젝트</span>
+          </div>
+        </div>
+
+        {/* CTA 버튼 */}
+        <div class="vh-btns" id="vhBtns">
+          <a href="/contact" class="hero-cta-btn primary">
+            <span>무료 전략 상담받기</span>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#viral-content" class="vh-scroll-btn">
+            <span>자세히 보기</span>
+            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </div>
+
+      {/* 하단 스크롤 힌트 */}
+      <div class="vh-scroll-hint">
+        <div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div>
+      </div>
+
+      {/* JS — 파티클 + 순차 애니메이션 + 카운터업 */}
+      <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  /* ── 파티클 캔버스 ── */
+  var cvs = document.getElementById('vhCanvas');
+  if(!cvs) return;
+  var ctx = cvs.getContext('2d');
+  var W, H, pts = [];
+  function resize(){ W=cvs.width=window.innerWidth; H=cvs.height=cvs.closest('section').offsetHeight||window.innerHeight; }
+  function mkPt(){
+    return { x:Math.random()*W, y:Math.random()*H,
+             vx:(Math.random()-0.5)*0.4, vy:(Math.random()-0.5)*0.4,
+             r:Math.random()*2.0+0.3, a:Math.random(),
+             color: Math.random()>0.7 ? '0,212,168' : (Math.random()>0.5 ? '100,160,255' : '26,107,255') };
+  }
+  function init(){
+    resize();
+    pts=[];
+    var n = Math.min(Math.floor(W*H/7500), 150);
+    for(var i=0;i<n;i++) pts.push(mkPt());
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(function(p){
+      p.x+=p.vx; p.y+=p.vy;
+      p.a += (Math.random()-0.5)*0.012;
+      if(p.a<0.1) p.a=0.1; if(p.a>0.9) p.a=0.9;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba('+p.color+','+(p.a*0.6)+')';
+      ctx.fill();
+    });
+    /* 연결선 */
+    for(var i=0;i<pts.length;i++){
+      for(var j=i+1;j<pts.length;j++){
+        var dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
+        var d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x,pts[i].y);
+          ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle='rgba(26,107,255,'+(0.15*(1-d/120))+')';
+          ctx.lineWidth=0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  init();
+  draw();
+  window.addEventListener('resize', init);
+
+  /* ── 순차 등장 애니메이션 ── */
+  function animIn(el, delay, dir){
+    if(!el) return;
+    el.style.opacity='0';
+    el.style.transform = dir==='up' ? 'translateY(36px)' : dir==='left' ? 'translateX(-36px)' : 'translateY(0)';
+    el.style.transition='opacity 0.9s cubic-bezier(.25,.46,.45,.94), transform 0.9s cubic-bezier(.25,.46,.45,.94)';
+    setTimeout(function(){
+      el.style.opacity='1';
+      el.style.transform='translateY(0) translateX(0)';
+    }, delay);
+  }
+  animIn(document.getElementById('vhL1'),  200, 'left');
+  animIn(document.getElementById('vhL2'),  480, 'left');
+  animIn(document.getElementById('vhSub'), 760, 'up');
+  animIn(document.getElementById('vhKpi'), 1000,'up');
+  animIn(document.getElementById('vhBtns'),1220,'up');
+
+  /* ── KPI 카운터업 ── */
+  var kpiItems = [
+    { id: null, el: null, target: 2800, suffix: '만+', label: '평균 캠페인 도달' },
+    { id: null, el: null, target: 48,   suffix: '시간', label: '최단 바이럴 달성' },
+    { id: null, el: null, target: 98,   suffix: '%',   label: '재계약률' },
+    { id: null, el: null, target: 320,  suffix: '+',   label: '완료 프로젝트' }
+  ];
+  var numEls = document.querySelectorAll('.vh-kpi-num');
+  numEls.forEach(function(el, i){ if(kpiItems[i]) kpiItems[i].el = el; });
+
+  function countUp(item){
+    if(!item.el) return;
+    var start = 0;
+    var dur = 1600;
+    var startTime = null;
+    item.el.classList.add('counting');
+    function step(ts){
+      if(!startTime) startTime = ts;
+      var prog = Math.min((ts-startTime)/dur, 1);
+      var eased = 1 - Math.pow(1-prog, 3);
+      var val = Math.floor(eased * item.target);
+      item.el.textContent = val.toLocaleString() + item.suffix;
+      if(prog < 1) requestAnimationFrame(step);
+      else {
+        item.el.textContent = item.target.toLocaleString() + item.suffix;
+        item.el.classList.remove('counting');
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  setTimeout(function(){
+    kpiItems.forEach(function(item){ countUp(item); });
+  }, 1200);
+
+})();
+      `}} />
     </section>
 
     {/* ============ 서비스 소개 ============ */}

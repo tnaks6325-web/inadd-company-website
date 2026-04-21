@@ -7202,3 +7202,408 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   position: relative;
   z-index: 1;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   VH — VIRAL HERO (시네마틱 풀스크린 히어로)
+══════════════════════════════════════════════════════════════ */
+
+/* ── 기반 섹션 ── */
+.vh-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #020408;
+}
+
+/* ── 파티클 캔버스 ── */
+.vh-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── 배경 레이어 ── */
+.vh-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 메인 그라디언트 오버레이 */
+.vh-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(26,107,255,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 30%, rgba(0,212,168,0.10) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(2,4,8,0) 0%, rgba(2,4,8,0.85) 100%);
+}
+
+/* 스캔라인 (subtle CRT 느낌) */
+.vh-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.06) 3px,
+    rgba(0,0,0,0.06) 4px
+  );
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* ── Glow Orbs ── */
+.vh-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+}
+.vh-orb--1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(26,107,255,0.28) 0%, transparent 70%);
+  top: -100px; left: -100px;
+  animation: vhOrbDrift 18s ease-in-out infinite;
+}
+.vh-orb--2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(0,212,168,0.20) 0%, transparent 70%);
+  bottom: -60px; right: -80px;
+  animation: vhOrbDrift 14s ease-in-out infinite reverse;
+  animation-delay: -5s;
+}
+.vh-orb--3 {
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(100,60,255,0.22) 0%, transparent 70%);
+  top: 40%; right: 25%;
+  animation: vhOrbDrift 20s ease-in-out infinite;
+  animation-delay: -9s;
+}
+@keyframes vhOrbDrift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(30px,-20px) scale(1.06); }
+  66%      { transform: translate(-20px,15px) scale(0.96); }
+}
+
+/* ── 그리드 라인 ── */
+.vh-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 15%, rgba(0,0,0,0.6) 85%, transparent 100%);
+}
+
+/* ── 노이즈 텍스처 ── */
+.vh-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+/* ── 콘텐츠 래퍼 ── */
+.vh-inner {
+  position: relative;
+  z-index: 2;
+  padding-top: 140px;
+  padding-bottom: 120px;
+  max-width: 900px;
+}
+
+/* ── 뒤로 가기 링크 ── */
+.vh-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  text-decoration: none;
+  margin-bottom: 36px;
+  letter-spacing: 0.04em;
+  transition: color 0.25s;
+}
+.vh-back:hover { color: rgba(26,107,255,0.9); }
+
+/* ── 배지 ── */
+.vh-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(26,107,255,0.9);
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border: 1px solid rgba(26,107,255,0.35);
+  border-radius: 40px;
+  background: rgba(26,107,255,0.08);
+  margin-bottom: 28px;
+  animation: vhBadgePulse 3s ease-in-out infinite;
+}
+@keyframes vhBadgePulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(26,107,255,0); }
+  50%      { box-shadow: 0 0 18px 4px rgba(26,107,255,0.18); }
+}
+.vh-badge-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(26,107,255,1);
+  box-shadow: 0 0 8px rgba(26,107,255,0.9);
+  animation: vhDotBlink 1.8s ease-in-out infinite;
+}
+@keyframes vhDotBlink {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* ── 메인 타이틀 ── */
+.vh-title {
+  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+  font-size: clamp(32px, 5.5vw, 68px);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -1.5px;
+  color: var(--white, #fff);
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.vh-tline {
+  display: block;
+  opacity: 0;
+  transform: translateX(-36px);
+}
+.vh-tline--accent {
+  background: linear-gradient(135deg, #fff 30%, rgba(26,107,255,0.9) 70%, rgba(0,212,168,0.85) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── 타이핑 커서 ── */
+.vh-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background: rgba(26,107,255,0.9);
+  margin-left: 4px;
+  vertical-align: middle;
+  border-radius: 2px;
+  animation: vhCursorBlink 1s step-end infinite;
+}
+@keyframes vhCursorBlink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* ── 서브 카피 ── */
+.vh-sub-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 36px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.vh-sub {
+  font-size: clamp(14px, 1.6vw, 17px);
+  color: rgba(255,255,255,0.60);
+  line-height: 1.8;
+  margin: 0;
+  font-weight: 400;
+}
+.vh-sub--em {
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
+.vh-sub--highlight {
+  color: rgba(0,212,168,0.90);
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+}
+.vh-sub--highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0; right: 0;
+  height: 1px;
+  background: rgba(0,212,168,0.5);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: vhUnderline 0.8s 2s forwards;
+}
+@keyframes vhUnderline {
+  to { transform: scaleX(1); }
+}
+
+/* ── KPI 스트립 ── */
+.vh-kpi-strip {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 44px;
+  opacity: 0;
+  transform: translateY(20px);
+  flex-wrap: wrap;
+  row-gap: 12px;
+}
+.vh-kpi-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 28px;
+}
+.vh-kpi-item:first-child { padding-left: 0; }
+.vh-kpi-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 800;
+  color: var(--white, #fff);
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.vh-kpi-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.vh-kpi-sep {
+  width: 1px;
+  height: 36px;
+  background: rgba(255,255,255,0.12);
+  flex-shrink: 0;
+}
+
+/* ── CTA 버튼 그룹 ── */
+.vh-btns {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.vh-scroll-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  padding: 12px 0;
+  transition: color 0.25s;
+}
+.vh-scroll-btn:hover { color: rgba(255,255,255,0.9); }
+.vh-scroll-btn svg { transition: transform 0.3s; }
+.vh-scroll-btn:hover svg { transform: translateY(3px); }
+
+/* ── 스크롤 힌트 ── */
+.vh-scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.5;
+}
+.vh-scroll-mouse {
+  width: 22px; height: 36px;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  border-radius: 11px;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+.vh-scroll-wheel {
+  width: 4px; height: 8px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 2px;
+  animation: vhScrollWheel 2s ease-in-out infinite;
+}
+@keyframes vhScrollWheel {
+  0%,100% { transform: translateY(0); opacity: 1; }
+  60%      { transform: translateY(10px); opacity: 0; }
+}
+
+/* ── 반응형 ── */
+@media (max-width: 768px) {
+  .vh-inner { padding-top: 110px; padding-bottom: 90px; }
+  .vh-title { letter-spacing: -0.5px; }
+  .vh-kpi-item { padding: 0 16px; }
+  .vh-kpi-sep { height: 28px; }
+}
+@media (max-width: 480px) {
+  .vh-inner { padding-top: 100px; padding-bottom: 80px; }
+  .vh-kpi-strip { gap: 12px; }
+  .vh-kpi-sep { display: none; }
+  .vh-kpi-item { padding: 0; }
+  .vh-btns { flex-direction: column; align-items: flex-start; }
+}
+
+/* ── 글리치 애니메이션 ── */
+@keyframes vhGlitch {
+  0%   { clip-path: inset(40% 0 61% 0); transform: translate(-3px, 0); }
+  20%  { clip-path: inset(92% 0 1% 0);  transform: translate(3px, 0); }
+  40%  { clip-path: inset(43% 0 1% 0);  transform: translate(-3px, 0); }
+  60%  { clip-path: inset(25% 0 58% 0); transform: translate(3px, 0); }
+  80%  { clip-path: inset(54% 0 7% 0);  transform: translate(-3px, 0); }
+  100% { clip-path: inset(58% 0 43% 0); transform: translate(0, 0); }
+}
+.vh-glitch-wrap {
+  position: relative;
+  display: inline-block;
+}
+.vh-glitch-wrap::before,
+.vh-glitch-wrap::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: inherit;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.vh-glitch-wrap::before {
+  left: 2px;
+  text-shadow: none;
+  background: linear-gradient(135deg, rgba(255,50,50,0.6), transparent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: vhGlitch 4s 3s steps(1) infinite;
+}
+.vh-glitch-wrap::after {
+  left: -2px;
+  background: linear-gradient(135deg, rgba(0,212,168,0.6), transparent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: vhGlitch 4s 3.2s steps(1) infinite reverse;
+}
+
+/* ── 카운터 업 숫자 하이라이트 ── */
+.vh-kpi-num.counting {
+  color: rgba(26,107,255,1);
+  text-shadow: 0 0 20px rgba(26,107,255,0.5);
+}
+
