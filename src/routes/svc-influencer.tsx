@@ -137,6 +137,104 @@ export const SvcInfluencerPage = () => (
       </div>
     </section>
 
+    {/* ══ 인플루언서 서비스 라인업 ══ */}
+    <section class="ifl-section">
+      <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-left" style="background:radial-gradient(circle,rgba(168,85,247,0.10) 0%,transparent 70%)"></div><div class="svc-section-glow-top" style="background:linear-gradient(90deg,transparent,rgba(168,85,247,0.35),transparent)"></div></div>
+      <div class="container" style="position:relative;z-index:1">
+        <div class="section-head">
+          <span class="sec-label">Service Lineup</span>
+          <h2 class="sec-title">인플루언서 마케팅<br /><em>7가지 서비스</em></h2>
+          <p class="sec-sub" style="margin-top:14px;color:rgba(255,255,255,0.5);font-size:15px;max-width:540px">브랜드 목표와 예산에 맞는 최적의 인플루언서 서비스를 제안드립니다.<br />상담을 통해 구체적인 서비스 방향을 함께 설계합니다.</p>
+        </div>
+
+        <div class="ifl-grid">
+
+          {/* 01 크리에이터 섭외/협찬 */}
+          <div class="ifl-card">
+            <div class="ifl-icon">🤝</div>
+            <h3 class="ifl-card-title">크리에이터 섭외/협찬</h3>
+            <ul class="ifl-tags">
+              <li>유튜버 섭외/협찬</li>
+              <li>연예인/인플루언서 섭외</li>
+              <li>인스타 피드 연계</li>
+            </ul>
+            <div class="ifl-card-accent"></div>
+          </div>
+
+          {/* 02 브랜디드 콘텐츠 */}
+          <div class="ifl-card">
+            <div class="ifl-icon">📣</div>
+            <h3 class="ifl-card-title">브랜디드</h3>
+            <ul class="ifl-tags">
+              <li>브랜드 중심 콘텐츠</li>
+            </ul>
+            <div class="ifl-card-accent"></div>
+          </div>
+
+          {/* 03 기획 PPL */}
+          <div class="ifl-card">
+            <div class="ifl-icon">🎬</div>
+            <h3 class="ifl-card-title">기획 PPL</h3>
+            <ul class="ifl-tags">
+              <li>자연스러운 제품 노출</li>
+            </ul>
+            <div class="ifl-card-accent"></div>
+          </div>
+
+          {/* 04 숏폼 */}
+          <div class="ifl-card">
+            <div class="ifl-icon">📱</div>
+            <h3 class="ifl-card-title">숏폼</h3>
+            <ul class="ifl-tags">
+              <li>숏폼 영상 제작</li>
+            </ul>
+            <div class="ifl-card-accent"></div>
+          </div>
+
+          {/* 05 유튜브 콘텐츠 제작 */}
+          <div class="ifl-card">
+            <div class="ifl-icon">🎥</div>
+            <h3 class="ifl-card-title">유튜브 콘텐츠 제작</h3>
+            <ul class="ifl-tags">
+              <li>롱폼 영상 제작</li>
+              <li>숏폼 영상 제작</li>
+              <li>유튜브 관리</li>
+            </ul>
+            <div class="ifl-card-accent"></div>
+          </div>
+
+          {/* 06 모델 */}
+          <div class="ifl-card">
+            <div class="ifl-icon">🧑‍🤝‍🧑</div>
+            <h3 class="ifl-card-title">모델</h3>
+            <ul class="ifl-tags">
+              <li>유튜버 모델</li>
+              <li>일반 모델</li>
+              <li>연예인 모델</li>
+            </ul>
+            <div class="ifl-card-accent"></div>
+          </div>
+
+          {/* 07 2차 가공 콘텐츠 */}
+          <div class="ifl-card">
+            <div class="ifl-icon">✂️</div>
+            <h3 class="ifl-card-title">2차 가공 콘텐츠</h3>
+            <ul class="ifl-tags">
+              <li>미디어믹스 활용</li>
+            </ul>
+            <div class="ifl-card-accent"></div>
+          </div>
+
+          {/* More */}
+          <div class="ifl-card ifl-card--more">
+            <div class="ifl-more-icon">＋</div>
+            <span>More Services</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <section class="section svc-results-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
