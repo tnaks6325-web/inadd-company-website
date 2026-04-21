@@ -8734,3 +8734,222 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .ifl2-conf-box       { padding:28px 20px; }
   .ifl2-conf-snum      { font-size:52px; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   IFL2 — DIFFERENTIATOR 섹션 (제안 크리에이터)
+══════════════════════════════════════════════════════════════ */
+.ifl2-diff-section {
+  position: relative;
+  padding: 110px 0 120px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #030812 0%, #060b1a 100%);
+}
+.ifl2-diff-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.ifl2-diff-orb {
+  position: absolute; border-radius: 50%; filter: blur(100px);
+  animation: ifl2OrbFloat 16s ease-in-out infinite;
+}
+.ifl2-diff-orb--blue   { width: 600px; height: 600px; top: -140px; left: -180px;
+  background: radial-gradient(circle, rgba(26,107,255,0.09) 0%, transparent 70%); animation-delay: 0s; }
+.ifl2-diff-orb--purple { width: 440px; height: 440px; bottom: -80px; right: -100px;
+  background: radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 70%); animation-delay: -6s; }
+.ifl2-diff-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(26,107,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,107,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 30%, transparent 100%);
+}
+
+/* ── 레이아웃 ── */
+.ifl2-diff-layout {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1px 1.4fr;
+  gap: 0 56px;
+  align-items: start;
+}
+.ifl2-diff-divider {
+  background: linear-gradient(180deg, transparent, rgba(26,107,255,0.25) 30%, rgba(26,107,255,0.25) 70%, transparent);
+  align-self: stretch;
+  min-height: 420px;
+}
+
+/* ── 왼쪽 ── */
+.ifl2-diff-sup {
+  display: block;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(26,107,255,0.65); margin-bottom: 18px;
+}
+.ifl2-diff-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin: 0 0 28px;
+}
+.ifl2-diff-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, rgba(26,107,255,0.95) 0%, rgba(0,200,255,0.85) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.ifl2-diff-quote {
+  margin: 0 0 36px;
+  padding: 0 0 0 18px;
+  border-left: 2px solid rgba(26,107,255,0.35);
+  font-size: clamp(14px,1.4vw,16px);
+  color: rgba(255,255,255,0.48);
+  line-height: 2.0;
+  font-style: normal;
+}
+.ifl2-diff-quote strong { color: rgba(255,255,255,0.88); font-weight: 700; }
+
+.ifl2-diff-criteria {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.ifl2-diff-criteria li {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 14.5px; color: rgba(255,255,255,0.58); font-weight: 500;
+}
+.ifl2-diff-cicon {
+  flex-shrink: 0;
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.ifl2-diff-cicon svg { width: 18px; height: 18px; }
+.ifl2-diff-cicon--ban    { background: rgba(239,68,68,0.08);   color: rgba(239,68,68,0.75); }
+.ifl2-diff-cicon--search { background: rgba(26,107,255,0.08);  color: rgba(26,107,255,0.8); }
+.ifl2-diff-cicon--growth { background: rgba(0,212,168,0.08);   color: rgba(0,212,168,0.75); }
+
+/* ── 오른쪽 케이스 카드 ── */
+.ifl2-diff-right {
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.ifl2-case-card {
+  position: relative;
+  border-radius: 16px;
+  padding: 24px 28px 28px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+  transition: transform .35s cubic-bezier(.25,.46,.45,.94), box-shadow .35s;
+}
+.ifl2-case-card:hover { transform: translateY(-4px); }
+
+.ifl2-case-card--good {
+  background: linear-gradient(145deg, rgba(26,107,255,0.07) 0%, rgba(0,0,0,0.45) 100%);
+  border-color: rgba(26,107,255,0.18);
+  box-shadow: 0 0 40px rgba(26,107,255,0.05);
+}
+.ifl2-case-card--good:hover {
+  border-color: rgba(26,107,255,0.35);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 40px rgba(26,107,255,0.08);
+}
+.ifl2-case-card--bad {
+  background: rgba(255,255,255,0.018);
+  border-color: rgba(255,255,255,0.05);
+  opacity: .82;
+}
+.ifl2-case-card--bad:hover { opacity: 1; }
+
+.ifl2-case-glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(26,107,255,0.07) 0%, transparent 70%);
+}
+
+/* 케이스 헤더 */
+.ifl2-case-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+}
+.ifl2-case-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 700; letter-spacing: .08em;
+  padding: 3px 10px 3px 7px; border-radius: 20px;
+  flex-shrink: 0;
+}
+.ifl2-case-badge--good {
+  background: rgba(26,107,255,0.12); color: rgba(26,107,255,0.9);
+  border: 1px solid rgba(26,107,255,0.22);
+}
+.ifl2-case-badge--bad {
+  background: rgba(100,100,120,0.12); color: rgba(140,140,160,0.8);
+  border: 1px solid rgba(100,100,130,0.18);
+}
+.ifl2-case-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: rgba(255,255,255,0.88); flex: 1;
+}
+.ifl2-case-title--bad { color: rgba(255,255,255,0.38); }
+.ifl2-case-check { margin-left: auto; flex-shrink: 0; }
+.ifl2-case-check--bad { opacity: .5; }
+
+/* 가격 비교 */
+.ifl2-case-price {
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px; padding: 14px 18px; margin-bottom: 18px;
+}
+.ifl2-case-price--bad { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.04); }
+.ifl2-case-price-from, .ifl2-case-price-to {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.ifl2-case-price-to { flex: 1; }
+.ifl2-case-price-label {
+  font-size: 10.5px; color: rgba(255,255,255,0.32);
+  letter-spacing: .05em; font-weight: 500;
+}
+.ifl2-case-price-label--em { color: rgba(26,107,255,0.7); }
+.ifl2-case-price-val {
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.55);
+  font-family: 'Space Grotesk', sans-serif;
+}
+.ifl2-case-price-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px; font-weight: 800; letter-spacing: -0.5px;
+  line-height: 1;
+}
+.ifl2-case-price-num--good { color: rgba(26,107,255,0.95); }
+.ifl2-case-price-num--bad  { color: rgba(180,180,200,0.5); }
+.ifl2-case-arrow { flex-shrink: 0; opacity: .6; }
+
+/* 포인트 리스트 */
+.ifl2-case-points {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.ifl2-case-points li {
+  font-size: 12.5px; line-height: 1.65; padding-left: 14px; position: relative;
+}
+.ifl2-case-points li::before {
+  content: '+'; position: absolute; left: 0; top: 0;
+  font-weight: 700; font-size: 12px;
+}
+.ifl2-case-points--good li { color: rgba(255,255,255,0.5); }
+.ifl2-case-points--good li::before { color: rgba(26,107,255,0.7); }
+.ifl2-case-points--good li strong { color: rgba(0,200,255,0.85); }
+.ifl2-case-points--bad li { color: rgba(255,255,255,0.28); }
+.ifl2-case-points--bad li::before { content: '−'; color: rgba(180,80,80,0.5); }
+.ifl2-case-points--bad li strong { color: rgba(200,100,100,0.6); }
+
+/* ── 반응형 ── */
+@media (max-width: 960px) {
+  .ifl2-diff-layout {
+    grid-template-columns: 1fr;
+    gap: 48px 0;
+  }
+  .ifl2-diff-divider {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  .ifl2-diff-section { padding: 80px 0 90px; }
+  .ifl2-case-card { padding: 20px 20px 24px; }
+  .ifl2-case-price { flex-wrap: wrap; gap: 10px; }
+}

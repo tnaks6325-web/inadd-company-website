@@ -88,6 +88,130 @@ export const SvcInfluencerPage = () => (
     <div id="ifl-services"></div>
 
     {/* ══════════════════════════════════════════
+        DIFFERENTIATOR — 인애드컴퍼니의 제안 크리에이터
+    ══════════════════════════════════════════ */}
+    <section class="ifl2-diff-section">
+      <div class="ifl2-diff-bg">
+        <div class="ifl2-diff-orb ifl2-diff-orb--blue"></div>
+        <div class="ifl2-diff-orb ifl2-diff-orb--purple"></div>
+        <div class="ifl2-diff-grid"></div>
+      </div>
+      <div class="container">
+        <div class="ifl2-diff-layout">
+
+          {/* ── 왼쪽: 타이틀 + 설명 ── */}
+          <div class="ifl2-diff-left">
+            <span class="ifl2-diff-sup">INFLUENCER &amp; YOUTUBE MARKETING</span>
+            <h2 class="ifl2-diff-title">
+              인애드컴퍼니의<br />
+              <em>제안 크리에이터</em>
+            </h2>
+            <blockquote class="ifl2-diff-quote">
+              "인애드컴퍼니는<br />
+              대한민국 크리에이터 시장의<br />
+              <strong>거품가를 인지하고</strong><br />
+              최대한 <strong>합리적인 크리에이터</strong>로<br />
+              제안드립니다."
+            </blockquote>
+            <ul class="ifl2-diff-criteria">
+              <li>
+                <div class="ifl2-diff-cicon ifl2-diff-cicon--ban">
+                  <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M4 4l12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                <span>시장 과열가 배제</span>
+              </li>
+              <li>
+                <div class="ifl2-diff-cicon ifl2-diff-cicon--search">
+                  <svg viewBox="0 0 20 20" fill="none"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M14 14l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                <span>비용 대비 퍼포먼스 검증</span>
+              </li>
+              <li>
+                <div class="ifl2-diff-cicon ifl2-diff-cicon--growth">
+                  <svg viewBox="0 0 20 20" fill="none"><path d="M3 15l4-5 4 3 6-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>성장 포텐셜 분석</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* ── 세로 구분선 ── */}
+          <div class="ifl2-diff-divider"></div>
+
+          {/* ── 오른쪽: 케이스 카드 ── */}
+          <div class="ifl2-diff-right">
+
+            {/* CASE 1 — 합리적 제안 */}
+            <div class="ifl2-case-card ifl2-case-card--good">
+              <div class="ifl2-case-glow"></div>
+              <div class="ifl2-case-header">
+                <div class="ifl2-case-badge ifl2-case-badge--good">
+                  <svg viewBox="0 0 12 12" fill="none" width="10" height="10"><circle cx="6" cy="6" r="5" fill="rgba(26,107,255,0.3)"/><path d="M3 6l2 2 4-4" stroke="rgba(26,107,255,1)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  진행 확정
+                </div>
+                <span class="ifl2-case-title">CASE: 합리적 제안</span>
+                <div class="ifl2-case-check">
+                  <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="10" fill="rgba(26,107,255,0.15)" stroke="rgba(26,107,255,0.5)" stroke-width="1.5"/><path d="M7 12l3.5 3.5L17 8" stroke="rgba(26,107,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <div class="ifl2-case-price">
+                <div class="ifl2-case-price-from">
+                  <span class="ifl2-case-price-label">내부 예상 단가</span>
+                  <span class="ifl2-case-price-val">800 – 1,000만원</span>
+                </div>
+                <div class="ifl2-case-arrow">
+                  <svg viewBox="0 0 24 10" fill="none" width="28"><path d="M0 5h22M17 1l5 4-5 4" stroke="rgba(26,107,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="ifl2-case-price-to">
+                  <span class="ifl2-case-price-label ifl2-case-price-label--em">실제 집행 비용</span>
+                  <span class="ifl2-case-price-num ifl2-case-price-num--good">500만원</span>
+                </div>
+              </div>
+              <ul class="ifl2-case-points ifl2-case-points--good">
+                <li>예상보다 하회 단가 / 높은 퍼포먼스 / 팬층 반응도 고루 보유</li>
+                <li>비슷한 수준의 퍼포먼스는 보통 준메이저급부터 나오는 편</li>
+                <li>향후 성장 포텐셜 <strong>매우 높음</strong></li>
+              </ul>
+            </div>
+
+            {/* CASE 2 — 비효율 제안 */}
+            <div class="ifl2-case-card ifl2-case-card--bad">
+              <div class="ifl2-case-header">
+                <div class="ifl2-case-badge ifl2-case-badge--bad">
+                  <svg viewBox="0 0 12 12" fill="none" width="10" height="10"><circle cx="6" cy="6" r="5" fill="rgba(100,100,120,0.3)"/><path d="M4 4l4 4M8 4l-4 4" stroke="rgba(140,140,160,0.8)" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  리스트 삭제
+                </div>
+                <span class="ifl2-case-title ifl2-case-title--bad">CASE: 비효율 제안</span>
+                <div class="ifl2-case-check ifl2-case-check--bad">
+                  <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="10" fill="rgba(80,80,100,0.15)" stroke="rgba(100,100,130,0.35)" stroke-width="1.5"/><path d="M8 8l8 8M16 8l-8 8" stroke="rgba(120,120,140,0.6)" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+              </div>
+              <div class="ifl2-case-price ifl2-case-price--bad">
+                <div class="ifl2-case-price-from">
+                  <span class="ifl2-case-price-label">내부 예상 단가</span>
+                  <span class="ifl2-case-price-val">200 – 300만원</span>
+                </div>
+                <div class="ifl2-case-arrow">
+                  <svg viewBox="0 0 24 10" fill="none" width="28"><path d="M0 5h22M17 1l5 4-5 4" stroke="rgba(120,120,140,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="ifl2-case-price-to">
+                  <span class="ifl2-case-price-label">실제 집행 비용</span>
+                  <span class="ifl2-case-price-num ifl2-case-price-num--bad">500만원</span>
+                </div>
+              </div>
+              <ul class="ifl2-case-points ifl2-case-points--bad">
+                <li>1개월 내 광고 미집행 / 낮은 퍼포먼스 / 예상대비 고비용</li>
+                <li>광고 시장득성상 괜찮은 크리에이터는 1개월 내 광고 필수 진행</li>
+                <li>향후 성장 포텐셜 <strong>낮음</strong> (리스트 가치가 낮음)</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════
         SERVICE 01 — 연예인 & 인플루언서 섭외/협찬
     ══════════════════════════════════════════ */}
     <section class="ifl2-section ifl2-section--casting">
