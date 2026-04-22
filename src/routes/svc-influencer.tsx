@@ -616,46 +616,66 @@ export const SvcInfluencerPage = () => (
           </ul>
           <div class="iflp2-panels" id="iflp2Panels">
             <div class="iflp2-panel active" data-panel="0">
-              <div class="iflp2-panel-icon" style="--pc:#2563eb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-              <span class="iflp2-panel-tag" style="--pc:#2563eb">Strategy Consultation</span>
-              <p class="iflp2-panel-desc">브랜드 목표·예산·타겟을 심층 분석합니다.<br />캠페인 KPI와 방향성을 함께 정의하고 맞춤 전략을 제안합니다.<br />단순한 견적 상담이 아닌 브랜드 성장 전략 미팅입니다.</p>
-              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#2563eb">🎯 목표 정의</span><span class="iflp2-ptag" style="--pc:#2563eb">💰 예산 협의</span><span class="iflp2-ptag" style="--pc:#2563eb">📊 KPI 설정</span><span class="iflp2-ptag" style="--pc:#2563eb">🗺 전략 방향 수립</span></div></div>
+              <div class="iflp2-panel-img"><img src="/static/images/process/step01.png" alt="상담 진행" loading="lazy" /></div>
+              <div class="iflp2-panel-body">
+                <span class="iflp2-panel-tag" style="--pc:#2563eb">Strategy Consultation</span>
+                <p class="iflp2-panel-desc">브랜드 목표·예산·타겟을 심층 분석합니다.<br />캠페인 KPI와 방향성을 함께 정의하고 맞춤 전략을 제안합니다.<br />단순한 견적 상담이 아닌 브랜드 성장 전략 미팅입니다.</p>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#2563eb">🎯 목표 정의</span><span class="iflp2-ptag" style="--pc:#2563eb">💰 예산 협의</span><span class="iflp2-ptag" style="--pc:#2563eb">📊 KPI 설정</span><span class="iflp2-ptag" style="--pc:#2563eb">🗺 전략 방향 수립</span></div></div>
+              </div>
             </div>
             <div class="iflp2-panel" data-panel="1">
-              <div class="iflp2-panel-icon" style="--pc:#7c3aed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg></div>
-              <span class="iflp2-panel-tag" style="--pc:#7c3aed">Contract &amp; Scope</span>
-              <p class="iflp2-panel-desc">진행 범위·일정·성과 지표를 명문화합니다.<br />투명한 비용 구조와 명확한 계약서로 신뢰를 보장합니다.<br />모든 조건이 계약서에 명시되어 불필요한 분쟁을 방지합니다.</p>
-              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#7c3aed">📋 범위 확정</span><span class="iflp2-ptag" style="--pc:#7c3aed">📅 일정 조율</span><span class="iflp2-ptag" style="--pc:#7c3aed">✍️ 계약 체결</span><span class="iflp2-ptag" style="--pc:#7c3aed">🔒 투명한 비용</span></div></div>
+              <div class="iflp2-panel-img"><img src="/static/images/process/step02.png" alt="계약 진행" loading="lazy" /></div>
+              <div class="iflp2-panel-body">
+                <span class="iflp2-panel-tag" style="--pc:#7c3aed">Contract &amp; Scope</span>
+                <p class="iflp2-panel-desc">진행 범위·일정·성과 지표를 명문화합니다.<br />투명한 비용 구조와 명확한 계약서로 신뢰를 보장합니다.<br />모든 조건이 계약서에 명시되어 불필요한 분쟁을 방지합니다.</p>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#7c3aed">📋 범위 확정</span><span class="iflp2-ptag" style="--pc:#7c3aed">📅 일정 조율</span><span class="iflp2-ptag" style="--pc:#7c3aed">✍️ 계약 체결</span><span class="iflp2-ptag" style="--pc:#7c3aed">🔒 투명한 비용</span></div></div>
+              </div>
             </div>
             <div class="iflp2-panel" data-panel="2">
-              <div class="iflp2-panel-icon" style="--pc:#059669"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
-              <span class="iflp2-panel-tag" style="--pc:#059669">Creative Briefing</span>
-              <p class="iflp2-panel-desc">브랜드 메시지·금지 표현·톤앤매너를 담은 크리에이터 브리핑 가이드를 제작합니다.<br />크리에이터가 브랜드의 언어로 콘텐츠를 만들 수 있도록 상세 지침을 제공합니다.</p>
-              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#059669">🎨 톤앤매너</span><span class="iflp2-ptag" style="--pc:#059669">📄 브리핑 문서</span><span class="iflp2-ptag" style="--pc:#059669">✅ 승인 기준</span><span class="iflp2-ptag" style="--pc:#059669">🚫 금지 표현 정리</span></div></div>
+              <div class="iflp2-panel-img"><img src="/static/images/process/step03.png" alt="가이드라인 작성" loading="lazy" /></div>
+              <div class="iflp2-panel-body">
+                <span class="iflp2-panel-tag" style="--pc:#059669">Creative Briefing</span>
+                <p class="iflp2-panel-desc">브랜드 메시지·금지 표현·톤앤매너를 담은 크리에이터 브리핑 가이드를 제작합니다.<br />크리에이터가 브랜드의 언어로 콘텐츠를 만들 수 있도록 상세 지침을 제공합니다.</p>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#059669">🎨 톤앤매너</span><span class="iflp2-ptag" style="--pc:#059669">📄 브리핑 문서</span><span class="iflp2-ptag" style="--pc:#059669">✅ 승인 기준</span><span class="iflp2-ptag" style="--pc:#059669">🚫 금지 표현 정리</span></div></div>
+              </div>
             </div>
             <div class="iflp2-panel" data-panel="3">
-              <div class="iflp2-panel-icon" style="--pc:#0891b2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75M21 21v-2a4 4 0 0 0-3-3.85"/></svg></div>
-              <span class="iflp2-panel-tag" style="--pc:#0891b2">Creator Matching</span>
-              <p class="iflp2-panel-desc">1,200+ 크리에이터 DB에서 타겟 적합성·퍼포먼스·단가를 종합 분석합니다.<br />단순 팔로워 수가 아닌 실제 전환율과 브랜드 핏을 기준으로 최적 크리에이터를 선별합니다.</p>
-              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#0891b2">🗄 1,200+ DB 분석</span><span class="iflp2-ptag" style="--pc:#0891b2">🔍 적합성 검증</span><span class="iflp2-ptag" style="--pc:#0891b2">💹 단가 협의</span><span class="iflp2-ptag" style="--pc:#0891b2">📈 전환율 기반 선별</span></div></div>
+              <div class="iflp2-panel-no-img" style="--pc:#0891b2">
+                <div class="iflp2-panel-icon" style="--pc:#0891b2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75M21 21v-2a4 4 0 0 0-3-3.85"/></svg></div>
+                <div class="iflp2-no-img-text">1,200+ 크리에이터 DB</div>
+              </div>
+              <div class="iflp2-panel-body">
+                <span class="iflp2-panel-tag" style="--pc:#0891b2">Creator Matching</span>
+                <p class="iflp2-panel-desc">1,200+ 크리에이터 DB에서 타겟 적합성·퍼포먼스·단가를 종합 분석합니다.<br />단순 팔로워 수가 아닌 실제 전환율과 브랜드 핏을 기준으로 최적 크리에이터를 선별합니다.</p>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#0891b2">🗄 1,200+ DB 분석</span><span class="iflp2-ptag" style="--pc:#0891b2">🔍 적합성 검증</span><span class="iflp2-ptag" style="--pc:#0891b2">💹 단가 협의</span><span class="iflp2-ptag" style="--pc:#0891b2">📈 전환율 기반 선별</span></div></div>
+              </div>
             </div>
             <div class="iflp2-panel" data-panel="4">
-              <div class="iflp2-panel-icon" style="--pc:#d97706"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M10 9.5l5 2.5-5 2.5V9.5z" fill="currentColor" opacity=".6"/><path d="M8 21h8M12 17v4"/></svg></div>
-              <span class="iflp2-panel-tag" style="--pc:#d97706">Content Production</span>
-              <p class="iflp2-panel-desc">가이드라인 기반으로 크리에이터가 콘텐츠를 제작합니다.<br />브랜드 검수와 피드백을 거쳐 최종 확정합니다.<br />완성도 높은 콘텐츠가 나올 때까지 함께 조율합니다.</p>
-              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#d97706">🎬 제작 모니터링</span><span class="iflp2-ptag" style="--pc:#d97706">🔎 브랜드 검수</span><span class="iflp2-ptag" style="--pc:#d97706">✅ 최종 승인</span><span class="iflp2-ptag" style="--pc:#d97706">🔄 피드백 반영</span></div></div>
+              <div class="iflp2-panel-img"><img src="/static/images/process/step05.png" alt="콘텐츠 제작" loading="lazy" /></div>
+              <div class="iflp2-panel-body">
+                <span class="iflp2-panel-tag" style="--pc:#d97706">Content Production</span>
+                <p class="iflp2-panel-desc">가이드라인 기반으로 크리에이터가 콘텐츠를 제작합니다.<br />브랜드 검수와 피드백을 거쳐 최종 확정합니다.<br />완성도 높은 콘텐츠가 나올 때까지 함께 조율합니다.</p>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#d97706">🎬 제작 모니터링</span><span class="iflp2-ptag" style="--pc:#d97706">🔎 브랜드 검수</span><span class="iflp2-ptag" style="--pc:#d97706">✅ 최종 승인</span><span class="iflp2-ptag" style="--pc:#d97706">🔄 피드백 반영</span></div></div>
+              </div>
             </div>
             <div class="iflp2-panel" data-panel="5">
-              <div class="iflp2-panel-icon" style="--pc:#dc2626"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></div>
-              <span class="iflp2-panel-tag" style="--pc:#dc2626">Viral Amplification</span>
-              <p class="iflp2-panel-desc">최적 시간에 콘텐츠를 게시하고 커뮤니티·SNS 연계 확산 전략을 병행 실행합니다.<br />인플루언서 콘텐츠를 씨앗으로 바이럴 파급력을 극대화합니다.</p>
-              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#dc2626">📱 SNS 확산</span><span class="iflp2-ptag" style="--pc:#dc2626">💬 커뮤니티 연계</span><span class="iflp2-ptag" style="--pc:#dc2626">📡 실시간 모니터링</span><span class="iflp2-ptag" style="--pc:#dc2626">⚡ 추가 확산 실행</span></div></div>
+              <div class="iflp2-panel-img iflp2-panel-img--dual">
+                <img src="/static/images/process/step06a.png" alt="콘텐츠 게시" loading="lazy" />
+                <img src="/static/images/process/step06b.png" alt="바이럴 확산" loading="lazy" />
+              </div>
+              <div class="iflp2-panel-body">
+                <span class="iflp2-panel-tag" style="--pc:#dc2626">Viral Amplification</span>
+                <p class="iflp2-panel-desc">최적 시간에 콘텐츠를 게시하고 커뮤니티·SNS 연계 확산 전략을 병행 실행합니다.<br />인플루언서 콘텐츠를 씨앗으로 바이럴 파급력을 극대화합니다.</p>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#dc2626">📱 SNS 확산</span><span class="iflp2-ptag" style="--pc:#dc2626">💬 커뮤니티 연계</span><span class="iflp2-ptag" style="--pc:#dc2626">📡 실시간 모니터링</span><span class="iflp2-ptag" style="--pc:#dc2626">⚡ 추가 확산 실행</span></div></div>
+              </div>
             </div>
             <div class="iflp2-panel" data-panel="6">
-              <div class="iflp2-panel-icon" style="--pc:#a855f7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
-              <span class="iflp2-panel-tag" style="--pc:#a855f7">Performance Reporting</span>
-              <p class="iflp2-panel-desc">조회수·도달·클릭·전환·매출까지 전 과정을 투명하게 리포팅합니다.<br />단순 수치 나열이 아닌 인사이트와 차기 캠페인 전략까지 함께 제공합니다.</p>
-              <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#a855f7">📊 성과 대시보드</span><span class="iflp2-ptag" style="--pc:#a855f7">🔬 인사이트 분석</span><span class="iflp2-ptag" style="--pc:#a855f7">🚀 차기 전략 제안</span><span class="iflp2-ptag" style="--pc:#a855f7">📈 ROI 리포트</span></div></div>
+              <div class="iflp2-panel-img"><img src="/static/images/process/step07.png" alt="리포팅" loading="lazy" /></div>
+              <div class="iflp2-panel-body">
+                <span class="iflp2-panel-tag" style="--pc:#a855f7">Performance Reporting</span>
+                <p class="iflp2-panel-desc">조회수·도달·클릭·전환·매출까지 전 과정을 투명하게 리포팅합니다.<br />단순 수치 나열이 아닌 인사이트와 차기 캠페인 전략까지 함께 제공합니다.</p>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#a855f7">📊 성과 대시보드</span><span class="iflp2-ptag" style="--pc:#a855f7">🔬 인사이트 분석</span><span class="iflp2-ptag" style="--pc:#a855f7">🚀 차기 전략 제안</span><span class="iflp2-ptag" style="--pc:#a855f7">📈 ROI 리포트</span></div></div>
+              </div>
             </div>
           </div>
         </div>

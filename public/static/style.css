@@ -9759,7 +9759,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 /* ── 오른쪽 패널 ── */
 .iflp2-panels {
   position: relative;
-  min-height: 400px;
+  min-height: 520px;
 }
 .iflp2-panel {
   position: absolute;
@@ -9767,19 +9767,87 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.07);
   border-radius: 20px;
-  padding: 36px 32px 32px;
+  overflow: hidden;
   opacity: 0;
   pointer-events: none;
   transform: translateY(10px) scale(0.98);
   transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 0;
 }
 .iflp2-panel.active {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0) scale(1);
+}
+/* 이미지 영역 */
+.iflp2-panel-img {
+  flex: 0 0 45%;
+  max-width: 45%;
+  overflow: hidden;
+  position: relative;
+}
+.iflp2-panel-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.iflp2-panel.active .iflp2-panel-img img {
+  transform: scale(1.02);
+}
+/* 듀얼 이미지 (Step 06) */
+.iflp2-panel-img--dual {
+  display: flex;
+  flex-direction: column;
+}
+.iflp2-panel-img--dual img {
+  flex: 1;
+  height: 50%;
+}
+.iflp2-panel-img--dual img:first-child {
+  border-bottom: 2px solid rgba(255,255,255,0.08);
+}
+/* 이미지 없는 패널 (Step 04 - 인플루언서 매칭) */
+.iflp2-panel-no-img {
+  flex: 0 0 45%;
+  max-width: 45%;
+  background: color-mix(in srgb, var(--pc, #3b82f6) 8%, rgba(0,0,0,0.3));
+  border-right: 1px solid color-mix(in srgb, var(--pc, #3b82f6) 20%, transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 32px;
+}
+.iflp2-panel-no-img .iflp2-panel-icon {
+  width: 72px; height: 72px;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--pc, #3b82f6) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--pc, #3b82f6) 35%, transparent);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--pc, #3b82f6);
+  margin-bottom: 0;
+}
+.iflp2-panel-no-img .iflp2-panel-icon svg { width: 36px; height: 36px; }
+.iflp2-no-img-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--pc, #3b82f6);
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+/* 본문 영역 */
+.iflp2-panel-body {
+  flex: 1;
+  padding: 36px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
 .iflp2-panel-icon {
   width: 48px; height: 48px;
@@ -9845,13 +9913,17 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 @media (max-width: 1024px) {
   .iflp2-wrap { grid-template-columns: 1fr; gap: 40px; }
   .iflp2-panels { min-height: 0; position: relative; }
-  .iflp2-panel { position: relative; inset: auto; }
+  .iflp2-panel { position: relative; inset: auto; flex-direction: column; }
   .iflp2-panel:not(.active) { display: none; }
+  .iflp2-panel-img { flex: 0 0 auto; max-width: 100%; height: 260px; }
+  .iflp2-panel-no-img { flex: 0 0 auto; max-width: 100%; height: 200px; border-right: none; border-bottom: 1px solid color-mix(in srgb, var(--pc, #3b82f6) 20%, transparent); }
+  .iflp2-panel-body { padding: 28px 24px; }
   .iflp2-name { font-size: 28px; }
 }
 @media (max-width: 640px) {
   .iflp2-name { font-size: 22px; }
-  .iflp2-panel { padding: 24px 20px; }
+  .iflp2-panel-img { height: 200px; }
+  .iflp2-panel-body { padding: 20px 18px; }
   .iflp2-en { display: none; }
 }
 
