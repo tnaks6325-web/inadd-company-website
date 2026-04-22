@@ -229,17 +229,9 @@ export const AboutPage = () => (
         </div>
         <div class="location-layout">
 
-          {/* 지도 영역 */}
-          <div class="location-map-wrap">
-            <iframe
-              src="https://maps.google.com/maps?q=%EA%B2%BD%EA%B8%B0%EB%8F%84+%EC%95%88%EC%82%B0%EC%8B%9C+%EB%8B%A8%EC%9B%90%EA%B5%AC+%EA%B3%A0%EC%9E%94%EB%A1%9C+51+%ED%83%80%EC%9B%8C%EC%95%84%EC%9D%B4%EC%A6%88%EB%B9%8C&t=&z=17&ie=UTF8&iwloc=&output=embed"
-              width="100%"
-              height="100%"
-              style="border:0; border-radius: 12px;"
-              allowfullscreen
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-            ></iframe>
+          {/* 지도 영역 — Leaflet.js (OpenStreetMap, 무료) */}
+          <div class="location-map-wrap" style="position:relative">
+            <div id="locationMap" style="width:100%;height:100%;min-height:400px;border-radius:12px"></div>
           </div>
 
           {/* 정보 */}
@@ -305,9 +297,59 @@ export const AboutPage = () => (
       </div>
     </section>
 
-    {/* ── Admin Dynamic Data ── */}
+    {/* ── Admin Dynamic Data + Leaflet Map ── */}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script dangerouslySetInnerHTML={{__html: `
+// Leaflet 동적 로드 후 지도 초기화
 (function(){
+  var DEFAULT_LAT = 37.3219, DEFAULT_LNG = 126.8309;
+  var mapInstance = null;
+  var markerInstance = null;
+
+  function loadLeaflet(cb) {
+    if (window.L) { cb(); return; }
+    var s = document.createElement('script');
+    s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    s.crossOrigin = '';
+    s.onload = cb;
+    document.head.appendChild(s);
+  }
+
+  function initMap(lat, lng, address) {
+    var el = document.getElementById('locationMap');
+    if (!el) return;
+    if (mapInstance) {
+      mapInstance.setView([lat, lng], 17);
+      if (markerInstance) {
+        markerInstance.setLatLng([lat, lng]);
+        markerInstance.getPopup().setContent(address || '인애드컴퍼니');
+      }
+      return;
+    }
+    mapInstance = L.map('locationMap', { zoomControl: true, scrollWheelZoom: false }).setView([lat, lng], 17);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 19
+    }).addTo(mapInstance);
+    // 커스텀 마커 아이콘
+    var icon = L.divIcon({
+      className: '',
+      html: '<div style="width:36px;height:36px;background:#1a6bff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 3px 12px rgba(26,107,255,0.6);position:relative">' +
+            '<div style="width:10px;height:10px;background:#fff;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"></div></div>',
+      iconSize: [36, 36],
+      iconAnchor: [18, 36],
+      popupAnchor: [0, -40]
+    });
+    markerInstance = L.marker([lat, lng], { icon: icon }).addTo(mapInstance);
+    markerInstance.bindPopup(
+      '<div style="font-family:inherit;padding:4px 2px">' +
+      '<strong style="font-size:14px;color:#1a6bff">인애드컴퍼니</strong><br>' +
+      '<span style="font-size:12px;color:#666">' + (address || '') + '</span>' +
+      '</div>',
+      { maxWidth: 260 }
+    ).openPopup();
+  }
+
   fetch('/api/admin/public/about')
     .then(function(r){ return r.json(); })
     .then(function(data){
@@ -316,10 +358,14 @@ export const AboutPage = () => (
         var addrEl = document.querySelector('.ldl-item .ldl-value');
         if(addrEl){ addrEl.innerHTML = data.address; }
       }
+      // 지도 초기화
+      var lat = parseFloat(data.lat) || DEFAULT_LAT;
+      var lng = parseFloat(data.lng) || DEFAULT_LNG;
+      loadLeaflet(function(){ initMap(lat, lng, data.address); });
+
       // 관리자 등록 로고 — 기존 row1/row2 트랙에 자연스럽게 합치기
       if(data.logos && data.logos.length){
         var logoKeys = data.logos;
-        // 각 로고의 dataUrl을 먼저 전부 로드
         Promise.all(logoKeys.map(function(key){
           return fetch('/api/admin/logo/'+key)
             .then(function(r){ return r.json(); })
@@ -329,7 +375,6 @@ export const AboutPage = () => (
           var validUrls = dataUrls.filter(Boolean);
           if(!validUrls.length) return;
 
-          // 로고 박스 HTML 생성 함수
           function makeBox(src){
             var box = document.createElement('div');
             box.className = 'acl-logo-box';
@@ -341,40 +386,34 @@ export const AboutPage = () => (
             return box;
           }
 
-          // row1(fwd), row2(rev) 트랙을 각각 가져옴
           var tracks = document.querySelectorAll('.acl-track');
           if(!tracks.length) return;
 
           tracks.forEach(function(track){
-            // 현재 트랙의 전체 로고 박스 수 (복제 포함)
             var existing = track.querySelectorAll('.acl-logo-box');
-            var half = existing.length / 2; // 실제 로고 수
+            var half = existing.length / 2;
 
-            // 원본 영역(앞 절반)의 마지막 원본 박스 뒤에 새 로고 삽입
-            // 그리고 복제 영역(뒤 절반)에도 똑같이 삽입
-            // → 항상 "원본 절반 = 복제 절반" 유지
             validUrls.forEach(function(src){
               var boxOrig  = makeBox(src);
               var boxClone = makeBox(src);
-
-              // 원본 절반의 끝 = existing[half-1].nextSibling
               var pivot = existing[half - 1];
               if(pivot && pivot.nextSibling){
                 track.insertBefore(boxOrig, pivot.nextSibling);
               } else {
-                // pivot이 맨 끝이거나 없으면 트랙 중간 기점 계산
                 var allBoxes = track.querySelectorAll('.acl-logo-box');
                 var mid = allBoxes[Math.floor(allBoxes.length / 2)];
                 track.insertBefore(boxOrig, mid || null);
               }
-              // 복제본은 트랙 맨 끝에 추가
               track.appendChild(boxClone);
             });
           });
         });
       }
     })
-    .catch(function(){});
+    .catch(function(){
+      // 좌표 로드 실패 시 기본값으로 지도 표시
+      loadLeaflet(function(){ initMap(DEFAULT_LAT, DEFAULT_LNG, '경기도 안산시 단원구 고잔로 51'); });
+    });
 })();
     `}} />
   </>

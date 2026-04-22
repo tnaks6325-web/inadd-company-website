@@ -21,7 +21,9 @@ export const DEFAULT_DATA = {
   home_slide_interval: '7',
 
   // ── About ──
-  about_address: '서울특별시 강남구 테헤란로 123, 인애드컴퍼니',
+  about_address: '경기도 안산시 단원구 고잔로 51 타워아이즈빌 2F, 204호',
+  about_lat: '37.3219',
+  about_lng: '126.8309',
   about_logos: JSON.stringify([
     'brand1','brand2','brand3','brand4','brand5','brand6',
     'brand7','brand8','brand9','brand10','brand11','brand12'

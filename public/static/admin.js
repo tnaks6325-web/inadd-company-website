@@ -191,12 +191,99 @@ document.getElementById('btnSaveStats').addEventListener('click', async () => {
 
 // ═══════════════ ABOUT ═══════════════
 let aboutLogos = [];
+let currentAddrLat = '';
+let currentAddrLng = '';
 
 async function loadAbout() {
   const data = await api('GET', '/about');
-  document.getElementById('aboutAddress').value = data.address || '';
+  const addr = data.address || '';
+  document.getElementById('aboutAddress').value = addr;
+  currentAddrLat = data.lat || '';
+  currentAddrLng = data.lng || '';
+  document.getElementById('aboutLat').value = currentAddrLat;
+  document.getElementById('aboutLng').value = currentAddrLng;
+  // 저장된 주소가 있으면 미리보기 지도 표시
+  if (addr && currentAddrLat && currentAddrLng) {
+    updateAdminMapPreview(addr, currentAddrLat, currentAddrLng);
+  }
   aboutLogos = data.logos || [];
   renderLogoGrid();
+}
+
+// 다음 주소 찾기 팝업
+document.getElementById('btnSearchAddress').addEventListener('click', () => {
+  if (typeof daum === 'undefined' || !daum.Postcode) {
+    showToast('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.', 'error');
+    loadDaumPostcode();
+    return;
+  }
+  new daum.Postcode({
+    oncomplete: async function(result) {
+      // 선택된 주소 (도로명 우선)
+      const addr = result.roadAddress || result.jibunAddress;
+      document.getElementById('aboutAddress').value = addr;
+      // 상세주소 입력창 표시
+      document.getElementById('addrDetailWrap').style.display = 'block';
+      document.getElementById('aboutAddressDetail').value = '';
+      document.getElementById('aboutAddressDetail').focus();
+      // 카카오 geocoding으로 좌표 변환
+      await geocodeAddress(addr);
+    }
+  }).open();
+});
+
+// 상세주소 입력 시 주소 업데이트
+document.getElementById('aboutAddressDetail').addEventListener('input', function() {
+  const base = document.getElementById('aboutAddress').value.split(' (')[0]; // 기존 상세 제거
+  // 미리보기용으로는 좌표 기반이므로 값만 유지
+});
+
+// 카카오 geocoding (REST API) → 좌표 획득
+async function geocodeAddress(addr) {
+  try {
+    // 카카오 로컬 검색 API 사용 (클라이언트 측에서는 CORS 제한)
+    // 대신 Nominatim (OpenStreetMap) 무료 geocoding API 사용
+    const encoded = encodeURIComponent(addr);
+    const res = await fetch(
+      'https://nominatim.openstreetmap.org/search?format=json&q=' + encoded + '&limit=1&countrycodes=kr',
+      { headers: { 'Accept-Language': 'ko' } }
+    );
+    const data = await res.json();
+    if (data && data.length > 0) {
+      const lat = parseFloat(data[0].lat).toFixed(6);
+      const lng = parseFloat(data[0].lon).toFixed(6);
+      currentAddrLat = lat;
+      currentAddrLng = lng;
+      document.getElementById('aboutLat').value = lat;
+      document.getElementById('aboutLng').value = lng;
+      updateAdminMapPreview(addr, lat, lng);
+      showToast('주소 위치를 찾았습니다.');
+    } else {
+      showToast('좌표를 찾지 못했습니다. 주소를 더 구체적으로 입력해보세요.', 'error');
+    }
+  } catch(e) {
+    console.error('Geocoding error:', e);
+    showToast('위치 변환 중 오류가 발생했습니다.', 'error');
+  }
+}
+
+// 미리보기 지도 업데이트 (Google Maps embed)
+function updateAdminMapPreview(addr, lat, lng) {
+  const wrap = document.getElementById('adminMapPreview');
+  const iframe = document.getElementById('adminMapIframe');
+  if (!wrap || !iframe) return;
+  const q = encodeURIComponent(addr);
+  iframe.src = 'https://maps.google.com/maps?q=' + lat + ',' + lng + '&z=17&ie=UTF8&iwloc=&output=embed';
+  wrap.style.display = 'block';
+}
+
+// 다음 우편번호 스크립트 동적 로드
+function loadDaumPostcode() {
+  if (document.getElementById('daumPostcodeScript')) return;
+  const s = document.createElement('script');
+  s.id = 'daumPostcodeScript';
+  s.src = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+  document.head.appendChild(s);
 }
 
 async function renderLogoGrid() {
@@ -233,8 +320,17 @@ async function deleteLogo(key) {
 }
 
 document.getElementById('btnSaveAddress').addEventListener('click', async () => {
-  await api('PUT', '/about', { address: document.getElementById('aboutAddress').value });
-  showToast('주소가 저장되었습니다.');
+  const base = document.getElementById('aboutAddress').value.trim();
+  const detail = document.getElementById('aboutAddressDetail').value.trim();
+  const full = detail ? base + ' ' + detail : base;
+  const lat = document.getElementById('aboutLat').value;
+  const lng = document.getElementById('aboutLng').value;
+  if (!full) { showToast('주소를 먼저 검색해주세요.', 'error'); return; }
+  if (!lat || !lng) { showToast('주소 검색을 통해 위치를 확인해주세요.', 'error'); return; }
+  await api('PUT', '/about', { address: full, lat, lng });
+  // 저장 후 미리보기 지도 갱신
+  updateAdminMapPreview(full, lat, lng);
+  showToast('주소가 저장되었습니다. 사이트의 지도도 업데이트됩니다.');
 });
 
 document.getElementById('logoUploadZone').addEventListener('click', () => document.getElementById('logoFileInput').click());
@@ -433,10 +529,12 @@ function initInsightQuill() {
   });
 }
 
-// 페이지 로드 후 Quill 초기화
+// 페이지 로드 후 초기화
 document.addEventListener('DOMContentLoaded', function() {
-  // 약간의 딜레이 후 초기화 (CDN 로딩 대기)
+  // Quill 에디터 초기화 (CDN 로딩 대기)
   setTimeout(initInsightQuill, 500);
+  // Daum 우편번호 스크립트 미리 로드 (About 섹션에서 즉시 사용 가능하도록)
+  loadDaumPostcode();
 });
 
 function openAddInsight() {

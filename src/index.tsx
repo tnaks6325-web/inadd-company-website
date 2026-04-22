@@ -581,12 +581,30 @@ function adminDashboardHTML(): string {
         <div class="panel-header">
           <div class="panel-title"><i class="fas fa-map-marker-alt"></i> 회사 주소</div>
         </div>
+        <p style="color:#666;font-size:13px;margin-bottom:16px">주소를 검색하면 지도 위치와 마커가 자동으로 업데이트됩니다.</p>
         <div class="form-row single">
           <div class="form-group">
             <label>주소</label>
-            <input type="text" id="aboutAddress" placeholder="서울특별시 강남구 ...">
+            <div style="display:flex;gap:10px;align-items:center">
+              <input type="text" id="aboutAddress" placeholder="주소 검색 후 자동 입력됩니다" readonly
+                style="flex:1;background:#111;border:1px solid #2a2a2a;border-radius:8px;color:#fff;font-size:14px;padding:10px 14px;cursor:default">
+              <button class="btn btn-secondary" id="btnSearchAddress" style="white-space:nowrap;flex-shrink:0">
+                <i class="fas fa-search"></i> 주소 찾기
+              </button>
+            </div>
+            <div id="addrDetailWrap" style="display:none;margin-top:10px">
+              <input type="text" id="aboutAddressDetail" placeholder="상세 주소 입력 (동/호수 등)"
+                style="width:100%;background:#111;border:1px solid #2a2a2a;border-radius:8px;color:#fff;font-size:14px;padding:10px 14px;box-sizing:border-box">
+            </div>
           </div>
         </div>
+        <!-- 미리보기 지도 -->
+        <div id="adminMapPreview" style="display:none;margin:14px 0;border-radius:10px;overflow:hidden;height:220px;background:#1a1a1a;border:1px solid #2a2a2a">
+          <iframe id="adminMapIframe" src="" width="100%" height="220" style="border:0" loading="lazy"></iframe>
+        </div>
+        <!-- 숨김 좌표 필드 -->
+        <input type="hidden" id="aboutLat">
+        <input type="hidden" id="aboutLng">
         <button class="btn btn-primary" id="btnSaveAddress"><i class="fas fa-save"></i> 주소 저장</button>
       </div>
 
@@ -878,6 +896,8 @@ function adminDashboardHTML(): string {
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
+<!-- Daum 우편번호 서비스 (주소 검색) -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/static/admin.js"></script>
 </body>
 </html>`
