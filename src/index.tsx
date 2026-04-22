@@ -480,6 +480,7 @@ function adminDashboardHTML(): string {
     <div class="nav-item" data-section="works"><i class="fas fa-briefcase"></i> Works</div>
     <div class="nav-item" data-section="insight"><i class="fas fa-newspaper"></i> Insight</div>
     <div class="nav-item" data-section="marketing"><i class="fas fa-chart-line"></i> Marketing</div>
+    <div class="nav-item" data-section="contact"><i class="fas fa-envelope"></i> Contact</div>
   </nav>
   <div class="sidebar-footer">
     <button class="btn-logout" id="btnLogout"><i class="fas fa-sign-out-alt"></i> 로그아웃</button>
@@ -670,6 +671,51 @@ function adminDashboardHTML(): string {
         <div id="marketingEditor"></div>
         <button class="btn btn-primary" id="btnSaveMarketing" style="margin-top:16px"><i class="fas fa-save"></i> 모든 수치 저장</button>
       </div>
+    </div>
+
+    <!-- ───────── CONTACT ───────── -->
+    <div class="section" id="section-contact">
+
+      <!-- 개인정보 보호 책임자 -->
+      <div class="panel" style="margin-bottom:24px">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fas fa-shield-alt"></i> 개인정보 보호 책임자</div>
+        </div>
+        <p style="color:#666;font-size:13px;margin-bottom:20px">개인정보 처리방침 모달에 표시되는 책임자 정보를 수정합니다.</p>
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+          <div class="form-group">
+            <label>책임자 이름</label>
+            <input type="text" id="privacyManager" placeholder="예: 홍길동">
+          </div>
+          <div class="form-group">
+            <label>담당자 이름</label>
+            <input type="text" id="privacyOfficer" placeholder="예: 김철수">
+          </div>
+        </div>
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+          <div class="form-group">
+            <label>웹사이트</label>
+            <input type="text" id="privacyWebsite" placeholder="예: www.example.co.kr">
+          </div>
+          <div class="form-group">
+            <label>이메일</label>
+            <input type="email" id="privacyEmail" placeholder="예: privacy@example.co.kr">
+          </div>
+        </div>
+        <button class="btn btn-primary" id="btnSavePrivacyOfficer"><i class="fas fa-save"></i> 저장하기</button>
+      </div>
+
+      <!-- 자주 묻는 질문 (FAQ) -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fas fa-question-circle"></i> 자주 묻는 질문 (FAQ)</div>
+          <button class="btn btn-secondary btn-sm" id="btnAddFaq" style="font-size:12px;padding:6px 14px"><i class="fas fa-plus"></i> 추가</button>
+        </div>
+        <p style="color:#666;font-size:13px;margin-bottom:20px">Contact 페이지 하단에 표시되는 FAQ를 관리합니다. <strong style="color:#aaa">최대 5개</strong>까지 등록 가능합니다.</p>
+        <div id="faqList" style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px"></div>
+        <button class="btn btn-primary" id="btnSaveFaq"><i class="fas fa-save"></i> FAQ 저장하기</button>
+      </div>
+
     </div>
 
   </div>

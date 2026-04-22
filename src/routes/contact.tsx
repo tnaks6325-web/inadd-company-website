@@ -305,7 +305,7 @@ export const ContactPage = () => (
               <span class="sec-label">FAQ</span>
               <h3>자주 묻는 질문</h3>
             </div>
-            <div class="ct-faq-list">
+            <div class="ct-faq-list" id="dynamicFaqList">
               <div class="faq-item">
                 <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
                   <span>프로젝트 기간은 얼마나 걸리나요?</span>
@@ -410,7 +410,7 @@ export const ContactPage = () => (
           <section class="prv-section">
             <h3>■ 개인정보 보호 책임자</h3>
             <table class="prv-table">
-              <tbody>
+              <tbody id="privacyOfficerTable">
                 <tr><td>책임자</td><td>김주희</td></tr>
                 <tr><td>담당자</td><td>이승노</td></tr>
                 <tr><td>웹사이트</td><td><a href="https://www.majestade.co.kr" target="_blank" rel="noopener">www.majestade.co.kr</a></td></tr>
@@ -557,6 +557,40 @@ export const ContactPage = () => (
         window.handleContactSubmit = handleContactSubmit;
         window.openPrivacyModal = openPrivacyModal;
         window.closePrivacyModal = closePrivacyModal;
+
+        // ── admin API에서 개인정보 책임자 + FAQ 동적 로드 ──
+        fetch('/api/admin/public/contact')
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            // 개인정보 보호 책임자 업데이트
+            if (data.officer) {
+              var o = data.officer;
+              var tbody = document.getElementById('privacyOfficerTable');
+              if (tbody) {
+                tbody.innerHTML =
+                  '<tr><td>책임자</td><td>' + (o.manager || '') + '</td></tr>' +
+                  '<tr><td>담당자</td><td>' + (o.officer || '') + '</td></tr>' +
+                  '<tr><td>웹사이트</td><td>' + (o.website ? '<a href="https://' + o.website.replace(/^https?:\\/\\//, '') + '" target="_blank" rel="noopener">' + o.website + '</a>' : '') + '</td></tr>' +
+                  '<tr><td>이메일</td><td>' + (o.email ? '<a href="mailto:' + o.email + '">' + o.email + '</a>' : '') + '</td></tr>';
+              }
+            }
+            // FAQ 업데이트
+            if (data.faq && data.faq.length) {
+              var faqList = document.getElementById('dynamicFaqList');
+              if (faqList) {
+                faqList.innerHTML = data.faq.map(function(f) {
+                  return '<div class="faq-item">'
+                    + '<button class="faq-q" onclick="this.closest(\\'.faq-item\\').classList.toggle(\\'open\\')">'
+                    + '<span>' + (f.q || '') + '</span>'
+                    + '<svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
+                    + '</button>'
+                    + '<div class="faq-a">' + (f.a || '') + '</div>'
+                    + '</div>';
+                }).join('');
+              }
+            }
+          })
+          .catch(function() { /* 조용히 실패 */ });
       })();
     `}} />
   </>

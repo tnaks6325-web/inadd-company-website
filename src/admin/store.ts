@@ -40,6 +40,20 @@ export const DEFAULT_DATA = {
   // ── Insight ──
   insight_posts: JSON.stringify([]),
 
+  // ── Contact ──
+  contact_privacy_officer: JSON.stringify({
+    manager: '김주희',
+    officer: '이승노',
+    website: 'www.majestade.co.kr',
+    email: 'maze_official@majestade.co.kr'
+  }),
+  contact_faq: JSON.stringify([
+    { q: '프로젝트 기간은 얼마나 걸리나요?', a: '프로젝트 규모에 따라 다르지만, 일반적으로 전략 수립 1~2주, 실행 및 운영 1~3개월입니다. 초기 상담에서 상세 일정을 협의합니다.' },
+    { q: '최소 예산이 있나요?', a: '단발성 캠페인은 300만원~, 월 운영 계약은 월 150만원~부터 협의 가능합니다.' },
+    { q: '성과 보장이 되나요?', a: '명확한 KPI를 함께 설정하고 지속 최적화합니다. 인애드컴퍼니의 재계약률 98%가 그 결과입니다.' },
+    { q: '어떤 업종과 주로 일하나요?', a: '뷰티, 식품, 헬스케어, 이커머스, 패션, 생활용품 등 다양한 업종과 함께하고 있습니다.' },
+  ]),
+
   // ── Marketing 성과 수치 ──
   marketing_stats: JSON.stringify({
     viral: {

@@ -278,4 +278,38 @@ admin.get('/public/marketing', async (c) => {
   return c.json({ stats: JSON.parse(raw!) })
 })
 
+// ── Contact: 개인정보 보호 책임자 + FAQ ──
+admin.get('/contact', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  const [officerRaw, faqRaw] = await Promise.all([
+    kvGet(kv, 'contact_privacy_officer'),
+    kvGet(kv, 'contact_faq'),
+  ])
+  return c.json({
+    officer: JSON.parse(officerRaw!),
+    faq: JSON.parse(faqRaw!),
+  })
+})
+
+admin.put('/contact', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  const body = await c.req.json() as any
+  if (body.officer !== undefined) await kvPut(kv, 'contact_privacy_officer', JSON.stringify(body.officer))
+  if (body.faq !== undefined) await kvPut(kv, 'contact_faq', JSON.stringify(body.faq))
+  return c.json({ ok: true })
+})
+
+// ── Public: Contact 데이터 ──
+admin.get('/public/contact', async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  const [officerRaw, faqRaw] = await Promise.all([
+    kvGet(kv, 'contact_privacy_officer'),
+    kvGet(kv, 'contact_faq'),
+  ])
+  return c.json({
+    officer: JSON.parse(officerRaw!),
+    faq: JSON.parse(faqRaw!),
+  })
+})
+
 export { admin }

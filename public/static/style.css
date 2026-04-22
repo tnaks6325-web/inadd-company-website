@@ -3188,7 +3188,18 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .cf-req { color: rgba(26,107,255,0.8); }
 
 /* Chips (체크박스 칩) */
-.cf-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.cf-chips {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+.cf-chips::-webkit-scrollbar { height: 3px; }
+.cf-chips::-webkit-scrollbar-track { background: transparent; }
+.cf-chips::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
 .cf-chip {
   display: flex;
   align-items: center;
@@ -3201,6 +3212,8 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   border-radius: 24px;
   transition: all var(--t) var(--ease);
   user-select: none;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .cf-chip:hover { border-color: rgba(26,107,255,0.4); }
 .cf-chip input[type="checkbox"] { width: 13px; height: 13px; accent-color: rgba(26,107,255,0.9); }
@@ -7065,6 +7078,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 /* privacy group flex 정렬 */
 .cf-privacy-group {
   display: flex;
+  flex-direction: row;
   align-items: center;
   flex-wrap: nowrap;
   gap: 0;

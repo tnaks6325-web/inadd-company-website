@@ -27,7 +27,7 @@ document.getElementById('btnLogout').addEventListener('click', () => {
 });
 
 // ── 섹션 전환 ──
-const sectionTitles = { home:'홈 관리', about:'About 관리', works:'Works 관리', insight:'Insight 관리', marketing:'Marketing 성과 관리' };
+const sectionTitles = { home:'홈 관리', about:'About 관리', works:'Works 관리', insight:'Insight 관리', marketing:'Marketing 성과 관리', contact:'Contact 관리' };
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => {
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -657,7 +657,100 @@ function loadSection(sec) {
   else if (sec === 'works') loadWorks();
   else if (sec === 'insight') loadInsight();
   else if (sec === 'marketing') loadMarketing();
+  else if (sec === 'contact') loadContact();
 }
 
 // 초기 로드
 loadHome();
+
+// ═══════════════ CONTACT ═══════════════
+let faqItems = [];
+
+async function loadContact() {
+  const data = await api('GET', '/contact');
+  // 개인정보 보호 책임자
+  if (data.officer) {
+    document.getElementById('privacyManager').value = data.officer.manager || '';
+    document.getElementById('privacyOfficer').value = data.officer.officer || '';
+    document.getElementById('privacyWebsite').value = data.officer.website || '';
+    document.getElementById('privacyEmail').value   = data.officer.email   || '';
+  }
+  // FAQ
+  faqItems = (data.faq || []).map(f => ({ q: f.q || '', a: f.a || '' }));
+  renderFaqList();
+}
+
+function renderFaqList() {
+  const wrap = document.getElementById('faqList');
+  if (!wrap) return;
+  const addBtn = document.getElementById('btnAddFaq');
+  if (addBtn) addBtn.disabled = faqItems.length >= 5;
+
+  if (!faqItems.length) {
+    wrap.innerHTML = '<p style="color:#555;font-size:13px;text-align:center;padding:20px 0">등록된 FAQ가 없습니다. 추가 버튼을 눌러 질문을 등록하세요.</p>';
+    return;
+  }
+
+  wrap.innerHTML = faqItems.map((f, i) => `
+    <div class="faq-edit-item" data-idx="${i}" style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span style="color:#888;font-size:12px;font-weight:700">FAQ ${i + 1}</span>
+        <button onclick="removeFaqItem(${i})" style="background:none;border:none;color:#555;cursor:pointer;font-size:14px;padding:2px 6px;transition:color .15s" onmouseover="this.style.color='#ff4d4d'" onmouseout="this.style.color='#555'">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+      <div class="form-group" style="margin-bottom:10px">
+        <label style="font-size:11px;color:#888;margin-bottom:5px;display:block">질문</label>
+        <input type="text" value="${escHtml(f.q)}" oninput="faqItems[${i}].q=this.value"
+          style="width:100%;background:#111;border:1px solid #2a2a2a;border-radius:6px;color:#fff;font-size:14px;padding:9px 12px;outline:none;box-sizing:border-box"
+          placeholder="예: 프로젝트 기간은 얼마나 걸리나요?">
+      </div>
+      <div class="form-group">
+        <label style="font-size:11px;color:#888;margin-bottom:5px;display:block">답변</label>
+        <textarea oninput="faqItems[${i}].a=this.value" rows="3"
+          style="width:100%;background:#111;border:1px solid #2a2a2a;border-radius:6px;color:#ccc;font-size:13px;padding:9px 12px;outline:none;resize:vertical;line-height:1.6;box-sizing:border-box;font-family:inherit"
+          placeholder="답변을 입력하세요...">${escHtml(f.a)}</textarea>
+      </div>
+    </div>
+  `).join('');
+}
+
+function escHtml(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function removeFaqItem(idx) {
+  faqItems.splice(idx, 1);
+  renderFaqList();
+}
+
+document.getElementById('btnAddFaq').addEventListener('click', () => {
+  if (faqItems.length >= 5) { showToast('FAQ는 최대 5개까지 등록 가능합니다.', 'error'); return; }
+  faqItems.push({ q: '', a: '' });
+  renderFaqList();
+  // 새로 추가된 질문 input에 포커스
+  const items = document.querySelectorAll('.faq-edit-item');
+  const last = items[items.length - 1];
+  if (last) last.querySelector('input').focus();
+});
+
+document.getElementById('btnSavePrivacyOfficer').addEventListener('click', async () => {
+  const officer = {
+    manager: document.getElementById('privacyManager').value.trim(),
+    officer: document.getElementById('privacyOfficer').value.trim(),
+    website: document.getElementById('privacyWebsite').value.trim(),
+    email:   document.getElementById('privacyEmail').value.trim(),
+  };
+  await api('PUT', '/contact', { officer });
+  showToast('개인정보 보호 책임자가 저장되었습니다.');
+});
+
+document.getElementById('btnSaveFaq').addEventListener('click', async () => {
+  // 빈 항목 필터링
+  const valid = faqItems.filter(f => f.q.trim() && f.a.trim());
+  if (!valid.length) { showToast('저장할 FAQ가 없습니다.', 'error'); return; }
+  await api('PUT', '/contact', { faq: valid });
+  faqItems = valid;
+  renderFaqList();
+  showToast('FAQ가 저장되었습니다.');
+});
