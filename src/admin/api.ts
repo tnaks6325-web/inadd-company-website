@@ -66,22 +66,24 @@ admin.put('/home', authMiddleware, async (c) => {
 
 admin.get('/about', authMiddleware, async (c) => {
   const kv = (c.env as any)?.ADMIN_KV
-  const [address, lat, lng, logos] = await Promise.all([
+  const [address, addressDetail, lat, lng, logos] = await Promise.all([
     kvGet(kv, 'about_address'),
+    kvGet(kv, 'about_address_detail'),
     kvGet(kv, 'about_lat'),
     kvGet(kv, 'about_lng'),
     kvGet(kv, 'about_logos'),
   ])
-  return c.json({ address, lat, lng, logos: JSON.parse(logos!) })
+  return c.json({ address, addressDetail: addressDetail || '', lat, lng, logos: JSON.parse(logos!) })
 })
 
 admin.put('/about', authMiddleware, async (c) => {
   const kv = (c.env as any)?.ADMIN_KV
   const body = await c.req.json()
-  if (body.address !== undefined) await kvPut(kv, 'about_address', body.address)
-  if (body.lat !== undefined)     await kvPut(kv, 'about_lat', String(body.lat))
-  if (body.lng !== undefined)     await kvPut(kv, 'about_lng', String(body.lng))
-  if (body.logos !== undefined)   await kvPut(kv, 'about_logos', JSON.stringify(body.logos))
+  if (body.address !== undefined)       await kvPut(kv, 'about_address', body.address)
+  if (body.addressDetail !== undefined) await kvPut(kv, 'about_address_detail', body.addressDetail)
+  if (body.lat !== undefined)           await kvPut(kv, 'about_lat', String(body.lat))
+  if (body.lng !== undefined)           await kvPut(kv, 'about_lng', String(body.lng))
+  if (body.logos !== undefined)         await kvPut(kv, 'about_logos', JSON.stringify(body.logos))
   return c.json({ ok: true })
 })
 
@@ -257,13 +259,14 @@ admin.get('/public/home', async (c) => {
 
 admin.get('/public/about', async (c) => {
   const kv = (c.env as any)?.ADMIN_KV
-  const [address, lat, lng, logos] = await Promise.all([
+  const [address, addressDetail, lat, lng, logos] = await Promise.all([
     kvGet(kv, 'about_address'),
+    kvGet(kv, 'about_address_detail'),
     kvGet(kv, 'about_lat'),
     kvGet(kv, 'about_lng'),
     kvGet(kv, 'about_logos'),
   ])
-  return c.json({ address, lat, lng, logos: JSON.parse(logos!) })
+  return c.json({ address, addressDetail: addressDetail || '', lat, lng, logos: JSON.parse(logos!) })
 })
 
 admin.get('/public/works', async (c) => {

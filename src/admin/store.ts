@@ -21,7 +21,8 @@ export const DEFAULT_DATA = {
   home_slide_interval: '7',
 
   // ── About ──
-  about_address: '경기도 안산시 단원구 고잔로 51 타워아이즈빌 2F, 204호',
+  about_address: '경기도 안산시 단원구 고잔로 51',
+  about_address_detail: '타워아이즈빌 2F, 204호',
   about_lat: '37.320819',
   about_lng: '126.831592',
   about_logos: JSON.stringify([

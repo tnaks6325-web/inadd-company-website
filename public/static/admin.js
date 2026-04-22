@@ -197,14 +197,14 @@ let currentAddrLng = '';
 async function loadAbout() {
   const data = await api('GET', '/about');
   const addr = data.address || '';
+  const detail = data.addressDetail || '';
   document.getElementById('aboutAddress').value = addr;
+  document.getElementById('aboutAddressDetail').value = detail;
   currentAddrLat = data.lat || '';
   currentAddrLng = data.lng || '';
   document.getElementById('aboutLat').value = currentAddrLat;
   document.getElementById('aboutLng').value = currentAddrLng;
-  // 카카오맵 링크 업데이트
   updateKakaoMapLink(addr);
-  // 저장된 주소가 있으면 미리보기 지도 표시
   if (addr && currentAddrLat && currentAddrLng) {
     updateAdminMapPreview(addr, currentAddrLat, currentAddrLng);
   }
@@ -360,18 +360,18 @@ document.getElementById('btnPreviewCoord').addEventListener('click', () => {
 document.getElementById('btnSaveAddress').addEventListener('click', async () => {
   const base = document.getElementById('aboutAddress').value.trim();
   const detail = document.getElementById('aboutAddressDetail').value.trim();
-  const full = detail ? base + ' ' + detail : base;
   const lat = document.getElementById('aboutLat').value.trim();
   const lng = document.getElementById('aboutLng').value.trim();
-  if (!full) { showToast('주소를 먼저 검색해주세요.', 'error'); return; }
+  if (!base) { showToast('주소를 먼저 검색해주세요.', 'error'); return; }
   if (!lat || !lng) { showToast('위도/경도를 입력해주세요. 카카오맵 버튼으로 좌표를 확인하세요.', 'error'); return; }
   const latNum = parseFloat(lat);
   const lngNum = parseFloat(lng);
   if (isNaN(latNum) || isNaN(lngNum) || latNum < 33 || latNum > 39 || lngNum < 124 || lngNum > 132) {
     showToast('올바른 한국 좌표를 입력해주세요. (위도 33~39, 경도 124~132)', 'error'); return;
   }
-  await api('PUT', '/about', { address: full, lat, lng });
-  updateAdminMapPreview(full, lat, lng);
+  await api('PUT', '/about', { address: base, addressDetail: detail, lat, lng });
+  const fullAddr = detail ? base + ' ' + detail : base;
+  updateAdminMapPreview(fullAddr, lat, lng);
   showToast('✅ 주소와 지도 위치가 저장되었습니다.');
 });
 

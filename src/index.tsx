@@ -595,8 +595,9 @@ function adminDashboardHTML(): string {
                 <i class="fas fa-search"></i> 주소 찾기
               </button>
             </div>
-            <div id="addrDetailWrap" style="display:none;margin-top:10px">
-              <input type="text" id="aboutAddressDetail" placeholder="상세 주소 입력 (동/호수 등)"
+            <div id="addrDetailWrap" style="margin-top:10px">
+              <label style="color:#666;font-size:12px;display:block;margin-bottom:4px">상세 주소 (층/호수 등)</label>
+              <input type="text" id="aboutAddressDetail" placeholder="예: 2F, 204호"
                 style="width:100%;background:#111;border:1px solid #2a2a2a;border-radius:8px;color:#fff;font-size:14px;padding:10px 14px;box-sizing:border-box">
             </div>
           </div>

@@ -356,7 +356,11 @@ export const AboutPage = () => (
       // 주소 교체
       if(data.address){
         var addrEl = document.querySelector('.ldl-item .ldl-value');
-        if(addrEl){ addrEl.innerHTML = data.address; }
+        if(addrEl){
+          var fullAddr = data.address;
+          if(data.addressDetail) fullAddr += '<br />' + data.addressDetail;
+          addrEl.innerHTML = fullAddr;
+        }
       }
       // 지도 초기화
       var lat = parseFloat(data.lat) || DEFAULT_LAT;
