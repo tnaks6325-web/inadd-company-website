@@ -304,5 +304,78 @@ export const AboutPage = () => (
         </div>
       </div>
     </section>
+
+    {/* ── Admin Dynamic Data ── */}
+    <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  fetch('/api/admin/public/about')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      // 주소 교체
+      if(data.address){
+        var addrEl = document.querySelector('.ldl-item .ldl-value');
+        if(addrEl){ addrEl.innerHTML = data.address; }
+      }
+      // 관리자 등록 로고 — 기존 row1/row2 트랙에 자연스럽게 합치기
+      if(data.logos && data.logos.length){
+        var logoKeys = data.logos;
+        // 각 로고의 dataUrl을 먼저 전부 로드
+        Promise.all(logoKeys.map(function(key){
+          return fetch('/api/admin/logo/'+key)
+            .then(function(r){ return r.json(); })
+            .then(function(res){ return res.dataUrl || null; })
+            .catch(function(){ return null; });
+        })).then(function(dataUrls){
+          var validUrls = dataUrls.filter(Boolean);
+          if(!validUrls.length) return;
+
+          // 로고 박스 HTML 생성 함수
+          function makeBox(src){
+            var box = document.createElement('div');
+            box.className = 'acl-logo-box';
+            var img = document.createElement('img');
+            img.src = src;
+            img.className = 'acl-logo-img';
+            img.loading = 'lazy';
+            box.appendChild(img);
+            return box;
+          }
+
+          // row1(fwd), row2(rev) 트랙을 각각 가져옴
+          var tracks = document.querySelectorAll('.acl-track');
+          if(!tracks.length) return;
+
+          tracks.forEach(function(track){
+            // 현재 트랙의 전체 로고 박스 수 (복제 포함)
+            var existing = track.querySelectorAll('.acl-logo-box');
+            var half = existing.length / 2; // 실제 로고 수
+
+            // 원본 영역(앞 절반)의 마지막 원본 박스 뒤에 새 로고 삽입
+            // 그리고 복제 영역(뒤 절반)에도 똑같이 삽입
+            // → 항상 "원본 절반 = 복제 절반" 유지
+            validUrls.forEach(function(src){
+              var boxOrig  = makeBox(src);
+              var boxClone = makeBox(src);
+
+              // 원본 절반의 끝 = existing[half-1].nextSibling
+              var pivot = existing[half - 1];
+              if(pivot && pivot.nextSibling){
+                track.insertBefore(boxOrig, pivot.nextSibling);
+              } else {
+                // pivot이 맨 끝이거나 없으면 트랙 중간 기점 계산
+                var allBoxes = track.querySelectorAll('.acl-logo-box');
+                var mid = allBoxes[Math.floor(allBoxes.length / 2)];
+                track.insertBefore(boxOrig, mid || null);
+              }
+              // 복제본은 트랙 맨 끝에 추가
+              track.appendChild(boxClone);
+            });
+          });
+        });
+      }
+    })
+    .catch(function(){});
+})();
+    `}} />
   </>
 )

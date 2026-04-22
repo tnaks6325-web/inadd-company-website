@@ -109,28 +109,473 @@ export const SvcSeedingPage = () => (
       </div>
     </section>
 
-    <section class="section svc-process-section">
+    {/* ══ 네이버 블로그 시딩 상품군 ══ */}
+    <section class="section sdng-products-section" id="sdng-blog">
+      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
+      <div class="container">
+        <div class="section-head">
+          <span class="sec-label">Naver Blog Seeding</span>
+          <h2 class="sec-title">네이버 블로그 시딩<br /><em>상품 라인업</em></h2>
+          <p class="sec-sub">검색 최적화와 신뢰도 기반의 콘텐츠 마케팅.<br />브랜드 목표와 예산에 맞는 최적의 블로그 시딩 상품을 선택하세요.</p>
+        </div>
+
+        {/* 홈 스타일 인터랙티브 좌-우 레이아웃 */}
+        <div class="svc-interactive" id="sdngBlogInteractive">
+
+          {/* 왼쪽: 상품 리스트 */}
+          <ul class="svc-list" id="sdngBlogList">
+            <li class="svc-list-item active" data-sdng="0">
+              <a href="#sdng-blog">
+                <span class="svc-list-num">01</span>
+                <span class="svc-list-name">일반 블로거</span>
+              </a>
+            </li>
+            <li class="svc-list-item" data-sdng="1">
+              <a href="#sdng-blog">
+                <span class="svc-list-num">02</span>
+                <span class="svc-list-name">특화 블로거</span>
+              </a>
+            </li>
+            <li class="svc-list-item" data-sdng="2">
+              <a href="#sdng-blog">
+                <span class="svc-list-num">03</span>
+                <span class="svc-list-name">상위노출 보장</span>
+              </a>
+            </li>
+            <li class="svc-list-item" data-sdng="3">
+              <a href="#sdng-blog">
+                <span class="svc-list-num">04</span>
+                <span class="svc-list-name">네이버 인플루언서</span>
+              </a>
+            </li>
+          </ul>
+
+          {/* 오른쪽: 비주얼 패널 */}
+          <div class="svc-visual" id="sdngBlogVisual">
+
+            {/* 패널 0 — 일반 블로거 */}
+            <div class="svc-panel active" data-sdng-panel="0">
+              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-general.jpg'); background-size:cover; background-position:center; position:relative;">
+                <div class="svc-real-img-overlay"></div>
+                <span class="sdng-panel-badge sdng-panel-badge--basic">Basic</span>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">General Blogger</span>
+                <p class="svc-panel-desc">
+                  다양한 분야의 일반 블로거를 활용한 <strong>가성비 높은 시딩 방식</strong>입니다.<br />
+                  넓은 독자층을 대상으로 브랜드를 자연스럽게 노출하며, 진정성 있는 후기로 소비자 신뢰를 쌓습니다.<br /><br />
+                  대량 배포와 검색 유입 기반 구축에 최적화된 엔트리 상품입니다.
+                </p>
+                <div class="svc-panel-tags">
+                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
+                  <div class="svc-ptag-grid">
+                    <span class="svc-ptag">📝 체험 후기</span>
+                    <span class="svc-ptag">🔍 키워드 최적화</span>
+                    <span class="svc-ptag">📊 성과 리포트</span>
+                    <span class="svc-ptag">📣 대량 확산</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 패널 1 — 특화 블로거 */}
+            <div class="svc-panel" data-sdng-panel="1">
+              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-specialized.jpg'); background-size:cover; background-position:center; position:relative;">
+                <div class="svc-real-img-overlay"></div>
+                <span class="sdng-panel-badge sdng-panel-badge--specialized">Specialized</span>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">Specialized Blogger</span>
+                <p class="svc-panel-desc">
+                  뷰티, 식품, 육아, 여행 등 <strong>특정 분야 전문 블로거</strong>를 활용합니다.<br />
+                  해당 분야의 충성 독자를 보유하고 있어 정밀한 타겟팅이 가능하며, 전문성 있는 콘텐츠로 높은 신뢰도를 형성합니다.<br /><br />
+                  카테고리 특화 바이럴에 가장 효과적인 상품입니다.
+                </p>
+                <div class="svc-panel-tags">
+                  <p class="svc-ptag-label">SPECIALTY AREAS</p>
+                  <div class="svc-ptag-grid">
+                    <span class="svc-ptag">💄 뷰티 특화</span>
+                    <span class="svc-ptag">🍽 식품 특화</span>
+                    <span class="svc-ptag">👶 육아 특화</span>
+                    <span class="svc-ptag">✈️ 여행 특화</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 패널 2 — 상위 노출 보장 */}
+            <div class="svc-panel" data-sdng-panel="2">
+              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-ranking.jpg'); background-size:cover; background-position:center; position:relative;">
+                <div class="svc-real-img-overlay"></div>
+                <span class="sdng-panel-badge sdng-panel-badge--ranking">Ranking</span>
+                <span class="sdng-panel-rec">RECOMMEND</span>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">Guaranteed Top Ranking</span>
+                <p class="svc-panel-desc">
+                  네이버 블로그 검색 결과 <strong>상위 노출을 보장</strong>하는 프리미엄 시딩 상품입니다.<br />
+                  SEO 최적화 콘텐츠와 전략적 키워드 배치로 검색 유입을 극대화하고, 성과를 수치로 증명합니다.<br /><br />
+                  키워드 경쟁이 치열한 카테고리에 필수적인 전략 상품입니다.
+                </p>
+                <div class="svc-panel-tags">
+                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
+                  <div class="svc-ptag-grid">
+                    <span class="svc-ptag">🏆 TOP 노출 보장</span>
+                    <span class="svc-ptag">🔑 키워드 전략</span>
+                    <span class="svc-ptag">📈 검색 유입 극대화</span>
+                    <span class="svc-ptag">✅ SEO 최적화</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 패널 3 — 네이버 인플루언서 */}
+            <div class="svc-panel" data-sdng-panel="3">
+              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-influencer.jpg'); background-size:cover; background-position:center; position:relative;">
+                <div class="svc-real-img-overlay"></div>
+                <span class="sdng-panel-badge sdng-panel-badge--premium">Premium</span>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">Naver Influencer</span>
+                <p class="svc-panel-desc">
+                  네이버가 <strong>공식 인증한 인플루언서</strong>를 활용하는 최고 등급의 시딩 상품입니다.<br />
+                  높은 팔로워와 강력한 신뢰도를 바탕으로 브랜드 인지도와 매출을 동시에 끌어올립니다.<br /><br />
+                  프리미엄 콘텐츠 퀄리티와 최대 확산력으로 브랜드 가치를 극대화합니다.
+                </p>
+                <div class="svc-panel-tags">
+                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
+                  <div class="svc-ptag-grid">
+                    <span class="svc-ptag">👑 공식 인증 인플루언서</span>
+                    <span class="svc-ptag">⭐ 프리미엄 콘텐츠</span>
+                    <span class="svc-ptag">🚀 최대 확산력</span>
+                    <span class="svc-ptag">💎 브랜드 가치 극대화</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>{/* /svc-visual */}
+        </div>{/* /svc-interactive */}
+      </div>
+
+      <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  var list = document.getElementById('sdngBlogList');
+  var visual = document.getElementById('sdngBlogVisual');
+  if(!list || !visual) return;
+  var items = list.querySelectorAll('.svc-list-item');
+  var panels = visual.querySelectorAll('.svc-panel');
+  items.forEach(function(item, i){
+    item.addEventListener('click', function(e){
+      e.preventDefault();
+      items.forEach(function(el){ el.classList.remove('active'); });
+      panels.forEach(function(el){ el.classList.remove('active'); });
+      item.classList.add('active');
+      if(panels[i]) panels[i].classList.add('active');
+    });
+  });
+})();
+      `}} />
+    </section>
+
+    {/* ══ 인스타그램 시딩 상품군 ══ */}
+    <section class="section sdng-products-section" id="sdng-insta">
+      <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-left"></div><div class="svc-section-glow-top"></div></div>
+      <div class="container">
+        <div class="section-head">
+          <span class="sec-label">Instagram Seeding</span>
+          <h2 class="sec-title">인스타그램 시딩<br /><em>상품 라인업</em></h2>
+          <p class="sec-sub">해시태그와 캡션을 활용한 소프트 시딩으로 탐색 및 브랜드 인지를 확장합니다.<br />인스타그램 알고리즘 최적화로 자연스러운 브랜드 노출과 참여를 유도합니다.</p>
+        </div>
+
+        {/* 인스타 핵심 특징 태그 */}
+        <div class="sdng-insta-features">
+          <span class="sdng-insta-feat"># 해시태그 유입</span>
+          <span class="sdng-insta-feat">👁 시각적 전달</span>
+          <span class="sdng-insta-feat">🌿 자연 노출</span>
+        </div>
+
+        {/* 동일한 interactive 좌-우 레이아웃 */}
+        <div class="svc-interactive" id="sdngInstaInteractive">
+
+          {/* 왼쪽: 상품 리스트 */}
+          <ul class="svc-list" id="sdngInstaList">
+            <li class="svc-list-item active" data-insta="0">
+              <a href="#sdng-insta">
+                <span class="svc-list-num">01</span>
+                <span class="svc-list-name">일반 피드 시딩</span>
+              </a>
+            </li>
+            <li class="svc-list-item" data-insta="1">
+              <a href="#sdng-insta">
+                <span class="svc-list-num">02</span>
+                <span class="svc-list-name">특화 타깃 시딩</span>
+              </a>
+            </li>
+          </ul>
+
+          {/* 오른쪽: 비주얼 패널 */}
+          <div class="svc-visual" id="sdngInstaVisual">
+
+            {/* 패널 0 — 일반 피드 시딩 */}
+            <div class="svc-panel active" data-insta-panel="0">
+              <div class="svc-panel-img sdng-insta-panel-bg sdng-insta-panel-bg--basic">
+                <div class="svc-real-img-overlay"></div>
+                <span class="sdng-panel-badge sdng-panel-badge--insta-basic">Basic</span>
+                {/* 인스타 피드 그리드 모의 UI */}
+                <div class="sdng-insta-grid-mock">
+                  <div class="sdng-insta-cell sdng-insta-cell--1"></div>
+                  <div class="sdng-insta-cell sdng-insta-cell--2"></div>
+                  <div class="sdng-insta-cell sdng-insta-cell--3"></div>
+                  <div class="sdng-insta-cell sdng-insta-cell--4"></div>
+                  <div class="sdng-insta-cell sdng-insta-cell--5"></div>
+                  <div class="sdng-insta-cell sdng-insta-cell--6"></div>
+                </div>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">General Feed Seeding</span>
+                <p class="svc-panel-desc">
+                  일반 계정을 활용해 <strong>이미지 중심의 정보 전달</strong>과 해시태그 검색 유입을 최적화합니다.<br />
+                  자연스러운 피드 콘텐츠로 브랜드를 노출하여 광고 피로감 없이 소비자에게 스며드는 방식입니다.<br /><br />
+                  신제품 런칭, 이벤트 홍보, 브랜드 인지도 확산에 최적화된 기본 상품입니다.
+                </p>
+                <div class="svc-panel-tags">
+                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
+                  <div class="svc-ptag-grid">
+                    <span class="svc-ptag sdng-insta-ptag">📸 이미지 중심 정보 전달</span>
+                    <span class="svc-ptag sdng-insta-ptag"># 해시태그 검색 유입 최적화</span>
+                    <span class="svc-ptag sdng-insta-ptag">🌿 자연스러운 브랜드 노출</span>
+                    <span class="svc-ptag sdng-insta-ptag">📊 성과 리포트 제공</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 패널 1 — 특화 타깃 시딩 */}
+            <div class="svc-panel" data-insta-panel="1">
+              <div class="svc-panel-img sdng-insta-panel-bg sdng-insta-panel-bg--specialized">
+                <div class="svc-real-img-overlay"></div>
+                <span class="sdng-panel-badge sdng-panel-badge--insta-specialized">Specialized</span>
+                <span class="sdng-panel-rec">RECOMMEND</span>
+                {/* 특화 타깃 모의 UI */}
+                <div class="sdng-insta-target-mock">
+                  <div class="sdng-insta-target-ring">
+                    <div class="sdng-insta-target-inner">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="rgba(225,48,108,0.9)" stroke-width="1.5" width="28" height="28"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                      <span>타깃</span>
+                    </div>
+                  </div>
+                  <div class="sdng-insta-hashtag-cloud">
+                    <span>#뷰티</span><span>#맛집</span><span>#라이프</span>
+                    <span>#서울</span><span>#일상</span>
+                  </div>
+                </div>
+              </div>
+              <div class="svc-panel-info">
+                <span class="svc-panel-tag">Specialized Target Seeding</span>
+                <p class="svc-panel-desc">
+                  특정 타깃층에 맞춘 <strong>해시태그 세트와 위치·카테고리 최적화</strong>로 틈새 커뮤니티를 정밀 공략합니다.<br />
+                  뷰티·음식·라이프스타일 등 카테고리별 충성 팔로워를 보유한 계정을 선별하여 높은 참여율을 이끌어냅니다.<br /><br />
+                  특정 카테고리 타깃팅이 중요한 브랜드에 가장 효과적인 프리미엄 상품입니다.
+                </p>
+                <div class="svc-panel-tags">
+                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
+                  <div class="svc-ptag-grid">
+                    <span class="svc-ptag sdng-insta-ptag sdng-insta-ptag--spec"># 타깃 맞춤 해시태그 세트</span>
+                    <span class="svc-ptag sdng-insta-ptag sdng-insta-ptag--spec">📍 위치·카테고리 최적화</span>
+                    <span class="svc-ptag sdng-insta-ptag sdng-insta-ptag--spec">🎯 틈새 커뮤니티 공략</span>
+                    <span class="svc-ptag sdng-insta-ptag sdng-insta-ptag--spec">💬 높은 참여율 유도</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>{/* /svc-visual */}
+        </div>{/* /svc-interactive */}
+
+        {/* 인스타 시딩 안내 배너 */}
+        <div class="sdng-insta-banner">
+          <div class="sdng-insta-banner-icon">📱</div>
+          <div class="sdng-insta-banner-text">
+            <strong>인스타그램 시딩 · 탐색 탭 & 해시태그 최적화</strong>
+            <span>네이버 블로그 시딩과 함께 진행 시 검색과 SNS를 동시에 커버하는 가장 강력한 시딩 조합이 완성됩니다</span>
+          </div>
+        </div>
+
+      </div>
+
+      <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  var list = document.getElementById('sdngInstaList');
+  var visual = document.getElementById('sdngInstaVisual');
+  if(!list || !visual) return;
+  var items = list.querySelectorAll('.svc-list-item');
+  var panels = visual.querySelectorAll('.svc-panel');
+  items.forEach(function(item, i){
+    item.addEventListener('click', function(e){
+      e.preventDefault();
+      items.forEach(function(el){ el.classList.remove('active'); });
+      panels.forEach(function(el){ el.classList.remove('active'); });
+      item.classList.add('active');
+      if(panels[i]) panels[i].classList.add('active');
+    });
+  });
+})();
+      `}} />
+    </section>
+
+    {/* ══ PROCESS TIMELINE ══ */}
+    <section class="section sdtl-section">
       <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-left"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
           <span class="sec-label">Process</span>
           <h2 class="sec-title">시딩 캠페인<br /><em>진행 프로세스</em></h2>
+          <p class="sec-sub">상담부터 최종 리포트까지, 전담 PM이 모든 단계를 함께합니다.</p>
         </div>
-        <div class="svc-process-steps">
-          {[
-            { num:'01', title:'타겟 체험단 설계', desc:'브랜드 타겟에 가장 부합하는 체험단 프로필을 설계하고 모집 전략을 수립합니다.' },
-            { num:'02', title:'체험단 모집·선별', desc:'지원자 중 진정성과 영향력을 기준으로 최적의 체험단을 선별합니다.' },
-            { num:'03', title:'제품 발송', desc:'제품과 함께 사용 가이드, 촬영 팁, 핵심 메시지를 전달합니다.' },
-            { num:'04', title:'후기 작성 지원', desc:'자연스럽고 진정성 있는 후기가 나올 수 있도록 방향성을 제시합니다.' },
-            { num:'05', title:'플랫폼 배포', desc:'네이버 블로그, 인스타그램, 카페 등 플랫폼별 최적화된 방식으로 후기를 배포합니다.' },
-            { num:'06', title:'성과 분석', desc:'전환율, 검색 유입, 매출 변화 등 시딩 전후 성과를 정밀하게 분석합니다.' },
-          ].map(s => (
-            <div class="sps-step">
-              <div class="sps-num">{s.num}</div>
-              <div class="sps-body"><h4>{s.title}</h4><p>{s.desc}</p></div>
+
+        <div class="sdtl-wrap">
+          {/* 중앙 라인 */}
+          <div class="sdtl-axis">
+            <div class="sdtl-axis-line"></div>
+          </div>
+
+          {/* STEP 01 */}
+          <div class="sdtl-item sdtl-item--left">
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#1a6bff">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Strategy Consultation</span>
+                <h4 class="sdtl-card-title">상담 진행</h4>
+                <p class="sdtl-card-desc">브랜드 목표, 예산, 타겟 고객을 분석하고 최적의 시딩 전략을 수립합니다. 캠페인 방향성과 KPI를 명확히 설정합니다.</p>
+              </div>
             </div>
-          ))}
+            <div class="sdtl-dot" style="--tc:#1a6bff"><span class="sdtl-num">01</span></div>
+            <div class="sdtl-spacer"></div>
+          </div>
+
+          {/* STEP 02 */}
+          <div class="sdtl-item sdtl-item--right">
+            <div class="sdtl-spacer"></div>
+            <div class="sdtl-dot" style="--tc:#6d28d9"><span class="sdtl-num">02</span></div>
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#6d28d9">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Contract &amp; Scope</span>
+                <h4 class="sdtl-card-title">계약 진행</h4>
+                <p class="sdtl-card-desc">캠페인 범위, 일정, 성과 지표를 문서화합니다. 투명한 비용 구조와 명확한 계약으로 신뢰 관계를 구축합니다.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 03 */}
+          <div class="sdtl-item sdtl-item--left">
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#0891b2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Creative Briefing</span>
+                <h4 class="sdtl-card-title">가이드라인 작성</h4>
+                <p class="sdtl-card-desc">브랜드 메시지, 톤앤매너, 금지 표현, 핵심 키워드를 담은 콘텐츠 가이드를 제작합니다. 자연스럽고 일관된 후기 생성의 기반이 됩니다.</p>
+              </div>
+            </div>
+            <div class="sdtl-dot" style="--tc:#0891b2"><span class="sdtl-num">03</span></div>
+            <div class="sdtl-spacer"></div>
+          </div>
+
+          {/* STEP 04 */}
+          <div class="sdtl-item sdtl-item--right">
+            <div class="sdtl-spacer"></div>
+            <div class="sdtl-dot" style="--tc:#059669"><span class="sdtl-num">04</span></div>
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#059669">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Creator Recruitment</span>
+                <h4 class="sdtl-card-title">크리에이터 모집</h4>
+                <p class="sdtl-card-desc">브랜드 타겟과 부합하는 블로거·인플루언서를 공개 모집합니다. 지원자의 채널 분석과 활동 이력을 검토합니다.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 05 */}
+          <div class="sdtl-item sdtl-item--left">
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#d97706">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Creator Selection</span>
+                <h4 class="sdtl-card-title">크리에이터 선정</h4>
+                <p class="sdtl-card-desc">진정성, 팔로워 품질, 카테고리 적합도를 기준으로 최적의 크리에이터를 선정합니다. 데이터 기반 매칭으로 성과를 극대화합니다.</p>
+              </div>
+            </div>
+            <div class="sdtl-dot" style="--tc:#d97706"><span class="sdtl-num">05</span></div>
+            <div class="sdtl-spacer"></div>
+          </div>
+
+          {/* STEP 06 */}
+          <div class="sdtl-item sdtl-item--right">
+            <div class="sdtl-spacer"></div>
+            <div class="sdtl-dot" style="--tc:#e11d48"><span class="sdtl-num">06</span></div>
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#e11d48">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Product Experience</span>
+                <h4 class="sdtl-card-title">체험 진행</h4>
+                <p class="sdtl-card-desc">선정된 크리에이터에게 제품을 발송하고 실제 사용 경험을 진행합니다. 가이드라인을 기반으로 자연스러운 체험 콘텐츠가 준비됩니다.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 07 */}
+          <div class="sdtl-item sdtl-item--left">
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#7c3aed">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Review Creation</span>
+                <h4 class="sdtl-card-title">리뷰 작성</h4>
+                <p class="sdtl-card-desc">크리에이터가 가이드라인에 맞춰 진정성 있는 후기를 작성합니다. 브랜드 검수 후 플랫폼에 최적화된 형태로 최종 게시됩니다.</p>
+              </div>
+            </div>
+            <div class="sdtl-dot" style="--tc:#7c3aed"><span class="sdtl-num">07</span></div>
+            <div class="sdtl-spacer"></div>
+          </div>
+
+          {/* STEP 08 */}
+          <div class="sdtl-item sdtl-item--right sdtl-item--last">
+            <div class="sdtl-spacer"></div>
+            <div class="sdtl-dot sdtl-dot--final" style="--tc:#10b981"><span class="sdtl-num">08</span></div>
+            <div class="sdtl-card sdtl-card--final">
+              <div class="sdtl-card-icon" style="--tc:#10b981">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Performance Report</span>
+                <h4 class="sdtl-card-title">리포트</h4>
+                <p class="sdtl-card-desc">캠페인 전 기간의 성과를 수치로 정리한 종합 리포트를 제공합니다. 전환율, 검색 유입, 매출 변화를 분석해 다음 캠페인 전략까지 제안합니다.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>{/* /sdtl-wrap */}
+
+        {/* 하단 배너 */}
+        <div class="sdtl-footer">
+          <span class="sdtl-footer-icon">📋</span>
+          <span>모든 단계에서 <strong>전담 PM</strong>이 함께합니다 &nbsp;·&nbsp; 평균 캠페인 기간 <strong>4–6주</strong></span>
         </div>
+
       </div>
     </section>
 
@@ -185,5 +630,41 @@ export const SvcSeedingPage = () => (
         </div>
       </div>
     </section>
+
+    {/* ── Admin Dynamic Marketing Stats ── */}
+    <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  var SVC_KEY = 'seeding';
+  fetch('/api/admin/public/marketing')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var svc = data.stats && data.stats[SVC_KEY];
+      if(!svc) return;
+      var grid = document.querySelector('.svc-result-grid');
+      if(!grid) return;
+      var cards = grid.querySelectorAll('.srg-card');
+      ['case1','case2','case3'].forEach(function(ck, i){
+        var c = svc[ck];
+        if(!c || !cards[i]) return;
+        var card = cards[i];
+        var tagEl = card.querySelector('.srg-tag');
+        if(tagEl && c.tag) tagEl.textContent = c.tag;
+        var metrics = card.querySelectorAll('.srg-metric');
+        var mdata = [
+          {m:c.m1,l:c.l1},{m:c.m2,l:c.l2},{m:c.m3,l:c.l3}
+        ].filter(function(x){ return x.m; });
+        mdata.forEach(function(md, mi){
+          if(!metrics[mi]) return;
+          var strong = metrics[mi].querySelector('strong');
+          var span = metrics[mi].querySelector('span');
+          if(strong && md.m) strong.textContent = md.m;
+          if(span && md.l) span.textContent = md.l;
+        });
+        var desc = card.querySelector('.srg-desc');
+        if(desc && c.desc) desc.textContent = c.desc;
+      });
+    }).catch(function(){});
+})();
+    `}} />
   </>
 )

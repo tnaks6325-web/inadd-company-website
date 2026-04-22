@@ -749,6 +749,45 @@ export const HomePage = () => (
 (function(){
 
 /* ─────────────────────────────────────────────
+   0. HERO SLIDER — 영상 자동 전환 (7초 간격 dissolve)
+───────────────────────────────────────────── */
+var _sliderTimer = null;
+function initSlider(intervalSec){
+  if(_sliderTimer){ clearInterval(_sliderTimer); _sliderTimer = null; }
+  var slides = document.querySelectorAll('.yt-slide');
+  if(slides.length < 2) return;
+
+  var current = 0;
+  var total   = slides.length;
+  var ms = ((intervalSec && intervalSec >= 1) ? intervalSec : 7) * 1000;
+
+  // 첫 슬라이드 활성화 보정
+  slides.forEach(function(s,i){ s.classList.toggle('active', i===0); s.classList.remove('leaving'); });
+
+  function goTo(next){
+    var prev = current;
+    if(next === prev) return;
+
+    slides[prev].classList.add('leaving');
+    slides[prev].classList.remove('active');
+    slides[next].classList.add('active');
+
+    setTimeout(function(){
+      slides[prev].classList.remove('leaving');
+    }, 1000);
+
+    current = next;
+  }
+
+  // 설정된 간격(ms)마다 다음 슬라이드로
+  _sliderTimer = setInterval(function(){
+    var next = (current + 1) % total;
+    goTo(next);
+  }, ms);
+}
+initSlider(7);
+
+/* ─────────────────────────────────────────────
    1. WHAT WE DO — 서비스 리스트 인터랙션
    마우스 오버 시 오른쪽 패널 교체 + 글로우 이펙트
 ───────────────────────────────────────────── */
@@ -977,6 +1016,57 @@ export const HomePage = () => (
     requestAnimationFrame(drawCta);
   }
   drawCta();
+})();
+
+/* ─────────────────────────────────────────────
+   ADMIN DYNAMIC DATA — 관리자 데이터 동적 로딩
+───────────────────────────────────────────── */
+(function(){
+  fetch('/api/admin/public/home')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var adminInterval = (data.interval && data.interval >= 1) ? data.interval : 7;
+      // ── 영상 교체 ──
+      if(data.videos && data.videos.length){
+        var slidesWrap = document.getElementById('ytSlides');
+        if(slidesWrap){
+          var html = data.videos.map(function(vid, i){
+            return '<div class="yt-slide'+(i===0?' active':'')+'" data-index="'+i+'">'
+              +'<div class="yt-iframe-wrap">'
+              +'<iframe class="yt-iframe" src="https://www.youtube.com/embed/'+vid+'?autoplay=1&mute=1&controls=0&loop=1&playlist='+vid+'&playsinline=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+              +'</div>'
+              +'<div class="yt-overlay"></div>'
+              +'</div>';
+          }).join('');
+          slidesWrap.innerHTML = html;
+
+          // 영상 교체 후 슬라이더 재시작 — API interval 적용
+          initSlider(adminInterval);
+        }
+      } else {
+        // 영상 교체 없이 간격만 바뀐 경우도 재시작
+        initSlider(adminInterval);
+      }
+      // ── 회사소개서 링크 교체 ──
+      if(data.brochure){
+        document.querySelectorAll('a[href*="drive.google.com"]').forEach(function(a){
+          a.href = data.brochure;
+        });
+      }
+      // ── KPI 수치 교체 ──
+      if(data.stats){
+        var s = data.stats;
+        var nums = document.querySelectorAll('.stat-num-big');
+        var map = [s.projects, s.contracts, s.experience, s.partners];
+        nums.forEach(function(el, i){
+          if(map[i] !== undefined){
+            el.setAttribute('data-count', map[i]);
+            el.textContent = '0';
+          }
+        });
+      }
+    })
+    .catch(function(){});
 })();
 
 })();

@@ -132,6 +132,7 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
           <div class="footer-bottom">
             <p>© 2025 인애드컴퍼니 (IN AD COMPANY). All rights reserved.</p>
             <p class="footer-legal">대표 : 김수만 | 연락처 : 010-9186-9944 | 경기도 안산시 단원구 고잔로 51, 타워아이즈빌 2F, 204호</p>
+            <a href="/admin/login" class="admin-login-btn" title="관리자 로그인">⚙</a>
           </div>
         </footer>
         {/* 전화 모달 - 전역 공통 */}

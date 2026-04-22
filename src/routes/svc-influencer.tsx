@@ -715,5 +715,41 @@ export const SvcInfluencerPage = () => (
         </div>
       </div>
     </section>
+
+    {/* ── Admin Dynamic Marketing Stats ── */}
+    <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  var SVC_KEY = 'influencer';
+  fetch('/api/admin/public/marketing')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var svc = data.stats && data.stats[SVC_KEY];
+      if(!svc) return;
+      var grid = document.querySelector('.svc-result-grid');
+      if(!grid) return;
+      var cards = grid.querySelectorAll('.srg-card');
+      ['case1','case2','case3'].forEach(function(ck, i){
+        var c = svc[ck];
+        if(!c || !cards[i]) return;
+        var card = cards[i];
+        var tagEl = card.querySelector('.srg-tag');
+        if(tagEl && c.tag) tagEl.textContent = c.tag;
+        var metrics = card.querySelectorAll('.srg-metric');
+        var mdata = [
+          {m:c.m1,l:c.l1},{m:c.m2,l:c.l2},{m:c.m3,l:c.l3}
+        ].filter(function(x){ return x.m; });
+        mdata.forEach(function(md, mi){
+          if(!metrics[mi]) return;
+          var strong = metrics[mi].querySelector('strong');
+          var span = metrics[mi].querySelector('span');
+          if(strong && md.m) strong.textContent = md.m;
+          if(span && md.l) span.textContent = md.l;
+        });
+        var desc = card.querySelector('.srg-desc');
+        if(desc && c.desc) desc.textContent = c.desc;
+      });
+    }).catch(function(){});
+})();
+    `}} />
   </>
 )

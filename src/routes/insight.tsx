@@ -1,19 +1,4 @@
-import { INSIGHT_ARTICLES, CONTENT_SUB_LABELS, type ContentSubCategory } from '../data/insight-articles'
-
 export const InsightPage = () => {
-  const articles = INSIGHT_ARTICLES
-
-  // 콘텐츠 별 전략 세부 탭 목록 (서비스 순서 그대로)
-  const subTabs: { key: ContentSubCategory; label: string }[] = [
-    { key: 'viral',      label: '바이럴 마케팅' },
-    { key: 'influencer', label: '인플루언서 마케팅' },
-    { key: 'seeding',    label: '시딩 캠페인' },
-    { key: 'seo',        label: 'SEO 마케팅' },
-    { key: 'review',     label: '리뷰 마케팅' },
-    { key: 'oliveyoung', label: '올리브영 마케팅' },
-    { key: 'ppl',        label: 'PPL 마케팅' },
-  ]
-
   return (
     <>
       {/* ── Page Hero ── */}
@@ -37,47 +22,25 @@ export const InsightPage = () => {
             <button class="ins2-tab" data-main="case-study">실전 사례</button>
           </nav>
 
-          {/* ── 2단계: 콘텐츠 별 전략 세부 탭 (기본 hidden) ── */}
+          {/* ── 2단계: 콘텐츠 별 전략 세부 탭 ── */}
           <nav class="ins2-sub-tab-bar" id="ins2SubTabs" style="display:none;">
             <button class="ins2-sub-tab active" data-sub="all-strategy">전체</button>
-            {subTabs.map(t => (
-              <button class="ins2-sub-tab" data-sub={t.key} key={t.key}>{t.label}</button>
-            ))}
+            <button class="ins2-sub-tab" data-sub="viral">바이럴 마케팅</button>
+            <button class="ins2-sub-tab" data-sub="influencer">인플루언서 마케팅</button>
+            <button class="ins2-sub-tab" data-sub="seeding">시딩 캠페인</button>
+            <button class="ins2-sub-tab" data-sub="seo">SEO 마케팅</button>
+            <button class="ins2-sub-tab" data-sub="review">리뷰 마케팅</button>
+            <button class="ins2-sub-tab" data-sub="oliveyoung">올리브영 마케팅</button>
+            <button class="ins2-sub-tab" data-sub="ppl">PPL 마케팅</button>
           </nav>
 
-          {/* ── 카드 그리드 ── */}
+          {/* ── 카드 그리드 — 어드민 API로 채움 ── */}
           <div class="ins2-grid" id="ins2Grid">
-            {articles.map(article => (
-              <a
-                key={article.id}
-                href={`/insight/${article.id}`}
-                class="ins2-card"
-                data-main-cat={article.category}
-                data-sub-cat={article.subCategory ?? ''}
-              >
-                {/* 썸네일 */}
-                <div class="ins2-thumb">
-                  <img
-                    src={article.thumbnail}
-                    alt={article.title}
-                    class="ins2-thumb-img"
-                    loading="lazy"
-                    onerror="this.style.display='none';this.parentElement.classList.add('ins2-thumb--fallback')"
-                  />
-                  <span class="ins2-tag">{article.tags[0]}</span>
-                </div>
-
-                {/* 본문 정보 */}
-                <div class="ins2-body">
-                  <h3 class="ins2-title">{article.title}</h3>
-                  <p class="ins2-summary">{article.summary}</p>
-                  <div class="ins2-meta">
-                    <span class="ins2-date">{article.date}</span>
-                    <span class="ins2-views">조회수 {article.views}</span>
-                  </div>
-                </div>
-              </a>
-            ))}
+            {/* 로딩 플레이스홀더 */}
+            <div class="ins2-loading" id="ins2Loading">
+              <div class="ins2-spinner"></div>
+              <p>게시물을 불러오는 중...</p>
+            </div>
           </div>
 
           {/* 글이 없을 때 */}
@@ -88,67 +51,105 @@ export const InsightPage = () => {
         </div>
       </section>
 
-      {/* ── 탭 필터 JS ── */}
+      {/* ── 탭 필터 + 어드민 데이터 로딩 통합 JS ── */}
       <script dangerouslySetInnerHTML={{__html: `
 (function() {
-  var mainTabs   = document.querySelectorAll('.ins2-tab');
-  var subTabBar  = document.getElementById('ins2SubTabs');
-  var subTabs    = document.querySelectorAll('.ins2-sub-tab');
-  var cards      = document.querySelectorAll('.ins2-card');
-  var empty      = document.getElementById('ins2Empty');
+  var mainTabs  = document.querySelectorAll('.ins2-tab');
+  var subTabBar = document.getElementById('ins2SubTabs');
+  var subTabs   = document.querySelectorAll('.ins2-sub-tab');
+  var grid      = document.getElementById('ins2Grid');
+  var empty     = document.getElementById('ins2Empty');
+  var loading   = document.getElementById('ins2Loading');
 
   var currentMain = 'all';
   var currentSub  = 'all-strategy';
 
+  var CAT_LABELS = { 'content-strategy':'콘텐츠 전략', 'case-study':'실전 사례' };
+  var SUB_LABELS = { viral:'바이럴 마케팅', influencer:'인플루언서', seeding:'시딩', seo:'SEO', review:'리뷰', oliveyoung:'올리브영', ppl:'PPL' };
+
   function applyFilter() {
+    var cards = grid.querySelectorAll('.ins2-card');
     var visible = 0;
     cards.forEach(function(card) {
       var mainCat = card.getAttribute('data-main-cat');
       var subCat  = card.getAttribute('data-sub-cat');
-
       var showMain = currentMain === 'all' || mainCat === currentMain;
       var showSub  = true;
-
-      // 콘텐츠별전략 탭이 활성일 때만 세부 필터 적용
       if (currentMain === 'content-strategy' && currentSub !== 'all-strategy') {
         showSub = subCat === currentSub;
       }
-
-      if (showMain && showSub) {
-        card.style.display = '';
-        visible++;
-      } else {
-        card.style.display = 'none';
-      }
+      if (showMain && showSub) { card.style.display = ''; visible++; }
+      else { card.style.display = 'none'; }
     });
-
     if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
   }
 
-  // 메인 탭 클릭
+  function renderCards(posts) {
+    if (loading) loading.style.display = 'none';
+    // 기존 카드 전부 제거
+    grid.querySelectorAll('.ins2-card').forEach(function(c){ c.remove(); });
+
+    if (!posts || !posts.length) {
+      if (empty) empty.style.display = 'block';
+      return;
+    }
+
+    posts.forEach(function(post) {
+      var a = document.createElement('a');
+      a.href = '/insight/admin_' + post.id;
+      a.className = 'ins2-card';
+      a.setAttribute('data-main-cat', post.mainCategory || '');
+      a.setAttribute('data-sub-cat',  post.subCategory  || '');
+      var dateStr = (post.createdAt || '').slice(0, 10);
+      var tag = SUB_LABELS[post.subCategory] || CAT_LABELS[post.mainCategory] || '인사이트';
+      a.innerHTML =
+        '<div class="ins2-thumb">'
+        + (post.thumbnail
+            ? '<img src="' + post.thumbnail + '" alt="' + post.title + '" class="ins2-thumb-img" loading="lazy" onerror="this.style.display=\\'none\\'">'
+            : '<div class="ins2-thumb-fallback"><i class="fas fa-newspaper"></i></div>')
+        + '<span class="ins2-tag">' + tag + '</span>'
+        + '</div>'
+        + '<div class="ins2-body">'
+        + '<h3 class="ins2-title">' + (post.title || '') + '</h3>'
+        + '<p class="ins2-summary">' + (post.summary || '') + '</p>'
+        + '<div class="ins2-meta">'
+        + '<span class="ins2-date">' + dateStr + '</span>'
+        + '</div>'
+        + '</div>';
+      grid.appendChild(a);
+    });
+
+    applyFilter();
+  }
+
+  // ── 어드민 API에서 포스트 로드 ──
+  fetch('/api/admin/public/insight')
+    .then(function(r) { return r.json(); })
+    .then(function(data) { renderCards(data.posts || []); })
+    .catch(function() {
+      if (loading) loading.style.display = 'none';
+      if (empty) empty.style.display = 'block';
+    });
+
+  // ── 메인 탭 클릭 ──
   mainTabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
       currentMain = this.getAttribute('data-main');
-
       mainTabs.forEach(function(t) { t.classList.remove('active'); });
       this.classList.add('active');
-
-      // 콘텐츠별전략 선택 시 서브탭 표시
       if (currentMain === 'content-strategy') {
         subTabBar.style.display = 'flex';
       } else {
         subTabBar.style.display = 'none';
-        // 서브탭 초기화
         currentSub = 'all-strategy';
         subTabs.forEach(function(t) { t.classList.remove('active'); });
         subTabs[0] && subTabs[0].classList.add('active');
       }
-
       applyFilter();
     });
   });
 
-  // 서브 탭 클릭
+  // ── 서브 탭 클릭 ──
   subTabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
       currentSub = this.getAttribute('data-sub');
@@ -157,9 +158,6 @@ export const InsightPage = () => {
       applyFilter();
     });
   });
-
-  // 초기 렌더
-  applyFilter();
 })();
       `}} />
 

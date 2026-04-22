@@ -1,5 +1,6 @@
 export const SvcPplPage = () => (
   <>
+    {/* ══ HERO ══ */}
     <section class="vh-hero">
       <canvas id="vhCanvas5" class="vh-canvas"></canvas>
       <div class="vh-bg">
@@ -9,59 +10,49 @@ export const SvcPplPage = () => (
         <div class="vh-grid"></div>
         <div class="vh-noise"></div>
       </div>
-
       <div class="container vh-inner">
         <a href="/marketing" class="svc-back-link vh-back">← Marketing 전체보기</a>
-
         <div class="vh-badge" style="color:rgba(239,68,68,0.95);border-color:rgba(239,68,68,0.35);background:rgba(239,68,68,0.08)">
           <span class="vh-badge-dot" style="background:rgba(239,68,68,1);box-shadow:0 0 8px rgba(239,68,68,0.9)"></span>
-          <span>PPL MARKETING</span>
+          <span>PPL MARKETING · PRODUCT PLACEMENT</span>
         </div>
-
         <h1 class="vh-title">
-          <span class="vh-tline" id="ppL1">방송 콘텐츠 속 자연스러운 브랜드 노출로</span>
-          <span class="vh-tline" id="ppL2" style="background:linear-gradient(135deg,#fff 20%,rgba(239,68,68,0.95) 55%,rgba(251,146,60,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">대중의 신뢰와 관심을 확보하는 프리미엄 광고 전략입니다.</span>
+          <span class="vh-tline" id="ppL1">방송 콘텐츠 속,</span>
+          <span class="vh-tline" id="ppL2" style="background:linear-gradient(135deg,#fff 20%,rgba(239,68,68,0.95) 55%,rgba(251,146,60,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">브랜드를 자연스럽게 각인시킵니다.</span>
         </h1>
-
         <div class="vh-sub-wrap" id="ppSub">
-          <p class="vh-sub">단순한 노출을 넘어 <strong style="color:rgba(255,255,255,0.9)">스토리텔링과 결합하여</strong></p>
-          <p class="vh-sub"><strong style="color:rgba(255,255,255,0.9)">브랜드 인지도</strong>를 높이고 시청자의 마음속에 깊이 각인됩니다.</p>
-          <p class="vh-sub" style="margin-top:12px"><span style="color:rgba(239,68,68,0.9);font-weight:600">5,000만+ 누적 시청자</span>에게 브랜드를 자연스럽게 경험시킵니다.</p>
+          <p class="vh-sub">단순한 노출을 넘어 <strong style="color:rgba(255,255,255,0.9)">스토리텔링과 결합</strong>하여 브랜드 인지도를 높이고</p>
+          <p class="vh-sub">시청자의 마음속에 깊이 각인되는 <strong style="color:rgba(255,255,255,0.9)">프리미엄 광고 전략</strong>입니다.</p>
+          <p class="vh-sub" style="margin-top:8px"><span style="color:rgba(239,68,68,0.9);font-weight:600">드라마 · 예능 · 교양 — 타겟이 명확한 프로그램으로 브랜드 가치를 전달합니다.</span></p>
         </div>
-
         <div class="vh-kpi-strip" id="ppKpi">
           <div class="vh-kpi-item">
-            <strong class="vh-kpi-num" style="color:#ef4444">5,000만+</strong>
-            <span class="vh-kpi-label">누적 시청자 수</span>
+            <strong class="vh-kpi-num" style="color:#ef4444">방송사 협찬</strong>
+            <span class="vh-kpi-label">공식 협찬 광고</span>
           </div>
           <div class="vh-kpi-sep"></div>
           <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">3×</strong>
-            <span class="vh-kpi-label">광고 전환율 향상</span>
+            <strong class="vh-kpi-num">에피소드 기획</strong>
+            <span class="vh-kpi-label">장면 설계 PPL</span>
           </div>
           <div class="vh-kpi-sep"></div>
           <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">98%</strong>
-            <span class="vh-kpi-label">재계약률</span>
+            <strong class="vh-kpi-num">자연스러운 노출</strong>
+            <span class="vh-kpi-label">거부감 제로 브랜딩</span>
           </div>
         </div>
-
         <div class="vh-btns" id="ppBtns">
           <a href="/contact" class="hero-cta-btn primary">
             <span>무료 전략 상담받기</span>
             <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href="#svc-intro" class="vh-scroll-btn">
-            <span>자세히 보기</span>
+          <a href="#ppl-features" class="vh-scroll-btn">
+            <span>서비스 보기</span>
             <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
       </div>
-
-      <div class="vh-scroll-hint">
-        <div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div>
-      </div>
-
+      <div class="vh-scroll-hint"><div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div></div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
   var cvs=document.getElementById('vhCanvas5'); if(!cvs)return;
@@ -83,95 +74,291 @@ export const SvcPplPage = () => (
       `}} />
     </section>
 
-    {/* 서비스 소개 */}
-    <section class="section svc-intro-section">
-      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div></div>
+    {/* ══ 서비스 소개 + 강점 4개 ══ */}
+    <section class="section ppl-features-section" id="ppl-features">
+      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
-        <div class="svc-intro-grid">
-          <div class="svc-intro-text">
+
+        {/* 상단: 좌측 설명 + 우측 강점 카드 */}
+        <div class="ppl-intro-wrap">
+          <div class="ppl-intro-left">
             <span class="sec-label">What We Do</span>
-            <h2 class="sec-title">광고가 아닌<br /><em>자연스러운 노출</em></h2>
-            <p>PPL(Product Placement)은 소비자가 광고임을 인식하지 못하는 상태에서 브랜드를 경험하게 만드는 가장 강력한 마케팅 방법입니다. 인애드컴퍼니는 드라마, 웹드라마, 유튜브 콘텐츠, 예능 등 다양한 미디어에서 브랜드를 자연스럽게 노출시킵니다.</p>
-            <p>콘텐츠를 시청하는 소비자는 브랜드를 경험하고, 경험은 검색으로, 검색은 구매로 연결되는 완벽한 퍼널을 설계합니다.</p>
-            <ul class="svc-feature-list">
-              <li><span class="sfl-dot"></span>드라마·예능 PPL 기획 및 협상</li>
-              <li><span class="sfl-dot"></span>유튜브 채널 협찬 콘텐츠 제작</li>
-              <li><span class="sfl-dot"></span>웹드라마 브랜디드 콘텐츠</li>
-              <li><span class="sfl-dot"></span>PPL 후 바이럴·SEO 연계 전략</li>
-              <li><span class="sfl-dot"></span>PPL 성과 측정 및 리포팅</li>
-            </ul>
+            <h2 class="sec-title" style="text-align:left;margin-bottom:24px">인애드컴퍼니<br /><em>방송사 협찬 광고</em></h2>
+            <p class="ppl-intro-desc">
+              방송 콘텐츠 속에 브랜드의 제품이나 서비스를 자연스럽게 녹여내어,
+              시청자들에게 <strong>거부감 없이 브랜드를 각인</strong>시키는 고효율 마케팅 솔루션입니다.
+            </p>
+            <p class="ppl-intro-desc" style="margin-top:14px">
+              드라마, 예능, 교양 등 <strong>타겟 오디언스가 명확한 프로그램</strong>을 선정하여
+              단순한 노출을 넘어 <strong>브랜드의 가치와 스토리</strong>를 전달합니다.
+            </p>
+            <div class="ppl-keywords">
+              <span class="ppl-kw">📡 방송사 협찬</span>
+              <span class="ppl-kw">🎬 에피소드 기획</span>
+              <span class="ppl-kw">👁 자연스러운 노출</span>
+              <span class="ppl-kw">💎 브랜드 신뢰도</span>
+            </div>
+            <p class="ppl-intro-note">※ 방송사, 프로그램, 브랜드 메시지에 따라 소구포인트 및 노출포인트가 달라질 수 있습니다.</p>
           </div>
-          <div class="svc-intro-visual">
-            <div class="siv-img-wrap">
-              <img src="/static/svc-images/ppl.png" alt="PPL 마케팅 비주얼" class="siv-photo" loading="lazy" />
+
+          <div class="ppl-intro-right">
+            <div class="ppl-feat-card">
+              <div class="ppl-feat-icon" style="color:#ef4444">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <div class="ppl-feat-body">
+                <h4>높은 신뢰도 및 파급력</h4>
+                <p>방송 매체가 가진 공신력을 바탕으로 브랜드의 신뢰도를 확보하고, 대중적인 인지도를 단기간에 상승시킵니다.</p>
+              </div>
+            </div>
+            <div class="ppl-feat-card">
+              <div class="ppl-feat-icon" style="color:#fb923c">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              </div>
+              <div class="ppl-feat-body">
+                <h4>자연스러운 브랜드 노출</h4>
+                <p>콘텐츠의 흐름 속에 자연스럽게 배치되어 광고에 대한 심리적 장벽을 낮추고 몰입도를 극대화합니다.</p>
+              </div>
+            </div>
+            <div class="ppl-feat-card">
+              <div class="ppl-feat-icon" style="color:#a855f7">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+              </div>
+              <div class="ppl-feat-body">
+                <h4>2차 마케팅 리소스 확보</h4>
+                <p>방송 노출 장면을 캡처하여 상세페이지, SNS 등 다양한 마케팅 채널의 2차 콘텐츠로 활용 가능합니다.</p>
+              </div>
+            </div>
+            <div class="ppl-feat-card">
+              <div class="ppl-feat-icon" style="color:#10b981">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              </div>
+              <div class="ppl-feat-body">
+                <h4>타 상품 연계 시너지</h4>
+                <p>블로그, 카페, SNS 등 바이럴 마케팅과 연계하여 방송 노출 이슈를 확산시키고 구매 전환을 유도합니다.</p>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
     </section>
 
-    {/* PPL 유형별 서비스 */}
-    <section class="section" style="background:var(--black-2)">
-      <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-float-dots"></div></div>
+    {/* ══ 에피소드 기획 PPL ══ */}
+    <section class="section ppl-episode-section">
+      <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-left"></div></div>
       <div class="container">
         <div class="section-head">
-          <span class="sec-label">PPL Types</span>
-          <h2 class="sec-title">PPL 유형별<br /><em>맞춤 전략</em></h2>
+          <span class="sec-label">Episode PPL</span>
+          <h2 class="sec-title">에피소드 기획 PPL<br /><em style="font-size:0.85em;color:rgba(255,255,255,0.5)">(TVN 기준)</em></h2>
+          <p class="sec-sub" style="max-width:680px;margin:0 auto">
+            방송관련 상품 진행 시 <strong style="color:rgba(239,68,68,0.9)">가장 큰 효과를 볼 수 있으며</strong>,<br />
+            다른 상품과의 연계가 매우 <strong style="color:rgba(255,255,255,0.85)">자연스럽게 이어집니다.</strong>
+          </p>
         </div>
-        <div class="svc-platform-grid">
-          {[
-            { icon:'🎬', name:'드라마 PPL', desc:'지상파·케이블·OTT 드라마 속 제품 노출. 주인공 사용 제품으로 강력한 브랜드 이미지 구축', kpi:'최대 1,000만 시청자' },
-            { icon:'📺', name:'예능 PPL', desc:'인기 예능 프로그램 협찬. 출연진의 자연스러운 사용으로 친근감 있는 브랜드 노출', kpi:'높은 반복 노출 효과' },
-            { icon:'▶️', name:'유튜브 협찬', desc:'구독자 10만~500만 유튜버 협찬 콘텐츠. 타겟 시청자 정밀 공략, 바이럴 확산 설계', kpi:'정밀 타겟 도달' },
-            { icon:'🎭', name:'웹드라마 브랜디드', desc:'브랜드 전용 웹드라마 제작 또는 기존 웹드라마 PPL. 젊은 타겟층에 강력 어필', kpi:'+3× 광고 전환율' },
-          ].map(p => (
-            <div class="spg-card">
-              <div class="spg-icon">{p.icon}</div>
-              <h4>{p.name}</h4>
-              <p>{p.desc}</p>
-              <div class="spg-kpi">{p.kpi}</div>
+
+        <div class="ppl-episode-grid">
+          {/* 예시 1 */}
+          <div class="ppl-ep-card">
+            <div class="ppl-ep-num">
+              <span>1</span>
             </div>
-          ))}
+            <h4 class="ppl-ep-title">브랜드 소구포인트 노출</h4>
+            <div class="ppl-ep-visual">
+              <div class="ppl-ep-mock">
+                <div class="ppl-ep-screen">
+                  <div class="ppl-ep-scene">
+                    <div class="ppl-ep-poster">
+                      <div class="ppl-ep-poster-item">
+                        <div class="ppl-ep-poster-img" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
+                          <div style="font-size:11px;color:rgba(255,255,255,0.7);font-weight:700;text-align:center;padding:8px 4px">NEW<br/>PRODUCT</div>
+                        </div>
+                        <div class="ppl-ep-poster-label">브랜드 포스터</div>
+                      </div>
+                      <div class="ppl-ep-poster-item">
+                        <div class="ppl-ep-poster-img" style="background:linear-gradient(135deg,#0f172a,#1e293b)">
+                          <div style="font-size:10px;color:rgba(239,68,68,0.9);font-weight:700;text-align:center;padding:8px 4px">BRAND<br/>MESSAGE</div>
+                        </div>
+                        <div class="ppl-ep-poster-label">소구 메시지</div>
+                      </div>
+                    </div>
+                    <div class="ppl-ep-play-badge">▶ 드라마 장면 속 자연 노출</div>
+                  </div>
+                </div>
+                <div class="ppl-ep-label-bar">
+                  <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1a6 6 0 1 1 0 12A6 6 0 0 1 8 2zm-.5 3v5h1V5h-1z"/></svg>
+                  방송사, 프로그램에 따라 노출 방식이 달라질 수 있습니다.
+                </div>
+              </div>
+            </div>
+            <p class="ppl-ep-desc">제품 포스터, 배너 등 브랜드 소구 메시지를 방송 화면 속에 자연스럽게 배치합니다. 시청자가 무의식 중에 브랜드를 인지하게 됩니다.</p>
+          </div>
+
+          {/* 예시 2 */}
+          <div class="ppl-ep-card">
+            <div class="ppl-ep-num">
+              <span>2</span>
+            </div>
+            <h4 class="ppl-ep-title">브랜드 제품 직접 노출</h4>
+            <div class="ppl-ep-visual">
+              <div class="ppl-ep-mock">
+                <div class="ppl-ep-screen">
+                  <div class="ppl-ep-scene ppl-ep-scene--product">
+                    <div class="ppl-ep-product-demo">
+                      <div class="ppl-ep-product-circle">
+                        <svg viewBox="0 0 48 48" fill="none" width="42" height="42">
+                          <circle cx="24" cy="24" r="20" fill="rgba(239,68,68,0.15)" stroke="rgba(239,68,68,0.4)" stroke-width="1.5"/>
+                          <path d="M16 28 C18 22 22 18 28 20 C32 21 34 26 30 30 C27 33 22 32 20 30" stroke="rgba(239,68,68,0.8)" stroke-width="1.5" fill="none"/>
+                          <circle cx="24" cy="24" r="4" fill="rgba(239,68,68,0.6)"/>
+                        </svg>
+                        <div class="ppl-ep-product-label">제품 클로즈업</div>
+                      </div>
+                      <div class="ppl-ep-product-hand">
+                        <svg viewBox="0 0 32 32" fill="none" width="28" height="28">
+                          <path d="M8 20 L8 12 C8 10.9 8.9 10 10 10 L10 10 C11.1 10 12 10.9 12 12 L12 8 C12 6.9 12.9 6 14 6 C15.1 6 16 6.9 16 8 L16 7 C16 5.9 16.9 5 18 5 C19.1 5 20 5.9 20 7 L20 8 C20 6.9 20.9 6 22 6 C23.1 6 24 6.9 24 8 L24 22 C24 25.3 21.3 28 18 28 L14 28 C10.7 28 8 25.3 8 22 L8 20Z" fill="rgba(251,146,60,0.3)" stroke="rgba(251,146,60,0.7)" stroke-width="1"/>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="ppl-ep-play-badge" style="background:rgba(251,146,60,0.15);border-color:rgba(251,146,60,0.3);color:rgba(251,146,60,0.9)">▶ 출연진 직접 사용 장면</div>
+                  </div>
+                </div>
+                <div class="ppl-ep-label-bar">
+                  <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1a6 6 0 1 1 0 12A6 6 0 0 1 8 2zm-.5 3v5h1V5h-1z"/></svg>
+                  방송사, 프로그램에 따라 노출 방식이 달라질 수 있습니다.
+                </div>
+              </div>
+            </div>
+            <p class="ppl-ep-desc">출연진이 실제로 제품을 사용하거나 소개하는 장면을 기획합니다. 가장 강력한 구매 전환 효과를 만들어내는 PPL 유형입니다.</p>
+          </div>
         </div>
+
+        {/* 안내 배너 */}
+        <div class="ppl-episode-banner">
+          <div class="ppl-eb-icon">🎯</div>
+          <div class="ppl-eb-text">
+            <strong>방송관련 상품 진행 시 가장 큰 효과</strong>
+            <span>에피소드 기획 PPL은 다른 마케팅 상품과의 연계가 자연스럽게 이어져 시너지 효과가 극대화됩니다</span>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    {/* 진행 프로세스 */}
-    <section class="section svc-process-section">
-      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-left"></div><div class="svc-section-glow-top"></div></div>
+    {/* ══ PROCESS TIMELINE ══ */}
+    <section class="section sdtl-section">
+      <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
           <span class="sec-label">Process</span>
           <h2 class="sec-title">PPL 마케팅<br /><em>진행 프로세스</em></h2>
+          <p class="sec-sub">상담부터 최종 리포트까지, 전담 PM이 모든 단계를 함께합니다.</p>
         </div>
-        <div class="svc-process-steps">
-          {[
-            { num:'01', title:'브랜드 분석', desc:'브랜드 아이덴티티, 타겟 소비자, 예산, 목표 달성을 위한 최적 PPL 유형 선정' },
-            { num:'02', title:'매체 발굴', desc:'브랜드에 최적화된 드라마·예능·유튜브 채널 발굴 및 협의 가능성 사전 검토' },
-            { num:'03', title:'협상·계약', desc:'콘텐츠 제작사·크리에이터와 PPL 조건 협상. 노출 방식, 횟수, 기간 등 조율' },
-            { num:'04', title:'제품 제공', desc:'촬영 일정에 맞춘 제품 제공, 노출 장면 가이드 제공, 현장 모니터링' },
-            { num:'05', title:'후속 마케팅', desc:'PPL 노출 후 바이럴 마케팅·SEO 연계. 시청자 검색 유입을 구매 전환으로 연결' },
-            { num:'06', title:'성과 리포팅', desc:'노출 횟수, 시청자 수, 검색량 변화, 매출 연계 종합 성과 리포트 제공' },
-          ].map(s => (
-            <div class="sps-step">
-              <div class="sps-num">{s.num}</div>
-              <div class="sps-body">
-                <h4>{s.title}</h4>
-                <p>{s.desc}</p>
+
+        <div class="sdtl-wrap">
+          <div class="sdtl-axis"><div class="sdtl-axis-line"></div></div>
+
+          {/* STEP 01 */}
+          <div class="sdtl-item sdtl-item--left">
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#ef4444">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Consultation</span>
+                <h4 class="sdtl-card-title">상담 진행</h4>
+                <p class="sdtl-card-desc">브랜드 현황, 목표 메시지, 예산, 희망 프로그램 장르를 파악합니다. 방송사 협찬 또는 에피소드 기획 중 최적의 PPL 방식을 제안합니다.</p>
               </div>
             </div>
-          ))}
+            <div class="sdtl-dot" style="--tc:#ef4444"><span class="sdtl-num">01</span></div>
+            <div class="sdtl-spacer"></div>
+          </div>
+
+          {/* STEP 02 */}
+          <div class="sdtl-item sdtl-item--right">
+            <div class="sdtl-spacer"></div>
+            <div class="sdtl-dot" style="--tc:#6d28d9"><span class="sdtl-num">02</span></div>
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#6d28d9">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Brand Analysis</span>
+                <h4 class="sdtl-card-title">브랜드 분석</h4>
+                <p class="sdtl-card-desc">브랜드 아이덴티티, 핵심 소구 메시지, 타겟 오디언스를 분석합니다. 브랜드에 맞는 최적의 프로그램·채널·노출 방식을 데이터 기반으로 도출합니다.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 03 */}
+          <div class="sdtl-item sdtl-item--left">
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#0891b2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Contract</span>
+                <h4 class="sdtl-card-title">계약 진행</h4>
+                <p class="sdtl-card-desc">방송사 / 제작사와 PPL 조건(노출 방식, 횟수, 에피소드, 기간)을 협상하고 계약을 체결합니다. 노출 KPI와 투명한 비용 구조를 계약서에 명확히 문서화합니다.</p>
+              </div>
+            </div>
+            <div class="sdtl-dot" style="--tc:#0891b2"><span class="sdtl-num">03</span></div>
+            <div class="sdtl-spacer"></div>
+          </div>
+
+          {/* STEP 04 */}
+          <div class="sdtl-item sdtl-item--right">
+            <div class="sdtl-spacer"></div>
+            <div class="sdtl-dot" style="--tc:#d97706"><span class="sdtl-num">04</span></div>
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#d97706">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">PPL Execution</span>
+                <h4 class="sdtl-card-title">각 상품 프로세스 진행</h4>
+                <p class="sdtl-card-desc">촬영 일정에 맞춰 제품 제공 및 노출 가이드를 제공하고 현장을 모니터링합니다. 에피소드 기획형의 경우 장면 구성부터 최종 편집까지 함께 관리합니다.</p>
+                <div class="seop-proc-chips" style="margin-top:12px">
+                  <span class="seop-proc-chip" style="--cc:#ef4444">📡 방송사 협찬</span>
+                  <span class="seop-proc-chip" style="--cc:#fb923c">🎬 에피소드 기획</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 05 */}
+          <div class="sdtl-item sdtl-item--left sdtl-item--last">
+            <div class="sdtl-card sdtl-card--final">
+              <div class="sdtl-card-icon" style="--tc:#10b981">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Performance Report</span>
+                <h4 class="sdtl-card-title">리포트</h4>
+                <p class="sdtl-card-desc">방송 노출 횟수, 누적 시청자 수, 방영 후 브랜드 검색량 변화, SNS 언급량, 매출 연계 성과를 종합 리포트로 제공합니다. 2차 콘텐츠 활용 방안과 후속 전략도 함께 제안합니다.</p>
+              </div>
+            </div>
+            <div class="sdtl-dot sdtl-dot--final" style="--tc:#10b981"><span class="sdtl-num">05</span></div>
+            <div class="sdtl-spacer"></div>
+          </div>
+
+        </div>{/* /sdtl-wrap */}
+
+        <div class="sdtl-footer">
+          <span class="sdtl-footer-icon">📋</span>
+          <span>모든 단계에서 <strong>전담 PM</strong>이 함께합니다 &nbsp;·&nbsp; 위 프로세스는 이해를 돕기 위한 흐름이며 <strong>실제는 각 상품에 맞춰 최적화</strong>되어 진행됩니다</span>
         </div>
+
       </div>
     </section>
 
-    {/* 성과 사례 */}
+    {/* ══ RESULTS ══ */}
     <section class="section svc-results-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
           <span class="sec-label">Results</span>
           <h2 class="sec-title">실제 성과<br /><em>숫자로 증명합니다</em></h2>
+          <p class="sec-sub">인애드컴퍼니가 함께한 PPL 캠페인의 실제 성과입니다.</p>
         </div>
         <div class="svc-result-grid">
           <div class="srg-card srg-card--featured">
@@ -181,29 +368,29 @@ export const SvcPplPage = () => (
               <div class="srg-metric"><strong>+380%</strong><span>브랜드 검색량</span></div>
               <div class="srg-metric"><strong>3×</strong><span>광고 전환율</span></div>
             </div>
-            <p class="srg-desc">뷰티 브랜드 드라마 PPL 캠페인. 주인공 사용 제품 노출로 방영 중 브랜드 검색량 380% 급등</p>
+            <p class="srg-desc">뷰티 브랜드 드라마 PPL 캠페인. 주인공 사용 제품 노출로 방영 중 브랜드 검색량 380% 급등 및 SNS 자발적 언급 폭증</p>
           </div>
           <div class="srg-card">
-            <div class="srg-tag">유튜브 100만 구독자 협찬</div>
+            <div class="srg-tag">에피소드 기획 PPL</div>
             <div class="srg-metrics">
-              <div class="srg-metric"><strong>220만</strong><span>조회수</span></div>
               <div class="srg-metric"><strong>+240%</strong><span>신규 고객 유입</span></div>
+              <div class="srg-metric"><strong>2차 콘텐츠</strong><span>SNS 바이럴 연계</span></div>
             </div>
-            <p class="srg-desc">식품 브랜드 유튜브 협찬 콘텐츠. 먹방·쿠킹 채널 협업으로 타겟 정밀 공략, 구매 전환 폭발적 증가</p>
+            <p class="srg-desc">식품 브랜드 예능 에피소드 기획 PPL. 자연스러운 제품 사용 장면으로 타겟 정밀 공략, 방영 후 SNS 바이럴까지 이어져 구매 전환 폭발적 증가</p>
           </div>
           <div class="srg-card">
-            <div class="srg-tag">웹드라마 브랜디드 콘텐츠</div>
+            <div class="srg-tag">웹드라마 브랜디드 PPL</div>
             <div class="srg-metrics">
               <div class="srg-metric"><strong>5,000만+</strong><span>누적 시청자</span></div>
               <div class="srg-metric"><strong>+520%</strong><span>SNS 언급량</span></div>
             </div>
-            <p class="srg-desc">헬스케어 브랜드 웹드라마 기획·제작 PPL. 전 에피소드 자연 노출로 SNS 화제성 폭발 및 브랜드 인지도 급상승</p>
+            <p class="srg-desc">헬스케어 브랜드 웹드라마 기획·제작 PPL. 전 에피소드 자연 노출로 SNS 화제성 폭발, 브랜드 인지도 및 신뢰도 급상승</p>
           </div>
         </div>
       </div>
     </section>
 
-    {/* CTA */}
+    {/* ══ CTA ══ */}
     <section class="svc-cta-section">
       <div class="container">
         <div class="svc-cta-inner">
@@ -221,5 +408,41 @@ export const SvcPplPage = () => (
         </div>
       </div>
     </section>
+
+    {/* ── Admin Dynamic Marketing Stats ── */}
+    <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  var SVC_KEY = 'ppl';
+  fetch('/api/admin/public/marketing')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var svc = data.stats && data.stats[SVC_KEY];
+      if(!svc) return;
+      var grid = document.querySelector('.svc-result-grid');
+      if(!grid) return;
+      var cards = grid.querySelectorAll('.srg-card');
+      ['case1','case2','case3'].forEach(function(ck, i){
+        var c = svc[ck];
+        if(!c || !cards[i]) return;
+        var card = cards[i];
+        var tagEl = card.querySelector('.srg-tag');
+        if(tagEl && c.tag) tagEl.textContent = c.tag;
+        var metrics = card.querySelectorAll('.srg-metric');
+        var mdata = [
+          {m:c.m1,l:c.l1},{m:c.m2,l:c.l2},{m:c.m3,l:c.l3}
+        ].filter(function(x){ return x.m; });
+        mdata.forEach(function(md, mi){
+          if(!metrics[mi]) return;
+          var strong = metrics[mi].querySelector('strong');
+          var span = metrics[mi].querySelector('span');
+          if(strong && md.m) strong.textContent = md.m;
+          if(span && md.l) span.textContent = md.l;
+        });
+        var desc = card.querySelector('.srg-desc');
+        if(desc && c.desc) desc.textContent = c.desc;
+      });
+    }).catch(function(){});
+})();
+    `}} />
   </>
 )

@@ -191,5 +191,53 @@ export const WorksPage = () => (
         </div>
       </div>
     </section>
+
+    {/* ── Admin Dynamic Works ── */}
+    <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  fetch('/api/admin/public/works')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var items = data.items;
+      if(!items || !items.length) return;
+      var grid = document.getElementById('worksGrid');
+      if(!grid) return;
+      // 기존 정적 카드 제거 후 동적 렌더
+      grid.innerHTML = '';
+      items.forEach(function(item){
+        var tags = (item.tags||[]).join(' ');
+        var article = document.createElement('article');
+        article.className = 'wg-card';
+        article.setAttribute('data-cat', tags);
+        article.innerHTML =
+          '<div class="wg-thumb">'
+          +'<img src="'+(item.thumb||'')+'" alt="'+(item.brand||'')+'" loading="lazy" onerror="this.style.opacity=0">'
+          +'<div class="wg-overlay">'
+          +'<div class="wg-overlay-logo"><span>'+(item.overlay||item.brand||'')+'</span></div>'
+          +'</div>'
+          +'</div>'
+          +'<div class="wg-meta">'
+          +'<span class="wg-brand">'+(item.brand||'')+'</span>'
+          +'<p class="wg-tags-text">'+(item.services||'')+'</p>'
+          +'</div>';
+        grid.appendChild(article);
+      });
+      // 필터 재바인딩
+      var filterBtns = document.querySelectorAll('.wf-btn');
+      filterBtns.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          filterBtns.forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          var filter = btn.getAttribute('data-filter');
+          grid.querySelectorAll('.wg-card').forEach(function(card){
+            var cat = card.getAttribute('data-cat') || '';
+            card.style.display = (filter==='all' || cat.indexOf(filter)>-1) ? '' : 'none';
+          });
+        });
+      });
+    })
+    .catch(function(){});
+})();
+    `}} />
   </>
 )
