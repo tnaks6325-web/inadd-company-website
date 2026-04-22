@@ -218,7 +218,7 @@ document.getElementById('btnSearchAddress').addEventListener('click', () => {
     return;
   }
   new daum.Postcode({
-    oncomplete: async function(result) {
+    oncomplete: function(result) {
       // 선택된 주소 (도로명 우선)
       const addr = result.roadAddress || result.jibunAddress;
       document.getElementById('aboutAddress').value = addr;
@@ -226,8 +226,22 @@ document.getElementById('btnSearchAddress').addEventListener('click', () => {
       document.getElementById('addrDetailWrap').style.display = 'block';
       document.getElementById('aboutAddressDetail').value = '';
       document.getElementById('aboutAddressDetail').focus();
-      // 카카오 geocoding으로 좌표 변환
-      await geocodeAddress(addr);
+
+      // Daum Postcode v2가 반환하는 x(경도), y(위도) 좌표 직접 사용
+      // → Nominatim 대비 정확도 대폭 향상 (카카오 공식 좌표계)
+      const lat = result.y; // WGS84 위도
+      const lng = result.x; // WGS84 경도
+      if (lat && lng) {
+        currentAddrLat = lat;
+        currentAddrLng = lng;
+        document.getElementById('aboutLat').value = lat;
+        document.getElementById('aboutLng').value = lng;
+        updateAdminMapPreview(addr, lat, lng);
+        showToast('주소 위치를 확인했습니다.');
+      } else {
+        // x/y가 없는 경우(구주소 등) fallback으로 Nominatim 사용
+        geocodeAddress(addr);
+      }
     }
   }).open();
 });

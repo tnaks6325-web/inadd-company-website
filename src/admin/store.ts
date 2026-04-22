@@ -22,8 +22,8 @@ export const DEFAULT_DATA = {
 
   // ── About ──
   about_address: '경기도 안산시 단원구 고잔로 51 타워아이즈빌 2F, 204호',
-  about_lat: '37.3219',
-  about_lng: '126.8309',
+  about_lat: '37.320819',
+  about_lng: '126.831592',
   about_logos: JSON.stringify([
     'brand1','brand2','brand3','brand4','brand5','brand6',
     'brand7','brand8','brand9','brand10','brand11','brand12'

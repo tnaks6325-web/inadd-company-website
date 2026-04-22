@@ -302,7 +302,7 @@ export const AboutPage = () => (
     <script dangerouslySetInnerHTML={{__html: `
 // Leaflet 동적 로드 후 지도 초기화
 (function(){
-  var DEFAULT_LAT = 37.3219, DEFAULT_LNG = 126.8309;
+  var DEFAULT_LAT = 37.320819, DEFAULT_LNG = 126.831592;
   var mapInstance = null;
   var markerInstance = null;
 
