@@ -15,9 +15,9 @@ async function api(method, path, body) {
 function showToast(msg, type) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = 'toast' + (type === 'error' ? ' error' : '');
+  t.className = 'toast' + (type === 'error' ? ' error' : type === 'info' ? ' info' : '');
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+  setTimeout(() => t.classList.remove('show'), 4000);
 }
 
 // ── 로그아웃 ──
@@ -202,12 +202,25 @@ async function loadAbout() {
   currentAddrLng = data.lng || '';
   document.getElementById('aboutLat').value = currentAddrLat;
   document.getElementById('aboutLng').value = currentAddrLng;
+  // 카카오맵 링크 업데이트
+  updateKakaoMapLink(addr);
   // 저장된 주소가 있으면 미리보기 지도 표시
   if (addr && currentAddrLat && currentAddrLng) {
     updateAdminMapPreview(addr, currentAddrLat, currentAddrLng);
   }
   aboutLogos = data.logos || [];
   renderLogoGrid();
+}
+
+// 카카오맵 링크 업데이트
+function updateKakaoMapLink(addr) {
+  const link = document.getElementById('btnOpenKakaoMap');
+  if (!link) return;
+  if (addr) {
+    link.href = 'https://map.kakao.com/?q=' + encodeURIComponent(addr);
+  } else {
+    link.href = 'https://map.kakao.com/';
+  }
 }
 
 // 다음 주소 찾기 팝업
@@ -219,29 +232,19 @@ document.getElementById('btnSearchAddress').addEventListener('click', () => {
   }
   new daum.Postcode({
     oncomplete: function(result) {
-      // 선택된 주소 (도로명 우선)
       const addr = result.roadAddress || result.jibunAddress;
       document.getElementById('aboutAddress').value = addr;
       // 상세주소 입력창 표시
       document.getElementById('addrDetailWrap').style.display = 'block';
       document.getElementById('aboutAddressDetail').value = '';
       document.getElementById('aboutAddressDetail').focus();
-
-      // Daum Postcode v2가 반환하는 x(경도), y(위도) 좌표 직접 사용
-      // → Nominatim 대비 정확도 대폭 향상 (카카오 공식 좌표계)
-      const lat = result.y; // WGS84 위도
-      const lng = result.x; // WGS84 경도
-      if (lat && lng) {
-        currentAddrLat = lat;
-        currentAddrLng = lng;
-        document.getElementById('aboutLat').value = lat;
-        document.getElementById('aboutLng').value = lng;
-        updateAdminMapPreview(addr, lat, lng);
-        showToast('주소 위치를 확인했습니다.');
-      } else {
-        // x/y가 없는 경우(구주소 등) fallback으로 Nominatim 사용
-        geocodeAddress(addr);
-      }
+      // 카카오맵 링크: 해당 주소로 검색
+      updateKakaoMapLink(addr);
+      // 좌표 초기화 안내
+      document.getElementById('aboutLat').value = '';
+      document.getElementById('aboutLng').value = '';
+      document.getElementById('adminMapPreview').style.display = 'none';
+      showToast('주소가 선택되었습니다. 위의 카카오맵 버튼으로 정확한 좌표를 확인 후 입력해주세요.', 'info');
     }
   }).open();
 });
@@ -333,18 +336,43 @@ async function deleteLogo(key) {
   showToast('로고가 삭제되었습니다.');
 }
 
+// 좌표 미리보기 버튼
+document.getElementById('btnPreviewCoord').addEventListener('click', () => {
+  const lat = document.getElementById('aboutLat').value.trim();
+  const lng = document.getElementById('aboutLng').value.trim();
+  const addr = document.getElementById('aboutAddress').value.trim();
+  if (!lat || !lng) {
+    showToast('위도와 경도를 모두 입력해주세요.', 'error');
+    return;
+  }
+  const latNum = parseFloat(lat);
+  const lngNum = parseFloat(lng);
+  if (isNaN(latNum) || isNaN(lngNum) || latNum < 33 || latNum > 39 || lngNum < 124 || lngNum > 132) {
+    showToast('올바른 한국 좌표 범위를 입력해주세요. (위도 33~39, 경도 124~132)', 'error');
+    return;
+  }
+  currentAddrLat = lat;
+  currentAddrLng = lng;
+  updateAdminMapPreview(addr, lat, lng);
+  showToast('지도 미리보기가 업데이트되었습니다.');
+});
+
 document.getElementById('btnSaveAddress').addEventListener('click', async () => {
   const base = document.getElementById('aboutAddress').value.trim();
   const detail = document.getElementById('aboutAddressDetail').value.trim();
   const full = detail ? base + ' ' + detail : base;
-  const lat = document.getElementById('aboutLat').value;
-  const lng = document.getElementById('aboutLng').value;
+  const lat = document.getElementById('aboutLat').value.trim();
+  const lng = document.getElementById('aboutLng').value.trim();
   if (!full) { showToast('주소를 먼저 검색해주세요.', 'error'); return; }
-  if (!lat || !lng) { showToast('주소 검색을 통해 위치를 확인해주세요.', 'error'); return; }
+  if (!lat || !lng) { showToast('위도/경도를 입력해주세요. 카카오맵 버튼으로 좌표를 확인하세요.', 'error'); return; }
+  const latNum = parseFloat(lat);
+  const lngNum = parseFloat(lng);
+  if (isNaN(latNum) || isNaN(lngNum) || latNum < 33 || latNum > 39 || lngNum < 124 || lngNum > 132) {
+    showToast('올바른 한국 좌표를 입력해주세요. (위도 33~39, 경도 124~132)', 'error'); return;
+  }
   await api('PUT', '/about', { address: full, lat, lng });
-  // 저장 후 미리보기 지도 갱신
   updateAdminMapPreview(full, lat, lng);
-  showToast('주소가 저장되었습니다. 사이트의 지도도 업데이트됩니다.');
+  showToast('✅ 주소와 지도 위치가 저장되었습니다.');
 });
 
 document.getElementById('logoUploadZone').addEventListener('click', () => document.getElementById('logoFileInput').click());

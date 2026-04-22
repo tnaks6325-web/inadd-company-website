@@ -448,6 +448,7 @@ function adminDashboardHTML(): string {
   .toast { position: fixed; bottom: 32px; right: 32px; background: #22c55e; color: #fff; padding: 14px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; z-index: 2000; transform: translateY(100px); opacity: 0; transition: all .3s; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
   .toast.show { transform: translateY(0); opacity: 1; }
   .toast.error { background: #ef4444; }
+  .toast.info { background: #1a6bff; }
 
   /* ── Section visibility ── */
   .section { display: none; }
@@ -581,8 +582,10 @@ function adminDashboardHTML(): string {
         <div class="panel-header">
           <div class="panel-title"><i class="fas fa-map-marker-alt"></i> 회사 주소</div>
         </div>
-        <p style="color:#666;font-size:13px;margin-bottom:16px">주소를 검색하면 지도 위치와 마커가 자동으로 업데이트됩니다.</p>
-        <div class="form-row single">
+        <p style="color:#666;font-size:13px;margin-bottom:16px">주소 찾기로 주소를 선택하면 카카오맵에서 정확한 좌표를 확인해 입력하세요.</p>
+
+        <!-- 주소 입력 -->
+        <div class="form-row single" style="margin-bottom:10px">
           <div class="form-group">
             <label>주소</label>
             <div style="display:flex;gap:10px;align-items:center">
@@ -598,13 +601,43 @@ function adminDashboardHTML(): string {
             </div>
           </div>
         </div>
+
+        <!-- 좌표 직접 입력 -->
+        <div style="background:#0d1117;border:1px solid #1e2a3a;border-radius:10px;padding:14px;margin-bottom:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <span style="color:#1a6bff;font-size:13px;font-weight:600"><i class="fas fa-crosshairs"></i> 지도 좌표 (필수)</span>
+            <a id="btnOpenKakaoMap" href="#" target="_blank"
+              style="font-size:12px;color:#ffd700;text-decoration:none;background:#1a1a00;border:1px solid #3a3a00;border-radius:6px;padding:4px 10px">
+              <i class="fas fa-external-link-alt"></i> 카카오맵에서 좌표 확인
+            </a>
+          </div>
+          <p style="color:#555;font-size:12px;margin-bottom:10px;line-height:1.6">
+            카카오맵에서 주소 검색 → 해당 위치 우클릭 → <strong style="color:#888">"이 곳이 궁금한가요?"</strong> 클릭 → 좌표 복사
+          </p>
+          <div style="display:flex;gap:10px">
+            <div style="flex:1">
+              <label style="color:#666;font-size:12px;display:block;margin-bottom:4px">위도 (Latitude)</label>
+              <input type="text" id="aboutLat" placeholder="예: 37.320819"
+                style="width:100%;background:#111;border:1px solid #2a2a2a;border-radius:8px;color:#fff;font-size:14px;padding:9px 12px;box-sizing:border-box">
+            </div>
+            <div style="flex:1">
+              <label style="color:#666;font-size:12px;display:block;margin-bottom:4px">경도 (Longitude)</label>
+              <input type="text" id="aboutLng" placeholder="예: 126.831592"
+                style="width:100%;background:#111;border:1px solid #2a2a2a;border-radius:8px;color:#fff;font-size:14px;padding:9px 12px;box-sizing:border-box">
+            </div>
+            <div style="display:flex;align-items:flex-end">
+              <button class="btn btn-secondary" id="btnPreviewCoord" style="white-space:nowrap;padding:9px 14px">
+                <i class="fas fa-map"></i> 미리보기
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- 미리보기 지도 -->
-        <div id="adminMapPreview" style="display:none;margin:14px 0;border-radius:10px;overflow:hidden;height:220px;background:#1a1a1a;border:1px solid #2a2a2a">
+        <div id="adminMapPreview" style="display:none;margin-bottom:14px;border-radius:10px;overflow:hidden;height:220px;background:#1a1a1a;border:1px solid #2a2a2a">
           <iframe id="adminMapIframe" src="" width="100%" height="220" style="border:0" loading="lazy"></iframe>
         </div>
-        <!-- 숨김 좌표 필드 -->
-        <input type="hidden" id="aboutLat">
-        <input type="hidden" id="aboutLng">
+
         <button class="btn btn-primary" id="btnSaveAddress"><i class="fas fa-save"></i> 주소 저장</button>
       </div>
 
