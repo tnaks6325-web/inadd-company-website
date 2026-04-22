@@ -9759,7 +9759,8 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 /* ── 오른쪽 패널 ── */
 .iflp2-panels {
   position: relative;
-  min-height: 520px;
+  min-height: 480px;
+  height: 480px;
 }
 .iflp2-panel {
   position: absolute;
@@ -9787,30 +9788,20 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   max-width: 45%;
   overflow: hidden;
   position: relative;
+  background: #000;
 }
 .iflp2-panel-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
   display: block;
   transition: transform 0.5s ease;
 }
 .iflp2-panel.active .iflp2-panel-img img {
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
-/* 듀얼 이미지 (Step 06) */
-.iflp2-panel-img--dual {
-  display: flex;
-  flex-direction: column;
-}
-.iflp2-panel-img--dual img {
-  flex: 1;
-  height: 50%;
-}
-.iflp2-panel-img--dual img:first-child {
-  border-bottom: 2px solid rgba(255,255,255,0.08);
-}
-/* 이미지 없는 패널 (Step 04 - 인플루언서 매칭) */
+/* 반응형 */
 .iflp2-panel-no-img {
   flex: 0 0 45%;
   max-width: 45%;

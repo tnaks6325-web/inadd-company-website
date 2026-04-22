@@ -640,10 +640,7 @@ export const SvcInfluencerPage = () => (
               </div>
             </div>
             <div class="iflp2-panel" data-panel="3">
-              <div class="iflp2-panel-no-img" style="--pc:#0891b2">
-                <div class="iflp2-panel-icon" style="--pc:#0891b2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75M21 21v-2a4 4 0 0 0-3-3.85"/></svg></div>
-                <div class="iflp2-no-img-text">1,200+ 크리에이터 DB</div>
-              </div>
+              <div class="iflp2-panel-img"><img src="/static/images/process/step04.png" alt="인플루언서 매칭" loading="lazy" /></div>
               <div class="iflp2-panel-body">
                 <span class="iflp2-panel-tag" style="--pc:#0891b2">Creator Matching</span>
                 <p class="iflp2-panel-desc">1,200+ 크리에이터 DB에서 타겟 적합성·퍼포먼스·단가를 종합 분석합니다.<br />단순 팔로워 수가 아닌 실제 전환율과 브랜드 핏을 기준으로 최적 크리에이터를 선별합니다.</p>
@@ -659,10 +656,7 @@ export const SvcInfluencerPage = () => (
               </div>
             </div>
             <div class="iflp2-panel" data-panel="5">
-              <div class="iflp2-panel-img iflp2-panel-img--dual">
-                <img src="/static/images/process/step06a.png" alt="콘텐츠 게시" loading="lazy" />
-                <img src="/static/images/process/step06b.png" alt="바이럴 확산" loading="lazy" />
-              </div>
+              <div class="iflp2-panel-img"><img src="/static/images/process/step06.png" alt="연계 바이럴 확산" loading="lazy" /></div>
               <div class="iflp2-panel-body">
                 <span class="iflp2-panel-tag" style="--pc:#dc2626">Viral Amplification</span>
                 <p class="iflp2-panel-desc">최적 시간에 콘텐츠를 게시하고 커뮤니티·SNS 연계 확산 전략을 병행 실행합니다.<br />인플루언서 콘텐츠를 씨앗으로 바이럴 파급력을 극대화합니다.</p>
