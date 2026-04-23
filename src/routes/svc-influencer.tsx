@@ -212,6 +212,137 @@ export const SvcInfluencerPage = () => (
     </section>
 
     {/* ══════════════════════════════════════════
+        DATA & FILTERING SECTION
+    ══════════════════════════════════════════ */}
+    <section class="ifl-data-section">
+      <div class="ifl-data-bg">
+        <div class="ifl-data-orb ifl-data-orb--a"></div>
+        <div class="ifl-data-orb ifl-data-orb--b"></div>
+      </div>
+      <div class="container" style="position:relative;z-index:1">
+
+        {/* 01 — 데이터 기반 리포트 */}
+        <div class="ifl-data-row">
+          <div class="ifl-data-text">
+            <div class="ifl-data-badge">01</div>
+            <h2 class="ifl-data-title">데이터 기반의 의사결정,<br /><em>정밀 통계 리포트 제공</em></h2>
+            <p class="ifl-data-desc">유튜버 리스트 전달 시, 단순 구독자 수가 아닌 성별/연령별 시청자 분포, 조회수 유지율 등 광고주가 꼭 알아야 할 핵심 지표를 함께 제공합니다.</p>
+          </div>
+          <div class="ifl-data-visual">
+            <div class="ifl-data-chart-card">
+              <div class="ifl-data-chart-header">
+                <span class="ifl-data-chart-title">구독자 및 평균 조회수 추이 (최근 6개월)</span>
+                <div class="ifl-data-chart-legend">
+                  <span class="ifl-data-legend-dot" style="background:#3b82f6"></span><span>구독자 수</span>
+                  <span class="ifl-data-legend-dot" style="background:#f472b6"></span><span>평균 조회수</span>
+                </div>
+              </div>
+              <div class="ifl-data-chart-body">
+                <svg viewBox="0 0 520 200" preserveAspectRatio="none" class="ifl-data-svg">
+                  {/* 그리드 */}
+                  <line x1="0" y1="40"  x2="520" y2="40"  stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                  <line x1="0" y1="80"  x2="520" y2="80"  stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                  <line x1="0" y1="120" x2="520" y2="120" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                  <line x1="0" y1="160" x2="520" y2="160" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                  {/* 구독자 곡선 (파란색) */}
+                  <path d="M0,170 C60,165 100,155 160,130 C220,105 260,85 320,65 C370,48 430,35 520,20"
+                    fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M0,170 C60,165 100,155 160,130 C220,105 260,85 320,65 C370,48 430,35 520,20 L520,200 L0,200 Z"
+                    fill="url(#blueGrad)" opacity="0.18"/>
+                  {/* 조회수 곡선 (분홍색) */}
+                  <path d="M0,180 C50,178 90,172 140,158 C200,140 250,115 310,95 C370,76 440,60 520,45"
+                    fill="none" stroke="#f472b6" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M0,180 C50,178 90,172 140,158 C200,140 250,115 310,95 C370,76 440,60 520,45 L520,200 L0,200 Z"
+                    fill="url(#pinkGrad)" opacity="0.15"/>
+                  <defs>
+                    <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#3b82f6"/>
+                      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+                    </linearGradient>
+                    <linearGradient id="pinkGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#f472b6"/>
+                      <stop offset="100%" stop-color="#f472b6" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="ifl-data-chart-xlabels">
+                  <span>8월</span><span>9월</span><span>10월</span><span>11월</span><span>12월</span><span>1월</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 02 — 초정밀 타겟 필터링 */}
+        <div class="ifl-data-row ifl-data-row--reverse">
+          <div class="ifl-data-visual ifl-data-visual--screens">
+            <div class="ifl-data-screens-top">
+              <div class="ifl-data-screen ifl-data-screen--sm">
+                <div class="ifl-screen-bar"><span></span><span></span><span></span></div>
+                <div class="ifl-screen-content">
+                  <div class="ifl-screen-list">
+                    {[1,2,3,4].map(i => <div class="ifl-screen-row"><div class="ifl-screen-thumb"></div><div class="ifl-screen-lines"><div></div><div></div></div></div>)}
+                  </div>
+                  <div class="ifl-screen-chart-mini">
+                    <svg viewBox="0 0 80 40" preserveAspectRatio="none">
+                      <path d="M0,35 C15,30 25,20 40,15 C55,10 65,8 80,5" fill="none" stroke="#f97316" stroke-width="2"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="ifl-data-screen ifl-data-screen--sm">
+                <div class="ifl-screen-bar"><span></span><span></span><span></span></div>
+                <div class="ifl-screen-content">
+                  <div class="ifl-screen-list">
+                    {[1,2,3].map(i => <div class="ifl-screen-row"><div class="ifl-screen-thumb"></div><div class="ifl-screen-lines"><div></div><div></div></div></div>)}
+                  </div>
+                  <div class="ifl-screen-chart-mini">
+                    <svg viewBox="0 0 80 40" preserveAspectRatio="none">
+                      <path d="M0,38 C20,35 35,25 50,18 C65,12 72,8 80,6" fill="none" stroke="#f472b6" stroke-width="2"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ifl-data-screen ifl-data-screen--lg">
+              <div class="ifl-screen-bar"><span></span><span></span><span></span></div>
+              <div class="ifl-screen-filter">
+                <div class="ifl-filter-row">
+                  {['카테고리','구독자 수','업로드 주기','평균 조회수','참여율','성별 비율'].map(t => (
+                    <div class="ifl-filter-chip"><span class="ifl-filter-dot"></span>{t}</div>
+                  ))}
+                </div>
+                <div class="ifl-filter-row" style="margin-top:10px">
+                  {['연령대','지역','언어','최근 성장률','브랜드 협업 이력','키워드'].map(t => (
+                    <div class="ifl-filter-chip"><span class="ifl-filter-dot"></span>{t}</div>
+                  ))}
+                </div>
+                <div class="ifl-filter-result">
+                  <span class="ifl-filter-count">65,732</span>
+                  <span class="ifl-filter-unit">Creators Found</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ifl-data-text">
+            <div class="ifl-data-badge ifl-data-badge--orange">02</div>
+            <h2 class="ifl-data-title">65,732명의 크리에이터,<br /><em>초정밀 타겟 필터링</em></h2>
+            <p class="ifl-data-desc">방대한 DB를 12가지 이상의 필터로 분류합니다. 구독자 상승률, 카테고리 밀도, 최근 반응도 등 브랜드에 가장 적합한 '라이징 크리에이터'를 초단위로 검색합니다.</p>
+            <div class="ifl-data-counter-badge">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <rect width="32" height="32" rx="8" fill="#FF0000"/>
+                <path d="M13 10.5l9 5.5-9 5.5V10.5z" fill="#fff"/>
+              </svg>
+              <strong>65,732</strong>
+              <span>Creators</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════
         SERVICE 01 — 연예인 & 인플루언서 섭외/협찬
     ══════════════════════════════════════════ */}
     <section class="ifl2-section ifl2-section--casting">
