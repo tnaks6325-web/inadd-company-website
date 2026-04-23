@@ -177,70 +177,125 @@ export const SvcReviewPage = () => (
     <section class="section rvp-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
-        <div class="section-head">
-          <span class="sec-label">Premium Review</span>
-          <h2 class="sec-title">[프리미엄 리뷰]<br /><em>블로거 + 구매평</em></h2>
-          <p class="sec-sub">브랜드의 신뢰도를 높이고 실질적인 <strong>구매 전환을 유도하는 통합 리뷰 솔루션</strong>입니다.</p>
+
+        {/* 헤더 */}
+        <div class="rvp-hero">
+          <div class="rvp-hero-label">
+            <span class="rvp-hero-badge">PREMIUM REVIEW</span>
+            <span class="rvp-hero-sub-badge">기획형 리뷰 기반</span>
+          </div>
+          <h2 class="rvp-hero-title">
+            블로그 리뷰 <em>&amp;</em> 구매평을<br />
+            <strong>하나의 전략</strong>으로 운용합니다
+          </h2>
+          <p class="rvp-hero-desc">
+            기획형 리뷰를 기반으로 네이버 블로그와 커머스 구매평을 동시에 공략합니다.<br />
+            단순 리뷰와 달리 <strong>스토리 구조·핵심 키워드·설득 포인트</strong>를 설계하여<br />
+            검색 상위노출과 실구매 전환율을 함께 끌어올립니다.
+          </p>
         </div>
 
-        <div class="rvp-grid">
+        {/* 3-카드 그리드 (이미지 포함) */}
+        <div class="rvp-premium-grid">
 
-          {/* 카드 01 */}
-          <div class="rvp-card">
-            <div class="rvp-card-num">01</div>
-            <h4 class="rvp-card-title">상위노출 &amp; 유입 효과</h4>
-            <div class="rvp-tags">
-              <span class="rvp-tag">#메인키워드_1페이지_상위노출</span>
-              <span class="rvp-tag">#블로그리뷰_링크값_유입</span>
+          {/* 카드 01 — 상위노출 & 블로그 */}
+          <div class="rvp-premium-card rvp-premium-card--blue">
+            <div class="rvp-premium-img-wrap">
+              <img src="/static/seo-images/review-premium-blog.jpg" alt="블로그 리뷰 상위노출" class="rvp-premium-img" />
+              <div class="rvp-premium-img-overlay"></div>
+              <span class="rvp-premium-num">01</span>
             </div>
-            <ul class="rvp-list">
-              <li>커머스 고객 특화 및 검색 노출 동시 진행</li>
-              <li>커머스 이용·검색 유입 고객 동시 확보</li>
-              <li>신제품·신규 브랜드 런칭 시 높은 성과</li>
-              <li>상품별 최적화된 블로거 매칭 <em>(품질 관리)</em></li>
-              <li>비용 대비 매우 높은 효율성 제공</li>
-            </ul>
+            <div class="rvp-premium-body">
+              <div class="rvp-premium-tags">
+                <span class="rvp-premium-tag">#블로그_상위노출</span>
+                <span class="rvp-premium-tag">#키워드_1페이지</span>
+                <span class="rvp-premium-tag">#기획형_스토리</span>
+              </div>
+              <h4 class="rvp-premium-title">상위노출 &amp; 블로그 리뷰</h4>
+              <p class="rvp-premium-desc">
+                기획형 스토리 구조로 블로그에 게시해 <strong>메인 키워드 1페이지 노출</strong>을 달성합니다.
+                커머스 유입 고객과 검색 고객을 동시에 확보하며,
+                신제품·신규 브랜드 런칭 시 특히 높은 성과를 냅니다.
+              </p>
+              <ul class="rvp-premium-list">
+                <li>네이버 블로그 검색 노출 최적화</li>
+                <li>상품별 최적화 블로거 매칭 <em>(품질 관리)</em></li>
+                <li>비용 대비 최고 효율의 유입 채널</li>
+              </ul>
+            </div>
           </div>
 
-          {/* 카드 02 */}
-          <div class="rvp-card">
-            <div class="rvp-card-num">02</div>
-            <h4 class="rvp-card-title">별점 관리 &amp; 여론 개선</h4>
-            <div class="rvp-tags">
-              <span class="rvp-tag">#별점관리</span>
-              <span class="rvp-tag">#댓글작성</span>
-              <span class="rvp-tag">#부정여론_완화</span>
-              <span class="rvp-tag">#별점5점_필수</span>
+          {/* 카드 02 — 별점 관리 */}
+          <div class="rvp-premium-card rvp-premium-card--gold">
+            <div class="rvp-premium-img-wrap">
+              <img src="/static/seo-images/review-premium-star.jpg" alt="별점 5점 관리" class="rvp-premium-img" />
+              <div class="rvp-premium-img-overlay"></div>
+              <span class="rvp-premium-num">02</span>
             </div>
-            <p class="rvp-desc">
-              비교적 긍정적인 리뷰 콘텐츠를 통해 소비자의 구매 심리를 자극하고,
-              <strong>별점 5점 리뷰를 지속적으로 확보</strong>하여 기존의 부정적인 여론을 효과적으로 완화합니다.
-            </p>
+            <div class="rvp-premium-body">
+              <div class="rvp-premium-tags">
+                <span class="rvp-premium-tag">#별점5점_확보</span>
+                <span class="rvp-premium-tag">#부정여론_완화</span>
+                <span class="rvp-premium-tag">#평점_관리</span>
+              </div>
+              <h4 class="rvp-premium-title">별점 관리 &amp; 여론 개선</h4>
+              <p class="rvp-premium-desc">
+                <strong>별점 5점 리뷰를 지속적으로 축적</strong>하여 기존 부정 여론을 효과적으로 희석시킵니다.
+                긍정적 리뷰 콘텐츠가 소비자의 구매 심리를 자극하고
+                평균 별점을 끌어올려 전환율을 높입니다.
+              </p>
+              <ul class="rvp-premium-list">
+                <li>네이버·쿠팡 별점 집중 관리</li>
+                <li>부정 리뷰 비율 희석 전략</li>
+                <li>긍정 여론 형성으로 재구매 유도</li>
+              </ul>
+            </div>
           </div>
 
-          {/* 카드 03 */}
-          <div class="rvp-card">
-            <div class="rvp-card-num">03</div>
-            <h4 class="rvp-card-title">구매 유도 댓글</h4>
-            <div class="rvp-tags">
-              <span class="rvp-tag">#의미있는_댓글</span>
-              <span class="rvp-tag">#소비자_구매유도</span>
+          {/* 카드 03 — 구매 유도 */}
+          <div class="rvp-premium-card rvp-premium-card--green">
+            <div class="rvp-premium-img-wrap">
+              <img src="/static/seo-images/review-premium-convert.jpg" alt="구매 유도 리뷰" class="rvp-premium-img" />
+              <div class="rvp-premium-img-overlay"></div>
+              <span class="rvp-premium-num">03</span>
             </div>
-            <p class="rvp-desc">
-              단순한 반응형 댓글이 아닌, 상품의 소구 포인트를 짚어주는
-              <strong>의미 있는 댓글 작업</strong>을 통해 소비자의 구매 결정을 돕고
-              실질적인 전환을 유도합니다.
-            </p>
+            <div class="rvp-premium-body">
+              <div class="rvp-premium-tags">
+                <span class="rvp-premium-tag">#구매전환_유도</span>
+                <span class="rvp-premium-tag">#설득_포인트</span>
+                <span class="rvp-premium-tag">#실구매자_경험</span>
+              </div>
+              <h4 class="rvp-premium-title">구매 전환 리뷰</h4>
+              <p class="rvp-premium-desc">
+                상품의 소구 포인트를 정확히 짚는 <strong>의미 있는 리뷰</strong>로
+                소비자의 구매 결정을 자연스럽게 유도합니다.
+                실제 체험 기반의 진정성 있는 콘텐츠로
+                장바구니 담기에서 결제까지 이어지는 전환을 만듭니다.
+              </p>
+              <ul class="rvp-premium-list">
+                <li>핵심 소구 포인트 중심 스토리텔링</li>
+                <li>구매 망설임 해소 댓글 작성</li>
+                <li>실질적인 구매 전환율 향상</li>
+              </ul>
+            </div>
           </div>
 
-        </div>{/* /rvp-grid */}
+        </div>{/* /rvp-premium-grid */}
 
-        {/* 채널 배지 */}
-        <div class="rvp-channels">
-          <span class="rvp-ch-label">운영 채널</span>
-          <span class="rvp-ch-badge rvp-ch-naver">NAVER</span>
-          <span class="rvp-ch-x">×</span>
-          <span class="rvp-ch-badge rvp-ch-coupang">coupang</span>
+        {/* 하단 강조 배너 */}
+        <div class="rvp-premium-banner">
+          <div class="rvp-premium-banner-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="rvp-premium-banner-text">
+            <strong>기획형 리뷰</strong>를 기본으로, 블로그·구매평을 동시에 공략하는
+            <em> 인애드만의 통합 프리미엄 리뷰 전략</em>
+          </div>
+          <div class="rvp-premium-banner-kpi">
+            <span><b>검색 유입</b> ↑</span>
+            <span><b>별점 관리</b> ↑</span>
+            <span><b>구매 전환</b> ↑</span>
+          </div>
         </div>
 
       </div>
