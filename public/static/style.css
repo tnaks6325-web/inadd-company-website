@@ -12403,6 +12403,9 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .seop-pstat span:last-child { width: 30px; text-align: right; }
 
 /* 자동완성 목업 */
+/* ══════════════════════════════════════════
+   자동완성 — 목록 순차 등장 애니메이션
+══════════════════════════════════════════ */
 .seop-auto-searchbox {
   display: flex; align-items: center; gap: 8px;
   padding: 10px 14px;
@@ -12413,6 +12416,78 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .seop-auto-typing { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 500; }
 .seop-cursor { animation: blink 1s step-end infinite; }
 @keyframes blink { 50% { opacity: 0; } }
+
+/* 기본: 숨김 상태 */
+.seop-auto-anim {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+/* JS가 추가하는 클래스 */
+.seop-auto-anim.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+/* 검색창 타이핑 커서 */
+.seop-cursor--yt,
+.seop-cursor--insta {
+  animation: blink 1s step-end infinite;
+  color: rgba(255,255,255,0.6);
+  margin-left: 1px;
+}
+
+/* ══════════════════════════════════════════
+   유튜브 — 영상 목록 순차 등장
+══════════════════════════════════════════ */
+.seop-yt-anim {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.32s ease, transform 0.32s ease;
+}
+.seop-yt-anim.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* 기본 숨김 상태 (JS 시작 전 첫 렌더) */
+#ytList .seop-yt-anim { opacity: 0; }
+#autoList .seop-auto-anim { opacity: 0; }
+
+/* ══════════════════════════════════════════
+   인스타 — 그리드 깜빡임 등장
+══════════════════════════════════════════ */
+#instaGrid {
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+/* 첫 번째 플래시 (순간 밝게) */
+#instaGrid.insta-flash {
+  opacity: 1;
+  filter: brightness(2.2) saturate(0.5);
+}
+/* 정상 표시 */
+#instaGrid.insta-visible {
+  opacity: 1;
+  filter: brightness(1);
+  transition: opacity 0.18s ease, filter 0.25s ease;
+}
+/* 두 번째 살짝 플래시 */
+#instaGrid.insta-flash2 {
+  filter: brightness(1.5) saturate(1.2);
+  transition: filter 0.1s ease;
+}
+/* 레전드 fade-in */
+#instaLegend {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+#instaLegend.insta-legend-visible {
+  opacity: 1;
+}
+/* 해시 기호 스타일 */
+.seop-insta-hash {
+  color: rgba(255,255,255,0.45);
+  font-size: 14px;
+}
 .seop-auto-list { display: flex; flex-direction: column; }
 .seop-auto-item {
   display: flex; align-items: center; gap: 10px;
