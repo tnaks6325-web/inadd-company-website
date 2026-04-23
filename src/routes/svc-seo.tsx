@@ -578,21 +578,17 @@ export const SvcSeoPage = () => (
     var tagEl     = document.getElementById('instaResultTag');
     var imgEl     = document.getElementById('instaResultImg');
     var legendEl  = document.getElementById('instaLegend');
-    var suggestEl = document.getElementById('instaSuggest');
     if(!resultEl || !imgEl) return;
 
     /* 검색창 텍스트 업데이트 */
     var typingEl = document.getElementById('instaTypingText');
-    if(typingEl) typingEl.textContent = tag;
+    if(typingEl) typingEl.textContent = '#' + tag;
 
-    /* 자동완성 숨기고 결과 표시 */
-    if(suggestEl) suggestEl.style.visibility = 'hidden';
-
-    /* 이미지 전환 */
+    /* 이미지 src 즉시 변경 (미리 로드) */
     imgEl.src = INSTA_IMAGES[tag] || '';
     if(tagEl) tagEl.textContent = '#' + tag;
-    resultEl.classList.remove('insta-result-visible');
-    void resultEl.offsetWidth;
+
+    /* 즉시 visible 클래스 추가 — opacity 페이드인으로 자연스럽게 */
     resultEl.classList.add('insta-result-visible');
     if(legendEl) legendEl.classList.add('insta-legend-visible');
 
@@ -604,11 +600,9 @@ export const SvcSeoPage = () => (
 
   function hideInstaResult(){
     var resultEl  = document.getElementById('instaResult');
-    var suggestEl = document.getElementById('instaSuggest');
     var legendEl  = document.getElementById('instaLegend');
     var typingEl  = document.getElementById('instaTypingText');
     if(resultEl)  resultEl.classList.remove('insta-result-visible');
-    if(suggestEl) suggestEl.style.visibility = '';
     if(legendEl)  legendEl.classList.remove('insta-legend-visible');
     if(typingEl)  typingEl.textContent = INSTA_KEYWORD;
     document.querySelectorAll('.seop-insta-sug-item').forEach(function(el){

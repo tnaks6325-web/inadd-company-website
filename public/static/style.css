@@ -12345,7 +12345,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   color: rgba(255,255,255,0.3);
   letter-spacing: 0.03em;
 }
-.seop-mock-body { padding: 16px; }
+.seop-mock-body { padding: 16px; position: relative; min-height: 320px; }
 
 /* 플레이스 목업 */
 .seop-place-search {
@@ -12511,16 +12511,24 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   gap: 6px;
   margin-top: 6px;
   opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
   pointer-events: none;
-  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #0d0e1f;
+  z-index: 2;
+  padding: 8px;
+  border-radius: 10px;
+  overflow-y: auto;
 }
 .seop-insta-result.insta-result-visible {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
-  visibility: visible;
 }
 /* 결과 상단바 */
 .seop-insta-result-topbar {
@@ -12561,6 +12569,8 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   border-radius: 8px;
   display: block;
   object-fit: cover;
+  flex: 1;
+  min-height: 0;
 }
 
 /* 레전드 */
