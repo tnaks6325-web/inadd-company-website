@@ -136,10 +136,11 @@ export const SvcSeedingPage = () => (
                 <span class="svc-list-name">특화 블로거</span>
               </a>
             </li>
-            <li class="svc-list-item" data-sdng="2">
+            <li class="svc-list-item sdng-list-best" data-sdng="2">
               <a href="#sdng-blog">
                 <span class="svc-list-num">03</span>
                 <span class="svc-list-name">상위노출 보장</span>
+                <span class="sdng-list-best-badge">BEST</span>
               </a>
             </li>
             <li class="svc-list-item" data-sdng="3">
@@ -155,7 +156,7 @@ export const SvcSeedingPage = () => (
 
             {/* 패널 0 — 일반 블로거 */}
             <div class="svc-panel active" data-sdng-panel="0">
-              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-general.jpg'); background-size:cover; background-position:center; position:relative;">
+              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-general-new.png'); background-size:cover; background-position:center top; position:relative;">
                 <div class="svc-real-img-overlay"></div>
                 <span class="sdng-panel-badge sdng-panel-badge--basic">Basic</span>
               </div>
@@ -180,7 +181,7 @@ export const SvcSeedingPage = () => (
 
             {/* 패널 1 — 특화 블로거 */}
             <div class="svc-panel" data-sdng-panel="1">
-              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-specialized.jpg'); background-size:cover; background-position:center; position:relative;">
+              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-specialized-new.jpg'); background-size:cover; background-position:center; position:relative;">
                 <div class="svc-real-img-overlay"></div>
                 <span class="sdng-panel-badge sdng-panel-badge--specialized">Specialized</span>
               </div>
@@ -203,14 +204,20 @@ export const SvcSeedingPage = () => (
               </div>
             </div>
 
-            {/* 패널 2 — 상위 노출 보장 */}
-            <div class="svc-panel" data-sdng-panel="2">
-              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-ranking.jpg'); background-size:cover; background-position:center; position:relative;">
-                <div class="svc-real-img-overlay"></div>
-                <span class="sdng-panel-badge sdng-panel-badge--ranking">Ranking</span>
-                <span class="sdng-panel-rec">RECOMMEND</span>
+            {/* 패널 2 — 상위 노출 보장 (BEST) */}
+            <div class="svc-panel sdng-panel--best" data-sdng-panel="2">
+              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-ranking-new.jpg'); background-size:cover; background-position:center; position:relative;">
+                <div class="svc-real-img-overlay sdng-best-overlay"></div>
+                <span class="sdng-panel-badge sdng-panel-badge--ranking">Guaranteed Top</span>
+                <div class="sdng-best-crown">
+                  <span class="sdng-best-crown-icon">👑</span>
+                  <span class="sdng-best-crown-text">BEST</span>
+                </div>
               </div>
-              <div class="svc-panel-info">
+              <div class="svc-panel-info sdng-best-info">
+                <div class="sdng-best-header">
+                  <span class="sdng-best-tag">🏆 베스트 추천 상품</span>
+                </div>
                 <span class="svc-panel-tag">Guaranteed Top Ranking</span>
                 <p class="svc-panel-desc">
                   네이버 블로그 검색 결과 <strong>상위 노출을 보장</strong>하는 프리미엄 시딩 상품입니다.<br />
@@ -231,7 +238,7 @@ export const SvcSeedingPage = () => (
 
             {/* 패널 3 — 네이버 인플루언서 */}
             <div class="svc-panel" data-sdng-panel="3">
-              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-influencer.jpg'); background-size:cover; background-position:center; position:relative;">
+              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-influencer-new.jpg'); background-size:cover; background-position:center; position:relative;">
                 <div class="svc-real-img-overlay"></div>
                 <span class="sdng-panel-badge sdng-panel-badge--premium">Premium</span>
               </div>
