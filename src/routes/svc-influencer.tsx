@@ -129,8 +129,9 @@ export const SvcInfluencerPage = () => (
           {/* 3단계 플로우 */}
           <div class="ifl-data-flow">
             <div class="ifl-data-flow-step">
-              <div class="ifl-data-flow-icon">
-                <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="currentColor" stroke-width="1.2"/><path d="M8 14h4l2-4 2 8 2-4h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="ifl-data-flow-img-wrap">
+                <img src="/static/images/process/flow-collect.jpg" alt="데이터 수집" />
+                <div class="ifl-data-flow-img-overlay"></div>
               </div>
               <div class="ifl-data-flow-label">데이터 수집</div>
               <div class="ifl-data-flow-sub">조회수 · 구독자 · 유지율</div>
@@ -139,8 +140,9 @@ export const SvcInfluencerPage = () => (
               <svg viewBox="0 0 40 12" fill="none"><path d="M0 6 H34 M28 1 L34 6 L28 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div class="ifl-data-flow-step">
-              <div class="ifl-data-flow-icon">
-                <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="currentColor" stroke-width="1.2"/><path d="M9 19l4-4 2 2 4-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19" cy="9" r="2" stroke="currentColor" stroke-width="1.2"/></svg>
+              <div class="ifl-data-flow-img-wrap">
+                <img src="/static/images/process/flow-review.jpg" alt="면밀한 검토" />
+                <div class="ifl-data-flow-img-overlay"></div>
               </div>
               <div class="ifl-data-flow-label">면밀한 검토</div>
               <div class="ifl-data-flow-sub">전문가 기준으로 엄선</div>
@@ -149,8 +151,9 @@ export const SvcInfluencerPage = () => (
               <svg viewBox="0 0 40 12" fill="none"><path d="M0 6 H34 M28 1 L34 6 L28 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div class="ifl-data-flow-step ifl-data-flow-step--accent">
-              <div class="ifl-data-flow-icon">
-                <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="currentColor" stroke-width="1.2"/><path d="M9 14l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="ifl-data-flow-img-wrap">
+                <img src="/static/images/process/flow-propose.jpg" alt="합리적 제안" />
+                <div class="ifl-data-flow-img-overlay ifl-data-flow-img-overlay--accent"></div>
               </div>
               <div class="ifl-data-flow-label">합리적 제안</div>
               <div class="ifl-data-flow-sub">거품 없이, 목적에 맞게</div>
@@ -185,12 +188,11 @@ export const SvcInfluencerPage = () => (
             <h3 class="ifl-data-title">구독자 수 너머의 지표로<br /><strong>광고 효과를 미리 가늠합니다</strong></h3>
             <p class="ifl-data-desc">
               크리에이터를 제안드릴 때, 구독자 수는 하나의 참고 지표일 뿐입니다.
-              <strong>구독자 대비 실제 조회수 달성률</strong>, 영상별 유지율,
-              시청자 성별·연령 분포까지 함께 살펴보고 광고 효과를 미리 검토한 뒤 제안드립니다.
+              <strong>구독자 대비 실제 조회수 달성률</strong>, 영상별 유지율을 함께 살펴보고
+              광고 효과를 미리 검토한 뒤 제안드립니다.
             </p>
             <ul class="ifl-data-points">
               <li><span class="ifl-data-dot"></span>구독자 대비 조회수 달성률 — 채널 실질 영향력 파악</li>
-              <li><span class="ifl-data-dot"></span>성별 · 연령 시청자 분포 — 브랜드 타겟 적합성 확인</li>
               <li><span class="ifl-data-dot"></span>조회수 유지율 — 광고 노출 구간 예측</li>
               <li><span class="ifl-data-dot"></span>구독자 이상 급증 채널은 제안 대상에서 제외</li>
             </ul>
@@ -214,7 +216,7 @@ export const SvcInfluencerPage = () => (
             <div class="ifl-data-num">02</div>
             <h3 class="ifl-data-title">어떤 조건이든 세밀하게 맞춰<br /><strong>꼭 맞는 크리에이터를 찾아드립니다</strong></h3>
             <p class="ifl-data-desc">
-              카테고리, 구독자 규모, 업로드 주기, 시청자 성별·연령까지 —
+              카테고리, 구독자 규모, 업로드 주기 등 —
               브랜드의 목적과 예산에 맞는 채널을 <strong>1,520+개 검증 DB에서 신중하게 추려</strong>
               제안드립니다. 기준에 미치지 못하는 채널은 DB에서 지속적으로 정리됩니다.
             </p>
