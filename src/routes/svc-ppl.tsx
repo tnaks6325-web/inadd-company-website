@@ -165,30 +165,13 @@ export const SvcPplPage = () => (
             </div>
             <h4 class="ppl-ep-title">브랜드 소구포인트 노출</h4>
             <div class="ppl-ep-visual">
-              <div class="ppl-ep-mock">
-                <div class="ppl-ep-screen">
-                  <div class="ppl-ep-scene">
-                    <div class="ppl-ep-poster">
-                      <div class="ppl-ep-poster-item">
-                        <div class="ppl-ep-poster-img" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
-                          <div style="font-size:11px;color:rgba(255,255,255,0.7);font-weight:700;text-align:center;padding:8px 4px">NEW<br/>PRODUCT</div>
-                        </div>
-                        <div class="ppl-ep-poster-label">브랜드 포스터</div>
-                      </div>
-                      <div class="ppl-ep-poster-item">
-                        <div class="ppl-ep-poster-img" style="background:linear-gradient(135deg,#0f172a,#1e293b)">
-                          <div style="font-size:10px;color:rgba(239,68,68,0.9);font-weight:700;text-align:center;padding:8px 4px">BRAND<br/>MESSAGE</div>
-                        </div>
-                        <div class="ppl-ep-poster-label">소구 메시지</div>
-                      </div>
-                    </div>
-                    <div class="ppl-ep-play-badge">▶ 드라마 장면 속 자연 노출</div>
-                  </div>
-                </div>
-                <div class="ppl-ep-label-bar">
-                  <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1a6 6 0 1 1 0 12A6 6 0 0 1 8 2zm-.5 3v5h1V5h-1z"/></svg>
-                  방송사, 프로그램에 따라 노출 방식이 달라질 수 있습니다.
-                </div>
+              <div class="ppl-ep-img-wrap">
+                <img src="/static/ppl-images/ppl-ep-brandpoint.jpg" alt="브랜드 소구포인트 노출" class="ppl-ep-img" />
+                <div class="ppl-ep-img-badge">▶ 드라마 장면 속 자연 노출</div>
+              </div>
+              <div class="ppl-ep-label-bar">
+                <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1a6 6 0 1 1 0 12A6 6 0 0 1 8 2zm-.5 3v5h1V5h-1z"/></svg>
+                방송사, 프로그램에 따라 노출 방식이 달라질 수 있습니다.
               </div>
             </div>
             <p class="ppl-ep-desc">제품 포스터, 배너 등 브랜드 소구 메시지를 방송 화면 속에 자연스럽게 배치합니다. 시청자가 무의식 중에 브랜드를 인지하게 됩니다.</p>
@@ -201,31 +184,13 @@ export const SvcPplPage = () => (
             </div>
             <h4 class="ppl-ep-title">브랜드 제품 직접 노출</h4>
             <div class="ppl-ep-visual">
-              <div class="ppl-ep-mock">
-                <div class="ppl-ep-screen">
-                  <div class="ppl-ep-scene ppl-ep-scene--product">
-                    <div class="ppl-ep-product-demo">
-                      <div class="ppl-ep-product-circle">
-                        <svg viewBox="0 0 48 48" fill="none" width="42" height="42">
-                          <circle cx="24" cy="24" r="20" fill="rgba(239,68,68,0.15)" stroke="rgba(239,68,68,0.4)" stroke-width="1.5"/>
-                          <path d="M16 28 C18 22 22 18 28 20 C32 21 34 26 30 30 C27 33 22 32 20 30" stroke="rgba(239,68,68,0.8)" stroke-width="1.5" fill="none"/>
-                          <circle cx="24" cy="24" r="4" fill="rgba(239,68,68,0.6)"/>
-                        </svg>
-                        <div class="ppl-ep-product-label">제품 클로즈업</div>
-                      </div>
-                      <div class="ppl-ep-product-hand">
-                        <svg viewBox="0 0 32 32" fill="none" width="28" height="28">
-                          <path d="M8 20 L8 12 C8 10.9 8.9 10 10 10 L10 10 C11.1 10 12 10.9 12 12 L12 8 C12 6.9 12.9 6 14 6 C15.1 6 16 6.9 16 8 L16 7 C16 5.9 16.9 5 18 5 C19.1 5 20 5.9 20 7 L20 8 C20 6.9 20.9 6 22 6 C23.1 6 24 6.9 24 8 L24 22 C24 25.3 21.3 28 18 28 L14 28 C10.7 28 8 25.3 8 22 L8 20Z" fill="rgba(251,146,60,0.3)" stroke="rgba(251,146,60,0.7)" stroke-width="1"/>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="ppl-ep-play-badge" style="background:rgba(251,146,60,0.15);border-color:rgba(251,146,60,0.3);color:rgba(251,146,60,0.9)">▶ 출연진 직접 사용 장면</div>
-                  </div>
-                </div>
-                <div class="ppl-ep-label-bar">
-                  <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1a6 6 0 1 1 0 12A6 6 0 0 1 8 2zm-.5 3v5h1V5h-1z"/></svg>
-                  방송사, 프로그램에 따라 노출 방식이 달라질 수 있습니다.
-                </div>
+              <div class="ppl-ep-img-wrap">
+                <img src="/static/ppl-images/ppl-ep-product.jpg" alt="브랜드 제품 직접 노출" class="ppl-ep-img" />
+                <div class="ppl-ep-img-badge ppl-ep-img-badge--orange">▶ 출연진 직접 사용 장면</div>
+              </div>
+              <div class="ppl-ep-label-bar">
+                <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1a6 6 0 1 1 0 12A6 6 0 0 1 8 2zm-.5 3v5h1V5h-1z"/></svg>
+                방송사, 프로그램에 따라 노출 방식이 달라질 수 있습니다.
               </div>
             </div>
             <p class="ppl-ep-desc">출연진이 실제로 제품을 사용하거나 소개하는 장면을 기획합니다. 가장 강력한 구매 전환 효과를 만들어내는 PPL 유형입니다.</p>
