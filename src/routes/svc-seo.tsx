@@ -570,27 +570,20 @@ export const SvcSeoPage = () => (
   });
 
   /* ══════════════════════════════════════════════
-     패널 1 — 자동완성: 타이핑 → 목록 순차 등장
+     패널 1 — 자동완성: 타이핑 → 1초 후 목록 순차 등장 (1회 후 유지)
   ══════════════════════════════════════════════ */
-  var AUTO_KEYWORD  = '강남 헬스장';
-  var autoTimers    = [];
-
-  function resetAutoAnim(){
-    autoTimers.forEach(clearTimeout);
-    autoTimers = [];
-    var typingEl = document.getElementById('autoTypingText');
-    var listItems = document.querySelectorAll('#autoList .seop-auto-anim');
-    if(typingEl) typingEl.textContent = '';
-    listItems.forEach(function(el){ el.classList.remove('visible'); });
-  }
+  var AUTO_KEYWORD = '강남 헬스장';
+  var autoTimers   = [];
+  var autoPlayed   = false;
 
   function startAutoAnim(){
-    resetAutoAnim();
-    var typingEl = document.getElementById('autoTypingText');
+    if(autoPlayed) return;
+    autoPlayed = true;
+    var typingEl  = document.getElementById('autoTypingText');
     var listItems = document.querySelectorAll('#autoList .seop-auto-anim');
     if(!typingEl) return;
 
-    /* 1. 한 글자씩 타이핑 */
+    /* 1. 한 글자씩 타이핑 (80ms 간격) */
     var chars = AUTO_KEYWORD.split('');
     chars.forEach(function(ch, idx){
       autoTimers.push(setTimeout(function(){
@@ -598,44 +591,32 @@ export const SvcSeoPage = () => (
       }, 80 * idx));
     });
 
-    /* 2. 타이핑 완료 후 목록 한 줄씩 등장 */
-    var typingDone = 80 * chars.length + 200;
+    /* 2. 타이핑 완료 + 1000ms 대기 → 목록 한 줄씩 등장 (160ms 간격) */
+    var typingDone = 80 * chars.length + 1000;
     listItems.forEach(function(el, idx){
       autoTimers.push(setTimeout(function(){
         el.classList.add('visible');
       }, typingDone + idx * 160));
     });
-
-    /* 3. 전체 완료 후 3.5초 대기 → 반복 */
-    var totalDur = typingDone + listItems.length * 160 + 3500;
-    autoTimers.push(setTimeout(startAutoAnim, totalDur));
+    /* 반복 없음 — 목록이 뜨면 그대로 유지 */
   }
 
   /* ══════════════════════════════════════════════
-     패널 2 — 유튜브: 타이핑 → 영상 목록 순차 등장
+     패널 2 — 유튜브: 타이핑 → 영상 목록 순차 등장 (1회 후 유지)
   ══════════════════════════════════════════════ */
   var YT_KEYWORD = '강남 헬스장 추천';
   var ytTimers   = [];
-
-  function resetYtAnim(){
-    ytTimers.forEach(clearTimeout);
-    ytTimers = [];
-    var typingEl = document.getElementById('ytTypingText');
-    var cursorEl = document.getElementById('ytCursor');
-    var listItems = document.querySelectorAll('#ytList .seop-yt-anim');
-    if(typingEl) typingEl.textContent = '';
-    if(cursorEl) cursorEl.style.display = 'inline';
-    listItems.forEach(function(el){ el.classList.remove('visible'); });
-  }
+  var ytPlayed   = false;
 
   function startYtAnim(){
-    resetYtAnim();
-    var typingEl = document.getElementById('ytTypingText');
-    var cursorEl = document.getElementById('ytCursor');
+    if(ytPlayed) return;
+    ytPlayed = true;
+    var typingEl  = document.getElementById('ytTypingText');
+    var cursorEl  = document.getElementById('ytCursor');
     var listItems = document.querySelectorAll('#ytList .seop-yt-anim');
     if(!typingEl) return;
 
-    /* 1. 타이핑 */
+    /* 1. 타이핑 (75ms 간격) */
     var chars = YT_KEYWORD.split('');
     chars.forEach(function(ch, idx){
       ytTimers.push(setTimeout(function(){
@@ -653,40 +634,26 @@ export const SvcSeoPage = () => (
         el.classList.add('visible');
       }, typingDone + 100 + idx * 220));
     });
-
-    /* 3. 반복 */
-    var totalDur = typingDone + listItems.length * 220 + 3500;
-    ytTimers.push(setTimeout(startYtAnim, totalDur));
+    /* 반복 없음 — 목록이 뜨면 그대로 유지 */
   }
 
   /* ══════════════════════════════════════════════
-     패널 3 — 인스타: 타이핑 → 그리드 flash-in
+     패널 3 — 인스타: 타이핑 → 그리드 flash-in (1회 후 유지)
   ══════════════════════════════════════════════ */
   var INSTA_KEYWORD = '강남헬스장';
   var instaTimers   = [];
-
-  function resetInstaAnim(){
-    instaTimers.forEach(clearTimeout);
-    instaTimers = [];
-    var typingEl = document.getElementById('instaTypingText');
-    var cursorEl = document.getElementById('instaCursor');
-    var gridEl   = document.getElementById('instaGrid');
-    var legendEl = document.getElementById('instaLegend');
-    if(typingEl) typingEl.textContent = '';
-    if(cursorEl) cursorEl.style.display = 'inline';
-    if(gridEl)   { gridEl.classList.remove('insta-visible'); gridEl.classList.remove('insta-flash'); }
-    if(legendEl) legendEl.classList.remove('insta-legend-visible');
-  }
+  var instaPlayed   = false;
 
   function startInstaAnim(){
-    resetInstaAnim();
+    if(instaPlayed) return;
+    instaPlayed = true;
     var typingEl = document.getElementById('instaTypingText');
     var cursorEl = document.getElementById('instaCursor');
     var gridEl   = document.getElementById('instaGrid');
     var legendEl = document.getElementById('instaLegend');
     if(!typingEl) return;
 
-    /* 1. 타이핑 */
+    /* 1. 타이핑 (85ms 간격) */
     var chars = INSTA_KEYWORD.split('');
     chars.forEach(function(ch, idx){
       instaTimers.push(setTimeout(function(){
@@ -698,26 +665,19 @@ export const SvcSeoPage = () => (
     var typingDone = 85 * chars.length + 350;
     instaTimers.push(setTimeout(function(){
       if(cursorEl) cursorEl.style.display = 'none';
-      /* 첫 번째 flash — 화면이 번쩍 */
-      if(gridEl){ gridEl.classList.add('insta-flash'); }
+      if(gridEl)   gridEl.classList.add('insta-flash');
     }, typingDone));
-
     instaTimers.push(setTimeout(function(){
       if(gridEl){ gridEl.classList.remove('insta-flash'); gridEl.classList.add('insta-visible'); }
     }, typingDone + 120));
-
-    /* 두 번째 살짝 flash — 강조 */
     instaTimers.push(setTimeout(function(){
-      if(gridEl){ gridEl.classList.add('insta-flash2'); }
+      if(gridEl) gridEl.classList.add('insta-flash2');
     }, typingDone + 320));
     instaTimers.push(setTimeout(function(){
-      if(gridEl){ gridEl.classList.remove('insta-flash2'); }
+      if(gridEl) gridEl.classList.remove('insta-flash2');
       if(legendEl) legendEl.classList.add('insta-legend-visible');
     }, typingDone + 480));
-
-    /* 3. 반복 */
-    var totalDur = typingDone + 500 + 4000;
-    instaTimers.push(setTimeout(startInstaAnim, totalDur));
+    /* 반복 없음 — 그리드가 뜨면 그대로 유지 */
   }
 
   /* ── 탭 활성화 시 초기 실행 (현재 패널 1이 기본 활성) ── */
