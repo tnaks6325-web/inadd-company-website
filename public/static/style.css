@@ -12345,7 +12345,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   color: rgba(255,255,255,0.3);
   letter-spacing: 0.03em;
 }
-.seop-mock-body { padding: 16px; position: relative; min-height: 320px; }
+.seop-mock-body { padding: 16px; }
 
 /* 플레이스 목업 */
 .seop-place-search {
@@ -12506,28 +12506,16 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 
 /* 이미지 결과 영역 */
 .seop-insta-result {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 6px;
   margin-top: 6px;
   opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity 0.25s ease;
   pointer-events: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #0d0e1f;
-  z-index: 2;
-  padding: 8px;
-  border-radius: 10px;
-  overflow-y: auto;
 }
 .seop-insta-result.insta-result-visible {
   opacity: 1;
-  transform: translateY(0);
   pointer-events: auto;
 }
 /* 결과 상단바 */
@@ -12566,11 +12554,10 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 }
 .seop-insta-result-img {
   width: 100%;
+  height: auto;
   border-radius: 8px;
   display: block;
-  object-fit: cover;
-  flex: 1;
-  min-height: 0;
+  object-fit: contain;
 }
 
 /* 레전드 */
