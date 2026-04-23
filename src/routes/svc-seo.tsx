@@ -174,11 +174,7 @@ export const SvcSeoPage = () => (
                     <img src="/static/seo-images/blog-before.jpg" alt="네이버 플레이스 전체 화면" class="sbm-base-img" />
                     {/* 미묘한 테두리 프레임 */}
                     <div class="sbm-frame"></div>
-                    {/* 클릭 힌트 */}
-                    <div class="sbm-hint" id="sbmHint">
-                      <span class="sbm-hint-icon">👆</span>
-                      <span class="sbm-hint-text">블로그 배포 카드를 클릭하세요</span>
-                    </div>
+
                   </div>
 
                   {/* 레이어 2: 모핑 확대 오버레이 (블로그 배포 클릭 시) */}
@@ -742,7 +738,6 @@ export const SvcSeoPage = () => (
   /* 모든 모핑 닫기 */
   var ALL_MORPHS   = ['sbmMorph','sbmInflowMorph','sbmReviewMorph','sbmSaveMorph'];
   var ALL_TRIGGERS = ['seoBlogCard','seoInflowCard','seoReviewCard','seoSaveCard'];
-  var hint = document.getElementById('sbmHint');
   var placeHint = document.getElementById('seopPlaceHint');
   /* 인터벌 레퍼런스를 상위 스코프에 선언 */
   var _inflowInterval = null;
@@ -768,7 +763,8 @@ export const SvcSeoPage = () => (
       var el = document.getElementById(id);
       if(el) el.classList.remove('active');
     });
-    if(hint) hint.style.opacity = '1';
+    /* 모두 닫히면 placeHint 다시 표시 */
+    if(placeHint) placeHint.style.display = '';
     _clearIntervals();
     /* 숫자 리셋 */
     ['sbmBlogNum','sbmVisitNum','sbmInflowCount',
@@ -778,15 +774,7 @@ export const SvcSeoPage = () => (
     });
   }
 
-  /* 카드 클릭 시 플레이스 힌트 숨기기 (공통) */
-  ALL_TRIGGERS.forEach(function(id){
-    var card = document.getElementById(id);
-    if(card){
-      card.addEventListener('click', function(){
-        if(placeHint) placeHint.style.display = 'none';
-      });
-    }
-  });
+
 
   /* ── 블로그 배포 ── */
   var blogCard = document.getElementById('seoBlogCard');
@@ -794,7 +782,7 @@ export const SvcSeoPage = () => (
   if(blogCard){
     blogCard.addEventListener('click', function(){
       closeAll();
-      if(hint) hint.style.opacity = '0';
+      if(placeHint) placeHint.style.display = 'none';
       blogCard.classList.add('active');
       blogMorph.classList.add('active');
       setTimeout(function(){
@@ -816,7 +804,7 @@ export const SvcSeoPage = () => (
   if(inflowCard){
     inflowCard.addEventListener('click', function(){
       closeAll();
-      if(hint) hint.style.opacity = '0';
+      if(placeHint) placeHint.style.display = 'none';
       inflowCard.classList.add('active');
       inflowMorph.classList.add('active');
       /* 카운트업 + 반복 클릭 효과 */
@@ -848,7 +836,7 @@ export const SvcSeoPage = () => (
   if(reviewCard){
     reviewCard.addEventListener('click', function(){
       closeAll();
-      if(hint) hint.style.opacity = '0';
+      if(placeHint) placeHint.style.display = 'none';
       reviewCard.classList.add('active');
       reviewMorph.classList.add('active');
       setTimeout(function(){
@@ -870,7 +858,7 @@ export const SvcSeoPage = () => (
   if(saveCard){
     saveCard.addEventListener('click', function(){
       closeAll();
-      if(hint) hint.style.opacity = '0';
+      if(placeHint) placeHint.style.display = 'none';
       saveCard.classList.add('active');
       saveMorph.classList.add('active');
       setTimeout(function(){

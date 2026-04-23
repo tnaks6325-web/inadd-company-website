@@ -11796,33 +11796,6 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   background: linear-gradient(180deg, transparent 60%, rgba(6,7,15,0.6) 100%);
 }
 
-/* 클릭 힌트 */
-.sbm-hint {
-  position: absolute;
-  bottom: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(6,7,15,0.78);
-  border: 1px solid rgba(59,130,246,0.35);
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 11px;
-  color: rgba(255,255,255,0.7);
-  white-space: nowrap;
-  backdrop-filter: blur(6px);
-  transition: opacity 0.3s ease;
-  animation: hintPulse 2s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes hintPulse {
-  0%,100% { opacity: 0.9; }
-  50%      { opacity: 0.45; }
-}
-.sbm-hint-icon { font-size: 13px; }
-
 /* ── 레이어 2: 모핑 오버레이 ── */
 .sbm-morph {
   position: absolute;
@@ -11997,35 +11970,13 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .seop-sub-card--blog-trigger {
   cursor: pointer;
   position: relative;
-  /* 깜빡이는 테두리 펄스 */
-  animation: blogCardPulse 2.6s ease-in-out infinite;
-}
-@keyframes blogCardPulse {
-  0%,100% { border-color: rgba(255,255,255,0.07); box-shadow: none; }
-  50%      { border-color: rgba(59,130,246,0.45); box-shadow: 0 0 0 3px rgba(59,130,246,0.08); }
 }
 .seop-sub-card--blog-trigger:hover,
 .seop-sub-card--blog-trigger.active {
   border-color: rgba(59,130,246,0.6) !important;
   background: rgba(59,130,246,0.1) !important;
   box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
-  animation: none;
 }
-/* 클릭 유도 레이블 */
-.seop-sub-card--blog-trigger::after {
-  content: '▶ 클릭';
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: rgba(59,130,246,0.7);
-  font-family: 'Space Grotesk', sans-serif;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.seop-sub-card--blog-trigger:hover::after { opacity: 1; }
 
 /* ── 나머지 3개 트리거 카드 공통 pulse ── */
 .seop-sub-card--trigger {
