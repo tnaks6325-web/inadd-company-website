@@ -113,17 +113,18 @@ export const SvcSeedingPage = () => (
     <section class="section sdng-products-section" id="sdng-blog">
       <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
-        <div class="section-head">
-          <span class="sec-label">Naver Blog Seeding</span>
-          <h2 class="sec-title">네이버 블로그 시딩<br /><em>상품 라인업</em></h2>
-          <p class="sec-sub">검색 최적화와 신뢰도 기반의 콘텐츠 마케팅.<br />브랜드 목표와 예산에 맞는 최적의 블로그 시딩 상품을 선택하세요.</p>
-        </div>
 
-        {/* 홈 스타일 인터랙티브 좌-우 레이아웃 */}
-        <div class="svc-interactive" id="sdngBlogInteractive">
+        {/* 좌(타이틀+리스트) / 우(패널) 통합 레이아웃 */}
+        <div class="sdng-split-layout" id="sdngBlogInteractive">
 
-          {/* 왼쪽: 상품 리스트 */}
-          <ul class="svc-list" id="sdngBlogList">
+          {/* 왼쪽: 타이틀 + 상품 리스트 */}
+          <div class="sdng-split-left">
+            <div class="sdng-split-head">
+              <span class="sec-label">Naver Blog Seeding</span>
+              <h2 class="sec-title">네이버 블로그 시딩<br /><em>상품 라인업</em></h2>
+              <p class="sec-sub">검색 최적화와 신뢰도 기반의 콘텐츠 마케팅.<br />브랜드 목표와 예산에 맞는 최적의 블로그 시딩 상품을 선택하세요.</p>
+            </div>
+            <ul class="svc-list" id="sdngBlogList">
             <li class="svc-list-item active" data-sdng="0">
               <a href="#sdng-blog">
                 <span class="svc-list-num">01</span>
@@ -150,14 +151,16 @@ export const SvcSeedingPage = () => (
               </a>
             </li>
           </ul>
+          </div>{/* /sdng-split-left */}
 
           {/* 오른쪽: 비주얼 패널 */}
+          <div class="sdng-split-right">
           <div class="svc-visual" id="sdngBlogVisual">
 
             {/* 패널 0 — 일반 블로거 */}
             <div class="svc-panel active" data-sdng-panel="0">
-              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-general-new.png'); background-size:cover; background-position:center top; position:relative;">
-                <div class="svc-real-img-overlay"></div>
+              <div class="svc-panel-img sdng-img-wrap">
+                <img src="/static/seeding-images/blog-general-new.png" alt="일반 블로거 시딩" class="sdng-panel-photo" />
                 <span class="sdng-panel-badge sdng-panel-badge--basic">Basic</span>
               </div>
               <div class="svc-panel-info">
@@ -181,8 +184,8 @@ export const SvcSeedingPage = () => (
 
             {/* 패널 1 — 특화 블로거 */}
             <div class="svc-panel" data-sdng-panel="1">
-              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-specialized-new.jpg'); background-size:cover; background-position:center; position:relative;">
-                <div class="svc-real-img-overlay"></div>
+              <div class="svc-panel-img sdng-img-wrap">
+                <img src="/static/seeding-images/blog-specialized-new.jpg" alt="특화 블로거 시딩" class="sdng-panel-photo" />
                 <span class="sdng-panel-badge sdng-panel-badge--specialized">Specialized</span>
               </div>
               <div class="svc-panel-info">
@@ -206,8 +209,8 @@ export const SvcSeedingPage = () => (
 
             {/* 패널 2 — 상위 노출 보장 (BEST) */}
             <div class="svc-panel sdng-panel--best" data-sdng-panel="2">
-              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-ranking-new.jpg'); background-size:cover; background-position:center; position:relative;">
-                <div class="svc-real-img-overlay sdng-best-overlay"></div>
+              <div class="svc-panel-img sdng-img-wrap">
+                <img src="/static/seeding-images/blog-ranking-new.jpg" alt="상위노출 보장 시딩" class="sdng-panel-photo" />
                 <span class="sdng-panel-badge sdng-panel-badge--ranking">Guaranteed Top</span>
                 <div class="sdng-best-crown">
                   <span class="sdng-best-crown-icon">👑</span>
@@ -238,8 +241,8 @@ export const SvcSeedingPage = () => (
 
             {/* 패널 3 — 네이버 인플루언서 */}
             <div class="svc-panel" data-sdng-panel="3">
-              <div class="svc-panel-img" style="background-image:url('/static/seeding-images/blog-influencer-new.jpg'); background-size:cover; background-position:center; position:relative;">
-                <div class="svc-real-img-overlay"></div>
+              <div class="svc-panel-img sdng-img-wrap">
+                <img src="/static/seeding-images/blog-influencer-new.jpg" alt="네이버 인플루언서 시딩" class="sdng-panel-photo" />
                 <span class="sdng-panel-badge sdng-panel-badge--premium">Premium</span>
               </div>
               <div class="svc-panel-info">
@@ -262,7 +265,8 @@ export const SvcSeedingPage = () => (
             </div>
 
           </div>{/* /svc-visual */}
-        </div>{/* /svc-interactive */}
+          </div>{/* /sdng-split-right */}
+        </div>{/* /sdng-split-layout */}
       </div>
 
       <script dangerouslySetInnerHTML={{ __html: `
@@ -289,24 +293,26 @@ export const SvcSeedingPage = () => (
     <section class="section sdng-products-section" id="sdng-insta">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-left"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
-        <div class="section-head">
-          <span class="sec-label">Instagram Seeding</span>
-          <h2 class="sec-title">인스타그램 시딩<br /><em>상품 라인업</em></h2>
-          <p class="sec-sub">해시태그와 캡션을 활용한 소프트 시딩으로 탐색 및 브랜드 인지를 확장합니다.<br />인스타그램 알고리즘 최적화로 자연스러운 브랜드 노출과 참여를 유도합니다.</p>
-        </div>
 
-        {/* 인스타 핵심 특징 태그 */}
-        <div class="sdng-insta-features">
-          <span class="sdng-insta-feat"># 해시태그 유입</span>
-          <span class="sdng-insta-feat">👁 시각적 전달</span>
-          <span class="sdng-insta-feat">🌿 자연 노출</span>
-        </div>
+        {/* 좌(타이틀+특징+리스트) / 우(패널) 통합 레이아웃 */}
+        <div class="sdng-split-layout sdng-split-layout--insta" id="sdngInstaInteractive">
 
-        {/* 동일한 interactive 좌-우 레이아웃 */}
-        <div class="svc-interactive" id="sdngInstaInteractive">
+          {/* 왼쪽: 타이틀 + 특징 + 상품 리스트 */}
+          <div class="sdng-split-left">
+            <div class="sdng-split-head">
+              <span class="sec-label">Instagram Seeding</span>
+              <h2 class="sec-title">인스타그램 시딩<br /><em>상품 라인업</em></h2>
+              <p class="sec-sub">해시태그와 캡션을 활용한 소프트 시딩으로 탐색 및 브랜드 인지를 확장합니다.<br />인스타그램 알고리즘 최적화로 자연스러운 브랜드 노출과 참여를 유도합니다.</p>
+            </div>
 
-          {/* 왼쪽: 상품 리스트 */}
-          <ul class="svc-list" id="sdngInstaList">
+            {/* 인스타 핵심 특징 태그 */}
+            <div class="sdng-insta-features">
+              <span class="sdng-insta-feat"># 해시태그 유입</span>
+              <span class="sdng-insta-feat">👁 시각적 전달</span>
+              <span class="sdng-insta-feat">🌿 자연 노출</span>
+            </div>
+
+            <ul class="svc-list" id="sdngInstaList">
             <li class="svc-list-item active" data-insta="0">
               <a href="#sdng-insta">
                 <span class="svc-list-num">01</span>
@@ -320,24 +326,17 @@ export const SvcSeedingPage = () => (
               </a>
             </li>
           </ul>
+          </div>{/* /sdng-split-left */}
 
           {/* 오른쪽: 비주얼 패널 */}
+          <div class="sdng-split-right">
           <div class="svc-visual" id="sdngInstaVisual">
 
             {/* 패널 0 — 일반 피드 시딩 */}
             <div class="svc-panel active" data-insta-panel="0">
-              <div class="svc-panel-img sdng-insta-panel-bg sdng-insta-panel-bg--basic">
-                <div class="svc-real-img-overlay"></div>
+              <div class="svc-panel-img sdng-img-wrap">
+                <img src="/static/seeding-images/insta-general-new.jpg" alt="일반 피드 시딩" class="sdng-panel-photo" />
                 <span class="sdng-panel-badge sdng-panel-badge--insta-basic">Basic</span>
-                {/* 인스타 피드 그리드 모의 UI */}
-                <div class="sdng-insta-grid-mock">
-                  <div class="sdng-insta-cell sdng-insta-cell--1"></div>
-                  <div class="sdng-insta-cell sdng-insta-cell--2"></div>
-                  <div class="sdng-insta-cell sdng-insta-cell--3"></div>
-                  <div class="sdng-insta-cell sdng-insta-cell--4"></div>
-                  <div class="sdng-insta-cell sdng-insta-cell--5"></div>
-                  <div class="sdng-insta-cell sdng-insta-cell--6"></div>
-                </div>
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">General Feed Seeding</span>
@@ -360,23 +359,9 @@ export const SvcSeedingPage = () => (
 
             {/* 패널 1 — 특화 타깃 시딩 */}
             <div class="svc-panel" data-insta-panel="1">
-              <div class="svc-panel-img sdng-insta-panel-bg sdng-insta-panel-bg--specialized">
-                <div class="svc-real-img-overlay"></div>
+              <div class="svc-panel-img sdng-img-wrap">
+                <img src="/static/seeding-images/insta-specialized-new.jpg" alt="특화 타깃 시딩" class="sdng-panel-photo" />
                 <span class="sdng-panel-badge sdng-panel-badge--insta-specialized">Specialized</span>
-                <span class="sdng-panel-rec">RECOMMEND</span>
-                {/* 특화 타깃 모의 UI */}
-                <div class="sdng-insta-target-mock">
-                  <div class="sdng-insta-target-ring">
-                    <div class="sdng-insta-target-inner">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="rgba(225,48,108,0.9)" stroke-width="1.5" width="28" height="28"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                      <span>타깃</span>
-                    </div>
-                  </div>
-                  <div class="sdng-insta-hashtag-cloud">
-                    <span>#뷰티</span><span>#맛집</span><span>#라이프</span>
-                    <span>#서울</span><span>#일상</span>
-                  </div>
-                </div>
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Specialized Target Seeding</span>
@@ -398,7 +383,8 @@ export const SvcSeedingPage = () => (
             </div>
 
           </div>{/* /svc-visual */}
-        </div>{/* /svc-interactive */}
+          </div>{/* /sdng-split-right */}
+        </div>{/* /sdng-split-layout */}
 
         {/* 인스타 시딩 안내 배너 */}
         <div class="sdng-insta-banner">

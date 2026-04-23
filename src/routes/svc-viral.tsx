@@ -298,6 +298,24 @@ export const SvcViralPage = () => (
             </div>
           ))}
         </div>
+
+        {/* 자세히 보기 — 회사소개서 연결 버튼 */}
+        <div class="vp-brochure-wrap">
+          <a
+            href="https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="vp-brochure-btn"
+          >
+            <span class="vp-brochure-dot"></span>
+            <span class="vp-brochure-text">자세히 보기</span>
+            <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+              <path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <p class="vp-brochure-hint">회사소개서에서 상세 서비스 내용을 확인하세요</p>
+        </div>
+
       </div>
     </section>
 

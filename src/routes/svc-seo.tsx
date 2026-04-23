@@ -125,7 +125,7 @@ export const SvcSeoPage = () => (
 
                 {/* 4가지 세부 작업 카드 */}
                 <div class="seop-sub-grid">
-                  <div class="seop-sub-card" style="--sc:#3b82f6">
+                  <div class="seop-sub-card seop-sub-card--blog-trigger" id="seoBlogCard" style="--sc:#3b82f6" tabindex="0" role="button" aria-label="블로그 배포 효과 보기">
                     <div class="seop-sub-icon">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
                     </div>
@@ -134,7 +134,7 @@ export const SvcSeoPage = () => (
                       <p>키워드 최적화 블로그 포스팅으로 플레이스 연관 콘텐츠를 확산</p>
                     </div>
                   </div>
-                  <div class="seop-sub-card" style="--sc:#8b5cf6">
+                  <div class="seop-sub-card seop-sub-card--trigger" id="seoInflowCard" style="--sc:#8b5cf6" tabindex="0" role="button" aria-label="유입 작업 효과 보기">
                     <div class="seop-sub-icon">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     </div>
@@ -143,7 +143,7 @@ export const SvcSeoPage = () => (
                       <p>플레이스 페이지 클릭 및 유입 수를 늘려 알고리즘 신호를 강화</p>
                     </div>
                   </div>
-                  <div class="seop-sub-card" style="--sc:#10b981">
+                  <div class="seop-sub-card seop-sub-card--trigger" id="seoReviewCard" style="--sc:#10b981" tabindex="0" role="button" aria-label="방문자 리뷰 효과 보기">
                     <div class="seop-sub-icon">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                     </div>
@@ -152,7 +152,7 @@ export const SvcSeoPage = () => (
                       <p>실제 방문자 리뷰를 축적해 신뢰도와 순위를 동시에 끌어올림</p>
                     </div>
                   </div>
-                  <div class="seop-sub-card" style="--sc:#f59e0b">
+                  <div class="seop-sub-card seop-sub-card--trigger" id="seoSaveCard" style="--sc:#f59e0b" tabindex="0" role="button" aria-label="저장 작업 효과 보기">
                     <div class="seop-sub-icon">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
                     </div>
@@ -164,44 +164,134 @@ export const SvcSeoPage = () => (
                 </div>
               </div>
 
-              {/* 오른쪽 시각화 */}
-              <div class="seop-visual">
-                <div class="seop-mock seop-mock--place">
-                  <div class="seop-mock-header">
-                    <div class="seop-mock-bar">
-                      <span class="seop-mock-dot r"></span><span class="seop-mock-dot y"></span><span class="seop-mock-dot g"></span>
+              {/* 오른쪽 시각화 — 실제 이미지 모핑 비주얼 */}
+              <div class="seop-visual" id="seopPlaceVisual">
+                {/* 블로그 배포 모핑 컨테이너 */}
+                <div class="seop-blog-morph" id="seoBlogMorph">
+
+                  {/* 레이어 1: 전체 스크린 (기본 상태) */}
+                  <div class="sbm-base" id="sbmBase">
+                    <img src="/static/seo-images/blog-before.jpg" alt="네이버 플레이스 전체 화면" class="sbm-base-img" />
+                    {/* 미묘한 테두리 프레임 */}
+                    <div class="sbm-frame"></div>
+                    {/* 클릭 힌트 */}
+                    <div class="sbm-hint" id="sbmHint">
+                      <span class="sbm-hint-icon">👆</span>
+                      <span class="sbm-hint-text">블로그 배포 카드를 클릭하세요</span>
                     </div>
-                    <div class="seop-mock-url">map.naver.com</div>
                   </div>
-                  <div class="seop-mock-body">
-                    <div class="seop-place-search">
-                      <span class="seop-place-search-icon">🔍</span>
-                      <span class="seop-place-kw">강남 맛집</span>
-                    </div>
-                    <div class="seop-place-list">
-                      <div class="seop-place-item seop-place-item--top">
-                        <span class="seop-place-rank rank-1">1</span>
-                        <div class="seop-place-info">
-                          <strong>광고주 브랜드</strong>
-                          <span>⭐ 4.9 · 리뷰 1,240</span>
+
+                  {/* 레이어 2: 모핑 확대 오버레이 (블로그 배포 클릭 시) */}
+                  <div class="sbm-morph" id="sbmMorph">
+                    {/* 흐린 배경 블러 */}
+                    <div class="sbm-backdrop"></div>
+                    {/* 확대된 블로그 리뷰 영역 */}
+                    <div class="sbm-zoom-card" id="sbmZoomCard">
+                      <img src="/static/seo-images/blog-after.jpg" alt="블로그 리뷰 증가" class="sbm-zoom-img" />
+                      {/* UP! 강조 뱃지 */}
+                      <div class="sbm-up-badge">
+                        <span class="sbm-up-text">UP!</span>
+                        <span class="sbm-up-arrow">↑</span>
+                      </div>
+                      {/* 통계 라벨 */}
+                      <div class="sbm-stat-row">
+                        <div class="sbm-stat">
+                          <strong>블로그 리뷰</strong>
+                          <span class="sbm-stat-num" id="sbmBlogNum">0</span>
                         </div>
-                        <span class="seop-place-badge">TOP</span>
-                      </div>
-                      <div class="seop-place-item">
-                        <span class="seop-place-rank rank-2">2</span>
-                        <div class="seop-place-info"><strong>경쟁사 A</strong><span>⭐ 4.5 · 리뷰 380</span></div>
-                      </div>
-                      <div class="seop-place-item">
-                        <span class="seop-place-rank rank-3">3</span>
-                        <div class="seop-place-info"><strong>경쟁사 B</strong><span>⭐ 4.3 · 리뷰 210</span></div>
+                        <div class="sbm-stat-divider"></div>
+                        <div class="sbm-stat">
+                          <strong>방문자 리뷰</strong>
+                          <span class="sbm-stat-num" id="sbmVisitNum">0</span>
+                        </div>
                       </div>
                     </div>
-                    <div class="seop-place-stats">
-                      <div class="seop-pstat"><span class="seop-pstat-label">블로그 배포</span><div class="seop-pstat-bar"><div class="seop-pstat-fill" style="width:88%;background:#3b82f6"></div></div><span>88%</span></div>
-                      <div class="seop-pstat"><span class="seop-pstat-label">리뷰 축적</span><div class="seop-pstat-bar"><div class="seop-pstat-fill" style="width:95%;background:#10b981"></div></div><span>95%</span></div>
-                      <div class="seop-pstat"><span class="seop-pstat-label">저장 수</span><div class="seop-pstat-bar"><div class="seop-pstat-fill" style="width:72%;background:#f59e0b"></div></div><span>72%</span></div>
-                    </div>
+                    {/* 닫기 버튼 */}
+                    <button class="sbm-close" id="sbmClose">✕ 닫기</button>
                   </div>
+
+                  {/* ── 레이어 3: 유입 작업 (실제 이미지 + 마우스 커서 클릭 연출) ── */}
+                  <div class="sbm-morph sbm-morph--inflow" id="sbmInflowMorph">
+                    <div class="sbm-backdrop"></div>
+                    {/* 전체 이미지를 배경으로 보여주고 그 위에 커서 클릭 */}
+                    <div class="sbm-zoom-card sbm-zoom-card--inflow" id="sbmInflowCard">
+                      {/* blog-before.jpg 를 배경 이미지로 깔기 */}
+                      <div class="sbm-inflow-img-wrap" id="sbmInflowImgWrap">
+                        <img src="/static/seo-images/blog-before.jpg" alt="플레이스 유입 작업" class="sbm-inflow-bg-img" id="sbmInflowBgImg" />
+                        {/* 클릭 타깃 하이라이트 — 플레이스 카드 영역 */}
+                        <div class="sbm-inflow-click-target" id="sbmInflowTarget"></div>
+                        {/* 마우스 커서 SVG */}
+                        <div class="sbm-cursor sbm-cursor--inflow" id="sbmCursor">
+                          <svg viewBox="0 0 24 24" width="32" height="32" fill="none">
+                            <path d="M5 3l14 9-7 1-4 7z" fill="white" stroke="#1a1a2e" stroke-width="1.2"/>
+                          </svg>
+                          <div class="sbm-cursor-ring" id="sbmCursorRing"></div>
+                        </div>
+                        {/* click! 텍스트 */}
+                        <div class="sbm-click-label sbm-click-label--inflow" id="sbmClickLabel">click !</div>
+                        {/* 유입 카운트 배지 */}
+                        <div class="sbm-inflow-badge" id="sbmInflowBadge">
+                          <span class="sbm-inflow-badge-icon">👆</span>
+                          <span class="sbm-inflow-badge-text">유입 <strong id="sbmInflowCount">0</strong></span>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="sbm-close" id="sbmInflowClose">✕ 닫기</button>
+                  </div>
+
+                  {/* ── 레이어 4: 방문자 리뷰 (블로그 배포와 동일 방식) ── */}
+                  <div class="sbm-morph sbm-morph--review" id="sbmReviewMorph">
+                    <div class="sbm-backdrop"></div>
+                    <div class="sbm-zoom-card sbm-zoom-card--review" id="sbmReviewCard">
+                      <img src="/static/seo-images/review-place.jpg" alt="방문자 리뷰 증가" class="sbm-zoom-img sbm-zoom-img--review" />
+                      <div class="sbm-up-badge sbm-up-badge--green">
+                        <span class="sbm-up-text">UP!</span>
+                        <span class="sbm-up-arrow">↑</span>
+                      </div>
+                      <div class="sbm-stat-row">
+                        <div class="sbm-stat">
+                          <strong>방문자 리뷰</strong>
+                          <span class="sbm-stat-num sbm-stat-num--green" id="sbmReviewNum">0</span>
+                        </div>
+                        <div class="sbm-stat-divider"></div>
+                        <div class="sbm-stat">
+                          <strong>블로그 리뷰</strong>
+                          <span class="sbm-stat-num sbm-stat-num--green" id="sbmReviewBlogNum">0</span>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="sbm-close" id="sbmReviewClose">✕ 닫기</button>
+                  </div>
+
+                  {/* ── 레이어 5: 저장 작업 (마우스 커서 + 저장 버튼 클릭) ── */}
+                  <div class="sbm-morph sbm-morph--save" id="sbmSaveMorph">
+                    <div class="sbm-backdrop"></div>
+                    <div class="sbm-zoom-card sbm-zoom-card--save" id="sbmSaveCard">
+                      {/* 저장 이미지 래퍼 — 커서 포지셔닝 기준 */}
+                      <div class="sbm-save-img-wrap">
+                        <img src="/static/seo-images/save-click.jpg" alt="저장 클릭" class="sbm-zoom-img sbm-zoom-img--save" id="sbmSaveImg" />
+                        {/* 저장 버튼 하이라이트 */}
+                        <div class="sbm-save-target" id="sbmSaveTarget"></div>
+                        {/* 마우스 커서 SVG */}
+                        <div class="sbm-cursor sbm-cursor--save" id="sbmSaveCursor">
+                          <svg viewBox="0 0 24 24" width="32" height="32" fill="none">
+                            <path d="M5 3l14 9-7 1-4 7z" fill="white" stroke="#1a1a2e" stroke-width="1.2"/>
+                          </svg>
+                          <div class="sbm-cursor-ring sbm-cursor-ring--amber" id="sbmSaveCursorRing"></div>
+                        </div>
+                        <div class="sbm-click-label sbm-click-label--amber" id="sbmSaveClickLabel">저장 !</div>
+                      </div>
+                      {/* 저장 카운트 */}
+                      <div class="sbm-stat-row sbm-stat-row--save">
+                        <div class="sbm-stat">
+                          <strong>저장 수 증가</strong>
+                          <span class="sbm-stat-num sbm-stat-num--amber" id="sbmSaveNum">0</span>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="sbm-close" id="sbmSaveClose">✕ 닫기</button>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -457,6 +547,7 @@ export const SvcSeoPage = () => (
 
         <script dangerouslySetInnerHTML={{ __html: `
 (function(){
+  /* ── 탭 전환 ── */
   var tabs = document.querySelectorAll('#seopTabs .seop-tab');
   var panels = document.querySelectorAll('#seopPanels .seop-panel');
   tabs.forEach(function(tab, i){
@@ -467,6 +558,166 @@ export const SvcSeoPage = () => (
       if(panels[i]) panels[i].classList.add('active');
     });
   });
+
+  /* ════════════════════════════════════════════
+     블로그 배포 · 유입 · 방문자 리뷰 · 저장 모핑
+  ════════════════════════════════════════════ */
+
+  /* 공통 카운트업 */
+  function animCount(el, target, duration){
+    var startTime = null;
+    function step(ts){
+      if(!startTime) startTime = ts;
+      var prog = Math.min((ts - startTime) / duration, 1);
+      var ease = 1 - Math.pow(1 - prog, 3);
+      el.textContent = Math.round(ease * target);
+      if(prog < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* 모든 모핑 닫기 */
+  var ALL_MORPHS   = ['sbmMorph','sbmInflowMorph','sbmReviewMorph','sbmSaveMorph'];
+  var ALL_TRIGGERS = ['seoBlogCard','seoInflowCard','seoReviewCard','seoSaveCard'];
+  var hint = document.getElementById('sbmHint');
+  /* 인터벌 레퍼런스를 상위 스코프에 선언 */
+  var _inflowInterval = null;
+  var _saveInterval   = null;
+
+  function _clearIntervals(){
+    if(_inflowInterval){ clearInterval(_inflowInterval); _inflowInterval = null; }
+    if(_saveInterval){   clearInterval(_saveInterval);   _saveInterval   = null; }
+    var iw = document.getElementById('sbmInflowImgWrap');
+    var ib = document.getElementById('sbmInflowBgImg');
+    var sw = document.querySelector('#sbmSaveCard .sbm-save-img-wrap');
+    if(iw) iw.classList.remove('clicking');
+    if(ib) ib.classList.remove('flash');
+    if(sw) sw.classList.remove('clicking');
+  }
+
+  function closeAll(){
+    ALL_MORPHS.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.classList.remove('active');
+    });
+    ALL_TRIGGERS.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.classList.remove('active');
+    });
+    if(hint) hint.style.opacity = '1';
+    _clearIntervals();
+    /* 숫자 리셋 */
+    ['sbmBlogNum','sbmVisitNum','sbmInflowCount',
+     'sbmReviewNum','sbmReviewBlogNum','sbmSaveNum'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.textContent = '0';
+    });
+  }
+
+  /* ── 블로그 배포 ── */
+  var blogCard = document.getElementById('seoBlogCard');
+  var blogMorph = document.getElementById('sbmMorph');
+  if(blogCard){
+    blogCard.addEventListener('click', function(){
+      closeAll();
+      if(hint) hint.style.opacity = '0';
+      blogCard.classList.add('active');
+      blogMorph.classList.add('active');
+      setTimeout(function(){
+        animCount(document.getElementById('sbmBlogNum'),  239, 1000);
+        animCount(document.getElementById('sbmVisitNum'), 401, 1200);
+      }, 300);
+    });
+    blogCard.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); blogCard.click(); }
+    });
+  }
+  var blogClose = document.getElementById('sbmClose');
+  if(blogClose) blogClose.addEventListener('click', closeAll);
+
+  /* ── 유입 작업 ── */
+  var inflowCard  = document.getElementById('seoInflowCard');
+  var inflowMorph = document.getElementById('sbmInflowMorph');
+
+  if(inflowCard){
+    inflowCard.addEventListener('click', function(){
+      closeAll();
+      if(hint) hint.style.opacity = '0';
+      inflowCard.classList.add('active');
+      inflowMorph.classList.add('active');
+      /* 카운트업 + 반복 클릭 효과 */
+      setTimeout(function(){
+        animCount(document.getElementById('sbmInflowCount'), 128, 1400);
+        /* 2.4초 주기로 이미지 깜빡임 + 하이라이트 */
+        var iw = document.getElementById('sbmInflowImgWrap');
+        var ib = document.getElementById('sbmInflowBgImg');
+        _inflowInterval = setInterval(function(){
+          if(iw) iw.classList.add('clicking');
+          if(ib) ib.classList.add('flash');
+          setTimeout(function(){
+            if(iw) iw.classList.remove('clicking');
+            if(ib) ib.classList.remove('flash');
+          }, 200);
+        }, 2400);
+      }, 500);
+    });
+    inflowCard.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); inflowCard.click(); }
+    });
+  }
+  var inflowClose = document.getElementById('sbmInflowClose');
+  if(inflowClose) inflowClose.addEventListener('click', closeAll);
+
+  /* ── 방문자 리뷰 ── */
+  var reviewCard  = document.getElementById('seoReviewCard');
+  var reviewMorph = document.getElementById('sbmReviewMorph');
+  if(reviewCard){
+    reviewCard.addEventListener('click', function(){
+      closeAll();
+      if(hint) hint.style.opacity = '0';
+      reviewCard.classList.add('active');
+      reviewMorph.classList.add('active');
+      setTimeout(function(){
+        animCount(document.getElementById('sbmReviewNum'),    401, 1100);
+        animCount(document.getElementById('sbmReviewBlogNum'),239, 1300);
+      }, 300);
+    });
+    reviewCard.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); reviewCard.click(); }
+    });
+  }
+  var reviewClose = document.getElementById('sbmReviewClose');
+  if(reviewClose) reviewClose.addEventListener('click', closeAll);
+
+  /* ── 저장 작업 ── */
+  var saveCard  = document.getElementById('seoSaveCard');
+  var saveMorph = document.getElementById('sbmSaveMorph');
+
+  if(saveCard){
+    saveCard.addEventListener('click', function(){
+      closeAll();
+      if(hint) hint.style.opacity = '0';
+      saveCard.classList.add('active');
+      saveMorph.classList.add('active');
+      setTimeout(function(){
+        animCount(document.getElementById('sbmSaveNum'), 347, 1200);
+        /* 2.4초 주기로 저장 버튼 하이라이트 + 이미지 깜빡임 */
+        var sw = document.querySelector('#sbmSaveCard .sbm-save-img-wrap');
+        _saveInterval = setInterval(function(){
+          if(sw) sw.classList.add('clicking');
+          setTimeout(function(){
+            if(sw) sw.classList.remove('clicking');
+          }, 200);
+        }, 2400);
+      }, 500);
+    });
+    saveCard.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); saveCard.click(); }
+    });
+  }
+  var saveClose = document.getElementById('sbmSaveClose');
+  if(saveClose) saveClose.addEventListener('click', closeAll);
+
 })();
         `}} />
 
