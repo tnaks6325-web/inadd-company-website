@@ -499,6 +499,46 @@ export const SvcInfluencerPage = () => (
               </div>
             </div>
 
+            {/* 중분류 03 — 인스타 피드 연계 */}
+            <div class="svctab-item" data-acc="0-2">
+              <button class="svctab-item-trigger">
+                <div class="svctab-item-left">
+                  <span class="svctab-item-idx">03</span>
+                  <div class="svctab-item-info">
+                    <span class="svctab-item-name">인스타 피드 연계</span>
+                    <span class="svctab-item-en">Instagram Feed Integration</span>
+                  </div>
+                </div>
+                <div class="svctab-item-arrow">
+                  <svg viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </button>
+              <div class="svctab-item-body">
+                <div class="svctab-item-content">
+                  <div class="svctab-item-img-wrap" data-placeholder="인스타 피드 연계 이미지">
+                    <div class="svctab-img-placeholder">
+                      <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="6" stroke="currentColor" stroke-width="1.5" opacity=".3"/><path d="M4 32l10-10 8 8 6-6 16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/><circle cx="14" cy="20" r="3" stroke="currentColor" stroke-width="1.5" opacity=".3"/></svg>
+                      <span>이미지 준비 중</span>
+                    </div>
+                  </div>
+                  <div class="svctab-item-desc">
+                    <div class="svctab-desc-tags">
+                      <span style="--tc:#f472b6">팬덤 소통</span>
+                      <span style="--tc:#f472b6">브랜드 친밀감</span>
+                      <span style="--tc:#f472b6">피드 전략</span>
+                      <span style="--tc:#f472b6">진정성</span>
+                    </div>
+                    <p class="svctab-desc-text">단순 노출을 넘어 <strong>팬덤 소통과 브랜드 친밀감</strong>을 동시에 강화합니다. 정교한 인스타그램 피드 전략으로 진정성 있는 팬층을 공략하고 브랜드 확산을 유도합니다.</p>
+                    <ul class="svctab-desc-points">
+                      <li><span class="svctab-desc-dot" style="--dc:#f472b6"></span>피드·스토리·릴스 통합 콘텐츠 기획</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#f472b6"></span>팬덤 기반 자연스러운 브랜드 노출</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#f472b6"></span>인플루언서 협찬과 연계해 확산 시너지 극대화</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>{/* /acc0 */}
         </div>{/* /panel0 */}
 
