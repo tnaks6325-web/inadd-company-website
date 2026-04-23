@@ -149,36 +149,16 @@ export const SvcInfluencerPage = () => (
               <li><span class="ifl-data-dot"></span>구독자 이상 급증 · 매입 의심 채널 감지</li>
             </ul>
           </div>
-          <div class="ifl-data-img-wrap">
-            <div class="ifl-data-img-placeholder" id="ifl-img-01">
-              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="52" height="52" rx="14" fill="rgba(26,107,255,0.1)"/>
-                <path d="M10 38 L19 24 L26 30 L35 16 L44 26" stroke="#1a6bff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <circle cx="19" cy="24" r="3.5" fill="#1a6bff" opacity="0.6"/>
-                <circle cx="35" cy="16" r="3.5" fill="#1a6bff" opacity="0.6"/>
-                <circle cx="26" cy="30" r="2.5" fill="rgba(26,107,255,0.4)"/>
-              </svg>
-              <p>데이터 리포트 이미지</p>
-              <span>이미지를 업로드하면 여기에 표시됩니다</span>
-            </div>
+          <div class="ifl-data-img-wrap ifl-data-img-wrap--report">
+            <img src="/static/images/process/data-report.jpg" alt="구독자 수 및 조회수 추이 데이터 리포트 차트" />
           </div>
         </div>
 
         {/* 02 — 필터링 시스템 */}
         <div class="ifl-data-row ifl-data-row--rev">
-          <div class="ifl-data-img-wrap">
-            <div class="ifl-data-img-placeholder" id="ifl-img-02">
-              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="52" height="52" rx="14" fill="rgba(26,107,255,0.1)"/>
-                <rect x="10" y="13" width="32" height="5" rx="2.5" fill="#1a6bff" opacity="0.35"/>
-                <rect x="10" y="24" width="24" height="5" rx="2.5" fill="#1a6bff" opacity="0.35"/>
-                <rect x="10" y="35" width="28" height="5" rx="2.5" fill="#1a6bff" opacity="0.35"/>
-                <circle cx="40" cy="37" r="8" stroke="#1a6bff" stroke-width="2" fill="none"/>
-                <path d="M46 43 L50 47" stroke="#1a6bff" stroke-width="2.5" stroke-linecap="round"/>
-              </svg>
-              <p>필터링 시스템 이미지</p>
-              <span>이미지를 업로드하면 여기에 표시됩니다</span>
-            </div>
+          <div class="ifl-data-img-wrap ifl-data-img-wrap--filter">
+            <img src="/static/images/process/filter-list.jpg" alt="크리에이터 상세 분석 리스트 뷰" class="ifl-filter-img ifl-filter-img--top" />
+            <img src="/static/images/process/filter-grid.jpg" alt="크리에이터 그리드 필터링 시스템" class="ifl-filter-img ifl-filter-img--bottom" />
           </div>
           <div class="ifl-data-text">
             <div class="ifl-data-num">02</div>

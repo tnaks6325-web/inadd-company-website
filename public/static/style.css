@@ -8601,26 +8601,39 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   object-fit: cover;
   display: block;
 }
-.ifl-data-img-placeholder {
-  position: absolute;
-  inset: 0;
+
+/* 01 — 리포트 이미지: 흰 배경 차트이므로 살짝 라운딩만 */
+.ifl-data-img-wrap--report {
+  background: #fff;
+  border-color: rgba(255,255,255,0.12);
+  aspect-ratio: 16 / 7;
+}
+.ifl-data-img-wrap--report img {
+  object-fit: contain;
+  padding: 12px;
+  background: #fff;
+}
+
+/* 02 — 필터링: 2장 상하 스택 */
+.ifl-data-img-wrap--filter {
+  aspect-ratio: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 24px;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  overflow: visible;
 }
-.ifl-data-img-placeholder p {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.38);
+.ifl-filter-img {
+  width: 100%;
+  border-radius: 14px;
+  display: block;
+  border: 1px solid rgba(255,255,255,0.08);
+  object-fit: cover;
+  object-position: top;
 }
-.ifl-data-img-placeholder span {
-  font-size: 12px;
-  color: rgba(255,255,255,0.2);
-  text-align: center;
-}
+.ifl-filter-img--top  { height: 240px; }
+.ifl-filter-img--bottom { height: 200px; }
 
 /* ── 반응형 ── */
 @media (max-width: 1024px) {
@@ -8629,6 +8642,8 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .ifl-data-row--rev .ifl-data-img-wrap { order: 0; }
   .ifl-data-head { margin-bottom: 64px; }
   .ifl-data-counter-bar { flex-wrap: wrap; justify-content: center; }
+  .ifl-filter-img--top  { height: 200px; }
+  .ifl-filter-img--bottom { height: 160px; }
 }
 @media (max-width: 640px) {
   .ifl-data-section { padding: 64px 0 72px; }
@@ -8636,6 +8651,8 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .ifl-data-title { font-size: 20px; }
   .ifl-data-counter-item { padding: 14px 20px; }
   .ifl-data-counter-num { font-size: 26px; }
+  .ifl-filter-img--top  { height: 160px; }
+  .ifl-filter-img--bottom { height: 130px; }
 }
 
 .ifl2-section {
