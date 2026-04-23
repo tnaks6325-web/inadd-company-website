@@ -88,6 +88,12 @@ export const SvcOliveYoungPage = () => (
 
           {/* 01 리뷰 마케팅 */}
           <div class="oy-card oy-card--review">
+            <div class="oy-card-img-wrap">
+              <img src="/static/oy-images/oy-review.jpg" alt="리뷰 마케팅" class="oy-card-img" />
+              <div class="oy-card-img-overlay">
+                <span class="oy-card-img-badge">Review Marketing</span>
+              </div>
+            </div>
             <div class="oy-card-header">
               <div class="oy-card-icon-wrap">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -115,6 +121,12 @@ export const SvcOliveYoungPage = () => (
 
           {/* 02 랭킹 작업 */}
           <div class="oy-card oy-card--ranking">
+            <div class="oy-card-img-wrap">
+              <img src="/static/oy-images/oy-ranking.jpg" alt="랭킹 작업" class="oy-card-img" />
+              <div class="oy-card-img-overlay">
+                <span class="oy-card-img-badge oy-card-img-badge--ranking">Category Ranking</span>
+              </div>
+            </div>
             <div class="oy-card-header">
               <div class="oy-card-icon-wrap">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
@@ -142,6 +154,12 @@ export const SvcOliveYoungPage = () => (
 
           {/* 03 상위 노출 */}
           <div class="oy-card oy-card--exposure">
+            <div class="oy-card-img-wrap">
+              <img src="/static/oy-images/oy-exposure.jpg" alt="상위 노출" class="oy-card-img" />
+              <div class="oy-card-img-overlay">
+                <span class="oy-card-img-badge oy-card-img-badge--exposure">Search Exposure</span>
+              </div>
+            </div>
             <div class="oy-card-header">
               <div class="oy-card-icon-wrap">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -168,21 +186,24 @@ export const SvcOliveYoungPage = () => (
           </div>
 
           {/* 04 구매 전환 */}
-          <div class="oy-card oy-card--conversion">
-            <div class="oy-card-header">
-              <div class="oy-card-icon-wrap">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-              </div>
-              <div>
-                <p class="oy-card-en">Sales Conversion</p>
-                <h3 class="oy-card-title">구매 전환</h3>
+          <div class="oy-card oy-card--conversion oy-card--conversion-highlight">
+            <div class="oy-conversion-header">
+              <div class="oy-conversion-badge">✦ SYNERGY EFFECT</div>
+              <div class="oy-card-header">
+                <div class="oy-card-icon-wrap oy-card-icon-wrap--conversion">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                </div>
+                <div>
+                  <p class="oy-card-en">Sales Conversion</p>
+                  <h3 class="oy-card-title oy-card-title--conversion">구매 전환</h3>
+                </div>
               </div>
             </div>
             <div class="oy-card-tags">
-              <span class="oy-tag">#통합 시너지</span>
-              <span class="oy-tag">#전환율 극대화</span>
+              <span class="oy-tag oy-tag--conversion">#통합 시너지</span>
+              <span class="oy-tag oy-tag--conversion">#전환율 극대화</span>
             </div>
-            <p class="oy-card-desc">
+            <p class="oy-card-desc oy-card-desc--conversion">
               <strong>리뷰 마케팅 + 랭킹 작업 + 상위 노출</strong> 세 가지를 함께 진행할 때 시너지 효과가 극대화됩니다.<br />
               각 서비스가 유기적으로 연결되어 <strong>구매 전환율이 복합적으로 상승</strong>하는 선순환 구조를 만듭니다.
             </p>
@@ -205,6 +226,22 @@ export const SvcOliveYoungPage = () => (
               <div class="oy-cf-result">
                 <span class="oy-cf-icon">📈</span>
                 <span>구매 전환 ↑</span>
+              </div>
+            </div>
+            <div class="oy-conversion-kpi">
+              <div class="oy-ckpi-item">
+                <strong>+340%</strong>
+                <span>평균 매출 증가</span>
+              </div>
+              <div class="oy-ckpi-divider"></div>
+              <div class="oy-ckpi-item">
+                <strong>TOP 5</strong>
+                <span>카테고리 순위</span>
+              </div>
+              <div class="oy-ckpi-divider"></div>
+              <div class="oy-ckpi-item">
+                <strong>3개월</strong>
+                <span>목표 달성 기간</span>
               </div>
             </div>
           </div>

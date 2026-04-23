@@ -13699,6 +13699,154 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 }
 .oy-cf-result .oy-cf-icon { font-size: 20px; }
 
+/* ── 카드 이미지 ── */
+.oy-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  margin: -28px -28px 20px -28px;
+  width: calc(100% + 56px);
+}
+.oy-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s cubic-bezier(.25,.46,.45,.94);
+  display: block;
+}
+.oy-card:hover .oy-card-img { transform: scale(1.06); }
+.oy-card-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(4,8,20,0.72) 0%, rgba(4,8,20,0.1) 55%, transparent 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 14px 16px;
+}
+.oy-card-img-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(3,199,90,0.22);
+  border: 1px solid rgba(3,199,90,0.4);
+  color: #03c75a;
+}
+.oy-card-img-badge--ranking {
+  background: rgba(26,107,255,0.22);
+  border-color: rgba(26,107,255,0.4);
+  color: #1a6bff;
+}
+.oy-card-img-badge--exposure {
+  background: rgba(245,158,11,0.22);
+  border-color: rgba(245,158,11,0.4);
+  color: #f59e0b;
+}
+
+/* ── 구매전환 강조 카드 ── */
+.oy-card--conversion-highlight {
+  background: linear-gradient(145deg, rgba(225,29,72,0.08) 0%, rgba(14,16,33,0.95) 40%);
+  border: 1.5px solid rgba(225,29,72,0.35) !important;
+  box-shadow: 0 0 32px rgba(225,29,72,0.1), 0 8px 24px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: visible;
+}
+.oy-card--conversion-highlight::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(225,29,72,0.4), rgba(255,100,130,0.15), transparent 60%);
+  z-index: 0;
+  pointer-events: none;
+}
+.oy-card--conversion-highlight:hover {
+  border-color: rgba(225,29,72,0.6) !important;
+  box-shadow: 0 0 48px rgba(225,29,72,0.2), 0 20px 48px rgba(225,29,72,0.1);
+  transform: translateY(-6px);
+}
+.oy-conversion-header {
+  position: relative;
+  z-index: 1;
+}
+.oy-conversion-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  color: #e11d48;
+  background: rgba(225,29,72,0.12);
+  border: 1px solid rgba(225,29,72,0.3);
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin-bottom: 12px;
+}
+.oy-card-icon-wrap--conversion {
+  background: rgba(225,29,72,0.15) !important;
+  border-color: rgba(225,29,72,0.35) !important;
+  color: #e11d48 !important;
+  box-shadow: 0 0 16px rgba(225,29,72,0.2);
+}
+.oy-card-title--conversion {
+  background: linear-gradient(90deg, #fff 30%, #e11d48 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.oy-card-desc--conversion {
+  color: rgba(255,255,255,0.72) !important;
+  font-size: 14px !important;
+}
+.oy-card-desc--conversion strong {
+  color: #fff !important;
+  font-weight: 700;
+}
+.oy-tag--conversion {
+  color: rgba(225,29,72,0.9) !important;
+  background: rgba(225,29,72,0.12) !important;
+  border-color: rgba(225,29,72,0.3) !important;
+}
+
+/* 구매전환 KPI 배너 */
+.oy-conversion-kpi {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: rgba(225,29,72,0.08);
+  border: 1px solid rgba(225,29,72,0.2);
+  border-radius: 12px;
+}
+.oy-ckpi-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.oy-ckpi-item strong {
+  font-size: 22px;
+  font-weight: 800;
+  color: #e11d48;
+  line-height: 1;
+}
+.oy-ckpi-item span {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+}
+.oy-ckpi-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(225,29,72,0.2);
+  flex-shrink: 0;
+}
+
 /* 하단 배너 */
 .oy-scenario-banner {
   display: flex;
