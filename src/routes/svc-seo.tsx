@@ -509,34 +509,33 @@ export const SvcSeoPage = () => (
                     <div class="seop-mock-url">instagram.com/explore</div>
                   </div>
                   <div class="seop-mock-body">
-                    {/* 검색바 — 타이핑 JS가 채움 */}
+                    {/* 검색바 — #올영 타이핑 후 자동완성 3개 등장 */}
                     <div class="seop-insta-searchbar">
                       <span class="seop-insta-hash">#</span>
                       <span class="seop-insta-kw" id="instaTypingText"></span><span class="seop-cursor seop-cursor--insta" id="instaCursor">|</span>
                     </div>
-                    {/* 그리드 — 기본 hidden, 타이핑 완료 후 flash-in */}
-                    <div class="seop-insta-grid" id="instaGrid">
-                      <div class="seop-insta-cell seop-insta-cell--featured">
-                        <div class="seop-insta-overlay">
-                          <span>❤️ 2,840</span>
-                          <div class="seop-insta-fbadge">TOP</div>
-                        </div>
+                    {/* 자동완성 드롭다운 — 타이핑 완료 후 순차 등장 */}
+                    <div class="seop-insta-suggest" id="instaSuggest">
+                      <div class="seop-insta-sug-item" id="instaSug0" data-tag="올영추천템">
+                        <span class="seop-insta-sug-hash">#</span>
+                        <span class="seop-insta-sug-text">올영<strong>추천템</strong></span>
+                        <span class="seop-insta-sug-cnt">게시물 24.8만</span>
                       </div>
-                      <div class="seop-insta-cell seop-insta-cell--brand">
-                        <div class="seop-insta-overlay"><span>❤️ 1,920</span></div>
+                      <div class="seop-insta-sug-item" id="instaSug1" data-tag="올영세일">
+                        <span class="seop-insta-sug-hash">#</span>
+                        <span class="seop-insta-sug-text">올영<strong>세일</strong></span>
+                        <span class="seop-insta-sug-cnt">게시물 18.2만</span>
                       </div>
-                      <div class="seop-insta-cell seop-insta-cell--brand2">
-                        <div class="seop-insta-overlay"><span>❤️ 1,540</span></div>
+                      <div class="seop-insta-sug-item" id="instaSug2" data-tag="올영추천">
+                        <span class="seop-insta-sug-hash">#</span>
+                        <span class="seop-insta-sug-text">올영<strong>추천</strong></span>
+                        <span class="seop-insta-sug-cnt">게시물 31.4만</span>
                       </div>
-                      <div class="seop-insta-cell seop-insta-cell--c4">
-                        <div class="seop-insta-overlay"><span>❤️ 980</span></div>
-                      </div>
-                      <div class="seop-insta-cell seop-insta-cell--c5">
-                        <div class="seop-insta-overlay"><span>❤️ 760</span></div>
-                      </div>
-                      <div class="seop-insta-cell seop-insta-cell--c6">
-                        <div class="seop-insta-overlay"><span>❤️ 640</span></div>
-                      </div>
+                    </div>
+                    {/* 이미지 결과 영역 — 자동완성 클릭 시 해당 이미지 표시 */}
+                    <div class="seop-insta-result" id="instaResult">
+                      <div class="seop-insta-result-header" id="instaResultTag"></div>
+                      <img class="seop-insta-result-img" id="instaResultImg" src="" alt="" />
                     </div>
                     <div class="seop-insta-legend" id="instaLegend">상위 노출된 브랜드 콘텐츠</div>
                   </div>
@@ -555,48 +554,92 @@ export const SvcSeoPage = () => (
      변수·함수 먼저 선언 — 탭 이벤트 등록보다 앞에 위치
   ══════════════════════════════════════════════ */
 
-  /* ── 패널 3 — 인스타: 타이핑 → 그리드 깜빡임 (유일하게 JS 애니 유지) ── */
-  var INSTA_KEYWORD = '강남헬스장';
+  /* ── 패널 3 — 인스타: #올영 타이핑 → 자동완성 3개 → 클릭 시 이미지 전환 ── */
+  var INSTA_KEYWORD = '올영';
   var instaTimers   = [];
   var instaPlayed   = false;
+
+  /* 태그별 이미지 매핑 */
+  var INSTA_IMAGES = {
+    '올영추천템': '/static/seo-images/insta-rec.jpg',
+    '올영세일':   '/static/seo-images/insta-sale.jpg',
+    '올영추천':   '/static/seo-images/insta-best.jpg'
+  };
+
+  function showInstaResult(tag){
+    var resultEl  = document.getElementById('instaResult');
+    var tagEl     = document.getElementById('instaResultTag');
+    var imgEl     = document.getElementById('instaResultImg');
+    var legendEl  = document.getElementById('instaLegend');
+    var suggestEl = document.getElementById('instaSuggest');
+    if(!resultEl || !imgEl) return;
+
+    /* 자동완성 → 검색창 텍스트 업데이트 */
+    var typingEl = document.getElementById('instaTypingText');
+    if(typingEl) typingEl.textContent = tag;
+
+    /* 자동완성 리스트 숨기기 */
+    if(suggestEl) suggestEl.style.display = 'none';
+
+    /* 이미지 전환 */
+    imgEl.src = INSTA_IMAGES[tag] || '';
+    if(tagEl) tagEl.textContent = '#' + tag;
+    resultEl.classList.remove('insta-result-visible');
+    void resultEl.offsetWidth; /* reflow 강제 */
+    resultEl.classList.add('insta-result-visible');
+    if(legendEl) legendEl.classList.add('insta-legend-visible');
+
+    /* 클릭된 아이템 하이라이트 */
+    document.querySelectorAll('.seop-insta-sug-item').forEach(function(el){
+      el.classList.toggle('active', el.dataset.tag === tag);
+    });
+  }
 
   function startInstaAnim(){
     if(instaPlayed) return;
     instaPlayed = true;
-    var typingEl = document.getElementById('instaTypingText');
-    var cursorEl = document.getElementById('instaCursor');
-    var gridEl   = document.getElementById('instaGrid');
-    var legendEl = document.getElementById('instaLegend');
+    var typingEl  = document.getElementById('instaTypingText');
+    var cursorEl  = document.getElementById('instaCursor');
+    var suggestEl = document.getElementById('instaSuggest');
+    var sugItems  = document.querySelectorAll('.seop-insta-sug-item');
     if(!typingEl) return;
+
+    /* 초기화 */
     typingEl.textContent = '';
     if(cursorEl) cursorEl.style.display = '';
-    if(gridEl){ gridEl.classList.remove('insta-flash','insta-visible','insta-flash2'); }
+    if(suggestEl){ suggestEl.style.display = ''; suggestEl.classList.remove('suggest-visible'); }
+    sugItems.forEach(function(el){ el.classList.remove('sug-visible','active'); });
+    var resultEl = document.getElementById('instaResult');
+    if(resultEl) resultEl.classList.remove('insta-result-visible');
+    var legendEl = document.getElementById('instaLegend');
     if(legendEl) legendEl.classList.remove('insta-legend-visible');
 
-    /* 1. 타이핑 (85ms 간격) */
+    /* 1. #올영 타이핑 (90ms 간격) */
     var chars = INSTA_KEYWORD.split('');
     chars.forEach(function(ch, idx){
       instaTimers.push(setTimeout(function(){
         typingEl.textContent += ch;
-      }, 85 * idx));
+      }, 90 * idx));
     });
 
-    /* 2. 타이핑 완료 → 커서 숨김 → 그리드 깜빡이며 등장 */
-    var typingDone = 85 * chars.length + 350;
+    /* 2. 타이핑 완료 → 커서 깜빡임 유지 → 자동완성 순차 등장 */
+    var typingDone = 90 * chars.length + 400;
+    if(suggestEl){
+      instaTimers.push(setTimeout(function(){
+        suggestEl.classList.add('suggest-visible');
+      }, typingDone));
+    }
+    sugItems.forEach(function(el, idx){
+      instaTimers.push(setTimeout(function(){
+        el.classList.add('sug-visible');
+      }, typingDone + 80 + idx * 120));
+    });
+
+    /* 3. 자동완성 등장 완료 → 첫 번째 항목 자동 클릭 연출 */
+    var allDone = typingDone + 80 + (sugItems.length - 1) * 120 + 600;
     instaTimers.push(setTimeout(function(){
-      if(cursorEl) cursorEl.style.display = 'none';
-      if(gridEl)   gridEl.classList.add('insta-flash');
-    }, typingDone));
-    instaTimers.push(setTimeout(function(){
-      if(gridEl){ gridEl.classList.remove('insta-flash'); gridEl.classList.add('insta-visible'); }
-    }, typingDone + 120));
-    instaTimers.push(setTimeout(function(){
-      if(gridEl) gridEl.classList.add('insta-flash2');
-    }, typingDone + 320));
-    instaTimers.push(setTimeout(function(){
-      if(gridEl) gridEl.classList.remove('insta-flash2');
-      if(legendEl) legendEl.classList.add('insta-legend-visible');
-    }, typingDone + 480));
+      showInstaResult('올영추천템');
+    }, allDone));
   }
 
   /* ── 탭 전환 ── */
@@ -618,6 +661,17 @@ export const SvcSeoPage = () => (
 
       /* 인스타 탭만 JS 애니 실행 */
       if(tabIdx === 3 && !instaPlayed) { startInstaAnim(); }
+    });
+  }
+
+  /* ── 인스타 자동완성 항목 클릭 ── */
+  var suggestContainer = document.getElementById('instaSuggest');
+  if(suggestContainer){
+    suggestContainer.addEventListener('click', function(e){
+      var item = e.target.closest('.seop-insta-sug-item');
+      if(!item) return;
+      var tag = item.dataset.tag;
+      if(tag) showInstaResult(tag);
     });
   }
 

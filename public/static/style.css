@@ -12448,32 +12448,101 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .seop-panel.active .seop-yt-item:nth-child(3) { animation-delay: 0.35s; }
 
 /* ══════════════════════════════════════════
-   인스타 — 그리드 깜빡임 등장
+   인스타 — 자동완성 드롭다운 + 이미지 결과
 ══════════════════════════════════════════ */
-#instaGrid {
+
+/* 자동완성 드롭다운 */
+.seop-insta-suggest {
+  display: none;
+  flex-direction: column;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.seop-insta-suggest.suggest-visible {
+  display: flex;
+}
+.seop-insta-sug-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
   opacity: 0;
-  transition: opacity 0.18s ease;
+  transform: translateY(-6px);
+  transition: opacity 0.22s ease, transform 0.22s ease, background 0.15s;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
-/* 첫 번째 플래시 (순간 밝게) */
-#instaGrid.insta-flash {
+.seop-insta-sug-item:last-child { border-bottom: none; }
+.seop-insta-sug-item.sug-visible {
   opacity: 1;
-  filter: brightness(2.2) saturate(0.5);
+  transform: translateY(0);
 }
-/* 정상 표시 */
-#instaGrid.insta-visible {
+.seop-insta-sug-item:hover,
+.seop-insta-sug-item.active {
+  background: rgba(236,72,153,0.18);
+}
+.seop-insta-sug-hash {
+  color: #ec4899;
+  font-size: 12px;
+  font-weight: 700;
+}
+.seop-insta-sug-text {
+  font-size: 12px;
+  color: rgba(255,255,255,0.85);
+  flex: 1;
+}
+.seop-insta-sug-text strong {
+  color: #fff;
+  font-weight: 700;
+}
+.seop-insta-sug-cnt {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  white-space: nowrap;
+}
+
+/* 이미지 결과 영역 */
+.seop-insta-result {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+  visibility: hidden;
+}
+.seop-insta-result.insta-result-visible {
   opacity: 1;
-  filter: brightness(1);
-  transition: opacity 0.18s ease, filter 0.25s ease;
+  transform: translateY(0);
+  pointer-events: auto;
+  visibility: visible;
 }
-/* 두 번째 살짝 플래시 */
-#instaGrid.insta-flash2 {
-  filter: brightness(1.5) saturate(1.2);
-  transition: filter 0.1s ease;
+.seop-insta-result-header {
+  font-size: 11px;
+  font-weight: 700;
+  color: #ec4899;
+  padding: 2px 0;
 }
-/* 레전드 fade-in */
+.seop-insta-result-img {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+  object-fit: cover;
+}
+
+/* 레전드 */
 #instaLegend {
   opacity: 0;
   transition: opacity 0.4s ease;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  padding-top: 4px;
 }
 #instaLegend.insta-legend-visible {
   opacity: 1;
