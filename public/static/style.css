@@ -12417,40 +12417,35 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .seop-cursor { animation: blink 1s step-end infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
-/* 기본: 숨김 상태 */
-.seop-auto-anim {
-  opacity: 0;
-  transform: translateX(-10px);
-  transition: opacity 0.28s ease, transform 0.28s ease;
+/* ══════════════════════════════════════════
+   자동완성 — 패널 활성 시 아이템 순차 페이드인 (CSS only)
+══════════════════════════════════════════ */
+@keyframes autoItemIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
-/* JS가 추가하는 클래스 */
-.seop-auto-anim.visible {
-  opacity: 1;
-  transform: translateX(0);
+.seop-panel.active .seop-auto-item {
+  animation: autoItemIn 0.32s ease both;
 }
-/* 검색창 타이핑 커서 */
-.seop-cursor--yt,
-.seop-cursor--insta {
-  animation: blink 1s step-end infinite;
-  color: rgba(255,255,255,0.6);
-  margin-left: 1px;
-}
+.seop-panel.active .seop-auto-item:nth-child(1) { animation-delay: 0.05s; }
+.seop-panel.active .seop-auto-item:nth-child(2) { animation-delay: 0.12s; }
+.seop-panel.active .seop-auto-item:nth-child(3) { animation-delay: 0.19s; }
+.seop-panel.active .seop-auto-item:nth-child(4) { animation-delay: 0.26s; }
+.seop-panel.active .seop-auto-item:nth-child(5) { animation-delay: 0.33s; }
 
 /* ══════════════════════════════════════════
-   유튜브 — 영상 목록 순차 등장
+   유튜브 — 패널 활성 시 영상 아이템 순차 페이드인 (CSS only)
 ══════════════════════════════════════════ */
-.seop-yt-anim {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.32s ease, transform 0.32s ease;
+@keyframes ytItemIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.seop-yt-anim.visible {
-  opacity: 1;
-  transform: translateY(0);
+.seop-panel.active .seop-yt-item {
+  animation: ytItemIn 0.35s ease both;
 }
-/* 기본 숨김 상태 (JS 시작 전 첫 렌더) */
-#ytList .seop-yt-anim { opacity: 0; }
-#autoList .seop-auto-anim { opacity: 0; }
+.seop-panel.active .seop-yt-item:nth-child(1) { animation-delay: 0.05s; }
+.seop-panel.active .seop-yt-item:nth-child(2) { animation-delay: 0.20s; }
+.seop-panel.active .seop-yt-item:nth-child(3) { animation-delay: 0.35s; }
 
 /* ══════════════════════════════════════════
    인스타 — 그리드 깜빡임 등장

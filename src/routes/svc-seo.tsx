@@ -345,30 +345,28 @@ export const SvcSeoPage = () => (
                   <div class="seop-mock-body">
                     <div class="seop-auto-searchbox">
                       <span class="seop-auto-icon">🔍</span>
-                      {/* 타이핑 텍스트 — JS가 채워 넣음 */}
-                      <span class="seop-auto-typing" id="autoTypingText"></span><span class="seop-cursor">|</span>
+                      <span class="seop-auto-typing">강남 헬스장</span>
                     </div>
-                    {/* 자동완성 목록 — 기본 hidden, JS가 순차 표시 */}
-                    <div class="seop-auto-list" id="autoList">
-                      <div class="seop-auto-item seop-auto-item--brand seop-auto-anim" data-idx="0">
+                    <div class="seop-auto-list">
+                      <div class="seop-auto-item seop-auto-item--brand">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                         <span>강남 헬스장 <em>광고주 브랜드</em></span>
                         <span class="seop-auto-hit">✦</span>
                       </div>
-                      <div class="seop-auto-item seop-auto-anim" data-idx="1">
+                      <div class="seop-auto-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                         <span>강남 헬스장 추천</span>
                       </div>
-                      <div class="seop-auto-item seop-auto-item--brand seop-auto-anim" data-idx="2">
+                      <div class="seop-auto-item seop-auto-item--brand">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                         <span>강남 헬스장 <em>광고주 브랜드</em> 가격</span>
                         <span class="seop-auto-hit">✦</span>
                       </div>
-                      <div class="seop-auto-item seop-auto-anim" data-idx="3">
+                      <div class="seop-auto-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                         <span>강남 헬스장 월 회비</span>
                       </div>
-                      <div class="seop-auto-item seop-auto-item--brand seop-auto-anim" data-idx="4">
+                      <div class="seop-auto-item seop-auto-item--brand">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                         <span>강남 헬스장 <em>광고주 브랜드</em> 후기</span>
                         <span class="seop-auto-hit">✦</span>
@@ -425,14 +423,12 @@ export const SvcSeoPage = () => (
                     <div class="seop-mock-url">youtube.com/results</div>
                   </div>
                   <div class="seop-mock-body">
-                    {/* 검색바 — 타이핑 JS가 채움 */}
                     <div class="seop-yt-searchbar">
                       <span>🔍</span>
-                      <span class="seop-yt-kw" id="ytTypingText"></span><span class="seop-cursor seop-cursor--yt" id="ytCursor">|</span>
+                      <span class="seop-yt-kw">강남 헬스장 추천</span>
                     </div>
-                    {/* 영상 목록 — 기본 hidden, 타이핑 완료 후 순차 등장 */}
-                    <div class="seop-yt-list" id="ytList">
-                      <div class="seop-yt-item seop-yt-item--top seop-yt-anim" data-idx="0">
+                    <div class="seop-yt-list">
+                      <div class="seop-yt-item seop-yt-item--top">
                         <div class="seop-yt-thumb">
                           <span class="seop-yt-play">▶</span>
                           <span class="seop-yt-dur">3:24</span>
@@ -443,7 +439,7 @@ export const SvcSeoPage = () => (
                           <div class="seop-yt-topbadge">검색 상위 노출</div>
                         </div>
                       </div>
-                      <div class="seop-yt-item seop-yt-anim" data-idx="1">
+                      <div class="seop-yt-item">
                         <div class="seop-yt-thumb seop-yt-thumb--sm">
                           <span class="seop-yt-play">▶</span>
                         </div>
@@ -452,7 +448,7 @@ export const SvcSeoPage = () => (
                           <span>일반 채널 · 조회수 8,200</span>
                         </div>
                       </div>
-                      <div class="seop-yt-item seop-yt-anim" data-idx="2">
+                      <div class="seop-yt-item">
                         <div class="seop-yt-thumb seop-yt-thumb--sm">
                           <span class="seop-yt-play">▶</span>
                         </div>
@@ -559,74 +555,7 @@ export const SvcSeoPage = () => (
      변수·함수 먼저 선언 — 탭 이벤트 등록보다 앞에 위치
   ══════════════════════════════════════════════ */
 
-  /* 패널 1 — 검색어 자동완성 */
-  var AUTO_KEYWORD = '강남 헬스장';
-  var autoTimers   = [];
-  var autoPlayed   = false;
-
-  function startAutoAnim(){
-    if(autoPlayed) return;
-    autoPlayed = true;
-    var typingEl  = document.getElementById('autoTypingText');
-    var listItems = document.querySelectorAll('#autoList .seop-auto-anim');
-    if(!typingEl) return;
-    typingEl.textContent = '';
-    listItems.forEach(function(el){ el.classList.remove('visible'); });
-
-    /* 1. 한 글자씩 타이핑 (80ms 간격) */
-    var chars = AUTO_KEYWORD.split('');
-    chars.forEach(function(ch, idx){
-      autoTimers.push(setTimeout(function(){
-        typingEl.textContent += ch;
-      }, 80 * idx));
-    });
-
-    /* 2. 타이핑 완료 + 1000ms 대기 → 목록 한 줄씩 등장 (160ms 간격) */
-    var typingDone = 80 * chars.length + 1000;
-    listItems.forEach(function(el, idx){
-      autoTimers.push(setTimeout(function(){
-        el.classList.add('visible');
-      }, typingDone + idx * 160));
-    });
-  }
-
-  /* 패널 2 — 유튜브 SEO */
-  var YT_KEYWORD = '강남 헬스장 추천';
-  var ytTimers   = [];
-  var ytPlayed   = false;
-
-  function startYtAnim(){
-    if(ytPlayed) return;
-    ytPlayed = true;
-    var typingEl  = document.getElementById('ytTypingText');
-    var cursorEl  = document.getElementById('ytCursor');
-    var listItems = document.querySelectorAll('#ytList .seop-yt-anim');
-    if(!typingEl) return;
-    typingEl.textContent = '';
-    listItems.forEach(function(el){ el.classList.remove('visible'); });
-    if(cursorEl) cursorEl.style.display = '';
-
-    /* 1. 타이핑 (75ms 간격) */
-    var chars = YT_KEYWORD.split('');
-    chars.forEach(function(ch, idx){
-      ytTimers.push(setTimeout(function(){
-        typingEl.textContent += ch;
-      }, 75 * idx));
-    });
-
-    /* 2. 타이핑 완료 → 커서 숨김 → 영상 목록 순차 등장 */
-    var typingDone = 75 * chars.length + 300;
-    ytTimers.push(setTimeout(function(){
-      if(cursorEl) cursorEl.style.display = 'none';
-    }, typingDone));
-    listItems.forEach(function(el, idx){
-      ytTimers.push(setTimeout(function(){
-        el.classList.add('visible');
-      }, typingDone + 100 + idx * 220));
-    });
-  }
-
-  /* 패널 3 — 인스타 검색 */
+  /* ── 패널 3 — 인스타: 타이핑 → 그리드 깜빡임 (유일하게 JS 애니 유지) ── */
   var INSTA_KEYWORD = '강남헬스장';
   var instaTimers   = [];
   var instaPlayed   = false;
@@ -670,11 +599,10 @@ export const SvcSeoPage = () => (
     }, typingDone + 480));
   }
 
-  /* ── 탭 전환 — 변수·함수 선언 이후에 등록 ── */
+  /* ── 탭 전환 ── */
   var tabs = document.querySelectorAll('#seopTabs .seop-tab');
   var panels = document.querySelectorAll('#seopPanels .seop-panel');
-  
-  /* 이벤트 위임 방식 — 탭 컨테이너에 단일 핸들러 */
+
   var tabContainer = document.getElementById('seopTabs');
   if(tabContainer){
     tabContainer.addEventListener('click', function(e){
@@ -682,20 +610,18 @@ export const SvcSeoPage = () => (
       if(!clickedTab) return;
       var tabIdx = Array.prototype.indexOf.call(tabs, clickedTab);
       if(tabIdx < 0) return;
-      
+
       tabs.forEach(function(t){ t.classList.remove('active'); });
       panels.forEach(function(p){ p.classList.remove('active'); });
       clickedTab.classList.add('active');
       if(panels[tabIdx]) panels[tabIdx].classList.add('active');
-      
-      /* 탭 전환 시 해당 패널 애니 실행 (미실행 시에만) */
-      if(tabIdx === 1 && !autoPlayed)  { startAutoAnim(); }
-      if(tabIdx === 2 && !ytPlayed)    { startYtAnim(); }
+
+      /* 인스타 탭만 JS 애니 실행 */
       if(tabIdx === 3 && !instaPlayed) { startInstaAnim(); }
     });
   }
 
-  /* IntersectionObserver — 섹션 진입 시 현재 활성 탭 기준으로 첫 실행 */
+  /* IntersectionObserver — 인스타 탭이 기본 활성인 경우만 처리 */
   (function(){
     var seoSection = document.querySelector('#seopPanels');
     if(!seoSection) return;
@@ -709,9 +635,7 @@ export const SvcSeoPage = () => (
             var idx = Array.prototype.indexOf.call(
               document.querySelectorAll('#seopPanels .seop-panel'), activePanel
             );
-            if(idx === 1) startAutoAnim();
-            else if(idx === 2) startYtAnim();
-            else if(idx === 3) startInstaAnim();
+            if(idx === 3) startInstaAnim();
           }
           obs.disconnect();
         }
