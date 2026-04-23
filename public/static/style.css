@@ -11639,6 +11639,21 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
+
+/* 플레이스 카드 클릭 유도 힌트 */
+@keyframes placeHintBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+.seop-place-hint {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(59, 130, 246, 0.9);
+  animation: placeHintBlink 1.4s ease-in-out infinite;
+  letter-spacing: 0.01em;
+}
 .seop-sub-card {
   display: flex;
   align-items: flex-start;

@@ -162,9 +162,9 @@ export const SvcSeoPage = () => (
                     </div>
                   </div>
                 </div>
+                {/* 플레이스 카드 클릭 유도 힌트 */}
+                <div class="seop-place-hint" id="seopPlaceHint">👆 플레이스 상품을 눌러주세요</div>
               </div>
-
-              {/* 오른쪽 시각화 — 실제 이미지 모핑 비주얼 */}
               <div class="seop-visual" id="seopPlaceVisual">
                 {/* 블로그 배포 모핑 컨테이너 */}
                 <div class="seop-blog-morph" id="seoBlogMorph">
@@ -743,6 +743,7 @@ export const SvcSeoPage = () => (
   var ALL_MORPHS   = ['sbmMorph','sbmInflowMorph','sbmReviewMorph','sbmSaveMorph'];
   var ALL_TRIGGERS = ['seoBlogCard','seoInflowCard','seoReviewCard','seoSaveCard'];
   var hint = document.getElementById('sbmHint');
+  var placeHint = document.getElementById('seopPlaceHint');
   /* 인터벌 레퍼런스를 상위 스코프에 선언 */
   var _inflowInterval = null;
   var _saveInterval   = null;
@@ -776,6 +777,16 @@ export const SvcSeoPage = () => (
       if(el) el.textContent = '0';
     });
   }
+
+  /* 카드 클릭 시 플레이스 힌트 숨기기 (공통) */
+  ALL_TRIGGERS.forEach(function(id){
+    var card = document.getElementById(id);
+    if(card){
+      card.addEventListener('click', function(){
+        if(placeHint) placeHint.style.display = 'none';
+      });
+    }
+  });
 
   /* ── 블로그 배포 ── */
   var blogCard = document.getElementById('seoBlogCard');
