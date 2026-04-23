@@ -91,25 +91,7 @@ export const SvcReviewPage = () => (
             <div class="rvt-card-top">
               <div class="rvt-tier-badge" style="background:rgba(234,179,8,0.15);border-color:rgba(234,179,8,0.4);color:#eab308">PREMIUM SERVICE</div>
               <div class="rvt-mock-preview rvt-mock--blog">
-                <div class="rvt-mock-header-bar">
-                  <div class="rvt-mock-dots"><span></span><span></span><span></span></div>
-                  <span class="rvt-mock-url-text">smartstore.naver.com</span>
-                </div>
-                <div class="rvt-mock-content">
-                  <div class="rvt-mock-stars">⭐⭐⭐⭐⭐</div>
-                  <div class="rvt-mock-text-lines">
-                    <span class="rvt-mock-line rvt-mock-line--title"></span>
-                    <span class="rvt-mock-line"></span>
-                    <span class="rvt-mock-line rvt-mock-line--short"></span>
-                    <span class="rvt-mock-line"></span>
-                    <span class="rvt-mock-line rvt-mock-line--mid"></span>
-                  </div>
-                  <div class="rvt-mock-imgs">
-                    <span class="rvt-mock-img"></span>
-                    <span class="rvt-mock-img"></span>
-                    <span class="rvt-mock-img"></span>
-                  </div>
-                </div>
+                <img src="/static/seo-images/review-planned.jpg" alt="기획형 리뷰 예시" class="rvt-mock-real-img" />
               </div>
             </div>
             <div class="rvt-card-body">
@@ -153,17 +135,7 @@ export const SvcReviewPage = () => (
             <div class="rvt-card-top">
               <div class="rvt-tier-badge" style="background:rgba(100,116,139,0.15);border-color:rgba(100,116,139,0.4);color:rgba(255,255,255,0.5)">BASIC SERVICE</div>
               <div class="rvt-mock-preview rvt-mock--simple">
-                <div class="rvt-mock-header-bar">
-                  <div class="rvt-mock-dots"><span></span><span></span><span></span></div>
-                  <span class="rvt-mock-url-text">coupang.com</span>
-                </div>
-                <div class="rvt-mock-content">
-                  <div class="rvt-mock-stars rvt-mock-stars--dim">⭐⭐⭐⭐⭐</div>
-                  <div class="rvt-mock-text-lines">
-                    <span class="rvt-mock-line rvt-mock-line--mid"></span>
-                    <span class="rvt-mock-line rvt-mock-line--short"></span>
-                  </div>
-                </div>
+                <img src="/static/seo-images/review-simple.jpg" alt="단순 리뷰 예시" class="rvt-mock-real-img" />
               </div>
             </div>
             <div class="rvt-card-body">

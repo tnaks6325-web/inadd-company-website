@@ -12952,6 +12952,22 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   background: rgba(15,15,20,0.8);
 }
 
+/* 실제 이미지로 교체된 mock — 잘리지 않게 전체 표시 */
+.rvt-mock-real-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: #fff;
+  max-height: 260px;
+  overflow: hidden;
+  /* 기획형 리뷰는 세로가 길어 스크롤 */
+}
+.rvt-mock--blog .rvt-mock-real-img {
+  max-height: 260px;
+  object-position: top;
+}
+
 .rvt-mock-header-bar {
   display: flex;
   align-items: center;
