@@ -668,3 +668,45 @@ function closeCallModal() {
     if (e.key === 'Escape') closeCallModal();
   });
 })();
+
+/* ── ifl-data-section 카운터 애니메이션 ── */
+(function() {
+  function animateCounter(el, target, duration) {
+    var start = 0;
+    var startTime = null;
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      // easeOutExpo
+      var eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      var current = Math.floor(eased * target);
+      el.textContent = current.toLocaleString();
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target.toLocaleString();
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  var counters = document.querySelectorAll('.ifl-data-counter-num[data-target]');
+  if (!counters.length) return;
+
+  var triggered = false;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !triggered) {
+        triggered = true;
+        counters.forEach(function(el) {
+          var target = parseInt(el.getAttribute('data-target'), 10);
+          animateCounter(el, target, 1800);
+        });
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  var section = document.querySelector('.ifl-data-section');
+  if (section) observer.observe(section);
+})();

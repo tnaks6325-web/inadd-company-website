@@ -87,6 +87,138 @@ export const SvcInfluencerPage = () => (
     {/* ══ 서비스 앵커 ══ */}
     <div id="ifl-services"></div>
 
+
+    {/* ══════════════════════════════════════════
+        DATA & FILTERING SECTION
+    ══════════════════════════════════════════ */}
+    <section class="ifl-data-section">
+      {/* 배경 오브 */}
+      <div class="ifl-data-bg">
+        <div class="ifl-data-orb ifl-data-orb--blue"></div>
+        <div class="ifl-data-orb ifl-data-orb--purple"></div>
+      </div>
+
+      <div class="container">
+
+        {/* 섹션 헤드 */}
+        <div class="ifl-data-head">
+          <span class="ifl-data-eyebrow">VERIFIED CREATOR DATABASE</span>
+          <h2 class="ifl-data-heading">
+            방대한 숫자가 아닌,<br />
+            <em>검증된 크리에이터만</em> DB에 담습니다
+          </h2>
+          <p class="ifl-data-subhead">
+            구독자 수만 많은 크리에이터는 의미가 없습니다.<br />
+            실제로 활동하고, <strong>구독자 대비 조회수가 의미 있는</strong> 국내 크리에이터만을 엄선해 관리합니다.
+          </p>
+
+          {/* 카운터 배지 바 */}
+          <div class="ifl-data-counter-bar">
+            <div class="ifl-data-counter-item">
+              <span class="ifl-data-counter-num" data-target="1520">0</span>
+              <span class="ifl-data-counter-unit">+</span>
+              <span class="ifl-data-counter-label">검증 크리에이터</span>
+            </div>
+            <div class="ifl-data-counter-divider"></div>
+            <div class="ifl-data-counter-item">
+              <span class="ifl-data-counter-num" data-target="97">0</span>
+              <span class="ifl-data-counter-unit">%</span>
+              <span class="ifl-data-counter-label">실제 활동 채널</span>
+            </div>
+            <div class="ifl-data-counter-divider"></div>
+            <div class="ifl-data-counter-item ifl-data-counter-item--live">
+              <span class="ifl-data-live-dot"></span>
+              <span class="ifl-data-counter-label">기준 미달 시 실시간 제외</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 01 — 정밀 통계 리포트 */}
+        <div class="ifl-data-row">
+          <div class="ifl-data-text">
+            <div class="ifl-data-num">01</div>
+            <h3 class="ifl-data-title">구독자 수보다 중요한<br /><strong>조회수 품질 분석 리포트</strong></h3>
+            <p class="ifl-data-desc">
+              크리에이터 제안 시, 단순 구독자 수가 아닌 <strong>구독자 대비 실제 조회수 달성률</strong>,
+              영상별 유지율, 성별/연령 시청자 분포 등 광고 효과를 직접 예측할 수 있는 핵심 지표를 함께 제공합니다.
+            </p>
+            <ul class="ifl-data-points">
+              <li><span class="ifl-data-dot"></span>구독자 대비 조회수 달성률 지표 제공</li>
+              <li><span class="ifl-data-dot"></span>성별 · 연령별 실시청자 분포 분석</li>
+              <li><span class="ifl-data-dot"></span>조회수 유지율 · 이탈 구간 심층 리포트</li>
+              <li><span class="ifl-data-dot"></span>구독자 이상 급증 · 매입 의심 채널 감지</li>
+            </ul>
+          </div>
+          <div class="ifl-data-img-wrap">
+            <div class="ifl-data-img-placeholder" id="ifl-img-01">
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="52" height="52" rx="14" fill="rgba(26,107,255,0.1)"/>
+                <path d="M10 38 L19 24 L26 30 L35 16 L44 26" stroke="#1a6bff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <circle cx="19" cy="24" r="3.5" fill="#1a6bff" opacity="0.6"/>
+                <circle cx="35" cy="16" r="3.5" fill="#1a6bff" opacity="0.6"/>
+                <circle cx="26" cy="30" r="2.5" fill="rgba(26,107,255,0.4)"/>
+              </svg>
+              <p>데이터 리포트 이미지</p>
+              <span>이미지를 업로드하면 여기에 표시됩니다</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 02 — 필터링 시스템 */}
+        <div class="ifl-data-row ifl-data-row--rev">
+          <div class="ifl-data-img-wrap">
+            <div class="ifl-data-img-placeholder" id="ifl-img-02">
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="52" height="52" rx="14" fill="rgba(26,107,255,0.1)"/>
+                <rect x="10" y="13" width="32" height="5" rx="2.5" fill="#1a6bff" opacity="0.35"/>
+                <rect x="10" y="24" width="24" height="5" rx="2.5" fill="#1a6bff" opacity="0.35"/>
+                <rect x="10" y="35" width="28" height="5" rx="2.5" fill="#1a6bff" opacity="0.35"/>
+                <circle cx="40" cy="37" r="8" stroke="#1a6bff" stroke-width="2" fill="none"/>
+                <path d="M46 43 L50 47" stroke="#1a6bff" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+              <p>필터링 시스템 이미지</p>
+              <span>이미지를 업로드하면 여기에 표시됩니다</span>
+            </div>
+          </div>
+          <div class="ifl-data-text">
+            <div class="ifl-data-num">02</div>
+            <h3 class="ifl-data-title">어떤 조건의 유튜버라도<br /><strong>정확하게 매칭해 드립니다</strong></h3>
+            <p class="ifl-data-desc">
+              카테고리, 구독자 규모, 업로드 주기, 시청자 성별/연령까지 — 브랜드가 원하는 조건을 입력하면
+              <strong>1,520+개의 검증 DB</strong>에서 최적의 크리에이터를 즉시 추출합니다.
+              기준 미달 채널은 실시간으로 제외되어 항상 최신 상태가 유지됩니다.
+            </p>
+
+            {/* 필터 태그 칩 */}
+            <div class="ifl-data-tags">
+              <span class="ifl-data-tag"># 영상 조회수 유지율 최상위</span>
+              <span class="ifl-data-tag"># 연예인/셀럽 인플루언서</span>
+              <span class="ifl-data-tag"># 커플/부부 라이프스타일</span>
+              <span class="ifl-data-tag"># 먹방/맛집 투어 전문</span>
+              <span class="ifl-data-tag"># 남성 패션/그루밍</span>
+              <span class="ifl-data-tag"># 급상승 구독자 알고리즘 침투</span>
+              <span class="ifl-data-tag ifl-data-tag--more"># 조회수 대비 저평가 가성비 유튜버</span>
+            </div>
+
+            {/* 실시간 DB 배지 */}
+            <div class="ifl-data-db-badge">
+              <div class="ifl-data-db-left">
+                <span class="ifl-data-live-dot"></span>
+                <span class="ifl-data-db-live-text">LIVE DB</span>
+              </div>
+              <div class="ifl-data-db-right">
+                <strong class="ifl-data-counter-num" data-target="1520">0</strong>
+                <span class="ifl-data-db-plus">+</span>
+                <span class="ifl-data-db-label">Verified Creators</span>
+              </div>
+              <div class="ifl-data-db-sub">기준 미달 크리에이터는 실시간으로 DB에서 제외됩니다</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     {/* ══════════════════════════════════════════
         DIFFERENTIATOR — 인애드컴퍼니의 제안 크리에이터
     ══════════════════════════════════════════ */}
@@ -208,81 +340,6 @@ export const SvcInfluencerPage = () => (
 
           </div>
         </div>
-      </div>
-    </section>
-
-    {/* ══════════════════════════════════════════
-        DATA & FILTERING SECTION
-    ══════════════════════════════════════════ */}
-    <section class="ifl-data-section">
-      <div class="container">
-
-        {/* 섹션 헤드 */}
-        <div class="ifl-data-head">
-          <span class="ifl-data-eyebrow">DATA &amp; SYSTEM</span>
-          <h2 class="ifl-data-heading">데이터와 시스템으로<br /><em>결과를 만듭니다</em></h2>
-        </div>
-
-        {/* 01 — 데이터 기반 리포트 */}
-        <div class="ifl-data-row">
-          <div class="ifl-data-text">
-            <div class="ifl-data-num">01</div>
-            <h3 class="ifl-data-title">데이터 기반의 의사결정,<br /><strong>정밀 통계 리포트 제공</strong></h3>
-            <p class="ifl-data-desc">유튜버 리스트 전달 시, 단순 구독자 수가 아닌 성별/연령별 시청자 분포, 조회수 유지율 등 광고주가 꼭 알아야 할 핵심 지표를 함께 제공합니다.</p>
-            <ul class="ifl-data-points">
-              <li><span class="ifl-data-dot"></span>성별 · 연령별 시청자 분포 분석</li>
-              <li><span class="ifl-data-dot"></span>조회수 유지율 · 이탈 구간 리포트</li>
-              <li><span class="ifl-data-dot"></span>구독자 성장 추이 · 이상 감지</li>
-            </ul>
-          </div>
-          <div class="ifl-data-img-wrap">
-            {/* 이미지 준비 중 — 추후 src 교체 */}
-            <div class="ifl-data-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="12" fill="rgba(26,107,255,0.12)"/>
-                <path d="M10 34 L18 22 L24 28 L32 16 L40 24" stroke="#1a6bff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <circle cx="18" cy="22" r="3" fill="#1a6bff" opacity="0.5"/>
-                <circle cx="32" cy="16" r="3" fill="#1a6bff" opacity="0.5"/>
-              </svg>
-              <p>데이터 리포트 이미지</p>
-              <span>이미지를 업로드하면 여기에 표시됩니다</span>
-            </div>
-          </div>
-        </div>
-
-        {/* 02 — 초정밀 타겟 필터링 */}
-        <div class="ifl-data-row ifl-data-row--rev">
-          <div class="ifl-data-img-wrap">
-            {/* 이미지 준비 중 — 추후 src 교체 */}
-            <div class="ifl-data-img-placeholder">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="12" fill="rgba(26,107,255,0.12)"/>
-                <rect x="10" y="12" width="28" height="4" rx="2" fill="#1a6bff" opacity="0.4"/>
-                <rect x="10" y="22" width="20" height="4" rx="2" fill="#1a6bff" opacity="0.4"/>
-                <rect x="10" y="32" width="24" height="4" rx="2" fill="#1a6bff" opacity="0.4"/>
-                <circle cx="36" cy="34" r="7" stroke="#1a6bff" stroke-width="2" fill="none"/>
-                <path d="M41 39 L44 42" stroke="#1a6bff" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              <p>필터링 시스템 이미지</p>
-              <span>이미지를 업로드하면 여기에 표시됩니다</span>
-            </div>
-          </div>
-          <div class="ifl-data-text">
-            <div class="ifl-data-num">02</div>
-            <h3 class="ifl-data-title">65,732명의 크리에이터,<br /><strong>초정밀 타겟 필터링</strong></h3>
-            <p class="ifl-data-desc">방대한 DB를 12가지 이상의 필터로 분류합니다. 구독자 상승률, 카테고리 밀도, 최근 반응도 등 브랜드에 가장 적합한 '라이징 크리에이터'를 초단위로 검색합니다.</p>
-            <ul class="ifl-data-points">
-              <li><span class="ifl-data-dot"></span>12가지 이상의 정밀 필터 시스템</li>
-              <li><span class="ifl-data-dot"></span>구독자 상승률 · 카테고리 밀도 분석</li>
-              <li><span class="ifl-data-dot"></span>라이징 크리에이터 실시간 탐색</li>
-            </ul>
-            <div class="ifl-data-stat">
-              <strong>65,732</strong>
-              <span>Creators in DB</span>
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
 
