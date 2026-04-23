@@ -468,19 +468,45 @@ if (menuToggle && mainNav) {
 
 /* ── 9. 서비스 인터랙티브 리스트 ── */
 (function initSvcInteractive() {
+  const visual = document.querySelector('.svc-visual');
+  if (!visual) return;
+
   const items  = document.querySelectorAll('.svc-list-item');
-  const panels = document.querySelectorAll('.svc-panel');
+  /* .svc-visual 안의 직계 .svc-panel만 선택 (전역 오염 방지) */
+  const panels = visual.querySelectorAll('.svc-panel');
   if (!items.length || !panels.length) return;
 
+  let currentIdx = 0;
+
   function activate(idx) {
+    if (idx === currentIdx) return; /* 동일 패널 재진입 무시 */
+    currentIdx = idx;
     items.forEach((el, i) => el.classList.toggle('active', i === idx));
-    panels.forEach((el, i) => el.classList.toggle('active', i === idx));
+    panels.forEach((el, i) => {
+      if (i === idx) {
+        el.style.display = 'flex';
+        /* 다음 프레임에 active 추가 → CSS animation 정상 실행 */
+        requestAnimationFrame(() => el.classList.add('active'));
+      } else {
+        el.classList.remove('active');
+        el.style.display = 'none';
+      }
+    });
   }
 
+  /* 초기 상태 — 0번 패널만 보이고 나머지 명시적으로 숨김 */
+  panels.forEach((el, i) => {
+    if (i === 0) {
+      el.style.display = 'flex';
+      el.classList.add('active');
+    } else {
+      el.style.display = 'none';
+      el.classList.remove('active');
+    }
+  });
+
   items.forEach((item, idx) => {
-    /* 호버 시 패널 전환 */
     item.addEventListener('mouseenter', () => activate(idx));
-    /* 클릭 시 해당 링크로 이동 */
     item.addEventListener('click', (e) => {
       const link = item.querySelector('a');
       if (link && !e.target.closest('a')) {
@@ -488,14 +514,6 @@ if (menuToggle && mainNav) {
       }
     });
   });
-
-  /* 마우스가 리스트 밖으로 나가면 마지막 활성 유지 */
-  const list = document.querySelector('.svc-list');
-  if (list) {
-    list.addEventListener('mouseleave', () => {
-      /* 현재 active 아이템 유지 — 별도 처리 불필요 */
-    });
-  }
 })();
 
 /* ============================================

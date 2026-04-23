@@ -798,27 +798,20 @@ em {
 /* ── 오른쪽: 비주얼 패널 ── */
 .svc-visual {
   position: relative;
-  /* height 고정 제거 — 패널 내용에 따라 자동 결정 */
+  overflow: hidden; /* 비활성 패널이 영역 밖으로 나오지 않도록 */
 }
 
 .svc-panel {
-  display: none;          /* 기본 숨김 */
+  display: none;          /* JS가 직접 style.display로 제어 */
   flex-direction: column;
   gap: 0;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.07);
-  animation: svcPanelIn 0.35s cubic-bezier(0.16,1,0.3,1);
-}
-@keyframes svcPanelIn {
-  from { opacity: 0; transform: translateY(10px) scale(0.99); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .svc-panel.active {
-  display: flex;
-}
-.svc-panel.exiting {
-  display: none;
+  /* display:flex 는 JS inline style로 처리 */
+  flex-direction: column;
 }
 
 /* 이미지 영역 */
