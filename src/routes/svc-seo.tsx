@@ -534,7 +534,14 @@ export const SvcSeoPage = () => (
                     </div>
                     {/* 이미지 결과 영역 — 자동완성 클릭 시 해당 이미지 표시 */}
                     <div class="seop-insta-result" id="instaResult">
-                      <div class="seop-insta-result-header" id="instaResultTag"></div>
+                      <div class="seop-insta-result-topbar">
+                        <button class="seop-insta-back" id="instaBackBtn">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="15 18 9 12 15 6"/></svg>
+                          뒤로
+                        </button>
+                        <div class="seop-insta-result-header" id="instaResultTag"></div>
+                        <button class="seop-insta-close" id="instaCloseBtn">✕</button>
+                      </div>
                       <img class="seop-insta-result-img" id="instaResultImg" src="" alt="" />
                     </div>
                     <div class="seop-insta-legend" id="instaLegend">상위 노출된 브랜드 콘텐츠</div>
@@ -574,24 +581,38 @@ export const SvcSeoPage = () => (
     var suggestEl = document.getElementById('instaSuggest');
     if(!resultEl || !imgEl) return;
 
-    /* 자동완성 → 검색창 텍스트 업데이트 */
+    /* 검색창 텍스트 업데이트 */
     var typingEl = document.getElementById('instaTypingText');
     if(typingEl) typingEl.textContent = tag;
 
-    /* 자동완성 리스트 숨기기 */
-    if(suggestEl) suggestEl.style.display = 'none';
+    /* 자동완성 숨기고 결과 표시 */
+    if(suggestEl) suggestEl.style.visibility = 'hidden';
 
     /* 이미지 전환 */
     imgEl.src = INSTA_IMAGES[tag] || '';
     if(tagEl) tagEl.textContent = '#' + tag;
     resultEl.classList.remove('insta-result-visible');
-    void resultEl.offsetWidth; /* reflow 강제 */
+    void resultEl.offsetWidth;
     resultEl.classList.add('insta-result-visible');
     if(legendEl) legendEl.classList.add('insta-legend-visible');
 
     /* 클릭된 아이템 하이라이트 */
     document.querySelectorAll('.seop-insta-sug-item').forEach(function(el){
       el.classList.toggle('active', el.dataset.tag === tag);
+    });
+  }
+
+  function hideInstaResult(){
+    var resultEl  = document.getElementById('instaResult');
+    var suggestEl = document.getElementById('instaSuggest');
+    var legendEl  = document.getElementById('instaLegend');
+    var typingEl  = document.getElementById('instaTypingText');
+    if(resultEl)  resultEl.classList.remove('insta-result-visible');
+    if(suggestEl) suggestEl.style.visibility = '';
+    if(legendEl)  legendEl.classList.remove('insta-legend-visible');
+    if(typingEl)  typingEl.textContent = INSTA_KEYWORD;
+    document.querySelectorAll('.seop-insta-sug-item').forEach(function(el){
+      el.classList.remove('active');
     });
   }
 
@@ -635,11 +656,7 @@ export const SvcSeoPage = () => (
       }, typingDone + 80 + idx * 120));
     });
 
-    /* 3. 자동완성 등장 완료 → 첫 번째 항목 자동 클릭 연출 */
-    var allDone = typingDone + 80 + (sugItems.length - 1) * 120 + 600;
-    instaTimers.push(setTimeout(function(){
-      showInstaResult('올영추천템');
-    }, allDone));
+    /* 3. 자동완성 등장 완료 → 유저 클릭 대기 (자동 선택 없음) */
   }
 
   /* ── 탭 전환 ── */
@@ -674,6 +691,13 @@ export const SvcSeoPage = () => (
       if(tag) showInstaResult(tag);
     });
   }
+
+  /* ── 인스타 뒤로가기 / 닫기 버튼 ── */
+  var instaBackBtn = document.getElementById('instaBackBtn');
+  if(instaBackBtn) instaBackBtn.addEventListener('click', hideInstaResult);
+
+  var instaCloseBtn = document.getElementById('instaCloseBtn');
+  if(instaCloseBtn) instaCloseBtn.addEventListener('click', hideInstaResult);
 
   /* IntersectionObserver — 인스타 탭이 기본 활성인 경우만 처리 */
   (function(){

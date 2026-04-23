@@ -12508,11 +12508,11 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .seop-insta-result {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   margin-top: 6px;
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
   visibility: hidden;
 }
@@ -12522,11 +12522,39 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   pointer-events: auto;
   visibility: visible;
 }
+/* 결과 상단바 */
+.seop-insta-result-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
 .seop-insta-result-header {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #ec4899;
-  padding: 2px 0;
+  flex: 1;
+  text-align: center;
+}
+.seop-insta-back,
+.seop-insta-close {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  border-radius: 6px;
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.seop-insta-back:hover,
+.seop-insta-close:hover {
+  background: rgba(255,255,255,0.16);
+  color: #fff;
 }
 .seop-insta-result-img {
   width: 100%;
