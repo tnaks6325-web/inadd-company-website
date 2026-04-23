@@ -532,6 +532,8 @@ export const SvcSeoPage = () => (
                         <span class="seop-insta-sug-cnt">게시물 31.4만</span>
                       </div>
                     </div>
+                    {/* 클릭 유도 안내 문구 */}
+                    <div class="seop-insta-hint" id="instaHint">👆 해시태그를 클릭해보세요</div>
                     {/* 이미지 결과 영역 — 자동완성 클릭 시 해당 이미지 표시 */}
                     <div class="seop-insta-result" id="instaResult">
                       <div class="seop-insta-result-topbar">
@@ -578,6 +580,7 @@ export const SvcSeoPage = () => (
     var tagEl     = document.getElementById('instaResultTag');
     var imgEl     = document.getElementById('instaResultImg');
     var legendEl  = document.getElementById('instaLegend');
+    var hintEl    = document.getElementById('instaHint');
     if(!resultEl || !imgEl) return;
 
     var typingEl = document.getElementById('instaTypingText');
@@ -585,6 +588,9 @@ export const SvcSeoPage = () => (
 
     imgEl.src = INSTA_IMAGES[tag] || '';
     if(tagEl) tagEl.textContent = '#' + tag;
+
+    /* 힌트 숨기기 */
+    if(hintEl) hintEl.style.display = 'none';
 
     resultEl.style.display = '';
     resultEl.classList.add('insta-result-visible');
@@ -599,9 +605,12 @@ export const SvcSeoPage = () => (
     var resultEl  = document.getElementById('instaResult');
     var legendEl  = document.getElementById('instaLegend');
     var typingEl  = document.getElementById('instaTypingText');
+    var hintEl    = document.getElementById('instaHint');
     if(resultEl)  resultEl.classList.remove('insta-result-visible');
     if(legendEl)  legendEl.classList.remove('insta-legend-visible');
     if(typingEl)  typingEl.textContent = INSTA_KEYWORD;
+    /* 뒤로가기 시 힌트 다시 표시 */
+    if(hintEl) hintEl.style.display = '';
     document.querySelectorAll('.seop-insta-sug-item').forEach(function(el){
       el.classList.remove('active');
     });
