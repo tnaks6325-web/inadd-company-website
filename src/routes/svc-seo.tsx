@@ -580,25 +580,16 @@ export const SvcSeoPage = () => (
     var legendEl  = document.getElementById('instaLegend');
     if(!resultEl || !imgEl) return;
 
-    /* 검색창 텍스트 업데이트 */
     var typingEl = document.getElementById('instaTypingText');
     if(typingEl) typingEl.textContent = '#' + tag;
 
-    /* 이미지 src 즉시 변경 */
     imgEl.src = INSTA_IMAGES[tag] || '';
     if(tagEl) tagEl.textContent = '#' + tag;
 
-    /* display:none → flex 전환 후 한 프레임 뒤 opacity 1 (페이드인) */
-    resultEl.style.display = 'flex';
-    resultEl.style.opacity = '0';
-    requestAnimationFrame(function(){
-      requestAnimationFrame(function(){
-        resultEl.classList.add('insta-result-visible');
-      });
-    });
+    resultEl.style.display = '';
+    resultEl.classList.add('insta-result-visible');
     if(legendEl) legendEl.classList.add('insta-legend-visible');
 
-    /* 클릭된 아이템 하이라이트 */
     document.querySelectorAll('.seop-insta-sug-item').forEach(function(el){
       el.classList.toggle('active', el.dataset.tag === tag);
     });
@@ -608,12 +599,7 @@ export const SvcSeoPage = () => (
     var resultEl  = document.getElementById('instaResult');
     var legendEl  = document.getElementById('instaLegend');
     var typingEl  = document.getElementById('instaTypingText');
-    if(resultEl){
-      resultEl.classList.remove('insta-result-visible');
-      resultEl.style.opacity = '';
-      /* transition 끝난 후 display:none */
-      setTimeout(function(){ resultEl.style.display = ''; }, 260);
-    }
+    if(resultEl)  resultEl.classList.remove('insta-result-visible');
     if(legendEl)  legendEl.classList.remove('insta-legend-visible');
     if(typingEl)  typingEl.textContent = INSTA_KEYWORD;
     document.querySelectorAll('.seop-insta-sug-item').forEach(function(el){

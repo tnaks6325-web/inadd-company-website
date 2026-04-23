@@ -12510,13 +12510,9 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   flex-direction: column;
   gap: 6px;
   margin-top: 6px;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  pointer-events: none;
 }
 .seop-insta-result.insta-result-visible {
-  opacity: 1;
-  pointer-events: auto;
+  display: flex;
 }
 /* 결과 상단바 */
 .seop-insta-result-topbar {
