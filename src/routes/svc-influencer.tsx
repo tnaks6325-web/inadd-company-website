@@ -115,15 +115,15 @@ export const SvcInfluencerPage = () => (
 
         {/* ── 섹션 헤드 ── */}
         <div class="ifl-data-head">
-          <span class="ifl-data-eyebrow">DATA-DRIVEN CREATOR SELECTION</span>
+          <span class="ifl-data-eyebrow">DATA-DRIVEN CREATOR CURATION</span>
           <h2 class="ifl-data-heading">
-            데이터를 직접 읽고,<br />
-            <em>우리가 판단해서 제안합니다</em>
+            숫자보다 맥락을 읽고,<br />
+            <em>맞는 크리에이터를 찾아드립니다</em>
           </h2>
           <p class="ifl-data-subhead">
-            단순히 지표를 전달하는 것이 아닙니다.<br />
-            수집된 데이터를 <strong>인애드컴퍼니가 직접 분석하고 판단</strong>해,
-            브랜드에 가장 합리적인 크리에이터를 선별해 제안합니다.
+            구독자 수치만으로는 광고의 성과를 담보할 수 없습니다.<br />
+            실질적인 데이터를 기반으로 <strong>브랜드에 진짜 맞는 크리에이터</strong>를
+            신중하게 검토하고 제안해 드립니다.
           </p>
 
           {/* 3단계 플로우 */}
@@ -142,8 +142,8 @@ export const SvcInfluencerPage = () => (
               <div class="ifl-data-flow-icon">
                 <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="currentColor" stroke-width="1.2"/><path d="M9 19l4-4 2 2 4-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19" cy="9" r="2" stroke="currentColor" stroke-width="1.2"/></svg>
               </div>
-              <div class="ifl-data-flow-label">직접 분석 · 판단</div>
-              <div class="ifl-data-flow-sub">인애드컴퍼니 전문가 검토</div>
+              <div class="ifl-data-flow-label">면밀한 검토</div>
+              <div class="ifl-data-flow-sub">전문가 기준으로 엄선</div>
             </div>
             <div class="ifl-data-flow-arrow">
               <svg viewBox="0 0 40 12" fill="none"><path d="M0 6 H34 M28 1 L34 6 L28 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -153,7 +153,7 @@ export const SvcInfluencerPage = () => (
                 <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="currentColor" stroke-width="1.2"/><path d="M9 14l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
               <div class="ifl-data-flow-label">합리적 제안</div>
-              <div class="ifl-data-flow-sub">거품 없는 최적 크리에이터</div>
+              <div class="ifl-data-flow-sub">거품 없이, 목적에 맞게</div>
             </div>
           </div>
 
@@ -182,21 +182,21 @@ export const SvcInfluencerPage = () => (
         <div class="ifl-data-row">
           <div class="ifl-data-text">
             <div class="ifl-data-num">01</div>
-            <h3 class="ifl-data-title">숫자 뒤에 숨겨진 진짜 가치,<br /><strong>우리가 직접 읽어냅니다</strong></h3>
+            <h3 class="ifl-data-title">구독자 수 너머의 지표로<br /><strong>광고 효과를 미리 가늠합니다</strong></h3>
             <p class="ifl-data-desc">
-              구독자 수는 그저 참고 수치입니다. 인애드컴퍼니는 <strong>구독자 대비 실제 조회수 달성률</strong>,
-              영상 유지율, 시청자 성별/연령 분포까지 직접 분석해
-              광고 집행 전 이미 결과를 예측하고 제안을 설계합니다.
+              크리에이터를 제안드릴 때, 구독자 수는 하나의 참고 지표일 뿐입니다.
+              <strong>구독자 대비 실제 조회수 달성률</strong>, 영상별 유지율,
+              시청자 성별·연령 분포까지 함께 살펴보고 광고 효과를 미리 검토한 뒤 제안드립니다.
             </p>
             <ul class="ifl-data-points">
-              <li><span class="ifl-data-dot"></span>구독자 대비 조회수 달성률로 채널 실력 판별</li>
-              <li><span class="ifl-data-dot"></span>성별 · 연령 시청자 분포 → 브랜드 타겟 적합성 검증</li>
-              <li><span class="ifl-data-dot"></span>조회수 유지율 분석 → 광고 노출 효과 예측</li>
-              <li><span class="ifl-data-dot"></span>구독자 매입 · 이상 급증 채널 자동 제외</li>
+              <li><span class="ifl-data-dot"></span>구독자 대비 조회수 달성률 — 채널 실질 영향력 파악</li>
+              <li><span class="ifl-data-dot"></span>성별 · 연령 시청자 분포 — 브랜드 타겟 적합성 확인</li>
+              <li><span class="ifl-data-dot"></span>조회수 유지율 — 광고 노출 구간 예측</li>
+              <li><span class="ifl-data-dot"></span>구독자 이상 급증 채널은 제안 대상에서 제외</li>
             </ul>
             <div class="ifl-data-insight-bar">
               <svg viewBox="0 0 18 18" fill="none" width="16" height="16"><circle cx="9" cy="9" r="8" stroke="#1a6bff" stroke-width="1.4"/><path d="M9 5v4l3 2" stroke="#1a6bff" stroke-width="1.4" stroke-linecap="round"/></svg>
-              <span>데이터 분석 후 <strong>제안까지 평균 24시간 이내</strong> 완료</span>
+              <span>검토 후 <strong>제안서 전달까지 평균 24시간 이내</strong></span>
             </div>
           </div>
           <div class="ifl-data-img-wrap ifl-data-img-wrap--report">
@@ -212,11 +212,11 @@ export const SvcInfluencerPage = () => (
           </div>
           <div class="ifl-data-text">
             <div class="ifl-data-num">02</div>
-            <h3 class="ifl-data-title">방대한 DB에서 걸러낸<br /><strong>진짜 맞는 크리에이터만 제안</strong></h3>
+            <h3 class="ifl-data-title">어떤 조건이든 세밀하게 맞춰<br /><strong>꼭 맞는 크리에이터를 찾아드립니다</strong></h3>
             <p class="ifl-data-desc">
-              1,520+명의 검증된 크리에이터 DB를 보유하고 있지만,
-              그 중에서도 <strong>브랜드 목적과 예산에 가장 합리적으로 맞는 채널</strong>만을
-              엄선해 제안합니다. 기준에 미달하는 채널은 즉시 DB에서 제외됩니다.
+              카테고리, 구독자 규모, 업로드 주기, 시청자 성별·연령까지 —
+              브랜드의 목적과 예산에 맞는 채널을 <strong>1,520+개 검증 DB에서 신중하게 추려</strong>
+              제안드립니다. 기준에 미치지 못하는 채널은 DB에서 지속적으로 정리됩니다.
             </p>
 
             {/* 필터 태그 칩 */}
