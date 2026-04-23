@@ -553,25 +553,13 @@ export const SvcSeoPage = () => (
 
         <script dangerouslySetInnerHTML={{ __html: `
 (function(){
-  /* ── 탭 전환 ── */
-  var tabs = document.querySelectorAll('#seopTabs .seop-tab');
-  var panels = document.querySelectorAll('#seopPanels .seop-panel');
-  tabs.forEach(function(tab, i){
-    tab.addEventListener('click', function(){
-      tabs.forEach(function(t){ t.classList.remove('active'); });
-      panels.forEach(function(p){ p.classList.remove('active'); });
-      tab.classList.add('active');
-      if(panels[i]) panels[i].classList.add('active');
-      /* 탭 전환 시 해당 패널 애니 실행 */
-      if(i === 1) startAutoAnim();
-      if(i === 2) startYtAnim();
-      if(i === 3) startInstaAnim();
-    });
-  });
-
+  /* DOM 준비 후 실행 보장 */
+  function init(){
   /* ══════════════════════════════════════════════
-     패널 1 — 자동완성: 타이핑 → 1초 후 목록 순차 등장 (1회 후 유지)
+     변수·함수 먼저 선언 — 탭 이벤트 등록보다 앞에 위치
   ══════════════════════════════════════════════ */
+
+  /* 패널 1 — 검색어 자동완성 */
   var AUTO_KEYWORD = '강남 헬스장';
   var autoTimers   = [];
   var autoPlayed   = false;
@@ -582,6 +570,8 @@ export const SvcSeoPage = () => (
     var typingEl  = document.getElementById('autoTypingText');
     var listItems = document.querySelectorAll('#autoList .seop-auto-anim');
     if(!typingEl) return;
+    typingEl.textContent = '';
+    listItems.forEach(function(el){ el.classList.remove('visible'); });
 
     /* 1. 한 글자씩 타이핑 (80ms 간격) */
     var chars = AUTO_KEYWORD.split('');
@@ -598,12 +588,9 @@ export const SvcSeoPage = () => (
         el.classList.add('visible');
       }, typingDone + idx * 160));
     });
-    /* 반복 없음 — 목록이 뜨면 그대로 유지 */
   }
 
-  /* ══════════════════════════════════════════════
-     패널 2 — 유튜브: 타이핑 → 영상 목록 순차 등장 (1회 후 유지)
-  ══════════════════════════════════════════════ */
+  /* 패널 2 — 유튜브 SEO */
   var YT_KEYWORD = '강남 헬스장 추천';
   var ytTimers   = [];
   var ytPlayed   = false;
@@ -615,6 +602,9 @@ export const SvcSeoPage = () => (
     var cursorEl  = document.getElementById('ytCursor');
     var listItems = document.querySelectorAll('#ytList .seop-yt-anim');
     if(!typingEl) return;
+    typingEl.textContent = '';
+    listItems.forEach(function(el){ el.classList.remove('visible'); });
+    if(cursorEl) cursorEl.style.display = '';
 
     /* 1. 타이핑 (75ms 간격) */
     var chars = YT_KEYWORD.split('');
@@ -634,12 +624,9 @@ export const SvcSeoPage = () => (
         el.classList.add('visible');
       }, typingDone + 100 + idx * 220));
     });
-    /* 반복 없음 — 목록이 뜨면 그대로 유지 */
   }
 
-  /* ══════════════════════════════════════════════
-     패널 3 — 인스타: 타이핑 → 그리드 flash-in (1회 후 유지)
-  ══════════════════════════════════════════════ */
+  /* 패널 3 — 인스타 검색 */
   var INSTA_KEYWORD = '강남헬스장';
   var instaTimers   = [];
   var instaPlayed   = false;
@@ -652,6 +639,10 @@ export const SvcSeoPage = () => (
     var gridEl   = document.getElementById('instaGrid');
     var legendEl = document.getElementById('instaLegend');
     if(!typingEl) return;
+    typingEl.textContent = '';
+    if(cursorEl) cursorEl.style.display = '';
+    if(gridEl){ gridEl.classList.remove('insta-flash','insta-visible','insta-flash2'); }
+    if(legendEl) legendEl.classList.remove('insta-legend-visible');
 
     /* 1. 타이핑 (85ms 간격) */
     var chars = INSTA_KEYWORD.split('');
@@ -677,11 +668,34 @@ export const SvcSeoPage = () => (
       if(gridEl) gridEl.classList.remove('insta-flash2');
       if(legendEl) legendEl.classList.add('insta-legend-visible');
     }, typingDone + 480));
-    /* 반복 없음 — 그리드가 뜨면 그대로 유지 */
   }
 
-  /* ── 탭 활성화 시 초기 실행 (현재 패널 1이 기본 활성) ── */
-  /* IntersectionObserver로 섹션 진입 시 첫 실행 */
+  /* ── 탭 전환 — 변수·함수 선언 이후에 등록 ── */
+  var tabs = document.querySelectorAll('#seopTabs .seop-tab');
+  var panels = document.querySelectorAll('#seopPanels .seop-panel');
+  
+  /* 이벤트 위임 방식 — 탭 컨테이너에 단일 핸들러 */
+  var tabContainer = document.getElementById('seopTabs');
+  if(tabContainer){
+    tabContainer.addEventListener('click', function(e){
+      var clickedTab = e.target.closest('.seop-tab');
+      if(!clickedTab) return;
+      var tabIdx = Array.prototype.indexOf.call(tabs, clickedTab);
+      if(tabIdx < 0) return;
+      
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      panels.forEach(function(p){ p.classList.remove('active'); });
+      clickedTab.classList.add('active');
+      if(panels[tabIdx]) panels[tabIdx].classList.add('active');
+      
+      /* 탭 전환 시 해당 패널 애니 실행 (미실행 시에만) */
+      if(tabIdx === 1 && !autoPlayed)  { startAutoAnim(); }
+      if(tabIdx === 2 && !ytPlayed)    { startYtAnim(); }
+      if(tabIdx === 3 && !instaPlayed) { startInstaAnim(); }
+    });
+  }
+
+  /* IntersectionObserver — 섹션 진입 시 현재 활성 탭 기준으로 첫 실행 */
   (function(){
     var seoSection = document.querySelector('#seopPanels');
     if(!seoSection) return;
@@ -690,7 +704,6 @@ export const SvcSeoPage = () => (
       entries.forEach(function(entry){
         if(entry.isIntersecting && !started){
           started = true;
-          /* 현재 활성 탭 기준으로 시작 */
           var activePanel = document.querySelector('#seopPanels .seop-panel.active');
           if(activePanel){
             var idx = Array.prototype.indexOf.call(
@@ -866,6 +879,13 @@ export const SvcSeoPage = () => (
   var saveClose = document.getElementById('sbmSaveClose');
   if(saveClose) saveClose.addEventListener('click', closeAll);
 
+  } /* end init() */
+  /* DOMContentLoaded 또는 즉시 실행 */
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
         `}} />
 
