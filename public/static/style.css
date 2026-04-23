@@ -10247,7 +10247,6 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   grid-template-columns: 1fr 1fr;
   gap: 0 56px;
   align-items: start;
-  min-height: 520px;
 }
 
 /* ── 왼쪽 리스트 ── */
@@ -10317,28 +10316,23 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 /* ── 오른쪽 패널 ── */
 .iflp2-panels {
   position: relative;
-  min-height: 640px;
-  height: 640px;
 }
 .iflp2-panel {
-  position: absolute;
-  inset: 0;
+  display: none;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.07);
   border-radius: 20px;
   overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(10px) scale(0.98);
-  transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1);
-  display: flex;
   flex-direction: column;
   gap: 0;
+  animation: panelFadeIn 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.99); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .iflp2-panel.active {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0) scale(1);
+  display: flex;
 }
 /* 이미지 영역 — 위쪽 */
 .iflp2-panel-img {
@@ -10364,7 +10358,8 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   padding: 24px 32px 28px;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow: hidden;
+  border-radius: 0 0 20px 20px;
 }
 .iflp2-panel-icon {
   width: 36px; height: 36px;
@@ -10408,16 +10403,22 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 }
 .iflp2-ptag-grid {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;         /* 항상 한 줄 */
   gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;  /* IE/Edge */
 }
+.iflp2-ptag-grid::-webkit-scrollbar { display: none; } /* Chrome/Safari */
 .iflp2-ptag {
-  font-size: 13px;
-  padding: 7px 14px;
+  font-size: 12px;
+  padding: 6px 12px;
   border-radius: 20px;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   color: rgba(255,255,255,0.7);
+  white-space: nowrap;       /* 태그 내 줄바꿈 없음 */
   transition: background 0.25s, border-color 0.25s, color 0.25s;
 }
 .iflp2-ptag:hover {
@@ -10429,9 +10430,8 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 /* 반응형 */
 @media (max-width: 1024px) {
   .iflp2-wrap { grid-template-columns: 1fr; gap: 40px; }
-  .iflp2-panels { min-height: 0; height: auto; position: relative; }
-  .iflp2-panel { position: relative; inset: auto; }
-  .iflp2-panel:not(.active) { display: none; }
+  .iflp2-panels { position: relative; }
+  .iflp2-panel { position: relative; }
   .iflp2-panel-img { flex: 0 0 auto; height: 280px; }
   .iflp2-panel-body { padding: 24px 24px; }
   .iflp2-name { font-size: 28px; }
