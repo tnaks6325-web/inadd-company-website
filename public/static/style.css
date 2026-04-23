@@ -12211,10 +12211,65 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   height: auto;
   object-fit: contain;
   background: #0d1020;
-  /* 이미지가 작으므로 패딩 최소화, 더 크게 보이도록 */
-  padding: 12px 16px 8px;
-  image-rendering: -webkit-optimize-contrast;
+  padding: 0;
 }
+/* 기획형 리뷰 — 세로가 긴 이미지, 스크롤 가능 */
+.sbm-review-img-wrap {
+  width: 100%;
+  max-height: 340px;
+  overflow-y: auto;
+  border-radius: 8px;
+  background: #fff;
+}
+.sbm-zoom-img--planned {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+/* 단순 리뷰 — 작은 카드형, 스크롤 없음 */
+.sbm-review-img-wrap--simple {
+  max-height: none;
+  overflow-y: visible;
+  background: #fff;
+  border-radius: 8px;
+}
+.sbm-zoom-img--simple {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+/* 리뷰 탭 */
+.sbm-review-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.sbm-review-tab {
+  flex: 1;
+  padding: 6px 0;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.sbm-review-tab.active {
+  background: rgba(16,185,129,0.18);
+  border-color: rgba(16,185,129,0.5);
+  color: #34d399;
+}
+.sbm-review-tab:hover:not(.active) {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+}
+/* 리뷰 패널 */
+.sbm-review-panel { display: none; }
+.sbm-review-panel.active { display: block; }
 /* 방문자 리뷰 카드 — green 테마 */
 .sbm-zoom-card--review {
   border-color: rgba(16,185,129,0.45);

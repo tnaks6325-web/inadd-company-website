@@ -235,14 +235,26 @@ export const SvcSeoPage = () => (
                     <button class="sbm-close" id="sbmInflowClose">✕ 닫기</button>
                   </div>
 
-                  {/* ── 레이어 4: 방문자 리뷰 (블로그 배포와 동일 방식) ── */}
+                  {/* ── 레이어 4: 방문자 리뷰 ── */}
                   <div class="sbm-morph sbm-morph--review" id="sbmReviewMorph">
                     <div class="sbm-backdrop"></div>
                     <div class="sbm-zoom-card sbm-zoom-card--review" id="sbmReviewCard">
-                      <img src="/static/seo-images/review-place.jpg" alt="방문자 리뷰 증가" class="sbm-zoom-img sbm-zoom-img--review" />
-                      <div class="sbm-up-badge sbm-up-badge--green">
-                        <span class="sbm-up-text">UP!</span>
-                        <span class="sbm-up-arrow">↑</span>
+                      {/* 리뷰 타입 탭 */}
+                      <div class="sbm-review-tabs">
+                        <button class="sbm-review-tab active" id="sbmReviewTab0" data-tab="0">기획형 리뷰</button>
+                        <button class="sbm-review-tab" id="sbmReviewTab1" data-tab="1">단순 리뷰</button>
+                      </div>
+                      {/* 기획형 리뷰 이미지 */}
+                      <div class="sbm-review-panel active" id="sbmReviewPanel0">
+                        <div class="sbm-review-img-wrap">
+                          <img src="/static/seo-images/review-planned.jpg" alt="기획형 리뷰" class="sbm-zoom-img sbm-zoom-img--review sbm-zoom-img--planned" />
+                        </div>
+                      </div>
+                      {/* 단순 리뷰 이미지 */}
+                      <div class="sbm-review-panel" id="sbmReviewPanel1">
+                        <div class="sbm-review-img-wrap sbm-review-img-wrap--simple">
+                          <img src="/static/seo-images/review-simple.jpg" alt="단순 리뷰" class="sbm-zoom-img sbm-zoom-img--review sbm-zoom-img--simple" />
+                        </div>
                       </div>
                       <div class="sbm-stat-row">
                         <div class="sbm-stat">
@@ -850,6 +862,21 @@ export const SvcSeoPage = () => (
   }
   var reviewClose = document.getElementById('sbmReviewClose');
   if(reviewClose) reviewClose.addEventListener('click', closeAll);
+
+  /* ── 리뷰 탭 전환 ── */
+  var reviewTabContainer = document.getElementById('sbmReviewCard');
+  if(reviewTabContainer){
+    reviewTabContainer.addEventListener('click', function(e){
+      var tab = e.target.closest('.sbm-review-tab');
+      if(!tab) return;
+      var idx = tab.dataset.tab;
+      document.querySelectorAll('.sbm-review-tab').forEach(function(t){ t.classList.remove('active'); });
+      document.querySelectorAll('.sbm-review-panel').forEach(function(p){ p.classList.remove('active'); });
+      tab.classList.add('active');
+      var panel = document.getElementById('sbmReviewPanel' + idx);
+      if(panel) panel.classList.add('active');
+    });
+  }
 
   /* ── 저장 작업 ── */
   var saveCard  = document.getElementById('seoSaveCard');
