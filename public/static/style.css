@@ -824,9 +824,11 @@ em {
 /* 이미지 영역 — contain으로 전체 표시 */
 .svc-panel-img {
   position: relative;
-  width: 100%;
-  background-color: #0a0d1a;
-  /* 이미지 비율에 따라 높이 자동 결정 */
+  flex: 1;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  min-height: 320px;
 }
 
 /* img 태그 방식 이미지 래퍼 */
