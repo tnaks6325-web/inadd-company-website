@@ -775,6 +775,20 @@ export const SvcInfluencerPage = () => (
             </div>
 
           </div>{/* /acc1 */}
+
+          {/* ── 콘텐츠 유형 하단 CTA ── */}
+          <div class="svctab-inline-cta">
+            <p class="svctab-cta-msg">
+              상담을 남기시면 유형에 맞는 <strong>레퍼런스</strong>를 받아 보실 수 있습니다.
+            </p>
+            <a href="/contact" class="svctab-cta-btn">
+              상담 남기기
+              <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
+                <path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
         </div>{/* /panel1 */}
 
         {/* ── 탭 패널 2 : 모델 ── */}
@@ -950,6 +964,20 @@ export const SvcInfluencerPage = () => (
             </div>
 
           </div>{/* /acc2 */}
+
+          {/* ── 모델 하단 CTA ── */}
+          <div class="svctab-inline-cta">
+            <p class="svctab-cta-msg">
+              상담을 남기시면 유형에 맞는 <strong>레퍼런스</strong>를 받아 보실 수 있습니다.
+            </p>
+            <a href="/contact" class="svctab-cta-btn">
+              상담 남기기
+              <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
+                <path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
         </div>{/* /panel2 */}
 
       </div>
