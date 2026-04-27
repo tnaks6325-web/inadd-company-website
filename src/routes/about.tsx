@@ -202,12 +202,9 @@ export const AboutPage = () => (
 
     {/* ── 비즈니스 파트너 섹션 ── */}
     <section class="about-partner-section">
-      {/* 배경 파티클 캔버스 */}
       <canvas class="aptn-canvas" id="aptnCanvas"></canvas>
       <div class="aptn-bg-orb aptn-bg-orb--a"></div>
       <div class="aptn-bg-orb aptn-bg-orb--b"></div>
-      <div class="aptn-bg-line aptn-bg-line--h1"></div>
-      <div class="aptn-bg-line aptn-bg-line--h2"></div>
 
       <div class="container" style="position:relative;z-index:1">
 
@@ -215,53 +212,110 @@ export const AboutPage = () => (
         <div class="aptn-header">
           <p class="aptn-eyebrow">OUR IDENTITY</p>
           <h2 class="aptn-main-title">비즈니스 파트너</h2>
-          <p class="aptn-main-sub">단순한 대행사를 넘어, 고객사의 성장을 함께 책임지는 진정한 파트너</p>
+          <p class="aptn-main-sub">인애드컴퍼니는 단순한 대행사가 아닙니다.<br />차별화된 전략으로 성장을 만들고, 광고주와 함께 진정한 파트너가 됩니다.</p>
         </div>
 
-        {/* 3개 가치 카드 */}
-        <div class="aptn-cards">
-          <div class="aptn-card" data-idx="0">
-            <div class="aptn-card-accent-line"></div>
-            <div class="aptn-card-number">01</div>
-            <div class="aptn-card-icon-wrap">
-              <div class="aptn-card-icon-ring"></div>
-              <span class="aptn-card-icon">💡</span>
-            </div>
-            <strong class="aptn-card-title">차별화된<br />솔루션 제공</strong>
-            <p class="aptn-card-desc">브랜드 특성에 맞는 최적 채널과 전략으로 경쟁과 차별되는 퍼포먼스를 설계합니다.</p>
-            <div class="aptn-card-tags">
-              <span>채널 분석</span><span>전략 설계</span><span>퍼포먼스</span>
-            </div>
-          </div>
-          <div class="aptn-card aptn-card--center" data-idx="1">
-            <div class="aptn-card-accent-line"></div>
-            <div class="aptn-card-number">02</div>
-            <div class="aptn-card-icon-wrap">
-              <div class="aptn-card-icon-ring"></div>
-              <span class="aptn-card-icon">📈</span>
-            </div>
-            <strong class="aptn-card-title">사업 성장<br />유도</strong>
-            <p class="aptn-card-desc">노출에서 전환까지 이어지는 풀퍼널 구조로 실질적인 매출과 인지도를 동시에 높입니다.</p>
-            <div class="aptn-card-tags">
-              <span>풀퍼널</span><span>매출 성장</span><span>인지도</span>
-            </div>
-          </div>
-          <div class="aptn-card" data-idx="2">
-            <div class="aptn-card-accent-line"></div>
-            <div class="aptn-card-number">03</div>
-            <div class="aptn-card-icon-wrap">
-              <div class="aptn-card-icon-ring"></div>
-              <span class="aptn-card-icon">🎯</span>
-            </div>
-            <strong class="aptn-card-title">브랜딩<br />강화</strong>
-            <p class="aptn-card-desc">소비자 인식 속에 브랜드를 자연스럽게 각인시키는 지속 가능한 마케팅 생태계를 구축합니다.</p>
-            <div class="aptn-card-tags">
-              <span>브랜드 설계</span><span>지속성</span><span>생태계</span>
-            </div>
-          </div>
-        </div>
+        {/* ── 플로우 다이어그램 ── */}
+        <div class="aptn-flow">
 
-        {/* VISION / MISSION */}
+          {/* STEP 01 */}
+          <div class="aptn-flow-step" data-step="0">
+            <div class="aptn-step-badge">STEP 01</div>
+            <div class="aptn-step-card">
+              <div class="aptn-step-icon-wrap">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <path d="M14 4L17.5 10.5H24L19 15L21 22L14 18L7 22L9 15L4 10.5H10.5L14 4Z" stroke="rgba(41,121,255,0.9)" stroke-width="1.6" stroke-linejoin="round" fill="rgba(41,121,255,0.1)"/>
+                </svg>
+              </div>
+              <strong class="aptn-step-title">차별화된 솔루션</strong>
+              <p class="aptn-step-desc">브랜드 특성을 분석해 경쟁사와 다른 최적의 채널 전략을 설계합니다.</p>
+              <ul class="aptn-step-list">
+                <li>브랜드 심층 분석</li>
+                <li>맞춤 채널 기획</li>
+                <li>경쟁 차별화 전략</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* 화살표 */}
+          <div class="aptn-flow-arrow">
+            <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+              <path d="M0 12H36M28 4L38 12L28 20" stroke="rgba(41,121,255,0.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="aptn-flow-arrow-label">인애드 실행</span>
+          </div>
+
+          {/* STEP 02 */}
+          <div class="aptn-flow-step" data-step="1">
+            <div class="aptn-step-badge aptn-step-badge--accent">STEP 02</div>
+            <div class="aptn-step-card aptn-step-card--accent">
+              <div class="aptn-step-icon-wrap aptn-step-icon-wrap--accent">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <polyline points="4,20 10,13 16,17 24,7" stroke="rgba(41,200,130,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="20,7 24,7 24,11" stroke="rgba(41,200,130,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <strong class="aptn-step-title">사업 성장 유도</strong>
+              <p class="aptn-step-desc">노출→유입→전환의 풀퍼널 구조로 매출과 인지도를 함께 끌어올립니다.</p>
+              <ul class="aptn-step-list">
+                <li>풀퍼널 캠페인 운영</li>
+                <li>전환율 최적화</li>
+                <li>성과 데이터 분석</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* 화살표 */}
+          <div class="aptn-flow-arrow">
+            <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+              <path d="M0 12H36M28 4L38 12L28 20" stroke="rgba(41,121,255,0.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="aptn-flow-arrow-label">결과 달성</span>
+          </div>
+
+          {/* STEP 03 */}
+          <div class="aptn-flow-step" data-step="2">
+            <div class="aptn-step-badge">STEP 03</div>
+            <div class="aptn-step-card">
+              <div class="aptn-step-icon-wrap">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <circle cx="14" cy="14" r="9" stroke="rgba(41,121,255,0.9)" stroke-width="1.6"/>
+                  <circle cx="14" cy="14" r="4" fill="rgba(41,121,255,0.3)" stroke="rgba(41,121,255,0.9)" stroke-width="1.6"/>
+                  <circle cx="14" cy="14" r="1.5" fill="rgba(41,121,255,0.9)"/>
+                </svg>
+              </div>
+              <strong class="aptn-step-title">브랜딩 강화</strong>
+              <p class="aptn-step-desc">소비자 인식에 자연스럽게 각인되는 지속 가능한 마케팅 생태계를 구축합니다.</p>
+              <ul class="aptn-step-list">
+                <li>브랜드 아이덴티티 구축</li>
+                <li>소비자 신뢰도 향상</li>
+                <li>지속 생태계 설계</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* 최종 화살표 → 파트너 */}
+          <div class="aptn-flow-arrow aptn-flow-arrow--result">
+            <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+              <path d="M0 12H36M28 4L38 12L28 20" stroke="rgba(41,121,255,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="aptn-flow-arrow-label">파트너십</span>
+          </div>
+
+          {/* RESULT: 비즈니스 파트너 */}
+          <div class="aptn-flow-result">
+            <div class="aptn-result-ring aptn-result-ring--outer"></div>
+            <div class="aptn-result-ring aptn-result-ring--inner"></div>
+            <div class="aptn-result-core">
+              <span class="aptn-result-icon">🤝</span>
+              <strong class="aptn-result-label">비즈니스<br />파트너</strong>
+            </div>
+          </div>
+
+        </div>
+        {/* /플로우 */}
+
+        {/* ── VISION / MISSION ── */}
         <div class="aptn-vm-section">
           <div class="aptn-vm-divider">
             <span class="aptn-vm-divider-line"></span>
@@ -269,27 +323,39 @@ export const AboutPage = () => (
             <span class="aptn-vm-divider-line"></span>
           </div>
 
-          <div class="aptn-vm-grid">
-            <div class="aptn-vm-card aptn-vm-card--vision">
-              <div class="aptn-vm-badge-row">
-                <div class="aptn-vm-badge">VISION</div>
-                <div class="aptn-vm-badge-dot"></div>
+          <div class="aptn-vm-row">
+            {/* VISION */}
+            <div class="aptn-vm-item aptn-vm-item--vision">
+              <div class="aptn-vm-item-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <circle cx="11" cy="11" r="8" stroke="rgba(41,121,255,0.8)" stroke-width="1.5"/>
+                  <circle cx="11" cy="11" r="3" fill="rgba(41,121,255,0.9)"/>
+                  <line x1="11" y1="1" x2="11" y2="4" stroke="rgba(41,121,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+                  <line x1="11" y1="18" x2="11" y2="21" stroke="rgba(41,121,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+                  <line x1="1" y1="11" x2="4" y2="11" stroke="rgba(41,121,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+                  <line x1="18" y1="11" x2="21" y2="11" stroke="rgba(41,121,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
               </div>
-              <p class="aptn-vm-quote">"고객사 비즈니스의 <strong>성공</strong>만을 위한,<br />효과적인 <strong>퍼널 솔루션</strong>을 제공합니다."</p>
+              <div class="aptn-vm-item-content">
+                <span class="aptn-vm-item-label">VISION</span>
+                <p class="aptn-vm-item-text">고객사 비즈니스의 <strong>성공</strong>만을 위한,<br />효과적인 <strong>퍼널 솔루션</strong>을 제공합니다.</p>
+              </div>
             </div>
 
-            <div class="aptn-vm-center">
-              <div class="aptn-vm-center-ring">
-                <div class="aptn-vm-center-dot"></div>
-              </div>
-            </div>
+            {/* 구분선 */}
+            <div class="aptn-vm-sep-v"></div>
 
-            <div class="aptn-vm-card aptn-vm-card--mission">
-              <div class="aptn-vm-badge-row">
-                <div class="aptn-vm-badge aptn-vm-badge--mission">MISSION</div>
-                <div class="aptn-vm-badge-dot"></div>
+            {/* MISSION */}
+            <div class="aptn-vm-item aptn-vm-item--mission">
+              <div class="aptn-vm-item-icon aptn-vm-item-icon--mission">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <path d="M11 3L13.5 8.5L20 9.3L15.5 13.5L16.8 20L11 16.8L5.2 20L6.5 13.5L2 9.3L8.5 8.5L11 3Z" stroke="rgba(140,80,255,0.8)" stroke-width="1.5" stroke-linejoin="round" fill="rgba(140,80,255,0.08)"/>
+                </svg>
               </div>
-              <p class="aptn-vm-quote">"고객사의 <strong>성장</strong>에 전력을 다하는<br />진정한 <strong>비즈니스 파트너</strong>가 됩니다."</p>
+              <div class="aptn-vm-item-content">
+                <span class="aptn-vm-item-label aptn-vm-item-label--mission">MISSION</span>
+                <p class="aptn-vm-item-text">고객사의 <strong>성장</strong>에 전력을 다하는<br />진정한 <strong>비즈니스 파트너</strong>가 됩니다.</p>
+              </div>
             </div>
           </div>
         </div>
