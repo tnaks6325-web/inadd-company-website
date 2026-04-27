@@ -288,7 +288,7 @@ export const ContactPage = () => (
 
               {/* 완료 메시지 */}
               <div class="contact-success" id="contactSuccess" style="display:none;">
-                <p class="cs-notify">담당자가 빠른 시일 내 연락드립니다.<br />보통 1 영업일 이내 응답합니다.</p>
+                <p class="cs-notify">상담을 기다리는 동안,<br />인애드컴퍼니의 관점과 전략을 살펴보세요.</p>
                 <div class="cs-main">
                   <div class="cs-check">
                     <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(26,107,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
