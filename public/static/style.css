@@ -787,22 +787,22 @@ em {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 22px;
-  background: linear-gradient(135deg, rgba(41,121,255,0.18) 0%, rgba(26,82,200,0.10) 100%);
-  border: 1px solid rgba(41,121,255,0.5);
+  gap: 10px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, rgba(41,121,255,0.20) 0%, rgba(26,82,200,0.12) 100%);
+  border: none;
   color: #ffffff;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.8px;
   text-transform: uppercase;
   border-radius: 4px;
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
   overflow: hidden;
-  box-shadow: 0 0 12px rgba(41,121,255,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+  box-shadow: 0 0 0 1px rgba(41,121,255,0.35), 0 0 16px rgba(41,121,255,0.18), inset 0 1px 0 rgba(255,255,255,0.07);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 /* 빛 스캔 레이어 */
 .svc-goto-btn::before {
@@ -829,17 +829,17 @@ em {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
-  border: 1px solid rgba(41,121,255,0.6);
+  width: 20px;
+  height: 20px;
+  border: none;
   border-radius: 50%;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  background: rgba(41,121,255,0.25);
+  transition: transform 0.3s ease, background 0.3s ease;
   flex-shrink: 0;
 }
 .svc-goto-btn:hover {
   color: #ffffff;
-  border-color: rgba(41,121,255,0.9);
-  box-shadow: 0 0 24px rgba(41,121,255,0.4), 0 0 48px rgba(41,121,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+  box-shadow: 0 0 0 1px rgba(41,121,255,0.7), 0 0 28px rgba(41,121,255,0.45), 0 0 56px rgba(41,121,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
   transform: translateY(-1px);
 }
 .svc-goto-btn:hover::before {
@@ -847,7 +847,7 @@ em {
 }
 .svc-goto-btn:hover .btn-arrow {
   transform: translateX(2px);
-  border-color: rgba(100,160,255,0.9);
+  background: rgba(41,121,255,0.5);
 }
 /* 패널 표시 시 깜빡임 강조 */
 @keyframes gotoBlink {
