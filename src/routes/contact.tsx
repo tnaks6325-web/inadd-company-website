@@ -288,18 +288,20 @@ export const ContactPage = () => (
 
               {/* 완료 메시지 */}
               <div class="contact-success" id="contactSuccess" style="display:none;">
-                <div class="cs-check">
-                  <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(26,107,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p class="cs-notify">담당자가 빠른 시일 내 연락드립니다.<br />보통 1 영업일 이내 응답합니다.</p>
+                <div class="cs-main">
+                  <div class="cs-check">
+                    <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(26,107,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <h3>상담 신청이 완료되었습니다!</h3>
                 </div>
-                <h3>상담 신청이 완료되었습니다!</h3>
-                <p>담당자가 빠른 시일 내 연락드립니다.<br />보통 1 영업일 이내 응답합니다.</p>
                 <a
                   href="https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="cs-brochure-btn"
                 >
-                  <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M12 2v13M7 10l5 5 5-5M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 2v13M7 10l5 5 5-5M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   <span>회사소개서 보기</span>
                 </a>
               </div>
