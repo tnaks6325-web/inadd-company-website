@@ -188,13 +188,16 @@ export const HomePage = () => (
             {/* 클릭 유도 힌트 — 첫 클릭 시 사라짐 */}
             <div class="svc-click-hint" id="svcClickHint">
               <div class="svc-hint-inner">
+                <div class="svc-hint-cursor">👆</div>
+                <p class="svc-hint-text">
+                  왼쪽 상품명을<br />
+                  <strong>클릭해주세요</strong>
+                </p>
                 <div class="svc-hint-arrow">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M8 16H24M16 8L8 16L16 24" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <path d="M28 18H8M16 8L6 18L16 28" stroke="rgba(100,160,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </div>
-                <p class="svc-hint-text">상품명을<br /><strong>클릭</strong>해주세요</p>
-                <div class="svc-hint-cursor">👆</div>
               </div>
             </div>
 

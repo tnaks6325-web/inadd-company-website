@@ -872,61 +872,65 @@ em {
 /* ── 오른쪽: 비주얼 패널 ── */
 .svc-visual {
   position: relative;
-  overflow: hidden; /* 비활성 패널이 영역 밖으로 나오지 않도록 */
+  min-height: 520px;           /* 힌트가 보일 공간 확보 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* ── 클릭 유도 힌트 ── */
 @keyframes hintPulse {
-  0%   { opacity: 0.5; transform: scale(1); }
-  50%  { opacity: 1;   transform: scale(1.04); }
-  100% { opacity: 0.5; transform: scale(1); }
+  0%   { opacity: 0.45; transform: translateY(0) scale(1); }
+  50%  { opacity: 1;    transform: translateY(-6px) scale(1.04); }
+  100% { opacity: 0.45; transform: translateY(0) scale(1); }
 }
 @keyframes hintArrow {
   0%   { transform: translateX(0); }
-  50%  { transform: translateX(-8px); }
+  50%  { transform: translateX(-10px); }
   100% { transform: translateX(0); }
 }
 @keyframes hintFadeOut {
-  to { opacity: 0; pointer-events: none; }
+  to { opacity: 0; visibility: hidden; }
 }
 .svc-click-hint {
-  position: absolute;
-  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-  pointer-events: none;
+  width: 100%;
+  padding: 60px 0;
+  transition: opacity 0.35s ease;
 }
 .svc-hint-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
   animation: hintPulse 2.4s ease-in-out infinite;
 }
 .svc-hint-arrow {
-  animation: hintArrow 1.6s ease-in-out infinite;
+  animation: hintArrow 1.8s ease-in-out infinite;
 }
 .svc-hint-text {
-  font-size: 20px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.45);
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
   text-align: center;
-  line-height: 1.5;
-  letter-spacing: -0.3px;
+  line-height: 1.6;
+  letter-spacing: -0.2px;
 }
 .svc-hint-text strong {
-  color: rgba(100,160,255,0.8);
-  font-size: 24px;
+  display: block;
+  color: rgba(100,160,255,0.75);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 .svc-hint-cursor {
-  font-size: 32px;
-  filter: grayscale(0.3);
+  font-size: 36px;
 }
 /* 클릭 후 페이드아웃 */
 .svc-click-hint.svc-hint--hidden {
-  animation: hintFadeOut 0.35s ease forwards;
+  animation: hintFadeOut 0.3s ease forwards;
 }
 
 .svc-panel {
