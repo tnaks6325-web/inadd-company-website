@@ -377,7 +377,7 @@ export const SvcInfluencerPage = () => (
 
 
     {/* ══════════════════════════════════════════
-        SERVICE TABS — 섭외/협찬 · 콘텐츠 제작 · 모델
+        SERVICE TABS — 섭외/협찬 · 콘텐츠 유형 · 모델
     ══════════════════════════════════════════ */}
     <section class="svctab-section" id="svctabSection">
       <div class="svctab-bg">
@@ -547,7 +547,7 @@ export const SvcInfluencerPage = () => (
           <div class="svctab-panel-head">
             <p class="svctab-panel-eyebrow">CONTENT TYPES</p>
             <h2 class="svctab-panel-title">콘텐츠 <em>유형</em></h2>
-            <p class="svctab-panel-lead">브랜드 메시지가 콘텐츠 자체가 되도록 — <strong>4가지 제작 솔루션</strong>을 제공합니다.</p>
+            <p class="svctab-panel-lead">브랜드 메시지가 콘텐츠 자체가 되도록 — <strong>4가지 콘텐츠 유형</strong>을 제공합니다.</p>
           </div>
 
           <div class="svctab-acc" id="acc1">
