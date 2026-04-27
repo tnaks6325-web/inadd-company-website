@@ -23,8 +23,29 @@ export const ContactPage = () => (
         <div class="ct-panel-num">01</div>
       </div>
 
-      {/* 가운데 구분선 + OR */}
-      <div class="ct-split-divider">
+      {/* 가운데 구분선 (왼쪽↔가운데) */}
+      <div class="ct-split-divider ct-divider--left">
+        <span>OR</span>
+      </div>
+      <div class="ct-split-panel ct-panel--brochure" id="panel-brochure"
+           onmouseenter="hoverPanel('brochure')"
+           onmouseleave="resetPanel()"
+           onclick="enterBrochure()">
+        <div class="ct-panel-bg"></div>
+        <div class="ct-panel-content">
+          <div class="ct-panel-label">BROCHURE</div>
+          <h2 class="ct-panel-title">회사소개서<br />받아보기</h2>
+          <p class="ct-panel-desc">이메일 하나면 충분합니다<br />인애드컴퍼니 소개서를 보내드립니다</p>
+          <div class="ct-panel-cta">
+            <span>소개서 신청하기</span>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2v13M7 10l5 5 5-5M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="ct-panel-num">03</div>
+      </div>
+
+      {/* 오른쪽 구분선 (가운데↔오른쪽) */}
+      <div class="ct-split-divider ct-divider--right">
         <span>OR</span>
       </div>
 
@@ -352,6 +373,119 @@ export const ContactPage = () => (
       </section>
     </div>{/* /ct-form-screen */}
 
+    {/* ══════════════════════════════════════
+        STEP 3 — 회사소개서 신청 화면
+        ══════════════════════════════════════ */}
+    <div class="ct-brochure-screen" id="ct-brochure-screen" style="display:none;">
+
+      {/* 페이지 히어로 */}
+      <section class="page-hero contact-hero ct-form-hero">
+        <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
+        <div class="container">
+          <button class="step-back-btn" onclick="backToSelect()">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 18L5 12L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            유형 다시 선택
+          </button>
+          <div class="ct-form-type-badge ct-badge--brochure">회사소개서 신청</div>
+          <h1 class="page-title">소개서<br /><em>신청하기</em></h1>
+          <p class="page-desc">이메일 주소만 입력해 주세요.<br />인애드컴퍼니 소개서를 바로 보내드립니다.</p>
+        </div>
+      </section>
+
+      {/* 소개서 신청 폼 */}
+      <section class="section contact-main-section">
+        <div class="container">
+          <div class="ct-brochure-wrap">
+
+            {/* 왼쪽: 소개서 카드 미리보기 */}
+            <div class="ct-brochure-preview">
+              <div class="ct-brochure-card">
+                <div class="ct-brochure-card-inner">
+                  <div class="ct-bc-logo">IN AD<br />COMPANY</div>
+                  <div class="ct-bc-title">회사소개서</div>
+                  <div class="ct-bc-year">2024</div>
+                  <div class="ct-bc-tags">
+                    <span>바이럴 마케팅</span>
+                    <span>인플루언서</span>
+                    <span>시딩</span>
+                    <span>SEO</span>
+                    <span>PPL</span>
+                  </div>
+                  <div class="ct-bc-footer">
+                    <span>인애드컴퍼니 · inadcompany.com</span>
+                  </div>
+                </div>
+              </div>
+              <p class="ct-brochure-preview-desc">
+                서비스 소개, 실적, 사례 레퍼런스가<br />담긴 PDF 소개서를 이메일로 보내드립니다.
+              </p>
+            </div>
+
+            {/* 오른쪽: 신청 폼 */}
+            <div class="ct-brochure-form-wrap">
+              <form class="contact-form" id="brochureForm"
+                    onsubmit="return handleBrochureSubmit(event)">
+                <div class="ct-brochure-form-head">
+                  <span class="sec-label">Brochure Request</span>
+                  <h2>회사소개서 받기</h2>
+                  <p>이메일 주소만 입력하면 바로 발송됩니다.<br />스팸이나 광고 메일은 절대 발송하지 않습니다.</p>
+                </div>
+
+                <div class="cf-group">
+                  <label for="br-req-email">이메일 주소 <span class="cf-req">*</span></label>
+                  <input type="email" id="br-req-email" name="email"
+                         placeholder="hello@yourcompany.com" required
+                         autocomplete="email" />
+                </div>
+
+                <div class="cf-group ct-brochure-agree-group">
+                  <label class="cf-privacy-check">
+                    <input type="checkbox" name="emailAgree" id="br-email-agree" required />
+                    <span class="cf-privacy-box"></span>
+                    <span>이메일 수신에 동의합니다.</span>
+                  </label>
+                  <p class="ct-brochure-agree-note">
+                    회사소개서 발송 목적으로만 사용되며, 이후 마케팅 수신 동의로 활용될 수 있습니다.<br />
+                    언제든지 수신 거부 가능합니다.
+                  </p>
+                </div>
+
+                <div class="cf-group cf-privacy-group">
+                  <label class="cf-privacy-check">
+                    <input type="checkbox" name="privacy" required />
+                    <span class="cf-privacy-box"></span>
+                    <span>개인정보 수집 및 이용에 동의합니다.</span>
+                  </label>
+                  <button type="button" class="cf-privacy-view-btn" onclick="openPrivacyModal()">내용 확인</button>
+                </div>
+
+                <button type="submit" class="cf-submit ct-brochure-submit">
+                  <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M12 2v13M7 10l5 5 5-5M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>소개서 받기</span>
+                </button>
+              </form>
+
+              {/* 완료 메시지 */}
+              <div class="contact-success" id="brochureSuccess" style="display:none;">
+                <p class="cs-notify">이메일을 확인해 주세요.<br />소개서 발송 준비 중입니다.</p>
+                <div class="cs-main">
+                  <div class="cs-check">
+                    <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(26,107,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <h3>신청이 완료되었습니다!</h3>
+                </div>
+                <p style="color:rgba(255,255,255,0.5); font-size:14px; text-align:center; margin-top:12px;">
+                  입력하신 이메일로 소개서를 발송해 드립니다.<br />
+                  (발송까지 최대 1영업일 소요될 수 있습니다)
+                </p>
+              </div>
+            </div>
+
+          </div>{/* /ct-brochure-wrap */}
+        </div>
+      </section>
+    </div>{/* /ct-brochure-screen */}
+
     {/* ── 개인정보 처리방침 모달 ── */}
     <div id="privacy-modal" class="prv-modal-overlay" onclick="if(event.target===this)closePrivacyModal()" style="display:none;">
       <div class="prv-modal-box">
@@ -460,20 +594,19 @@ export const ContactPage = () => (
     <script dangerouslySetInnerHTML={{__html: `
       (function() {
         function hoverPanel(type) {
-          var agency = document.getElementById('panel-agency');
-          var brand  = document.getElementById('panel-brand');
-          if (type === 'agency') {
-            agency.classList.add('ct-active');
-            brand.classList.add('ct-shrink');
-          } else {
-            brand.classList.add('ct-active');
-            agency.classList.add('ct-shrink');
-          }
+          var agency   = document.getElementById('panel-agency');
+          var brand    = document.getElementById('panel-brand');
+          var brochure = document.getElementById('panel-brochure');
+          var all = [agency, brand, brochure];
+          all.forEach(function(el) { el && el.classList.remove('ct-active','ct-shrink'); });
+          var active = document.getElementById('panel-' + type);
+          if (active) active.classList.add('ct-active');
+          all.forEach(function(el) { if (el && el !== active) el.classList.add('ct-shrink'); });
         }
         function resetPanel() {
-          ['panel-agency','panel-brand'].forEach(function(id) {
+          ['panel-agency','panel-brand','panel-brochure'].forEach(function(id) {
             var el = document.getElementById(id);
-            el.classList.remove('ct-active','ct-shrink');
+            if (el) el.classList.remove('ct-active','ct-shrink');
           });
         }
         function enterForm(type) {
@@ -509,15 +642,44 @@ export const ContactPage = () => (
           }, 450);
         }
         function backToSelect() {
-          var split  = document.getElementById('ct-split');
-          var screen = document.getElementById('ct-form-screen');
-          screen.style.animation = 'ctSplitOut 0.4s ease forwards';
+          var split     = document.getElementById('ct-split');
+          var screen    = document.getElementById('ct-form-screen');
+          var bScreen   = document.getElementById('ct-brochure-screen');
+          [screen, bScreen].forEach(function(s) {
+            if (s && s.style.display !== 'none') {
+              s.style.animation = 'ctSplitOut 0.4s ease forwards';
+              setTimeout(function() {
+                s.style.display = 'none';
+                split.style.display = 'flex';
+                split.style.animation = 'ctFormIn 0.5s ease forwards';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }, 350);
+            }
+          });
+        }
+        function enterBrochure() {
+          var split   = document.getElementById('ct-split');
+          var bScreen = document.getElementById('ct-brochure-screen');
+          split.style.animation = 'ctSplitOut 0.5s cubic-bezier(0.4,0,0.2,1) forwards';
           setTimeout(function() {
-            screen.style.display = 'none';
-            split.style.display = 'flex';
-            split.style.animation = 'ctFormIn 0.5s ease forwards';
+            split.style.display = 'none';
+            bScreen.style.display = 'block';
+            bScreen.style.animation = 'ctFormIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards';
             window.scrollTo({ top: 0, behavior: 'smooth' });
-          }, 350);
+          }, 450);
+        }
+        function handleBrochureSubmit(e) {
+          e.preventDefault();
+          var form    = document.getElementById('brochureForm');
+          var success = document.getElementById('brochureSuccess');
+          form.style.transition = 'opacity 0.3s ease';
+          form.style.opacity = '0';
+          setTimeout(function() {
+            form.style.display = 'none';
+            success.style.display = 'flex';
+            success.style.animation = 'ctFormIn 0.5s ease forwards';
+          }, 300);
+          return false;
         }
         function toggleCustomBudget(sel, targetId) {
           var wrap = document.getElementById(targetId);
@@ -563,9 +725,11 @@ export const ContactPage = () => (
         window.hoverPanel = hoverPanel;
         window.resetPanel = resetPanel;
         window.enterForm = enterForm;
+        window.enterBrochure = enterBrochure;
         window.backToSelect = backToSelect;
         window.toggleCustomBudget = toggleCustomBudget;
         window.handleContactSubmit = handleContactSubmit;
+        window.handleBrochureSubmit = handleBrochureSubmit;
         window.openPrivacyModal = openPrivacyModal;
         window.closePrivacyModal = closePrivacyModal;
 

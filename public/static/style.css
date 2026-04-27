@@ -7798,8 +7798,191 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── 폼 화면 히어로 내 배지·백버튼 ── */
-.ct-form-hero .step-back-btn {
+/* ── 3분할 레이아웃: 구분선 위치 ── */
+.ct-split-divider.ct-divider--left {
+  left: 33.33%;
+}
+.ct-split-divider.ct-divider--right {
+  left: 66.66%;
+}
+
+/* ── 회사소개서 패널 배경 ── */
+.ct-panel--brochure .ct-panel-bg {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,180,50,0.2) 0%, transparent 70%),
+    linear-gradient(135deg, #0a0d1f 0%, #12100a 50%, #080a18 100%);
+}
+.ct-panel--brochure.ct-active .ct-panel-cta {
+  background: rgba(255,180,50,0.12);
+  border-color: rgba(255,180,50,0.45);
+  color: #fff;
+  box-shadow: 0 0 24px rgba(255,180,50,0.2);
+}
+.ct-panel--brochure.ct-active .ct-panel-label { color: rgba(255,180,50,0.8); }
+
+/* 소개서 배지 */
+.ct-badge--brochure {
+  background: rgba(255,180,50,0.15);
+  border: 1px solid rgba(255,180,50,0.4);
+  color: rgba(255,180,50,0.9);
+}
+
+/* ── 회사소개서 신청 화면 레이아웃 ── */
+.ct-brochure-wrap {
+  display: flex;
+  gap: 64px;
+  align-items: flex-start;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* 왼쪽 소개서 카드 미리보기 */
+.ct-brochure-preview {
+  flex: 0 0 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.ct-brochure-card {
+  width: 200px;
+  height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(255,180,50,0.08);
+  border: 1px solid rgba(255,180,50,0.2);
+  position: relative;
+  transform: rotate(-3deg);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.ct-brochure-card:hover {
+  transform: rotate(0deg) translateY(-6px);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(255,180,50,0.15);
+}
+.ct-brochure-card-inner {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #080d20 0%, #0d1530 40%, #060a18 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px 16px;
+  position: relative;
+}
+.ct-brochure-card-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 30%, rgba(255,180,50,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.ct-bc-logo {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: rgba(255,180,50,0.7);
+  text-align: center;
+  line-height: 1.3;
+}
+.ct-bc-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.ct-bc-year {
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  font-weight: 600;
+}
+.ct-bc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  margin-top: 8px;
+}
+.ct-bc-tags span {
+  font-size: 9px;
+  padding: 3px 7px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.4);
+}
+.ct-bc-footer {
+  position: absolute;
+  bottom: 14px;
+  font-size: 8px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.05em;
+}
+.ct-brochure-preview-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* 오른쪽 신청 폼 */
+.ct-brochure-form-wrap {
+  flex: 1;
+}
+.ct-brochure-form-head {
+  margin-bottom: 36px;
+}
+.ct-brochure-form-head h2 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  margin: 8px 0 12px;
+}
+.ct-brochure-form-head p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.7;
+}
+
+/* 이메일 수신 동의 그룹 */
+.ct-brochure-agree-group {
+  background: rgba(255,180,50,0.05);
+  border: 1px solid rgba(255,180,50,0.15);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+.ct-brochure-agree-note {
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  line-height: 1.6;
+  margin-top: 8px;
+  margin-left: 28px;
+}
+
+/* 소개서 신청 버튼 */
+.ct-brochure-submit {
+  background: linear-gradient(135deg, rgba(255,180,50,0.9) 0%, rgba(255,140,30,0.9) 100%) !important;
+  box-shadow: 0 8px 24px rgba(255,160,40,0.3) !important;
+}
+.ct-brochure-submit:hover {
+  box-shadow: 0 12px 32px rgba(255,160,40,0.5) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .ct-brochure-wrap {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .ct-brochure-preview {
+    flex: none;
+    width: 100%;
+  }
+}
+
+
   display: inline-flex;
   align-items: center;
   gap: 8px;
