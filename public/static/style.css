@@ -805,6 +805,17 @@ em {
   border-color: rgba(41,121,255,0.7);
   transform: translateX(3px);
 }
+/* 패널 표시 시 깜빡임 강조 */
+@keyframes gotoBlink {
+  0%   { background: rgba(41,121,255,0.12); border-color: rgba(41,121,255,0.4);  box-shadow: none; }
+  30%  { background: rgba(41,121,255,0.55); border-color: rgba(41,121,255,1);    box-shadow: 0 0 16px rgba(41,121,255,0.7); }
+  60%  { background: rgba(41,121,255,0.12); border-color: rgba(41,121,255,0.4);  box-shadow: none; }
+  80%  { background: rgba(41,121,255,0.45); border-color: rgba(41,121,255,0.9);  box-shadow: 0 0 10px rgba(41,121,255,0.5); }
+  100% { background: rgba(41,121,255,0.12); border-color: rgba(41,121,255,0.4);  box-shadow: none; }
+}
+.svc-goto-btn.blink {
+  animation: gotoBlink 1.2s ease forwards;
+}
 
 .svc-list-item a {
   display: flex;

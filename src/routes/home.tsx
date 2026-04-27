@@ -380,7 +380,13 @@ export const HomePage = () => (
       /* 선택 활성화 */
       items[idx].classList.add('active');
       var gotoBtn = items[idx].querySelector('.svc-goto-btn');
-      if (gotoBtn) gotoBtn.style.display = 'inline-flex';
+      if (gotoBtn) {
+        gotoBtn.style.display = 'inline-flex';
+        /* 깜빡임 강조 — 클래스를 재실행하려면 먼저 제거 후 추가 */
+        gotoBtn.classList.remove('blink');
+        void gotoBtn.offsetWidth; /* reflow 강제 */
+        gotoBtn.classList.add('blink');
+      }
       if (panels[idx]) {
         panels[idx].style.display = 'flex';
         requestAnimationFrame(function(){ panels[idx].classList.add('active'); });
@@ -890,43 +896,6 @@ function initSlider(intervalSec){
   }, ms);
 }
 initSlider(7);
-
-/* ─────────────────────────────────────────────
-   1. WHAT WE DO — 서비스 리스트 인터랙션
-   마우스 오버 시 오른쪽 패널 교체 + 글로우 이펙트
-───────────────────────────────────────────── */
-(function(){
-  var items = document.querySelectorAll('.svc-list-item');
-  var panels = document.querySelectorAll('.svc-panel');
-  if(!items.length || !panels.length) return;
-
-  function activate(idx){
-    items.forEach(function(el){ el.classList.remove('active'); });
-    panels.forEach(function(el){ el.classList.remove('active'); el.classList.add('exiting'); });
-    items[idx].classList.add('active');
-    // 패널 교체 — 페이드+슬라이드
-    setTimeout(function(){
-      panels.forEach(function(el){ el.classList.remove('exiting'); });
-      var target = document.querySelector('.svc-panel[data-panel="'+idx+'"]');
-      if(target) target.classList.add('active');
-    }, 180);
-  }
-
-  items.forEach(function(item, idx){
-    // 호버 시 미리보기
-    item.addEventListener('mouseenter', function(){ activate(idx); });
-  });
-
-  // 클릭도 동일하게 (모바일 대응)
-  items.forEach(function(item, idx){
-    item.addEventListener('click', function(e){
-      var href = item.querySelector('a') && item.querySelector('a').getAttribute('href');
-      if(href && href !== '#'){
-        // 링크 이동
-      }
-    });
-  });
-})();
 
 /* ─────────────────────────────────────────────
    2. STATS — 숫자 카운팅 + stagger fade-up
