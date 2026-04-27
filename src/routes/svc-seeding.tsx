@@ -276,13 +276,29 @@ export const SvcSeedingPage = () => (
   if(!list || !visual) return;
   var items = list.querySelectorAll('.svc-list-item');
   var panels = visual.querySelectorAll('.svc-panel');
+
+  function activate(idx) {
+    items.forEach(function(el){ el.classList.remove('active'); });
+    panels.forEach(function(el){
+      el.classList.remove('active');
+      el.style.display = 'none';
+    });
+    items[idx].classList.add('active');
+    if(panels[idx]) {
+      panels[idx].classList.add('active');
+      panels[idx].style.display = 'flex';
+    }
+  }
+
+  /* 초기화: 첫 번째 패널만 표시 */
+  panels.forEach(function(el, i){
+    el.style.display = i === 0 ? 'flex' : 'none';
+  });
+
   items.forEach(function(item, i){
     item.addEventListener('click', function(e){
       e.preventDefault();
-      items.forEach(function(el){ el.classList.remove('active'); });
-      panels.forEach(function(el){ el.classList.remove('active'); });
-      item.classList.add('active');
-      if(panels[i]) panels[i].classList.add('active');
+      activate(i);
     });
   });
 })();
@@ -404,13 +420,29 @@ export const SvcSeedingPage = () => (
   if(!list || !visual) return;
   var items = list.querySelectorAll('.svc-list-item');
   var panels = visual.querySelectorAll('.svc-panel');
+
+  function activate(idx) {
+    items.forEach(function(el){ el.classList.remove('active'); });
+    panels.forEach(function(el){
+      el.classList.remove('active');
+      el.style.display = 'none';
+    });
+    items[idx].classList.add('active');
+    if(panels[idx]) {
+      panels[idx].classList.add('active');
+      panels[idx].style.display = 'flex';
+    }
+  }
+
+  /* 초기화 */
+  panels.forEach(function(el, i){
+    el.style.display = i === 0 ? 'flex' : 'none';
+  });
+
   items.forEach(function(item, i){
     item.addEventListener('click', function(e){
       e.preventDefault();
-      items.forEach(function(el){ el.classList.remove('active'); });
-      panels.forEach(function(el){ el.classList.remove('active'); });
-      item.classList.add('active');
-      if(panels[i]) panels[i].classList.add('active');
+      activate(i);
     });
   });
 })();
