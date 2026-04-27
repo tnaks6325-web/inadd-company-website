@@ -66,16 +66,8 @@ export const AboutPage = () => (
 
   scenes.forEach(function(s) { io.observe(s); });
 
-  function updateHeader() {
-    var storyBottom = story.offsetTop + story.offsetHeight;
-    var scrollY = window.scrollY || window.pageYOffset;
-    if (header) {
-      if (scrollY < storyBottom - 80) { header.classList.add('header--hidden'); }
-      else { header.classList.remove('header--hidden'); }
-    }
-  }
-  window.addEventListener('scroll', updateHeader, { passive: true });
-  updateHeader();
+  /* 헤더는 항상 표시 - 숨김 처리 제거 */
+  if (header) { header.classList.remove('header--hidden'); }
 })();
     `}} />
 

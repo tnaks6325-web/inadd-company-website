@@ -810,7 +810,7 @@ em {
   border: 1px solid rgba(255,255,255,0.07);
 }
 .svc-panel.active {
-  /* display:flex 는 JS inline style로 처리 */
+  display: flex !important;
   flex-direction: column;
 }
 
@@ -4472,9 +4472,9 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 
 /* 헤더 숨기기 */
 .header--hidden {
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transition: opacity 0.4s ease !important;
+  /* about 스크롤 스토리에서 헤더를 숨기지 않음 - 항상 표시 */
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 .site-header {
   transition: opacity 0.4s ease;
