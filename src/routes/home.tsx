@@ -117,27 +117,69 @@ export const HomePage = () => (
         <div class="svc-interactive" id="svcInteractive">
 
           {/* 왼쪽: 키워드 리스트 */}
-          <ul class="svc-list">
-            <li class="svc-list-item active" data-svc="0">
-              <a href="/marketing/viral"><span class="svc-list-num">01</span><span class="svc-list-name">VIRAL</span></a>
+          <ul class="svc-list" id="homeSvcList">
+            <li class="svc-list-item" data-svc="0">
+              <div class="svc-list-row">
+                <button class="svc-list-btn" type="button">
+                  <span class="svc-list-num">01</span>
+                  <span class="svc-list-name">VIRAL</span>
+                </button>
+                <a href="/marketing/viral" class="svc-goto-btn" style="display:none">보러가기 →</a>
+              </div>
             </li>
             <li class="svc-list-item" data-svc="1">
-              <a href="/marketing/influencer"><span class="svc-list-num">02</span><span class="svc-list-name">INFLUENCER</span></a>
+              <div class="svc-list-row">
+                <button class="svc-list-btn" type="button">
+                  <span class="svc-list-num">02</span>
+                  <span class="svc-list-name">INFLUENCER</span>
+                </button>
+                <a href="/marketing/influencer" class="svc-goto-btn" style="display:none">보러가기 →</a>
+              </div>
             </li>
             <li class="svc-list-item" data-svc="2">
-              <a href="/marketing/seeding"><span class="svc-list-num">03</span><span class="svc-list-name">SEEDING</span></a>
+              <div class="svc-list-row">
+                <button class="svc-list-btn" type="button">
+                  <span class="svc-list-num">03</span>
+                  <span class="svc-list-name">SEEDING</span>
+                </button>
+                <a href="/marketing/seeding" class="svc-goto-btn" style="display:none">보러가기 →</a>
+              </div>
             </li>
             <li class="svc-list-item" data-svc="3">
-              <a href="/marketing/seo"><span class="svc-list-num">04</span><span class="svc-list-name">SEO</span></a>
+              <div class="svc-list-row">
+                <button class="svc-list-btn" type="button">
+                  <span class="svc-list-num">04</span>
+                  <span class="svc-list-name">SEO</span>
+                </button>
+                <a href="/marketing/seo" class="svc-goto-btn" style="display:none">보러가기 →</a>
+              </div>
             </li>
             <li class="svc-list-item" data-svc="4">
-              <a href="/marketing/review"><span class="svc-list-num">05</span><span class="svc-list-name">REVIEW</span></a>
+              <div class="svc-list-row">
+                <button class="svc-list-btn" type="button">
+                  <span class="svc-list-num">05</span>
+                  <span class="svc-list-name">REVIEW</span>
+                </button>
+                <a href="/marketing/review" class="svc-goto-btn" style="display:none">보러가기 →</a>
+              </div>
             </li>
             <li class="svc-list-item" data-svc="5">
-              <a href="/marketing/oliveyoung"><span class="svc-list-num">06</span><span class="svc-list-name">OLIVE YOUNG</span></a>
+              <div class="svc-list-row">
+                <button class="svc-list-btn" type="button">
+                  <span class="svc-list-num">06</span>
+                  <span class="svc-list-name">OLIVE YOUNG</span>
+                </button>
+                <a href="/marketing/oliveyoung" class="svc-goto-btn" style="display:none">보러가기 →</a>
+              </div>
             </li>
             <li class="svc-list-item" data-svc="6">
-              <a href="/marketing/ppl"><span class="svc-list-num">07</span><span class="svc-list-name">PPL</span></a>
+              <div class="svc-list-row">
+                <button class="svc-list-btn" type="button">
+                  <span class="svc-list-num">07</span>
+                  <span class="svc-list-name">PPL</span>
+                </button>
+                <a href="/marketing/ppl" class="svc-goto-btn" style="display:none">보러가기 →</a>
+              </div>
             </li>
           </ul>
 
@@ -145,7 +187,7 @@ export const HomePage = () => (
           <div class="svc-visual">
 
             {/* 패널 0 — VIRAL */}
-            <div class="svc-panel active" data-panel="0">
+            <div class="svc-panel" data-panel="0" style="display:none">
               <div class="svc-panel-img" style="background-image:url('/static/svc-images/viral.png'); background-size:cover; background-position:center; position:relative;">
                 <div class="svc-real-img-overlay"></div>
               </div>
@@ -301,6 +343,68 @@ export const HomePage = () => (
 
           </div>{/* /svc-visual */}
         </div>{/* /svc-interactive */}
+
+      <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  function initHomeTab() {
+    var list = document.getElementById('homeSvcList');
+    if (!list) return;
+    var items = list.querySelectorAll('.svc-list-item');
+    var visual = list.closest('.svc-interactive').querySelector('.svc-visual');
+    if (!visual) return;
+    var panels = visual.querySelectorAll('.svc-panel');
+    var currentIdx = -1;
+
+    /* 초기화: 모든 패널 숨김 */
+    panels.forEach(function(p) { p.style.display = 'none'; p.classList.remove('active'); });
+
+    function activate(idx) {
+      /* 같은 항목 다시 클릭하면 닫기 */
+      if (currentIdx === idx) {
+        panels[idx].style.display = 'none';
+        panels[idx].classList.remove('active');
+        items[idx].classList.remove('active');
+        var gotoBtn = items[idx].querySelector('.svc-goto-btn');
+        if (gotoBtn) gotoBtn.style.display = 'none';
+        currentIdx = -1;
+        return;
+      }
+      currentIdx = idx;
+      /* 전체 리셋 */
+      items.forEach(function(el) {
+        el.classList.remove('active');
+        var btn = el.querySelector('.svc-goto-btn');
+        if (btn) btn.style.display = 'none';
+      });
+      panels.forEach(function(p) { p.style.display = 'none'; p.classList.remove('active'); });
+      /* 선택 활성화 */
+      items[idx].classList.add('active');
+      var gotoBtn = items[idx].querySelector('.svc-goto-btn');
+      if (gotoBtn) gotoBtn.style.display = 'inline-flex';
+      if (panels[idx]) {
+        panels[idx].style.display = 'flex';
+        requestAnimationFrame(function(){ panels[idx].classList.add('active'); });
+      }
+    }
+
+    items.forEach(function(item, i) {
+      var btn = item.querySelector('.svc-list-btn');
+      if (btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          activate(i);
+        });
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHomeTab);
+  } else {
+    initHomeTab();
+  }
+})();
+      `}} />
 
       </div>
     </section>

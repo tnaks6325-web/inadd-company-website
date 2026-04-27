@@ -468,8 +468,9 @@ if (menuToggle && mainNav) {
 
 /* ── 9. 서비스 인터랙티브 리스트 ── */
 (function initSvcInteractive() {
-  /* 시딩 페이지는 자체 JS로 처리 — 전역 함수 실행 안 함 */
+  /* 시딩 페이지 & 홈 페이지는 자체 JS로 처리 — 전역 함수 실행 안 함 */
   if (document.getElementById('sdngBlogVisual') || document.getElementById('sdngInstaVisual')) return;
+  if (document.getElementById('homeSvcList')) return;
 
   const visual = document.querySelector('.svc-visual');
   if (!visual) return;
