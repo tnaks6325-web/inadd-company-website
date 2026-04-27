@@ -2415,7 +2415,7 @@ em {
 ════════════════════════════════ */
 .aptn-flow {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   gap: 0;
   margin-bottom: 88px;
@@ -2430,6 +2430,7 @@ em {
   gap: 14px;
   flex: 1;
   max-width: 220px;
+  align-self: stretch;
 }
 
 /* STEP 배지 */
@@ -2453,6 +2454,7 @@ em {
 /* 카드 */
 .aptn-step-card {
   width: 100%;
+  flex: 1;
   background: rgba(15,22,48,0.85);        /* 더 밝고 불투명 */
   border: 1px solid rgba(60,110,220,0.35);
   border-radius: 20px;
@@ -2462,6 +2464,9 @@ em {
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 /* 상단 액센트 라인 — 항상 표시 */
 .aptn-step-card::before {
@@ -2574,7 +2579,8 @@ em {
   gap: 8px;
   flex-shrink: 0;
   padding: 0 10px;
-  margin-top: 52px;
+  margin-top: 0;
+  align-self: center;
 }
 .aptn-flow-arrow svg path {
   stroke: rgba(80,140,255,0.7);  /* 더 밝게 */
@@ -2600,7 +2606,8 @@ em {
   width: 140px; height: 140px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  margin-top: 52px;
+  margin-top: 0;
+  align-self: center;
 }
 .aptn-result-ring {
   position: absolute;
@@ -2759,6 +2766,76 @@ em {
 
 
 /* ── About Clients / 클라이언트 ── */
+/* ═══════════════════════════════════════════════
+   상담 CTA 배너
+   ═══════════════════════════════════════════════ */
+.about-cta-section {
+  background: linear-gradient(135deg, #03020d 0%, #080e24 50%, #03020d 100%);
+  border-top: 1px solid rgba(41,121,255,0.2);
+  border-bottom: 1px solid rgba(41,121,255,0.2);
+  padding: 60px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.about-cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(41,121,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.about-cta-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+/* 깜빡이는 텍스트 */
+@keyframes ctaTextBlink {
+  0%, 100% { opacity: 1; text-shadow: 0 0 20px rgba(41,121,255,0.6); }
+  50%       { opacity: 0.55; text-shadow: 0 0 6px rgba(41,121,255,0.2); }
+}
+.about-cta-text {
+  font-size: clamp(16px, 2.5vw, 22px);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+  animation: ctaTextBlink 2s ease-in-out infinite;
+}
+/* 버튼 */
+.about-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 40px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, rgba(41,121,255,0.9), rgba(80,160,255,0.8));
+  border: 1px solid rgba(41,121,255,0.6);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  box-shadow: 0 4px 24px rgba(41,121,255,0.35);
+  transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+}
+.about-cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 40px rgba(41,121,255,0.55);
+  background: linear-gradient(135deg, rgba(60,140,255,1), rgba(100,180,255,0.9));
+}
+.about-cta-arrow {
+  font-size: 18px;
+  transition: transform 0.25s;
+}
+.about-cta-btn:hover .about-cta-arrow {
+  transform: translateX(5px);
+}
+
 /* ═══════════════════════════════════════════════
    클라이언트 섹션 — 흰 배경 + 로고 마퀴 (레뷰 스타일)
    ═══════════════════════════════════════════════ */

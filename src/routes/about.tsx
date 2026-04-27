@@ -363,6 +363,18 @@ export const AboutPage = () => (
       </div>
     </section>
 
+    {/* ── 상담 CTA 배너 ── */}
+    <section class="about-cta-section">
+      <div class="about-cta-inner">
+        <p class="about-cta-text">
+          아래 상담을 남기시면 유형에 맞는 레퍼런스를 받아 보실 수 있습니다.
+        </p>
+        <a href="/contact" class="about-cta-btn">
+          상담 남기기 <span class="about-cta-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
     {/* ── 클라이언트 ── */}
     <section class="acl-section">
 
