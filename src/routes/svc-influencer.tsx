@@ -397,8 +397,8 @@ export const SvcInfluencerPage = () => (
           <div class="svctab-divider"></div>
           <button class="svctab-btn" data-tab="1">
             <span class="svctab-btn-num">02</span>
-            <span class="svctab-btn-label">콘텐츠 제작</span>
-            <span class="svctab-btn-sub">Content Production</span>
+            <span class="svctab-btn-label">콘텐츠 유형</span>
+            <span class="svctab-btn-sub">Content Types</span>
           </button>
           <div class="svctab-divider"></div>
           <button class="svctab-btn" data-tab="2">
@@ -542,11 +542,11 @@ export const SvcInfluencerPage = () => (
           </div>{/* /acc0 */}
         </div>{/* /panel0 */}
 
-        {/* ── 탭 패널 1 : 콘텐츠 제작 ── */}
+        {/* ── 탭 패널 1 : 콘텐츠 유형 ── */}
         <div class="svctab-panel" id="svctabPanel1">
           <div class="svctab-panel-head">
-            <p class="svctab-panel-eyebrow">CONTENT PRODUCTION</p>
-            <h2 class="svctab-panel-title">콘텐츠 <em>제작</em></h2>
+            <p class="svctab-panel-eyebrow">CONTENT TYPES</p>
+            <h2 class="svctab-panel-title">콘텐츠 <em>유형</em></h2>
             <p class="svctab-panel-lead">브랜드 메시지가 콘텐츠 자체가 되도록 — <strong>4가지 제작 솔루션</strong>을 제공합니다.</p>
           </div>
 
