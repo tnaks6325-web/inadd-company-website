@@ -742,32 +742,32 @@ export const SvcInfluencerPage = () => (
                     </div>
                     <div class="sic-stats">
                       <div class="sic-stat">
-                        <span class="sic-num">15–60<span class="sic-unit">s</span></span>
-                        <span class="sic-desc">릴스·틱톡<br/>최적화 포맷</span>
+                        <span class="sic-num">크리에이터</span>
+                        <span class="sic-desc">전문 크리에이터<br/>직접 기획·출연</span>
                       </div>
                       <div class="sic-stat">
-                        <span class="sic-num">AI</span>
-                        <span class="sic-desc">AI 기반<br/>합리적 제작</span>
+                        <span class="sic-num">릴스<br/><span style="font-size:11px">/ 쇼츠</span></span>
+                        <span class="sic-desc">플랫폼별<br/>최적화 포맷</span>
                       </div>
                       <div class="sic-stat">
                         <span class="sic-num">바이럴</span>
-                        <span class="sic-desc">빠른 확산<br/>퍼포먼스 광고</span>
+                        <span class="sic-desc">자연스러운<br/>광고 확산</span>
                       </div>
                     </div>
-                    <p class="sic-quote">"짧고 강하게, 빠르게 바이럴"</p>
+                    <p class="sic-quote">"크리에이터가 직접 만드는 찐 광고 콘텐츠"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#f87171">숏폼</span>
-                      <span style="--tc:#f87171">릴스 / 틱톡</span>
-                      <span style="--tc:#f87171">AI 제작</span>
+                      <span style="--tc:#f87171">크리에이터 제작</span>
+                      <span style="--tc:#f87171">릴스 / 쇼츠</span>
+                      <span style="--tc:#f87171">자연 노출</span>
                       <span style="--tc:#f87171">바이럴</span>
                     </div>
-                    <p class="svctab-desc-text">짧은 호흡 안에 브랜드 메시지를 압축적으로 전달하는 <strong>숏폼 전문 제작</strong> 서비스. 릴스·틱톡·유튜브 쇼츠에 최적화된 포맷으로 빠른 확산을 유도합니다.</p>
+                    <p class="svctab-desc-text">크리에이터가 <strong>직접 기획하고 출연</strong>하는 숏폼 광고 콘텐츠. 광고처럼 느껴지지 않는 자연스러운 포맷으로 시청자의 공감을 이끌어내고 빠른 확산을 유도합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#f87171"></span>릴스·틱톡·쇼츠 각 플랫폼 포맷 최적화</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#f87171"></span>AI 숏폼 — 합리적 단가로 빠른 퀄리티 제작</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#f87171"></span>바이럴·퍼포먼스 광고 소재로 즉시 활용 가능</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#f87171"></span>크리에이터 고유 톤·스타일로 브랜드 자연 녹여내기</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#f87171"></span>릴스·쇼츠·틱톡 각 플랫폼 특성에 맞는 포맷 기획</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#f87171"></span>광고 거부감 없이 높은 시청 완료율 달성</li>
                     </ul>
                   </div>
                 </div>
@@ -802,26 +802,26 @@ export const SvcInfluencerPage = () => (
                       </div>
                       <div class="sic-stat">
                         <span class="sic-num">AI</span>
-                        <span class="sic-desc">AI 롱폼<br/>스마트 제작</span>
+                        <span class="sic-desc">AI 롱폼·숏폼<br/>합리적 제작</span>
                       </div>
                       <div class="sic-stat">
                         <span class="sic-num">Premium</span>
                         <span class="sic-desc">고품질<br/>프리미엄 영상</span>
                       </div>
                     </div>
-                    <p class="sic-quote">"브랜드 스토리를 깊이 있게 담는 영상"</p>
+                    <p class="sic-quote">"브랜드 스토리를 깊이 있게, 효율적으로"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
                       <span style="--tc:#a78bfa">유튜브</span>
                       <span style="--tc:#a78bfa">롱폼</span>
-                      <span style="--tc:#a78bfa">AI 제작</span>
+                      <span style="--tc:#a78bfa">AI 롱폼·숏폼</span>
                       <span style="--tc:#a78bfa">프리미엄</span>
                     </div>
-                    <p class="svctab-desc-text">브랜드 메시지를 <strong>깊이 있는 스토리</strong>로 풀어내는 유튜브 전문 영상 제작. 프리미엄 고품질 롱폼부터 AI 기반 합리적 롱폼까지 예산에 맞게 선택할 수 있습니다.</p>
+                    <p class="svctab-desc-text">브랜드 메시지를 <strong>깊이 있는 스토리</strong>로 풀어내는 유튜브 전문 영상 제작. 프리미엄 롱폼부터 AI 기반 롱폼·숏폼까지 예산과 목적에 맞게 선택할 수 있습니다.</p>
                     <ul class="svctab-desc-points">
                       <li><span class="svctab-desc-dot" style="--dc:#a78bfa"></span>프리미엄 롱폼 — 브랜드 스토리 심층 전달</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#a78bfa"></span>AI 롱폼 — 합리적 단가의 스마트한 제작</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#a78bfa"></span>AI 롱폼·AI 숏폼 — 합리적 단가의 스마트한 제작</li>
                       <li><span class="svctab-desc-dot" style="--dc:#a78bfa"></span>유튜브 알고리즘 최적화 기획·편집 포함</li>
                     </ul>
                   </div>
