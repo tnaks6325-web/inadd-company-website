@@ -124,7 +124,7 @@ export const HomePage = () => (
                   <span class="svc-list-num">01</span>
                   <span class="svc-list-name">VIRAL</span>
                 </button>
-                <a href="/marketing/viral" class="svc-goto-btn" style="display:none">보러가기 →</a>
+                <a href="/marketing/viral" class="svc-goto-btn" style="display:none">VIEW<span class="btn-arrow"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4H6.5M4.5 1.5L7 4L4.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
               </div>
             </li>
             <li class="svc-list-item" data-svc="1">
@@ -133,7 +133,7 @@ export const HomePage = () => (
                   <span class="svc-list-num">02</span>
                   <span class="svc-list-name">INFLUENCER</span>
                 </button>
-                <a href="/marketing/influencer" class="svc-goto-btn" style="display:none">보러가기 →</a>
+                <a href="/marketing/influencer" class="svc-goto-btn" style="display:none">VIEW<span class="btn-arrow"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4H6.5M4.5 1.5L7 4L4.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
               </div>
             </li>
             <li class="svc-list-item" data-svc="2">
@@ -142,7 +142,7 @@ export const HomePage = () => (
                   <span class="svc-list-num">03</span>
                   <span class="svc-list-name">SEEDING</span>
                 </button>
-                <a href="/marketing/seeding" class="svc-goto-btn" style="display:none">보러가기 →</a>
+                <a href="/marketing/seeding" class="svc-goto-btn" style="display:none">VIEW<span class="btn-arrow"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4H6.5M4.5 1.5L7 4L4.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
               </div>
             </li>
             <li class="svc-list-item" data-svc="3">
@@ -151,7 +151,7 @@ export const HomePage = () => (
                   <span class="svc-list-num">04</span>
                   <span class="svc-list-name">SEO</span>
                 </button>
-                <a href="/marketing/seo" class="svc-goto-btn" style="display:none">보러가기 →</a>
+                <a href="/marketing/seo" class="svc-goto-btn" style="display:none">VIEW<span class="btn-arrow"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4H6.5M4.5 1.5L7 4L4.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
               </div>
             </li>
             <li class="svc-list-item" data-svc="4">
@@ -160,7 +160,7 @@ export const HomePage = () => (
                   <span class="svc-list-num">05</span>
                   <span class="svc-list-name">REVIEW</span>
                 </button>
-                <a href="/marketing/review" class="svc-goto-btn" style="display:none">보러가기 →</a>
+                <a href="/marketing/review" class="svc-goto-btn" style="display:none">VIEW<span class="btn-arrow"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4H6.5M4.5 1.5L7 4L4.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
               </div>
             </li>
             <li class="svc-list-item" data-svc="5">
@@ -169,7 +169,7 @@ export const HomePage = () => (
                   <span class="svc-list-num">06</span>
                   <span class="svc-list-name">OLIVE YOUNG</span>
                 </button>
-                <a href="/marketing/oliveyoung" class="svc-goto-btn" style="display:none">보러가기 →</a>
+                <a href="/marketing/oliveyoung" class="svc-goto-btn" style="display:none">VIEW<span class="btn-arrow"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4H6.5M4.5 1.5L7 4L4.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
               </div>
             </li>
             <li class="svc-list-item" data-svc="6">
@@ -178,7 +178,7 @@ export const HomePage = () => (
                   <span class="svc-list-num">07</span>
                   <span class="svc-list-name">PPL</span>
                 </button>
-                <a href="/marketing/ppl" class="svc-goto-btn" style="display:none">보러가기 →</a>
+                <a href="/marketing/ppl" class="svc-goto-btn" style="display:none">VIEW<span class="btn-arrow"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4H6.5M4.5 1.5L7 4L4.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
               </div>
             </li>
           </ul>
