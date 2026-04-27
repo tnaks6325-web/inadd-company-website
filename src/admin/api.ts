@@ -321,4 +321,87 @@ admin.get('/public/contact', async (c) => {
   })
 })
 
+// ════════════════════════════════════════════════
+//  GALLERY (인애드 일상)
+// ════════════════════════════════════════════════
+
+// 갤러리 목록 조회 (어드민)
+admin.get('/gallery', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  const raw = await kvGet(kv, 'gallery_items')
+  return c.json({ items: JSON.parse(raw!) })
+})
+
+// 갤러리 아이템 추가
+admin.post('/gallery', authMiddleware, async (c) => {
+  const kv   = (c.env as any)?.ADMIN_KV
+  const body = await c.req.json() as any
+  const raw  = await kvGet(kv, 'gallery_items')
+  const items: any[] = JSON.parse(raw!)
+  const newItem = {
+    id:        Date.now(),
+    imageUrl:  body.imageUrl  || '',
+    caption:   body.caption   || '',
+    tag:       body.tag       || '일상',
+    createdAt: new Date().toISOString(),
+  }
+  items.unshift(newItem)
+  await kvPut(kv, 'gallery_items', JSON.stringify(items))
+  return c.json({ ok: true, item: newItem })
+})
+
+// 갤러리 아이템 수정
+admin.put('/gallery/:id', authMiddleware, async (c) => {
+  const kv   = (c.env as any)?.ADMIN_KV
+  const id   = Number(c.req.param('id'))
+  const body = await c.req.json() as any
+  const raw  = await kvGet(kv, 'gallery_items')
+  const items: any[] = JSON.parse(raw!)
+  const idx  = items.findIndex((i: any) => i.id === id)
+  if (idx !== -1) items[idx] = { ...items[idx], ...body }
+  await kvPut(kv, 'gallery_items', JSON.stringify(items))
+  return c.json({ ok: true })
+})
+
+// 갤러리 아이템 삭제
+admin.delete('/gallery/:id', authMiddleware, async (c) => {
+  const kv  = (c.env as any)?.ADMIN_KV
+  const id  = Number(c.req.param('id'))
+  const raw = await kvGet(kv, 'gallery_items')
+  const items: any[] = JSON.parse(raw!).filter((i: any) => i.id !== id)
+  await kvPut(kv, 'gallery_items', JSON.stringify(items))
+  return c.json({ ok: true })
+})
+
+// 갤러리 이미지 업로드 (base64 → KV)
+admin.post('/gallery/image', authMiddleware, async (c) => {
+  const kv   = (c.env as any)?.ADMIN_KV
+  const body = await c.req.json() as any
+  const b64  = body.data as string
+  const key  = `gallery_img_${Date.now()}`
+  await kvPut(kv, key, b64)
+  return c.json({ ok: true, key, url: `/api/admin/gallery-img/${key}` })
+})
+
+// 갤러리 이미지 서빙
+admin.get('/gallery-img/:key', async (c) => {
+  const kv  = (c.env as any)?.ADMIN_KV
+  const key = c.req.param('key')
+  const b64 = await kvGet(kv, key)
+  if (!b64) return c.notFound()
+  const meta = b64.split(',')[0]
+  const mime = meta.match(/:(.*?);/)?.[1] || 'image/jpeg'
+  const bin  = atob(b64.split(',')[1])
+  const buf  = new Uint8Array(bin.length)
+  for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i)
+  return new Response(buf, { headers: { 'Content-Type': mime, 'Cache-Control': 'public,max-age=31536000' } })
+})
+
+// Public: 갤러리 목록
+admin.get('/public/gallery', async (c) => {
+  const kv  = (c.env as any)?.ADMIN_KV
+  const raw = await kvGet(kv, 'gallery_items')
+  return c.json({ items: JSON.parse(raw!) })
+})
+
 export { admin }

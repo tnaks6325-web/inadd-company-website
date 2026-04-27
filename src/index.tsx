@@ -343,6 +343,16 @@ function adminDashboardHTML(): string {
   .post-info .post-meta { color: #666; font-size: 12px; margin-top: 4px; }
   .post-actions { display: flex; gap: 8px; }
 
+  /* ── Gallery admin ── */
+  .gal-admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-top: 8px; }
+  .gal-admin-item { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid #2a2a2a; background: #111; aspect-ratio: 1; }
+  .gal-admin-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gal-admin-item-info { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.85)); padding: 24px 10px 10px; }
+  .gal-admin-item-tag { font-size: 10px; font-weight: 700; color: #4d9fff; letter-spacing: .8px; display: block; }
+  .gal-admin-item-cap { font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 2px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: block; }
+  .gal-admin-item-del { position: absolute; top: 6px; right: 6px; background: rgba(220,38,38,0.85); border: none; color: #fff; width: 24px; height: 24px; border-radius: 50%; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .2s; }
+  .gal-admin-item:hover .gal-admin-item-del { opacity: 1; }
+
   /* ── Marketing stats ── */
   .mktg-service { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 20px; margin-bottom: 16px; }
   .mktg-service-title { color: #1a6bff; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
@@ -480,6 +490,7 @@ function adminDashboardHTML(): string {
     <div class="nav-item" data-section="about"><i class="fas fa-building"></i> About</div>
     <div class="nav-item" data-section="works"><i class="fas fa-briefcase"></i> Works</div>
     <div class="nav-item" data-section="insight"><i class="fas fa-newspaper"></i> Insight</div>
+    <div class="nav-item" data-section="gallery"><i class="fas fa-images"></i> 갤러리</div>
     <div class="nav-item" data-section="marketing"><i class="fas fa-chart-line"></i> Marketing</div>
     <div class="nav-item" data-section="contact"><i class="fas fa-envelope"></i> Contact</div>
   </nav>
@@ -710,6 +721,24 @@ function adminDashboardHTML(): string {
           <em style="color:#666">※ 썸네일은 리스트 페이지에서 카드 형태로 표시됩니다.</em>
         </div>
         <div class="post-list" id="postList"></div>
+      </div>
+    </div>
+
+    <!-- ───────── GALLERY (인애드 일상) ───────── -->
+    <div class="section" id="section-gallery">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fas fa-images"></i> 인애드 일상 갤러리 관리</div>
+          <button class="btn btn-primary btn-sm" id="btnAddGallery"><i class="fas fa-plus"></i> 사진 추가</button>
+        </div>
+        <div class="thumb-spec">
+          <strong>갤러리 이미지 안내</strong><br>
+          권장 크기: <strong>800 × 600 px 이상</strong><br>
+          파일 형식: JPG, PNG, WebP / 최대 5MB<br>
+          태그: 일상 · 팀 · 오피스 · 행사 · 캠페인<br>
+          <em style="color:#666">※ 인사이트 페이지 '인애드 일상' 탭에 마소닉 그리드로 표시됩니다.</em>
+        </div>
+        <div class="gal-admin-grid" id="galAdminGrid"></div>
       </div>
     </div>
 

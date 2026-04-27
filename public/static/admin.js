@@ -894,3 +894,117 @@ document.getElementById('btnSaveFaq').addEventListener('click', async () => {
   renderFaqList();
   showToast('FAQ가 저장되었습니다.');
 });
+
+// ═══════════════ GALLERY (인애드 일상) ═══════════════
+
+async function loadGallery() {
+  const data = await api('GET', '/gallery');
+  renderGalAdmin(data.items || []);
+}
+
+function renderGalAdmin(items) {
+  const grid = document.getElementById('galAdminGrid');
+  if (!grid) return;
+  if (!items.length) {
+    grid.innerHTML = '<p style="color:#555;font-size:13px;padding:20px 0;grid-column:1/-1">등록된 사진이 없습니다. 사진 추가 버튼을 눌러 업로드하세요.</p>';
+    return;
+  }
+  grid.innerHTML = items.map(item => `
+    <div class="gal-admin-item">
+      <img src="${item.imageUrl}" alt="${item.caption || ''}" onerror="this.style.background='#222'" />
+      <div class="gal-admin-item-info">
+        <span class="gal-admin-item-tag">${item.tag || '일상'}</span>
+        <span class="gal-admin-item-cap">${item.caption || ''}</span>
+      </div>
+      <button class="gal-admin-item-del" onclick="deleteGalItem(${item.id})">✕</button>
+    </div>
+  `).join('');
+}
+
+async function deleteGalItem(id) {
+  if (!confirm('이 사진을 삭제하시겠습니까?')) return;
+  await api('DELETE', `/gallery/${id}`);
+  showToast('사진이 삭제되었습니다.');
+  loadGallery();
+}
+
+// 갤러리 사진 추가 모달
+document.getElementById('btnAddGallery').addEventListener('click', () => {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;display:flex;align-items:center;justify-content:center;';
+  overlay.innerHTML = `
+    <div style="background:#111;border:1px solid #2a2a2a;border-radius:14px;padding:28px;width:460px;max-width:96vw;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <strong style="color:#fff;font-size:16px">사진 추가</strong>
+        <button id="galModalClose" style="background:none;border:none;color:#888;font-size:20px;cursor:pointer">✕</button>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="color:#888;font-size:12px;font-weight:600;display:block;margin-bottom:6px">이미지 파일 *</label>
+        <input type="file" id="galFileInput" accept="image/*" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;padding:10px;font-size:14px;" />
+        <div id="galPreview" style="margin-top:10px;display:none;"><img id="galPreviewImg" style="width:100%;max-height:200px;object-fit:contain;border-radius:8px;border:1px solid #2a2a2a;" /></div>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="color:#888;font-size:12px;font-weight:600;display:block;margin-bottom:6px">태그</label>
+        <select id="galTagSelect" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;padding:10px;font-size:14px;outline:none;">
+          <option value="일상">일상</option>
+          <option value="팀">팀</option>
+          <option value="오피스">오피스</option>
+          <option value="행사">행사</option>
+          <option value="캠페인">캠페인</option>
+        </select>
+      </div>
+      <div style="margin-bottom:24px">
+        <label style="color:#888;font-size:12px;font-weight:600;display:block;margin-bottom:6px">캡션 (선택)</label>
+        <input type="text" id="galCaptionInput" placeholder="사진 설명을 입력하세요" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;padding:10px 12px;font-size:14px;outline:none;box-sizing:border-box;" />
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button id="galSaveBtn" style="flex:1;background:#1a6bff;border:none;color:#fff;padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">업로드 저장</button>
+        <button id="galCancelBtn" style="padding:12px 20px;background:#1a1a1a;border:1px solid #2a2a2a;color:#aaa;border-radius:8px;font-size:14px;cursor:pointer;">취소</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  let b64Data = null;
+  document.getElementById('galFileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      b64Data = ev.target.result;
+      document.getElementById('galPreviewImg').src = b64Data;
+      document.getElementById('galPreview').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  function closeModal() { overlay.remove(); }
+  document.getElementById('galModalClose').addEventListener('click', closeModal);
+  document.getElementById('galCancelBtn').addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
+
+  document.getElementById('galSaveBtn').addEventListener('click', async () => {
+    if (!b64Data) { showToast('이미지를 선택해주세요.', 'error'); return; }
+    const btn = document.getElementById('galSaveBtn');
+    btn.textContent = '업로드 중...'; btn.disabled = true;
+    try {
+      const imgRes = await api('POST', '/gallery/image', { data: b64Data });
+      const tag     = document.getElementById('galTagSelect').value;
+      const caption = document.getElementById('galCaptionInput').value.trim();
+      await api('POST', '/gallery', { imageUrl: imgRes.url, tag, caption });
+      showToast('사진이 추가되었습니다.');
+      closeModal();
+      loadGallery();
+    } catch(err) {
+      showToast('업로드 실패: ' + (err.message || '오류'), 'error');
+      btn.textContent = '업로드 저장'; btn.disabled = false;
+    }
+  });
+});
+
+// loadSection에 gallery 추가 (기존 함수 오버라이드)
+const _origLoadSection = loadSection;
+function loadSection(sec) {
+  if (sec === 'gallery') loadGallery();
+  else _origLoadSection(sec);
+}

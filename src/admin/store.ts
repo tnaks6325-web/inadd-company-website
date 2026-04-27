@@ -43,6 +43,9 @@ export const DEFAULT_DATA = {
   // ── Insight ──
   insight_posts: JSON.stringify([]),
 
+  // ── Gallery (인애드 일상) ──
+  gallery_items: JSON.stringify([]),
+
   // ── Contact ──
   contact_privacy_officer: JSON.stringify({
     manager: '김주희',
