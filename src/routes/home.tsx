@@ -185,6 +185,18 @@ export const HomePage = () => (
 
           {/* 오른쪽: 비주얼 패널 */}
           <div class="svc-visual">
+            {/* 클릭 유도 힌트 — 첫 클릭 시 사라짐 */}
+            <div class="svc-click-hint" id="svcClickHint">
+              <div class="svc-hint-inner">
+                <div class="svc-hint-arrow">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <path d="M8 16H24M16 8L8 16L16 24" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <p class="svc-hint-text">상품명을<br /><strong>클릭</strong>해주세요</p>
+                <div class="svc-hint-cursor">👆</div>
+              </div>
+            </div>
 
             {/* 패널 0 — VIRAL */}
             <div class="svc-panel" data-panel="0" style="display:none">
@@ -354,11 +366,16 @@ export const HomePage = () => (
     if (!visual) return;
     var panels = visual.querySelectorAll('.svc-panel');
     var currentIdx = -1;
+    var hint = document.getElementById('svcClickHint');
 
     /* 초기화: 모든 패널 숨김 */
     panels.forEach(function(p) { p.style.display = 'none'; p.classList.remove('active'); });
 
     function activate(idx) {
+      /* 첫 클릭 시 힌트 숨김 */
+      if (hint) {
+        hint.classList.add('svc-hint--hidden');
+      }
       /* 같은 항목 다시 클릭하면 닫기 */
       if (currentIdx === idx) {
         panels[idx].style.display = 'none';
