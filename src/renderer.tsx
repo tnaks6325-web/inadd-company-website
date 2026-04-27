@@ -17,7 +17,7 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-        <link href="/static/style.css?v=20260427e" rel="stylesheet" />
+        <link href="/static/style.css?v=20260427f" rel="stylesheet" />
       </head>
       <body>
         <header class="site-header" id="site-header">
