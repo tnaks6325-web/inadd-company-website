@@ -730,7 +730,7 @@ em {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0 60px;
-  align-items: center;
+  align-items: stretch;   /* 양쪽 같은 높이 */
   min-height: 580px;
 }
 
@@ -872,17 +872,17 @@ em {
 /* ── 오른쪽: 비주얼 패널 ── */
 .svc-visual {
   position: relative;
-  min-height: 520px;           /* 힌트가 보일 공간 확보 */
+  min-height: 520px;         /* 힌트가 보이려면 높이 확보 필수 */
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
-/* ── 클릭 유도 힌트 ── */
+/* ── 클릭 유도 힌트 — absolute로 오른쪽 영역 중앙에 떠 있음 ── */
 @keyframes hintPulse {
-  0%   { opacity: 0.45; transform: translateY(0) scale(1); }
-  50%  { opacity: 1;    transform: translateY(-6px) scale(1.04); }
-  100% { opacity: 0.45; transform: translateY(0) scale(1); }
+  0%   { opacity: 0.4; transform: translateY(0); }
+  50%  { opacity: 1;   transform: translateY(-8px); }
+  100% { opacity: 0.4; transform: translateY(0); }
 }
 @keyframes hintArrow {
   0%   { transform: translateX(0); }
@@ -890,38 +890,40 @@ em {
   100% { transform: translateX(0); }
 }
 @keyframes hintFadeOut {
-  to { opacity: 0; visibility: hidden; }
+  to { opacity: 0; pointer-events: none; }
 }
 .svc-click-hint {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  padding: 60px 0;
-  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 5;
 }
 .svc-hint-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  animation: hintPulse 2.4s ease-in-out infinite;
+  gap: 18px;
+  animation: hintPulse 2.2s ease-in-out infinite;
 }
 .svc-hint-arrow {
-  animation: hintArrow 1.8s ease-in-out infinite;
+  animation: hintArrow 1.6s ease-in-out infinite;
 }
 .svc-hint-text {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   color: rgba(255,255,255,0.4);
   text-align: center;
-  line-height: 1.6;
+  line-height: 1.65;
   letter-spacing: -0.2px;
+  white-space: nowrap;
 }
 .svc-hint-text strong {
   display: block;
-  color: rgba(100,160,255,0.75);
-  font-size: 26px;
+  color: rgba(100,160,255,0.8);
+  font-size: 24px;
   font-weight: 800;
   letter-spacing: -0.5px;
 }
@@ -1154,7 +1156,7 @@ em {
     gap: 48px;
     min-height: auto;
   }
-  .svc-visual { /* height auto */ }
+  .svc-visual { min-height: 320px; }
   .svc-list-name { font-size: 26px; }
 }
 
