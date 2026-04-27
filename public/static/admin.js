@@ -500,6 +500,8 @@ async function loadInsight() {
   const data = await api('GET', '/insight');
   insightPosts = data.posts || [];
   renderPostList();
+  // 갤러리도 함께 로드
+  loadGallery();
 }
 
 function renderPostList() {
@@ -798,6 +800,7 @@ function loadSection(sec) {
   else if (sec === 'insight') loadInsight();
   else if (sec === 'marketing') loadMarketing();
   else if (sec === 'contact') loadContact();
+  else if (sec === 'gallery') loadGallery();
 }
 
 // 초기 로드
@@ -1002,9 +1005,4 @@ document.getElementById('btnAddGallery').addEventListener('click', () => {
   });
 });
 
-// loadSection에 gallery 추가 (기존 함수 오버라이드)
-const _origLoadSection = loadSection;
-function loadSection(sec) {
-  if (sec === 'gallery') loadGallery();
-  else _origLoadSection(sec);
-}
+// gallery loadSection is handled in the main loadSection above

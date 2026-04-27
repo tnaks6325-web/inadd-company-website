@@ -490,7 +490,6 @@ function adminDashboardHTML(): string {
     <div class="nav-item" data-section="about"><i class="fas fa-building"></i> About</div>
     <div class="nav-item" data-section="works"><i class="fas fa-briefcase"></i> Works</div>
     <div class="nav-item" data-section="insight"><i class="fas fa-newspaper"></i> Insight</div>
-    <div class="nav-item" data-section="gallery"><i class="fas fa-images"></i> 갤러리</div>
     <div class="nav-item" data-section="marketing"><i class="fas fa-chart-line"></i> Marketing</div>
     <div class="nav-item" data-section="contact"><i class="fas fa-envelope"></i> Contact</div>
   </nav>
@@ -707,7 +706,7 @@ function adminDashboardHTML(): string {
 
     <!-- ───────── INSIGHT ───────── -->
     <div class="section" id="section-insight">
-      <div class="panel">
+      <div class="panel" style="margin-bottom:24px">
         <div class="panel-header">
           <div class="panel-title"><i class="fas fa-newspaper"></i> Insight 게시물 관리</div>
           <button class="btn btn-primary btn-sm" id="btnAddInsight"><i class="fas fa-plus"></i> 새 게시물 작성</button>
@@ -722,21 +721,15 @@ function adminDashboardHTML(): string {
         </div>
         <div class="post-list" id="postList"></div>
       </div>
-    </div>
 
-    <!-- ───────── GALLERY (인애드 일상) ───────── -->
-    <div class="section" id="section-gallery">
       <div class="panel">
         <div class="panel-header">
           <div class="panel-title"><i class="fas fa-images"></i> 인애드 일상 갤러리 관리</div>
           <button class="btn btn-primary btn-sm" id="btnAddGallery"><i class="fas fa-plus"></i> 사진 추가</button>
         </div>
         <div class="thumb-spec">
-          <strong>갤러리 이미지 안내</strong><br>
-          권장 크기: <strong>800 × 600 px 이상</strong><br>
-          파일 형식: JPG, PNG, WebP / 최대 5MB<br>
-          태그: 일상 · 팀 · 오피스 · 행사 · 캠페인<br>
-          <em style="color:#666">※ 인사이트 페이지 '인애드 일상' 탭에 마소닉 그리드로 표시됩니다.</em>
+          인사이트 페이지 <strong>'인애드 일상'</strong> 탭에 마소닉 그리드로 표시됩니다. 사진을 업로드하고 태그 및 캐졜을 입력하세요.<br>
+          <em style="color:#666">태그: 일상 · 팀 · 오피스 · 행사 · 캠페인 / 권장 크기 800 × 600 px 이상</em>
         </div>
         <div class="gal-admin-grid" id="galAdminGrid"></div>
       </div>
