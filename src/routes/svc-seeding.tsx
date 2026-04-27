@@ -158,7 +158,7 @@ export const SvcSeedingPage = () => (
           <div class="svc-visual" id="sdngBlogVisual">
 
             {/* 패널 0 — 일반 블로거 */}
-            <div class="svc-panel active" data-sdng-panel="0">
+            <div class="svc-panel active" data-sdng-panel="0" style="display:flex">
               <div class="svc-panel-img sdng-img-wrap">
                 <img src="/static/seeding-images/blog-general-new.png" alt="일반 블로거 시딩" class="sdng-panel-photo" />
                 <span class="sdng-panel-badge sdng-panel-badge--basic">Basic</span>
@@ -183,7 +183,7 @@ export const SvcSeedingPage = () => (
             </div>
 
             {/* 패널 1 — 특화 블로거 */}
-            <div class="svc-panel" data-sdng-panel="1">
+            <div class="svc-panel" data-sdng-panel="1" style="display:none">
               <div class="svc-panel-img sdng-img-wrap">
                 <img src="/static/seeding-images/blog-specialized-new.jpg" alt="특화 블로거 시딩" class="sdng-panel-photo" />
                 <span class="sdng-panel-badge sdng-panel-badge--specialized">Specialized</span>
@@ -208,7 +208,7 @@ export const SvcSeedingPage = () => (
             </div>
 
             {/* 패널 2 — 상위 노출 보장 (BEST) */}
-            <div class="svc-panel sdng-panel--best" data-sdng-panel="2">
+            <div class="svc-panel sdng-panel--best" data-sdng-panel="2" style="display:none">
               <div class="svc-panel-img sdng-img-wrap">
                 <img src="/static/seeding-images/blog-ranking-new.jpg" alt="상위노출 보장 시딩" class="sdng-panel-photo" />
                 <span class="sdng-panel-badge sdng-panel-badge--ranking">Guaranteed Top</span>
@@ -240,7 +240,7 @@ export const SvcSeedingPage = () => (
             </div>
 
             {/* 패널 3 — 네이버 인플루언서 */}
-            <div class="svc-panel" data-sdng-panel="3">
+            <div class="svc-panel" data-sdng-panel="3" style="display:none">
               <div class="svc-panel-img sdng-img-wrap">
                 <img src="/static/seeding-images/blog-influencer-new.jpg" alt="네이버 인플루언서 시딩" class="sdng-panel-photo" />
                 <span class="sdng-panel-badge sdng-panel-badge--premium">Premium</span>
@@ -271,36 +271,43 @@ export const SvcSeedingPage = () => (
 
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
-  var list = document.getElementById('sdngBlogList');
-  var visual = document.getElementById('sdngBlogVisual');
-  if(!list || !visual) return;
-  var items = list.querySelectorAll('.svc-list-item');
-  var panels = visual.querySelectorAll('.svc-panel');
+  function initBlogTab() {
+    var list = document.getElementById('sdngBlogList');
+    var visual = document.getElementById('sdngBlogVisual');
+    if(!list || !visual) return;
+    var items = list.querySelectorAll('.svc-list-item');
+    var panels = visual.querySelectorAll('.svc-panel');
 
-  function activate(idx) {
-    items.forEach(function(el){ el.classList.remove('active'); });
-    panels.forEach(function(el){
-      el.classList.remove('active');
-      el.style.display = 'none';
-    });
-    items[idx].classList.add('active');
-    if(panels[idx]) {
-      panels[idx].classList.add('active');
-      panels[idx].style.display = 'flex';
+    function activate(idx) {
+      items.forEach(function(el){ el.classList.remove('active'); });
+      panels.forEach(function(el){
+        el.classList.remove('active');
+        el.style.display = 'none';
+      });
+      items[idx].classList.add('active');
+      if(panels[idx]) {
+        panels[idx].classList.add('active');
+        panels[idx].style.display = 'flex';
+      }
     }
-  }
 
-  /* 초기화: 첫 번째 패널만 표시 */
-  panels.forEach(function(el, i){
-    el.style.display = i === 0 ? 'flex' : 'none';
-  });
-
-  items.forEach(function(item, i){
-    item.addEventListener('click', function(e){
-      e.preventDefault();
-      activate(i);
+    /* 초기화: 첫 번째 패널만 표시 */
+    panels.forEach(function(el, i){
+      el.style.display = i === 0 ? 'flex' : 'none';
     });
-  });
+
+    items.forEach(function(item, i){
+      item.addEventListener('click', function(e){
+        e.preventDefault();
+        activate(i);
+      });
+    });
+  }
+  if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBlogTab);
+  } else {
+    initBlogTab();
+  }
 })();
       `}} />
     </section>
@@ -349,7 +356,7 @@ export const SvcSeedingPage = () => (
           <div class="svc-visual" id="sdngInstaVisual">
 
             {/* 패널 0 — 일반 피드 시딩 */}
-            <div class="svc-panel active" data-insta-panel="0">
+            <div class="svc-panel active" data-insta-panel="0" style="display:flex">
               <div class="svc-panel-img sdng-img-wrap">
                 <img src="/static/seeding-images/insta-general-new.jpg" alt="일반 피드 시딩" class="sdng-panel-photo" />
                 <span class="sdng-panel-badge sdng-panel-badge--insta-basic">Basic</span>
@@ -374,7 +381,7 @@ export const SvcSeedingPage = () => (
             </div>
 
             {/* 패널 1 — 특화 타깃 시딩 */}
-            <div class="svc-panel" data-insta-panel="1">
+            <div class="svc-panel" data-insta-panel="1" style="display:none">
               <div class="svc-panel-img sdng-img-wrap">
                 <img src="/static/seeding-images/insta-specialized-new.jpg" alt="특화 타깃 시딩" class="sdng-panel-photo" />
                 <span class="sdng-panel-badge sdng-panel-badge--insta-specialized">Specialized</span>
@@ -415,36 +422,43 @@ export const SvcSeedingPage = () => (
 
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
-  var list = document.getElementById('sdngInstaList');
-  var visual = document.getElementById('sdngInstaVisual');
-  if(!list || !visual) return;
-  var items = list.querySelectorAll('.svc-list-item');
-  var panels = visual.querySelectorAll('.svc-panel');
+  function initInstaTab() {
+    var list = document.getElementById('sdngInstaList');
+    var visual = document.getElementById('sdngInstaVisual');
+    if(!list || !visual) return;
+    var items = list.querySelectorAll('.svc-list-item');
+    var panels = visual.querySelectorAll('.svc-panel');
 
-  function activate(idx) {
-    items.forEach(function(el){ el.classList.remove('active'); });
-    panels.forEach(function(el){
-      el.classList.remove('active');
-      el.style.display = 'none';
-    });
-    items[idx].classList.add('active');
-    if(panels[idx]) {
-      panels[idx].classList.add('active');
-      panels[idx].style.display = 'flex';
+    function activate(idx) {
+      items.forEach(function(el){ el.classList.remove('active'); });
+      panels.forEach(function(el){
+        el.classList.remove('active');
+        el.style.display = 'none';
+      });
+      items[idx].classList.add('active');
+      if(panels[idx]) {
+        panels[idx].classList.add('active');
+        panels[idx].style.display = 'flex';
+      }
     }
-  }
 
-  /* 초기화 */
-  panels.forEach(function(el, i){
-    el.style.display = i === 0 ? 'flex' : 'none';
-  });
-
-  items.forEach(function(item, i){
-    item.addEventListener('click', function(e){
-      e.preventDefault();
-      activate(i);
+    /* 초기화 */
+    panels.forEach(function(el, i){
+      el.style.display = i === 0 ? 'flex' : 'none';
     });
-  });
+
+    items.forEach(function(item, i){
+      item.addEventListener('click', function(e){
+        e.preventDefault();
+        activate(i);
+      });
+    });
+  }
+  if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initInstaTab);
+  } else {
+    initInstaTab();
+  }
 })();
       `}} />
     </section>
