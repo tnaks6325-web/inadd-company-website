@@ -3451,6 +3451,27 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 /* Contact success */
 .cs-check { margin: 0 auto 24px; width: 64px; height: 64px; }
 .cs-check svg { width: 64px; height: 64px; display: block; }
+/* 상담완료 후 회사소개서 버튼 */
+.cs-brochure-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 12px 28px;
+  background: rgba(41,121,255,0.12);
+  border: 1px solid rgba(41,121,255,0.35);
+  color: rgba(140,190,255,0.9);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.cs-brochure-btn:hover {
+  background: rgba(41,121,255,0.22);
+  border-color: rgba(41,121,255,0.65);
+  color: #ffffff;
+}
 
 /* Sidebar */
 .contact-sidebar { display: flex; flex-direction: column; gap: 20px; }

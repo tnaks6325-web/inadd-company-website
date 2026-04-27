@@ -48,12 +48,9 @@ export const HomePage = () => (
           </div>
           <p class="hero-sub" id="heroSub"></p>
           <div class="hero-cta-group" id="heroCta">
-            <a href="https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view" target="_blank" rel="noopener noreferrer" class="hero-cta-btn primary">
-              <span>회사소개서 보기</span>
+            <a href="/contact" class="hero-cta-btn primary">
+              <span>상담 신청하기</span>
               <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <a href="/contact" class="hero-cta-btn ghost">
-              <span>무료 상담 신청</span>
             </a>
           </div>
         </div>
@@ -72,12 +69,9 @@ export const HomePage = () => (
           <span class="ll-sub">IN AD COMPANY · THE CREATIVE MARKETING AGENCY</span>
         </div>
         <div class="ll-cta">
-          <a href="https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view" target="_blank" rel="noopener noreferrer" class="hero-cta-btn primary">
-            <span>회사소개서 보기</span>
+          <a href="/contact" class="hero-cta-btn primary">
+            <span>상담 신청하기</span>
             <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="/contact" class="hero-cta-btn ghost">
-            <span>무료 상담 신청</span>
           </a>
         </div>
       </div>
