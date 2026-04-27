@@ -82,79 +82,218 @@ export const AboutPage = () => (
     </section>
 
     {/* ── 회사 소개 ── */}
-    <section class="section about-intro-section">
-      <div class="container">
-        <div class="about-intro-grid">
-          <div class="about-intro-text">
-            <span class="sec-label">Company</span>
-            <h2 class="sec-title">인애드컴퍼니<br /><em>IN AD COMPANY</em></h2>
-            <p>2019년 설립된 인애드컴퍼니는 바이럴 마케팅, 인플루언서·유튜브 마케팅, 시딩 캠페인, SEO, 고객 리뷰 마케팅, 올리브영 마케팅, PPL 등 전방위적 퍼널 마케팅 솔루션을 제공하는 크리에이티브 마케팅 에이전시입니다.</p>
-            <p>광고처럼 보이지 않는 자연스러운 확산 구조를 설계해 브랜드 인지도를 높이고, 소비자가 먼저 찾게 만드는 지속적인 마케팅 생태계를 구축합니다.</p>
+    <section class="about-intro-section">
+      {/* 배경 장식 */}
+      <div class="ai-section-bg">
+        <div class="ai-bg-grid"></div>
+        <div class="ai-bg-glow ai-bg-glow--left"></div>
+        <div class="ai-bg-glow ai-bg-glow--right"></div>
+      </div>
 
+      <div class="container" style="position:relative;z-index:1">
+        {/* 섹션 레이블 */}
+        <div class="ai-eyebrow-row">
+          <span class="ai-eyebrow-line"></span>
+          <span class="ai-eyebrow-text">COMPANY OVERVIEW</span>
+          <span class="ai-eyebrow-line"></span>
+        </div>
+
+        <div class="about-intro-grid">
+
+          {/* 왼쪽: 텍스트 */}
+          <div class="about-intro-text">
+            <h2 class="about-intro-title">
+              <span class="ai-title-ko">인애드컴퍼니</span>
+              <span class="ai-title-en">IN AD COMPANY</span>
+            </h2>
+
+            <div class="ai-desc-block">
+              <p>2019년 설립된 인애드컴퍼니는 바이럴 마케팅, 인플루언서·유튜브 마케팅, 시딩 캠페인, SEO, 고객 리뷰 마케팅, 올리브영 마케팅, PPL 등 전방위적 퍼널 마케팅 솔루션을 제공하는 크리에이티브 마케팅 에이전시입니다.</p>
+              <p>광고처럼 보이지 않는 자연스러운 확산 구조를 설계해 브랜드 인지도를 높이고, 소비자가 먼저 찾게 만드는 지속적인 마케팅 생태계를 구축합니다.</p>
+            </div>
+
+            {/* 서비스 태그 그리드 */}
+            <div class="ai-services-grid">
+              <div class="ai-svc-item">
+                <span class="ai-svc-dot"></span>
+                <span class="ai-svc-name">바이럴 마케팅</span>
+              </div>
+              <div class="ai-svc-item">
+                <span class="ai-svc-dot"></span>
+                <span class="ai-svc-name">인플루언서</span>
+              </div>
+              <div class="ai-svc-item">
+                <span class="ai-svc-dot"></span>
+                <span class="ai-svc-name">SEO 최적화</span>
+              </div>
+              <div class="ai-svc-item">
+                <span class="ai-svc-dot"></span>
+                <span class="ai-svc-name">시딩 캠페인</span>
+              </div>
+              <div class="ai-svc-item">
+                <span class="ai-svc-dot"></span>
+                <span class="ai-svc-name">리뷰 마케팅</span>
+              </div>
+              <div class="ai-svc-item">
+                <span class="ai-svc-dot"></span>
+                <span class="ai-svc-name">PPL 광고</span>
+              </div>
+              <div class="ai-svc-item">
+                <span class="ai-svc-dot"></span>
+                <span class="ai-svc-name">올리브영</span>
+              </div>
+              <div class="ai-svc-item">
+                <span class="ai-svc-dot"></span>
+                <span class="ai-svc-name">유튜브 광고</span>
+              </div>
+            </div>
+
+            <a href="/contact" class="ai-cta-link">
+              <span>상담 신청하기</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
+
+          {/* 오른쪽: 스탯 카드 4개 */}
           <div class="about-stats-grid">
-            <div class="astat-card">
-              <div class="astat-num">2019<span class="astat-unit">년</span></div>
-              <p>설립</p>
+            <div class="astat-card" data-target="2019" data-suffix="년" data-label="설립">
+              <div class="astat-glow"></div>
+              <div class="astat-scan"></div>
+              <div class="astat-inner">
+                <p class="astat-label-top">설립 연도</p>
+                <div class="astat-num"><span class="astat-counter">2019</span><span class="astat-unit">년</span></div>
+                <div class="astat-bar"><div class="astat-bar-fill"></div></div>
+              </div>
             </div>
-            <div class="astat-card">
-              <div class="astat-num">320<span class="astat-unit">+</span></div>
-              <p>완료 프로젝트</p>
+            <div class="astat-card astat-card--highlight" data-target="320" data-suffix="+" data-label="완료 프로젝트">
+              <div class="astat-glow"></div>
+              <div class="astat-scan"></div>
+              <div class="astat-inner">
+                <p class="astat-label-top">완료 프로젝트</p>
+                <div class="astat-num"><span class="astat-counter">320</span><span class="astat-unit">+</span></div>
+                <div class="astat-bar"><div class="astat-bar-fill"></div></div>
+              </div>
             </div>
-            <div class="astat-card">
-              <div class="astat-num">98<span class="astat-unit">%</span></div>
-              <p>재계약률</p>
+            <div class="astat-card" data-target="98" data-suffix="%" data-label="재계약률">
+              <div class="astat-glow"></div>
+              <div class="astat-scan"></div>
+              <div class="astat-inner">
+                <p class="astat-label-top">재계약률</p>
+                <div class="astat-num"><span class="astat-counter">98</span><span class="astat-unit">%</span></div>
+                <div class="astat-bar"><div class="astat-bar-fill"></div></div>
+              </div>
             </div>
-            <div class="astat-card">
-              <div class="astat-num">50<span class="astat-unit">+</span></div>
-              <p>파트너 브랜드</p>
+            <div class="astat-card" data-target="50" data-suffix="+" data-label="파트너 브랜드">
+              <div class="astat-glow"></div>
+              <div class="astat-scan"></div>
+              <div class="astat-inner">
+                <p class="astat-label-top">파트너 브랜드</p>
+                <div class="astat-num"><span class="astat-counter">50</span><span class="astat-unit">+</span></div>
+                <div class="astat-bar"><div class="astat-bar-fill"></div></div>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
 
-    {/* ── 인애드가 추구하는 가치 (비즈니스 파트너) ── */}
-    <section class="section about-values-section about-partner-section">
-      <div class="container">
-        <div class="aptn-formula">
-          <div class="aptn-item">
-            <div class="aptn-icon">💡</div>
-            <strong>차별화 된<br />솔루션 제공</strong>
+    {/* ── 비즈니스 파트너 섹션 ── */}
+    <section class="about-partner-section">
+      {/* 배경 파티클 캔버스 */}
+      <canvas class="aptn-canvas" id="aptnCanvas"></canvas>
+      <div class="aptn-bg-orb aptn-bg-orb--a"></div>
+      <div class="aptn-bg-orb aptn-bg-orb--b"></div>
+      <div class="aptn-bg-line aptn-bg-line--h1"></div>
+      <div class="aptn-bg-line aptn-bg-line--h2"></div>
+
+      <div class="container" style="position:relative;z-index:1">
+
+        {/* 섹션 헤더 */}
+        <div class="aptn-header">
+          <p class="aptn-eyebrow">OUR IDENTITY</p>
+          <h2 class="aptn-main-title">비즈니스 파트너</h2>
+          <p class="aptn-main-sub">단순한 대행사를 넘어, 고객사의 성장을 함께 책임지는 진정한 파트너</p>
+        </div>
+
+        {/* 3개 가치 카드 */}
+        <div class="aptn-cards">
+          <div class="aptn-card" data-idx="0">
+            <div class="aptn-card-accent-line"></div>
+            <div class="aptn-card-number">01</div>
+            <div class="aptn-card-icon-wrap">
+              <div class="aptn-card-icon-ring"></div>
+              <span class="aptn-card-icon">💡</span>
+            </div>
+            <strong class="aptn-card-title">차별화된<br />솔루션 제공</strong>
+            <p class="aptn-card-desc">브랜드 특성에 맞는 최적 채널과 전략으로 경쟁과 차별되는 퍼포먼스를 설계합니다.</p>
+            <div class="aptn-card-tags">
+              <span>채널 분석</span><span>전략 설계</span><span>퍼포먼스</span>
+            </div>
           </div>
-          <div class="aptn-plus">+</div>
-          <div class="aptn-item">
-            <div class="aptn-icon">📈</div>
-            <strong>사업 성장<br />유도</strong>
+          <div class="aptn-card aptn-card--center" data-idx="1">
+            <div class="aptn-card-accent-line"></div>
+            <div class="aptn-card-number">02</div>
+            <div class="aptn-card-icon-wrap">
+              <div class="aptn-card-icon-ring"></div>
+              <span class="aptn-card-icon">📈</span>
+            </div>
+            <strong class="aptn-card-title">사업 성장<br />유도</strong>
+            <p class="aptn-card-desc">노출에서 전환까지 이어지는 풀퍼널 구조로 실질적인 매출과 인지도를 동시에 높입니다.</p>
+            <div class="aptn-card-tags">
+              <span>풀퍼널</span><span>매출 성장</span><span>인지도</span>
+            </div>
           </div>
-          <div class="aptn-plus">+</div>
-          <div class="aptn-item">
-            <div class="aptn-icon">🎯</div>
-            <strong>브랜딩<br />강화</strong>
+          <div class="aptn-card" data-idx="2">
+            <div class="aptn-card-accent-line"></div>
+            <div class="aptn-card-number">03</div>
+            <div class="aptn-card-icon-wrap">
+              <div class="aptn-card-icon-ring"></div>
+              <span class="aptn-card-icon">🎯</span>
+            </div>
+            <strong class="aptn-card-title">브랜딩<br />강화</strong>
+            <p class="aptn-card-desc">소비자 인식 속에 브랜드를 자연스럽게 각인시키는 지속 가능한 마케팅 생태계를 구축합니다.</p>
+            <div class="aptn-card-tags">
+              <span>브랜드 설계</span><span>지속성</span><span>생태계</span>
+            </div>
           </div>
         </div>
 
-        <div class="aptn-arrow">
-          <svg viewBox="0 0 24 24" fill="none" width="36" height="36">
-            <path d="M12 5v14M5 12l7 7 7-7" stroke="#1a6bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        {/* VISION / MISSION */}
+        <div class="aptn-vm-section">
+          <div class="aptn-vm-divider">
+            <span class="aptn-vm-divider-line"></span>
+            <span class="aptn-vm-divider-badge">CORE VALUES</span>
+            <span class="aptn-vm-divider-line"></span>
+          </div>
+
+          <div class="aptn-vm-grid">
+            <div class="aptn-vm-card aptn-vm-card--vision">
+              <div class="aptn-vm-badge-row">
+                <div class="aptn-vm-badge">VISION</div>
+                <div class="aptn-vm-badge-dot"></div>
+              </div>
+              <p class="aptn-vm-quote">"고객사 비즈니스의 <strong>성공</strong>만을 위한,<br />효과적인 <strong>퍼널 솔루션</strong>을 제공합니다."</p>
+            </div>
+
+            <div class="aptn-vm-center">
+              <div class="aptn-vm-center-ring">
+                <div class="aptn-vm-center-dot"></div>
+              </div>
+            </div>
+
+            <div class="aptn-vm-card aptn-vm-card--mission">
+              <div class="aptn-vm-badge-row">
+                <div class="aptn-vm-badge aptn-vm-badge--mission">MISSION</div>
+                <div class="aptn-vm-badge-dot"></div>
+              </div>
+              <p class="aptn-vm-quote">"고객사의 <strong>성장</strong>에 전력을 다하는<br />진정한 <strong>비즈니스 파트너</strong>가 됩니다."</p>
+            </div>
+          </div>
         </div>
 
-        <div class="aptn-result aptn-result--center">
-          <h2 class="aptn-result-title">비즈니스 파트너</h2>
-        </div>
-
-        <div class="aptn-vm-grid">
-          <div class="aptn-vm-card aptn-vm-card--vision">
-            <span class="aptn-vm-label">VISION</span>
-            <p>"고객사 비즈니스의 <strong>성공</strong>만을 위한,<br />효과적인 <strong>퍼널 솔루션</strong>을 제공합니다."</p>
-          </div>
-          <div class="aptn-vm-divider"></div>
-          <div class="aptn-vm-card aptn-vm-card--mission">
-            <span class="aptn-vm-label">MISSION</span>
-            <p>"고객사의 <strong>성장</strong>에 전력을 다하는<br />진정한 <strong>비즈니스 파트너</strong>가 됩니다."</p>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -410,6 +549,102 @@ export const AboutPage = () => (
       // 좌표 로드 실패 시 기본값으로 지도 표시
       loadLeaflet(function(){ initMap(DEFAULT_LAT, DEFAULT_LNG, '경기도 안산시 단원구 고잔로 51'); });
     });
+})();
+    `}} />
+
+    {/* 카운터 애니메이션 + 파티클 */}
+    <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  /* ── 카운터 애니메이션 ── */
+  function animateCounter(el, target, duration) {
+    var start = 0, startTime = null;
+    var isYear = target >= 2000;
+    var from = isYear ? target : 0;
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var val = Math.floor(from + (target - from) * eased);
+      el.textContent = val.toLocaleString();
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target.toLocaleString();
+    }
+    requestAnimationFrame(step);
+  }
+
+  var observed = false;
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting && !observed) {
+        observed = true;
+        document.querySelectorAll('.astat-counter').forEach(function(el) {
+          var card = el.closest('.astat-card');
+          var target = parseInt(card.dataset.target, 10);
+          animateCounter(el, target, 1600);
+        });
+        /* 카드 글로우 순차 등장 */
+        document.querySelectorAll('.astat-card').forEach(function(card, i) {
+          setTimeout(function(){ card.classList.add('astat-card--visible'); }, i * 120);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  var statsGrid = document.querySelector('.about-stats-grid');
+  if (statsGrid) io.observe(statsGrid);
+
+  /* ── 파티클 캔버스 ── */
+  var canvas = document.getElementById('aptnCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (var i = 0; i < 55; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.4 + 0.3,
+      dx: (Math.random() - 0.5) * 0.35,
+      dy: (Math.random() - 0.5) * 0.35,
+      a: Math.random() * 0.5 + 0.1
+    });
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(function(p) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(41,121,255,' + p.a + ')';
+      ctx.fill();
+      p.x += p.dx; p.y += p.dy;
+      if (p.x < 0 || p.x > canvas.width)  p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+    /* 가까운 파티클끼리 연결 */
+    for (var i = 0; i < particles.length; i++) {
+      for (var j = i + 1; j < particles.length; j++) {
+        var dx = particles[i].x - particles[j].x;
+        var dy = particles[i].y - particles[j].y;
+        var dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 100) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = 'rgba(41,121,255,' + (0.12 * (1 - dist/100)) + ')';
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
 })();
     `}} />
   </>
