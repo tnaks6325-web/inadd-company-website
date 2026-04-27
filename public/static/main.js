@@ -468,6 +468,9 @@ if (menuToggle && mainNav) {
 
 /* ── 9. 서비스 인터랙티브 리스트 ── */
 (function initSvcInteractive() {
+  /* 시딩 페이지는 자체 JS로 처리 — 전역 함수 실행 안 함 */
+  if (document.getElementById('sdngBlogVisual') || document.getElementById('sdngInstaVisual')) return;
+
   const visual = document.querySelector('.svc-visual');
   if (!visual) return;
 
@@ -506,12 +509,9 @@ if (menuToggle && mainNav) {
   });
 
   items.forEach((item, idx) => {
-    item.addEventListener('mouseenter', () => activate(idx));
     item.addEventListener('click', (e) => {
-      const link = item.querySelector('a');
-      if (link && !e.target.closest('a')) {
-        window.location.href = link.getAttribute('href');
-      }
+      e.preventDefault();
+      activate(idx);
     });
   });
 })();
