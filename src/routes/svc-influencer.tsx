@@ -435,11 +435,26 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body open">
                 <div class="svctab-item-content">
-                  <div class="svctab-item-img-wrap" data-placeholder="연예인 섭외/협찬 이미지">
-                    <div class="svctab-img-placeholder">
-                      <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="6" stroke="currentColor" stroke-width="1.5" opacity=".3"/><path d="M4 32l10-10 8 8 6-6 16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/><circle cx="14" cy="20" r="3" stroke="currentColor" stroke-width="1.5" opacity=".3"/></svg>
-                      <span>이미지 준비 중</span>
+                  <div class="svctab-infocard" style="border-top-color:#fbbf24">
+                    <div class="sic-header">
+                      <span class="sic-icon">🎬</span>
+                      <span class="sic-label">Celebrity Casting</span>
                     </div>
+                    <div class="sic-stats">
+                      <div class="sic-stat">
+                        <span class="sic-num">Top</span>
+                        <span class="sic-desc">탑·미들 연예인<br/>전 구간 대응</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">∞</span>
+                        <span class="sic-desc">팬덤 기반<br/>폭발적 확산</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">PPL</span>
+                        <span class="sic-desc">협찬·광고<br/>통합 운영</span>
+                      </div>
+                    </div>
+                    <p class="sic-quote">"연예인 파워로 브랜드를 단숨에 각인"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
@@ -475,11 +490,26 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-item-img-wrap" data-placeholder="인플루언서 섭외/협찬 이미지">
-                    <div class="svctab-img-placeholder">
-                      <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="6" stroke="currentColor" stroke-width="1.5" opacity=".3"/><path d="M4 32l10-10 8 8 6-6 16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/><circle cx="14" cy="20" r="3" stroke="currentColor" stroke-width="1.5" opacity=".3"/></svg>
-                      <span>이미지 준비 중</span>
+                  <div class="svctab-infocard" style="border-top-color:#a78bfa">
+                    <div class="sic-header">
+                      <span class="sic-icon">⭐</span>
+                      <span class="sic-label">Influencer Casting</span>
                     </div>
+                    <div class="sic-stats">
+                      <div class="sic-stat">
+                        <span class="sic-num">1,520<span class="sic-unit">+</span></span>
+                        <span class="sic-desc">검증된<br/>크리에이터 DB</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">Nano<br/><span style="font-size:11px">~Mega</span></span>
+                        <span class="sic-desc">전 구간<br/>대응 가능</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">ROI</span>
+                        <span class="sic-desc">데이터 기반<br/>고효율 매칭</span>
+                      </div>
+                    </div>
+                    <p class="sic-quote">"정확한 타겟에 정확히 도달하는 방법"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
@@ -515,11 +545,26 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-item-img-wrap" data-placeholder="인스타 피드 연계 이미지">
-                    <div class="svctab-img-placeholder">
-                      <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="6" stroke="currentColor" stroke-width="1.5" opacity=".3"/><path d="M4 32l10-10 8 8 6-6 16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/><circle cx="14" cy="20" r="3" stroke="currentColor" stroke-width="1.5" opacity=".3"/></svg>
-                      <span>이미지 준비 중</span>
+                  <div class="svctab-infocard" style="border-top-color:#f472b6">
+                    <div class="sic-header">
+                      <span class="sic-icon">📸</span>
+                      <span class="sic-label">Instagram Feed</span>
                     </div>
+                    <div class="sic-stats">
+                      <div class="sic-stat">
+                        <span class="sic-num">Feed</span>
+                        <span class="sic-desc">인스타 피드<br/>자연 노출</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">Reels</span>
+                        <span class="sic-desc">숏폼 연계<br/>바이럴 확산</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">2배</span>
+                        <span class="sic-desc">유튜브 연계 시<br/>도달 시너지</span>
+                      </div>
+                    </div>
+                    <p class="sic-quote">"유튜브 협찬 + 인스타 확산 동시 집행"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
@@ -582,11 +627,26 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body open">
                 <div class="svctab-item-content">
-                  <div class="svctab-item-img-wrap" data-placeholder="브랜디드 콘텐츠 이미지">
-                    <div class="svctab-img-placeholder">
-                      <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="6" stroke="currentColor" stroke-width="1.5" opacity=".3"/><path d="M4 32l10-10 8 8 6-6 16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/><circle cx="14" cy="20" r="3" stroke="currentColor" stroke-width="1.5" opacity=".3"/></svg>
-                      <span>이미지 준비 중</span>
+                  <div class="svctab-infocard" style="border-top-color:#60a5fa">
+                    <div class="sic-header">
+                      <span class="sic-icon">🎨</span>
+                      <span class="sic-label">Branded Content</span>
                     </div>
+                    <div class="sic-stats">
+                      <div class="sic-stat">
+                        <span class="sic-num">100%</span>
+                        <span class="sic-desc">광고 인식<br/>없는 자연 노출</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">세계관</span>
+                        <span class="sic-desc">크리에이터<br/>스토리 융합</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">프리미엄</span>
+                        <span class="sic-desc">고관여<br/>콘텐츠 설계</span>
+                      </div>
+                    </div>
+                    <p class="sic-quote">"광고가 아닌 콘텐츠로 소비자를 설득"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
@@ -621,11 +681,26 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-item-img-wrap" data-placeholder="기획 PPL 이미지">
-                    <div class="svctab-img-placeholder">
-                      <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="6" stroke="currentColor" stroke-width="1.5" opacity=".3"/><path d="M4 32l10-10 8 8 6-6 16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/><circle cx="14" cy="20" r="3" stroke="currentColor" stroke-width="1.5" opacity=".3"/></svg>
-                      <span>이미지 준비 중</span>
+                  <div class="svctab-infocard" style="border-top-color:#34d399">
+                    <div class="sic-header">
+                      <span class="sic-icon">🎭</span>
+                      <span class="sic-label">Planned PPL</span>
                     </div>
+                    <div class="sic-stats">
+                      <div class="sic-stat">
+                        <span class="sic-num">자연</span>
+                        <span class="sic-desc">콘텐츠 흐름<br/>속 자연 배치</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">低</span>
+                        <span class="sic-desc">시청자<br/>이탈률 최소화</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">신뢰</span>
+                        <span class="sic-desc">브랜드<br/>친밀감 형성</span>
+                      </div>
+                    </div>
+                    <p class="sic-quote">"보는 사람이 광고라 느끼지 않는 광고"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
@@ -660,11 +735,26 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-item-img-wrap" data-placeholder="숏폼/유튜브 영상 이미지">
-                    <div class="svctab-img-placeholder">
-                      <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="6" stroke="currentColor" stroke-width="1.5" opacity=".3"/><path d="M4 32l10-10 8 8 6-6 16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/><circle cx="14" cy="20" r="3" stroke="currentColor" stroke-width="1.5" opacity=".3"/></svg>
-                      <span>이미지 준비 중</span>
+                  <div class="svctab-infocard" style="border-top-color:#f87171">
+                    <div class="sic-header">
+                      <span class="sic-icon">▶️</span>
+                      <span class="sic-label">Short-form &amp; YouTube</span>
                     </div>
+                    <div class="sic-stats">
+                      <div class="sic-stat">
+                        <span class="sic-num">4가지</span>
+                        <span class="sic-desc">롱폼·숏폼<br/>AI 제작 옵션</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">AI</span>
+                        <span class="sic-desc">합리적 단가<br/>스마트 제작</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">All</span>
+                        <span class="sic-desc">플랫폼 최적화<br/>멀티 포맷</span>
+                      </div>
+                    </div>
+                    <p class="sic-quote">"예산과 목적에 딱 맞는 포맷을 선택"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
@@ -713,11 +803,26 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body open">
                 <div class="svctab-item-content">
-                  <div class="svctab-item-img-wrap" data-placeholder="유튜버 모델 이미지">
-                    <div class="svctab-img-placeholder">
-                      <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="6" stroke="currentColor" stroke-width="1.5" opacity=".3"/><path d="M4 32l10-10 8 8 6-6 16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/><circle cx="14" cy="20" r="3" stroke="currentColor" stroke-width="1.5" opacity=".3"/></svg>
-                      <span>이미지 준비 중</span>
+                  <div class="svctab-infocard" style="border-top-color:#fb923c">
+                    <div class="sic-header">
+                      <span class="sic-icon">📺</span>
+                      <span class="sic-label">YouTuber Model</span>
                     </div>
+                    <div class="sic-stats">
+                      <div class="sic-stat">
+                        <span class="sic-num">High</span>
+                        <span class="sic-desc">팬층 기반<br/>구매 전환율</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">동시</span>
+                        <span class="sic-desc">채널 콘텐츠<br/>광고 동시 집행</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">ROI</span>
+                        <span class="sic-desc">합리적 비용<br/>높은 수익률</span>
+                      </div>
+                    </div>
+                    <p class="sic-quote">"연예인 효과를 합리적 비용으로 실현"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
@@ -752,11 +857,26 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-item-img-wrap" data-placeholder="연예인 모델 이미지">
-                    <div class="svctab-img-placeholder">
-                      <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="6" stroke="currentColor" stroke-width="1.5" opacity=".3"/><path d="M4 32l10-10 8 8 6-6 16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/><circle cx="14" cy="20" r="3" stroke="currentColor" stroke-width="1.5" opacity=".3"/></svg>
-                      <span>이미지 준비 중</span>
+                  <div class="svctab-infocard" style="border-top-color:#e879f9">
+                    <div class="sic-header">
+                      <span class="sic-icon">✨</span>
+                      <span class="sic-label">Celebrity Model</span>
                     </div>
+                    <div class="sic-stats">
+                      <div class="sic-stat">
+                        <span class="sic-num">Premium</span>
+                        <span class="sic-desc">브랜드<br/>이미지 프리미엄화</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">대중</span>
+                        <span class="sic-desc">대중적 신뢰도<br/>즉각 확보</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">탄력</span>
+                        <span class="sic-desc">규모별<br/>탄력적 예산 협의</span>
+                      </div>
+                    </div>
+                    <p class="sic-quote">"브랜드 고급화의 가장 확실한 방법"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
@@ -791,11 +911,26 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-item-img-wrap" data-placeholder="일반 모델 이미지">
-                    <div class="svctab-img-placeholder">
-                      <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="6" stroke="currentColor" stroke-width="1.5" opacity=".3"/><path d="M4 32l10-10 8 8 6-6 16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/><circle cx="14" cy="20" r="3" stroke="currentColor" stroke-width="1.5" opacity=".3"/></svg>
-                      <span>이미지 준비 중</span>
+                  <div class="svctab-infocard" style="border-top-color:#2dd4bf">
+                    <div class="sic-header">
+                      <span class="sic-icon">💡</span>
+                      <span class="sic-label">Commercial Model</span>
                     </div>
+                    <div class="sic-stats">
+                      <div class="sic-stat">
+                        <span class="sic-num">직관</span>
+                        <span class="sic-desc">제품 핵심<br/>직관적 전달</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">합리</span>
+                        <span class="sic-desc">합리적 비용<br/>고품질 촬영</span>
+                      </div>
+                      <div class="sic-stat">
+                        <span class="sic-num">다양</span>
+                        <span class="sic-desc">다양한<br/>모델 풀 보유</span>
+                      </div>
+                    </div>
+                    <p class="sic-quote">"제품을 가장 아름답게 보여주는 방법"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">

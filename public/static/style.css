@@ -9448,7 +9448,73 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   letter-spacing: 0.1em;
 }
 
-/* 설명 영역 */
+/* ── 텍스트 인포카드 (이미지 대체) ── */
+.svctab-infocard {
+  --sic-color: #60a5fa;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px 24px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-top: 2px solid var(--sic-color, #60a5fa);
+  border-radius: 10px;
+  min-width: 0;
+  flex-shrink: 0;
+  width: 100%;
+}
+.svctab-infocard[data-color] { border-top-color: attr(data-color); }
+.sic-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sic-icon { font-size: 22px; line-height: 1; }
+.sic-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  font-family: 'Space Grotesk', sans-serif;
+}
+.sic-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.sic-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 10px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  text-align: center;
+}
+.sic-num {
+  font-size: 18px;
+  font-weight: 800;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #ffffff;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+.sic-unit { font-size: 13px; font-weight: 600; opacity: 0.7; }
+.sic-desc {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.5;
+}
+.sic-quote {
+  font-size: 12px;
+  font-style: italic;
+  color: rgba(255,255,255,0.3);
+  border-left: 2px solid rgba(255,255,255,0.1);
+  padding-left: 12px;
+  line-height: 1.6;
+  margin-top: auto;
+}
 .svctab-item-desc {
   display: flex;
   flex-direction: column;
