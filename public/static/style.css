@@ -9516,6 +9516,55 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .svctab-nav { margin-bottom: 40px; }
   .svctab-item-trigger { padding: 18px 20px; }
   .svctab-item-content { padding: 20px 20px 28px; }
+  .svctab-inline-cta { flex-direction: column; gap: 16px; text-align: center; }
+}
+
+/* ── 섭외/협찬 하단 인라인 CTA ── */
+@keyframes svctabMsgBlink {
+  0%,100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+.svctab-inline-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 36px;
+  padding: 24px 32px;
+  background: rgba(41,121,255,0.06);
+  border: 1px solid rgba(41,121,255,0.18);
+  border-radius: 8px;
+}
+.svctab-cta-msg {
+  font-size: 15px;
+  color: rgba(180,210,255,0.75);
+  line-height: 1.6;
+  animation: svctabMsgBlink 2.2s ease-in-out infinite;
+}
+.svctab-cta-msg strong {
+  color: rgba(120,170,255,1);
+  font-weight: 700;
+}
+.svctab-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 26px;
+  background: rgba(41,121,255,0.15);
+  border: 1px solid rgba(41,121,255,0.4);
+  color: rgba(160,200,255,0.95);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 4px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.svctab-cta-btn:hover {
+  background: rgba(41,121,255,0.28);
+  border-color: rgba(41,121,255,0.7);
+  color: #ffffff;
 }
 
 /* ────────────────────────────────── */
