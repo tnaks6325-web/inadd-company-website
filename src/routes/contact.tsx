@@ -67,28 +67,6 @@ export const ContactPage = () => (
         <div class="ct-panel-num">02</div>
       </div>
 
-      {/* 맨 오른쪽 구분선 (브랜드↔킥오프) */}
-      <div class="ct-split-divider ct-divider--kickoff">
-        <span>OR</span>
-      </div>
-
-      {/* 맨 오른쪽 — 킥오프 미팅 */}
-      <div class="ct-split-panel ct-panel--kickoff" id="panel-kickoff"
-           onmouseenter="hoverPanel('kickoff')"
-           onmouseleave="resetPanel()"
-           onclick="enterKickoff()">
-        <div class="ct-panel-bg"></div>
-        <div class="ct-panel-content">
-          <div class="ct-panel-label" style="color:rgba(160,120,255,0.9);border-color:rgba(160,120,255,0.3)">KICKOFF</div>
-          <h2 class="ct-panel-title">킥오프<br />미팅 신청</h2>
-          <p class="ct-panel-desc">희망 일정을 전달해 주세요<br />담당자가 빠르게 확정해 드립니다</p>
-          <div class="ct-panel-cta">
-            <span>일정 신청하기</span>
-            <svg viewBox="0 0 24 24" fill="none"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="ct-panel-num">04</div>
-      </div>
     </div>
 
     {/* ══════════════════════════════════════
@@ -828,15 +806,14 @@ export const ContactPage = () => (
           var agency   = document.getElementById('panel-agency');
           var brand    = document.getElementById('panel-brand');
           var brochure = document.getElementById('panel-brochure');
-          var kickoff  = document.getElementById('panel-kickoff');
-          var all = [agency, brand, brochure, kickoff];
+          var all = [agency, brand, brochure];
           all.forEach(function(el) { el && el.classList.remove('ct-active','ct-shrink'); });
           var active = document.getElementById('panel-' + type);
           if (active) active.classList.add('ct-active');
           all.forEach(function(el) { if (el && el !== active) el.classList.add('ct-shrink'); });
         }
         function resetPanel() {
-          ['panel-agency','panel-brand','panel-brochure','panel-kickoff'].forEach(function(id) {
+          ['panel-agency','panel-brand','panel-brochure'].forEach(function(id) {
             var el = document.getElementById(id);
             if (el) el.classList.remove('ct-active','ct-shrink');
           });

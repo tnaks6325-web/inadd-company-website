@@ -8392,15 +8392,12 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── 4분할 레이아웃: 구분선 위치 ── */
+/* ── 3분할 레이아웃: 구분선 위치 ── */
 .ct-split-divider.ct-divider--left {
-  left: 25%;
+  left: 33.33%;
 }
 .ct-split-divider.ct-divider--right {
-  left: 50%;
-}
-.ct-split-divider.ct-divider--kickoff {
-  left: 75%;
+  left: 66.66%;
 }
 
 /* ── 회사소개서 패널 배경 ── */
