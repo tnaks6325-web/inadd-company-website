@@ -88,7 +88,7 @@ export const SvcViralPage = () => (
   /* ── Three.js 3D 배경 ── */
   var s=document.createElement('script');
   s.src='/static/svc-three-bg.js';
-  s.onload=function(){ initSvcThreeBg('vhCanvas', 0x1a6bff, 0x00d4a8, 0x6440ff); };
+  s.onload=function(){ initSvcThreeBg(0x1a6bff, 0x00d4a8, 0x6440ff); };
   document.head.appendChild(s);
 
   /* ── 순차 등장 애니메이션 ── */

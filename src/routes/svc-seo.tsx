@@ -58,7 +58,7 @@ export const SvcSeoPage = () => (
 (function(){
   var s=document.createElement('script');
   s.src='/static/svc-three-bg.js';
-  s.onload=function(){ initSvcThreeBg('vhCanvas4', 0xeab308, 0xf97316, 0x1a6bff); };
+  s.onload=function(){ initSvcThreeBg(0xeab308, 0xf97316, 0x1a6bff); };
   document.head.appendChild(s);
   function anim(el,delay,dir){if(!el)return;el.style.opacity='0';el.style.transform=dir==='up'?'translateY(32px)':'translateX(-32px)';el.style.transition='opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)';setTimeout(function(){el.style.opacity='1';el.style.transform='none';},delay);}
   anim(document.getElementById('seL1'),200,'left');

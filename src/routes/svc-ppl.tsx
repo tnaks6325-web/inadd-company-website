@@ -57,7 +57,7 @@ export const SvcPplPage = () => (
 (function(){
   var s=document.createElement('script');
   s.src='/static/svc-three-bg.js';
-  s.onload=function(){ initSvcThreeBg('vhCanvas5', 0xef4444, 0xfb923c, 0xa855f7); };
+  s.onload=function(){ initSvcThreeBg(0xef4444, 0xfb923c, 0xa855f7); };
   document.head.appendChild(s);
   function anim(el,delay,dir){if(!el)return;el.style.opacity='0';el.style.transform=dir==='up'?'translateY(32px)':'translateX(-32px)';el.style.transition='opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)';setTimeout(function(){el.style.opacity='1';el.style.transform='none';},delay);}
   anim(document.getElementById('ppL1'),200,'left');

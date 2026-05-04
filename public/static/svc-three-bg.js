@@ -1,230 +1,210 @@
 /**
- * svc-three-bg.js
- * 세부 마케팅 페이지 공통 Three.js 배경 이펙트
- * 사용법: initSvcThreeBg(canvasId, primaryColor, secondaryColor, accentColor)
- * 예) initSvcThreeBg('vhCanvas', 0x1a6bff, 0x00d4a8, 0x8844ff)
+ * svc-three-bg.js  v2
+ * - 캔버스를 position:fixed 로 전체 페이지 배경에 깔기
+ * - 구체들 전체 화면에 넓게 분산, 자유롭게 둥둥 부유
+ * - 마우스 패럴랙스 없음
+ * 사용법: initSvcThreeBg(primaryHex, secondaryHex, accentHex)
  */
 (function(global){
 
-  function initSvcThreeBg(canvasId, primaryHex, secondaryHex, accentHex) {
+  function initSvcThreeBg(primaryHex, secondaryHex, accentHex) {
     /* Three.js 로드 후 씬 초기화 */
     if (global.THREE) {
-      _buildScene(canvasId, primaryHex, secondaryHex, accentHex);
+      _buildScene(primaryHex, secondaryHex, accentHex);
       return;
     }
     var s = document.createElement('script');
     s.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
-    s.onload = function(){ _buildScene(canvasId, primaryHex, secondaryHex, accentHex); };
+    s.onload = function(){ _buildScene(primaryHex, secondaryHex, accentHex); };
     document.head.appendChild(s);
   }
 
-  function _buildScene(canvasId, primaryHex, secondaryHex, accentHex) {
-    var canvas = document.getElementById(canvasId);
-    if (!canvas) return;
+  function _buildScene(primaryHex, secondaryHex, accentHex) {
 
-    var section = canvas.closest('section') || canvas.parentElement;
+    /* ── 캔버스: body에 fixed로 붙여 전체 페이지 배경 ── */
+    var canvas = document.createElement('canvas');
+    canvas.id = '__svc-three-bg__';
+    canvas.style.cssText = [
+      'position:fixed',
+      'inset:0',
+      'width:100%',
+      'height:100%',
+      'pointer-events:none',
+      'z-index:0'
+    ].join(';');
+    /* body 맨 앞에 삽입 (다른 요소 뒤에 위치) */
+    document.body.insertBefore(canvas, document.body.firstChild);
+
+    /* 기존 섹션 배경들이 z-index 위로 올라오도록 보장 */
+    var styleTag = document.createElement('style');
+    styleTag.textContent = [
+      /* 히어로 섹션: 배경 투명하게 + 콘텐츠는 위로 */
+      '.vh-hero { background: transparent !important; }',
+      '.vh-bg   { display: none !important; }',
+      '.vh-canvas { display: none !important; }',
+      /* 그 외 일반 섹션들: 반투명 오버레이로 가독성 확보 */
+      '.section { position: relative; isolation: isolate; }',
+      '.section::before {',
+      '  content:""; position:absolute; inset:0; z-index:0;',
+      '  background: rgba(2,4,12,0.72);',
+      '  pointer-events:none;',
+      '}',
+      '.section .container, .section > * { position:relative; z-index:1; }',
+      /* CTA, intro 등 특수 섹션 */
+      '.svc-cta-section { background: transparent !important; }',
+      '.svc-intro-section { background: transparent !important; }',
+    ].join('\n');
+    document.head.appendChild(styleTag);
+
     var W = window.innerWidth;
-    var H = section.offsetHeight || window.innerHeight;
+    var H = window.innerHeight;
 
     /* ── 렌더러 ── */
     var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
     renderer.setSize(W, H);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x020814, 1);
+    renderer.setClearColor(0x020408, 1);
 
     /* ── 씬 & 카메라 ── */
     var scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x020814, 0.038);
+    scene.fog = new THREE.FogExp2(0x020408, 0.022);
 
-    var camera = new THREE.PerspectiveCamera(58, W / H, 0.1, 100);
-    camera.position.set(0, 0, 9);
+    var camera = new THREE.PerspectiveCamera(65, W / H, 0.1, 120);
+    camera.position.set(0, 0, 12);
 
     /* ── 조명 ── */
-    scene.add(new THREE.AmbientLight(0xffffff, 0.2));
+    scene.add(new THREE.AmbientLight(0xffffff, 0.25));
 
-    var keyLight = new THREE.PointLight(primaryHex, 10, 18);
-    keyLight.position.set(-2, 3, 4);
+    var keyLight = new THREE.PointLight(primaryHex, 12, 22);
+    keyLight.position.set(-3, 4, 6);
     scene.add(keyLight);
 
-    var fillLight = new THREE.PointLight(secondaryHex, 5, 14);
-    fillLight.position.set(4, -2, 3);
+    var fillLight = new THREE.PointLight(secondaryHex, 6, 16);
+    fillLight.position.set(6, -3, 4);
     scene.add(fillLight);
 
-    var rimLight = new THREE.PointLight(accentHex, 3, 10);
-    rimLight.position.set(0, -4, 1);
+    var rimLight = new THREE.PointLight(accentHex, 4, 12);
+    rimLight.position.set(0, -5, 2);
     scene.add(rimLight);
 
-    var backLight = new THREE.PointLight(primaryHex, 2, 8);
-    backLight.position.set(3, 3, -3);
-    scene.add(backLight);
-
-    /* ── 메인 구체 3개 (서비스 아이덴티티) ── */
+    /* ── 메인 구체: 화면 전체에 넓게 분산 배치 ── */
     var sphereDefs = [
-      { p: [ 2.6,  1.5,  0.0],  r: 1.0,  col: primaryHex,   emi: _darken(primaryHex,   0.08) },
-      { p: [ 4.6, -0.4, -1.0],  r: 0.72, col: secondaryHex, emi: _darken(secondaryHex, 0.06) },
-      { p: [ 1.5, -1.9,  0.6],  r: 0.55, col: accentHex,    emi: _darken(accentHex,    0.05) },
+      { p: [-5.5,  3.0,  -1.0], r: 1.1,  col: primaryHex   },
+      { p: [ 5.0,  2.5,  -2.0], r: 0.85, col: secondaryHex },
+      { p: [-4.0, -3.0,  -1.5], r: 0.70, col: accentHex    },
+      { p: [ 4.5, -2.5,  -0.5], r: 0.90, col: primaryHex   },
+      { p: [ 0.0,  0.5,  -3.5], r: 0.60, col: secondaryHex },
+      { p: [-1.5, -4.5,  -2.0], r: 0.50, col: accentHex    },
+      { p: [ 2.5,  4.5,  -3.0], r: 0.45, col: primaryHex   },
     ];
 
     var spheres = sphereDefs.map(function(d) {
-      var geo = new THREE.SphereGeometry(d.r, 64, 64);
+      var geo = new THREE.SphereGeometry(d.r, 48, 48);
       var mat = new THREE.MeshStandardMaterial({
         color:             d.col,
-        emissive:          d.emi,
-        emissiveIntensity: 0.45,
-        metalness:         0.80,
-        roughness:         0.12,
+        emissive:          d.col,
+        emissiveIntensity: 0.25,
+        metalness:         0.75,
+        roughness:         0.18,
+        transparent:       true,
+        opacity:           0.82,
       });
       var mesh = new THREE.Mesh(geo, mat);
       mesh.position.set(d.p[0], d.p[1], d.p[2]);
-      mesh.userData.base = d.p.slice();
+      /* 각 구체마다 독립적인 부유 파라미터 */
+      mesh.userData.base  = d.p.slice();
+      mesh.userData.speed = 0.28 + Math.random() * 0.18;
+      mesh.userData.amp   = 0.35 + Math.random() * 0.25;
+      mesh.userData.phase = Math.random() * Math.PI * 2;
       scene.add(mesh);
       return mesh;
     });
 
-    /* ── 구체 사이 광섬유 연결선 ── */
-    [[0,1],[1,2],[0,2]].forEach(function(pair) {
-      var a = new THREE.Vector3().fromArray(sphereDefs[pair[0]].p);
-      var b = new THREE.Vector3().fromArray(sphereDefs[pair[1]].p);
-      var pts = [];
-      for (var i = 0; i <= 24; i++) {
-        var t = i / 24;
-        var v = new THREE.Vector3().lerpVectors(a, b, t);
-        v.z += Math.sin(t * Math.PI) * 0.5;
-        pts.push(v);
-      }
-      var curve = new THREE.CatmullRomCurve3(pts);
-      scene.add(new THREE.Mesh(
-        new THREE.TubeGeometry(curve, 30, 0.014, 8, false),
-        new THREE.MeshBasicMaterial({ color: primaryHex, transparent: true, opacity: 0.20 })
-      ));
-    });
-
-    /* ── 소형 위성 구체 6개 (배경에 흩뿌림) ── */
-    var miniSpheres = [];
-    var miniDefs = [
-      { p: [-2.0,  2.0, -2.0], r: 0.30 },
-      { p: [ 6.5,  2.5, -1.5], r: 0.22 },
-      { p: [-1.5, -2.5, -1.0], r: 0.18 },
-      { p: [ 5.5, -2.8, -2.0], r: 0.25 },
-      { p: [ 3.5,  3.5, -2.5], r: 0.15 },
-      { p: [ 0.5, -3.8, -1.5], r: 0.20 },
-    ];
-    miniDefs.forEach(function(d) {
-      var mat = new THREE.MeshStandardMaterial({
-        color: primaryHex, metalness: 0.9, roughness: 0.1,
-        transparent: true, opacity: 0.45,
-      });
-      var mesh = new THREE.Mesh(new THREE.SphereGeometry(d.r, 32, 32), mat);
-      mesh.position.fromArray(d.p);
-      mesh.userData.base = d.p.slice();
-      scene.add(mesh);
-      miniSpheres.push(mesh);
-    });
-
-    /* ── 환경 파티클 ── */
-    var pN = 900, pBuf = new Float32Array(pN * 3);
+    /* ── 환경 파티클: 화면 전체 ── */
+    var pN = 1200;
+    var pBuf = new Float32Array(pN * 3);
     for (var i = 0; i < pN; i++) {
-      pBuf[i*3]   = (Math.random() - 0.5) * 22;
-      pBuf[i*3+1] = (Math.random() - 0.5) * 15;
-      pBuf[i*3+2] = (Math.random() - 0.5) * 10 - 2;
+      pBuf[i*3]   = (Math.random() - 0.5) * 30;
+      pBuf[i*3+1] = (Math.random() - 0.5) * 22;
+      pBuf[i*3+2] = (Math.random() - 0.5) * 14 - 4;
     }
     var pGeo = new THREE.BufferGeometry();
     pGeo.setAttribute('position', new THREE.BufferAttribute(pBuf, 3));
     scene.add(new THREE.Points(pGeo,
-      new THREE.PointsMaterial({ color: primaryHex, size: 0.042, transparent: true, opacity: 0.5 })
+      new THREE.PointsMaterial({
+        color: primaryHex,
+        size: 0.038,
+        transparent: true,
+        opacity: 0.45,
+      })
     ));
 
-    /* ── 공전 링 2개 ── */
-    var ringA = new THREE.Mesh(
-      new THREE.TorusGeometry(3.6, 0.011, 16, 140),
-      new THREE.MeshBasicMaterial({ color: primaryHex, transparent: true, opacity: 0.12 })
-    );
-    ringA.rotation.set(Math.PI / 5, 0, Math.PI / 7);
-    scene.add(ringA);
-
-    var ringB = new THREE.Mesh(
-      new THREE.TorusGeometry(2.3, 0.008, 16, 100),
-      new THREE.MeshBasicMaterial({ color: secondaryHex, transparent: true, opacity: 0.09 })
-    );
-    ringB.rotation.set(-Math.PI / 4, Math.PI / 5, 0);
-    scene.add(ringB);
-
-    /* ── 마우스 패럴랙스 ── */
-    var mouse = { x: 0, y: 0 }, rot = { x: 0, y: 0 };
-    document.addEventListener('mousemove', function(e) {
-      mouse.x =  (e.clientX / window.innerWidth  - 0.5) * 2;
-      mouse.y = -(e.clientY / window.innerHeight - 0.5) * 2;
+    /* ── 공전 링 3개: 넓게 배치 ── */
+    var ringDefs = [
+      { r: 5.5, tube: 0.012, col: primaryHex,   rx:  0.4, ry: 0,    rz:  0.6,  spd:  0.0018 },
+      { r: 3.8, tube: 0.009, col: secondaryHex, rx: -0.5, ry:  0.4, rz:  0,    spd: -0.0013 },
+      { r: 7.0, tube: 0.007, col: accentHex,    rx:  0.2, ry: -0.3, rz: -0.4,  spd:  0.0010 },
+    ];
+    var rings = ringDefs.map(function(d) {
+      var mesh = new THREE.Mesh(
+        new THREE.TorusGeometry(d.r, d.tube, 16, 160),
+        new THREE.MeshBasicMaterial({ color: d.col, transparent: true, opacity: 0.10 })
+      );
+      mesh.rotation.set(d.rx, d.ry, d.rz);
+      mesh.userData.spd = d.spd;
+      scene.add(mesh);
+      return mesh;
     });
 
     /* ── 리사이즈 ── */
     window.addEventListener('resize', function() {
       W = window.innerWidth;
-      H = section.offsetHeight || window.innerHeight;
+      H = window.innerHeight;
       camera.aspect = W / H;
       camera.updateProjectionMatrix();
       renderer.setSize(W, H);
     });
 
-    /* ── 애니메이션 루프 ── */
+    /* ── 애니메이션 루프 (마우스 패럴랙스 없음) ── */
     var clock = new THREE.Clock();
     (function animate() {
       requestAnimationFrame(animate);
       var t = clock.getElapsedTime();
 
-      /* 씬 전체 — 느린 자동 + 마우스 */
-      rot.x += (mouse.y * 0.16 - rot.x) * 0.04;
-      rot.y += (mouse.x * 0.20 + t * 0.055 - rot.y) * 0.03;
-      scene.rotation.x = rot.x;
-      scene.rotation.y = rot.y;
+      /* 씬 전체 — 아주 느린 자동 회전만 */
+      scene.rotation.y = t * 0.012;
+      scene.rotation.x = Math.sin(t * 0.007) * 0.06;
 
-      /* 메인 구체 부유 */
-      spheres.forEach(function(s, i) {
-        var b = s.userData.base;
-        var spd = 0.35 + i * 0.12, amp = 0.18 + i * 0.05;
+      /* 각 구체 독립 부유 */
+      spheres.forEach(function(s) {
+        var b   = s.userData.base;
+        var spd = s.userData.speed;
+        var amp = s.userData.amp;
+        var ph  = s.userData.phase;
         s.position.set(
-          b[0] + Math.cos(t * spd + i * 1.4) * amp,
-          b[1] + Math.sin(t * spd * 0.8 + i) * amp,
-          b[2] + Math.sin(t * 0.5  + i)      * 0.12
+          b[0] + Math.cos(t * spd       + ph) * amp,
+          b[1] + Math.sin(t * spd * 0.7 + ph) * amp,
+          b[2] + Math.sin(t * 0.4       + ph) * 0.15
         );
-        s.rotation.x += 0.003 + i * 0.001;
-        s.rotation.y += 0.004 + i * 0.002;
-        var pulse = 1 + Math.sin(t * 1.2 + i * 1.6) * 0.022;
+        /* 매우 느린 자전 */
+        s.rotation.y += 0.002;
+        s.rotation.x += 0.001;
+        /* 부드러운 펄스 */
+        var pulse = 1 + Math.sin(t * 0.9 + ph) * 0.018;
         s.scale.setScalar(pulse);
       });
 
-      /* 소형 위성 부유 */
-      miniSpheres.forEach(function(s, i) {
-        var b = s.userData.base;
-        var spd = 0.25 + i * 0.08;
-        s.position.set(
-          b[0] + Math.cos(t * spd + i) * 0.25,
-          b[1] + Math.sin(t * spd + i) * 0.20,
-          b[2] + Math.sin(t * 0.3 + i) * 0.10
-        );
-      });
-
       /* 링 회전 */
-      ringA.rotation.z += 0.0022;
-      ringB.rotation.z -= 0.0016;
-      ringB.rotation.x += 0.0007;
+      rings.forEach(function(r) { r.rotation.z += r.userData.spd; });
 
-      /* 조명 궤도 */
-      keyLight.position.x  = Math.sin(t * 0.55) * 4;
-      keyLight.position.y  = Math.cos(t * 0.38) * 3;
-      fillLight.position.x = Math.cos(t * 0.42) * 4;
-      fillLight.position.z = Math.sin(t * 0.60) * 2;
-      rimLight.position.x  = Math.sin(t * 0.28 + 1) * 3;
+      /* 조명 궤도 (씬 독립) */
+      keyLight.position.x  = Math.sin(t * 0.4) * 5;
+      keyLight.position.y  = Math.cos(t * 0.3) * 4;
+      fillLight.position.x = Math.cos(t * 0.35) * 5;
+      fillLight.position.z = Math.sin(t * 0.5)  * 3;
 
       renderer.render(scene, camera);
     })();
-  }
-
-  /* 색상 어두운 버전 (emissive용) */
-  function _darken(hex, factor) {
-    var r = ((hex >> 16) & 0xff) * factor;
-    var g = ((hex >>  8) & 0xff) * factor;
-    var b =  (hex        & 0xff) * factor;
-    return (Math.round(r) << 16) | (Math.round(g) << 8) | Math.round(b);
   }
 
   global.initSvcThreeBg = initSvcThreeBg;
