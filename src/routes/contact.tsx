@@ -509,42 +509,12 @@ export const ContactPage = () => (
           <div class="ct-kickoff-form-solo">
             <form class="contact-form" id="kickoffForm" onsubmit="return handleKickoffSubmit(event)">
 
-              {/* ── STEP 00: 담당자 정보 ── */}
-              <div class="kf-section kf-contact-section">
-                <div class="kf-section-head">
-                  <span class="kf-step-num">00</span>
-                  <div>
-                    <h3 class="kf-section-title">담당자 정보 <span class="cf-req">*</span></h3>
-                    <p class="kf-section-desc">미팅 일정 확인 후 연락드릴 정보를 입력해 주세요</p>
-                  </div>
-                </div>
-                <div class="kf-contact-grid">
-                  <div class="cf-row cf-row--2">
-                    <div class="cf-group">
-                      <label class="cf-label">담당자 이름 <span class="cf-req">*</span></label>
-                      <input type="text" name="kf_name" id="kf-name" placeholder="홍길동" required />
-                    </div>
-                    <div class="cf-group">
-                      <label class="cf-label">직급 <span class="cf-req">*</span></label>
-                      <input type="text" name="kf_position" id="kf-position" placeholder="마케팅 팀장" required />
-                    </div>
-                  </div>
-                  <div class="cf-row cf-row--2">
-                    <div class="cf-group">
-                      <label class="cf-label">연락처 <span class="cf-req">*</span></label>
-                      <input type="tel" name="kf_phone" id="kf-phone" placeholder="010-0000-0000" required />
-                    </div>
-                    <div class="cf-group">
-                      <label class="cf-label">이메일 <span class="cf-req">*</span></label>
-                      <input type="email" name="kf_email" id="kf-email" placeholder="example@company.com" required />
-                    </div>
-                  </div>
-                  <div class="cf-group">
-                    <label class="cf-label">회사명 <span class="cf-req">*</span></label>
-                    <input type="text" name="kf_company" id="kf-company" placeholder="(주)인애드컴퍼니" required />
-                  </div>
-                </div>
-              </div>
+              {/* hidden: 상담 신청 시 입력한 담당자 정보 자동 전달 */}
+              <input type="hidden" id="kf-name" name="kf_name" />
+              <input type="hidden" id="kf-position" name="kf_position" />
+              <input type="hidden" id="kf-phone" name="kf_phone" />
+              <input type="hidden" id="kf-email" name="kf_email" />
+              <input type="hidden" id="kf-company" name="kf_company" />
 
               {/* ── STEP 1: 미팅 방식 ── */}
               <div class="kf-section">
@@ -982,6 +952,24 @@ export const ContactPage = () => (
           }, 450);
         }
         function goToKickoff() {
+          // 상담 폼에서 입력한 담당자 정보 → 킥오프 hidden 필드에 자동 복사
+          var fieldMap = [
+            { from: ['ag-name','br-name'],         to: 'kf-name' },
+            { from: ['ag-position','br-position'],  to: 'kf-position' },
+            { from: ['ag-phone','br-phone'],         to: 'kf-phone' },
+            { from: ['ag-email','br-email'],         to: 'kf-email' },
+            { from: ['ag-company','br-company'],     to: 'kf-company' }
+          ];
+          fieldMap.forEach(function(m) {
+            var val = '';
+            m.from.forEach(function(id) {
+              var el = document.getElementById(id);
+              if (el && el.value) val = el.value;
+            });
+            var dest = document.getElementById(m.to);
+            if (dest) dest.value = val;
+          });
+
           var formScreen = document.getElementById('ct-form-screen');
           var kScreen    = document.getElementById('ct-kickoff-screen');
           formScreen.style.animation = 'ctSplitOut 0.4s ease forwards';
