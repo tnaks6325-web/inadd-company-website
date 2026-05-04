@@ -212,70 +212,63 @@ export const ViralPage = () => (
       </div>
 
       {/* ── 스크롤 스택 영역 ── */}
-      <div class="ss-scroll-area" id="ss-scroll-area">
-        {/* sticky 무대: 카드들이 여기서 쌓임 */}
-        <div class="ss-stage" id="ss-stage">
-          {[
-            {
-              icon: '🔥', href: '/marketing/viral', title: '바이럴 마케팅', tag: 'VIRAL',
-              desc: '맘카페·커뮤니티 기반의 자연스러운 확산으로 브랜드 인지도를 폭발적으로 높입니다.',
-              kpis: [{ val: '2,800만+', label: '평균 도달' }, { val: '48h', label: '최단 바이럴' }],
-              img: '/static/svc-images/viral.png',
-              accentColor: '#1a6bff',
-            },
-            {
-              icon: '⭐', href: '/marketing/influencer', title: '인플루언서 마케팅', tag: 'INFLUENCER',
-              desc: '검증된 1,200+ 크리에이터 네트워크로 타겟 소비자에게 진정성 있는 메시지를 전달합니다.',
-              kpis: [{ val: '1,200+', label: '파트너 크리에이터' }, { val: '+580%', label: '최대 매출 증가' }],
-              img: '/static/svc-images/influencer.png',
-              accentColor: '#a855f7',
-            },
-            {
-              icon: '🌱', href: '/marketing/seeding', title: '시딩 캠페인', tag: 'SEEDING',
-              desc: '핵심 타겟에게 샘플을 전달해 진정성 있는 후기와 입소문 생태계를 구축합니다.',
-              kpis: [{ val: '68%', label: '후기 전환율' }, { val: '+230%', label: '리뷰 전환 효과' }],
-              img: '/static/svc-images/seeding.png',
-              accentColor: '#10b981',
-            },
-            {
-              icon: '🔍', href: '/marketing/seo', title: 'SEO 마케팅', tag: 'SEO',
-              desc: '소비자가 검색하는 순간 브랜드가 먼저 보이도록 키워드부터 콘텐츠까지 설계합니다.',
-              kpis: [{ val: 'TOP3', label: '검색 순위 달성' }, { val: '+1,200%', label: '검색량 증가' }],
-              img: '/static/svc-images/seo.png',
-              accentColor: '#eab308',
-            },
-            {
-              icon: '💬', href: '/marketing/review', title: '리뷰 마케팅', tag: 'REVIEW',
-              desc: '진정성 있는 소비자 리뷰로 브랜드 신뢰를 쌓고 구매 전환율을 극적으로 높입니다.',
-              kpis: [{ val: '+230%', label: '리뷰 전환율' }, { val: '3×', label: '브랜드 신뢰도' }],
-              img: '/static/svc-images/review.png',
-              accentColor: '#f97316',
-            },
-            {
-              icon: '💚', href: '/marketing/oliveyoung', title: '올리브영 마케팅', tag: 'OLIVE YOUNG',
-              desc: '국내 최대 H&B 채널 올리브영에서 브랜드를 단기간에 폭발적으로 성장시킵니다.',
-              kpis: [{ val: '+340%', label: '채널 매출 증가' }, { val: '2.4×', label: '3개월 성장' }],
-              img: '/static/svc-images/oliveyoung.png',
-              accentColor: '#03c75a',
-            },
-            {
-              icon: '🎬', href: '/marketing/ppl', title: 'PPL 마케팅', tag: 'PPL',
-              desc: '드라마·유튜브 콘텐츠 속 자연스러운 브랜드 노출로 수천만 시청자에게 각인됩니다.',
-              kpis: [{ val: '5,000만+', label: '누적 시청자' }, { val: '3×', label: '광고 전환율' }],
-              img: '/static/svc-images/ppl.png',
-              accentColor: '#ef4444',
-            },
-          ].map((s, i) => (
-            <a href={s.href}
-               class="ss-card"
-               key={s.href}
-               style={`--accent:${s.accentColor}`}
-            >
+      <div class="ss-container" id="ss-container">
+        {[
+          {
+            icon: '🔥', href: '/marketing/viral', title: '바이럴 마케팅', tag: 'VIRAL',
+            desc: '맘카페·커뮤니티 기반의 자연스러운 확산으로 브랜드 인지도를 폭발적으로 높입니다.',
+            kpis: [{ val: '2,800만+', label: '평균 도달' }, { val: '48h', label: '최단 바이럴' }],
+            img: '/static/svc-images/viral.png',
+            accentColor: '#1a6bff',
+          },
+          {
+            icon: '⭐', href: '/marketing/influencer', title: '인플루언서 마케팅', tag: 'INFLUENCER',
+            desc: '검증된 1,200+ 크리에이터 네트워크로 타겟 소비자에게 진정성 있는 메시지를 전달합니다.',
+            kpis: [{ val: '1,200+', label: '파트너 크리에이터' }, { val: '+580%', label: '최대 매출 증가' }],
+            img: '/static/svc-images/influencer.png',
+            accentColor: '#a855f7',
+          },
+          {
+            icon: '🌱', href: '/marketing/seeding', title: '시딩 캠페인', tag: 'SEEDING',
+            desc: '핵심 타겟에게 샘플을 전달해 진정성 있는 후기와 입소문 생태계를 구축합니다.',
+            kpis: [{ val: '68%', label: '후기 전환율' }, { val: '+230%', label: '리뷰 전환 효과' }],
+            img: '/static/svc-images/seeding.png',
+            accentColor: '#10b981',
+          },
+          {
+            icon: '🔍', href: '/marketing/seo', title: 'SEO 마케팅', tag: 'SEO',
+            desc: '소비자가 검색하는 순간 브랜드가 먼저 보이도록 키워드부터 콘텐츠까지 설계합니다.',
+            kpis: [{ val: 'TOP3', label: '검색 순위 달성' }, { val: '+1,200%', label: '검색량 증가' }],
+            img: '/static/svc-images/seo.png',
+            accentColor: '#eab308',
+          },
+          {
+            icon: '💬', href: '/marketing/review', title: '리뷰 마케팅', tag: 'REVIEW',
+            desc: '진정성 있는 소비자 리뷰로 브랜드 신뢰를 쌓고 구매 전환율을 극적으로 높입니다.',
+            kpis: [{ val: '+230%', label: '리뷰 전환율' }, { val: '3×', label: '브랜드 신뢰도' }],
+            img: '/static/svc-images/review.png',
+            accentColor: '#f97316',
+          },
+          {
+            icon: '💚', href: '/marketing/oliveyoung', title: '올리브영 마케팅', tag: 'OLIVE YOUNG',
+            desc: '국내 최대 H&B 채널 올리브영에서 브랜드를 단기간에 폭발적으로 성장시킵니다.',
+            kpis: [{ val: '+340%', label: '채널 매출 증가' }, { val: '2.4×', label: '3개월 성장' }],
+            img: '/static/svc-images/oliveyoung.png',
+            accentColor: '#03c75a',
+          },
+          {
+            icon: '🎬', href: '/marketing/ppl', title: 'PPL 마케팅', tag: 'PPL',
+            desc: '드라마·유튜브 콘텐츠 속 자연스러운 브랜드 노출로 수천만 시청자에게 각인됩니다.',
+            kpis: [{ val: '5,000만+', label: '누적 시청자' }, { val: '3×', label: '광고 전환율' }],
+            img: '/static/svc-images/ppl.png',
+            accentColor: '#ef4444',
+          },
+        ].map((s, i) => (
+          <div class="ss-item" key={s.href}>
+            <a href={s.href} class="ss-card" style={`--accent:${s.accentColor}`}>
               <div class="ss-card-inner">
                 {/* 왼쪽: 이미지 */}
-                <div class="ss-card-img"
-                     style={`background-image:url('${s.img}')`}>
-                </div>
+                <div class="ss-card-img" style={`background-image:url('${s.img}')`}></div>
                 {/* 오른쪽: 콘텐츠 */}
                 <div class="ss-card-body">
                   <div class="ss-card-meta">
@@ -304,10 +297,8 @@ export const ViralPage = () => (
                 </div>
               </div>
             </a>
-          ))}
-        </div>
-        {/* 스택 해제용 엔드 마커 */}
-        <div class="ss-end" id="ss-end"></div>
+          </div>
+        ))}
       </div>
     </section>
 
@@ -524,7 +515,7 @@ export const ViralPage = () => (
     ss.src = '/static/scroll-stack.js';
     ss.onload = function() {
       if (typeof initScrollStack === 'function') {
-        initScrollStack('#ss-stage', {
+        initScrollStack('#ss-container', {
           itemDistance:      220,
           itemScale:         0.03,
           itemStackDistance: 28,

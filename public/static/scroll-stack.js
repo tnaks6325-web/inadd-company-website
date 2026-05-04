@@ -1,140 +1,155 @@
 /**
- * scroll-stack.js
- * ScrollStack - Lenis 기반 스크롤 스택 애니메이션
- * React Bits ScrollStack 로직을 순수 JS로 포팅
+ * scroll-stack.js  v2
+ * 올바른 ScrollStack 구현:
+ * - 각 카드가 독립적인 .ss-item 래퍼 안에 위치
+ * - 래퍼가 충분한 높이(scrollHeight)를 가져 스크롤 공간 확보
+ * - 카드 자체는 position:sticky 로 뷰포트에 고정
+ * - 스크롤하면 이전 카드가 scale down 되며 다음 카드가 올라옴
+ *
+ * 사용법:
+ *   initScrollStack('.ss-container')
+ *
+ * HTML 구조:
+ *   <div class="ss-container">
+ *     <div class="ss-item">   ← 스크롤 높이를 담당
+ *       <div class="ss-card"> ← sticky 고정, transform 대상
+ *         ...content...
+ *       </div>
+ *     </div>
+ *     ...
+ *   </div>
  */
 (function(global) {
 
   function initScrollStack(containerSelector, options) {
     var opts = Object.assign({
-      itemDistance:      100,
-      itemScale:         0.03,
-      itemStackDistance: 30,
-      stackPosition:     '20%',
-      scaleEndPosition:  '10%',
-      baseScale:         0.85,
-      rotationAmount:    0,
-      blurAmount:        0,
+      itemScale:         0.03,   /* 카드당 축소량 */
+      itemStackOffset:   24,     /* 위로 쌓일 때 px 간격 */
+      baseScale:         0.82,   /* 가장 뒤 카드 최소 스케일 */
+      blurAmount:        1.5,    /* 뒤 카드 블러 (px/단계) */
+      scrollHeight:      '90vh', /* 각 카드가 차지하는 스크롤 높이 */
+      stickyTop:         '8vh',  /* sticky top 위치 */
     }, options || {});
 
     var container = document.querySelector(containerSelector);
-    if (!container) return;
+    if (!container) { console.warn('[ScrollStack] container not found:', containerSelector); return; }
 
-    var cards = Array.from(container.querySelectorAll('.ss-card'));
-    if (!cards.length) return;
+    var items = Array.from(container.querySelectorAll('.ss-item'));
+    var cards = items.map(function(item) { return item.querySelector('.ss-card'); });
+    var N = cards.length;
+    if (!N) { console.warn('[ScrollStack] no .ss-card found'); return; }
 
-    var endEl = container.querySelector('.ss-end');
+    /* ── 각 .ss-item 에 스크롤 높이 부여 ── */
+    var shPx = parseUnit(opts.scrollHeight, window.innerHeight);
+    var stPx = parseUnit(opts.stickyTop,    window.innerHeight);
 
-    /* margin + will-change 초기 세팅 */
-    cards.forEach(function(card, i) {
-      if (i < cards.length - 1) {
-        card.style.marginBottom = opts.itemDistance + 'px';
-      }
-      card.style.willChange      = 'transform, filter';
+    items.forEach(function(item, i) {
+      item.style.height          = (shPx + (i === N - 1 ? window.innerHeight * 0.4 : 0)) + 'px';
+      item.style.position        = 'relative';
+    });
+
+    /* ── 각 .ss-card 를 sticky 로 설정 ── */
+    cards.forEach(function(card) {
+      card.style.position        = 'sticky';
+      card.style.top             = stPx + 'px';
       card.style.transformOrigin = 'top center';
+      card.style.willChange      = 'transform, filter';
       card.style.backfaceVisibility = 'hidden';
+      card.style.zIndex          = '1';
     });
 
     /* ── 헬퍼 ── */
-    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
-
-    function parsePercent(val, ref) {
-      if (typeof val === 'string' && val.includes('%')) {
-        return (parseFloat(val) / 100) * ref;
-      }
+    function parseUnit(val, ref) {
+      if (typeof val === 'string' && val.includes('vh')) return (parseFloat(val) / 100) * ref;
+      if (typeof val === 'string' && val.includes('px')) return parseFloat(val);
       return parseFloat(val);
     }
 
-    function calcProgress(scroll, start, end) {
-      if (scroll < start) return 0;
-      if (scroll > end)   return 1;
-      return (scroll - start) / (end - start);
-    }
+    function lerp(a, b, t) { return a + (b - a) * Math.max(0, Math.min(1, t)); }
 
     /* ── 핵심 업데이트 ── */
     function update() {
-      var scrollTop = window.scrollY;
-      var vh        = window.innerHeight;
-
-      var stackPosPx    = parsePercent(opts.stackPosition,    vh);
-      var scaleEndPosPx = parsePercent(opts.scaleEndPosition, vh);
-
-      var endTop = endEl
-        ? endEl.getBoundingClientRect().top + scrollTop
-        : 0;
+      var scrollY = window.scrollY;
+      var vh = window.innerHeight;
 
       cards.forEach(function(card, i) {
-        var cardTop    = card.getBoundingClientRect().top + scrollTop;
-        var trigStart  = cardTop - stackPosPx - opts.itemStackDistance * i;
-        var trigEnd    = cardTop - scaleEndPosPx;
-        var pinStart   = trigStart;
-        var pinEnd     = endTop - vh / 2;
+        var item = items[i];
+        /* item의 문서상 절대 top 위치 */
+        var itemTop = item.getBoundingClientRect().top + scrollY;
 
-        /* 스케일 */
-        var scaleProgress = calcProgress(scrollTop, trigStart, trigEnd);
-        var targetScale   = opts.baseScale + i * opts.itemScale;
-        var scale         = 1 - scaleProgress * (1 - targetScale);
+        /* 이 카드가 sticky되는 시점 = itemTop */
+        /* 이 카드가 스크롤에 의해 얼마나 지나쳤는지 (0 = 막 sticky됨, 1 = 완전히 지남) */
+        var progress = (scrollY - itemTop + stPx) / shPx;
+        progress = Math.max(0, Math.min(1, progress));
 
-        /* 회전 */
-        var rotation = opts.rotationAmount
-          ? i * opts.rotationAmount * scaleProgress : 0;
-
-        /* 블러 */
-        var blur = 0;
-        if (opts.blurAmount) {
-          var topIdx = 0;
-          cards.forEach(function(c, j) {
-            var jTop   = c.getBoundingClientRect().top + scrollTop;
-            var jStart = jTop - stackPosPx - opts.itemStackDistance * j;
-            if (scrollTop >= jStart) topIdx = j;
-          });
-          if (i < topIdx) blur = Math.max(0, (topIdx - i) * opts.blurAmount);
+        /* 이 카드 위로 얼마나 많은 카드가 쌓였는지 계산 */
+        var stackCount = 0;
+        for (var j = 0; j < i; j++) {
+          var jItemTop = items[j].getBoundingClientRect().top + scrollY;
+          var jProgress = (scrollY - jItemTop + stPx) / shPx;
+          if (jProgress >= 1) stackCount++; /* 완전히 지나간 카드 수 */
+          else if (jProgress > 0) stackCount += jProgress; /* 진행 중인 카드 */
         }
 
-        /* translateY — sticky 핀 */
-        var translateY = 0;
-        if (scrollTop >= pinStart && scrollTop <= pinEnd) {
-          translateY = scrollTop - cardTop + stackPosPx + opts.itemStackDistance * i;
-        } else if (scrollTop > pinEnd) {
-          translateY = pinEnd - cardTop + stackPosPx + opts.itemStackDistance * i;
-        }
+        /* scale: 뒤에 쌓일수록 작아짐 */
+        var targetScale = Math.max(opts.baseScale, 1 - stackCount * opts.itemScale);
+        var scale = lerp(1, targetScale, Math.min(1, stackCount));
 
-        card.style.transform =
-          'translate3d(0,' + translateY.toFixed(2) + 'px,0)' +
-          ' scale(' + scale.toFixed(4) + ')' +
-          ' rotate(' + rotation.toFixed(2) + 'deg)';
+        /* translateY: 위로 쌓이는 offset */
+        var translateY = -stackCount * opts.itemStackOffset;
 
-        card.style.filter = blur > 0 ? 'blur(' + blur.toFixed(2) + 'px)' : '';
+        /* blur: 뒤 카드일수록 흐려짐 */
+        var blurVal = stackCount * opts.blurAmount;
+        blurVal = Math.max(0, Math.min(8, blurVal));
+
+        /* opacity: 맨 뒤 카드들 약간 어둡게 */
+        var opacity = Math.max(0.55, 1 - stackCount * 0.08);
+
+        card.style.transform = 'translate3d(0,' + translateY.toFixed(2) + 'px,0) scale(' + scale.toFixed(4) + ')';
+        card.style.filter    = blurVal > 0.05 ? 'blur(' + blurVal.toFixed(2) + 'px)' : '';
+        card.style.opacity   = opacity.toFixed(3);
+        card.style.zIndex    = String(N - stackCount);
       });
     }
+
+    /* ── 리사이즈 대응 ── */
+    function onResize() {
+      var newVh = window.innerHeight;
+      shPx = parseUnit(opts.scrollHeight, newVh);
+      stPx = parseUnit(opts.stickyTop,    newVh);
+      items.forEach(function(item, i) {
+        item.style.height = (shPx + (i === N - 1 ? newVh * 0.4 : 0)) + 'px';
+      });
+      cards.forEach(function(card) {
+        card.style.top = stPx + 'px';
+      });
+      update();
+    }
+    window.addEventListener('resize', onResize);
 
     /* ── Lenis 부드러운 스크롤 ── */
     function setupLenis() {
       var lenis = new global.Lenis({
-        duration:          1.2,
-        easing:            function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-        smoothWheel:       true,
-        touchMultiplier:   2,
-        wheelMultiplier:   1,
-        lerp:              0.1,
-        syncTouch:         true,
-        syncTouchLerp:     0.075,
+        duration:      1.2,
+        easing:        function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+        smoothWheel:   true,
+        wheelMultiplier: 1,
+        lerp:          0.1,
+        syncTouch:     true,
       });
 
       lenis.on('scroll', update);
 
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
+      function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
       requestAnimationFrame(raf);
-      return lenis;
     }
 
-    /* ── Lenis CDN 로드 후 시작 ── */
+    /* ── 시작 ── */
     function start() {
       setupLenis();
       update();
+      /* scroll 이벤트도 fallback으로 등록 */
+      window.addEventListener('scroll', update, { passive: true });
     }
 
     if (global.Lenis) {
