@@ -450,15 +450,6 @@ export const ContactPage = () => (
                   </p>
                 </div>
 
-                <div class="cf-group cf-privacy-group">
-                  <label class="cf-privacy-check">
-                    <input type="checkbox" name="privacy" required />
-                    <span class="cf-privacy-box"></span>
-                    <span>개인정보 수집 및 이용에 동의합니다.</span>
-                  </label>
-                  <button type="button" class="cf-privacy-view-btn" onclick="openPrivacyModal()">내용 확인</button>
-                </div>
-
                 <button type="submit" class="cf-submit ct-brochure-submit">
                   <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M12 2v13M7 10l5 5 5-5M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   <span>소개서 받기</span>
