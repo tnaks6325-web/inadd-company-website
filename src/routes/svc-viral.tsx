@@ -82,71 +82,22 @@ export const SvcViralPage = () => (
         <div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div>
       </div>
 
-      {/* JS — 파티클 + 순차 애니메이션 + 카운터업 */}
+      {/* JS — Three.js 3D 배경 + 순차 애니메이션 + 카운터업 */}
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
-  /* ── 파티클 캔버스 ── */
-  var cvs = document.getElementById('vhCanvas');
-  if(!cvs) return;
-  var ctx = cvs.getContext('2d');
-  var W, H, pts = [];
-  function resize(){ W=cvs.width=window.innerWidth; H=cvs.height=cvs.closest('section').offsetHeight||window.innerHeight; }
-  function mkPt(){
-    return { x:Math.random()*W, y:Math.random()*H,
-             vx:(Math.random()-0.5)*0.4, vy:(Math.random()-0.5)*0.4,
-             r:Math.random()*2.0+0.3, a:Math.random(),
-             color: Math.random()>0.7 ? '0,212,168' : (Math.random()>0.5 ? '100,160,255' : '26,107,255') };
-  }
-  function init(){
-    resize();
-    pts=[];
-    var n = Math.min(Math.floor(W*H/7500), 150);
-    for(var i=0;i<n;i++) pts.push(mkPt());
-  }
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    pts.forEach(function(p){
-      p.x+=p.vx; p.y+=p.vy;
-      p.a += (Math.random()-0.5)*0.012;
-      if(p.a<0.1) p.a=0.1; if(p.a>0.9) p.a=0.9;
-      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
-      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='rgba('+p.color+','+(p.a*0.6)+')';
-      ctx.fill();
-    });
-    /* 연결선 */
-    for(var i=0;i<pts.length;i++){
-      for(var j=i+1;j<pts.length;j++){
-        var dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
-        var d=Math.sqrt(dx*dx+dy*dy);
-        if(d<120){
-          ctx.beginPath();
-          ctx.moveTo(pts[i].x,pts[i].y);
-          ctx.lineTo(pts[j].x,pts[j].y);
-          ctx.strokeStyle='rgba(26,107,255,'+(0.15*(1-d/120))+')';
-          ctx.lineWidth=0.5;
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(draw);
-  }
-  init();
-  draw();
-  window.addEventListener('resize', init);
+  /* ── Three.js 3D 배경 ── */
+  var s=document.createElement('script');
+  s.src='/static/svc-three-bg.js';
+  s.onload=function(){ initSvcThreeBg('vhCanvas', 0x1a6bff, 0x00d4a8, 0x6440ff); };
+  document.head.appendChild(s);
 
   /* ── 순차 등장 애니메이션 ── */
   function animIn(el, delay, dir){
     if(!el) return;
     el.style.opacity='0';
-    el.style.transform = dir==='up' ? 'translateY(36px)' : dir==='left' ? 'translateX(-36px)' : 'translateY(0)';
+    el.style.transform = dir==='up' ? 'translateY(36px)' : 'translateX(-36px)';
     el.style.transition='opacity 0.9s cubic-bezier(.25,.46,.45,.94), transform 0.9s cubic-bezier(.25,.46,.45,.94)';
-    setTimeout(function(){
-      el.style.opacity='1';
-      el.style.transform='translateY(0) translateX(0)';
-    }, delay);
+    setTimeout(function(){ el.style.opacity='1'; el.style.transform='none'; }, delay);
   }
   animIn(document.getElementById('vhL1'),  200, 'left');
   animIn(document.getElementById('vhL2'),  480, 'left');
@@ -155,40 +106,16 @@ export const SvcViralPage = () => (
   animIn(document.getElementById('vhBtns'),1220,'up');
 
   /* ── KPI 카운터업 ── */
-  var kpiItems = [
-    { id: null, el: null, target: 2800, suffix: '만+', label: '평균 캠페인 도달' },
-    { id: null, el: null, target: 48,   suffix: '시간', label: '최단 바이럴 달성' },
-    { id: null, el: null, target: 98,   suffix: '%',   label: '재계약률' },
-    { id: null, el: null, target: 320,  suffix: '+',   label: '완료 프로젝트' }
-  ];
-  var numEls = document.querySelectorAll('.vh-kpi-num');
-  numEls.forEach(function(el, i){ if(kpiItems[i]) kpiItems[i].el = el; });
-
-  function countUp(item){
-    if(!item.el) return;
-    var start = 0;
-    var dur = 1600;
-    var startTime = null;
-    item.el.classList.add('counting');
-    function step(ts){
-      if(!startTime) startTime = ts;
-      var prog = Math.min((ts-startTime)/dur, 1);
-      var eased = 1 - Math.pow(1-prog, 3);
-      var val = Math.floor(eased * item.target);
-      item.el.textContent = val.toLocaleString() + item.suffix;
-      if(prog < 1) requestAnimationFrame(step);
-      else {
-        item.el.textContent = item.target.toLocaleString() + item.suffix;
-        item.el.classList.remove('counting');
-      }
-    }
-    requestAnimationFrame(step);
+  var kpiDefs=[{t:2800,s:'만+'},{t:48,s:'시간'},{t:98,s:'%'},{t:320,s:'+'}];
+  var numEls=document.querySelectorAll('.vh-kpi-num');
+  function countUp(el,target,suffix){
+    var dur=1600,st=null;
+    (function step(ts){ if(!st)st=ts; var p=Math.min((ts-st)/dur,1),e=1-Math.pow(1-p,3);
+      el.textContent=Math.floor(e*target).toLocaleString()+suffix;
+      if(p<1)requestAnimationFrame(step); })
+    (performance.now());
   }
-
-  setTimeout(function(){
-    kpiItems.forEach(function(item){ countUp(item); });
-  }, 1200);
-
+  setTimeout(function(){ numEls.forEach(function(el,i){ if(kpiDefs[i])countUp(el,kpiDefs[i].t,kpiDefs[i].s); }); },1200);
 })();
       `}} />
     </section>
