@@ -16806,3 +16806,26 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 @media (max-width: 640px) {
   .kf-contact-section { padding: 20px 16px; }
 }
+
+/* ── 킥오프: 인애드컴퍼니 고정 주소 카드 ── */
+.kf-fixed-addr-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  background: rgba(160,120,255,0.06);
+  border: 1.5px solid rgba(160,120,255,0.25);
+  border-radius: 12px;
+}
+.kf-fixed-addr-main {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.92);
+  line-height: 1.5;
+  margin: 0 0 5px;
+}
+.kf-fixed-addr-sub {
+  font-size: 12px;
+  color: rgba(160,120,255,0.7);
+  margin: 0;
+}

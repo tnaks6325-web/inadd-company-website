@@ -565,33 +565,50 @@ export const ContactPage = () => (
                 </div>
               </div>
 
-              {/* ── STEP 2: 장소 (visit/onsite일 때만 표시) ── */}
+              {/* ── STEP 2-A: 인애드컴퍼니 방문 — 고정 주소 표시 ── */}
               <div class="kf-section kf-location-section" id="kf-location-section" style="display:none;">
                 <div class="kf-section-head">
                   <span class="kf-step-num">02</span>
                   <div>
-                    <h3 class="kf-section-title" id="kf-location-title">미팅 장소 <span class="cf-req">*</span></h3>
-                    <p class="kf-section-desc" id="kf-location-desc">미팅이 진행될 주소를 입력해 주세요</p>
+                    <h3 class="kf-section-title" id="kf-location-title">미팅 장소</h3>
+                    <p class="kf-section-desc" id="kf-location-desc">방문하실 인애드컴퍼니 주소입니다</p>
                   </div>
                 </div>
-                <div class="kf-address-wrap">
-                  <div class="cf-row cf-row--addr">
-                    <div class="cf-group" style="flex:1; margin-bottom:0">
-                      <input type="text" id="kf-postcode" name="postcode" placeholder="우편번호" readonly
-                             style="cursor:pointer; background:rgba(255,255,255,0.04);"
-                             onclick="openAddressSearch()" />
+
+                {/* visit: 고정 주소 카드 */}
+                <div id="kf-addr-fixed" style="display:none;">
+                  <div class="kf-fixed-addr-card">
+                    <svg viewBox="0 0 24 24" fill="none" width="18" height="18" style="flex-shrink:0;margin-top:2px"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" stroke="rgba(160,120,255,0.85)" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="10" r="3" stroke="rgba(160,120,255,0.85)" stroke-width="1.8"/></svg>
+                    <div>
+                      <p class="kf-fixed-addr-main">경기도 안산시 단원구 고잔로 51, 타락아이즈빌 2F, 204호</p>
+                      <p class="kf-fixed-addr-sub">주차 가능 · 지하철 4호선 중앙역 도보 5분</p>
                     </div>
-                    <button type="button" class="kf-addr-search-btn" onclick="openAddressSearch()">
-                      <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
-                      주소 찾기
-                    </button>
                   </div>
-                  <div class="cf-group" style="margin-top:10px; margin-bottom:0">
-                    <input type="text" id="kf-address" name="address" placeholder="기본 주소" readonly
-                           style="background:rgba(255,255,255,0.04);" />
-                  </div>
-                  <div class="cf-group" style="margin-top:8px; margin-bottom:0">
-                    <input type="text" id="kf-address-detail" name="addressDetail" placeholder="상세 주소 (층, 호수 등)" />
+                  {/* hidden으로 form 데이터에 포함 */}
+                  <input type="hidden" name="address" value="경기도 안산시 단원구 고잔로 51, 타락아이즈빌 2F, 204호" />
+                </div>
+
+                {/* onsite: 주소 직접 입력 */}
+                <div id="kf-addr-search" style="display:none;">
+                  <div class="kf-address-wrap">
+                    <div class="cf-row cf-row--addr">
+                      <div class="cf-group" style="flex:1; margin-bottom:0">
+                        <input type="text" id="kf-postcode" name="postcode" placeholder="우편번호" readonly
+                               style="cursor:pointer; background:rgba(255,255,255,0.04);"
+                               onclick="openAddressSearch()" />
+                      </div>
+                      <button type="button" class="kf-addr-search-btn" onclick="openAddressSearch()">
+                        <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+                        주소 찾기
+                      </button>
+                    </div>
+                    <div class="cf-group" style="margin-top:10px; margin-bottom:0">
+                      <input type="text" id="kf-address" name="address" placeholder="기본 주소" readonly
+                             style="background:rgba(255,255,255,0.04);" />
+                    </div>
+                    <div class="cf-group" style="margin-top:8px; margin-bottom:0">
+                      <input type="text" id="kf-address-detail" name="addressDetail" placeholder="상세 주소 (층, 호수 등)" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1042,26 +1059,26 @@ export const ContactPage = () => (
             setTimeout(function() { showSection(memSection); }, 100);
             setTimeout(function() { showSection(schSection); }, 200);
             setTimeout(function() { showSection(noteSection); }, 300);
-            // 장소 input required 해제
-            ['kf-postcode','kf-address'].forEach(function(id) {
-              var el = document.getElementById(id);
-              if (el) el.removeAttribute('required');
-            });
           } else {
-            // 방문/출장: 장소 → 인원 → 일정 → 사전질문
-            var locTitle = document.getElementById('kf-location-title');
-            var locDesc  = document.getElementById('kf-location-desc');
+            // 방문/출장: 장소 섹션 표시
+            var addrFixed  = document.getElementById('kf-addr-fixed');
+            var addrSearch = document.getElementById('kf-addr-search');
+            var locTitle   = document.getElementById('kf-location-title');
+            var locDesc    = document.getElementById('kf-location-desc');
+
             if (type === 'visit') {
-              if (locTitle) locTitle.innerHTML = '인애드컴퍼니 주소 확인 <span class="cf-req">*</span>';
-              if (locDesc)  locDesc.textContent = '방문하실 저희 사무실 주소입니다';
-              // 자동으로 주소 채우기 (인애드컴퍼니 고정 주소)
-              var pc  = document.getElementById('kf-postcode');
-              var adr = document.getElementById('kf-address');
-              if (pc)  pc.value  = '06234';
-              if (adr) adr.value = '서울특별시 강남구 테헤란로 00길 00 (인애드컴퍼니)';
+              // 고정 주소 카드 표시, 주소 찾기 숨김
+              if (addrFixed)  addrFixed.style.display  = 'block';
+              if (addrSearch) addrSearch.style.display = 'none';
+              if (locTitle)   locTitle.textContent = '미팅 장소';
+              if (locDesc)    locDesc.textContent  = '방문하실 인애드컴퍼니 주소입니다';
             } else {
-              if (locTitle) locTitle.innerHTML = '미팅 장소 <span class="cf-req">*</span>';
-              if (locDesc)  locDesc.textContent = '담당자가 방문할 주소를 입력해 주세요';
+              // 주소 찾기 표시, 고정 주소 숨김
+              if (addrFixed)  addrFixed.style.display  = 'none';
+              if (addrSearch) addrSearch.style.display = 'block';
+              if (locTitle)   locTitle.innerHTML = '미팅 장소 <span class="cf-req">*</span>';
+              if (locDesc)    locDesc.textContent = '담당자가 방문할 주소를 입력해 주세요';
+              // 입력값 초기화
               var pc2  = document.getElementById('kf-postcode');
               var adr2 = document.getElementById('kf-address');
               if (pc2)  pc2.value  = '';
