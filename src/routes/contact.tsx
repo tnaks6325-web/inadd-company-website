@@ -517,7 +517,7 @@ export const ContactPage = () => (
               <input type="hidden" id="kf-company" name="kf_company" />
 
               {/* ── STEP 1: 미팅 방식 ── */}
-              <div class="kf-section">
+              <div class="kf-section" style="opacity:1;transform:translateY(0)">
                 <div class="kf-section-head">
                   <span class="kf-step-num">01</span>
                   <div>

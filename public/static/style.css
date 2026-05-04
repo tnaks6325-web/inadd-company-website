@@ -16412,8 +16412,9 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   opacity: 1;
   transform: translateY(0);
 }
-/* STEP 1은 처음부터 보임 */
-.kf-section:first-child {
+/* STEP 1(미팅 방식)은 처음부터 보임 */
+.kf-section:first-of-type,
+.kf-method-section {
   opacity: 1;
   transform: translateY(0);
 }
