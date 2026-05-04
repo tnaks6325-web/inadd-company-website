@@ -200,105 +200,92 @@ export const ViralPage = () => (
     </div>
 
     {/* ════════════════════════════════════════
-        서비스 스크롤 스택
+        서비스 그리드
     ════════════════════════════════════════ */}
-    <section class="section mkt-services-section ss-section" id="mkt-services">
+    <section class="section mkt-services-section" id="mkt-services">
       <div class="container">
-        <div class="section-head reveal-up ss-section-head">
+        <div class="section-head reveal-up">
           <span class="sec-label">Our Services</span>
           <h2 class="sec-title">브랜드에 맞는<br /><em>마케팅을 골라보세요</em></h2>
           <p class="sec-sub">각 서비스는 독립적으로도, 통합 퍼널로도 운영할 수 있습니다.<br />어떤 조합이 최적인지 무료 상담으로 알아보세요.</p>
         </div>
-      </div>
-
-      {/* ── 스크롤 스택 영역 ── */}
-      <div class="ss-container" id="ss-container">
-        {[
-          {
-            icon: '🔥', href: '/marketing/viral', title: '바이럴 마케팅', tag: 'VIRAL',
-            desc: '맘카페·커뮤니티 기반의 자연스러운 확산으로 브랜드 인지도를 폭발적으로 높입니다.',
-            kpis: [{ val: '2,800만+', label: '평균 도달' }, { val: '48h', label: '최단 바이럴' }],
-            img: '/static/svc-images/viral.png',
-            accentColor: '#1a6bff',
-          },
-          {
-            icon: '⭐', href: '/marketing/influencer', title: '인플루언서 마케팅', tag: 'INFLUENCER',
-            desc: '검증된 1,200+ 크리에이터 네트워크로 타겟 소비자에게 진정성 있는 메시지를 전달합니다.',
-            kpis: [{ val: '1,200+', label: '파트너 크리에이터' }, { val: '+580%', label: '최대 매출 증가' }],
-            img: '/static/svc-images/influencer.png',
-            accentColor: '#a855f7',
-          },
-          {
-            icon: '🌱', href: '/marketing/seeding', title: '시딩 캠페인', tag: 'SEEDING',
-            desc: '핵심 타겟에게 샘플을 전달해 진정성 있는 후기와 입소문 생태계를 구축합니다.',
-            kpis: [{ val: '68%', label: '후기 전환율' }, { val: '+230%', label: '리뷰 전환 효과' }],
-            img: '/static/svc-images/seeding.png',
-            accentColor: '#10b981',
-          },
-          {
-            icon: '🔍', href: '/marketing/seo', title: 'SEO 마케팅', tag: 'SEO',
-            desc: '소비자가 검색하는 순간 브랜드가 먼저 보이도록 키워드부터 콘텐츠까지 설계합니다.',
-            kpis: [{ val: 'TOP3', label: '검색 순위 달성' }, { val: '+1,200%', label: '검색량 증가' }],
-            img: '/static/svc-images/seo.png',
-            accentColor: '#eab308',
-          },
-          {
-            icon: '💬', href: '/marketing/review', title: '리뷰 마케팅', tag: 'REVIEW',
-            desc: '진정성 있는 소비자 리뷰로 브랜드 신뢰를 쌓고 구매 전환율을 극적으로 높입니다.',
-            kpis: [{ val: '+230%', label: '리뷰 전환율' }, { val: '3×', label: '브랜드 신뢰도' }],
-            img: '/static/svc-images/review.png',
-            accentColor: '#f97316',
-          },
-          {
-            icon: '💚', href: '/marketing/oliveyoung', title: '올리브영 마케팅', tag: 'OLIVE YOUNG',
-            desc: '국내 최대 H&B 채널 올리브영에서 브랜드를 단기간에 폭발적으로 성장시킵니다.',
-            kpis: [{ val: '+340%', label: '채널 매출 증가' }, { val: '2.4×', label: '3개월 성장' }],
-            img: '/static/svc-images/oliveyoung.png',
-            accentColor: '#03c75a',
-          },
-          {
-            icon: '🎬', href: '/marketing/ppl', title: 'PPL 마케팅', tag: 'PPL',
-            desc: '드라마·유튜브 콘텐츠 속 자연스러운 브랜드 노출로 수천만 시청자에게 각인됩니다.',
-            kpis: [{ val: '5,000만+', label: '누적 시청자' }, { val: '3×', label: '광고 전환율' }],
-            img: '/static/svc-images/ppl.png',
-            accentColor: '#ef4444',
-          },
-        ].map((s, i) => (
-          <div class="ss-item" key={s.href}>
-            <a href={s.href} class="ss-card" style={`--accent:${s.accentColor}`}>
-              <div class="ss-card-inner">
-                {/* 왼쪽: 이미지 */}
-                <div class="ss-card-img" style={`background-image:url('${s.img}')`}></div>
-                {/* 오른쪽: 콘텐츠 */}
-                <div class="ss-card-body">
-                  <div class="ss-card-meta">
-                    <span class="ss-card-tag">{s.tag}</span>
-                    <span class="ss-card-num">0{i + 1} / 07</span>
-                  </div>
-                  <div class="ss-card-title-row">
-                    <span class="ss-card-icon">{s.icon}</span>
-                    <h3 class="ss-card-title">{s.title}</h3>
-                  </div>
-                  <p class="ss-card-desc">{s.desc}</p>
-                  <div class="ss-card-kpis">
-                    {s.kpis.map(k => (
-                      <div class="ss-card-kpi" key={k.label}>
-                        <strong>{k.val}</strong>
-                        <span>{k.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div class="ss-card-cta">
-                    자세히 보기
-                    <svg viewBox="0 0 24 24" fill="none" width="13" height="13">
-                      <path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </div>
+        <div class="mkt-svc-img-grid">
+          {[
+            {
+              icon: '🔥', href: '/marketing/viral', title: '바이럴 마케팅', tag: 'VIRAL',
+              desc: '맘카페·커뮤니티 기반의 자연스러운 확산으로 브랜드 인지도를 폭발적으로 높입니다.',
+              kpis: [{ val: '2,800만+', label: '평균 도달' }, { val: '48h', label: '최단 바이럴' }],
+              img: '/static/svc-images/viral.png',
+              accentColor: '#1a6bff',
+            },
+            {
+              icon: '⭐', href: '/marketing/influencer', title: '인플루언서 마케팅', tag: 'INFLUENCER',
+              desc: '검증된 1,200+ 크리에이터 네트워크로 타겟 소비자에게 진정성 있는 메시지를 전달합니다.',
+              kpis: [{ val: '1,200+', label: '파트너 크리에이터' }, { val: '+580%', label: '최대 매출 증가' }],
+              img: '/static/svc-images/influencer.png',
+              accentColor: '#a855f7',
+            },
+            {
+              icon: '🌱', href: '/marketing/seeding', title: '시딩 캠페인', tag: 'SEEDING',
+              desc: '핵심 타겟에게 샘플을 전달해 진정성 있는 후기와 입소문 생태계를 구축합니다.',
+              kpis: [{ val: '68%', label: '후기 전환율' }, { val: '+230%', label: '리뷰 전환 효과' }],
+              img: '/static/svc-images/seeding.png', imgPos: 'center center',
+              accentColor: '#10b981',
+            },
+            {
+              icon: '🔍', href: '/marketing/seo', title: 'SEO 마케팅', tag: 'SEO',
+              desc: '소비자가 검색하는 순간 브랜드가 먼저 보이도록 키워드부터 콘텐츠까지 설계합니다.',
+              kpis: [{ val: 'TOP3', label: '검색 순위 달성' }, { val: '+1,200%', label: '검색량 증가' }],
+              img: '/static/svc-images/seo.png', imgPos: 'center center',
+              accentColor: '#eab308',
+            },
+            {
+              icon: '💬', href: '/marketing/review', title: '리뷰 마케팅', tag: 'REVIEW',
+              desc: '진정성 있는 소비자 리뷰로 브랜드 신뢰를 쌓고 구매 전환율을 극적으로 높입니다.',
+              kpis: [{ val: '+230%', label: '리뷰 전환율' }, { val: '3×', label: '브랜드 신뢰도' }],
+              img: '/static/svc-images/review.png',
+              accentColor: '#f97316',
+            },
+            {
+              icon: '💚', href: '/marketing/oliveyoung', title: '올리브영 마케팅', tag: 'OLIVE YOUNG',
+              desc: '국내 최대 H&B 채널 올리브영에서 브랜드를 단기간에 폭발적으로 성장시킵니다.',
+              kpis: [{ val: '+340%', label: '채널 매출 증가' }, { val: '2.4×', label: '3개월 성장' }],
+              img: '/static/svc-images/oliveyoung.png',
+              accentColor: '#03c75a',
+            },
+            {
+              icon: '🎬', href: '/marketing/ppl', title: 'PPL 마케팅', tag: 'PPL',
+              desc: '드라마·유튜브 콘텐츠 속 자연스러운 브랜드 노출로 수천만 시청자에게 각인됩니다.',
+              kpis: [{ val: '5,000만+', label: '누적 시청자' }, { val: '3×', label: '광고 전환율' }],
+              img: '/static/svc-images/ppl.png',
+              accentColor: '#ef4444',
+            },
+          ].map((s, i) => (
+            <a href={s.href} class="msig-card reveal-up" style={`transition-delay:${i * 0.08}s;--accent:${s.accentColor}`} key={s.href}>
+              <div class="msig-img" style={`background-image:url('${s.img}');background-position:${'imgPos' in s ? (s as any).imgPos : 'center center'}`}></div>
+              <div class="msig-overlay"></div>
+              <div class="msig-accent-glow" style={`background: radial-gradient(circle at 50% 100%, ${s.accentColor}44 0%, transparent 65%)`}></div>
+              <div class="msig-tag" style={`background:${s.accentColor}44;border-color:${s.accentColor}88`}>{s.tag}</div>
+              <div class="msig-content">
+                <div class="msig-icon">{s.icon}</div>
+                <h3 class="msig-title">{s.title}</h3>
+                <p class="msig-desc">{s.desc}</p>
+                <div class="msig-kpi">
+                  {s.kpis.map(k => (
+                    <div class="msig-kpi-item" key={k.label} style={`--kpi-color:${s.accentColor}`}>
+                      <strong>{k.val}</strong>
+                      <span>{k.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <div class="msig-arrow" style={`color:${s.accentColor}`}>
+                  자세히 보기
+                  <svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
               </div>
             </a>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
 
@@ -508,29 +495,6 @@ export const ViralPage = () => (
     }
     setTimeout(type, 800);
   }
-
-  /* ══ ScrollStack 로드 ══ */
-  (function() {
-    var ss = document.createElement('script');
-    ss.src = '/static/scroll-stack.js';
-    ss.onload = function() {
-      if (typeof initScrollStack !== 'function') return;
-      /* 이미지·레이아웃 안정 후 초기화 (requestAnimationFrame 2회 대기) */
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-          initScrollStack('#ss-container', {
-            itemScale:        0.03,   /* 카드당 축소 배율 */
-            itemStackOffset:  28,     /* 위로 쌓일 px 간격 */
-            baseScale:        0.82,   /* 뒤 카드 최소 scale */
-            blurAmount:       1.2,    /* 뒤 카드 blur (px/단계) */
-            scrollHeight:     '90vh', /* 카드 1장당 스크롤 높이 */
-            stickyTop:        '10vh', /* sticky top 위치 */
-          });
-        });
-      });
-    };
-    document.head.appendChild(ss);
-  })();
 
   /* ══ 스크롤 리빌 ══ */
   var revEls = document.querySelectorAll('.reveal-up,.reveal-side--left,.reveal-side--right');
