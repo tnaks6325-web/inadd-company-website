@@ -16385,3 +16385,368 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 /* section-head 기본 위치 (JS 초기화 전 보이도록 유지 — JS가 덮어쓰기) */
 .section-head { }
 
+
+/* ══════════════════════════════════════
+   킥오프 미팅 신청 — 재설계 CSS
+   ══════════════════════════════════════ */
+
+/* 단일 컬럼 폼 래퍼 */
+.ct-kickoff-form-solo {
+  max-width: 680px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+}
+
+/* 섹션 공통 */
+.kf-section {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 28px 28px 24px;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.kf-section--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* STEP 1은 처음부터 보임 */
+.kf-section:first-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 섹션 헤더 */
+.kf-section-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.kf-step-num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(160,120,255,0.15);
+  border: 1px solid rgba(160,120,255,0.35);
+  color: rgba(160,120,255,0.95);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.kf-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.92);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.kf-section-desc {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.38);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── 미팅 방식 카드 ── */
+.kf-method-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.kf-method-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+.kf-method-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0; height: 0;
+}
+.kf-mc-icon {
+  font-size: 26px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.kf-mc-body {
+  flex: 1;
+}
+.kf-mc-body strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 3px;
+}
+.kf-mc-body p {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.42);
+  margin: 0;
+}
+.kf-mc-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+.kf-mc-check svg { opacity: 0; transition: opacity 0.2s ease; }
+.kf-method-card:hover {
+  border-color: rgba(160,120,255,0.4);
+  background: rgba(160,120,255,0.05);
+}
+.kf-method-card.kf-mc--selected {
+  border-color: rgba(160,120,255,0.7);
+  background: rgba(160,120,255,0.1);
+  box-shadow: 0 0 0 1px rgba(160,120,255,0.2), 0 4px 20px rgba(160,120,255,0.1);
+}
+.kf-method-card.kf-mc--selected .kf-mc-check {
+  background: rgba(160,120,255,0.9);
+  border-color: rgba(160,120,255,0.9);
+}
+.kf-method-card.kf-mc--selected .kf-mc-check svg { opacity: 1; }
+.kf-method-card.kf-mc--selected .kf-mc-body strong {
+  color: rgba(220,200,255,0.96);
+}
+
+/* ── 주소 검색 ── */
+.cf-row--addr {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+  margin-bottom: 0;
+}
+.kf-addr-search-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 18px;
+  height: 48px;
+  background: rgba(160,120,255,0.14);
+  border: 1.5px solid rgba(160,120,255,0.4);
+  border-radius: 8px;
+  color: rgba(200,175,255,0.92);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s;
+}
+.kf-addr-search-btn:hover {
+  background: rgba(160,120,255,0.25);
+  border-color: rgba(160,120,255,0.65);
+}
+.kf-address-wrap { display: flex; flex-direction: column; gap: 0; }
+
+/* ── 인원 칩 ── */
+.kf-members-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.kf-member-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 22px;
+  border: 1.5px solid rgba(255,255,255,0.12);
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.2s ease;
+  background: rgba(255,255,255,0.03);
+}
+.kf-member-chip input { position: absolute; opacity: 0; width:0; height:0; }
+.kf-member-chip:hover {
+  border-color: rgba(160,120,255,0.45);
+  color: rgba(220,200,255,0.9);
+}
+.kf-member-chip:has(input:checked) {
+  border-color: rgba(160,120,255,0.7);
+  background: rgba(160,120,255,0.12);
+  color: rgba(220,200,255,0.96);
+  box-shadow: 0 0 0 1px rgba(160,120,255,0.2);
+}
+
+/* ── 일정 블록 ── */
+.kf-schedule-block {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+.kf-schedule-rank {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.kf-rank--1 {
+  background: rgba(160,120,255,0.18);
+  color: rgba(200,175,255,0.95);
+  border: 1px solid rgba(160,120,255,0.35);
+}
+.kf-rank--2 {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.kf-schedule-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-size: 12px;
+  color: rgba(160,120,255,0.65);
+  line-height: 1.5;
+}
+
+/* ── 사전질문 textarea ── */
+.kf-textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 14px 16px;
+  color: rgba(255,255,255,0.85);
+  font-size: 13.5px;
+  line-height: 1.7;
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+}
+.kf-textarea::placeholder { color: rgba(255,255,255,0.25); }
+.kf-textarea:focus {
+  outline: none;
+  border-color: rgba(160,120,255,0.5);
+  background: rgba(160,120,255,0.04);
+}
+
+/* ── 킥오프 완료 화면 ── */
+.ct-kickoff-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 60px 20px 80px;
+  animation: ctFormIn 0.5s ease forwards;
+}
+.ckd-icon { font-size: 52px; margin-bottom: 20px; }
+.ckd-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.95);
+  margin-bottom: 18px;
+  line-height: 1.3;
+}
+.ckd-msg {
+  font-size: 15px;
+  color: rgba(200,210,255,0.75);
+  line-height: 1.9;
+  margin-bottom: 32px;
+}
+.ckd-msg strong { color: rgba(220,200,255,0.95); }
+.ckd-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(160,120,255,0.07);
+  border: 1px solid rgba(160,120,255,0.18);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  width: 100%;
+  max-width: 440px;
+}
+.ckd-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(200,185,255,0.8);
+  text-align: left;
+  line-height: 1.5;
+}
+.ckd-contact {
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+}
+.ckd-contact a {
+  color: rgba(160,120,255,0.9);
+  font-weight: 600;
+  text-decoration: none;
+}
+.ckd-contact a:hover { color: #fff; }
+
+/* ── 작성 내용 보기 버튼 ── */
+.cs-review-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 20px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 4px;
+  color: rgba(255,255,255,0.5);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.2s ease;
+}
+.cs-review-btn:hover {
+  background: rgba(255,255,255,0.09);
+  color: rgba(255,255,255,0.8);
+  border-color: rgba(255,255,255,0.3);
+}
+
+/* ── 작성내용 보기 모달 본문 ── */
+.srm-box { max-width: 480px; }
+.srm-list { display: flex; flex-direction: column; gap: 0; }
+.srm-row {
+  display: flex;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.srm-row:last-child { border-bottom: none; }
+.srm-key {
+  flex-shrink: 0;
+  width: 100px;
+  color: rgba(255,255,255,0.38);
+  font-size: 12px;
+  padding-top: 1px;
+}
+.srm-val {
+  flex: 1;
+  color: rgba(255,255,255,0.82);
+  word-break: break-all;
+}
+

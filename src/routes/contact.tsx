@@ -318,11 +318,18 @@ export const ContactPage = () => (
                 </div>
                 <p class="cs-notify">담당자가 <strong>1영업일 이내</strong> 연락 드립니다.<br />급한 문의는 아래로 연락 주세요.</p>
                 <p class="cs-contact-info">📞 <a href="tel:010-9186-9944">010-9186-9944</a></p>
+
+                {/* 작성 내용 보기 */}
+                <button class="cs-review-btn" onclick="openSubmitReviewModal()">
+                  <svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>작성 내용 보기</span>
+                </button>
+
                 <div class="cs-divider"></div>
-                <p class="cs-kickoff-label">상담 전 미리 준비하고 싶으시다면</p>
+                <p class="cs-kickoff-label">인애드컴퍼니와 미팅 일정을 잡고 싶으신가요?</p>
                 <button class="cs-kickoff-btn" onclick="goToKickoff()">
                   <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <span>킥오프 미팅 일정 잡기</span>
+                  <span>인애드컴퍼니 미팅일정 잡기</span>
                 </button>
                 <p class="cs-kickoff-desc">킥오프 미팅에서 인애드컴퍼니의 독점 마케팅 상품을 확인하세요</p>
               </div>
@@ -486,12 +493,12 @@ export const ContactPage = () => (
       <section class="page-hero contact-hero ct-form-hero">
         <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
         <div class="container">
-          <button class="step-back-btn" onclick="backToSelect()">
+          <button class="step-back-btn" onclick="backFromKickoff()">
             <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 18L5 12L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             돌아가기
           </button>
-          <div class="ct-form-type-badge ct-badge--kickoff">킥오프 미팅 신청</div>
-          <h1 class="page-title">킥오프<br /><em>미팅 신청</em></h1>
+          <div class="ct-form-type-badge ct-badge--kickoff">KICKOFF MEETING</div>
+          <h1 class="page-title">인애드컴퍼니<br /><em>미팅일정 잡기</em></h1>
           <p class="page-desc">희망 일정을 알려주시면 담당자가 확인 후<br />빠르게 미팅 일정을 확정해 드립니다.</p>
         </div>
       </section>
@@ -499,103 +506,128 @@ export const ContactPage = () => (
       {/* 신청 폼 */}
       <section class="section contact-main-section">
         <div class="container">
-          <div class="ct-kickoff-wrap">
+          <div class="ct-kickoff-form-solo">
+            <form class="contact-form" id="kickoffForm" onsubmit="return handleKickoffSubmit(event)">
 
-            {/* 왼쪽: 안내 카드 */}
-            <div class="ct-kickoff-info">
-              <div class="ct-kickoff-info-card">
-                <div class="ct-ki-icon">🔒</div>
-                <p class="ct-ki-badge">CONFIDENTIAL · INTERNAL</p>
-                <h3 class="ct-ki-title">미디어믹스<br />2차가공 콘텐츠</h3>
-                <p class="ct-ki-desc">킥오프 미팅에서만 공개되는<br />인애드컴퍼니 고유 마케팅 상품입니다.</p>
-                <div class="ct-ki-steps">
-                  <div class="ct-ki-step">
-                    <span class="ct-ki-step-num">01</span>
-                    <div>
-                      <strong>일정 신청</strong>
-                      <p>희망 날짜와 시간을 제출합니다</p>
-                    </div>
+              {/* ── STEP 1: 미팅 방식 ── */}
+              <div class="kf-section">
+                <div class="kf-section-head">
+                  <span class="kf-step-num">01</span>
+                  <div>
+                    <h3 class="kf-section-title">미팅 방식 선택 <span class="cf-req">*</span></h3>
+                    <p class="kf-section-desc">편하신 방식을 선택해 주세요</p>
                   </div>
-                  <div class="ct-ki-step">
-                    <span class="ct-ki-step-num">02</span>
-                    <div>
-                      <strong>담당자 확인</strong>
-                      <p>1영업일 내 연락 및 일정 확정</p>
+                </div>
+                <div class="kf-method-cards">
+                  <label class="kf-method-card" id="kmc-visit">
+                    <input type="radio" name="meetingType" value="visit" required
+                           onchange="onMeetingTypeChange('visit')" />
+                    <div class="kf-mc-icon">🏢</div>
+                    <div class="kf-mc-body">
+                      <strong>인애드컴퍼니 방문</strong>
+                      <p>저희 사무실로 직접 방문하시는 미팅</p>
                     </div>
+                    <div class="kf-mc-check">
+                      <svg viewBox="0 0 20 20" fill="none"><path d="M5 10l4 4 6-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                  </label>
+                  <label class="kf-method-card" id="kmc-onsite">
+                    <input type="radio" name="meetingType" value="onsite" required
+                           onchange="onMeetingTypeChange('onsite')" />
+                    <div class="kf-mc-icon">🚗</div>
+                    <div class="kf-mc-body">
+                      <strong>방문 상담 요청</strong>
+                      <p>담당자가 직접 방문하는 출장 미팅</p>
+                    </div>
+                    <div class="kf-mc-check">
+                      <svg viewBox="0 0 20 20" fill="none"><path d="M5 10l4 4 6-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                  </label>
+                  <label class="kf-method-card" id="kmc-zoom">
+                    <input type="radio" name="meetingType" value="zoom" required
+                           onchange="onMeetingTypeChange('zoom')" />
+                    <div class="kf-mc-icon">💻</div>
+                    <div class="kf-mc-body">
+                      <strong>ZOOM 미팅</strong>
+                      <p>Zoom / Google Meet 온라인 미팅</p>
+                    </div>
+                    <div class="kf-mc-check">
+                      <svg viewBox="0 0 20 20" fill="none"><path d="M5 10l4 4 6-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              {/* ── STEP 2: 장소 (visit/onsite일 때만 표시) ── */}
+              <div class="kf-section kf-location-section" id="kf-location-section" style="display:none;">
+                <div class="kf-section-head">
+                  <span class="kf-step-num">02</span>
+                  <div>
+                    <h3 class="kf-section-title" id="kf-location-title">미팅 장소 <span class="cf-req">*</span></h3>
+                    <p class="kf-section-desc" id="kf-location-desc">미팅이 진행될 주소를 입력해 주세요</p>
                   </div>
-                  <div class="ct-ki-step">
-                    <span class="ct-ki-step-num">03</span>
-                    <div>
-                      <strong>킥오프 미팅</strong>
-                      <p>상품 상세 내용 + 전략 공유</p>
+                </div>
+                <div class="kf-address-wrap">
+                  <div class="cf-row cf-row--addr">
+                    <div class="cf-group" style="flex:1; margin-bottom:0">
+                      <input type="text" id="kf-postcode" name="postcode" placeholder="우편번호" readonly
+                             style="cursor:pointer; background:rgba(255,255,255,0.04);"
+                             onclick="openAddressSearch()" />
                     </div>
+                    <button type="button" class="kf-addr-search-btn" onclick="openAddressSearch()">
+                      <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+                      주소 찾기
+                    </button>
+                  </div>
+                  <div class="cf-group" style="margin-top:10px; margin-bottom:0">
+                    <input type="text" id="kf-address" name="address" placeholder="기본 주소" readonly
+                           style="background:rgba(255,255,255,0.04);" />
+                  </div>
+                  <div class="cf-group" style="margin-top:8px; margin-bottom:0">
+                    <input type="text" id="kf-address-detail" name="addressDetail" placeholder="상세 주소 (층, 호수 등)" />
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* 오른쪽: 신청 폼 */}
-            <div class="ct-kickoff-form-wrap">
-              <form class="contact-form" id="kickoffForm"
-                    onsubmit="return handleKickoffSubmit(event)">
-                <div class="cfw-head">
-                  <span class="sec-label">Kickoff Meeting</span>
-                  <h2>미팅 일정 신청</h2>
-                  <p>희망 일정 2~3개를 알려주시면<br />담당자가 조율 후 확정 연락 드립니다.</p>
-                </div>
-
-                {/* 담당자 정보 */}
-                <div class="cf-row cf-row--2">
-                  <div class="cf-group">
-                    <label for="kf-name">담당자 이름 <span class="cf-req">*</span></label>
-                    <input type="text" id="kf-name" name="name" placeholder="홍길동" required />
-                  </div>
-                  <div class="cf-group">
-                    <label for="kf-company">브랜드 / 회사명 <span class="cf-req">*</span></label>
-                    <input type="text" id="kf-company" name="company" placeholder="(주)브랜드명" required />
+              {/* ── STEP 3: 미팅 참여 인원 ── */}
+              <div class="kf-section kf-members-section" id="kf-members-section" style="display:none;">
+                <div class="kf-section-head">
+                  <span class="kf-step-num" id="kf-step-members">03</span>
+                  <div>
+                    <h3 class="kf-section-title">미팅 참여 인원 <span class="cf-req">*</span></h3>
+                    <p class="kf-section-desc">참석 예정 인원수를 선택해 주세요</p>
                   </div>
                 </div>
+                <div class="kf-members-chips">
+                  {['1명', '2명', '3명', '4명', '5명 이상'].map((v, i) => (
+                    <label class="kf-member-chip" key={v}>
+                      <input type="radio" name="memberCount" value={v} required />
+                      <span>{v}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
 
-                <div class="cf-row cf-row--2">
-                  <div class="cf-group">
-                    <label for="kf-phone">연락처 <span class="cf-req">*</span></label>
-                    <input type="tel" id="kf-phone" name="phone" placeholder="010-0000-0000" required />
-                  </div>
-                  <div class="cf-group">
-                    <label for="kf-email">이메일 <span class="cf-req">*</span></label>
-                    <input type="email" id="kf-email" name="email" placeholder="hello@brand.com" required />
+              {/* ── STEP 4: 희망 일정 ── */}
+              <div class="kf-section kf-schedule-section" id="kf-schedule-section" style="display:none;">
+                <div class="kf-section-head">
+                  <span class="kf-step-num" id="kf-step-schedule">04</span>
+                  <div>
+                    <h3 class="kf-section-title">희망 일정 <span class="cf-req">*</span></h3>
+                    <p class="kf-section-desc">1순위·2순위를 입력하시면 인애드컴퍼니가 확정해 드립니다</p>
                   </div>
                 </div>
 
-                {/* 미팅 방식 */}
-                <div class="cf-group">
-                  <label>미팅 방식 <span class="cf-req">*</span></label>
-                  <div class="cf-chips">
-                    {[
-                      { val: 'online', label: '💻 온라인 (Zoom·Meet)' },
-                      { val: 'offline', label: '🏢 오프라인 방문' },
-                      { val: 'both', label: '🔄 무관 (모두 가능)' },
-                    ].map(s => (
-                      <label class="cf-chip" key={s.val}>
-                        <input type="radio" name="meetingType" value={s.val} required />
-                        <span>{s.label}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 희망 일정 1 */}
-                <div class="cf-group">
-                  <label class="cf-schedule-label">
-                    <span class="cf-schedule-badge cf-schedule-badge--1st">1순위</span>
-                    희망 일정 <span class="cf-req">*</span>
-                  </label>
+                {/* 1순위 */}
+                <div class="kf-schedule-block">
+                  <div class="kf-schedule-rank kf-rank--1">1순위</div>
                   <div class="cf-row cf-row--2">
                     <div class="cf-group" style="margin-bottom:0">
-                      <input type="date" id="kf-date1" name="date1" required
-                             style="color-scheme:dark" />
+                      <label style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:6px;display:block">날짜</label>
+                      <input type="date" id="kf-date1" name="date1" required style="color-scheme:dark" />
                     </div>
                     <div class="cf-group" style="margin-bottom:0">
+                      <label style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:6px;display:block">시간</label>
                       <div class="cf-select-wrap">
                         <select name="time1" required>
                           <option value="">시간 선택</option>
@@ -614,18 +646,16 @@ export const ContactPage = () => (
                   </div>
                 </div>
 
-                {/* 희망 일정 2 */}
-                <div class="cf-group">
-                  <label class="cf-schedule-label">
-                    <span class="cf-schedule-badge cf-schedule-badge--2nd">2순위</span>
-                    희망 일정 <span style="font-size:11px; color:rgba(255,255,255,0.35)">(선택)</span>
-                  </label>
+                {/* 2순위 */}
+                <div class="kf-schedule-block" style="margin-top:16px">
+                  <div class="kf-schedule-rank kf-rank--2">2순위 <span style="font-size:10px;opacity:0.55">(선택)</span></div>
                   <div class="cf-row cf-row--2">
                     <div class="cf-group" style="margin-bottom:0">
-                      <input type="date" id="kf-date2" name="date2"
-                             style="color-scheme:dark" />
+                      <label style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:6px;display:block">날짜</label>
+                      <input type="date" id="kf-date2" name="date2" style="color-scheme:dark" />
                     </div>
                     <div class="cf-group" style="margin-bottom:0">
+                      <label style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:6px;display:block">시간</label>
                       <div class="cf-select-wrap">
                         <select name="time2">
                           <option value="">시간 선택</option>
@@ -644,15 +674,27 @@ export const ContactPage = () => (
                   </div>
                 </div>
 
-                {/* 사전 질문 */}
-                <div class="cf-group">
-                  <label for="kf-note">사전 질문 / 궁금한 점 <span style="font-size:11px; color:rgba(255,255,255,0.35)">(선택)</span></label>
-                  <textarea id="kf-note" name="note" rows={3}
-                            placeholder="미팅 전 미리 알고 싶은 내용이나 현재 상황을 간단히 적어주세요." />
+                <p class="kf-schedule-note">
+                  <svg viewBox="0 0 16 16" fill="none" width="13" height="13"><path d="M8 2a6 6 0 1 1 0 12A6 6 0 0 1 8 2zm0 4v4m0 2v.5" stroke="rgba(160,120,255,0.7)" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  인애드컴퍼니가 두 일정 중 가능한 일정으로 확정 후 연락드립니다
+                </p>
+              </div>
+
+              {/* ── STEP 5: 사전 질문 ── */}
+              <div class="kf-section kf-note-section" id="kf-note-section" style="display:none;">
+                <div class="kf-section-head">
+                  <span class="kf-step-num" id="kf-step-note">05</span>
+                  <div>
+                    <h3 class="kf-section-title">사전 질문 / 궁금한 점 <span style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:400">(선택)</span></h3>
+                    <p class="kf-section-desc">미팅 전 미리 공유하고 싶은 내용을 적어주세요</p>
+                  </div>
                 </div>
+                <textarea id="kf-note" name="note" rows={4}
+                          class="kf-textarea"
+                          placeholder="현재 브랜드 상황, 목표, 궁금한 점 등 자유롭게 적어주세요.&#10;미팅 담당자가 미리 확인하고 더 알찬 미팅을 준비합니다." />
 
                 {/* 개인정보 동의 */}
-                <div class="cf-group">
+                <div class="cf-group cf-privacy-group" style="margin-top:20px">
                   <label class="cf-privacy-check">
                     <input type="checkbox" name="privacyAgree" required />
                     <span class="cf-privacy-box"></span>
@@ -661,39 +703,59 @@ export const ContactPage = () => (
                   <button type="button" class="cf-privacy-view-btn" onclick="openPrivacyModal()">내용 확인</button>
                 </div>
 
-                <button type="submit" class="cf-submit cf-submit--kickoff">
-                  <span>미팅 일정 신청하기</span>
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <button type="submit" class="cf-submit cf-submit--kickoff" style="margin-top:24px">
+                  <svg viewBox="0 0 24 24" fill="none" width="17" height="17"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>미팅일정 신청하기</span>
                 </button>
-              </form>
-
-              {/* 완료 메시지 */}
-              <div class="contact-success ct-kickoff-success" id="kickoffSuccess" style="display:none;">
-                <div class="cks-icon">📅</div>
-                <h3 class="cks-title">미팅 신청이 완료되었습니다!</h3>
-                <p class="cks-desc">담당자가 신청하신 일정을 확인하고<br /><strong>1영업일 이내</strong>에 연락 드립니다.</p>
-                <div class="cks-info-box">
-                  <div class="cks-info-row">
-                    <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><path d="M10 2a8 8 0 1 1 0 16A8 8 0 0 1 10 2zm0 4v4l3 3" stroke="rgba(160,120,255,0.9)" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    <span>담당자 확인 후 일정 확정 연락</span>
-                  </div>
-                  <div class="cks-info-row">
-                    <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><path d="M3 5h14M3 10h14M3 15h8" stroke="rgba(160,120,255,0.9)" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    <span>미팅 확정 시 상세 안내 이메일 발송</span>
-                  </div>
-                  <div class="cks-info-row">
-                    <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><path d="M10 2l2.4 5h5.3l-4.3 3.1 1.6 5.2L10 12.3 5 15.3l1.6-5.2L2.3 7h5.3z" stroke="rgba(160,120,255,0.9)" stroke-width="1.5" stroke-linejoin="round"/></svg>
-                    <span>킥오프 미팅에서 상품 상세 내용 공개</span>
-                  </div>
-                </div>
-                <p class="cks-contact">문의: <a href="tel:010-9186-9944">010-9186-9944</a></p>
               </div>
 
+            </form>
+
+            {/* 완료 메시지 */}
+            <div class="ct-kickoff-done" id="kickoffSuccess" style="display:none;">
+              <div class="ckd-icon">📅</div>
+              <h3 class="ckd-title">미팅일정 신청이 완료되었습니다</h3>
+              <p class="ckd-msg">
+                인애드컴퍼니에서 일정을 확인 후<br />
+                <strong>1영업일 이내</strong> 회신 드리겠습니다.<br />
+                감사합니다 😊
+              </p>
+              <div class="ckd-info-list">
+                <div class="ckd-info-item">
+                  <svg viewBox="0 0 20 20" fill="none" width="15" height="15"><path d="M10 2a8 8 0 1 1 0 16A8 8 0 0 1 10 2zm0 4v4l3 3" stroke="rgba(160,120,255,0.85)" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <span>신청하신 1·2순위 일정 중 가능한 일정으로 확정됩니다</span>
+                </div>
+                <div class="ckd-info-item">
+                  <svg viewBox="0 0 20 20" fill="none" width="15" height="15"><path d="M3 8l7-5 7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8z" stroke="rgba(160,120,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>일정 확정 후 이메일 또는 전화로 안내드립니다</span>
+                </div>
+                <div class="ckd-info-item">
+                  <svg viewBox="0 0 20 20" fill="none" width="15" height="15"><path d="M10 2l2.4 5h5.3l-4.3 3.1 1.6 5.2L10 12.3 5 15.3l1.6-5.2L2.3 7h5.3z" stroke="rgba(160,120,255,0.85)" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                  <span>킥오프 미팅에서 인애드만의 독점 마케팅 상품을 공개합니다</span>
+                </div>
+              </div>
+              <p class="ckd-contact">문의: <a href="tel:010-9186-9944">010-9186-9944</a></p>
             </div>
-          </div>
+
+          </div>{/* /ct-kickoff-form-solo */}
         </div>
       </section>
     </div>{/* /ct-kickoff-screen */}
+
+    {/* ── 작성 내용 보기 모달 ── */}
+    <div id="submit-review-modal" class="prv-modal-overlay" onclick="if(event.target===this)closeSubmitReviewModal()" style="display:none;">
+      <div class="prv-modal-box srm-box">
+        <div class="prv-modal-header">
+          <h2>작성 내용 확인</h2>
+          <button class="prv-modal-close" onclick="closeSubmitReviewModal()" aria-label="닫기">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="prv-modal-body">
+          <div id="srm-body" class="srm-list"></div>
+        </div>
+      </div>
+    </div>
 
     {/* ── 개인정보 처리방침 모달 ── */}
     <div id="privacy-modal" class="prv-modal-overlay" onclick="if(event.target===this)closePrivacyModal()" style="display:none;">
@@ -879,8 +941,8 @@ export const ContactPage = () => (
           }, 450);
         }
         function goToKickoff() {
-          var formScreen    = document.getElementById('ct-form-screen');
-          var kScreen       = document.getElementById('ct-kickoff-screen');
+          var formScreen = document.getElementById('ct-form-screen');
+          var kScreen    = document.getElementById('ct-kickoff-screen');
           formScreen.style.animation = 'ctSplitOut 0.4s ease forwards';
           setTimeout(function() {
             formScreen.style.display = 'none';
@@ -888,6 +950,155 @@ export const ContactPage = () => (
             kScreen.style.animation = 'ctFormIn 0.5s ease forwards';
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }, 380);
+        }
+        function backFromKickoff() {
+          var formScreen = document.getElementById('ct-form-screen');
+          var kScreen    = document.getElementById('ct-kickoff-screen');
+          var successEl  = document.getElementById('contactSuccess');
+          kScreen.style.animation = 'ctSplitOut 0.4s ease forwards';
+          setTimeout(function() {
+            kScreen.style.display = 'none';
+            // 상담완료 화면에서 왔으면 그쪽으로 돌아가기
+            if (successEl && successEl.style.display !== 'none') {
+              formScreen.style.display = 'block';
+              formScreen.style.animation = 'ctFormIn 0.5s ease forwards';
+            } else {
+              var split = document.getElementById('ct-split');
+              split.style.display = 'flex';
+              split.style.animation = 'ctFormIn 0.5s ease forwards';
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // 킥오프 폼 초기화
+            resetKickoffForm();
+          }, 350);
+        }
+        function resetKickoffForm() {
+          var form = document.getElementById('kickoffForm');
+          var success = document.getElementById('kickoffSuccess');
+          if (form) { form.reset(); form.style.display = 'block'; form.style.opacity = '1'; }
+          if (success) success.style.display = 'none';
+          // 조건부 섹션 모두 숨기기
+          ['kf-location-section','kf-members-section','kf-schedule-section','kf-note-section'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+          });
+          // 방식 카드 선택 해제
+          document.querySelectorAll('.kf-method-card').forEach(function(c) { c.classList.remove('kf-mc--selected'); });
+          // step 번호 리셋
+          updateKickoffStepNums('visit');
+        }
+        function onMeetingTypeChange(type) {
+          // 카드 선택 효과
+          document.querySelectorAll('.kf-method-card').forEach(function(c) { c.classList.remove('kf-mc--selected'); });
+          var card = document.getElementById('kmc-' + type);
+          if (card) card.classList.add('kf-mc--selected');
+
+          var locSection  = document.getElementById('kf-location-section');
+          var memSection  = document.getElementById('kf-members-section');
+          var schSection  = document.getElementById('kf-schedule-section');
+          var noteSection = document.getElementById('kf-note-section');
+
+          function showSection(el) {
+            el.style.display = 'block';
+            requestAnimationFrame(function() { el.classList.add('kf-section--visible'); });
+          }
+
+          // 이미 열린 것 닫기
+          [locSection, memSection, schSection, noteSection].forEach(function(s) {
+            if (s) { s.style.display = 'none'; s.classList.remove('kf-section--visible'); }
+          });
+
+          if (type === 'zoom') {
+            // ZOOM: 장소 없이 바로 인원 → 일정 → 사전질문
+            setTimeout(function() { showSection(memSection); }, 100);
+            setTimeout(function() { showSection(schSection); }, 200);
+            setTimeout(function() { showSection(noteSection); }, 300);
+            // 장소 input required 해제
+            ['kf-postcode','kf-address'].forEach(function(id) {
+              var el = document.getElementById(id);
+              if (el) el.removeAttribute('required');
+            });
+          } else {
+            // 방문/출장: 장소 → 인원 → 일정 → 사전질문
+            var locTitle = document.getElementById('kf-location-title');
+            var locDesc  = document.getElementById('kf-location-desc');
+            if (type === 'visit') {
+              if (locTitle) locTitle.innerHTML = '인애드컴퍼니 주소 확인 <span class="cf-req">*</span>';
+              if (locDesc)  locDesc.textContent = '방문하실 저희 사무실 주소입니다';
+              // 자동으로 주소 채우기 (인애드컴퍼니 고정 주소)
+              var pc  = document.getElementById('kf-postcode');
+              var adr = document.getElementById('kf-address');
+              if (pc)  pc.value  = '06234';
+              if (adr) adr.value = '서울특별시 강남구 테헤란로 00길 00 (인애드컴퍼니)';
+            } else {
+              if (locTitle) locTitle.innerHTML = '미팅 장소 <span class="cf-req">*</span>';
+              if (locDesc)  locDesc.textContent = '담당자가 방문할 주소를 입력해 주세요';
+              var pc2  = document.getElementById('kf-postcode');
+              var adr2 = document.getElementById('kf-address');
+              if (pc2)  pc2.value  = '';
+              if (adr2) adr2.value = '';
+            }
+            setTimeout(function() { showSection(locSection); }, 100);
+            setTimeout(function() { showSection(memSection); }, 200);
+            setTimeout(function() { showSection(schSection); }, 300);
+            setTimeout(function() { showSection(noteSection); }, 400);
+          }
+
+          updateKickoffStepNums(type);
+        }
+        function updateKickoffStepNums(type) {
+          // ZOOM이면 02=인원, 03=일정, 04=사전질문
+          // visit/onsite이면 02=장소, 03=인원, 04=일정, 05=사전질문
+          var isZoom = (type === 'zoom');
+          var stepMem  = document.getElementById('kf-step-members');
+          var stepSch  = document.getElementById('kf-step-schedule');
+          var stepNote = document.getElementById('kf-step-note');
+          if (stepMem)  stepMem.textContent  = isZoom ? '02' : '03';
+          if (stepSch)  stepSch.textContent  = isZoom ? '03' : '04';
+          if (stepNote) stepNote.textContent = isZoom ? '04' : '05';
+        }
+        function openAddressSearch() {
+          // Daum 우편번호 서비스 로드 및 실행
+          function execDaum() {
+            new daum.Postcode({
+              oncomplete: function(data) {
+                document.getElementById('kf-postcode').value = data.zonecode;
+                document.getElementById('kf-address').value  = data.roadAddress || data.jibunAddress;
+                document.getElementById('kf-address-detail').focus();
+              }
+            }).open();
+          }
+          if (window.daum && window.daum.Postcode) {
+            execDaum();
+          } else {
+            var s = document.createElement('script');
+            s.src = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+            s.onload = execDaum;
+            document.head.appendChild(s);
+          }
+        }
+        // 상담 완료 후 작성내용 팝업
+        var _submittedFormData = {};
+        function openSubmitReviewModal() {
+          var modal = document.getElementById('submit-review-modal');
+          if (!modal) return;
+          // 저장된 데이터로 목록 렌더링
+          var body = document.getElementById('srm-body');
+          if (body && Object.keys(_submittedFormData).length) {
+            var rows = Object.entries(_submittedFormData).map(function(kv) {
+              return '<div class="srm-row"><span class="srm-key">' + kv[0] + '</span><span class="srm-val">' + (kv[1] || '-') + '</span></div>';
+            }).join('');
+            body.innerHTML = rows;
+          }
+          modal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+          requestAnimationFrame(function() { modal.classList.add('prv-open'); });
+        }
+        function closeSubmitReviewModal() {
+          var modal = document.getElementById('submit-review-modal');
+          if (!modal) return;
+          modal.classList.remove('prv-open');
+          setTimeout(function() { modal.style.display = 'none'; document.body.style.overflow = ''; }, 260);
         }
         function enterBrochure() {
           var split   = document.getElementById('ct-split');
@@ -910,6 +1121,7 @@ export const ContactPage = () => (
             form.style.display = 'none';
             success.style.display = 'flex';
             success.style.animation = 'ctFormIn 0.5s ease forwards';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }, 300);
           return false;
         }
@@ -935,6 +1147,24 @@ export const ContactPage = () => (
           var formId = type === 'agency' ? 'agencyForm' : 'brandForm';
           var form = document.getElementById(formId);
           var success = document.getElementById('contactSuccess');
+
+          // 작성 내용 수집
+          _submittedFormData = {};
+          var fd = new FormData(form);
+          var labelMap = {
+            name:'이름', position:'직급', phone:'연락처', email:'이메일',
+            company:'회사명', companyUrl:'회사 URL', brand:'담당 브랜드', brandUrl:'브랜드 URL',
+            budget:'예상 예산', budgetCustom:'예산(직접입력)', message:'문의 내용',
+            service:'관심 서비스'
+          };
+          var services = [];
+          fd.forEach(function(val, key) {
+            if (key === 'service') { services.push(val); return; }
+            if (key === 'privacy') return;
+            _submittedFormData[labelMap[key] || key] = val;
+          });
+          if (services.length) _submittedFormData['관심 서비스'] = services.join(', ');
+
           form.style.transition = 'opacity 0.3s ease';
           form.style.opacity = '0';
           setTimeout(function() {
@@ -963,7 +1193,7 @@ export const ContactPage = () => (
         }
         // ESC 키 닫기
         document.addEventListener('keydown', function(e) {
-          if (e.key === 'Escape') closePrivacyModal();
+          if (e.key === 'Escape') { closePrivacyModal(); closeSubmitReviewModal(); }
         });
 
         // 전역 노출
@@ -974,6 +1204,12 @@ export const ContactPage = () => (
         window.enterKickoff = enterKickoff;
         window.goToKickoff = goToKickoff;
         window.backToSelect = backToSelect;
+        window.backFromKickoff = backFromKickoff;
+        window.resetKickoffForm = resetKickoffForm;
+        window.onMeetingTypeChange = onMeetingTypeChange;
+        window.openAddressSearch = openAddressSearch;
+        window.openSubmitReviewModal = openSubmitReviewModal;
+        window.closeSubmitReviewModal = closeSubmitReviewModal;
         window.handleKickoffSubmit = handleKickoffSubmit;
         window.toggleCustomBudget = toggleCustomBudget;
         window.handleContactSubmit = handleContactSubmit;
