@@ -66,6 +66,29 @@ export const ContactPage = () => (
         </div>
         <div class="ct-panel-num">02</div>
       </div>
+
+      {/* 맨 오른쪽 구분선 (브랜드↔킥오프) */}
+      <div class="ct-split-divider ct-divider--kickoff">
+        <span>OR</span>
+      </div>
+
+      {/* 맨 오른쪽 — 킥오프 미팅 */}
+      <div class="ct-split-panel ct-panel--kickoff" id="panel-kickoff"
+           onmouseenter="hoverPanel('kickoff')"
+           onmouseleave="resetPanel()"
+           onclick="enterKickoff()">
+        <div class="ct-panel-bg"></div>
+        <div class="ct-panel-content">
+          <div class="ct-panel-label" style="color:rgba(160,120,255,0.9);border-color:rgba(160,120,255,0.3)">KICKOFF</div>
+          <h2 class="ct-panel-title">킥오프<br />미팅 신청</h2>
+          <p class="ct-panel-desc">희망 일정을 전달해 주세요<br />담당자가 빠르게 확정해 드립니다</p>
+          <div class="ct-panel-cta">
+            <span>일정 신청하기</span>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="ct-panel-num">04</div>
+      </div>
     </div>
 
     {/* ══════════════════════════════════════
@@ -309,22 +332,21 @@ export const ContactPage = () => (
 
               {/* 완료 메시지 */}
               <div class="contact-success" id="contactSuccess" style="display:none;">
-                <p class="cs-notify">상담을 기다리는 동안,<br />인애드컴퍼니의 관점과 전략을 살펴보세요.</p>
                 <div class="cs-main">
                   <div class="cs-check">
                     <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(26,107,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
                   <h3>상담 신청이 완료되었습니다!</h3>
                 </div>
-                <a
-                  href="https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="cs-brochure-btn"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 2v13M7 10l5 5 5-5M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <span>회사소개서 보기</span>
-                </a>
+                <p class="cs-notify">담당자가 <strong>1영업일 이내</strong> 연락 드립니다.<br />급한 문의는 아래로 연락 주세요.</p>
+                <p class="cs-contact-info">📞 <a href="tel:010-9186-9944">010-9186-9944</a></p>
+                <div class="cs-divider"></div>
+                <p class="cs-kickoff-label">상담 전 미리 준비하고 싶으시다면</p>
+                <button class="cs-kickoff-btn" onclick="goToKickoff()">
+                  <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>킥오프 미팅 일정 잡기</span>
+                </button>
+                <p class="cs-kickoff-desc">킥오프 미팅에서 인애드컴퍼니의 독점 마케팅 상품을 확인하세요</p>
               </div>
 
             </div>{/* /contact-form-wrap */}
@@ -477,6 +499,224 @@ export const ContactPage = () => (
       </section>
     </div>{/* /ct-brochure-screen */}
 
+    {/* ══════════════════════════════════════
+        STEP 4 — 킥오프 미팅 신청 화면
+        ══════════════════════════════════════ */}
+    <div class="ct-kickoff-screen" id="ct-kickoff-screen" style="display:none;">
+
+      {/* 히어로 */}
+      <section class="page-hero contact-hero ct-form-hero">
+        <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
+        <div class="container">
+          <button class="step-back-btn" onclick="backToSelect()">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 18L5 12L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            돌아가기
+          </button>
+          <div class="ct-form-type-badge ct-badge--kickoff">킥오프 미팅 신청</div>
+          <h1 class="page-title">킥오프<br /><em>미팅 신청</em></h1>
+          <p class="page-desc">희망 일정을 알려주시면 담당자가 확인 후<br />빠르게 미팅 일정을 확정해 드립니다.</p>
+        </div>
+      </section>
+
+      {/* 신청 폼 */}
+      <section class="section contact-main-section">
+        <div class="container">
+          <div class="ct-kickoff-wrap">
+
+            {/* 왼쪽: 안내 카드 */}
+            <div class="ct-kickoff-info">
+              <div class="ct-kickoff-info-card">
+                <div class="ct-ki-icon">🔒</div>
+                <p class="ct-ki-badge">CONFIDENTIAL · INTERNAL</p>
+                <h3 class="ct-ki-title">미디어믹스<br />2차가공 콘텐츠</h3>
+                <p class="ct-ki-desc">킥오프 미팅에서만 공개되는<br />인애드컴퍼니 고유 마케팅 상품입니다.</p>
+                <div class="ct-ki-steps">
+                  <div class="ct-ki-step">
+                    <span class="ct-ki-step-num">01</span>
+                    <div>
+                      <strong>일정 신청</strong>
+                      <p>희망 날짜와 시간을 제출합니다</p>
+                    </div>
+                  </div>
+                  <div class="ct-ki-step">
+                    <span class="ct-ki-step-num">02</span>
+                    <div>
+                      <strong>담당자 확인</strong>
+                      <p>1영업일 내 연락 및 일정 확정</p>
+                    </div>
+                  </div>
+                  <div class="ct-ki-step">
+                    <span class="ct-ki-step-num">03</span>
+                    <div>
+                      <strong>킥오프 미팅</strong>
+                      <p>상품 상세 내용 + 전략 공유</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 오른쪽: 신청 폼 */}
+            <div class="ct-kickoff-form-wrap">
+              <form class="contact-form" id="kickoffForm"
+                    onsubmit="return handleKickoffSubmit(event)">
+                <div class="cfw-head">
+                  <span class="sec-label">Kickoff Meeting</span>
+                  <h2>미팅 일정 신청</h2>
+                  <p>희망 일정 2~3개를 알려주시면<br />담당자가 조율 후 확정 연락 드립니다.</p>
+                </div>
+
+                {/* 담당자 정보 */}
+                <div class="cf-row cf-row--2">
+                  <div class="cf-group">
+                    <label for="kf-name">담당자 이름 <span class="cf-req">*</span></label>
+                    <input type="text" id="kf-name" name="name" placeholder="홍길동" required />
+                  </div>
+                  <div class="cf-group">
+                    <label for="kf-company">브랜드 / 회사명 <span class="cf-req">*</span></label>
+                    <input type="text" id="kf-company" name="company" placeholder="(주)브랜드명" required />
+                  </div>
+                </div>
+
+                <div class="cf-row cf-row--2">
+                  <div class="cf-group">
+                    <label for="kf-phone">연락처 <span class="cf-req">*</span></label>
+                    <input type="tel" id="kf-phone" name="phone" placeholder="010-0000-0000" required />
+                  </div>
+                  <div class="cf-group">
+                    <label for="kf-email">이메일 <span class="cf-req">*</span></label>
+                    <input type="email" id="kf-email" name="email" placeholder="hello@brand.com" required />
+                  </div>
+                </div>
+
+                {/* 미팅 방식 */}
+                <div class="cf-group">
+                  <label>미팅 방식 <span class="cf-req">*</span></label>
+                  <div class="cf-chips">
+                    {[
+                      { val: 'online', label: '💻 온라인 (Zoom·Meet)' },
+                      { val: 'offline', label: '🏢 오프라인 방문' },
+                      { val: 'both', label: '🔄 무관 (모두 가능)' },
+                    ].map(s => (
+                      <label class="cf-chip" key={s.val}>
+                        <input type="radio" name="meetingType" value={s.val} required />
+                        <span>{s.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 희망 일정 1 */}
+                <div class="cf-group">
+                  <label class="cf-schedule-label">
+                    <span class="cf-schedule-badge cf-schedule-badge--1st">1순위</span>
+                    희망 일정 <span class="cf-req">*</span>
+                  </label>
+                  <div class="cf-row cf-row--2">
+                    <div class="cf-group" style="margin-bottom:0">
+                      <input type="date" id="kf-date1" name="date1" required
+                             style="color-scheme:dark" />
+                    </div>
+                    <div class="cf-group" style="margin-bottom:0">
+                      <div class="cf-select-wrap">
+                        <select name="time1" required>
+                          <option value="">시간 선택</option>
+                          <option value="09:00">오전 09:00</option>
+                          <option value="10:00">오전 10:00</option>
+                          <option value="11:00">오전 11:00</option>
+                          <option value="13:00">오후 01:00</option>
+                          <option value="14:00">오후 02:00</option>
+                          <option value="15:00">오후 03:00</option>
+                          <option value="16:00">오후 04:00</option>
+                          <option value="17:00">오후 05:00</option>
+                        </select>
+                        <span class="cf-sel-arrow">▾</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 희망 일정 2 */}
+                <div class="cf-group">
+                  <label class="cf-schedule-label">
+                    <span class="cf-schedule-badge cf-schedule-badge--2nd">2순위</span>
+                    희망 일정 <span style="font-size:11px; color:rgba(255,255,255,0.35)">(선택)</span>
+                  </label>
+                  <div class="cf-row cf-row--2">
+                    <div class="cf-group" style="margin-bottom:0">
+                      <input type="date" id="kf-date2" name="date2"
+                             style="color-scheme:dark" />
+                    </div>
+                    <div class="cf-group" style="margin-bottom:0">
+                      <div class="cf-select-wrap">
+                        <select name="time2">
+                          <option value="">시간 선택</option>
+                          <option value="09:00">오전 09:00</option>
+                          <option value="10:00">오전 10:00</option>
+                          <option value="11:00">오전 11:00</option>
+                          <option value="13:00">오후 01:00</option>
+                          <option value="14:00">오후 02:00</option>
+                          <option value="15:00">오후 03:00</option>
+                          <option value="16:00">오후 04:00</option>
+                          <option value="17:00">오후 05:00</option>
+                        </select>
+                        <span class="cf-sel-arrow">▾</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 사전 질문 */}
+                <div class="cf-group">
+                  <label for="kf-note">사전 질문 / 궁금한 점 <span style="font-size:11px; color:rgba(255,255,255,0.35)">(선택)</span></label>
+                  <textarea id="kf-note" name="note" rows={3}
+                            placeholder="미팅 전 미리 알고 싶은 내용이나 현재 상황을 간단히 적어주세요." />
+                </div>
+
+                {/* 개인정보 동의 */}
+                <div class="cf-group">
+                  <label class="cf-privacy-check">
+                    <input type="checkbox" name="privacyAgree" required />
+                    <span class="cf-privacy-box"></span>
+                    <span>개인정보 수집 및 이용에 동의합니다. <span class="cf-req">*</span></span>
+                  </label>
+                  <button type="button" class="cf-privacy-view-btn" onclick="openPrivacyModal()">내용 확인</button>
+                </div>
+
+                <button type="submit" class="cf-submit cf-submit--kickoff">
+                  <span>미팅 일정 신청하기</span>
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </form>
+
+              {/* 완료 메시지 */}
+              <div class="contact-success ct-kickoff-success" id="kickoffSuccess" style="display:none;">
+                <div class="cks-icon">📅</div>
+                <h3 class="cks-title">미팅 신청이 완료되었습니다!</h3>
+                <p class="cks-desc">담당자가 신청하신 일정을 확인하고<br /><strong>1영업일 이내</strong>에 연락 드립니다.</p>
+                <div class="cks-info-box">
+                  <div class="cks-info-row">
+                    <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><path d="M10 2a8 8 0 1 1 0 16A8 8 0 0 1 10 2zm0 4v4l3 3" stroke="rgba(160,120,255,0.9)" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    <span>담당자 확인 후 일정 확정 연락</span>
+                  </div>
+                  <div class="cks-info-row">
+                    <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><path d="M3 5h14M3 10h14M3 15h8" stroke="rgba(160,120,255,0.9)" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    <span>미팅 확정 시 상세 안내 이메일 발송</span>
+                  </div>
+                  <div class="cks-info-row">
+                    <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><path d="M10 2l2.4 5h5.3l-4.3 3.1 1.6 5.2L10 12.3 5 15.3l1.6-5.2L2.3 7h5.3z" stroke="rgba(160,120,255,0.9)" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                    <span>킥오프 미팅에서 상품 상세 내용 공개</span>
+                  </div>
+                </div>
+                <p class="cks-contact">문의: <a href="tel:010-9186-9944">010-9186-9944</a></p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>{/* /ct-kickoff-screen */}
+
     {/* ── 개인정보 처리방침 모달 ── */}
     <div id="privacy-modal" class="prv-modal-overlay" onclick="if(event.target===this)closePrivacyModal()" style="display:none;">
       <div class="prv-modal-box">
@@ -588,14 +828,15 @@ export const ContactPage = () => (
           var agency   = document.getElementById('panel-agency');
           var brand    = document.getElementById('panel-brand');
           var brochure = document.getElementById('panel-brochure');
-          var all = [agency, brand, brochure];
+          var kickoff  = document.getElementById('panel-kickoff');
+          var all = [agency, brand, brochure, kickoff];
           all.forEach(function(el) { el && el.classList.remove('ct-active','ct-shrink'); });
           var active = document.getElementById('panel-' + type);
           if (active) active.classList.add('ct-active');
           all.forEach(function(el) { if (el && el !== active) el.classList.add('ct-shrink'); });
         }
         function resetPanel() {
-          ['panel-agency','panel-brand','panel-brochure'].forEach(function(id) {
+          ['panel-agency','panel-brand','panel-brochure','panel-kickoff'].forEach(function(id) {
             var el = document.getElementById(id);
             if (el) el.classList.remove('ct-active','ct-shrink');
           });
@@ -636,7 +877,8 @@ export const ContactPage = () => (
           var split     = document.getElementById('ct-split');
           var screen    = document.getElementById('ct-form-screen');
           var bScreen   = document.getElementById('ct-brochure-screen');
-          [screen, bScreen].forEach(function(s) {
+          var kScreen   = document.getElementById('ct-kickoff-screen');
+          [screen, bScreen, kScreen].forEach(function(s) {
             if (s && s.style.display !== 'none') {
               s.style.animation = 'ctSplitOut 0.4s ease forwards';
               setTimeout(function() {
@@ -648,6 +890,28 @@ export const ContactPage = () => (
             }
           });
         }
+        function enterKickoff() {
+          var split   = document.getElementById('ct-split');
+          var kScreen = document.getElementById('ct-kickoff-screen');
+          split.style.animation = 'ctSplitOut 0.5s cubic-bezier(0.4,0,0.2,1) forwards';
+          setTimeout(function() {
+            split.style.display = 'none';
+            kScreen.style.display = 'block';
+            kScreen.style.animation = 'ctFormIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }, 450);
+        }
+        function goToKickoff() {
+          var formScreen    = document.getElementById('ct-form-screen');
+          var kScreen       = document.getElementById('ct-kickoff-screen');
+          formScreen.style.animation = 'ctSplitOut 0.4s ease forwards';
+          setTimeout(function() {
+            formScreen.style.display = 'none';
+            kScreen.style.display = 'block';
+            kScreen.style.animation = 'ctFormIn 0.5s ease forwards';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }, 380);
+        }
         function enterBrochure() {
           var split   = document.getElementById('ct-split');
           var bScreen = document.getElementById('ct-brochure-screen');
@@ -658,6 +922,19 @@ export const ContactPage = () => (
             bScreen.style.animation = 'ctFormIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards';
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }, 450);
+        }
+        function handleKickoffSubmit(e) {
+          e.preventDefault();
+          var form    = document.getElementById('kickoffForm');
+          var success = document.getElementById('kickoffSuccess');
+          form.style.transition = 'opacity 0.3s ease';
+          form.style.opacity = '0';
+          setTimeout(function() {
+            form.style.display = 'none';
+            success.style.display = 'flex';
+            success.style.animation = 'ctFormIn 0.5s ease forwards';
+          }, 300);
+          return false;
         }
         function handleBrochureSubmit(e) {
           e.preventDefault();
@@ -717,7 +994,10 @@ export const ContactPage = () => (
         window.resetPanel = resetPanel;
         window.enterForm = enterForm;
         window.enterBrochure = enterBrochure;
+        window.enterKickoff = enterKickoff;
+        window.goToKickoff = goToKickoff;
         window.backToSelect = backToSelect;
+        window.handleKickoffSubmit = handleKickoffSubmit;
         window.toggleCustomBudget = toggleCustomBudget;
         window.handleContactSubmit = handleContactSubmit;
         window.handleBrochureSubmit = handleBrochureSubmit;

@@ -3504,6 +3504,65 @@ em {
   box-shadow: 0 0 0 1px rgba(41,121,255,0.8), 0 0 24px rgba(41,121,255,0.4);
 }
 
+/* 상담 완료 후 킥오프 유도 요소 */
+.cs-contact-info {
+  font-size: 14px;
+  color: rgba(180,200,255,0.7);
+  margin-top: -16px;
+  margin-bottom: 8px;
+}
+.cs-contact-info a {
+  color: rgba(160,200,255,0.9);
+  text-decoration: none;
+  font-weight: 600;
+}
+.cs-contact-info a:hover { color: #fff; }
+.cs-divider {
+  width: 100%;
+  max-width: 320px;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 24px auto;
+}
+.cs-kickoff-label {
+  font-size: 12px;
+  color: rgba(160,120,255,0.7);
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.cs-kickoff-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 28px;
+  background: rgba(160,120,255,0.12);
+  border: 1px solid rgba(160,120,255,0.4);
+  color: rgba(200,175,255,0.95);
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+  animation: csKickoffGlow 2s ease-in-out infinite;
+}
+.cs-kickoff-btn:hover {
+  background: rgba(160,120,255,0.25);
+  border-color: rgba(160,120,255,0.7);
+  color: #fff;
+  animation: none;
+  box-shadow: 0 0 24px rgba(160,120,255,0.25);
+}
+.cs-kickoff-desc {
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.3);
+  margin-top: 10px;
+}
+@keyframes csKickoffGlow {
+  0%,100% { box-shadow: 0 0 0 rgba(160,120,255,0); }
+  50%      { box-shadow: 0 0 18px rgba(160,120,255,0.22); }
+}
+
 /* Contact Info */
 .contact-info-wrap { display: flex; flex-direction: column; gap: 20px; }
 .ci-card {
@@ -8333,12 +8392,15 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── 3분할 레이아웃: 구분선 위치 ── */
+/* ── 4분할 레이아웃: 구분선 위치 ── */
 .ct-split-divider.ct-divider--left {
-  left: 33.33%;
+  left: 25%;
 }
 .ct-split-divider.ct-divider--right {
-  left: 66.66%;
+  left: 50%;
+}
+.ct-split-divider.ct-divider--kickoff {
+  left: 75%;
 }
 
 /* ── 회사소개서 패널 배경 ── */
@@ -8360,6 +8422,43 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   background: rgba(255,180,50,0.15);
   border: 1px solid rgba(255,180,50,0.4);
   color: rgba(255,180,50,0.9);
+}
+
+/* ── 킥오프 패널 배경 ── */
+.ct-panel--kickoff .ct-panel-bg {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(160,120,255,0.22) 0%, transparent 70%),
+    linear-gradient(135deg, #0a0d1f 0%, #0e0b20 50%, #080a18 100%);
+}
+.ct-panel--kickoff.ct-active .ct-panel-cta {
+  background: rgba(160,120,255,0.12);
+  border-color: rgba(160,120,255,0.45);
+  color: #fff;
+  box-shadow: 0 0 24px rgba(160,120,255,0.2);
+}
+.ct-panel--kickoff.ct-active .ct-panel-label { color: rgba(160,120,255,0.8); }
+
+/* 킥오프 divider */
+.ct-split-divider.ct-divider--kickoff {
+  left: 75%;
+}
+
+/* 킥오프 배지 */
+.ct-badge--kickoff {
+  background: rgba(160,120,255,0.15);
+  border: 1px solid rgba(160,120,255,0.4);
+  color: rgba(160,120,255,0.9);
+}
+
+/* 킥오프 submit 버튼 색상 오버라이드 */
+.cf-submit--kickoff {
+  background: linear-gradient(135deg, rgba(160,120,255,0.18) 0%, rgba(120,80,220,0.22) 100%);
+  border-color: rgba(160,120,255,0.4);
+}
+.cf-submit--kickoff:hover {
+  background: linear-gradient(135deg, rgba(160,120,255,0.3) 0%, rgba(120,80,220,0.35) 100%);
+  border-color: rgba(160,120,255,0.7);
+  box-shadow: 0 0 24px rgba(160,120,255,0.25);
 }
 
 /* ── 회사소개서 신청 화면 레이아웃 ── */

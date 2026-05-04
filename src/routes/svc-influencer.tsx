@@ -1105,7 +1105,7 @@ export const SvcInfluencerPage = () => (
             </div>
           </div>
 
-          <a href="/contact" class="hero-cta-btn primary ifl2-conf-cta">
+          <a href="/contact?type=kickoff" class="hero-cta-btn primary ifl2-conf-cta">
             <span>킥오프 미팅 신청하기</span>
             <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
