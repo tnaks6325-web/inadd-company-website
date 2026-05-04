@@ -16235,3 +16235,35 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   border-color: rgba(26,107,255,0.4);
   color: #1a6bff;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   SCROLL REVEAL — 마케팅 상세 페이지 공통 진입 애니메이션
+══════════════════════════════════════════════════════════════ */
+
+/* 기본 초기 숨김 상태 (JS가 적용하기 전 FOUC 방지용 선택적 사용) */
+[data-sr-ready="1"] {
+  will-change: opacity, transform;
+}
+
+/* svc-intro 좌우 분할 */
+.svc-intro-text,
+.svc-intro-visual {
+  transition: opacity 0.75s cubic-bezier(0.25,0.46,0.45,0.94),
+              transform 0.75s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+/* 프로세스 스텝 이미지 호버 오버레이 */
+.sps-img-wrap { overflow: hidden; border-radius: 16px; }
+
+/* srg-metric 카운터업 강조 */
+.srg-metric strong {
+  display: inline-block;
+  transition: transform 0.3s;
+}
+.srg-card:hover .srg-metric strong {
+  transform: scale(1.06);
+}
+
+/* section-head 기본 위치 (JS 초기화 전 보이도록 유지 — JS가 덮어쓰기) */
+.section-head { }
+

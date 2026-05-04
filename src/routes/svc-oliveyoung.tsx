@@ -419,6 +419,16 @@ export const SvcOliveYoungPage = () => (
       </div>
     </section>
 
+
+    {/* ── Scroll Reveal ── */}
+    <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  var s = document.createElement('script');
+  s.src = '/static/scroll-reveal.js';
+  document.head.appendChild(s);
+})();
+    `}} />
+
     {/* ── Admin Dynamic Marketing Stats ── */}
     <script dangerouslySetInnerHTML={{__html: `
 (function(){
