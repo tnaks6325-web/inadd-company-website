@@ -1,19 +1,15 @@
 export const ViralPage = () => (
   <>
     {/* ════════════════════════════════════════
-        HERO — 풀스크린 + 파티클 + 타이핑 텍스트
+        HERO — Three.js 3D 배경 + 텍스트 오버레이
     ════════════════════════════════════════ */}
     <section class="mkt-hero">
-      {/* 파티클 캔버스 */}
-      <canvas id="mktParticle" class="mkt-hero-canvas"></canvas>
 
-      {/* 배경 글로우 오브 */}
-      <div class="mkt-hero-orb mkt-hero-orb--1"></div>
-      <div class="mkt-hero-orb mkt-hero-orb--2"></div>
-      <div class="mkt-hero-orb mkt-hero-orb--3"></div>
+      {/* ── 전체 배경 3D 캔버스 (absolute, z=0) ── */}
+      <canvas id="mkt3dCanvas" class="mkt-3d-bg-canvas"></canvas>
 
+      {/* ── 텍스트 오버레이 (z=2) ── */}
       <div class="container mkt-hero-inner">
-        {/* 왼쪽 텍스트 */}
         <div class="mkt-hero-text">
           <div class="mkt-hero-badge">
             <span class="mhb-dot"></span>
@@ -27,7 +23,6 @@ export const ViralPage = () => (
             </span>
           </h1>
 
-          {/* 타이핑 텍스트 */}
           <div class="mkt-hero-typing-wrap">
             <span class="mht-static">우리 브랜드를 </span>
             <span class="mht-typing" id="mktTyping"></span>
@@ -51,55 +46,11 @@ export const ViralPage = () => (
             </a>
           </div>
         </div>
-
-        {/* 오른쪽 — Three.js 3D 인터랙티브 씬 */}
-        <div class="mkt-3d-wrap">
-          <canvas id="mkt3dCanvas" class="mkt-3d-canvas"></canvas>
-          {/* HUD 레이블 오버레이 */}
-          <div class="mkt-3d-hud">
-            <div class="m3h-label m3h-label--awareness" id="hud-awareness">
-              <span class="m3h-dot"></span>
-              <span class="m3h-text">인지</span>
-              <span class="m3h-val">AWARENESS</span>
-            </div>
-            <div class="m3h-label m3h-label--explore" id="hud-explore">
-              <span class="m3h-dot"></span>
-              <span class="m3h-text">탐색</span>
-              <span class="m3h-val">EXPLORE</span>
-            </div>
-            <div class="m3h-label m3h-label--trust" id="hud-trust">
-              <span class="m3h-dot"></span>
-              <span class="m3h-text">신뢰</span>
-              <span class="m3h-val">TRUST</span>
-            </div>
-            <div class="m3h-label m3h-label--convert" id="hud-convert">
-              <span class="m3h-dot"></span>
-              <span class="m3h-text">전환</span>
-              <span class="m3h-val">CONVERT</span>
-            </div>
-          </div>
-          {/* 우하단 KPI 미니 카드 */}
-          <div class="mkt-3d-kpi">
-            <div class="m3k-item">
-              <strong>+580%</strong><span>최대 매출</span>
-            </div>
-            <div class="m3k-sep"></div>
-            <div class="m3k-item">
-              <strong>98%</strong><span>재계약률</span>
-            </div>
-            <div class="m3k-sep"></div>
-            <div class="m3k-item">
-              <strong>320+</strong><span>프로젝트</span>
-            </div>
-          </div>
-        </div>
       </div>
 
-      {/* 하단 스크롤 힌트 */}
+      {/* ── 하단 스크롤 힌트 ── */}
       <div class="mkt-hero-scroll-hint">
-        <div class="mhsh-mouse">
-          <div class="mhsh-wheel"></div>
-        </div>
+        <div class="mhsh-mouse"><div class="mhsh-wheel"></div></div>
       </div>
     </section>
 
@@ -125,7 +76,7 @@ export const ViralPage = () => (
     </div>
 
     {/* ════════════════════════════════════════
-        서비스 그리드 — 이미지 풀카버 + 호버 줌
+        서비스 그리드
     ════════════════════════════════════════ */}
     <section class="section mkt-services-section" id="mkt-services">
       <div class="container">
@@ -137,79 +88,52 @@ export const ViralPage = () => (
         <div class="mkt-svc-img-grid">
           {[
             {
-              icon: '🔥',
-              href: '/marketing/viral',
-              title: '바이럴 마케팅',
-              tag: 'VIRAL',
+              icon: '🔥', href: '/marketing/viral', title: '바이럴 마케팅', tag: 'VIRAL',
               desc: '맘카페·커뮤니티 기반의 자연스러운 확산으로 브랜드 인지도를 폭발적으로 높입니다.',
               kpis: [{ val: '2,800만+', label: '평균 도달' }, { val: '48h', label: '최단 바이럴' }],
               img: '/static/svc-images/viral.png',
             },
             {
-              icon: '⭐',
-              href: '/marketing/influencer',
-              title: '인플루언서 마케팅',
-              tag: 'INFLUENCER',
+              icon: '⭐', href: '/marketing/influencer', title: '인플루언서 마케팅', tag: 'INFLUENCER',
               desc: '검증된 1,200+ 크리에이터 네트워크로 타겟 소비자에게 진정성 있는 메시지를 전달합니다.',
               kpis: [{ val: '1,200+', label: '파트너 크리에이터' }, { val: '+580%', label: '최대 매출 증가' }],
               img: '/static/svc-images/influencer.png',
             },
             {
-              icon: '🌱',
-              href: '/marketing/seeding',
-              title: '시딩 캠페인',
-              tag: 'SEEDING',
+              icon: '🌱', href: '/marketing/seeding', title: '시딩 캠페인', tag: 'SEEDING',
               desc: '핵심 타겟에게 샘플을 전달해 진정성 있는 후기와 입소문 생태계를 구축합니다.',
               kpis: [{ val: '68%', label: '후기 전환율' }, { val: '+230%', label: '리뷰 전환 효과' }],
-              img: '/static/svc-images/seeding.png',
-              imgPos: 'center center',
+              img: '/static/svc-images/seeding.png', imgPos: 'center center',
             },
             {
-              icon: '🔍',
-              href: '/marketing/seo',
-              title: 'SEO 마케팅',
-              tag: 'SEO',
+              icon: '🔍', href: '/marketing/seo', title: 'SEO 마케팅', tag: 'SEO',
               desc: '소비자가 검색하는 순간 브랜드가 먼저 보이도록 키워드부터 콘텐츠까지 설계합니다.',
               kpis: [{ val: 'TOP3', label: '검색 순위 달성' }, { val: '+1,200%', label: '검색량 증가' }],
-              img: '/static/svc-images/seo.png',
-              imgPos: 'center center',
+              img: '/static/svc-images/seo.png', imgPos: 'center center',
             },
             {
-              icon: '💬',
-              href: '/marketing/review',
-              title: '리뷰 마케팅',
-              tag: 'REVIEW',
+              icon: '💬', href: '/marketing/review', title: '리뷰 마케팅', tag: 'REVIEW',
               desc: '진정성 있는 소비자 리뷰로 브랜드 신뢰를 쌓고 구매 전환율을 극적으로 높입니다.',
               kpis: [{ val: '+230%', label: '리뷰 전환율' }, { val: '3×', label: '브랜드 신뢰도' }],
               img: '/static/svc-images/review.png',
             },
             {
-              icon: '💚',
-              href: '/marketing/oliveyoung',
-              title: '올리브영 마케팅',
-              tag: 'OLIVE YOUNG',
+              icon: '💚', href: '/marketing/oliveyoung', title: '올리브영 마케팅', tag: 'OLIVE YOUNG',
               desc: '국내 최대 H&B 채널 올리브영에서 브랜드를 단기간에 폭발적으로 성장시킵니다.',
               kpis: [{ val: '+340%', label: '채널 매출 증가' }, { val: '2.4×', label: '3개월 성장' }],
               img: '/static/svc-images/oliveyoung.png',
             },
             {
-              icon: '🎬',
-              href: '/marketing/ppl',
-              title: 'PPL 마케팅',
-              tag: 'PPL',
+              icon: '🎬', href: '/marketing/ppl', title: 'PPL 마케팅', tag: 'PPL',
               desc: '드라마·유튜브 콘텐츠 속 자연스러운 브랜드 노출로 수천만 시청자에게 각인됩니다.',
               kpis: [{ val: '5,000만+', label: '누적 시청자' }, { val: '3×', label: '광고 전환율' }],
               img: '/static/svc-images/ppl.png',
             },
           ].map((s, i) => (
             <a href={s.href} class="msig-card reveal-up" style={`transition-delay:${i * 0.08}s`} key={s.href}>
-              {/* 배경 이미지 — 호버 시 줌 */}
               <div class="msig-img" style={`background-image:url('${s.img}');background-position:${'imgPos' in s ? (s as any).imgPos : 'center center'}`}></div>
-              {/* 그라디언트 오버레이 */}
               <div class="msig-overlay"></div>
-              {/* 상단 태그 */}
               <div class="msig-tag">{s.tag}</div>
-              {/* 하단 콘텐츠 */}
               <div class="msig-content">
                 <div class="msig-icon">{s.icon}</div>
                 <h3 class="msig-title">{s.title}</h3>
@@ -257,139 +181,147 @@ export const ViralPage = () => (
     </section>
 
     {/* ════════════════════════════════════════
-        JS — 파티클 + 타이핑 + 스크롤 리빌
+        JS — Three.js 배경 + 타이핑 + 스크롤 리빌
     ════════════════════════════════════════ */}
     <script dangerouslySetInnerHTML={{__html: `
 (function(){
-  /* ══════════════════════════════════════════
-     1. Three.js 3D 씬 — 퍼널 구체 + 파티클
-  ══════════════════════════════════════════ */
-  var script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
-  script.onload = function(){ initThreeScene(); };
-  document.head.appendChild(script);
 
-  function initThreeScene(){
+  /* ══════════════════════════════════════════════════════
+     THREE.JS 배경 씬
+     - 구체 4개 (퍼널 단계: 인지·탐색·신뢰·전환)
+     - 구체 사이 광섬유 연결선
+     - 환경 파티클 800개
+     - 공전 링 2개
+     - 마우스 패럴랙스 전체 씬 회전
+  ══════════════════════════════════════════════════════ */
+  var threeScript = document.createElement('script');
+  threeScript.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
+  threeScript.onload = initBgScene;
+  document.head.appendChild(threeScript);
+
+  function initBgScene() {
     var canvas = document.getElementById('mkt3dCanvas');
-    if(!canvas) return;
-    var wrap = canvas.parentElement;
-    var W = wrap.clientWidth, H = wrap.clientHeight;
+    if (!canvas) return;
+
+    var W = window.innerWidth;
+    var H = canvas.parentElement.offsetHeight || window.innerHeight;
 
     /* ── 렌더러 ── */
     var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     renderer.setSize(W, H);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0);
+    renderer.setClearColor(0x020814, 1); /* 배경색 — 히어로와 동일 */
 
     /* ── 씬 & 카메라 ── */
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(50, W/H, 0.1, 100);
-    camera.position.set(0, 0, 7);
+    /* 약간의 안개 — 깊이감 */
+    scene.fog = new THREE.FogExp2(0x020814, 0.04);
+
+    var camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 100);
+    camera.position.set(0, 0, 9);
 
     /* ── 조명 ── */
-    var ambient = new THREE.AmbientLight(0xffffff, 0.3);
-    scene.add(ambient);
-    var dirLight = new THREE.DirectionalLight(0x4488ff, 2.5);
-    dirLight.position.set(3, 5, 5);
-    scene.add(dirLight);
-    var bluePoint = new THREE.PointLight(0x1a6bff, 6, 12);
-    bluePoint.position.set(-2, 2, 3);
-    scene.add(bluePoint);
-    var tealPoint = new THREE.PointLight(0x00d4a8, 3, 10);
-    tealPoint.position.set(3, -2, 2);
-    scene.add(tealPoint);
-    var purplePoint = new THREE.PointLight(0x8844ff, 2, 8);
-    purplePoint.position.set(0, -3, 1);
-    scene.add(purplePoint);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.25));
 
-    /* ── 퍼널 구체 4개 (인지→탐색→신뢰→전환) ── */
-    var funnelData = [
-      { pos: [-1.8, 1.4, 0],   r: 1.05, color: 0x1a6bff, emissive: 0x0a2855, label: 'hud-awareness' },
-      { pos: [ 1.6, 1.0, -0.5], r: 0.82, color: 0x00b4d8, emissive: 0x003344, label: 'hud-explore' },
-      { pos: [-1.2, -1.1, 0.4], r: 0.65, color: 0x00d4a8, emissive: 0x003322, label: 'hud-trust' },
-      { pos: [ 1.3, -1.4, -0.3],r: 0.50, color: 0xff6b35, emissive: 0x441800, label: 'hud-convert' },
+    var blueKey = new THREE.PointLight(0x1a6bff, 10, 18);
+    blueKey.position.set(-3, 3, 4);
+    scene.add(blueKey);
+
+    var tealFill = new THREE.PointLight(0x00d4a8, 5, 14);
+    tealFill.position.set(4, -2, 3);
+    scene.add(tealFill);
+
+    var purpleRim = new THREE.PointLight(0x8844ff, 4, 12);
+    purpleRim.position.set(0, -4, 2);
+    scene.add(purpleRim);
+
+    var orangeAccent = new THREE.PointLight(0xff6b35, 3, 10);
+    orangeAccent.position.set(3, 3, -2);
+    scene.add(orangeAccent);
+
+    /* ── 퍼널 구체 4개 ── */
+    /* 화면 오른쪽 절반에 배치 — 텍스트(왼쪽)와 겹치지 않도록 x 오프셋 +1.5 */
+    var sphereDefs = [
+      { p: [ 2.2,  1.6,  0.0], r: 1.1,  col: 0x1a6bff, emi: 0x051530 },  /* 인지 — 가장 큰 파랑 */
+      { p: [ 4.8,  0.6, -1.0], r: 0.82, col: 0x00b4d8, emi: 0x002233 },  /* 탐색 — 시안 */
+      { p: [ 1.8, -1.8,  0.5], r: 0.65, col: 0x00d4a8, emi: 0x002220 },  /* 신뢰 — 초록 */
+      { p: [ 4.2, -2.0, -0.5], r: 0.50, col: 0xff6b35, emi: 0x3a1200 },  /* 전환 — 오렌지 */
     ];
 
-    var spheres = [];
-    funnelData.forEach(function(d){
+    var spheres = sphereDefs.map(function(d) {
       var geo = new THREE.SphereGeometry(d.r, 64, 64);
       var mat = new THREE.MeshStandardMaterial({
-        color: d.color,
-        emissive: d.emissive,
-        emissiveIntensity: 0.4,
-        metalness: 0.7,
-        roughness: 0.15,
-        envMapIntensity: 1.2,
+        color:            d.col,
+        emissive:         d.emi,
+        emissiveIntensity:0.5,
+        metalness:        0.75,
+        roughness:        0.12,
       });
       var mesh = new THREE.Mesh(geo, mat);
-      mesh.position.set(d.pos[0], d.pos[1], d.pos[2]);
-      mesh.userData = { basePos: d.pos.slice(), label: d.label, baseR: d.r };
+      mesh.position.set(d.p[0], d.p[1], d.p[2]);
+      mesh.userData.base = d.p.slice();
       scene.add(mesh);
-      spheres.push(mesh);
+      return mesh;
     });
 
-    /* ── 구체 사이 연결선 (광섬유 느낌) ── */
-    var linePairs = [[0,1],[1,2],[2,3],[0,2],[1,3]];
-    linePairs.forEach(function(pair){
-      var p1 = new THREE.Vector3(...funnelData[pair[0]].pos);
-      var p2 = new THREE.Vector3(...funnelData[pair[1]].pos);
-      var points = [];
-      for(var i=0; i<=20; i++){
-        var t = i/20;
-        var mid = new THREE.Vector3().lerpVectors(p1, p2, t);
-        mid.z += Math.sin(t * Math.PI) * 0.3;
-        points.push(mid);
+    /* ── 구체 사이 광섬유 연결선 ── */
+    [[0,1],[1,2],[2,3],[0,2],[1,3],[0,3]].forEach(function(pair) {
+      var a = new THREE.Vector3(...sphereDefs[pair[0]].p);
+      var b = new THREE.Vector3(...sphereDefs[pair[1]].p);
+      var pts = [];
+      for (var i = 0; i <= 24; i++) {
+        var t = i / 24;
+        var v = new THREE.Vector3().lerpVectors(a, b, t);
+        v.z += Math.sin(t * Math.PI) * 0.4;
+        pts.push(v);
       }
-      var curve = new THREE.CatmullRomCurve3(points);
-      var geo = new THREE.TubeGeometry(curve, 30, 0.015, 8, false);
-      var mat = new THREE.MeshBasicMaterial({
-        color: 0x3399ff,
-        transparent: true,
-        opacity: 0.25,
-      });
-      scene.add(new THREE.Mesh(geo, mat));
+      var curve = new THREE.CatmullRomCurve3(pts);
+      var tGeo  = new THREE.TubeGeometry(curve, 32, 0.013, 8, false);
+      var tMat  = new THREE.MeshBasicMaterial({ color: 0x4499ff, transparent: true, opacity: 0.22 });
+      scene.add(new THREE.Mesh(tGeo, tMat));
     });
 
-    /* ── 환경 파티클 (점구름) ── */
-    var pCount = 600;
-    var pPos = new Float32Array(pCount * 3);
-    for(var i=0; i<pCount; i++){
-      pPos[i*3]   = (Math.random()-0.5)*14;
-      pPos[i*3+1] = (Math.random()-0.5)*10;
-      pPos[i*3+2] = (Math.random()-0.5)*8 - 2;
+    /* ── 파티클 구름 ── */
+    var pN = 900;
+    var pBuf = new Float32Array(pN * 3);
+    for (var i = 0; i < pN; i++) {
+      pBuf[i*3]   = (Math.random() - 0.5) * 20;
+      pBuf[i*3+1] = (Math.random() - 0.5) * 14;
+      pBuf[i*3+2] = (Math.random() - 0.5) * 10 - 3;
     }
     var pGeo = new THREE.BufferGeometry();
-    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-    var pMat = new THREE.PointsMaterial({ color: 0x4488ff, size: 0.04, transparent: true, opacity: 0.6 });
-    scene.add(new THREE.Points(pGeo, pMat));
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pBuf, 3));
+    scene.add(new THREE.Points(pGeo,
+      new THREE.PointsMaterial({ color: 0x4488ff, size: 0.045, transparent: true, opacity: 0.55 })
+    ));
 
-    /* ── 링 (중앙 원형 궤도) ── */
-    var ringGeo = new THREE.TorusGeometry(2.8, 0.012, 16, 120);
-    var ringMat = new THREE.MeshBasicMaterial({ color: 0x1a6bff, transparent: true, opacity: 0.15 });
-    var ring = new THREE.Mesh(ringGeo, ringMat);
-    ring.rotation.x = Math.PI / 5;
-    ring.rotation.z = Math.PI / 8;
-    scene.add(ring);
+    /* ── 공전 링 ── */
+    var ringA = new THREE.Mesh(
+      new THREE.TorusGeometry(3.4, 0.012, 16, 140),
+      new THREE.MeshBasicMaterial({ color: 0x1a6bff, transparent: true, opacity: 0.13 })
+    );
+    ringA.rotation.set(Math.PI / 5, 0, Math.PI / 8);
+    scene.add(ringA);
 
-    var ring2Geo = new THREE.TorusGeometry(2.0, 0.008, 16, 100);
-    var ring2Mat = new THREE.MeshBasicMaterial({ color: 0x00d4a8, transparent: true, opacity: 0.1 });
-    var ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-    ring2.rotation.x = -Math.PI / 4;
-    ring2.rotation.y = Math.PI / 6;
-    scene.add(ring2);
+    var ringB = new THREE.Mesh(
+      new THREE.TorusGeometry(2.2, 0.008, 16, 100),
+      new THREE.MeshBasicMaterial({ color: 0x00d4a8, transparent: true, opacity: 0.10 })
+    );
+    ringB.rotation.set(-Math.PI / 4, Math.PI / 6, 0);
+    scene.add(ringB);
 
-    /* ── 마우스 인터랙션 ── */
+    /* ── 마우스 패럴랙스 ── */
     var mouse = { x: 0, y: 0 };
-    var targetRot = { x: 0, y: 0 };
-    var currentRot = { x: 0, y: 0 };
-    document.addEventListener('mousemove', function(e){
-      mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouse.y = (e.clientY / window.innerHeight - 0.5) * 2;
+    var rot   = { x: 0, y: 0 };
+    document.addEventListener('mousemove', function(e) {
+      mouse.x =  (e.clientX / window.innerWidth  - 0.5) * 2;
+      mouse.y = -(e.clientY / window.innerHeight - 0.5) * 2;
     });
 
     /* ── 리사이즈 ── */
-    window.addEventListener('resize', function(){
-      W = wrap.clientWidth; H = wrap.clientHeight;
+    window.addEventListener('resize', function() {
+      W = window.innerWidth;
+      H = canvas.parentElement.offsetHeight || window.innerHeight;
       camera.aspect = W / H;
       camera.updateProjectionMatrix();
       renderer.setSize(W, H);
@@ -397,114 +329,111 @@ export const ViralPage = () => (
 
     /* ── 애니메이션 루프 ── */
     var clock = new THREE.Clock();
-    function animate(){
+    (function animate() {
       requestAnimationFrame(animate);
       var t = clock.getElapsedTime();
 
-      /* 씬 전체 부드러운 마우스 회전 */
-      targetRot.y = mouse.x * 0.3;
-      targetRot.x = -mouse.y * 0.2;
-      currentRot.x += (targetRot.x - currentRot.x) * 0.05;
-      currentRot.y += (targetRot.y - currentRot.y) * 0.05;
-      scene.rotation.x = currentRot.x;
-      scene.rotation.y = currentRot.y + t * 0.08;
+      /* 씬 전체 — 느린 자동 회전 + 마우스 패럴랙스 */
+      rot.x += (mouse.y * 0.18 - rot.x) * 0.04;
+      rot.y += (mouse.x * 0.22 + t * 0.06 - rot.y) * 0.03;
+      scene.rotation.x = rot.x;
+      scene.rotation.y = rot.y;
 
-      /* 구체별 개별 공전 */
-      spheres.forEach(function(s, i){
-        var bp = s.userData.basePos;
-        var spd = 0.4 + i * 0.15;
-        var amp = 0.18 + i * 0.04;
-        s.position.x = bp[0] + Math.cos(t * spd + i) * amp;
-        s.position.y = bp[1] + Math.sin(t * spd * 0.7 + i) * amp;
-        s.position.z = bp[2] + Math.sin(t * 0.5 + i) * 0.12;
-        /* 자전 */
+      /* 각 구체 — 독립 부유 */
+      spheres.forEach(function(s, i) {
+        var b   = s.userData.base;
+        var spd = 0.38 + i * 0.13;
+        var amp = 0.20 + i * 0.05;
+        s.position.set(
+          b[0] + Math.cos(t * spd + i * 1.3) * amp,
+          b[1] + Math.sin(t * spd * 0.8 + i) * amp,
+          b[2] + Math.sin(t * 0.5 + i)       * 0.14
+        );
         s.rotation.x += 0.003 + i * 0.001;
-        s.rotation.y += 0.005 + i * 0.002;
-        /* 펄스 스케일 */
-        var pulse = 1 + Math.sin(t * 1.2 + i * 1.5) * 0.025;
+        s.rotation.y += 0.004 + i * 0.002;
+        /* 펄스 */
+        var pulse = 1 + Math.sin(t * 1.3 + i * 1.6) * 0.022;
         s.scale.setScalar(pulse);
       });
 
-      /* 링 회전 */
-      ring.rotation.z  += 0.003;
-      ring2.rotation.z -= 0.002;
-      ring2.rotation.x += 0.001;
+      /* 링 */
+      ringA.rotation.z += 0.0025;
+      ringB.rotation.z -= 0.0018;
+      ringB.rotation.x += 0.0008;
 
-      /* 조명 이동 */
-      bluePoint.position.x = Math.sin(t * 0.6) * 3;
-      bluePoint.position.y = Math.cos(t * 0.4) * 2;
-      tealPoint.position.x = Math.cos(t * 0.5) * 3;
-      tealPoint.position.z = Math.sin(t * 0.7) * 2;
+      /* 조명 궤도 */
+      blueKey.position.x    = Math.sin(t * 0.55) * 4;
+      blueKey.position.y    = Math.cos(t * 0.40) * 3;
+      tealFill.position.x   = Math.cos(t * 0.45) * 4;
+      tealFill.position.z   = Math.sin(t * 0.65) * 2;
+      purpleRim.position.x  = Math.sin(t * 0.3 + 1) * 3;
+      orangeAccent.position.y = Math.cos(t * 0.35 + 2) * 3;
 
       renderer.render(scene, camera);
-    }
-    animate();
+    })();
   }
 
   /* ══════════════════════════════════════════
-     2. 타이핑 효과
+     타이핑 효과
   ══════════════════════════════════════════ */
   var el = document.getElementById('mktTyping');
-  if(el){
-    var words = ['발견하게 합니다','신뢰하게 합니다','구매하게 합니다','성장시킵니다'];
-    var wi=0, ci=0, deleting=false;
-    function type(){
-      var word = words[wi];
-      if(!deleting){
-        el.textContent = word.slice(0,++ci);
-        if(ci===word.length){ deleting=true; setTimeout(type,1800); return; }
+  if (el) {
+    var words = ['발견하게 합니다', '신뢰하게 합니다', '구매하게 합니다', '성장시킵니다'];
+    var wi = 0, ci = 0, del = false;
+    function type() {
+      var w = words[wi];
+      if (!del) {
+        el.textContent = w.slice(0, ++ci);
+        if (ci === w.length) { del = true; setTimeout(type, 1800); return; }
       } else {
-        el.textContent = word.slice(0,--ci);
-        if(ci===0){ deleting=false; wi=(wi+1)%words.length; setTimeout(type,400); return; }
+        el.textContent = w.slice(0, --ci);
+        if (ci === 0)  { del = false; wi = (wi + 1) % words.length; setTimeout(type, 400); return; }
       }
-      setTimeout(type, deleting?50:90);
+      setTimeout(type, del ? 50 : 90);
     }
-    setTimeout(type,800);
+    setTimeout(type, 800);
   }
 
   /* ══════════════════════════════════════════
-     3. 스크롤 리빌
+     스크롤 리빌
   ══════════════════════════════════════════ */
-  var revealEls = document.querySelectorAll('.reveal-up, .reveal-side--left, .reveal-side--right');
-  if('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); }
+  var revEls = document.querySelectorAll('.reveal-up,.reveal-side--left,.reveal-side--right');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); }
       });
-    },{threshold:0.15});
-    revealEls.forEach(function(el){ io.observe(el); });
+    }, { threshold: 0.15 });
+    revEls.forEach(function(el) { io.observe(el); });
   } else {
-    revealEls.forEach(function(el){ el.classList.add('revealed'); });
+    revEls.forEach(function(el) { el.classList.add('revealed'); });
   }
 
   /* ══════════════════════════════════════════
-     4. 숫자 카운터
+     숫자 카운터
   ══════════════════════════════════════════ */
   var nums = document.querySelectorAll('.mss-num');
   var counted = false;
-  function countUp(){
-    if(counted) return;
+  function countUp() {
+    if (counted) return;
     var strip = document.querySelector('.mkt-stats-strip');
-    if(!strip) return;
-    var rect = strip.getBoundingClientRect();
-    if(rect.top < window.innerHeight - 80){
+    if (!strip) return;
+    if (strip.getBoundingClientRect().top < window.innerHeight - 80) {
       counted = true;
-      nums.forEach(function(n){
+      nums.forEach(function(n) {
         var target = parseInt(n.getAttribute('data-target'));
-        var duration = 1400, startTime = null;
-        function step(ts){
-          if(!startTime) startTime=ts;
-          var prog = Math.min((ts-startTime)/duration,1);
-          var ease = 1-Math.pow(1-prog,3);
-          n.textContent = Math.floor(ease*target);
-          if(prog<1) requestAnimationFrame(step);
-          else n.textContent = target;
+        var t0 = null, dur = 1400;
+        function step(ts) {
+          if (!t0) t0 = ts;
+          var p = Math.min((ts - t0) / dur, 1);
+          n.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+          if (p < 1) requestAnimationFrame(step); else n.textContent = target;
         }
         requestAnimationFrame(step);
       });
     }
   }
-  window.addEventListener('scroll',countUp,{passive:true});
+  window.addEventListener('scroll', countUp, { passive: true });
   countUp();
 
 })();

@@ -6373,14 +6373,23 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   50% { transform: translate(-20px,30px); }
 }
 
-/* 히어로 내부 레이아웃 */
+/* ── 전체 배경 3D 캔버스 ── */
+.mkt-3d-bg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+}
+
+/* 히어로 내부 레이아웃 — 텍스트만, 단일 컬럼 */
 .mkt-hero-inner {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: 60px;
-  align-items: center;
+  grid-template-columns: 1fr;
+  max-width: 640px;          /* 왼쪽 절반만 차지 */
   padding-top: 100px;
   padding-bottom: 80px;
 }
@@ -6520,115 +6529,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   80% { transform: translateY(8px); opacity: 0; }
 }
 
-/* ══════════════════════════════════════
-   3D 씬 컨테이너
-══════════════════════════════════════ */
-.mkt-3d-wrap {
-  position: relative;
-  width: 100%;
-  height: 500px;
-  opacity: 0;
-  animation: heroLineIn 1s 0.5s ease forwards;
-}
-.mkt-3d-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-  border-radius: 20px;
-  /* 미묘한 테두리 글로우 */
-  box-shadow:
-    0 0 0 1px rgba(26,107,255,0.15),
-    0 0 60px rgba(26,107,255,0.08),
-    inset 0 0 80px rgba(0,0,0,0.4);
-}
-
-/* ── HUD 레이블 오버레이 ── */
-.mkt-3d-hud {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.m3h-label {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  opacity: 0;
-  animation: m3hFadeIn 0.6s ease forwards;
-}
-.m3h-label--awareness { top: 10%;  left: 5%;  animation-delay: 1.2s; }
-.m3h-label--explore   { top: 15%;  right: 6%; animation-delay: 1.5s; }
-.m3h-label--trust     { bottom: 28%; left: 8%; animation-delay: 1.8s; }
-.m3h-label--convert   { bottom: 18%; right: 5%;animation-delay: 2.1s; }
-@keyframes m3hFadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.m3h-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  box-shadow: 0 0 8px currentColor;
-}
-.m3h-label--awareness .m3h-dot { background: #1a6bff; box-shadow: 0 0 10px #1a6bff; }
-.m3h-label--explore   .m3h-dot { background: #00b4d8; box-shadow: 0 0 10px #00b4d8; }
-.m3h-label--trust     .m3h-dot { background: #00d4a8; box-shadow: 0 0 10px #00d4a8; }
-.m3h-label--convert   .m3h-dot { background: #ff6b35; box-shadow: 0 0 10px #ff6b35; }
-.m3h-text {
-  font-size: 12px;
-  font-weight: 800;
-  color: rgba(255,255,255,0.9);
-  letter-spacing: 0.05em;
-}
-.m3h-val {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  color: rgba(255,255,255,0.3);
-}
-
-/* ── 우하단 KPI 미니 바 ── */
-.mkt-3d-kpi {
-  position: absolute;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 0;
-  background: rgba(5,10,30,0.75);
-  border: 1px solid rgba(26,107,255,0.2);
-  border-radius: 40px;
-  padding: 10px 22px;
-  backdrop-filter: blur(14px);
-  opacity: 0;
-  animation: m3hFadeIn 0.6s 2.4s ease forwards;
-  white-space: nowrap;
-}
-.m3k-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 0 16px;
-}
-.m3k-item strong {
-  font-size: 16px;
-  font-weight: 800;
-  color: #fff;
-  font-family: 'Space Grotesk', sans-serif;
-  line-height: 1;
-}
-.m3k-item span {
-  font-size: 9px;
-  color: rgba(255,255,255,0.35);
-  letter-spacing: 0.08em;
-}
-.m3k-sep {
-  width: 1px;
-  height: 28px;
-  background: rgba(255,255,255,0.1);
-}
+/* ── 숫자 스트립 바로 위 빈 구분 ── */
 
 /* ── 숫자 스트립 ── */
 .mkt-stats-strip {
@@ -6903,8 +6804,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 
 /* ── 반응형 ── */
 @media (max-width: 1024px) {
-  .mkt-hero-inner { grid-template-columns: 1fr; }
-  .mkt-3d-wrap { display: none; }
+  .mkt-hero-inner { max-width: 100%; }
   .mkt-hero { min-height: auto; padding: 140px 0 80px; }
   .mfs-step, .mfs-step:nth-child(even) { flex-direction: column; gap: 12px; }
   .mfs-step-num { display: none; }
@@ -6913,6 +6813,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .mkt-stats-inner { justify-content: center; gap: 32px; }
   .mss-item { min-width: 30%; }
   .mkt-hero-btns { flex-direction: column; align-items: flex-start; }
+  .mkt-hero-inner { max-width: 100%; }
 }
 
 /* ══════════════════════════════════════════════════
