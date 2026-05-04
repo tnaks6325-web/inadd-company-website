@@ -1,8 +1,8 @@
 /**
- * svc-three-bg.js  v2
+ * svc-three-bg.js  v3
  * - 캔버스를 position:fixed 로 전체 페이지 배경에 깔기
  * - 구체들 전체 화면에 넓게 분산, 자유롭게 둥둥 부유
- * - 마우스 패럴랙스 없음
+ * - 마우스 팔로우 안개/빛 효과 추가
  * 사용법: initSvcThreeBg(primaryHex, secondaryHex, accentHex)
  */
 (function(global){
@@ -156,6 +156,59 @@
       return mesh;
     });
 
+    /* ── 마우스 팔로우 안개 조명 ── */
+    /* 마우스 위치를 NDC(-1~1) 로 추적 */
+    var mouse = { x: 0, y: 0 };          /* 실제 마우스 NDC */
+    var mouseSmooth = { x: 0, y: 0 };    /* lerp 된 부드러운 위치 */
+    var mousePrev   = { x: 0, y: 0 };    /* 이전 프레임 위치 */
+    var mouseVel    = { x: 0, y: 0 };    /* 속도 (이동 빠를수록 빛 강해짐) */
+
+    window.addEventListener('mousemove', function(e) {
+      mouse.x =  (e.clientX / window.innerWidth)  * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    /* 마우스 팔로우 포인트 라이트 — 안개 속에서 퍼지는 빛 */
+    var fogLight = new THREE.PointLight(primaryHex, 0, 18);
+    fogLight.position.set(0, 0, 6);
+    scene.add(fogLight);
+
+    /* 보조 안개 조명 — 약간 뒤처지며 색이 다름 (trailing glow) */
+    var fogTrail = new THREE.PointLight(accentHex, 0, 12);
+    fogTrail.position.set(0, 0, 5);
+    scene.add(fogTrail);
+
+    /* 마우스 커서 주변에 미세한 파티클 스프레이 (안개 티끌) */
+    var dustN   = 180;
+    var dustBuf = new Float32Array(dustN * 3);
+    var dustVel = new Float32Array(dustN * 3);  /* 각 파티클 속도 */
+    for (var i = 0; i < dustN; i++) {
+      /* 초기엔 랜덤하게 흩어져 있음 */
+      dustBuf[i*3]   = (Math.random() - 0.5) * 14;
+      dustBuf[i*3+1] = (Math.random() - 0.5) * 10;
+      dustBuf[i*3+2] = (Math.random() - 0.5) * 4 + 4;
+      /* 각 파티클 고유 표류 속도 */
+      dustVel[i*3]   = (Math.random() - 0.5) * 0.004;
+      dustVel[i*3+1] = (Math.random() - 0.5) * 0.004;
+      dustVel[i*3+2] = 0;
+    }
+    var dustGeo = new THREE.BufferGeometry();
+    dustGeo.setAttribute('position', new THREE.BufferAttribute(dustBuf, 3));
+    var dustMat = new THREE.PointsMaterial({
+      color:       primaryHex,
+      size:        0.055,
+      transparent: true,
+      opacity:     0,            /* 처음엔 투명 — 마우스 움직이면 나타남 */
+      depthWrite:  false,
+      blending:    THREE.AdditiveBlending,
+    });
+    var dustPoints = new THREE.Points(dustGeo, dustMat);
+    scene.add(dustPoints);
+
+    /* 마우스가 얼마나 빠르게 움직이는지 추적 */
+    var mouseSpeed     = 0;    /* 0~1 정규화 */
+    var mouseSpeedSmth = 0;    /* 부드럽게 감쇠 */
+
     /* ── 리사이즈 ── */
     window.addEventListener('resize', function() {
       W = window.innerWidth;
@@ -165,17 +218,79 @@
       renderer.setSize(W, H);
     });
 
-    /* ── 애니메이션 루프 (마우스 패럴랙스 없음) ── */
+    /* ── 애니메이션 루프 ── */
     var clock = new THREE.Clock();
     (function animate() {
       requestAnimationFrame(animate);
       var t = clock.getElapsedTime();
 
-      /* 씬 전체 — 아주 느린 자동 회전만 */
+      /* ── 마우스 lerp: 0.04 = 아주 느리고 묵직하게 추적 ── */
+      mouseSmooth.x += (mouse.x - mouseSmooth.x) * 0.04;
+      mouseSmooth.y += (mouse.y - mouseSmooth.y) * 0.04;
+
+      /* 마우스 이동 속도 계산 */
+      var dx = mouseSmooth.x - mousePrev.x;
+      var dy = mouseSmooth.y - mousePrev.y;
+      mouseSpeed     = Math.min(Math.sqrt(dx*dx + dy*dy) * 60, 1); /* 60 = 감도 */
+      mouseSpeedSmth += (mouseSpeed - mouseSpeedSmth) * 0.08;       /* 부드럽게 */
+      mousePrev.x = mouseSmooth.x;
+      mousePrev.y = mouseSmooth.y;
+
+      /* 마우스 NDC → 3D world 좌표 (z=6 평면 기준) */
+      var mwx = mouseSmooth.x * 7.5;   /* 화면 폭 절반 대략 7.5 unit */
+      var mwy = mouseSmooth.y * 5.5;
+
+      /* ── fogLight: 마우스를 천천히 따라오는 주 안개 조명 ── */
+      fogLight.position.x += (mwx - fogLight.position.x) * 0.035;
+      fogLight.position.y += (mwy - fogLight.position.y) * 0.035;
+      /* 강도: 기본 4 + 빠르게 움직일수록 최대 9까지 올라감 */
+      fogLight.intensity = 4 + mouseSpeedSmth * 5;
+      /* 색상: 속도에 따라 primaryHex ↔ accentHex 사이를 살짝 진동 */
+      fogLight.color.setHex(mouseSpeedSmth > 0.4 ? accentHex : primaryHex);
+
+      /* ── fogTrail: fogLight보다 더 느리게 — 잔상처럼 뒤처짐 ── */
+      fogTrail.position.x += (fogLight.position.x - fogTrail.position.x) * 0.018;
+      fogTrail.position.y += (fogLight.position.y - fogTrail.position.y) * 0.018;
+      fogTrail.intensity = 2.5 + mouseSpeedSmth * 3;
+
+      /* ── 먼지 파티클: 마우스 주변으로 서서히 끌려옴 ── */
+      var attr = dustGeo.getAttribute('position');
+      for (var i = 0; i < dustN; i++) {
+        var px = attr.getX(i);
+        var py = attr.getY(i);
+        var pz = attr.getZ(i);
+
+        /* 마우스 방향 인력: 거리 멀수록 약하게 */
+        var ex  = mwx - px;
+        var ey  = mwy - py;
+        var dist2 = ex*ex + ey*ey;
+        var pull  = 0.0006 / (dist2 * 0.08 + 0.5);  /* 거리 역비례 인력 */
+
+        /* 고유 표류 + 인력 합산 */
+        px += dustVel[i*3]   + ex * pull;
+        py += dustVel[i*3+1] + ey * pull;
+        pz += Math.sin(t * 0.3 + i * 0.4) * 0.003;  /* 살짝 Z 흔들림 */
+
+        /* 너무 멀리 가면 마우스 근처로 리셋 */
+        if (dist2 > 120) {
+          px = mwx + (Math.random() - 0.5) * 5;
+          py = mwy + (Math.random() - 0.5) * 4;
+          pz = 4.5 + Math.random() * 1.5;
+        }
+
+        attr.setXYZ(i, px, py, pz);
+      }
+      attr.needsUpdate = true;
+
+      /* 먼지 불투명도: 마우스 속도 + 항상 살짝 보이게 */
+      dustMat.opacity = 0.12 + mouseSpeedSmth * 0.45;
+      dustMat.size    = 0.045 + mouseSpeedSmth * 0.035;
+
+      /* ── 씬 전체 — 아주 느린 자동 회전 ── */
       scene.rotation.y = t * 0.012;
       scene.rotation.x = Math.sin(t * 0.007) * 0.06;
 
-      /* 각 구체 독립 부유 */
+      /* ── 각 구체 독립 부유 ── */
       spheres.forEach(function(s) {
         var b   = s.userData.base;
         var spd = s.userData.speed;
@@ -194,10 +309,10 @@
         s.scale.setScalar(pulse);
       });
 
-      /* 링 회전 */
+      /* ── 링 회전 ── */
       rings.forEach(function(r) { r.rotation.z += r.userData.spd; });
 
-      /* 조명 궤도 (씬 독립) */
+      /* ── 조명 궤도 (씬 독립) ── */
       keyLight.position.x  = Math.sin(t * 0.4) * 5;
       keyLight.position.y  = Math.cos(t * 0.3) * 4;
       fillLight.position.x = Math.cos(t * 0.35) * 5;
