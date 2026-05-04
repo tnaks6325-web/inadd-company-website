@@ -514,18 +514,20 @@ export const ViralPage = () => (
     var ss = document.createElement('script');
     ss.src = '/static/scroll-stack.js';
     ss.onload = function() {
-      if (typeof initScrollStack === 'function') {
-        initScrollStack('#ss-container', {
-          itemDistance:      220,
-          itemScale:         0.03,
-          itemStackDistance: 28,
-          stackPosition:     '18%',
-          scaleEndPosition:  '8%',
-          baseScale:         0.82,
-          rotationAmount:    0,
-          blurAmount:        1.2,
+      if (typeof initScrollStack !== 'function') return;
+      /* 이미지·레이아웃 안정 후 초기화 (requestAnimationFrame 2회 대기) */
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          initScrollStack('#ss-container', {
+            itemScale:        0.03,   /* 카드당 축소 배율 */
+            itemStackOffset:  28,     /* 위로 쌓일 px 간격 */
+            baseScale:        0.82,   /* 뒤 카드 최소 scale */
+            blurAmount:       1.2,    /* 뒤 카드 blur (px/단계) */
+            scrollHeight:     '90vh', /* 카드 1장당 스크롤 높이 */
+            stickyTop:        '10vh', /* sticky top 위치 */
+          });
         });
-      }
+      });
     };
     document.head.appendChild(ss);
   })();
