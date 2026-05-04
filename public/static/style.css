@@ -6767,6 +6767,15 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   background: rgba(26,107,255,0.70);
   flex-shrink: 0;
 }
+.mkt-marquee-emoji {
+  font-size: 14px;
+  line-height: 1;
+  filter: saturate(0.7);
+  transition: filter 0.2s;
+}
+.mkt-marquee-item:hover .mkt-marquee-emoji {
+  filter: saturate(1.2);
+}
 
 /* ══ FEATURES 섹션 ══ */
 .mkt-features-section {

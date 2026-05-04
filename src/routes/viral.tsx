@@ -112,10 +112,26 @@ export const ViralPage = () => (
     ════════════════════════════════════════ */}
     <div class="mkt-marquee-bar">
       <div class="mkt-marquee-track">
-        {['바이럴 마케팅', '인플루언서', '시딩 캠페인', 'SEO 마케팅', '고객 리뷰', '올리브영', 'PPL', '바이럴 마케팅', '인플루언서', '시딩 캠페인', 'SEO 마케팅', '고객 리뷰', '올리브영', 'PPL'].map((tag, i) => (
+        {[
+          { emoji: '🔥', label: '바이럴 마케팅' },
+          { emoji: '⭐', label: '인플루언서' },
+          { emoji: '🌱', label: '시딩 캠페인' },
+          { emoji: '🔍', label: 'SEO 마케팅' },
+          { emoji: '💬', label: '고객 리뷰' },
+          { emoji: '💚', label: '올리브영' },
+          { emoji: '🎬', label: 'PPL' },
+          { emoji: '🔥', label: '바이럴 마케팅' },
+          { emoji: '⭐', label: '인플루언서' },
+          { emoji: '🌱', label: '시딩 캠페인' },
+          { emoji: '🔍', label: 'SEO 마케팅' },
+          { emoji: '💬', label: '고객 리뷰' },
+          { emoji: '💚', label: '올리브영' },
+          { emoji: '🎬', label: 'PPL' },
+        ].map((item, i) => (
           <span class="mkt-marquee-item" key={i}>
             <span class="mkt-marquee-dot"></span>
-            {tag}
+            <span class="mkt-marquee-emoji">{item.emoji}</span>
+            {item.label}
           </span>
         ))}
       </div>
