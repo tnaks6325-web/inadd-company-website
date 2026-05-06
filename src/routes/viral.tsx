@@ -277,8 +277,18 @@ export const ViralPage = () => (
               accentColor: '#ef4444',
             },
           ].map((s, i) => (
-            <a href={s.href} class="msig-card reveal-up" style={`transition-delay:${i * 0.08}s;--accent:${s.accentColor}`} key={s.href}>
+            <a href={s.href} class={`msig-card reveal-up${s.tag === 'INFLUENCER' ? ' msig-card--has-video' : ''}`} style={`transition-delay:${i * 0.08}s;--accent:${s.accentColor}`} key={s.href}>
               <div class="msig-img" style={`background-image:url('${s.img}');background-position:${'imgPos' in s ? (s as any).imgPos : 'center center'}`}></div>
+              {s.tag === 'INFLUENCER' && (
+                <video
+                  class="msig-video"
+                  src="/static/svc-images/influencer-video.mp4"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                ></video>
+              )}
               <div class="msig-overlay"></div>
               <div class="msig-accent-glow" style={`background: radial-gradient(circle at 50% 100%, ${s.accentColor}44 0%, transparent 65%)`}></div>
               <div class="msig-tag" style={`background:${s.accentColor}44;border-color:${s.accentColor}88`}>{s.tag}</div>
