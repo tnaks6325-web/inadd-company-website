@@ -10356,23 +10356,47 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   margin-bottom: 52px;
   flex-wrap: wrap;
   width: 100%;
-  max-width: 900px;
+  max-width: 960px;
   margin-left: auto;
   margin-right: auto;
 }
-/* 플로우 카드 — 이미지 썸네일 형태 */
+
+/* 플로우 카드 */
 .ifl-data-flow-step {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 0;
   flex: 1;
   min-width: 200px;
-  max-width: 280px;
+  max-width: 290px;
   position: relative;
-  transition: transform 0.25s;
+  transition: transform 0.3s cubic-bezier(.25,.46,.45,.94);
+  cursor: default;
 }
-.ifl-data-flow-step:hover { transform: translateY(-4px); }
+.ifl-data-flow-step:hover { transform: translateY(-6px); }
+
+/* 스텝 번호 뱃지 — 이미지 좌상단 */
+.ifl-data-flow-step::before {
+  content: attr(data-step);
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  width: 28px;
+  height: 28px;
+  background: rgba(26,107,255,0.85);
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(26,107,255,0.5);
+}
 
 /* 이미지 래퍼 */
 .ifl-data-flow-img-wrap {
@@ -10383,62 +10407,110 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   position: relative;
   border: 1px solid rgba(255,255,255,0.1);
   box-shadow: 0 12px 36px rgba(0,0,0,0.55);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.ifl-data-flow-step:hover .ifl-data-flow-img-wrap {
+  border-color: rgba(26,107,255,0.5);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.65), 0 0 0 1px rgba(26,107,255,0.3), 0 0 24px rgba(26,107,255,0.15);
 }
 .ifl-data-flow-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s cubic-bezier(.25,.46,.45,.94);
+  filter: brightness(0.82) saturate(0.9);
 }
 .ifl-data-flow-step:hover .ifl-data-flow-img-wrap img {
-  transform: scale(1.04);
+  transform: scale(1.06);
+  filter: brightness(0.95) saturate(1.05);
 }
-/* 오버레이 — 기본 */
+
+/* 오버레이 — 기본: 하단에서 위로 올라오는 그라디언트 */
 .ifl-data-flow-img-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(5,7,16,0.1) 0%,
-    rgba(5,7,16,0.45) 100%
+    rgba(5,7,16,0.0) 30%,
+    rgba(5,7,16,0.75) 100%
   );
   border-radius: inherit;
+  transition: opacity 0.3s;
 }
 /* 오버레이 — accent (합리적 제안) */
 .ifl-data-flow-img-overlay--accent {
   background: linear-gradient(
     to bottom,
-    rgba(26,107,255,0.08) 0%,
-    rgba(5,7,16,0.55) 100%
+    rgba(26,107,255,0.05) 20%,
+    rgba(5,7,16,0.78) 100%
   );
 }
+
+/* 이미지 위에 호버 시 나타나는 라벨 오버레이 */
+.ifl-data-flow-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(26,107,255,0.08);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.ifl-data-flow-step:hover .ifl-data-flow-img-wrap::after {
+  opacity: 1;
+}
+
 /* accent 카드 테두리 강조 */
 .ifl-data-flow-step--accent .ifl-data-flow-img-wrap {
   border-color: rgba(26,107,255,0.4);
   box-shadow: 0 12px 36px rgba(0,0,0,0.55), 0 0 0 1px rgba(26,107,255,0.25);
 }
+.ifl-data-flow-step--accent::before {
+  background: rgba(26,107,255,1);
+  box-shadow: 0 2px 12px rgba(26,107,255,0.7);
+}
 
+/* 라벨 영역 — 이미지 하단 안쪽에 겹침 */
+.ifl-data-flow-label-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 16px 14px;
+  z-index: 5;
+  pointer-events: none;
+}
 .ifl-data-flow-label {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.01em;
   white-space: nowrap;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  margin-bottom: 4px;
 }
 .ifl-data-flow-step--accent .ifl-data-flow-label {
-  color: var(--blue, #1a6bff);
+  color: #fff;
 }
 .ifl-data-flow-sub {
-  font-size: 12px;
-  color: rgba(255,255,255,0.38);
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.6);
   white-space: nowrap;
-  margin-top: -6px;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+  transition: color 0.3s;
 }
+.ifl-data-flow-step:hover .ifl-data-flow-sub {
+  color: rgba(255,255,255,0.85);
+}
+
+/* 화살표 */
 .ifl-data-flow-arrow {
   padding: 0 12px;
-  color: rgba(26,107,255,0.45);
+  color: rgba(26,107,255,0.5);
   flex-shrink: 0;
+  transition: color 0.3s;
+  margin-bottom: 32px; /* 라벨이 이미지 아래로 내려간 공간 보정 */
 }
 .ifl-data-flow-arrow svg { width: 40px; height: 12px; }
 

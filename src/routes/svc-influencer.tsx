@@ -123,35 +123,41 @@ export const SvcInfluencerPage = () => (
 
           {/* 3단계 플로우 */}
           <div class="ifl-data-flow">
-            <div class="ifl-data-flow-step">
+            <div class="ifl-data-flow-step" data-step="01">
               <div class="ifl-data-flow-img-wrap">
                 <img src="/static/images/process/flow-collect.jpg" alt="데이터 수집" />
                 <div class="ifl-data-flow-img-overlay"></div>
+                <div class="ifl-data-flow-label-wrap">
+                  <div class="ifl-data-flow-label">데이터 수집</div>
+                  <div class="ifl-data-flow-sub">조회수 · 구독자 · 유지율</div>
+                </div>
               </div>
-              <div class="ifl-data-flow-label">데이터 수집</div>
-              <div class="ifl-data-flow-sub">조회수 · 구독자 · 유지율</div>
             </div>
             <div class="ifl-data-flow-arrow">
               <svg viewBox="0 0 40 12" fill="none"><path d="M0 6 H34 M28 1 L34 6 L28 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="ifl-data-flow-step">
+            <div class="ifl-data-flow-step" data-step="02">
               <div class="ifl-data-flow-img-wrap">
                 <img src="/static/images/process/flow-review.jpg" alt="면밀한 검토" />
                 <div class="ifl-data-flow-img-overlay"></div>
+                <div class="ifl-data-flow-label-wrap">
+                  <div class="ifl-data-flow-label">면밀한 검토</div>
+                  <div class="ifl-data-flow-sub">전문가 기준으로 엄선</div>
+                </div>
               </div>
-              <div class="ifl-data-flow-label">면밀한 검토</div>
-              <div class="ifl-data-flow-sub">전문가 기준으로 엄선</div>
             </div>
             <div class="ifl-data-flow-arrow">
               <svg viewBox="0 0 40 12" fill="none"><path d="M0 6 H34 M28 1 L34 6 L28 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="ifl-data-flow-step ifl-data-flow-step--accent">
+            <div class="ifl-data-flow-step ifl-data-flow-step--accent" data-step="03">
               <div class="ifl-data-flow-img-wrap">
                 <img src="/static/images/process/flow-propose.jpg" alt="합리적 제안" />
                 <div class="ifl-data-flow-img-overlay ifl-data-flow-img-overlay--accent"></div>
+                <div class="ifl-data-flow-label-wrap">
+                  <div class="ifl-data-flow-label">합리적 제안</div>
+                  <div class="ifl-data-flow-sub">거품 없이, 목적에 맞게</div>
+                </div>
               </div>
-              <div class="ifl-data-flow-label">합리적 제안</div>
-              <div class="ifl-data-flow-sub">거품 없이, 목적에 맞게</div>
             </div>
           </div>
 
@@ -1106,7 +1112,7 @@ export const SvcInfluencerPage = () => (
           </div>
 
           <a href="/contact?type=kickoff" class="hero-cta-btn primary ifl2-conf-cta">
-            <span>킥오프 미팅 신청하기</span>
+            <span>상담 신청하기</span>
             <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
