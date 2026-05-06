@@ -156,74 +156,132 @@ export const SvcViralPage = () => (
           <h2 class="sec-title">바이럴 마케팅<br /><em>상품 라인업</em></h2>
         </div>
         <div class="vp-grid">
-          {[
-            {
-              icon:'☕', name:'카페 침투 마케팅', sub:'Cafe Viral',
-              desc:'맘카페·네이버카페 등 소비자가 모이는 커뮤니티에 자연스럽게 스며드는 바이럴 콘텐츠 기획·운영',
-              kpis:[
-                { val:'1,965개', label:'보유 카페 수' },
-                { val:'19개', label:'진행 카테고리 수' },
-              ]
-            },
-            {
-              icon:'💬', name:'커뮤니티 바이럴', sub:'Community Viral',
-              desc:'온라인 커뮤니티 내 이슈화로 브랜드 검색량과 자연 유입을 폭발적으로 증가시킵니다',
-              kpis:[
-                { val:'72+', label:'진행 가능 커뮤니티' },
-              ]
-            },
-            {
-              icon:'📱', name:'SNS 바이럴', sub:'SNS Viral',
-              desc:'인스타그램·틱톡·유튜브 등 SNS 채널에서의 자연스러운 확산 구조를 설계합니다',
-              kpis:[
-                { val:'450개+', label:'진행 가능 계정' },
-              ],
-              tags:['인스타 카드뉴스','먹스타그램 배포','숏폼 배포','숏폼 제작','X (구 트위터)','스레드'],
-            },
-            {
-              icon:'📰', name:'언론 바이럴', sub:'Press Viral',
-              desc:'뉴스·매체 배포를 통해 브랜드의 공신력과 검색 노출을 동시에 강화합니다',
-              kpis:[
-                { val:'153+', label:'보유 매체 수' },
-                { val:'7개', label:'보유 카테고리 수' },
-              ]
-            },
-          ].map((p, i) => (
-            <div class="vp-card" id={`vp-card-${i}`} onclick={`toggleVpCard(${i})`}>
+
+          {/* ── 카페 침투 마케팅 ── */}
+          <div class="vp-card" id="vp-card-0" onclick="toggleVpCard(0)">
+            <div class="vp-card-img-wrap">
+              <img src="/static/images/viral-products/vp-cafe.jpg" alt="카페 침투 마케팅" class="vp-card-img" />
+              <div class="vp-card-img-overlay"></div>
+              <span class="vp-card-img-badge">Cafe Viral</span>
+            </div>
+            <div class="vp-card-content">
               <div class="vp-card-top">
-                <div class="vp-icon">{p.icon}</div>
+                <div class="vp-icon">☕</div>
                 <div class="vp-body">
-                  <h3>{p.name}</h3>
-                  <span class="vp-sub">{p.sub}</span>
-                  <p>{p.desc}</p>
+                  <h3>카페 침투 마케팅</h3>
+                  <span class="vp-sub">Cafe Viral</span>
+                  <p>맘카페·네이버카페 등 소비자가 모이는 커뮤니티에 자연스럽게 스며드는 바이럴 콘텐츠 기획·운영</p>
                 </div>
-                <div class="vp-toggle-btn" id={`vp-toggle-${i}`}>
+                <div class="vp-toggle-btn" id="vp-toggle-0">
                   <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
               </div>
-              <div class="vp-kpi-panel" id={`vp-kpi-${i}`}>
+              <div class="vp-kpi-panel" id="vp-kpi-0">
                 <div class="vp-kpi-divider"></div>
                 <div class="vp-kpi-row">
-                  {p.kpis.map(k => (
-                    <div class="vp-kpi-item">
-                      <strong class="vp-kpi-val">{k.val}</strong>
-                      <span class="vp-kpi-label">{k.label}</span>
-                    </div>
-                  ))}
+                  <div class="vp-kpi-item"><strong class="vp-kpi-val">1,965개</strong><span class="vp-kpi-label">보유 카페 수</span></div>
+                  <div class="vp-kpi-item"><strong class="vp-kpi-val">19개</strong><span class="vp-kpi-label">진행 카테고리 수</span></div>
                 </div>
-                {p.tags && (
-                  <div class="vp-tags-row">
-                    <span class="vp-tags-label">상품군</span>
-                    <div class="vp-tags-wrap">
-                      {p.tags.map(t => (
-                        <span class="vp-tag">{t}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* ── 커뮤니티 바이럴 ── */}
+          <div class="vp-card" id="vp-card-1" onclick="toggleVpCard(1)">
+            <div class="vp-card-img-wrap">
+              <img src="/static/images/viral-products/vp-community.jpg" alt="커뮤니티 바이럴" class="vp-card-img" />
+              <div class="vp-card-img-overlay"></div>
+              <span class="vp-card-img-badge">Community Viral</span>
+            </div>
+            <div class="vp-card-content">
+              <div class="vp-card-top">
+                <div class="vp-icon">💬</div>
+                <div class="vp-body">
+                  <h3>커뮤니티 바이럴</h3>
+                  <span class="vp-sub">Community Viral</span>
+                  <p>온라인 커뮤니티 내 이슈화로 브랜드 검색량과 자연 유입을 폭발적으로 증가시킵니다</p>
+                </div>
+                <div class="vp-toggle-btn" id="vp-toggle-1">
+                  <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <div class="vp-kpi-panel" id="vp-kpi-1">
+                <div class="vp-kpi-divider"></div>
+                <div class="vp-kpi-row">
+                  <div class="vp-kpi-item"><strong class="vp-kpi-val">72+</strong><span class="vp-kpi-label">진행 가능 커뮤니티</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── SNS 바이럴 ── */}
+          <div class="vp-card" id="vp-card-2" onclick="toggleVpCard(2)">
+            <div class="vp-card-img-wrap">
+              <img src="/static/images/viral-products/vp-sns.jpg" alt="SNS 바이럴" class="vp-card-img" />
+              <div class="vp-card-img-overlay"></div>
+              <span class="vp-card-img-badge">SNS Viral</span>
+            </div>
+            <div class="vp-card-content">
+              <div class="vp-card-top">
+                <div class="vp-icon">📱</div>
+                <div class="vp-body">
+                  <h3>SNS 바이럴</h3>
+                  <span class="vp-sub">SNS Viral</span>
+                  <p>인스타그램·틱톡·유튜브 등 SNS 채널에서의 자연스러운 확산 구조를 설계합니다</p>
+                </div>
+                <div class="vp-toggle-btn" id="vp-toggle-2">
+                  <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <div class="vp-kpi-panel" id="vp-kpi-2">
+                <div class="vp-kpi-divider"></div>
+                <div class="vp-kpi-row">
+                  <div class="vp-kpi-item"><strong class="vp-kpi-val">450개+</strong><span class="vp-kpi-label">진행 가능 계정</span></div>
+                </div>
+                <div class="vp-tags-row">
+                  <span class="vp-tags-label">상품군</span>
+                  <div class="vp-tags-wrap">
+                    <span class="vp-tag">인스타 카드뉴스</span>
+                    <span class="vp-tag">먹스타그램 배포</span>
+                    <span class="vp-tag">숏폼 배포</span>
+                    <span class="vp-tag">숏폼 제작</span>
+                    <span class="vp-tag">X (구 트위터)</span>
+                    <span class="vp-tag">스레드</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── 언론 바이럴 ── */}
+          <div class="vp-card" id="vp-card-3" onclick="toggleVpCard(3)">
+            <div class="vp-card-img-wrap">
+              <img src="/static/images/viral-products/vp-press.jpg" alt="언론 바이럴" class="vp-card-img" />
+              <div class="vp-card-img-overlay"></div>
+              <span class="vp-card-img-badge">Press Viral</span>
+            </div>
+            <div class="vp-card-content">
+              <div class="vp-card-top">
+                <div class="vp-icon">📰</div>
+                <div class="vp-body">
+                  <h3>언론 바이럴</h3>
+                  <span class="vp-sub">Press Viral</span>
+                  <p>뉴스·매체 배포를 통해 브랜드의 공신력과 검색 노출을 동시에 강화합니다</p>
+                </div>
+                <div class="vp-toggle-btn" id="vp-toggle-3">
+                  <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <div class="vp-kpi-panel" id="vp-kpi-3">
+                <div class="vp-kpi-divider"></div>
+                <div class="vp-kpi-row">
+                  <div class="vp-kpi-item"><strong class="vp-kpi-val">153+</strong><span class="vp-kpi-label">보유 매체 수</span></div>
+                  <div class="vp-kpi-item"><strong class="vp-kpi-val">7개</strong><span class="vp-kpi-label">보유 카테고리 수</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         {/* 자세히 보기 — 상담 신청 연결 */}
