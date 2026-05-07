@@ -468,74 +468,141 @@ export const SvcSeedingPage = () => (
           <p class="sec-sub">상담부터 최종 리포트까지, 전담 PM이 모든 단계를 함께합니다.</p>
         </div>
 
-        <div class="sdac-wrap">
-          {[
-            { num:'01', en:'Strategy Consultation', title:'상담 진행', color:'#1a6bff',
-              desc:'브랜드 목표, 예산, 타겟 고객을 분석하고 최적의 시딩 전략을 수립합니다. 캠페인 방향성과 KPI를 명확히 설정합니다.',
-              tags:['목표 설정', 'KPI 수립', '예산 협의'],
-              svg:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> },
-            { num:'02', en:'Contract & Scope', title:'계약 진행', color:'#6d28d9',
-              desc:'캠페인 범위, 일정, 성과 지표를 문서화합니다. 투명한 비용 구조와 명확한 계약으로 신뢰 관계를 구축합니다.',
-              tags:['범위 확정', '일정 협의', '비용 투명화'],
-              svg:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> },
-            { num:'03', en:'Creative Briefing', title:'가이드라인 작성', color:'#0891b2',
-              desc:'브랜드 메시지, 톤앤매너, 금지 표현, 핵심 키워드를 담은 콘텐츠 가이드를 제작합니다. 자연스럽고 일관된 후기 생성의 기반이 됩니다.',
-              tags:['톤앤매너', '핵심 키워드', '콘텐츠 방향'],
-              svg:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg> },
-            { num:'04', en:'Creator Recruitment', title:'크리에이터 모집', color:'#059669',
-              desc:'브랜드 타겟과 부합하는 블로거·인플루언서를 공개 모집합니다. 지원자의 채널 분석과 활동 이력을 검토합니다.',
-              tags:['공개 모집', '채널 분석', '이력 검토'],
-              svg:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> },
-            { num:'05', en:'Creator Selection', title:'크리에이터 선정', color:'#d97706',
-              desc:'진정성, 팔로워 품질, 카테고리 적합도를 기준으로 최적의 크리에이터를 선정합니다. 데이터 기반 매칭으로 성과를 극대화합니다.',
-              tags:['적합도 평가', '데이터 매칭', '최종 선정'],
-              svg:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> },
-            { num:'06', en:'Product Experience', title:'체험 진행', color:'#e11d48',
-              desc:'선정된 크리에이터에게 제품을 발송하고 실제 사용 경험을 진행합니다. 가이드라인을 기반으로 자연스러운 체험 콘텐츠가 준비됩니다.',
-              tags:['제품 발송', '실사용 체험', '콘텐츠 준비'],
-              svg:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> },
-            { num:'07', en:'Review Creation', title:'리뷰 작성', color:'#7c3aed',
-              desc:'크리에이터가 가이드라인에 맞춰 진정성 있는 후기를 작성합니다. 브랜드 검수 후 플랫폼에 최적화된 형태로 최종 게시됩니다.',
-              tags:['후기 작성', '브랜드 검수', '최종 게시'],
-              svg:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> },
-            { num:'08', en:'Performance Report', title:'리포트', color:'#10b981',
-              desc:'캠페인 전 기간의 성과를 수치로 정리한 종합 리포트를 제공합니다. 전환율, 검색 유입, 매출 변화를 분석해 다음 캠페인 전략까지 제안합니다.',
-              tags:['성과 분석', '전환율 리포트', '전략 제안'],
-              svg:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> },
-          ].map((s, i) => (
-            <div class="sdac-item" data-idx={i} style={`--ac:${s.color}`}>
-              {/* 헤더 (항상 보임 — 클릭 토글) */}
-              <button class={`sdac-header${i === 0 ? ' sdac-header--open' : ''}`} type="button"
-                onclick="(function(btn){var item=btn.closest('.sdac-item');var body=item.querySelector('.sdac-body');var isOpen=btn.classList.contains('sdac-header--open');document.querySelectorAll('.sdac-header--open').forEach(function(b){b.classList.remove('sdac-header--open');b.closest('.sdac-item').querySelector('.sdac-body').style.maxHeight='0';b.closest('.sdac-item').querySelector('.sdac-body').style.opacity='0';});if(!isOpen){btn.classList.add('sdac-header--open');body.style.maxHeight=body.scrollHeight+'px';body.style.opacity='1';}})(this)">
-                <div class="sdac-header-left">
-                  <div class="sdac-icon-wrap">
-                    {s.svg}
-                  </div>
-                  <div class="sdac-header-text">
-                    <span class="sdac-en">{s.en}</span>
-                    <span class="sdac-title">{s.title}</span>
-                  </div>
-                </div>
-                <div class="sdac-header-right">
-                  <span class="sdac-num">{s.num}</span>
-                  <span class="sdac-chevron">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="6 9 12 15 18 9"/></svg>
-                  </span>
-                </div>
-              </button>
+        <div class="sdtl-wrap">
+          {/* 중앙 라인 */}
+          <div class="sdtl-axis">
+            <div class="sdtl-axis-line"></div>
+          </div>
 
-              {/* 바디 (접힘/펼침) */}
-              <div class="sdac-body" style={i === 0 ? '' : 'max-height:0;opacity:0'}>
-                <div class="sdac-body-inner">
-                  <p class="sdac-desc">{s.desc}</p>
-                  <div class="sdac-tags">
-                    {s.tags.map(t => <span class="sdac-tag">{t}</span>)}
-                  </div>
-                </div>
+          {/* STEP 01 */}
+          <div class="sdtl-item sdtl-item--left">
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#1a6bff">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Strategy Consultation</span>
+                <h4 class="sdtl-card-title">상담 진행</h4>
+                <p class="sdtl-card-desc">브랜드 목표, 예산, 타겟 고객을 분석하고 최적의 시딩 전략을 수립합니다. 캠페인 방향성과 KPI를 명확히 설정합니다.</p>
               </div>
             </div>
-          ))}
-        </div>{/* /sdac-wrap */}
+            <div class="sdtl-dot" style="--tc:#1a6bff"><span class="sdtl-num">01</span></div>
+            <div class="sdtl-spacer"></div>
+          </div>
+
+          {/* STEP 02 */}
+          <div class="sdtl-item sdtl-item--right">
+            <div class="sdtl-spacer"></div>
+            <div class="sdtl-dot" style="--tc:#6d28d9"><span class="sdtl-num">02</span></div>
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#6d28d9">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Contract &amp; Scope</span>
+                <h4 class="sdtl-card-title">계약 진행</h4>
+                <p class="sdtl-card-desc">캠페인 범위, 일정, 성과 지표를 문서화합니다. 투명한 비용 구조와 명확한 계약으로 신뢰 관계를 구축합니다.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 03 */}
+          <div class="sdtl-item sdtl-item--left">
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#0891b2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Creative Briefing</span>
+                <h4 class="sdtl-card-title">가이드라인 작성</h4>
+                <p class="sdtl-card-desc">브랜드 메시지, 톤앤매너, 금지 표현, 핵심 키워드를 담은 콘텐츠 가이드를 제작합니다. 자연스럽고 일관된 후기 생성의 기반이 됩니다.</p>
+              </div>
+            </div>
+            <div class="sdtl-dot" style="--tc:#0891b2"><span class="sdtl-num">03</span></div>
+            <div class="sdtl-spacer"></div>
+          </div>
+
+          {/* STEP 04 */}
+          <div class="sdtl-item sdtl-item--right">
+            <div class="sdtl-spacer"></div>
+            <div class="sdtl-dot" style="--tc:#059669"><span class="sdtl-num">04</span></div>
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#059669">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Creator Recruitment</span>
+                <h4 class="sdtl-card-title">크리에이터 모집</h4>
+                <p class="sdtl-card-desc">브랜드 타겟과 부합하는 블로거·인플루언서를 공개 모집합니다. 지원자의 채널 분석과 활동 이력을 검토합니다.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 05 */}
+          <div class="sdtl-item sdtl-item--left">
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#d97706">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Creator Selection</span>
+                <h4 class="sdtl-card-title">크리에이터 선정</h4>
+                <p class="sdtl-card-desc">진정성, 팔로워 품질, 카테고리 적합도를 기준으로 최적의 크리에이터를 선정합니다. 데이터 기반 매칭으로 성과를 극대화합니다.</p>
+              </div>
+            </div>
+            <div class="sdtl-dot" style="--tc:#d97706"><span class="sdtl-num">05</span></div>
+            <div class="sdtl-spacer"></div>
+          </div>
+
+          {/* STEP 06 */}
+          <div class="sdtl-item sdtl-item--right">
+            <div class="sdtl-spacer"></div>
+            <div class="sdtl-dot" style="--tc:#e11d48"><span class="sdtl-num">06</span></div>
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#e11d48">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Product Experience</span>
+                <h4 class="sdtl-card-title">체험 진행</h4>
+                <p class="sdtl-card-desc">선정된 크리에이터에게 제품을 발송하고 실제 사용 경험을 진행합니다. 가이드라인을 기반으로 자연스러운 체험 콘텐츠가 준비됩니다.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 07 */}
+          <div class="sdtl-item sdtl-item--left">
+            <div class="sdtl-card">
+              <div class="sdtl-card-icon" style="--tc:#7c3aed">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Review Creation</span>
+                <h4 class="sdtl-card-title">리뷰 작성</h4>
+                <p class="sdtl-card-desc">크리에이터가 가이드라인에 맞춰 진정성 있는 후기를 작성합니다. 브랜드 검수 후 플랫폼에 최적화된 형태로 최종 게시됩니다.</p>
+              </div>
+            </div>
+            <div class="sdtl-dot" style="--tc:#7c3aed"><span class="sdtl-num">07</span></div>
+            <div class="sdtl-spacer"></div>
+          </div>
+
+          {/* STEP 08 */}
+          <div class="sdtl-item sdtl-item--right sdtl-item--last">
+            <div class="sdtl-spacer"></div>
+            <div class="sdtl-dot sdtl-dot--final" style="--tc:#10b981"><span class="sdtl-num">08</span></div>
+            <div class="sdtl-card sdtl-card--final">
+              <div class="sdtl-card-icon" style="--tc:#10b981">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+              <div class="sdtl-card-body">
+                <span class="sdtl-card-en">Performance Report</span>
+                <h4 class="sdtl-card-title">리포트</h4>
+                <p class="sdtl-card-desc">캠페인 전 기간의 성과를 수치로 정리한 종합 리포트를 제공합니다. 전환율, 검색 유입, 매출 변화를 분석해 다음 캠페인 전략까지 제안합니다.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>{/* /sdtl-wrap */}
 
         {/* 하단 배너 */}
         <div class="sdtl-footer">
