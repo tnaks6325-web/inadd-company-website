@@ -47,56 +47,30 @@ export const ViralPage = () => (
             </a>
           </div>
 
-          {/* 스탯 4개 */}
-          <div class="mkt-hero-stats">
-            {[
-              { value: '320+',   label: '완료 프로젝트' },
-              { value: '98%',    label: '재계약률' },
-              { value: '2,800만+', label: '평균 도달' },
-              { value: '5년+',   label: '업계 경력' },
-            ].map(s => (
-              <div class="mhs-item" key={s.label}>
-                <p class="mhs-value">{s.value}</p>
-                <p class="mhs-label">{s.label}</p>
-              </div>
-            ))}
-          </div>
         </div>
 
-        {/* 우측 — glassmorphism 플로팅 카드 */}
-        <div class="mkt-hero-right">
-          {/* 카드 뒤 glow 오브 */}
+        {/* 우측 — floating 스탯 카드 3개 */}
+        <div class="mkt-hero-right mkt-hero-right--float">
+          {/* glow 오브 */}
           <div class="mhr-orb mhr-orb--blue"></div>
           <div class="mhr-orb mhr-orb--purple"></div>
 
-          <div class="mhr-card mhr-card--1">
-            <div class="mhrc-icon-row">
-              <span class="mhrc-icon">📡</span>
-              <p class="mhrc-eyebrow">REACH</p>
-            </div>
-            <p class="mhrc-value">2,800<span>만+</span></p>
-            <p class="mhrc-desc">평균 캠페인 도달 수치<br />퍼널 전략으로 도달 폭발</p>
-            <div class="mhrc-bar"><div class="mhrc-bar-fill" style="width:87%"></div></div>
+          <div class="mhf-card mhf-card--1">
+            <span class="mhf-icon">🏆</span>
+            <p class="mhf-value">320<span>+</span></p>
+            <p class="mhf-label">완료 프로젝트</p>
           </div>
 
-          <div class="mhr-card mhr-card--2">
-            <div class="mhrc-icon-row">
-              <span class="mhrc-icon">📈</span>
-              <p class="mhrc-eyebrow">RESULT</p>
-            </div>
-            <p class="mhrc-value">+580<span>%</span></p>
-            <p class="mhrc-desc">최대 매출 증가율<br />통합 퍼널 캠페인 기준</p>
-            <div class="mhrc-bar"><div class="mhrc-bar-fill" style="width:94%"></div></div>
+          <div class="mhf-card mhf-card--2">
+            <span class="mhf-icon">🔄</span>
+            <p class="mhf-value">98<span>%</span></p>
+            <p class="mhf-label">재계약률</p>
           </div>
 
-          <div class="mhr-card mhr-card--3">
-            <div class="mhrc-icon-row">
-              <span class="mhrc-icon">🤝</span>
-              <p class="mhrc-eyebrow">TRUST</p>
-            </div>
-            <p class="mhrc-value">98<span>%</span></p>
-            <p class="mhrc-desc">재계약률<br />성과가 증명하는 신뢰도</p>
-            <div class="mhrc-bar"><div class="mhrc-bar-fill" style="width:98%"></div></div>
+          <div class="mhf-card mhf-card--3">
+            <span class="mhf-icon">📅</span>
+            <p class="mhf-value">5<span>년+</span></p>
+            <p class="mhf-label">업계 경력</p>
           </div>
         </div>
       </div>
