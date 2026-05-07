@@ -373,6 +373,34 @@ export const ContactPage = () => (
                 </button>
                 <div class="faq-a">뷰티, 식품, 헬스케어, 이커머스, 패션, 생활용품 등 다양한 업종과 함께하고 있습니다.</div>
               </div>
+              <div class="faq-item">
+                <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+                  <span>상담 후 바로 계약을 해야 하나요?</span>
+                  <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <div class="faq-a">아닙니다. 초기 상담은 완전 무료이며 부담 없이 문의해 주세요. 전략 제안서를 검토하신 후 진행 여부를 결정하시면 됩니다.</div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+                  <span>상담 신청 후 연락은 얼마나 걸리나요?</span>
+                  <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <div class="faq-a">영업일 기준 24시간 이내에 담당 매니저가 직접 연락드립니다. 긴급한 경우 전화 문의를 이용해 주세요.</div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+                  <span>여러 마케팅 상품을 동시에 진행할 수 있나요?</span>
+                  <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <div class="faq-a">가능합니다. 바이럴·시딩·인플루언서 등 복수 상품을 통합 운영하면 채널 간 시너지 효과가 극대화됩니다. 통합 패키지 할인도 제공합니다.</div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+                  <span>계약 해지는 자유롭게 가능한가요?</span>
+                  <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <div class="faq-a">월 단위 계약을 기본으로 하며, 최소 계약 기간(보통 3개월) 이후에는 1개월 전 통보로 자유롭게 해지하실 수 있습니다.</div>
+              </div>
             </div>
           </div>
 

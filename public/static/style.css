@@ -16937,11 +16937,15 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .svc-faq-section { position: relative; }
 
 .faq-wrap {
-  max-width: 780px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+  max-width: 100%;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .faq-wrap { grid-template-columns: 1fr; }
 }
 
 .faq-item {
