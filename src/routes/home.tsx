@@ -86,7 +86,6 @@ export const HomePage = () => (
 
     {/* ============ MARQUEE ============ */}
     <div class="marquee-band">
-      {/* 1열: 왼쪽 → 오른쪽 */}
       <div class="marquee-track marquee-track--fwd">
         {[
           { text: '바이럴 마케팅', en: 'Viral Marketing', accent: false },
@@ -96,7 +95,6 @@ export const HomePage = () => (
           { text: '고객 리뷰 마케팅', en: 'Customer Review', accent: false },
           { text: '올리브영 마케팅', en: 'Olive Young', accent: true },
           { text: 'PPL 마케팅', en: 'PPL', accent: false },
-        ].concat([
           { text: '바이럴 마케팅', en: 'Viral Marketing', accent: false },
           { text: '인플루언서 · 유튜브 마케팅', en: 'Influencer & YouTube', accent: true },
           { text: '시딩 캠페인', en: 'Seeding Campaign', accent: false },
@@ -104,33 +102,7 @@ export const HomePage = () => (
           { text: '고객 리뷰 마케팅', en: 'Customer Review', accent: false },
           { text: '올리브영 마케팅', en: 'Olive Young', accent: true },
           { text: 'PPL 마케팅', en: 'PPL', accent: false },
-        ]).map((item, i) => (
-          <span class={`marquee-item${item.accent ? ' marquee-item--accent' : ''}`}>
-            <span class="marquee-ko">{item.text}</span>
-            <span class="marquee-en">{item.en}</span>
-            <span class="marquee-sep">✦</span>
-          </span>
-        ))}
-      </div>
-      {/* 2열: 오른쪽 → 왼쪽 (역방향) */}
-      <div class="marquee-track marquee-track--rev">
-        {[
-          { text: 'PPL 마케팅', en: 'PPL', accent: true },
-          { text: '올리브영 마케팅', en: 'Olive Young', accent: false },
-          { text: '고객 리뷰 마케팅', en: 'Customer Review', accent: true },
-          { text: 'SEO 마케팅', en: 'SEO Marketing', accent: false },
-          { text: '시딩 캠페인', en: 'Seeding Campaign', accent: true },
-          { text: '인플루언서 · 유튜브 마케팅', en: 'Influencer & YouTube', accent: false },
-          { text: '바이럴 마케팅', en: 'Viral Marketing', accent: true },
-        ].concat([
-          { text: 'PPL 마케팅', en: 'PPL', accent: true },
-          { text: '올리브영 마케팅', en: 'Olive Young', accent: false },
-          { text: '고객 리뷰 마케팅', en: 'Customer Review', accent: true },
-          { text: 'SEO 마케팅', en: 'SEO Marketing', accent: false },
-          { text: '시딩 캠페인', en: 'Seeding Campaign', accent: true },
-          { text: '인플루언서 · 유튜브 마케팅', en: 'Influencer & YouTube', accent: false },
-          { text: '바이럴 마케팅', en: 'Viral Marketing', accent: true },
-        ]).map((item, i) => (
+        ].map((item) => (
           <span class={`marquee-item${item.accent ? ' marquee-item--accent' : ''}`}>
             <span class="marquee-ko">{item.text}</span>
             <span class="marquee-en">{item.en}</span>

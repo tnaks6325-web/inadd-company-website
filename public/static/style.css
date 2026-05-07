@@ -732,10 +732,6 @@ em {
 }
 .marquee-track--fwd {
   animation: marqueeRunFwd 32s linear infinite;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-.marquee-track--rev {
-  animation: marqueeRunRev 38s linear infinite;
 }
 /* 호버 시 일시정지 */
 .marquee-band:hover .marquee-track { animation-play-state: paused; }
