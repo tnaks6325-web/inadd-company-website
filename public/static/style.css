@@ -8692,7 +8692,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 /* 폼 화면의 contact-layout은 1컬럼으로 */
 .ct-form-screen .contact-layout {
   grid-template-columns: 1fr !important;
-  max-width: 720px;
+  max-width: 100%;
 }
 
 /* FAQ 섹션 */
@@ -8782,13 +8782,13 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 
 /* ── Contact 폼 영역 + FAQ 너비/정렬 통일 ── */
 .ct-form-screen .contact-layout {
-  max-width: 720px;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
 .ct-form-screen .contact-form-wrap {
   width: 100%;
-  max-width: 720px;
+  max-width: 100%;
 }
 /* contact-form 내 모든 input/select/textarea 너비 100% */
 .ct-form-screen .cf-group input,
@@ -8802,10 +8802,10 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   width: 100%;
 }
 
-/* ── Contact 폼 화면: 히어로·폼·FAQ 모두 720px 기준 왼쪽 정렬 통일 ── */
+/* ── Contact 폼 화면: 히어로·폼·FAQ 모두 풀너비 ── */
 .ct-form-screen .page-hero .container,
 .ct-form-screen .contact-main-section .container {
-  max-width: 720px;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 32px;
