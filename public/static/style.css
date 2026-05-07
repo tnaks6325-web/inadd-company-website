@@ -5338,8 +5338,8 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 }
 .vp-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  grid-template-columns: 1fr;
+  gap: 16px;
   margin-top: 56px;
 }
 .vp-card {
@@ -8713,15 +8713,11 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   margin-top: 8px;
 }
 
-/* FAQ 리스트 — 2컬럼 그리드 */
+/* FAQ 리스트 — 1열 세로 */
 .ct-faq-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 28px;
-  align-items: start;
-}
-@media (max-width: 860px) {
-  .ct-faq-list { grid-template-columns: 1fr; }
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .ct-faq-list .faq-item {
