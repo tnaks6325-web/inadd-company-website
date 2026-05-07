@@ -686,37 +686,120 @@ em {
 /* ============================================
    MARQUEE BAND
    ============================================ */
+/* ── Marquee Band ── */
 .marquee-band {
   overflow: hidden;
-  background: var(--black-3);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 16px 0;
+  position: relative;
+  background: rgba(10,10,18,0.95);
+  border-top: 1px solid rgba(26,107,255,0.18);
+  border-bottom: 1px solid rgba(26,107,255,0.18);
+  padding: 0;
+  /* 양끝 페이드 마스크 */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+/* 배경 글로우 라인 */
+.marquee-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(26,107,255,0.04) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
+/* 각 트랙 행 */
 .marquee-track {
   display: flex;
   white-space: nowrap;
-  animation: marqueeRun 35s linear infinite;
+  padding: 13px 0;
 }
+.marquee-track--fwd {
+  animation: marqueeRunFwd 32s linear infinite;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.marquee-track--rev {
+  animation: marqueeRunRev 38s linear infinite;
+}
+/* 호버 시 일시정지 */
+.marquee-band:hover .marquee-track { animation-play-state: paused; }
 
+/* 개별 아이템 */
 .marquee-item {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 24px;
+  cursor: default;
+  transition: transform 0.25s ease;
+}
+.marquee-item:hover { transform: translateY(-2px); }
+
+/* 한글 메인 텍스트 */
+.marquee-ko {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: rgba(255,255,255,0.75);
+  transition: color 0.25s ease;
+}
+.marquee-item:hover .marquee-ko { color: #fff; }
+
+/* 영문 서브 텍스트 */
+.marquee-en {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--gray-3);
-  padding: 0 28px;
+  color: rgba(255,255,255,0.28);
+  transition: color 0.25s ease;
+}
+.marquee-item:hover .marquee-en { color: rgba(255,255,255,0.5); }
+
+/* 강조 아이템 */
+.marquee-item--accent .marquee-ko {
+  color: rgba(26,107,255,0.9);
+}
+.marquee-item--accent:hover .marquee-ko {
+  color: #4d8eff;
+  text-shadow: 0 0 12px rgba(26,107,255,0.6);
 }
 
+/* 구분자 */
 .marquee-sep {
-  color: var(--blue);
-  margin-left: 8px;
+  font-size: 8px;
+  color: rgba(26,107,255,0.45);
+  margin-left: 4px;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+.marquee-item:hover .marquee-sep {
+  color: rgba(26,107,255,0.9);
+  transform: rotate(45deg);
 }
 
-@keyframes marqueeRun {
+@keyframes marqueeRunFwd {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+@keyframes marqueeRunRev {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
 }
 
 
