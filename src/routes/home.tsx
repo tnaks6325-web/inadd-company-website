@@ -323,14 +323,14 @@ export const HomePage = () => (
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Olive Young Marketing</span>
-                <p class="svc-panel-desc">올리브영 채널을 전략적으로 공략하여 <strong>브랜드 매출과 인지도를 동시에</strong> 끌어올립니다.<br /><br />입점 기획부터 상위 노출, 리뷰 관리, 기획전 참여까지 올리브영 내 모든 접점을 통합 관리하여 K-뷰티 브랜드의 채널 성과를 극대화합니다.</p>
+                <p class="svc-panel-desc">올리브영 채널을 전략적으로 공략하여 <strong>브랜드 매출과 인지도를 동시에</strong> 끌어올립니다.<br /><br />브랜딩 전략 수립부터 상위 노출, 리뷰 관리, 기획전 참여 유도까지 올리브영 내 모든 접점을 통합 관리하여 K-뷰티 브랜드의 채널 성과를 극대화합니다.</p>
                 <div class="svc-panel-tags">
                   <p class="svc-ptag-label">SERVICE KEYWORDS</p>
                   <div class="svc-ptag-grid">
-                    <span class="svc-ptag">🛒 입점 기획</span>
+                    <span class="svc-ptag">✨ 브랜딩</span>
                     <span class="svc-ptag">📊 상위 노출 최적화</span>
                     <span class="svc-ptag">💬 리뷰 관리</span>
-                    <span class="svc-ptag">🎪 기획전 참여</span>
+                    <span class="svc-ptag">🎪 기획전 참여 유도</span>
                   </div>
                 </div>
               </div>
