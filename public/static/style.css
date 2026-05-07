@@ -8791,7 +8791,9 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 }
 .ct-form-screen .contact-form-wrap {
   width: 100%;
-  max-width: 100%;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
 }
 /* contact-form 내 모든 input/select/textarea 너비 100% */
 .ct-form-screen .cf-group input,
@@ -8808,7 +8810,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 /* ── Contact 폼 화면: 히어로·폼·FAQ 모두 풀너비 ── */
 .ct-form-screen .page-hero .container,
 .ct-form-screen .contact-main-section .container {
-  max-width: 100%;
+  max-width: 860px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 32px;
@@ -8816,12 +8818,16 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 }
 .ct-form-screen .contact-layout {
   grid-template-columns: 1fr !important;
-  max-width: 100%;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
   gap: 0;
 }
 .ct-form-screen .contact-form-wrap,
 .ct-faq-section {
-  max-width: 100%;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
 }
 /* 히어로 패딩 줄임 (너무 넓지 않게) */
 .ct-form-screen .page-hero {
