@@ -8697,8 +8697,8 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 
 /* FAQ 섹션 */
 .ct-faq-section {
-  max-width: 720px;
-  margin: 56px auto 0;
+  max-width: 100%;
+  margin: 56px 0 0;
   padding-top: 48px;
   border-top: 1px solid rgba(255,255,255,0.08);
 }
@@ -8713,19 +8713,21 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   margin-top: 8px;
 }
 
-/* FAQ 리스트 — 한 줄씩 */
+/* FAQ 리스트 — 2컬럼 그리드 */
 .ct-faq-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 28px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .ct-faq-list { grid-template-columns: 1fr; }
 }
 
 .ct-faq-list .faq-item {
   border-bottom: 1px solid rgba(255,255,255,0.07);
-  border-top: none;
-}
-.ct-faq-list .faq-item:first-child {
   border-top: 1px solid rgba(255,255,255,0.07);
+  margin-top: -1px;
 }
 
 .ct-faq-list .faq-q {
@@ -8771,14 +8773,15 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   max-height: 0;
   overflow: hidden;
   font-size: 14px;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.7;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.75;
   padding: 0 4px;
+  word-break: keep-all;
   transition: max-height 0.35s ease, padding 0.35s ease;
 }
 .ct-faq-list .faq-item.open .faq-a {
-  max-height: 200px;
-  padding-bottom: 20px;
+  max-height: 300px;
+  padding: 0 4px 20px;
 }
 
 /* ── Contact 폼 영역 + FAQ 너비/정렬 통일 ── */
