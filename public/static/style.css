@@ -7705,207 +7705,229 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 ══════════════════════════════════════════════════ */
 
 /* 7카드 그리드: 상단 4 + 하단 3 */
+/* ══ 서비스 카드 그리드 ══ */
 .mkt-svc-img-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto auto;
-  gap: 20px;
+  gap: 18px;
   margin-top: 56px;
 }
-/* 하단 3개 카드 중앙 정렬 트릭 */
+/* 하단 3개 중앙 배치 */
 .msig-card:nth-child(5) { grid-column: 1 / 2; }
 .msig-card:nth-child(6) { grid-column: 2 / 3; }
 .msig-card:nth-child(7) { grid-column: 3 / 4; }
 
-/* 카드 기본 */
+/* ── 카드 기본 ── */
 .msig-card {
   position: relative;
-  border-radius: 20px;
+  border-radius: 22px;
   overflow: hidden;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 4.2;
   text-decoration: none;
   color: inherit;
   display: block;
   cursor: pointer;
-  background: #0d1117;
+  background: #080e1e;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.msig-card:hover {
+  border-color: rgba(var(--accent-rgb, 26,107,255), 0.35);
+  box-shadow: 0 24px 56px rgba(0,0,0,0.55), 0 0 0 1px rgba(var(--accent-rgb,26,107,255),0.12);
+  transform: translateY(-6px);
 }
 
-/* 배경 이미지 — 기본 scale(1), 호버 시 줌 */
+/* ── 배경 이미지 ── */
 .msig-img {
   position: absolute;
   inset: 0;
   background-size: cover;
   background-position: center;
-  transform: scale(1.0);
-  transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: scale(1.04);
+  transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
   will-change: transform;
 }
 .msig-card:hover .msig-img {
-  transform: scale(1.1);
+  transform: scale(1.13);
 }
 
-/* 그라디언트 오버레이 — 기본 진함, 호버 시 살짝 밝아짐 */
+/* ── 오버레이 레이어 ── */
+/* 기본: 하단 2/3 진하게 덮어서 텍스트 가독성 확보 */
 .msig-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0,0,0,0.15) 0%,
-    rgba(0,0,0,0.25) 30%,
-    rgba(0,0,0,0.75) 65%,
-    rgba(0,0,0,0.92) 100%
+    rgba(0,0,0,0.0)  0%,
+    rgba(0,0,0,0.1) 35%,
+    rgba(0,0,0,0.72) 62%,
+    rgba(0,0,0,0.96) 100%
   );
-  transition: opacity 0.4s ease;
   z-index: 1;
+  transition: background 0.45s ease;
 }
+/* hover: 전체를 더 어둡게 → 서브 텍스트 가독성 */
 .msig-card:hover .msig-overlay {
   background: linear-gradient(
     to bottom,
-    rgba(0,0,0,0.05) 0%,
-    rgba(0,0,0,0.2) 30%,
-    rgba(0,0,0,0.72) 65%,
-    rgba(0,0,0,0.92) 100%
+    rgba(0,0,0,0.30)  0%,
+    rgba(0,0,0,0.45) 35%,
+    rgba(0,0,0,0.82) 62%,
+    rgba(0,0,0,0.97) 100%
   );
 }
 
-/* 상단 태그 */
+/* ── accent glow ── */
+.msig-accent-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+.msig-card:hover .msig-accent-glow { opacity: 1; }
+
+/* ── 상단 태그 ── */
 .msig-tag {
   position: absolute;
-  top: 18px;
-  left: 18px;
-  z-index: 3;
+  top: 16px;
+  left: 16px;
+  z-index: 4;
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 2px;
-  color: rgba(255,255,255,0.9);
-  background: rgba(26,107,255,0.55);
-  border: 1px solid rgba(26,107,255,0.7);
-  border-radius: 5px;
-  padding: 4px 10px;
-  backdrop-filter: blur(6px);
-  transform: translateY(0);
-  transition: transform 0.35s ease, background 0.35s ease;
+  color: rgba(255,255,255,0.92);
+  border-radius: 6px;
+  padding: 4px 11px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: opacity 0.35s ease;
 }
-.msig-card:hover .msig-tag {
-  background: rgba(26,107,255,0.8);
-}
+.msig-card:hover .msig-tag { opacity: 0.7; }
 
-/* 하단 콘텐츠 블록 */
+/* ── 하단 콘텐츠 블록 ── */
 .msig-content {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 24px 22px 22px;
-  z-index: 3;
+  bottom: 0; left: 0; right: 0;
+  padding: 22px 22px 24px;
+  z-index: 4;
+  /* 기본 상태: hook만 올라와 있는 위치 */
   transform: translateY(0);
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
 }
+/* hover: 살짝 위로 올려 서브 문구 공간 확보 */
 .msig-card:hover .msig-content {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
 }
 
-/* 아이콘 */
+/* ── 아이콘 ── */
 .msig-icon {
-  font-size: 22px;
-  margin-bottom: 8px;
+  font-size: 24px;
+  margin-bottom: 10px;
   display: block;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7));
+  /* hover 시 작아지며 올라감 */
+  transition: transform 0.4s ease, font-size 0.4s ease, opacity 0.4s ease;
+}
+.msig-card:hover .msig-icon {
+  font-size: 18px;
+  opacity: 0.8;
 }
 
-/* 타이틀 */
+/* ── 서비스명 (소제목) ── */
 .msig-title {
-  font-size: 17px;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 6px;
-  line-height: 1.2;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.7);
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 7px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+  transition: color 0.35s ease;
+}
+.msig-card:hover .msig-title {
+  color: rgba(255,255,255,0.5);
 }
 
-/* 설명 — 기본 숨김, 호버 시 나타남 */
-.msig-desc {
-  font-size: 12px;
-  color: rgba(255,255,255,0.75);
-  line-height: 1.6;
-  margin-bottom: 12px;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
-  max-height: 0;
+/* ── 메인 훅 문구 ── */
+.msig-hook {
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.35;
+  margin-bottom: 0;
+  white-space: nowrap;          /* 한 줄 강제 */
   overflow: hidden;
-}
-.msig-card:hover .msig-desc {
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.9);
+  /* 기본 상태: 보임 */
   opacity: 1;
   transform: translateY(0);
-  max-height: 120px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+.msig-card:hover .msig-hook {
+  transform: translateY(-2px);
 }
 
-/* KPI 수치 */
-.msig-kpi {
-  display: flex;
-  gap: 14px;
+/* ── 서브 문구 — 평소 숨김, hover 시 슬라이드 등장 ── */
+.msig-sub {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.65;
+  margin-top: 0;
   margin-bottom: 14px;
+  /* 기본: 완전 숨김 */
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    max-height  0.45s cubic-bezier(0.25,0.46,0.45,0.94) 0.04s,
+    opacity     0.38s ease                               0.08s,
+    transform   0.38s ease                               0.08s,
+    margin-top  0.35s ease                               0.04s;
 }
-.msig-kpi-item {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-.msig-kpi-item strong {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  color: #5a9fff;
-  text-shadow: 0 0 12px rgba(26,107,255,0.6);
-}
-.msig-kpi-item span {
-  font-size: 10px;
-  color: rgba(255,255,255,0.55);
+.msig-card:hover .msig-sub {
+  max-height: 80px;
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 10px;
 }
 
-/* 화살표 버튼 */
+/* ── 자세히 보기 화살표 ── */
 .msig-arrow {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.55);
-  transition: color 0.25s, gap 0.25s;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s, color 0.2s;
+  transform: translateX(-8px);
+  transition: opacity 0.32s ease 0.14s, transform 0.32s ease 0.14s;
 }
 .msig-card:hover .msig-arrow {
   opacity: 1;
   transform: translateX(0);
-  color: rgba(255,255,255,0.85);
 }
 
-/* 반응형 */
+/* ── 반응형 ── */
 @media (max-width: 1200px) {
-  .mkt-svc-img-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  .mkt-svc-img-grid { grid-template-columns: repeat(3, 1fr); }
   .msig-card:nth-child(5),
   .msig-card:nth-child(6),
-  .msig-card:nth-child(7) {
-    grid-column: auto;
-  }
+  .msig-card:nth-child(7) { grid-column: auto; }
+}
+@media (max-width: 900px) {
+  .msig-hook { font-size: 13.5px; white-space: normal; }
 }
 @media (max-width: 768px) {
-  .mkt-svc-img-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-  }
+  .mkt-svc-img-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .msig-card { aspect-ratio: 4 / 5; }
-  .msig-desc { display: none; }
+  .msig-hook { font-size: 13px; white-space: normal; }
 }
 @media (max-width: 480px) {
-  .mkt-svc-img-grid {
-    grid-template-columns: 1fr;
-  }
+  .mkt-svc-img-grid { grid-template-columns: 1fr; }
   .msig-card { aspect-ratio: 16 / 9; }
 }
 

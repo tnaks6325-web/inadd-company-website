@@ -203,50 +203,50 @@ export const ViralPage = () => (
           {[
             {
               icon: '🔥', href: '/marketing/viral', title: '바이럴 마케팅', tag: 'VIRAL',
-              desc: '맘카페·커뮤니티 기반의 자연스러운 확산으로 브랜드 인지도를 폭발적으로 높입니다.',
-              kpis: [{ val: '2,800만+', label: '평균 도달' }, { val: '48h', label: '최단 바이럴' }],
+              hook: '단 하루만에 브랜드가 퍼져야 할 때',
+              sub:  '하루아침에 모든 피드에 올라오는 그 브랜드,\n바로 우리가 만듭니다.',
               img: '/static/svc-images/viral.png',
               accentColor: '#1a6bff',
             },
             {
               icon: '⭐', href: '/marketing/influencer', title: '인플루언서 마케팅', tag: 'INFLUENCER',
-              desc: '검증된 1,200+ 크리에이터 네트워크로 타겟 소비자에게 진정성 있는 메시지를 전달합니다.',
-              kpis: [{ val: '1,200+', label: '파트너 크리에이터' }, { val: '+580%', label: '최대 매출 증가' }],
+              hook: '내 브랜드를 진짜처럼 말해줄 사람이 필요할 때',
+              sub:  '광고처럼 안 보이는 광고,\n1,200명의 크리에이터가 대신 말해줍니다.',
               img: '/static/svc-images/influencer.png',
               accentColor: '#a855f7',
             },
             {
               icon: '🌱', href: '/marketing/seeding', title: '시딩 캠페인', tag: 'SEEDING',
-              desc: '핵심 타겟에게 샘플을 전달해 진정성 있는 후기와 입소문 생태계를 구축합니다.',
-              kpis: [{ val: '68%', label: '후기 전환율' }, { val: '+230%', label: '리뷰 전환 효과' }],
+              hook: '리뷰가 없어서 구매를 망설이게 될 때',
+              sub:  '실제 후기가 쌓이면\n소비자는 스스로 찾아옵니다.',
               img: '/static/svc-images/seeding.png', imgPos: 'center center',
               accentColor: '#10b981',
             },
             {
               icon: '🔍', href: '/marketing/seo', title: 'SEO 마케팅', tag: 'SEO',
-              desc: '소비자가 검색하는 순간 브랜드가 먼저 보이도록 키워드부터 콘텐츠까지 설계합니다.',
-              kpis: [{ val: 'TOP3', label: '검색 순위 달성' }, { val: '+1,200%', label: '검색량 증가' }],
+              hook: '검색해도 우리 브랜드가 안 나올 때',
+              sub:  '고객이 검색하는 순간,\n가장 먼저 눈에 띄어야 합니다.',
               img: '/static/svc-images/seo.png', imgPos: 'center center',
               accentColor: '#eab308',
             },
             {
               icon: '💬', href: '/marketing/review', title: '리뷰 마케팅', tag: 'REVIEW',
-              desc: '진정성 있는 소비자 리뷰로 브랜드 신뢰를 쌓고 구매 전환율을 극적으로 높입니다.',
-              kpis: [{ val: '+230%', label: '리뷰 전환율' }, { val: '3×', label: '브랜드 신뢰도' }],
+              hook: '별점 하나가 매출을 좌우할 때',
+              sub:  '신뢰는 숫자로 증명됩니다.\n리뷰가 곧 영업입니다.',
               img: '/static/svc-images/review.png',
               accentColor: '#f97316',
             },
             {
               icon: '💚', href: '/marketing/oliveyoung', title: '올리브영 마케팅', tag: 'OLIVE YOUNG',
-              desc: '국내 최대 H&B 채널 올리브영에서 브랜드를 단기간에 폭발적으로 성장시킵니다.',
-              kpis: [{ val: '+340%', label: '채널 매출 증가' }, { val: '2.4×', label: '3개월 성장' }],
+              hook: '올리브영 입점은 했는데 팔리질 않을 때',
+              sub:  '입점보다 중요한 건 노출,\n노출보다 중요한 건 전환입니다.',
               img: '/static/svc-images/oliveyoung.png',
               accentColor: '#03c75a',
             },
             {
               icon: '🎬', href: '/marketing/ppl', title: 'PPL 마케팅', tag: 'PPL',
-              desc: '드라마·유튜브 콘텐츠 속 자연스러운 브랜드 노출로 수천만 시청자에게 각인됩니다.',
-              kpis: [{ val: '5,000만+', label: '누적 시청자' }, { val: '3×', label: '광고 전환율' }],
+              hook: '광고인지 모르게 브랜드를 심고 싶을 때',
+              sub:  '시청자가 건너뛰지 않는 순간,\n브랜드가 기억에 새겨집니다.',
               img: '/static/svc-images/ppl.png',
               accentColor: '#ef4444',
             },
@@ -265,22 +265,15 @@ export const ViralPage = () => (
               )}
               <div class="msig-overlay"></div>
               <div class="msig-accent-glow" style={`background: radial-gradient(circle at 50% 100%, ${s.accentColor}44 0%, transparent 65%)`}></div>
-              <div class="msig-tag" style={`background:${s.accentColor}44;border-color:${s.accentColor}88`}>{s.tag}</div>
+              <div class="msig-tag" style={`background:${s.accentColor}22;border-color:${s.accentColor}66`}>{s.tag}</div>
               <div class="msig-content">
                 <div class="msig-icon">{s.icon}</div>
                 <h3 class="msig-title">{s.title}</h3>
-                <p class="msig-desc">{s.desc}</p>
-                <div class="msig-kpi">
-                  {s.kpis.map(k => (
-                    <div class="msig-kpi-item" key={k.label} style={`--kpi-color:${s.accentColor}`}>
-                      <strong>{k.val}</strong>
-                      <span>{k.label}</span>
-                    </div>
-                  ))}
-                </div>
+                <p class="msig-hook" style={`color:${s.accentColor}`}>{s.hook}</p>
+                <p class="msig-sub">{s.sub.split('\n').map((line, li) => (<>{line}{li === 0 && <br />}</>))}</p>
                 <div class="msig-arrow" style={`color:${s.accentColor}`}>
                   자세히 보기
-                  <svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" width="13" height="13"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
               </div>
             </a>
