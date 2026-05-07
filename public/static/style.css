@@ -2797,7 +2797,7 @@ em {
 }
 .aptn-vm-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 22px;
   padding: 44px 44px;
   transition: background .3s;
@@ -2817,7 +2817,6 @@ em {
   background: rgba(41,121,255,0.12);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  margin-top: 3px;
   box-shadow: 0 0 12px rgba(41,121,255,0.12);
 }
 .aptn-vm-item-icon--mission {
