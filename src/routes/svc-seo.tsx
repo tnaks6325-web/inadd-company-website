@@ -1015,39 +1015,35 @@ export const SvcSeoPage = () => (
       </div>
     </section>
 
-    <section class="section svc-results-section">
+    {/* ══ FAQ ══ */}
+    <section class="section svc-faq-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
-          <span class="sec-label">Results</span>
-          <h2 class="sec-title">실제 성과<br /><em>숫자로 증명합니다</em></h2>
+          <span class="sec-label">FAQ</span>
+          <h2 class="sec-title">자주 하는 질문</h2>
+          <p class="sec-sub">SEO 마케팅에 대해 가장 많이 묻는 질문들을 모았습니다.</p>
         </div>
-        <div class="svc-result-grid">
-          <div class="srg-card srg-card--featured">
-            <div class="srg-tag">헬스케어 플레이스 SEO</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>TOP1</strong><span>플레이스 순위</span></div>
-              <div class="srg-metric"><strong>+1,200%</strong><span>검색 유입 증가</span></div>
-              <div class="srg-metric"><strong>3개월</strong><span>달성 기간</span></div>
+        <div class="faq-wrap">
+          {[
+            { q:'SEO 마케팅은 광고와 어떻게 다른가요?', a:'광고는 예산이 끊기면 노출도 멈추지만, SEO는 <strong>한 번 상위 노출되면 지속적으로 유입</strong>이 발생합니다. 초기 투자 대비 장기적인 ROI가 매우 높은 마케팅 방식입니다.' },
+            { q:'네이버 플레이스 상위 노출은 어떻게 작동하나요?', a:'방문자 수, 리뷰 수·품질, 저장 수, 체류 시간 등 <strong>다양한 신호</strong>를 네이버 알고리즘이 종합 평가합니다. 인애드컴퍼니는 이 신호들을 체계적으로 강화하는 전략을 적용합니다.' },
+            { q:'효과가 나타나는 데 얼마나 걸리나요?', a:'초기 변화는 <strong>4~8주</strong> 내에 확인되며, 안정적인 상위 노출 유지는 3~6개월이 소요됩니다. 알고리즘 변화에 대응하는 지속 관리가 중요합니다.' },
+            { q:'유튜브 SEO도 따로 필요한가요?', a:'네, 유튜브는 <strong>구글 다음으로 큰 검색 엔진</strong>입니다. 제목·태그·설명·자막 최적화와 초기 조회수 확보를 통해 관련 키워드 검색 시 상위 노출되도록 설계합니다.' },
+            { q:'인스타그램 해시태그 SEO도 가능한가요?', a:'가능합니다. 브랜드·카테고리·트렌드 키워드를 분석해 <strong>최적 해시태그 세트</strong>를 구성하고, 해시태그 검색 상위 노출을 위한 초기 인게이지먼트 전략을 병행합니다.' },
+            { q:'SEO 작업 후 순위가 다시 떨어질 수 있나요?', a:'알고리즘 업데이트나 경쟁사 활동에 따라 변동이 있을 수 있습니다. 인애드컴퍼니는 <strong>월별 모니터링 및 대응 전략</strong>을 제공해 상위 순위를 안정적으로 유지합니다.' },
+          ].map((item, i) => (
+            <div class="faq-item" id={`faq-seo-${i}`}>
+              <button class="faq-q" type="button" onclick={`(function(btn){var item=btn.closest('.faq-item');var isOpen=item.classList.contains('faq-item--open');document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('faq-item--open');});if(!isOpen){item.classList.add('faq-item--open');}})(this)`}>
+                <div class="faq-q-left">
+                  <span class="faq-q-badge">Q</span>
+                  <span class="faq-q-text">{item.q}</span>
+                </div>
+                <span class="faq-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></span>
+              </button>
+              <div class="faq-a"><div class="faq-a-inner" dangerouslySetInnerHTML={{__html: item.a}} /></div>
             </div>
-            <p class="srg-desc">건강기능식품 브랜드 플레이스 + 자동완성 통합 전략으로 주요 키워드 3개월 내 1위 달성</p>
-          </div>
-          <div class="srg-card">
-            <div class="srg-tag">뷰티 브랜드 유튜브 SEO</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>+340%</strong><span>오가닉 유입 증가</span></div>
-              <div class="srg-metric"><strong>6개월</strong><span>유지 기간</span></div>
-            </div>
-            <p class="srg-desc">K-뷰티 신규 브랜드 유튜브 SEO. 카테고리 핵심 키워드 선점으로 광고 없이 꾸준한 유입 확보</p>
-          </div>
-          <div class="srg-card">
-            <div class="srg-tag">이커머스 인스타 검색</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>+520%</strong><span>해시태그 노출</span></div>
-              <div class="srg-metric"><strong>2배</strong><span>전환율 상승</span></div>
-            </div>
-            <p class="srg-desc">신제품 출시 인스타 해시태그 집중 공략으로 출시 2주 만에 인지도 급상승 및 매출 전환</p>
-          </div>
+          ))}
         </div>
       </div>
     </section>

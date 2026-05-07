@@ -448,39 +448,35 @@ export const SvcReviewPage = () => (
     </section>
 
     {/* ══ RESULTS ══ */}
-    <section class="section svc-results-section">
+    {/* ══ FAQ ══ */}
+    <section class="section svc-faq-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
-          <span class="sec-label">Results</span>
-          <h2 class="sec-title">실제 성과<br /><em>숫자로 증명합니다</em></h2>
+          <span class="sec-label">FAQ</span>
+          <h2 class="sec-title">자주 하는 질문</h2>
+          <p class="sec-sub">리뷰 마케팅에 대해 가장 많이 묻는 질문들을 모았습니다.</p>
         </div>
-        <div class="svc-result-grid">
-          <div class="srg-card srg-card--featured">
-            <div class="srg-tag">뷰티 브랜드 기획형 리뷰</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>+230%</strong><span>리뷰 전환율 향상</span></div>
-              <div class="srg-metric"><strong>별점 4.9</strong><span>네이버 쇼핑 달성</span></div>
-              <div class="srg-metric"><strong>1,400건</strong><span>리뷰 확보</span></div>
+        <div class="faq-wrap">
+          {[
+            { q:'리뷰 마케팅은 허위 리뷰 아닌가요?', a:'실제 제품을 사용한 소비자가 <strong>자신의 경험을 솔직하게 작성</strong>하는 방식입니다. 인애드컴퍼니는 허위·과장 리뷰를 엄격히 금지하며, 공정거래위원회 지침을 준수합니다.' },
+            { q:'어떤 플랫폼에서 리뷰 관리가 가능한가요?', a:'<strong>네이버 스마트스토어, 쿠팡, 올리브영, 카카오선물하기</strong> 등 주요 이커머스 플랫폼과 네이버 블로그, 인스타그램까지 통합 관리합니다.' },
+            { q:'부정적인 리뷰는 어떻게 대응하나요?', a:'부정 리뷰 모니터링 → 원인 분석 → <strong>신속한 브랜드 공식 답변 작성</strong> → 긍정 리뷰 비중 확대 전략을 순차적으로 적용해 브랜드 이미지를 회복합니다.' },
+            { q:'리뷰 수가 얼마나 있어야 효과가 있나요?', a:'카테고리마다 다르지만, 일반적으로 <strong>50건 이상</strong>이면 신뢰도 형성이 시작되고, 200건 이상이면 검색 알고리즘 상위 노출에도 긍정적인 영향을 줍니다.' },
+            { q:'별점 관리도 함께 해주나요?', a:'네, 리뷰 수 확보와 함께 <strong>평균 별점 4.5 이상 유지</strong>를 목표로 운영합니다. 저품질 리뷰 관리 및 우수 리뷰 유도 전략을 병행합니다.' },
+            { q:'리뷰 캠페인 완료 후에도 효과가 지속되나요?', a:'네, 블로그·이커머스 리뷰는 <strong>검색 자산으로 축적</strong>되어 캠페인 종료 후에도 지속적으로 신규 고객 유입과 구매 전환에 기여합니다.' },
+          ].map((item, i) => (
+            <div class="faq-item" id={`faq-review-${i}`}>
+              <button class="faq-q" type="button" onclick={`(function(btn){var item=btn.closest('.faq-item');var isOpen=item.classList.contains('faq-item--open');document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('faq-item--open');});if(!isOpen){item.classList.add('faq-item--open');}})(this)`}>
+                <div class="faq-q-left">
+                  <span class="faq-q-badge">Q</span>
+                  <span class="faq-q-text">{item.q}</span>
+                </div>
+                <span class="faq-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></span>
+              </button>
+              <div class="faq-a"><div class="faq-a-inner" dangerouslySetInnerHTML={{__html: item.a}} /></div>
             </div>
-            <p class="srg-desc">스킨케어 신제품 출시 캠페인. 300명 체험단 기획형 리뷰로 브랜드 신뢰 생태계 구축 및 카테고리 상위 등극</p>
-          </div>
-          <div class="srg-card">
-            <div class="srg-tag">식품 브랜드 블로거 리뷰</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>850건</strong><span>블로그 리뷰</span></div>
-              <div class="srg-metric"><strong>+420%</strong><span>자연 검색 유입</span></div>
-            </div>
-            <p class="srg-desc">건강식품 브랜드 SEO 최적화 블로그 리뷰 캠페인. 브랜드 키워드 네이버 1페이지 점령 및 지속 유입 확보</p>
-          </div>
-          <div class="srg-card">
-            <div class="srg-tag">헬스케어 쿠팡 별점 관리</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>별점 4.8</strong><span>평균 유지</span></div>
-              <div class="srg-metric"><strong>+185%</strong><span>매출 증가</span></div>
-            </div>
-            <p class="srg-desc">건강보조식품 쿠팡 별점 관리 + 구매 유도 댓글 전략으로 부정 여론 완화 및 카테고리 베스트셀러 등극</p>
-          </div>
+          ))}
         </div>
       </div>
     </section>

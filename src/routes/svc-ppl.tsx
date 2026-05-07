@@ -312,40 +312,35 @@ export const SvcPplPage = () => (
     </section>
 
     {/* ══ RESULTS ══ */}
-    <section class="section svc-results-section">
+    {/* ══ FAQ ══ */}
+    <section class="section svc-faq-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
-          <span class="sec-label">Results</span>
-          <h2 class="sec-title">실제 성과<br /><em>숫자로 증명합니다</em></h2>
-          <p class="sec-sub">인애드컴퍼니가 함께한 PPL 캠페인의 실제 성과입니다.</p>
+          <span class="sec-label">FAQ</span>
+          <h2 class="sec-title">자주 하는 질문</h2>
+          <p class="sec-sub">PPL 마케팅에 대해 가장 많이 묻는 질문들을 모았습니다.</p>
         </div>
-        <div class="svc-result-grid">
-          <div class="srg-card srg-card--featured">
-            <div class="srg-tag">케이블 드라마 PPL</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>850만</strong><span>누적 시청자</span></div>
-              <div class="srg-metric"><strong>+380%</strong><span>브랜드 검색량</span></div>
-              <div class="srg-metric"><strong>3×</strong><span>광고 전환율</span></div>
+        <div class="faq-wrap">
+          {[
+            { q:'PPL 마케팅은 어떤 브랜드에 적합한가요?', a:'드라마·예능 시청자와 타겟이 겹치는 <strong>식품, 뷰티, 건강기능식품, 생활용품</strong> 브랜드에 특히 효과적입니다. 브랜드 인지도 확산과 자연스러운 제품 소구가 동시에 필요한 경우 최적입니다.' },
+            { q:'PPL 비용은 어느 정도인가요?', a:'방송사, 프로그램 시청률, 노출 방식(간접 노출·직접 사용·에피소드 기획)에 따라 크게 달라집니다. <strong>케이블·웹드라마부터 지상파까지</strong> 예산에 맞는 옵션을 제안해 드리니 상담을 통해 확인하세요.' },
+            { q:'방영 전에 노출 장면을 미리 확인할 수 있나요?', a:'에피소드 기획형의 경우 <strong>사전 장면 협의 및 편집본 검토</strong>가 가능합니다. 일반 간접 노출형은 방송사 편집 권한으로 인해 사전 확인이 제한될 수 있습니다.' },
+            { q:'PPL 이후 2차 콘텐츠 활용이 가능한가요?', a:'방영된 장면의 캡처·클립을 <strong>SNS·디지털 광고 소재로 재활용</strong>할 수 있어 PPL 투자 대비 효과를 극대화할 수 있습니다. 저작권 범위는 계약 시 명확히 확정합니다.' },
+            { q:'시청률이 낮은 프로그램은 효과가 없나요?', a:'시청률이 낮더라도 <strong>타겟 적합도가 높은 프로그램</strong>이면 전환율이 높습니다. 예를 들어 건강기능식품은 건강 정보 프로그램이, 뷰티는 뷰티 예능이 더 높은 ROI를 보입니다.' },
+            { q:'계약 후 방영이 취소될 수도 있나요?', a:'제작 일정 변경이나 편성 조정으로 방영이 지연·변경될 수 있습니다. 인애드컴퍼니는 계약서에 <strong>방영 보장 조항과 환불 정책</strong>을 명확히 포함해 리스크를 최소화합니다.' },
+          ].map((item, i) => (
+            <div class="faq-item" id={`faq-ppl-${i}`}>
+              <button class="faq-q" type="button" onclick={`(function(btn){var item=btn.closest('.faq-item');var isOpen=item.classList.contains('faq-item--open');document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('faq-item--open');});if(!isOpen){item.classList.add('faq-item--open');}})(this)`}>
+                <div class="faq-q-left">
+                  <span class="faq-q-badge">Q</span>
+                  <span class="faq-q-text">{item.q}</span>
+                </div>
+                <span class="faq-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></span>
+              </button>
+              <div class="faq-a"><div class="faq-a-inner" dangerouslySetInnerHTML={{__html: item.a}} /></div>
             </div>
-            <p class="srg-desc">뷰티 브랜드 드라마 PPL 캠페인. 주인공 사용 제품 노출로 방영 중 브랜드 검색량 380% 급등 및 SNS 자발적 언급 폭증</p>
-          </div>
-          <div class="srg-card">
-            <div class="srg-tag">에피소드 기획 PPL</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>+240%</strong><span>신규 고객 유입</span></div>
-              <div class="srg-metric"><strong>2차 콘텐츠</strong><span>SNS 바이럴 연계</span></div>
-            </div>
-            <p class="srg-desc">식품 브랜드 예능 에피소드 기획 PPL. 자연스러운 제품 사용 장면으로 타겟 정밀 공략, 방영 후 SNS 바이럴까지 이어져 구매 전환 폭발적 증가</p>
-          </div>
-          <div class="srg-card">
-            <div class="srg-tag">웹드라마 브랜디드 PPL</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>5,000만+</strong><span>누적 시청자</span></div>
-              <div class="srg-metric"><strong>+520%</strong><span>SNS 언급량</span></div>
-            </div>
-            <p class="srg-desc">헬스케어 브랜드 웹드라마 기획·제작 PPL. 전 에피소드 자연 노출로 SNS 화제성 폭발, 브랜드 인지도 및 신뢰도 급상승</p>
-          </div>
+          ))}
         </div>
       </div>
     </section>

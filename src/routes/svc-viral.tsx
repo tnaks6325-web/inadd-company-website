@@ -281,39 +281,35 @@ export const SvcViralPage = () => (
     </section>
 
     {/* ============ 성과 사례 ============ */}
-    <section class="section svc-results-section">
+    {/* ══ FAQ ══ */}
+    <section class="section svc-faq-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
-          <span class="sec-label">Results</span>
-          <h2 class="sec-title">실제 성과<br /><em>숫자로 증명합니다</em></h2>
+          <span class="sec-label">FAQ</span>
+          <h2 class="sec-title">자주 하는 질문</h2>
+          <p class="sec-sub">바이럴 마케팅에 대해 가장 많이 묻는 질문들을 모았습니다.</p>
         </div>
-        <div class="svc-result-grid">
-          <div class="srg-card srg-card--featured">
-            <div class="srg-tag">Instagram 바이럴</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>2,800만</strong><span>조회수</span></div>
-              <div class="srg-metric"><strong>142,000</strong><span>공유 수</span></div>
-              <div class="srg-metric"><strong>+580%</strong><span>매출 증가</span></div>
+        <div class="faq-wrap">
+          {[
+            { q:'바이럴 마케팅과 일반 광고는 어떻게 다른가요?', a:'일반 광고는 브랜드가 직접 메시지를 전달하지만, 바이럴 마케팅은 <strong>소비자가 자발적으로 콘텐츠를 공유</strong>하도록 설계합니다. 신뢰도가 높고 비용 대비 도달 범위가 훨씬 넓습니다.' },
+            { q:'어떤 채널에서 바이럴 마케팅이 가능한가요?', a:'인스타그램, 유튜브, 틱톡 등 SNS는 물론 <strong>네이버 카페·커뮤니티, 맘카페, 직장인 커뮤니티</strong> 등 타겟 고객이 모이는 채널 전반에 걸쳐 운영합니다.' },
+            { q:'캠페인 효과는 얼마나 걸려야 나타나나요?', a:'채널과 콘텐츠 유형에 따라 다르지만, 통상 <strong>런칭 후 48~72시간 이내</strong>에 초기 반응을 확인할 수 있으며, 본격적인 검색량·매출 변화는 2~4주 내 나타납니다.' },
+            { q:'중소기업·스타트업도 진행할 수 있나요?', a:'네, 가능합니다. 예산 규모에 맞게 <strong>핵심 채널 집중형 플랜</strong>을 설계해 드립니다. 대기업과 동일한 효과를 더 효율적인 비용으로 달성한 사례가 많습니다.' },
+            { q:'콘텐츠는 누가 제작하나요?', a:'인애드컴퍼니 내부 크리에이티브팀이 브랜드 가이드라인에 맞춰 <strong>직접 기획·제작</strong>합니다. 브랜드 톤앤매너 분석부터 배포까지 원스톱으로 처리합니다.' },
+            { q:'성과 측정은 어떻게 이루어지나요?', a:'조회수·공유수·저장수·댓글 등 <strong>채널별 상세 데이터</strong>와 함께, 브랜드 검색량 변화·매출 증감을 연계 분석한 종합 리포트를 캠페인 종료 후 제공합니다.' },
+          ].map((item, i) => (
+            <div class="faq-item" id={`faq-viral-${i}`}>
+              <button class="faq-q" type="button" onclick={`(function(btn){var item=btn.closest('.faq-item');var isOpen=item.classList.contains('faq-item--open');document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('faq-item--open');});if(!isOpen){item.classList.add('faq-item--open');}})(this)`}>
+                <div class="faq-q-left">
+                  <span class="faq-q-badge">Q</span>
+                  <span class="faq-q-text">{item.q}</span>
+                </div>
+                <span class="faq-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></span>
+              </button>
+              <div class="faq-a"><div class="faq-a-inner" dangerouslySetInnerHTML={{__html: item.a}} /></div>
             </div>
-            <p class="srg-desc">뷰티 브랜드 신제품 출시 캠페인. 맘카페 + 인스타그램 연계 바이럴로 48시간 내 2,800만 조회 달성</p>
-          </div>
-          <div class="srg-card">
-            <div class="srg-tag">커뮤니티 바이럴</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>1,800만</strong><span>조회수</span></div>
-              <div class="srg-metric"><strong>+1,200%</strong><span>검색량 증가</span></div>
-            </div>
-            <p class="srg-desc">식품 브랜드 바이럴 캠페인. 온라인 커뮤니티 이슈화로 브랜드 검색량 폭발적 증가</p>
-          </div>
-          <div class="srg-card">
-            <div class="srg-tag">YouTube 바이럴</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>900만</strong><span>조회수</span></div>
-              <div class="srg-metric"><strong>+340%</strong><span>브랜드 인지도</span></div>
-            </div>
-            <p class="srg-desc">헬스케어 브랜드 유튜브 바이럴. 자연스러운 리뷰 콘텐츠로 브랜드 신뢰도 3배 향상</p>
-          </div>
+          ))}
         </div>
       </div>
     </section>

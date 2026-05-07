@@ -365,40 +365,35 @@ export const SvcOliveYoungPage = () => (
     </section>
 
     {/* ══ RESULTS ══ */}
-    <section class="section svc-results-section">
+    {/* ══ FAQ ══ */}
+    <section class="section svc-faq-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
-          <span class="sec-label">Results</span>
-          <h2 class="sec-title">실제 성과<br /><em>숫자로 증명합니다</em></h2>
-          <p class="sec-sub">인애드컴퍼니가 함께한 올리브영 브랜드의 실제 캠페인 성과입니다.</p>
+          <span class="sec-label">FAQ</span>
+          <h2 class="sec-title">자주 하는 질문</h2>
+          <p class="sec-sub">올리브영 마케팅에 대해 가장 많이 묻는 질문들을 모았습니다.</p>
         </div>
-        <div class="svc-result-grid">
-          <div class="srg-card srg-card--featured">
-            <div class="srg-tag">스킨케어 브랜드 통합 운영</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>+340%</strong><span>3개월 채널 매출 증가</span></div>
-              <div class="srg-metric"><strong>TOP 5</strong><span>카테고리 순위 달성</span></div>
-              <div class="srg-metric"><strong>별점 4.9</strong><span>달성 및 유지</span></div>
+        <div class="faq-wrap">
+          {[
+            { q:'올리브영 입점이 안 된 상태에서도 마케팅이 가능한가요?', a:'입점 전 <strong>시딩·리뷰 생태계 구축</strong>부터 진행 가능합니다. 입점 심사 시 기존 리뷰·인지도가 긍정적으로 작용하며, 입점 후 바로 HOT 상품 진입을 노릴 수 있도록 준비합니다.' },
+            { q:'올리브영 랭킹은 어떤 기준으로 결정되나요?', a:'판매량, 리뷰 수·품질, 위시리스트 저장, 클릭률, 재구매율 등 <strong>다양한 지표</strong>가 복합적으로 반영됩니다. 인애드컴퍼니는 이 지표들을 체계적으로 개선하는 전략을 적용합니다.' },
+            { q:'탑리뷰어 섭외는 어떻게 이루어지나요?', a:'인애드컴퍼니가 보유한 <strong>올리브영 탑리뷰어 DB</strong>를 통해 브랜드 카테고리에 맞는 리뷰어를 직접 섭외합니다. 리뷰 품질과 활동 이력을 사전 검증합니다.' },
+            { q:'HOT 상품 진입까지 기간이 얼마나 걸리나요?', a:'브랜드 현황과 카테고리 경쟁 강도에 따라 다르지만, 집중 운영 시 <strong>1~3개월</strong> 내 카테고리 TOP 10 진입 사례가 많습니다.' },
+            { q:'온라인 스토어와 오프라인 매장 모두 적용되나요?', a:'주력은 <strong>올리브영 온라인몰</strong> 최적화이며, 온라인 성과가 오프라인 매장 발주에도 연동되는 구조를 활용합니다. 오프라인 매대 노출 전략도 함께 제안합니다.' },
+            { q:'경쟁 브랜드가 많은 카테고리에서도 효과가 있나요?', a:'경쟁이 치열할수록 <strong>데이터 기반 차별화 전략</strong>이 중요합니다. 경쟁사 리뷰·키워드 분석을 통해 공략 포인트를 발굴하고, 틈새 공략으로 효율적인 순위 상승을 달성합니다.' },
+          ].map((item, i) => (
+            <div class="faq-item" id={`faq-oy-${i}`}>
+              <button class="faq-q" type="button" onclick={`(function(btn){var item=btn.closest('.faq-item');var isOpen=item.classList.contains('faq-item--open');document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('faq-item--open');});if(!isOpen){item.classList.add('faq-item--open');}})(this)`}>
+                <div class="faq-q-left">
+                  <span class="faq-q-badge">Q</span>
+                  <span class="faq-q-text">{item.q}</span>
+                </div>
+                <span class="faq-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></span>
+              </button>
+              <div class="faq-a"><div class="faq-a-inner" dangerouslySetInnerHTML={{__html: item.a}} /></div>
             </div>
-            <p class="srg-desc">중소 뷰티 브랜드 리뷰+랭킹+노출 통합 운영. 탑리뷰어 1,200건 확보 및 카테고리 TOP 5 진입으로 채널 매출 3.4배 성장 달성</p>
-          </div>
-          <div class="srg-card">
-            <div class="srg-tag">헬스케어 랭킹 1위 달성</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>카테고리 1위</strong><span>랭킹 보장 달성</span></div>
-              <div class="srg-metric"><strong>2.4×</strong><span>3개월 매출 성장</span></div>
-            </div>
-            <p class="srg-desc">건강보조식품 랭킹 작업 + 상위 노출 연계 운영. 카테고리 1위 보장 패키지로 경쟁사 대비 압도적 노출 확보 및 매출 2.4배 달성</p>
-          </div>
-          <div class="srg-card">
-            <div class="srg-tag">뷰티 신규 브랜드 런칭</div>
-            <div class="srg-metrics">
-              <div class="srg-metric"><strong>1개월</strong><span>TOP 10 진입</span></div>
-              <div class="srg-metric"><strong>+215%</strong><span>첫달 목표 초과 달성</span></div>
-            </div>
-            <p class="srg-desc">신규 브랜드 리뷰 마케팅 집중 투입. 탑리뷰어 조기 확보로 입점 1개월 만에 카테고리 TOP 10 진입 및 재구매율 급상승</p>
-          </div>
+          ))}
         </div>
       </div>
     </section>
