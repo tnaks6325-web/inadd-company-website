@@ -8770,16 +8770,18 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 
 .ct-faq-list .faq-a {
   max-height: 0;
+  opacity: 0;
   overflow: hidden;
   font-size: 14px;
-  color: rgba(255,255,255,0.55);
-  line-height: 1.75;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.8;
   padding: 0 4px;
   word-break: keep-all;
-  transition: max-height 0.35s ease, padding 0.35s ease;
+  transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.35s ease;
 }
 .ct-faq-list .faq-item.open .faq-a {
-  max-height: 300px;
+  max-height: 400px;
+  opacity: 1;
   padding: 0 4px 20px;
 }
 
