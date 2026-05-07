@@ -146,7 +146,7 @@ export const SvcPplPage = () => (
         <div class="section-head">
           <span class="sec-label">Episode PPL</span>
           <h2 class="sec-title">에피소드 기획 PPL<br /><em style="font-size:0.85em;color:rgba(255,255,255,0.5)">(TVN 기준)</em></h2>
-          <p class="sec-sub" style="max-width:680px;margin:0 auto">
+          <p class="sec-sub" style="max-width:680px">
             방송관련 상품 진행 시 <strong style="color:rgba(239,68,68,0.9)">가장 큰 효과를 볼 수 있으며</strong>,<br />
             다른 상품과의 연계가 매우 <strong style="color:rgba(255,255,255,0.85)">자연스럽게 이어집니다.</strong>
           </p>
