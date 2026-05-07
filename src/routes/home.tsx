@@ -468,97 +468,105 @@ export const HomePage = () => (
 
         {/* 헤더 */}
         <div class="hist-head">
-          <div>
-            <span class="sec-label">Company Growth</span>
-            <h2 class="sec-title hist-title">IN AD <em>HISTORY</em></h2>
-            <p class="hist-subtitle">2019 – 2026 Continuous Growth</p>
-          </div>
+          <span class="sec-label">Company Growth</span>
+          <h2 class="sec-title hist-title">IN AD <em>HISTORY</em></h2>
+          <p class="hist-subtitle">2019 – 2026 Continuous Growth</p>
         </div>
 
-        {/* SVG 성장 곡선 + 노드 컨테이너 */}
-        <div class="hist-track-wrap" id="histTrackWrap">
+        {/* 버티컬 타임라인 */}
+        <div class="htl-wrap">
 
-          {/* 배경 SVG 곡선 */}
-          <svg class="hist-curve-svg" viewBox="0 0 1200 260" preserveAspectRatio="none" aria-hidden="true">
-            {/* 글로우 선 */}
-            <path class="hist-curve-glow"
-              d="M 0,220 C 100,210 180,200 250,185 C 330,168 390,148 470,128 C 550,108 610,92 690,75 C 770,58 840,44 920,32 C 980,22 1050,16 1200,12"
-              fill="none" />
-            {/* 메인 선 */}
-            <path class="hist-curve-line"
-              d="M 0,220 C 100,210 180,200 250,185 C 330,168 390,148 470,128 C 550,108 610,92 690,75 C 770,58 840,44 920,32 C 980,22 1050,16 1200,12"
-              fill="none" />
-          </svg>
+          {/* 세로 연결선 */}
+          <div class="htl-spine">
+            <div class="htl-spine-line"></div>
+            <div class="htl-spine-glow"></div>
+          </div>
 
-          {/* 노드 8개 — 각 연도 */}
           {[
             {
-              year: '2019', label: '설립 및 런칭', pos: 12,
-              items: ['인아드컴퍼니 설립', '카페침투 마케팅 런칭'],
-              now: false
+              year: '2019', label: '설립 및 런칭',
+              icon: '🚀', accent: '#1a6bff',
+              items: ['인애드컴퍼니 설립', '카페침투 마케팅 런칭'],
+              side: 'left', now: false
             },
             {
-              year: '2020', label: '서비스 확장', pos: 24,
+              year: '2020', label: '서비스 확장',
+              icon: '📡', accent: '#7c3aed',
               items: ['확장 이전', 'SNS 채널 런칭', '커뮤니티 바이럴 런칭'],
-              now: false
+              side: 'right', now: false
             },
             {
-              year: '2021', label: '브랜드 재정립', pos: 36,
+              year: '2021', label: '브랜드 재정립',
+              icon: '✨', accent: '#0891b2',
               items: ['"인애드컴퍼니" 사명 변경'],
-              now: false
+              side: 'left', now: false
             },
             {
-              year: '2022', label: '법인 전환 & 도약', pos: 48,
+              year: '2022', label: '법인 전환 & 도약',
+              icon: '🏢', accent: '#059669',
               items: ['주식회사 전환', '유튜브 마케팅 런칭', '2차 가공 콘텐츠 런칭'],
-              now: false
+              side: 'right', now: false
             },
             {
-              year: '2023', label: '조직 전문화', pos: 60,
-              items: ['확장 이전', '유튜브 에이전시 팀'],
-              now: false
+              year: '2023', label: '조직 전문화',
+              icon: '👥', accent: '#d97706',
+              items: ['확장 이전', '유튜브 에이전시 팀 구성'],
+              side: 'left', now: false
             },
             {
-              year: '2024', label: '시스템 고도화', pos: 72,
+              year: '2024', label: '시스템 고도화',
+              icon: '⚙️', accent: '#dc2626',
               items: ['퍼스널 마케팅 구축', '브랜딩 TF팀 구축', '유튜브 릴리즈 개발'],
-              now: false
+              side: 'right', now: false
             },
             {
-              year: '2025', label: '업무 시스템 자동화', pos: 84,
+              year: '2025', label: '업무 시스템 자동화',
+              icon: '🤖', accent: '#7c3aed',
               items: ['사내 인트라넷 구축', '카피하우스 자동화 개발'],
-              now: false
+              side: 'left', now: false
             },
             {
-              year: '2026', label: '글로벌 & 퍼포먼스', pos: 96,
+              year: '2026', label: '글로벌 & 퍼포먼스',
+              icon: '🌐', accent: '#1a6bff',
               items: ['콘텐츠 마케팅 정립', '글로벌 마케팅 런칭', '퍼포먼스 마케팅 런칭'],
-              now: true
+              side: 'right', now: true
             }
-          ].map((node) => (
-            <div
-              class={`hn-node${node.now ? ' hn-node--future' : ''}`}
-              style={`left:${node.pos}%`}
-              data-year={node.year}
-            >
-              {/* 동그라미 */}
-              <div class="hn-circle">
-                <span class="hn-circle-inner"></span>
-                <span class="hn-pulse"></span>
+          ].map((node, idx) => (
+            <div class={`htl-row htl-row--${node.side}${node.now ? ' htl-row--future' : ''}`} data-idx={idx}>
+
+              {/* 카드 */}
+              <div class="htl-card" style={`--accent:${node.accent}`}>
+                <div class="htl-card-inner">
+                  <div class="htl-card-top">
+                    <span class="htl-icon">{node.icon}</span>
+                    <div>
+                      <div class="htl-year">{node.year}{node.now && <span class="htl-badge">진행 중</span>}</div>
+                      <div class="htl-label">{node.label}</div>
+                    </div>
+                  </div>
+                  <ul class="htl-list">
+                    {node.items.map(item => <li class="htl-item"><span class="htl-dot"></span>{item}</li>)}
+                  </ul>
+                </div>
+                <div class="htl-card-glow"></div>
               </div>
 
-              {/* 툴팁 카드 */}
-              <div class="hn-card">
-                <div class="hn-card-year">{node.year}{node.now && <span class="hn-future-badge">예정</span>}</div>
-                <div class="hn-card-title">{node.label}</div>
-                <ul class="hn-card-list">
-                  {node.items.map(item => <li>{item}</li>)}
-                </ul>
+              {/* 중앙 노드 */}
+              <div class="htl-node" style={`--accent:${node.accent}`}>
+                <div class="htl-node-ring"></div>
+                <div class="htl-node-dot"></div>
+                <div class="htl-node-pulse"></div>
               </div>
 
-              {/* 연도 라벨 (평소에 보임) */}
-              <span class="hn-year-label">{node.year}</span>
+              {/* 반대편 연도 표시 */}
+              <div class="htl-year-aside">
+                <span class="htl-year-aside-text">{node.year}</span>
+              </div>
+
             </div>
           ))}
 
-        </div>{/* /hist-track-wrap */}
+        </div>{/* /htl-wrap */}
       </div>
     </section>
 
@@ -971,61 +979,49 @@ initSlider(7);
 })();
 
 /* ─────────────────────────────────────────────
-   3. HISTORY — 곡선 드로잉 + 노드 순차 등장
+   3. HISTORY — 버티컬 타임라인 카드 순차 등장
 ───────────────────────────────────────────── */
 (function(){
   var histSection = document.querySelector('.history-section');
   if(!histSection) return;
-  var triggered = false;
 
-  // 노드들 초기 숨김
-  var nodes = histSection.querySelectorAll('.hn-node');
-  nodes.forEach(function(n){
-    n.style.opacity = '0';
-    n.style.transform = 'translateY(20px) scale(0.8)';
-    n.style.transition = 'none';
+  // 세로 라인 드로잉 애니메이션
+  var spineLine = histSection.querySelector('.htl-spine-line');
+  if(spineLine){
+    spineLine.style.transform = 'scaleY(0)';
+    spineLine.style.transformOrigin = 'top center';
+    spineLine.style.transition = 'none';
+  }
+
+  // 카드들 초기 숨김
+  var rows = histSection.querySelectorAll('.htl-row');
+  rows.forEach(function(r){
+    var isLeft = r.classList.contains('htl-row--left');
+    r.style.opacity = '0';
+    r.style.transform = isLeft ? 'translateX(-40px)' : 'translateX(40px)';
+    r.style.transition = 'none';
   });
 
-  // 곡선 경로 길이 측정
-  var line = histSection.querySelector('.hist-curve-line');
-  if(line){
-    var len = line.getTotalLength ? line.getTotalLength() : 1800;
-    line.style.strokeDasharray = len;
-    line.style.strokeDashoffset = len;
-    line.style.transition = 'none';
-  }
-  var glow = histSection.querySelector('.hist-curve-glow');
-  if(glow){
-    var glen = glow.getTotalLength ? glow.getTotalLength() : 1800;
-    glow.style.strokeDasharray = glen;
-    glow.style.strokeDashoffset = glen;
-    glow.style.transition = 'none';
-  }
-
+  var triggered = false;
   function runAnim(){
     if(triggered) return;
     var rect = histSection.getBoundingClientRect();
-    if(rect.top > window.innerHeight - 80) return;
+    if(rect.top > window.innerHeight - 100) return;
     triggered = true;
 
-    // 곡선 드로잉
-    if(line){
-      line.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.4,0,0.2,1)';
-      line.style.strokeDashoffset = '0';
-    }
-    if(glow){
-      glow.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.4,0,0.2,1) 0.1s';
-      glow.style.strokeDashoffset = '0';
+    // 세로 라인 드로잉
+    if(spineLine){
+      spineLine.style.transition = 'transform 1.6s cubic-bezier(0.4,0,0.2,1)';
+      spineLine.style.transform = 'scaleY(1)';
     }
 
-    // 노드 순차 등장 (곡선 드로잉과 함께)
-    nodes.forEach(function(n, i){
-      var delay = 0.3 + i * 0.18;
+    // 카드 순차 슬라이드인
+    rows.forEach(function(r, i){
       setTimeout(function(){
-        n.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1)';
-        n.style.opacity = '1';
-        n.style.transform = 'translateY(0) scale(1)';
-      }, delay * 1000);
+        r.style.transition = 'opacity 0.55s ease, transform 0.55s cubic-bezier(0.34,1.56,0.64,1)';
+        r.style.opacity = '1';
+        r.style.transform = 'translateX(0)';
+      }, 200 + i * 130);
     });
   }
 
