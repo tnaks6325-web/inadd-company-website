@@ -2505,10 +2505,10 @@ em {
 ════════════════════════════════ */
 .aptn-flow {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   gap: 0;
-  margin-bottom: 88px;
+  margin-bottom: 72px;
   position: relative; z-index: 1;
 }
 
@@ -2517,10 +2517,9 @@ em {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   flex: 1;
-  max-width: 220px;
-  align-self: stretch;
+  max-width: 260px;
 }
 
 /* STEP 배지 */
@@ -2547,15 +2546,15 @@ em {
 .aptn-step-card {
   width: 100%;
   flex: 1;
-  background: rgba(20,32,72,0.95);          /* 더 밝고 불투명하게 */
-  border: 1px solid rgba(80,140,255,0.45);  /* 테두리 더 선명하게 */
-  border-radius: 20px;
-  padding: 30px 26px 28px;
+  background: rgba(16,26,60,0.92);
+  border: 1px solid rgba(80,140,255,0.35);
+  border-radius: 18px;
+  padding: 28px 24px 26px;
   text-align: center;
   transition: border-color .3s, transform .3s, box-shadow .3s;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -2569,9 +2568,9 @@ em {
   opacity: 1;
 }
 .aptn-step-card--accent {
-  background: rgba(10,36,28,0.95);
-  border-color: rgba(41,200,130,0.55);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 24px rgba(41,200,130,0.1), inset 0 1px 0 rgba(255,255,255,0.08);
+  background: rgba(16,26,60,0.92);
+  border-color: rgba(41,200,130,0.45);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.45), 0 0 16px rgba(41,200,130,0.08), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .aptn-step-card--accent::before {
   background: linear-gradient(90deg, transparent, rgba(41,200,130,0.9), transparent);
@@ -2678,11 +2677,11 @@ em {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   flex-shrink: 0;
-  padding: 0 10px;
-  margin-top: 0;
+  padding: 0 8px;
   align-self: center;
+  margin-top: 36px; /* 배지 높이만큼 내려서 카드 중앙과 맞춤 */
 }
 .aptn-flow-arrow svg path {
   stroke: rgba(100,160,255,0.9);  /* 더 밝게 */
@@ -2706,11 +2705,11 @@ em {
 /* ── 결과: 비즈니스 파트너 원형 ── */
 .aptn-flow-result {
   position: relative;
-  width: 140px; height: 140px;
+  width: 130px; height: 130px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  margin-top: 0;
   align-self: center;
+  margin-top: 36px; /* 화살표와 동일 오프셋 */
 }
 .aptn-result-ring {
   position: absolute;
