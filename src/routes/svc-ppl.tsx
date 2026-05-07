@@ -155,10 +155,10 @@ export const SvcPplPage = () => (
         <div class="ppl-episode-grid">
           {/* 예시 1 */}
           <div class="ppl-ep-card">
-            <div class="ppl-ep-num">
-              <span>1</span>
+            <div class="ppl-ep-title-row">
+              <div class="ppl-ep-num"><span>1</span></div>
+              <h4 class="ppl-ep-title">브랜드 소구포인트 노출</h4>
             </div>
-            <h4 class="ppl-ep-title">브랜드 소구포인트 노출</h4>
             <div class="ppl-ep-visual">
               <div class="ppl-ep-img-wrap">
                 <img src="/static/ppl-images/ppl-ep-brandpoint.jpg" alt="브랜드 소구포인트 노출" class="ppl-ep-img" />
@@ -174,10 +174,10 @@ export const SvcPplPage = () => (
 
           {/* 예시 2 */}
           <div class="ppl-ep-card">
-            <div class="ppl-ep-num">
-              <span>2</span>
+            <div class="ppl-ep-title-row">
+              <div class="ppl-ep-num"><span>2</span></div>
+              <h4 class="ppl-ep-title">브랜드 제품 직접 노출</h4>
             </div>
-            <h4 class="ppl-ep-title">브랜드 제품 직접 노출</h4>
             <div class="ppl-ep-visual">
               <div class="ppl-ep-img-wrap">
                 <img src="/static/ppl-images/ppl-ep-product.jpg" alt="브랜드 제품 직접 노출" class="ppl-ep-img" />
