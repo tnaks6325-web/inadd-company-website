@@ -284,31 +284,8 @@ export const AboutPage = () => (
           </div>
           {/* /상단 스텝 */}
 
-          {/* 수렴 SVG 라인 — JS로 위→아래 stroke-dashoffset 직접 제어 */}
-          <div class="aptn-converge-lines" aria-hidden="true">
-            <svg id="aptnCvgSvg" class="aptn-cvg-svg" viewBox="0 0 900 200" preserveAspectRatio="none" fill="none">
-              <defs>
-                <linearGradient id="cvgGradL" x1="150" y1="0" x2="450" y2="200" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="rgba(80,140,255,0.65)"/>
-                  <stop offset="100%" stop-color="rgba(120,180,255,0.95)"/>
-                </linearGradient>
-                <linearGradient id="cvgGradR" x1="750" y1="0" x2="450" y2="200" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="rgba(80,140,255,0.65)"/>
-                  <stop offset="100%" stop-color="rgba(120,180,255,0.95)"/>
-                </linearGradient>
-                <filter id="cvgGlow" x="-30%" y="-30%" width="160%" height="160%">
-                  <feGaussianBlur stdDeviation="2.5" result="blur"/>
-                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                </filter>
-              </defs>
-              {/* 왼쪽 카드 → 중앙 */}
-              <path id="cvgPathL" class="aptn-cvg-path aptn-cvg-path--l" d="M 150 0 C 150 100 450 90 450 200" filter="url(#cvgGlow)"/>
-              {/* 중앙 카드 → 직선 */}
-              <path id="cvgPathC" class="aptn-cvg-path aptn-cvg-path--c" d="M 450 0 L 450 200" filter="url(#cvgGlow)"/>
-              {/* 오른쪽 카드 → 중앙 */}
-              <path id="cvgPathR" class="aptn-cvg-path aptn-cvg-path--r" d="M 750 0 C 750 100 450 90 450 200" filter="url(#cvgGlow)"/>
-            </svg>
-          </div>
+          {/* 수렴 Canvas 라인 — JS가 실제 DOM 위치 기준으로 직접 그림 */}
+          <canvas id="cvgCanvas" class="aptn-cvg-canvas" aria-hidden="true"></canvas>
 
           {/* 하단 — 비즈니스 파트너 결과 카드 (더 크고 임팩트 있게) */}
           <div class="aptn-converge-result">
@@ -758,34 +735,33 @@ export const AboutPage = () => (
   }
   drawParticles();
 
-  /* ══ 수렴 플로우 ══ */
+  /* ══ 수렴 플로우 Canvas 애니메이션 ══ */
   (function() {
     function run() {
       var convergeEl = document.getElementById('aptnConverge');
-      if (!convergeEl) return;
+      var canvas     = document.getElementById('cvgCanvas');
+      if (!convergeEl || !canvas) return;
 
-      var pathL = document.getElementById('cvgPathL');
-      var pathC = document.getElementById('cvgPathC');
-      var pathR = document.getElementById('cvgPathR');
-      if (!pathL || !pathC || !pathR) return;
+      var steps   = convergeEl.querySelectorAll('.aptn-converge-step');
+      var resultEl = convergeEl.querySelector('.aptn-converge-result');
+      var ctx = canvas.getContext('2d');
 
-      /* SVG 렌더 완료 후 길이 측정 */
-      var lenL = pathL.getTotalLength();
-      var lenC = pathC.getTotalLength();
-      var lenR = pathR.getTotalLength();
-
-      /* 길이가 0이면 아직 렌더 전 → 다음 프레임에 재시도 */
-      if (!lenL || !lenC || !lenR) {
-        requestAnimationFrame(run);
-        return;
+      /* ── Canvas 크기: converge 컨테이너 전체를 덮음 ── */
+      function resizeCanvas() {
+        var wrap = convergeEl.getBoundingClientRect();
+        canvas.width  = wrap.width;
+        canvas.height = wrap.height;
+        canvas.style.position = 'absolute';
+        canvas.style.top  = '0';
+        canvas.style.left = '0';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '0';
       }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
 
-      /* 초기 숨김: setAttribute로 확실하게 */
-      [pathL, pathC, pathR].forEach(function(p, i) {
-        var len = [lenL, lenC, lenR][i];
-        p.setAttribute('stroke-dasharray',  len);
-        p.setAttribute('stroke-dashoffset', len);
-      });
+      /* converge 컨테이너 position:relative 보장 */
+      convergeEl.style.position = 'relative';
 
       var fired = false;
 
@@ -794,43 +770,103 @@ export const AboutPage = () => (
         fired = true;
         io.disconnect();
 
-        /* ① 카드 3개 방향별 슬라이드 인 */
-        var steps = convergeEl.querySelectorAll('.aptn-converge-step');
+        /* ① 카드 3개 방향별 슬라이드 인 (0 / 150 / 300 ms) */
         steps.forEach(function(s, i) {
           setTimeout(function() { s.classList.add('is-visible'); }, i * 150);
         });
 
-        /* ② 카드 완료(450ms) 후 선 빠르게 그리기 */
+        /* ② 카드 3개 완전히 나온 뒤(480ms) 선 그리기 시작 */
         setTimeout(function() {
-          var DUR = 420; /* ms — 빠르게 확 그어짐 */
-          var t0 = null;
+          /* 각 카드 하단 중앙 좌표 (시작점) */
+          var wrapRect = convergeEl.getBoundingClientRect();
 
-          function draw(ts) {
+          function getMid(el) {
+            var r = el.getBoundingClientRect();
+            return {
+              x: r.left + r.width / 2 - wrapRect.left,
+              y: r.bottom - wrapRect.top
+            };
+          }
+
+          /* 결과 카드 상단 중앙 (끝점) */
+          function getTarget() {
+            var r = resultEl.getBoundingClientRect();
+            return {
+              x: r.left + r.width / 2 - wrapRect.left,
+              y: r.top - wrapRect.top + 4
+            };
+          }
+
+          var s0 = getMid(steps[0]);
+          var s1 = getMid(steps[1]);
+          var s2 = getMid(steps[2]);
+          var tgt = getTarget();
+
+          /* 베지어 제어점: 각 카드 → 수렴점 */
+          /* 선 끝점은 결과카드 상단 (tgt) — 3선 모두 같은 끝점으로 수렴 */
+          var lines = [
+            { sx: s0.x, sy: s0.y, cx: s0.x, cy: tgt.y - 20, ex: tgt.x, ey: tgt.y },
+            { sx: s1.x, sy: s1.y, cx: s1.x, cy: tgt.y - 20, ex: tgt.x, ey: tgt.y },
+            { sx: s2.x, sy: s2.y, cx: s2.x, cy: tgt.y - 20, ex: tgt.x, ey: tgt.y }
+          ];
+
+          var DUR = 500; /* 선 그리기 총 시간 ms */
+          var t0  = null;
+
+          function drawLines(ts) {
             if (!t0) t0 = ts;
-            var p = Math.min((ts - t0) / DUR, 1);
-            var e = 1 - Math.pow(1 - p, 2); /* easeOutQuad */
+            var prog = Math.min((ts - t0) / DUR, 1);
+            var e    = 1 - Math.pow(1 - prog, 3); /* easeOutCubic */
 
-            pathL.setAttribute('stroke-dashoffset', lenL * (1 - e));
-            pathC.setAttribute('stroke-dashoffset', lenC * (1 - e));
-            pathR.setAttribute('stroke-dashoffset', lenR * (1 - e));
+            /* canvas 크기 갱신 (resize 대응) */
+            resizeCanvas();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            if (p < 1) {
-              requestAnimationFrame(draw);
+            lines.forEach(function(ln, idx) {
+              /* progress 만큼만 그리기 — 베지어 분할 */
+              var t  = e;
+              /* de Casteljau: quadratic bezier point at t */
+              var mx = (1-t)*(1-t)*ln.sx + 2*(1-t)*t*ln.cx + t*t*ln.ex;
+              var my = (1-t)*(1-t)*ln.sy + 2*(1-t)*t*ln.cy + t*t*ln.ey;
+
+              /* 그라디언트 */
+              var grad = ctx.createLinearGradient(ln.sx, ln.sy, mx, my);
+              grad.addColorStop(0,   'rgba(80,140,255,0.5)');
+              grad.addColorStop(0.6, 'rgba(100,160,255,0.85)');
+              grad.addColorStop(1,   'rgba(140,200,255,1)');
+
+              ctx.beginPath();
+              ctx.moveTo(ln.sx, ln.sy);
+              /* 분할 제어점 */
+              var c1x = (1-t)*ln.sx + t*ln.cx;
+              var c1y = (1-t)*ln.sy + t*ln.cy;
+              ctx.quadraticCurveTo(c1x, c1y, mx, my);
+              ctx.strokeStyle = grad;
+              ctx.lineWidth   = idx === 1 ? 2.5 : 2;
+              ctx.lineCap     = 'round';
+              ctx.shadowBlur  = 10;
+              ctx.shadowColor = 'rgba(80,140,255,0.6)';
+              ctx.stroke();
+              ctx.shadowBlur = 0;
+            });
+
+            if (prog < 1) {
+              requestAnimationFrame(drawLines);
             } else {
-              /* ③ 선 완성 → 결과 카드 등장 */
-              var res = convergeEl.querySelector('.aptn-converge-result');
-              if (res) res.classList.add('is-visible');
+              /* ③ 3선 수렴 완료 → 결과 카드 등장 */
+              if (resultEl) resultEl.classList.add('is-visible');
             }
           }
-          requestAnimationFrame(draw);
-        }, 450);
+          requestAnimationFrame(drawLines);
+
+        }, 480);
 
       }, { threshold: 0.15 });
 
       io.observe(convergeEl);
     }
 
-    /* DOMContentLoaded 이후에 실행 보장 */
+    /* SVG/DOM 렌더 완료 후 실행 */
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         requestAnimationFrame(function() { requestAnimationFrame(run); });
