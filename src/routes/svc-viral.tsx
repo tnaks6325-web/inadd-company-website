@@ -118,25 +118,83 @@ export const SvcViralPage = () => (
     <section class="section svc-intro-section" id="viral-content">
       <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div></div>
       <div class="container">
-        <div class="svc-intro-grid">
-          <div class="svc-intro-text">
-            <span class="sec-label">What We Do</span>
-            <h2 class="sec-title">광고가 아닌<br /><em>경험으로 퍼집니다</em></h2>
-            <p>소비자는 광고를 피하지만, 경험은 스스로 공유합니다. 인애드컴퍼니는 맘카페, 네이버카페, 커뮤니티 등 소비자가 직접 모이는 공간에서 자연스럽게 확산되는 바이럴 구조를 설계합니다.</p>
-            <p>광고처럼 느껴지지 않는 콘텐츠가 공유되고, 공유는 검색으로, 검색은 구매로 연결됩니다.</p>
-            <ul class="svc-feature-list">
-              <li><span class="sfl-dot"></span>커뮤니티 이슈화 기획 및 운영</li>
-              <li><span class="sfl-dot"></span>맘카페·SNS 자연확산 설계</li>
-              <li><span class="sfl-dot"></span>UGC(사용자 생성 콘텐츠) 유도 전략</li>
-              <li><span class="sfl-dot"></span>버즈 모니터링 및 실시간 대응</li>
-              <li><span class="sfl-dot"></span>바이럴 후 SEO 연계 전략</li>
+        <div class="svc-intro-grid vi-grid">
+
+          {/* ── 좌측 텍스트 ── */}
+          <div class="svc-intro-text vi-text" id="viText">
+            <span class="sec-label vi-label">WHAT WE DO</span>
+            <h2 class="sec-title vi-title">광고가 아닌<br /><em>경험으로 퍼집니다</em></h2>
+            <p class="vi-desc">소비자는 광고를 피하지만, 경험은 스스로 공유합니다. 인애드컴퍼니는 맘카페, 네이버카페, 커뮤니티 등 소비자가 직접 모이는 공간에서 자연스럽게 확산되는 바이럴 구조를 설계합니다.</p>
+
+            {/* 강조 인용구 */}
+            <blockquote class="vi-quote">
+              <span class="vi-quote-bar"></span>
+              <p>광고처럼 느껴지지 않는 콘텐츠가 공유되고,<br />공유는 검색으로, 검색은 <strong>구매로 연결</strong>됩니다.</p>
+            </blockquote>
+
+            {/* 피처 리스트 — 번호 + 아이콘 */}
+            <ul class="vi-feat-list">
+              <li class="vi-feat-item">
+                <span class="vi-feat-num">01</span>
+                <span class="vi-feat-text">커뮤니티 이슈화 기획 및 운영</span>
+              </li>
+              <li class="vi-feat-item">
+                <span class="vi-feat-num">02</span>
+                <span class="vi-feat-text">맘카페·SNS 자연확산 설계</span>
+              </li>
+              <li class="vi-feat-item">
+                <span class="vi-feat-num">03</span>
+                <span class="vi-feat-text">UGC(사용자 생성 콘텐츠) 유도 전략</span>
+              </li>
+              <li class="vi-feat-item">
+                <span class="vi-feat-num">04</span>
+                <span class="vi-feat-text">버즈 모니터링 및 실시간 대응</span>
+              </li>
+              <li class="vi-feat-item">
+                <span class="vi-feat-num">05</span>
+                <span class="vi-feat-text">바이럴 후 SEO 연계 전략</span>
+              </li>
             </ul>
           </div>
-          <div class="svc-intro-visual">
-            <div class="siv-img-wrap">
-              <img src="/static/svc-images/viral.png" alt="바이럴 마케팅 비주얼" class="siv-photo" loading="lazy" />
+
+          {/* ── 우측 비주얼 ── */}
+          <div class="svc-intro-visual vi-visual" id="viVisual">
+            {/* 글로우 배경 */}
+            <div class="vi-glow"></div>
+
+            {/* 메인 이미지 */}
+            <div class="vi-img-frame">
+              <img src="/static/svc-images/viral.png" alt="바이럴 마케팅 비주얼" class="vi-photo" loading="lazy" />
+              {/* 이미지 상단 오버레이 배지 */}
+              <div class="vi-badge vi-badge--tl">
+                <span class="vi-badge-icon">📣</span>
+                <span class="vi-badge-label">바이럴 확산</span>
+              </div>
+              <div class="vi-badge vi-badge--br">
+                <span class="vi-badge-dot vi-badge-dot--live"></span>
+                <span class="vi-badge-label">실시간 모니터링</span>
+              </div>
+            </div>
+
+            {/* 하단 스탯 바 */}
+            <div class="vi-stat-bar">
+              <div class="vi-stat">
+                <strong>1억+</strong>
+                <span>누적 노출</span>
+              </div>
+              <div class="vi-stat-div"></div>
+              <div class="vi-stat">
+                <strong>98%</strong>
+                <span>재계약률</span>
+              </div>
+              <div class="vi-stat-div"></div>
+              <div class="vi-stat">
+                <strong>320+</strong>
+                <span>완료 프로젝트</span>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -359,6 +417,17 @@ export const SvcViralPage = () => (
   var s = document.createElement('script');
   s.src = '/static/scroll-reveal.js';
   document.head.appendChild(s);
+
+  /* vi- 섹션 진입 애니메이션 */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('vi-in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  ['viText','viVisual'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) io.observe(el);
+  });
 })();
     `}} />
 

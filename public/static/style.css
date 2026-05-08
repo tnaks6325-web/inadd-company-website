@@ -4869,6 +4869,252 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   line-height: 1.7;
 }
 
+/* ══════════════════════════════════════
+   vi- : 바이럴 서비스 소개 리디자인
+══════════════════════════════════════ */
+.vi-grid {
+  grid-template-columns: 1fr 420px;
+  gap: 80px;
+  align-items: center;
+}
+
+/* ── 좌측 텍스트 ── */
+.vi-text {
+  /* 스크롤 진입 전 숨김 */
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.85s cubic-bezier(.22,1,.36,1),
+              transform 0.85s cubic-bezier(.22,1,.36,1);
+}
+.vi-text.vi-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.vi-label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(60,140,255,0.9);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.vi-title {
+  margin: 14px 0 22px !important;
+}
+.vi-desc {
+  font-size: 15.5px;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.95;
+  margin-bottom: 28px;
+}
+
+/* 강조 인용구 */
+.vi-quote {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: rgba(26,107,255,0.07);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin: 0 0 32px;
+}
+.vi-quote-bar {
+  flex-shrink: 0;
+  width: 3px;
+  align-self: stretch;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #1a6bff 0%, #00d4a8 100%);
+}
+.vi-quote p {
+  font-size: 15px;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.8;
+  margin: 0;
+}
+.vi-quote p strong {
+  color: #5eb0ff;
+  font-weight: 700;
+}
+
+/* 피처 리스트 */
+.vi-feat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.vi-feat-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: background 0.2s;
+}
+.vi-feat-item:last-child { border-bottom: none; }
+.vi-feat-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(26,107,255,0.15);
+  border: 1px solid rgba(26,107,255,0.35);
+  font-size: 11px;
+  font-weight: 800;
+  color: #5eb0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.04em;
+}
+.vi-feat-text {
+  font-size: 14.5px;
+  color: rgba(255,255,255,0.82);
+  letter-spacing: 0.01em;
+}
+.vi-feat-item:hover .vi-feat-text { color: #fff; }
+.vi-feat-item:hover .vi-feat-num {
+  background: rgba(26,107,255,0.3);
+  border-color: rgba(26,107,255,0.6);
+}
+
+/* ── 우측 비주얼 ── */
+.vi-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.85s cubic-bezier(.22,1,.36,1) 0.18s,
+              transform 0.85s cubic-bezier(.22,1,.36,1) 0.18s;
+}
+.vi-visual.vi-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 배경 글로우 */
+.vi-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,107,255,0.18) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 이미지 프레임 */
+.vi-img-frame {
+  position: relative;
+  z-index: 1;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(60,120,255,0.3);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 20px 60px rgba(0,0,0,0.55),
+    0 0 40px rgba(26,107,255,0.12);
+}
+.vi-photo {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.vi-img-frame:hover .vi-photo { transform: scale(1.04); }
+
+/* 이미지 위 배지 */
+.vi-badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(8,14,40,0.82);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(60,120,255,0.35);
+  border-radius: 30px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.9);
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.vi-badge--tl { top: 14px; left: 14px; }
+.vi-badge--br { bottom: 14px; right: 14px; }
+.vi-badge-icon { font-size: 14px; }
+.vi-badge-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.vi-badge-dot--live {
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34,197,94,0.8);
+  animation: viLivePulse 1.6s ease-in-out infinite;
+}
+@keyframes viLivePulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(1.4); }
+}
+
+/* 하단 스탯 바 */
+.vi-stat-bar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(14,22,60,0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(60,120,255,0.25);
+  border-radius: 16px;
+  padding: 18px 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+.vi-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+.vi-stat strong {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #fff 30%, #5eb0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.vi-stat span {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.vi-stat-div {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.1);
+  flex-shrink: 0;
+  margin: 0 8px;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 860px) {
+  .vi-grid { grid-template-columns: 1fr; gap: 40px; }
+  .vi-visual { display: none; }
+}
+
 /* Process Steps */
 .svc-process-steps {
   display: grid;
