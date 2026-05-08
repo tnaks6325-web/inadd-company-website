@@ -91,31 +91,25 @@ export const SvcViralPage = () => (
   s.onload=function(){ initSvcThreeBg(0x1a6bff, 0x00d4a8, 0x6440ff); };
   document.head.appendChild(s);
 
-  /* ── 순차 등장 애니메이션 ── */
-  function animIn(el, delay, dir){
+  /* ── 순차 등장 애니메이션 (스윽 fade+slide) ── */
+  function animIn(el, delay){
     if(!el) return;
     el.style.opacity='0';
-    el.style.transform = dir==='up' ? 'translateY(36px)' : 'translateX(-36px)';
-    el.style.transition='opacity 0.9s cubic-bezier(.25,.46,.45,.94), transform 0.9s cubic-bezier(.25,.46,.45,.94)';
-    setTimeout(function(){ el.style.opacity='1'; el.style.transform='none'; }, delay);
+    el.style.transform='translateY(28px)';
+    el.style.transition='opacity 0.85s cubic-bezier(.22,1,.36,1), transform 0.85s cubic-bezier(.22,1,.36,1)';
+    el.style.transitionDelay = delay+'ms';
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        el.style.opacity='1';
+        el.style.transform='translateY(0)';
+      });
+    });
   }
-  animIn(document.getElementById('vhL1'),  200, 'left');
-  animIn(document.getElementById('vhL2'),  480, 'left');
-  animIn(document.getElementById('vhSub'), 760, 'up');
-  animIn(document.getElementById('vhKpi'), 1000,'up');
-  animIn(document.getElementById('vhBtns'),1220,'up');
-
-  /* ── KPI 카운터업 ── */
-  var kpiDefs=[{t:2800,s:'만+'},{t:48,s:'시간'},{t:98,s:'%'},{t:320,s:'+'}];
-  var numEls=document.querySelectorAll('.vh-kpi-num');
-  function countUp(el,target,suffix){
-    var dur=1600,st=null;
-    (function step(ts){ if(!st)st=ts; var p=Math.min((ts-st)/dur,1),e=1-Math.pow(1-p,3);
-      el.textContent=Math.floor(e*target).toLocaleString()+suffix;
-      if(p<1)requestAnimationFrame(step); })
-    (performance.now());
-  }
-  setTimeout(function(){ numEls.forEach(function(el,i){ if(kpiDefs[i])countUp(el,kpiDefs[i].t,kpiDefs[i].s); }); },1200);
+  animIn(document.getElementById('vhL1'),  150);
+  animIn(document.getElementById('vhL2'),  320);
+  animIn(document.getElementById('vhSub'), 490);
+  animIn(document.getElementById('vhKpi'), 660);
+  animIn(document.getElementById('vhBtns'),820);
 })();
       `}} />
     </section>
