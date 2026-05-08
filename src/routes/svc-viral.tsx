@@ -44,8 +44,8 @@ export const SvcViralPage = () => (
         {/* 구분선 + KPI 스트립 */}
         <div class="vh-kpi-strip" id="vhKpi">
           <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">2,800만+</strong>
-            <span class="vh-kpi-label">평균 캠페인 도달</span>
+            <strong class="vh-kpi-num">1억+</strong>
+            <span class="vh-kpi-label">누적 콘텐츠 노출</span>
           </div>
           <div class="vh-kpi-sep"></div>
           <div class="vh-kpi-item">

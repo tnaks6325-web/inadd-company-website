@@ -215,105 +215,132 @@ export const AboutPage = () => (
           <p class="aptn-main-sub">인애드컴퍼니는 단순한 대행사가 아닙니다.<br />차별화된 전략으로 성장을 만들고, 광고주와 함께 진정한 파트너가 됩니다.</p>
         </div>
 
-        {/* ── 플로우 다이어그램 ── */}
-        <div class="aptn-flow">
+        {/* ── 수렴 플로우 다이어그램 ── */}
+        <div class="aptn-converge" id="aptnConverge">
 
-          {/* STEP 01 */}
-          <div class="aptn-flow-step" data-step="0">
-            <div class="aptn-step-badge">STEP 01</div>
-            <div class="aptn-step-card">
-              <div class="aptn-step-icon-wrap">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                  <path d="M14 4L17.5 10.5H24L19 15L21 22L14 18L7 22L9 15L4 10.5H10.5L14 4Z" stroke="rgba(41,121,255,0.9)" stroke-width="1.6" stroke-linejoin="round" fill="rgba(41,121,255,0.1)"/>
-                </svg>
+          {/* 상단 3개 스텝 */}
+          <div class="aptn-converge-steps">
+
+            {/* STEP 01 — 왼쪽에서 수렴 */}
+            <div class="aptn-converge-step aptn-converge-step--left" data-step="0">
+              <div class="aptn-step-badge">STEP 01</div>
+              <div class="aptn-step-card">
+                <div class="aptn-step-icon-wrap">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <path d="M14 4L17.5 10.5H24L19 15L21 22L14 18L7 22L9 15L4 10.5H10.5L14 4Z" stroke="rgba(41,121,255,0.9)" stroke-width="1.6" stroke-linejoin="round" fill="rgba(41,121,255,0.1)"/>
+                  </svg>
+                </div>
+                <strong class="aptn-step-title">차별화된 솔루션</strong>
+                <p class="aptn-step-desc">브랜드 특성을 분석해 경쟁사와 다른 최적의 채널 전략을 설계합니다.</p>
+                <ul class="aptn-step-list">
+                  <li>브랜드 심층 분석</li>
+                  <li>맞춤 채널 기획</li>
+                  <li>경쟁 차별화 전략</li>
+                </ul>
               </div>
-              <strong class="aptn-step-title">차별화된 솔루션</strong>
-              <p class="aptn-step-desc">브랜드 특성을 분석해 경쟁사와 다른 최적의 채널 전략을 설계합니다.</p>
-              <ul class="aptn-step-list">
-                <li>브랜드 심층 분석</li>
-                <li>맞춤 채널 기획</li>
-                <li>경쟁 차별화 전략</li>
-              </ul>
+              {/* 아래쪽 커넥터 점 */}
+              <div class="aptn-step-connector-dot"></div>
             </div>
-          </div>
 
-          {/* 화살표 */}
-          <div class="aptn-flow-arrow">
-            <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
-              <path d="M0 12H36M28 4L38 12L28 20" stroke="rgba(41,121,255,0.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="aptn-flow-arrow-label">인애드 실행</span>
-          </div>
-
-          {/* STEP 02 */}
-          <div class="aptn-flow-step" data-step="1">
-            <div class="aptn-step-badge aptn-step-badge--accent">STEP 02</div>
-            <div class="aptn-step-card aptn-step-card--accent">
-              <div class="aptn-step-icon-wrap aptn-step-icon-wrap--accent">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                  <polyline points="4,20 10,13 16,17 24,7" stroke="rgba(41,200,130,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <polyline points="20,7 24,7 24,11" stroke="rgba(41,200,130,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+            {/* STEP 02 — 중앙에서 수렴 */}
+            <div class="aptn-converge-step aptn-converge-step--center" data-step="1">
+              <div class="aptn-step-badge aptn-step-badge--accent">STEP 02</div>
+              <div class="aptn-step-card aptn-step-card--accent">
+                <div class="aptn-step-icon-wrap aptn-step-icon-wrap--accent">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <polyline points="4,20 10,13 16,17 24,7" stroke="rgba(41,200,130,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <polyline points="20,7 24,7 24,11" stroke="rgba(41,200,130,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <strong class="aptn-step-title">사업 성장 유도</strong>
+                <p class="aptn-step-desc">노출→유입→전환의 풀퍼널 구조로 매출과 인지도를 함께 끌어올립니다.</p>
+                <ul class="aptn-step-list">
+                  <li>풀퍼널 캠페인 운영</li>
+                  <li>전환율 최적화</li>
+                  <li>성과 데이터 분석</li>
+                </ul>
               </div>
-              <strong class="aptn-step-title">사업 성장 유도</strong>
-              <p class="aptn-step-desc">노출→유입→전환의 풀퍼널 구조로 매출과 인지도를 함께 끌어올립니다.</p>
-              <ul class="aptn-step-list">
-                <li>풀퍼널 캠페인 운영</li>
-                <li>전환율 최적화</li>
-                <li>성과 데이터 분석</li>
-              </ul>
+              <div class="aptn-step-connector-dot aptn-step-connector-dot--accent"></div>
             </div>
-          </div>
 
-          {/* 화살표 */}
-          <div class="aptn-flow-arrow">
-            <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
-              <path d="M0 12H36M28 4L38 12L28 20" stroke="rgba(41,121,255,0.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="aptn-flow-arrow-label">결과 달성</span>
-          </div>
-
-          {/* STEP 03 */}
-          <div class="aptn-flow-step" data-step="2">
-            <div class="aptn-step-badge">STEP 03</div>
-            <div class="aptn-step-card">
-              <div class="aptn-step-icon-wrap">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                  <circle cx="14" cy="14" r="9" stroke="rgba(41,121,255,0.9)" stroke-width="1.6"/>
-                  <circle cx="14" cy="14" r="4" fill="rgba(41,121,255,0.3)" stroke="rgba(41,121,255,0.9)" stroke-width="1.6"/>
-                  <circle cx="14" cy="14" r="1.5" fill="rgba(41,121,255,0.9)"/>
-                </svg>
+            {/* STEP 03 — 오른쪽에서 수렴 */}
+            <div class="aptn-converge-step aptn-converge-step--right" data-step="2">
+              <div class="aptn-step-badge">STEP 03</div>
+              <div class="aptn-step-card">
+                <div class="aptn-step-icon-wrap">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <circle cx="14" cy="14" r="9" stroke="rgba(41,121,255,0.9)" stroke-width="1.6"/>
+                    <circle cx="14" cy="14" r="4" fill="rgba(41,121,255,0.3)" stroke="rgba(41,121,255,0.9)" stroke-width="1.6"/>
+                    <circle cx="14" cy="14" r="1.5" fill="rgba(41,121,255,0.9)"/>
+                  </svg>
+                </div>
+                <strong class="aptn-step-title">브랜딩 강화</strong>
+                <p class="aptn-step-desc">소비자 인식에 자연스럽게 각인되는 지속 가능한 마케팅 생태계를 구축합니다.</p>
+                <ul class="aptn-step-list">
+                  <li>브랜드 아이덴티티 구축</li>
+                  <li>소비자 신뢰도 향상</li>
+                  <li>지속 생태계 설계</li>
+                </ul>
               </div>
-              <strong class="aptn-step-title">브랜딩 강화</strong>
-              <p class="aptn-step-desc">소비자 인식에 자연스럽게 각인되는 지속 가능한 마케팅 생태계를 구축합니다.</p>
-              <ul class="aptn-step-list">
-                <li>브랜드 아이덴티티 구축</li>
-                <li>소비자 신뢰도 향상</li>
-                <li>지속 생태계 설계</li>
-              </ul>
+              <div class="aptn-step-connector-dot"></div>
             </div>
-          </div>
 
-          {/* 최종 화살표 → 파트너 */}
-          <div class="aptn-flow-arrow aptn-flow-arrow--result">
-            <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
-              <path d="M0 12H36M28 4L38 12L28 20" stroke="rgba(41,121,255,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </div>
+          {/* /상단 스텝 */}
+
+          {/* 수렴 SVG 라인 레이어 — 세 라인이 중앙 점으로 모여듦 */}
+          <div class="aptn-converge-lines" aria-hidden="true">
+            <svg class="aptn-cvg-svg" viewBox="0 0 900 140" preserveAspectRatio="none" fill="none">
+              {/* 파티클 필터 */}
+              <defs>
+                <filter id="cvgGlow">
+                  <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              {/* 왼쪽 카드 → 중앙 */}
+              <path class="aptn-cvg-path aptn-cvg-path--l" d="M 150 0 C 150 80 450 70 450 140" filter="url(#cvgGlow)"/>
+              {/* 중앙 카드 → 중앙 (직선) */}
+              <path class="aptn-cvg-path aptn-cvg-path--c" d="M 450 0 L 450 140" filter="url(#cvgGlow)"/>
+              {/* 오른쪽 카드 → 중앙 */}
+              <path class="aptn-cvg-path aptn-cvg-path--r" d="M 750 0 C 750 80 450 70 450 140" filter="url(#cvgGlow)"/>
+              {/* 수렴 플래시 파티클 */}
+              <circle class="aptn-cvg-particle aptn-cvg-particle--l" r="3"/>
+              <circle class="aptn-cvg-particle aptn-cvg-particle--c" r="3"/>
+              <circle class="aptn-cvg-particle aptn-cvg-particle--r" r="3"/>
+              {/* 중앙 수렴 폭발 점 */}
+              <circle class="aptn-cvg-dot" cx="450" cy="140" r="6"/>
+              <circle class="aptn-cvg-burst" cx="450" cy="140" r="14"/>
             </svg>
-            <span class="aptn-flow-arrow-label">파트너십</span>
           </div>
 
-          {/* RESULT: 비즈니스 파트너 */}
-          <div class="aptn-flow-result">
+          {/* 하단 — 비즈니스 파트너 결과 카드 (더 크고 임팩트 있게) */}
+          <div class="aptn-converge-result">
+            {/* 외부 글로우 링들 */}
             <div class="aptn-result-ring aptn-result-ring--outer"></div>
+            <div class="aptn-result-ring aptn-result-ring--mid"></div>
             <div class="aptn-result-ring aptn-result-ring--inner"></div>
-            <div class="aptn-result-core">
-              <span class="aptn-result-icon">🤝</span>
-              <strong class="aptn-result-label">비즈니스<br />파트너</strong>
+            {/* 메인 카드 */}
+            <div class="aptn-result-card">
+              <div class="aptn-result-card-inner">
+                <div class="aptn-result-icon-wrap">
+                  <span class="aptn-result-icon">🤝</span>
+                </div>
+                <strong class="aptn-result-label">비즈니스 파트너</strong>
+                <p class="aptn-result-sub">세 가지 전략이 하나로 완성됩니다</p>
+                <div class="aptn-result-tags">
+                  <span>솔루션</span>
+                  <span class="aptn-result-tag-plus">+</span>
+                  <span>성장</span>
+                  <span class="aptn-result-tag-plus">+</span>
+                  <span>브랜딩</span>
+                </div>
+              </div>
             </div>
           </div>
 
         </div>
-        {/* /플로우 */}
+        {/* /수렴 플로우 */}
 
         {/* ── VISION / MISSION ── */}
         <div class="aptn-vm-section">
@@ -723,6 +750,28 @@ export const AboutPage = () => (
     requestAnimationFrame(drawParticles);
   }
   drawParticles();
+
+  /* ── 수렴 플로우 스크롤 진입 애니메이션 ── */
+  var convergeEl = document.getElementById('aptnConverge');
+  if (convergeEl) {
+    var convergeObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          /* 컨테이너에 is-visible → CSS 전환 트리거 */
+          convergeEl.classList.add('is-visible');
+          /* 각 스텝 카드 순차 등장 */
+          var steps = convergeEl.querySelectorAll('.aptn-converge-step');
+          steps.forEach(function(step, i) {
+            setTimeout(function() {
+              step.classList.add('is-visible');
+            }, i * 140);
+          });
+          convergeObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.15 });
+    convergeObserver.observe(convergeEl);
+  }
 })();
     `}} />
   </>

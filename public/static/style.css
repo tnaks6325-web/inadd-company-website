@@ -2503,23 +2503,62 @@ em {
 /* ════════════════════════════════
    플로우 다이어그램 (가독성 개선)
 ════════════════════════════════ */
-.aptn-flow {
+/* ══ 수렴 플로우 레이아웃 ══ */
+.aptn-converge {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 80px;
   display: flex;
-  align-items: stretch;
-  justify-content: center;
-  gap: 0;
-  margin-bottom: 72px;
-  position: relative; z-index: 1;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* 각 스텝 컬럼 */
-.aptn-flow-step {
+/* ── 상단 3개 스텝 행 ── */
+.aptn-converge-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+/* 각 스텝 컬럼 — 스크롤 진입 전 초기 위치 (JS로 .is-visible 부여) */
+.aptn-converge-step {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  flex: 1;
-  max-width: 260px;
+  opacity: 0;
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1);
+}
+/* 왼쪽 카드: 왼쪽 아래에서 진입 */
+.aptn-converge-step--left  { transform: translate(-60px, 30px); }
+/* 중앙 카드: 위에서 진입 */
+.aptn-converge-step--center { transform: translateY(-40px); }
+/* 오른쪽 카드: 오른쪽 아래에서 진입 */
+.aptn-converge-step--right { transform: translate(60px, 30px); }
+
+/* 진입 후 */
+.aptn-converge-step.is-visible {
+  opacity: 1;
+  transform: translate(0,0);
+}
+.aptn-converge-step--left.is-visible  { transition-delay: 0.0s; }
+.aptn-converge-step--center.is-visible { transition-delay: 0.15s; }
+.aptn-converge-step--right.is-visible { transition-delay: 0.0s; }
+
+/* 카드 하단 커넥터 점 */
+.aptn-step-connector-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(80,140,255,0.9);
+  box-shadow: 0 0 10px rgba(80,140,255,0.8);
+  opacity: 0;
+  transition: opacity 0.4s ease 0.7s;
+}
+.aptn-converge-step.is-visible .aptn-step-connector-dot { opacity: 1; }
+.aptn-step-connector-dot--accent {
+  background: rgba(41,200,130,0.9);
+  box-shadow: 0 0 10px rgba(41,200,130,0.8);
 }
 
 /* STEP 배지 */
@@ -2528,9 +2567,9 @@ em {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.8px;
-  color: rgba(140,190,255,1);           /* 더 밝게 */
+  color: rgba(140,190,255,1);
   padding: 5px 16px;
-  border: 1px solid rgba(80,140,255,0.6); /* 테두리 진하게 */
+  border: 1px solid rgba(80,140,255,0.6);
   border-radius: 20px;
   background: rgba(41,121,255,0.18);
   box-shadow: 0 0 12px rgba(41,121,255,0.2);
@@ -2559,13 +2598,11 @@ em {
   flex-direction: column;
   justify-content: flex-start;
 }
-/* 상단 액센트 라인 */
 .aptn-step-card::before {
   content: '';
   position: absolute;
   top: 0; left: 8%; right: 8%; height: 2px;
   background: linear-gradient(90deg, transparent, rgba(80,140,255,0.9), transparent);
-  opacity: 1;
 }
 .aptn-step-card--accent {
   background: rgba(16,26,60,0.92);
@@ -2587,8 +2624,8 @@ em {
 
 /* 아이콘 */
 .aptn-step-icon-wrap {
-  width: 62px; height: 62px;               /* 더 크게 */
-  border: 1.5px solid rgba(80,140,255,0.6); /* 테두리 선명하게 */
+  width: 62px; height: 62px;
+  border: 1.5px solid rgba(80,140,255,0.6);
   border-radius: 16px;
   background: rgba(41,121,255,0.18);
   display: flex; align-items: center; justify-content: center;
@@ -2615,7 +2652,7 @@ em {
 /* 타이틀 */
 .aptn-step-title {
   display: block;
-  font-size: 20px;           /* 더 크게 */
+  font-size: 20px;
   font-weight: 800;
   color: #ffffff;
   margin-bottom: 14px;
@@ -2626,8 +2663,8 @@ em {
 
 /* 설명 */
 .aptn-step-desc {
-  font-size: 13.5px;              /* 살짝 키움 */
-  color: rgba(210,225,255,0.92);  /* 더 밝게 */
+  font-size: 13.5px;
+  color: rgba(210,225,255,0.92);
   line-height: 1.85;
   margin-bottom: 20px;
   word-break: keep-all;
@@ -2645,8 +2682,8 @@ em {
   padding-top: 16px;
 }
 .aptn-step-list li {
-  font-size: 13px;                 /* 키움 */
-  color: rgba(185,210,255,0.95);   /* 더 밝게 */
+  font-size: 13px;
+  color: rgba(185,210,255,0.95);
   display: flex;
   align-items: center;
   gap: 9px;
@@ -2654,103 +2691,272 @@ em {
 }
 .aptn-step-list li::before {
   content: '';
-  width: 6px; height: 6px;        /* 점 키움 */
+  width: 6px; height: 6px;
   border-radius: 50%;
   background: rgba(80,140,255,0.95);
   flex-shrink: 0;
   box-shadow: 0 0 8px rgba(80,140,255,0.6);
 }
-.aptn-step-card--accent .aptn-step-list {
-  border-top-color: rgba(41,200,130,0.2);
-}
-.aptn-step-card--accent .aptn-step-list li {
-  color: rgba(130,240,190,0.95);
-}
+.aptn-step-card--accent .aptn-step-list { border-top-color: rgba(41,200,130,0.2); }
+.aptn-step-card--accent .aptn-step-list li { color: rgba(130,240,190,0.95); }
 .aptn-step-card--accent .aptn-step-list li::before {
   background: rgba(41,200,130,0.95);
   box-shadow: 0 0 8px rgba(41,200,130,0.6);
 }
 
-/* ── 화살표 ── */
-.aptn-flow-arrow {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  flex-shrink: 0;
-  padding: 0 8px;
-  align-self: center;
-  margin-top: 36px; /* 배지 높이만큼 내려서 카드 중앙과 맞춤 */
+/* ── 수렴 SVG 라인 ── */
+.aptn-converge-lines {
+  width: 100%;
+  height: 120px;
+  position: relative;
+  margin-top: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease 0.6s;
 }
-.aptn-flow-arrow svg path {
-  stroke: rgba(100,160,255,0.9);  /* 더 밝게 */
-}
-.aptn-flow-arrow-label {
-  font-size: 11px;                /* 키움 */
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  color: rgba(120,175,255,0.95);  /* 더 밝게 */
-  text-transform: uppercase;
-  white-space: nowrap;
-  text-shadow: 0 0 8px rgba(80,140,255,0.4);
-}
-.aptn-flow-arrow--result svg path {
-  stroke: rgba(120,180,255,1);
-}
-.aptn-flow-arrow--result .aptn-flow-arrow-label {
-  color: rgba(120,180,255,1);
+.aptn-converge.is-visible .aptn-converge-lines { opacity: 1; }
+.aptn-cvg-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
-/* ── 결과: 비즈니스 파트너 원형 ── */
-.aptn-flow-result {
-  position: relative;
-  width: 130px; height: 130px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  align-self: center;
-  margin-top: 36px; /* 화살표와 동일 오프셋 */
+/* 수렴 패스 — 스크롤 진입 시 그려짐 */
+.aptn-cvg-path {
+  stroke-width: 2;
+  stroke-linecap: round;
+  fill: none;
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
 }
+.aptn-converge.is-visible .aptn-cvg-path {
+  animation: cvgDraw 1.0s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+.aptn-cvg-path--l {
+  stroke: url(#cvgGradL);
+  animation-delay: 0.65s;
+}
+.aptn-cvg-path--c {
+  stroke: rgba(100,160,255,0.85);
+  stroke-width: 2.5;
+  animation-delay: 0.6s;
+}
+.aptn-cvg-path--r {
+  stroke: url(#cvgGradR);
+  animation-delay: 0.65s;
+}
+@keyframes cvgDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* 파티클: 라인 위를 달리는 점 */
+.aptn-cvg-particle {
+  fill: rgba(120,180,255,0.9);
+  filter: drop-shadow(0 0 4px rgba(80,140,255,1));
+  opacity: 0;
+}
+.aptn-converge.is-visible .aptn-cvg-particle--l {
+  animation: cvgParticleL 1.0s ease forwards;
+  animation-delay: 0.65s;
+}
+.aptn-converge.is-visible .aptn-cvg-particle--c {
+  animation: cvgParticleC 0.9s ease forwards;
+  animation-delay: 0.6s;
+}
+.aptn-converge.is-visible .aptn-cvg-particle--r {
+  animation: cvgParticleR 1.0s ease forwards;
+  animation-delay: 0.65s;
+}
+@keyframes cvgParticleL {
+  0%   { opacity:1; offset-path: path('M 150 0 C 150 80 450 70 450 140'); offset-distance: 0%; }
+  100% { opacity:0; offset-path: path('M 150 0 C 150 80 450 70 450 140'); offset-distance: 100%; }
+}
+@keyframes cvgParticleC {
+  0%   { opacity:1; transform: translate(450px,0); }
+  100% { opacity:0; transform: translate(450px,140px); }
+}
+@keyframes cvgParticleR {
+  0%   { opacity:1; offset-path: path('M 750 0 C 750 80 450 70 450 140'); offset-distance: 0%; }
+  100% { opacity:0; offset-path: path('M 750 0 C 750 80 450 70 450 140'); offset-distance: 100%; }
+}
+
+/* 수렴 중앙 점 */
+.aptn-cvg-dot {
+  fill: rgba(41,121,255,0.95);
+  filter: drop-shadow(0 0 8px rgba(41,121,255,1));
+  opacity: 0;
+}
+.aptn-converge.is-visible .aptn-cvg-dot {
+  animation: cvgDotPop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  animation-delay: 1.55s;
+}
+
+/* 수렴 폭발 링 */
+.aptn-cvg-burst {
+  fill: none;
+  stroke: rgba(80,140,255,0.7);
+  stroke-width: 1.5;
+  opacity: 0;
+}
+.aptn-converge.is-visible .aptn-cvg-burst {
+  animation: cvgBurst 0.6s ease-out forwards;
+  animation-delay: 1.6s;
+}
+@keyframes cvgDotPop {
+  from { opacity: 0; transform: scale(0); transform-origin: 450px 140px; }
+  to   { opacity: 1; transform: scale(1); transform-origin: 450px 140px; }
+}
+@keyframes cvgBurst {
+  0%   { opacity: 0.8; r: 6;  stroke-width: 2; }
+  100% { opacity: 0;   r: 28; stroke-width: 0.5; }
+}
+
+/* ── 하단 수렴 결과: 비즈니스 파트너 카드 ── */
+.aptn-converge-result {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -8px;
+  /* 등장 애니메이션 */
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  transition-delay: 1.5s;
+}
+.aptn-converge.is-visible .aptn-converge-result {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* 외부 펄스 링 3개 */
 .aptn-result-ring {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(41,121,255,0.4);
+  pointer-events: none;
+}
+.aptn-result-ring--outer {
+  width: 240px; height: 240px;
+  border: 1px solid rgba(41,121,255,0.18);
   animation: aptnRingPulse 3.5s ease-in-out infinite;
 }
-.aptn-result-ring--outer { inset: 0; }
+.aptn-result-ring--mid {
+  width: 200px; height: 200px;
+  border: 1px solid rgba(41,121,255,0.28);
+  animation: aptnRingPulse 3.5s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
 .aptn-result-ring--inner {
-  inset: 10px;
-  border-color: rgba(41,121,255,0.25);
-  animation-delay: .9s;
+  width: 168px; height: 168px;
+  border: 1.5px solid rgba(41,121,255,0.4);
+  animation: aptnRingPulse 3.5s ease-in-out infinite;
+  animation-delay: 1.2s;
 }
 @keyframes aptnRingPulse {
-  0%,100% { box-shadow: 0 0 0 0 rgba(41,121,255,0.3); }
-  50%      { box-shadow: 0 0 0 12px rgba(41,121,255,0); }
+  0%,100% { transform: scale(1);    opacity: 0.8; }
+  50%     { transform: scale(1.08); opacity: 0.3; }
 }
-.aptn-result-core {
+
+/* 메인 결과 카드 */
+.aptn-result-card {
   position: relative; z-index: 1;
-  width: 100px; height: 100px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(41,121,255,0.25) 0%, rgba(41,121,255,0.06) 70%);
-  border: 1.5px solid rgba(41,121,255,0.6);
-  box-shadow: 0 0 40px rgba(41,121,255,0.3), inset 0 0 20px rgba(41,121,255,0.1);
+  width: 280px;
+  background: linear-gradient(135deg, rgba(16,26,70,0.98) 0%, rgba(22,36,88,0.96) 100%);
+  border: 1.5px solid rgba(60,120,255,0.55);
+  border-radius: 24px;
+  box-shadow:
+    0 0 60px rgba(41,121,255,0.3),
+    0 20px 60px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+.aptn-result-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(80,160,255,1), rgba(180,100,255,0.8), transparent);
+}
+.aptn-result-card-inner {
+  padding: 32px 28px 28px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
+  gap: 12px;
   text-align: center;
 }
-.aptn-result-icon {
-  font-size: 24px;
-  line-height: 1;
+
+/* 아이콘 원형 */
+.aptn-result-icon-wrap {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(41,121,255,0.35) 0%, rgba(41,121,255,0.08) 70%);
+  border: 1.5px solid rgba(80,150,255,0.6);
+  box-shadow: 0 0 32px rgba(41,121,255,0.4), inset 0 0 16px rgba(41,121,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  animation: aptnIconFloat 3s ease-in-out infinite;
 }
+@keyframes aptnIconFloat {
+  0%,100% { transform: translateY(0);   box-shadow: 0 0 32px rgba(41,121,255,0.4); }
+  50%     { transform: translateY(-5px); box-shadow: 0 8px 40px rgba(41,121,255,0.55); }
+}
+.aptn-result-icon { font-size: 32px; line-height: 1; }
+
+/* 타이틀 */
 .aptn-result-label {
-  font-size: 11px;
+  font-size: 22px;
   font-weight: 800;
   color: #ffffff;
-  line-height: 1.35;
-  letter-spacing: 0.2px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 20px rgba(80,140,255,0.4);
+}
+
+/* 서브 텍스트 */
+.aptn-result-sub {
+  font-size: 13px;
+  color: rgba(160,195,255,0.8);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 태그 행 */
+.aptn-result-tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+}
+.aptn-result-tags span {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: rgba(140,190,255,1);
+  padding: 4px 12px;
+  border: 1px solid rgba(80,140,255,0.45);
+  border-radius: 14px;
+  background: rgba(41,121,255,0.14);
+}
+.aptn-result-tag-plus {
+  border: none !important;
+  background: none !important;
+  padding: 0 !important;
+  color: rgba(80,140,255,0.8) !important;
+  font-size: 16px !important;
+  font-weight: 300 !important;
+}
+
+/* 반응형 */
+@media (max-width: 860px) {
+  .aptn-converge-steps { grid-template-columns: 1fr; gap: 16px; }
+  .aptn-converge-lines { display: none; }
+  .aptn-converge-result { margin-top: 32px; transition-delay: 0.3s; }
+  .aptn-converge-step--left,
+  .aptn-converge-step--center,
+  .aptn-converge-step--right { transform: translateY(30px); }
+  .aptn-result-card { width: 260px; }
+  .aptn-step-connector-dot { display: none; }
 }
 
 /* ════════════════════════════════
@@ -2797,9 +3003,12 @@ em {
 }
 .aptn-vm-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 22px;
+  justify-content: flex-start;
+  gap: 20px;
   padding: 44px 44px;
+  text-align: center;
   transition: background .3s;
 }
 .aptn-vm-item:hover {
