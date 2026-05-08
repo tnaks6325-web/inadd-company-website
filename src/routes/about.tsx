@@ -785,12 +785,14 @@ export const AboutPage = () => (
 
           var topRect = topEl.getBoundingClientRect();
 
-          /* 각 스텝 카드 하단 중앙 (선 시작점) */
-          function getBottom(el) {
-            var r = el.getBoundingClientRect();
+          /* 각 스텝 카드 하단 중앙 (선 시작점)
+             — .aptn-step-card 의 bottom 기준으로 잡아야 카드 경계에 닿음 */
+          function getBottom(stepEl) {
+            var card = stepEl.querySelector('.aptn-step-card');
+            var r = (card || stepEl).getBoundingClientRect();
             return {
               x: r.left + r.width / 2 - topRect.left,
-              y: r.bottom - topRect.top
+              y: r.bottom - topRect.top  /* 카드 하단 경계 */
             };
           }
 
