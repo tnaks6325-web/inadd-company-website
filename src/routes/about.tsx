@@ -288,29 +288,39 @@ export const AboutPage = () => (
           </div>
           {/* /상단 스텝 */}
 
-          {/* 수렴 SVG 라인 레이어 — 세 라인이 중앙 점으로 모여듦 */}
+          {/* 수렴 SVG 라인 — 카드 하단 → 비즈니스 파트너 카드까지 연속 연결 */}
           <div class="aptn-converge-lines" aria-hidden="true">
-            <svg class="aptn-cvg-svg" viewBox="0 0 900 140" preserveAspectRatio="none" fill="none">
-              {/* 파티클 필터 */}
+            <svg class="aptn-cvg-svg" viewBox="0 0 900 200" preserveAspectRatio="none" fill="none">
               <defs>
-                <filter id="cvgGlow">
-                  <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                {/* 왼쪽 라인 그라디언트 */}
+                <linearGradient id="cvgGradL" x1="150" y1="0" x2="450" y2="200" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="rgba(80,140,255,0.7)"/>
+                  <stop offset="100%" stop-color="rgba(120,180,255,0.95)"/>
+                </linearGradient>
+                {/* 오른쪽 라인 그라디언트 */}
+                <linearGradient id="cvgGradR" x1="750" y1="0" x2="450" y2="200" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="rgba(80,140,255,0.7)"/>
+                  <stop offset="100%" stop-color="rgba(120,180,255,0.95)"/>
+                </linearGradient>
+                {/* 글로우 필터 */}
+                <filter id="cvgGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur"/>
                   <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
                 </filter>
               </defs>
-              {/* 왼쪽 카드 → 중앙 */}
-              <path class="aptn-cvg-path aptn-cvg-path--l" d="M 150 0 C 150 80 450 70 450 140" filter="url(#cvgGlow)"/>
-              {/* 중앙 카드 → 중앙 (직선) */}
-              <path class="aptn-cvg-path aptn-cvg-path--c" d="M 450 0 L 450 140" filter="url(#cvgGlow)"/>
-              {/* 오른쪽 카드 → 중앙 */}
-              <path class="aptn-cvg-path aptn-cvg-path--r" d="M 750 0 C 750 80 450 70 450 140" filter="url(#cvgGlow)"/>
-              {/* 수렴 플래시 파티클 */}
-              <circle class="aptn-cvg-particle aptn-cvg-particle--l" r="3"/>
-              <circle class="aptn-cvg-particle aptn-cvg-particle--c" r="3"/>
-              <circle class="aptn-cvg-particle aptn-cvg-particle--r" r="3"/>
-              {/* 중앙 수렴 폭발 점 */}
-              <circle class="aptn-cvg-dot" cx="450" cy="140" r="6"/>
-              <circle class="aptn-cvg-burst" cx="450" cy="140" r="14"/>
+              {/* 왼쪽 카드 → 중앙 수렴 */}
+              <path class="aptn-cvg-path aptn-cvg-path--l" d="M 150 0 C 150 100 450 90 450 200" filter="url(#cvgGlow)"/>
+              {/* 중앙 카드 → 직선 */}
+              <path class="aptn-cvg-path aptn-cvg-path--c" d="M 450 0 L 450 200" filter="url(#cvgGlow)"/>
+              {/* 오른쪽 카드 → 중앙 수렴 */}
+              <path class="aptn-cvg-path aptn-cvg-path--r" d="M 750 0 C 750 100 450 90 450 200" filter="url(#cvgGlow)"/>
+              {/* 수렴 파티클 */}
+              <circle class="aptn-cvg-particle aptn-cvg-particle--l" r="3.5"/>
+              <circle class="aptn-cvg-particle aptn-cvg-particle--c" r="3.5"/>
+              <circle class="aptn-cvg-particle aptn-cvg-particle--r" r="3.5"/>
+              {/* 수렴 도착 점 (카드 상단) */}
+              <circle class="aptn-cvg-dot" cx="450" cy="200" r="5"/>
+              <circle class="aptn-cvg-burst" cx="450" cy="200" r="12"/>
             </svg>
           </div>
 
@@ -326,14 +336,25 @@ export const AboutPage = () => (
                 <div class="aptn-result-icon-wrap">
                   <span class="aptn-result-icon">🤝</span>
                 </div>
-                <strong class="aptn-result-label">비즈니스 파트너</strong>
-                <p class="aptn-result-sub">세 가지 전략이 하나로 완성됩니다</p>
-                <div class="aptn-result-tags">
-                  <span>솔루션</span>
-                  <span class="aptn-result-tag-plus">+</span>
-                  <span>성장</span>
-                  <span class="aptn-result-tag-plus">+</span>
-                  <span>브랜딩</span>
+                <strong class="aptn-result-label">Business Partner</strong>
+                <p class="aptn-result-tagline">STRATEGY · GROWTH · IDENTITY</p>
+                <p class="aptn-result-sub">단순 대행을 넘어,<br />브랜드의 장기 성장을 설계합니다</p>
+                <div class="aptn-result-divider"></div>
+                <div class="aptn-result-metrics">
+                  <div class="aptn-result-metric">
+                    <span class="aptn-result-metric-val">320<em>+</em></span>
+                    <span class="aptn-result-metric-key">Projects</span>
+                  </div>
+                  <div class="aptn-result-metric-sep"></div>
+                  <div class="aptn-result-metric">
+                    <span class="aptn-result-metric-val">98<em>%</em></span>
+                    <span class="aptn-result-metric-key">Retention</span>
+                  </div>
+                  <div class="aptn-result-metric-sep"></div>
+                  <div class="aptn-result-metric">
+                    <span class="aptn-result-metric-val">6<em>yr</em></span>
+                    <span class="aptn-result-metric-key">Expertise</span>
+                  </div>
                 </div>
               </div>
             </div>
