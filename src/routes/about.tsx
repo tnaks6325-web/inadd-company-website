@@ -218,76 +218,82 @@ export const AboutPage = () => (
         {/* ── 수렴 플로우 다이어그램 ── */}
         <div class="aptn-converge" id="aptnConverge">
 
-          {/* 상단 3개 스텝 */}
-          <div class="aptn-converge-steps">
+          {/* 상단 영역: 3개 스텝 카드 + Canvas (선은 여기서 그려짐) */}
+          <div class="aptn-converge-top" id="aptnConvergeTop">
 
-            {/* STEP 01 — 왼쪽에서 수렴 */}
-            <div class="aptn-converge-step aptn-converge-step--left" data-step="0">
-              <div class="aptn-step-badge">STEP 01</div>
-              <div class="aptn-step-card">
-                <div class="aptn-step-icon-wrap">
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                    <path d="M14 4L17.5 10.5H24L19 15L21 22L14 18L7 22L9 15L4 10.5H10.5L14 4Z" stroke="rgba(41,121,255,0.9)" stroke-width="1.6" stroke-linejoin="round" fill="rgba(41,121,255,0.1)"/>
-                  </svg>
-                </div>
-                <strong class="aptn-step-title">차별화된 솔루션</strong>
-                <p class="aptn-step-desc">브랜드 특성을 분석해 경쟁사와 다른 최적의 채널 전략을 설계합니다.</p>
-                <ul class="aptn-step-list">
-                  <li>브랜드 심층 분석</li>
-                  <li>맞춤 채널 기획</li>
-                  <li>경쟁 차별화 전략</li>
-                </ul>
-              </div>
-            </div>
+            {/* 상단 3개 스텝 */}
+            <div class="aptn-converge-steps">
 
-            {/* STEP 02 — 중앙에서 수렴 */}
-            <div class="aptn-converge-step aptn-converge-step--center" data-step="1">
-              <div class="aptn-step-badge aptn-step-badge--accent">STEP 02</div>
-              <div class="aptn-step-card aptn-step-card--accent">
-                <div class="aptn-step-icon-wrap aptn-step-icon-wrap--accent">
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                    <polyline points="4,20 10,13 16,17 24,7" stroke="rgba(41,200,130,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <polyline points="20,7 24,7 24,11" stroke="rgba(41,200,130,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+              {/* STEP 01 */}
+              <div class="aptn-converge-step aptn-converge-step--left" data-step="0">
+                <div class="aptn-step-badge">STEP 01</div>
+                <div class="aptn-step-card">
+                  <div class="aptn-step-icon-wrap">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                      <path d="M14 4L17.5 10.5H24L19 15L21 22L14 18L7 22L9 15L4 10.5H10.5L14 4Z" stroke="rgba(41,121,255,0.9)" stroke-width="1.6" stroke-linejoin="round" fill="rgba(41,121,255,0.1)"/>
+                    </svg>
+                  </div>
+                  <strong class="aptn-step-title">차별화된 솔루션</strong>
+                  <p class="aptn-step-desc">브랜드 특성을 분석해 경쟁사와 다른 최적의 채널 전략을 설계합니다.</p>
+                  <ul class="aptn-step-list">
+                    <li>브랜드 심층 분석</li>
+                    <li>맞춤 채널 기획</li>
+                    <li>경쟁 차별화 전략</li>
+                  </ul>
                 </div>
-                <strong class="aptn-step-title">사업 성장 유도</strong>
-                <p class="aptn-step-desc">노출→유입→전환의 풀퍼널 구조로 매출과 인지도를 함께 끌어올립니다.</p>
-                <ul class="aptn-step-list">
-                  <li>풀퍼널 캠페인 운영</li>
-                  <li>전환율 최적화</li>
-                  <li>성과 데이터 분석</li>
-                </ul>
               </div>
-            </div>
 
-            {/* STEP 03 — 오른쪽에서 수렴 */}
-            <div class="aptn-converge-step aptn-converge-step--right" data-step="2">
-              <div class="aptn-step-badge">STEP 03</div>
-              <div class="aptn-step-card">
-                <div class="aptn-step-icon-wrap">
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                    <circle cx="14" cy="14" r="9" stroke="rgba(41,121,255,0.9)" stroke-width="1.6"/>
-                    <circle cx="14" cy="14" r="4" fill="rgba(41,121,255,0.3)" stroke="rgba(41,121,255,0.9)" stroke-width="1.6"/>
-                    <circle cx="14" cy="14" r="1.5" fill="rgba(41,121,255,0.9)"/>
-                  </svg>
+              {/* STEP 02 */}
+              <div class="aptn-converge-step aptn-converge-step--center" data-step="1">
+                <div class="aptn-step-badge aptn-step-badge--accent">STEP 02</div>
+                <div class="aptn-step-card aptn-step-card--accent">
+                  <div class="aptn-step-icon-wrap aptn-step-icon-wrap--accent">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                      <polyline points="4,20 10,13 16,17 24,7" stroke="rgba(41,200,130,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <polyline points="20,7 24,7 24,11" stroke="rgba(41,200,130,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <strong class="aptn-step-title">사업 성장 유도</strong>
+                  <p class="aptn-step-desc">노출→유입→전환의 풀퍼널 구조로 매출과 인지도를 함께 끌어올립니다.</p>
+                  <ul class="aptn-step-list">
+                    <li>풀퍼널 캠페인 운영</li>
+                    <li>전환율 최적화</li>
+                    <li>성과 데이터 분석</li>
+                  </ul>
                 </div>
-                <strong class="aptn-step-title">브랜딩 강화</strong>
-                <p class="aptn-step-desc">소비자 인식에 자연스럽게 각인되는 지속 가능한 마케팅 생태계를 구축합니다.</p>
-                <ul class="aptn-step-list">
-                  <li>브랜드 아이덴티티 구축</li>
-                  <li>소비자 신뢰도 향상</li>
-                  <li>지속 생태계 설계</li>
-                </ul>
               </div>
+
+              {/* STEP 03 */}
+              <div class="aptn-converge-step aptn-converge-step--right" data-step="2">
+                <div class="aptn-step-badge">STEP 03</div>
+                <div class="aptn-step-card">
+                  <div class="aptn-step-icon-wrap">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                      <circle cx="14" cy="14" r="9" stroke="rgba(41,121,255,0.9)" stroke-width="1.6"/>
+                      <circle cx="14" cy="14" r="4" fill="rgba(41,121,255,0.3)" stroke="rgba(41,121,255,0.9)" stroke-width="1.6"/>
+                      <circle cx="14" cy="14" r="1.5" fill="rgba(41,121,255,0.9)"/>
+                    </svg>
+                  </div>
+                  <strong class="aptn-step-title">브랜딩 강화</strong>
+                  <p class="aptn-step-desc">소비자 인식에 자연스럽게 각인되는 지속 가능한 마케팅 생태계를 구축합니다.</p>
+                  <ul class="aptn-step-list">
+                    <li>브랜드 아이덴티티 구축</li>
+                    <li>소비자 신뢰도 향상</li>
+                    <li>지속 생태계 설계</li>
+                  </ul>
+                </div>
+              </div>
+
             </div>
+            {/* /상단 스텝 */}
+
+            {/* Canvas — aptn-converge-top 내부에서 선을 그림 */}
+            <canvas id="cvgCanvas" class="aptn-cvg-canvas" aria-hidden="true"></canvas>
 
           </div>
-          {/* /상단 스텝 */}
+          {/* /aptn-converge-top */}
 
-          {/* 수렴 Canvas 라인 — JS가 실제 DOM 위치 기준으로 직접 그림 */}
-          <canvas id="cvgCanvas" class="aptn-cvg-canvas" aria-hidden="true"></canvas>
-
-          {/* 하단 — 비즈니스 파트너 결과 카드 (더 크고 임팩트 있게) */}
+          {/* 비즈니스 파트너 결과 카드 — Canvas/선 완전히 아래에 위치 */}
           <div class="aptn-converge-result">
             {/* 외부 글로우 링들 */}
             <div class="aptn-result-ring aptn-result-ring--outer"></div>
@@ -324,6 +330,7 @@ export const AboutPage = () => (
           </div>
 
         </div>
+        {/* /수렴 플로우 */}
         {/* /수렴 플로우 */}
 
         {/* ── VISION / MISSION ── */}
@@ -735,33 +742,30 @@ export const AboutPage = () => (
   }
   drawParticles();
 
+
   /* ══ 수렴 플로우 Canvas 애니메이션 ══ */
   (function() {
     function run() {
+      var topEl    = document.getElementById('aptnConvergeTop');
+      var canvas   = document.getElementById('cvgCanvas');
       var convergeEl = document.getElementById('aptnConverge');
-      var canvas     = document.getElementById('cvgCanvas');
-      if (!convergeEl || !canvas) return;
+      if (!topEl || !canvas || !convergeEl) return;
 
-      var steps   = convergeEl.querySelectorAll('.aptn-converge-step');
+      var steps    = convergeEl.querySelectorAll('.aptn-converge-step');
       var resultEl = convergeEl.querySelector('.aptn-converge-result');
       var ctx = canvas.getContext('2d');
 
-      /* ── Canvas 크기: converge 컨테이너 전체를 덮음 ── */
+      /* ── Canvas 크기: aptn-converge-top 내부 전체를 덮음 ── */
       function resizeCanvas() {
-        var wrap = convergeEl.getBoundingClientRect();
-        canvas.width  = wrap.width;
-        canvas.height = wrap.height;
-        canvas.style.position = 'absolute';
-        canvas.style.top  = '0';
-        canvas.style.left = '0';
-        canvas.style.pointerEvents = 'none';
-        canvas.style.zIndex = '0';
+        var r = topEl.getBoundingClientRect();
+        canvas.width  = r.width;
+        canvas.height = r.height;
       }
       resizeCanvas();
       window.addEventListener('resize', resizeCanvas);
 
-      /* converge 컨테이너 position:relative 보장 */
-      convergeEl.style.position = 'relative';
+      /* aptn-converge-top 에 position:relative 보장 */
+      topEl.style.position = 'relative';
 
       var fired = false;
 
@@ -775,85 +779,78 @@ export const AboutPage = () => (
           setTimeout(function() { s.classList.add('is-visible'); }, i * 150);
         });
 
-        /* ② 카드 3개 완전히 나온 뒤(480ms) 선 그리기 시작 */
+        /* ② 카드 완전히 등장(480ms) 후 선 그리기 */
         setTimeout(function() {
-          /* 각 카드 하단 중앙 좌표 (시작점) */
-          var wrapRect = convergeEl.getBoundingClientRect();
+          resizeCanvas();
 
-          function getMid(el) {
+          var topRect = topEl.getBoundingClientRect();
+
+          /* 각 스텝 카드 하단 중앙 (선 시작점) */
+          function getBottom(el) {
             var r = el.getBoundingClientRect();
             return {
-              x: r.left + r.width / 2 - wrapRect.left,
-              y: r.bottom - wrapRect.top
+              x: r.left + r.width / 2 - topRect.left,
+              y: r.bottom - topRect.top
             };
           }
 
-          /* 결과 카드 상단 중앙 (끝점) */
-          function getTarget() {
-            var r = resultEl.getBoundingClientRect();
-            return {
-              x: r.left + r.width / 2 - wrapRect.left,
-              y: r.top - wrapRect.top + 4
-            };
-          }
+          var s0 = getBottom(steps[0]);
+          var s1 = getBottom(steps[1]);
+          var s2 = getBottom(steps[2]);
 
-          var s0 = getMid(steps[0]);
-          var s1 = getMid(steps[1]);
-          var s2 = getMid(steps[2]);
-          var tgt = getTarget();
+          /* 수렴점 = Canvas 하단 중앙 고정
+             (결과 카드는 Canvas 완전히 밖/아래에 있어서 겹치지 않음) */
+          var ex = canvas.width  / 2;
+          var ey = canvas.height - 4;
 
-          /* 베지어 제어점: 각 카드 → 수렴점 */
-          /* 선 끝점은 결과카드 상단 (tgt) — 3선 모두 같은 끝점으로 수렴 */
-          var lines = [
-            { sx: s0.x, sy: s0.y, cx: s0.x, cy: tgt.y - 20, ex: tgt.x, ey: tgt.y },
-            { sx: s1.x, sy: s1.y, cx: s1.x, cy: tgt.y - 20, ex: tgt.x, ey: tgt.y },
-            { sx: s2.x, sy: s2.y, cx: s2.x, cy: tgt.y - 20, ex: tgt.x, ey: tgt.y }
+          /* 3선 정의: 시작(sx,sy) → 제어점(cx,cy) → 수렴점(ex,ey) */
+          var lineData = [
+            { sx: s0.x, sy: s0.y, cx: s0.x * 0.6 + ex * 0.4, cy: ey * 0.6 },
+            { sx: s1.x, sy: s1.y, cx: s1.x,                   cy: ey * 0.55 },
+            { sx: s2.x, sy: s2.y, cx: s2.x * 0.6 + ex * 0.4, cy: ey * 0.6 }
           ];
 
-          var DUR = 500; /* 선 그리기 총 시간 ms */
+          var DUR = 450; /* 선 그리기 총 시간 ms — 빠르게 */
           var t0  = null;
 
           function drawLines(ts) {
             if (!t0) t0 = ts;
             var prog = Math.min((ts - t0) / DUR, 1);
-            var e    = 1 - Math.pow(1 - prog, 3); /* easeOutCubic */
+            /* easeOutQuart — 처음 빠르고 끝에서 살짝 감속 */
+            var e = 1 - Math.pow(1 - prog, 4);
 
-            /* canvas 크기 갱신 (resize 대응) */
-            resizeCanvas();
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            lines.forEach(function(ln, idx) {
-              /* progress 만큼만 그리기 — 베지어 분할 */
-              var t  = e;
-              /* de Casteljau: quadratic bezier point at t */
-              var mx = (1-t)*(1-t)*ln.sx + 2*(1-t)*t*ln.cx + t*t*ln.ex;
-              var my = (1-t)*(1-t)*ln.sy + 2*(1-t)*t*ln.cy + t*t*ln.ey;
+            lineData.forEach(function(ln, idx) {
+              var t = e;
+              /* de Casteljau: quadratic bezier 의 t 지점 좌표 */
+              var mx = (1-t)*(1-t)*ln.sx + 2*(1-t)*t*ln.cx + t*t*ex;
+              var my = (1-t)*(1-t)*ln.sy + 2*(1-t)*t*ln.cy + t*t*ey;
 
-              /* 그라디언트 */
               var grad = ctx.createLinearGradient(ln.sx, ln.sy, mx, my);
-              grad.addColorStop(0,   'rgba(80,140,255,0.5)');
-              grad.addColorStop(0.6, 'rgba(100,160,255,0.85)');
+              grad.addColorStop(0,   'rgba(60,120,255,0.45)');
+              grad.addColorStop(0.5, 'rgba(90,150,255,0.8)');
               grad.addColorStop(1,   'rgba(140,200,255,1)');
 
               ctx.beginPath();
               ctx.moveTo(ln.sx, ln.sy);
-              /* 분할 제어점 */
+              /* 분할된 제어점 */
               var c1x = (1-t)*ln.sx + t*ln.cx;
               var c1y = (1-t)*ln.sy + t*ln.cy;
               ctx.quadraticCurveTo(c1x, c1y, mx, my);
               ctx.strokeStyle = grad;
               ctx.lineWidth   = idx === 1 ? 2.5 : 2;
               ctx.lineCap     = 'round';
-              ctx.shadowBlur  = 10;
-              ctx.shadowColor = 'rgba(80,140,255,0.6)';
+              ctx.shadowBlur  = 12;
+              ctx.shadowColor = 'rgba(80,140,255,0.55)';
               ctx.stroke();
-              ctx.shadowBlur = 0;
+              ctx.shadowBlur  = 0;
             });
 
             if (prog < 1) {
               requestAnimationFrame(drawLines);
             } else {
-              /* ③ 3선 수렴 완료 → 결과 카드 등장 */
+              /* ③ 선 수렴 완료 → 비즈니스 파트너 카드 등장 */
               if (resultEl) resultEl.classList.add('is-visible');
             }
           }
@@ -861,12 +858,11 @@ export const AboutPage = () => (
 
         }, 480);
 
-      }, { threshold: 0.15 });
+      }, { threshold: 0.2 });
 
       io.observe(convergeEl);
     }
 
-    /* SVG/DOM 렌더 완료 후 실행 */
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         requestAnimationFrame(function() { requestAnimationFrame(run); });

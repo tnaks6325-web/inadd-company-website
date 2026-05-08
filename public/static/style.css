@@ -2513,6 +2513,13 @@ em {
   align-items: center;
 }
 
+/* 상단 영역: 스텝 카드 + Canvas (선이 이 안에서 그려짐) */
+.aptn-converge-top {
+  position: relative;
+  width: 100%;
+  padding-bottom: 80px; /* 선이 하단까지 내려올 공간 */
+}
+
 /* ── 상단 3개 스텝 행 ── */
 .aptn-converge-steps {
   display: grid;
@@ -2715,16 +2722,16 @@ em {
 }
 
 
-/* ── 하단 수렴 결과: 비즈니스 파트너 카드 ── */
+/* ── 하단 수렴 결과: 비즈니스 파트너 카드 (Canvas/선 완전히 아래) ── */
 .aptn-converge-result {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -8px;
+  margin-top: 16px; /* canvas 하단과 카드 사이 간격 */
   /* 초기: 숨김 — JS가 .is-visible 부여 시 등장 */
   opacity: 0;
-  transform: translateY(24px) scale(0.88);
+  transform: translateY(32px) scale(0.88);
   transition: opacity 0.65s cubic-bezier(0.34,1.56,0.64,1),
               transform 0.65s cubic-bezier(0.34,1.56,0.64,1);
 }
