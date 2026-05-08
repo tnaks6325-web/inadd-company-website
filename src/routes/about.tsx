@@ -806,46 +806,42 @@ export const AboutPage = () => (
           var ex = canvas.width  / 2;
           var ey = canvas.height - 4;
 
-          /* 3선 정의: 시작(sx,sy) → 제어점(cx,cy) → 수렴점(ex,ey) */
+          /* 3선 정의: 시작(sx,sy) → 수렴점(ex,ey) — 직선이므로 제어점 없음 */
           var lineData = [
-            { sx: s0.x, sy: s0.y, cx: s0.x * 0.6 + ex * 0.4, cy: ey * 0.6 },
-            { sx: s1.x, sy: s1.y, cx: s1.x,                   cy: ey * 0.55 },
-            { sx: s2.x, sy: s2.y, cx: s2.x * 0.6 + ex * 0.4, cy: ey * 0.6 }
+            { sx: s0.x, sy: s0.y },
+            { sx: s1.x, sy: s1.y },
+            { sx: s2.x, sy: s2.y }
           ];
 
-          var DUR = 450; /* 선 그리기 총 시간 ms — 빠르게 */
+          var DUR = 400; /* 선 그리기 총 시간 ms */
           var t0  = null;
 
           function drawLines(ts) {
             if (!t0) t0 = ts;
             var prog = Math.min((ts - t0) / DUR, 1);
-            /* easeOutQuart — 처음 빠르고 끝에서 살짝 감속 */
-            var e = 1 - Math.pow(1 - prog, 4);
+            /* linear — 직선이므로 일정 속도로 */
+            var e = prog;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             lineData.forEach(function(ln, idx) {
-              var t = e;
-              /* de Casteljau: quadratic bezier 의 t 지점 좌표 */
-              var mx = (1-t)*(1-t)*ln.sx + 2*(1-t)*t*ln.cx + t*t*ex;
-              var my = (1-t)*(1-t)*ln.sy + 2*(1-t)*t*ln.cy + t*t*ey;
+              /* 직선: 시작점 → 수렴점을 e 비율만큼 그림 */
+              var mx = ln.sx + (ex - ln.sx) * e;
+              var my = ln.sy + (ey - ln.sy) * e;
 
               var grad = ctx.createLinearGradient(ln.sx, ln.sy, mx, my);
-              grad.addColorStop(0,   'rgba(60,120,255,0.45)');
-              grad.addColorStop(0.5, 'rgba(90,150,255,0.8)');
+              grad.addColorStop(0,   'rgba(60,120,255,0.5)');
+              grad.addColorStop(0.5, 'rgba(90,150,255,0.85)');
               grad.addColorStop(1,   'rgba(140,200,255,1)');
 
               ctx.beginPath();
               ctx.moveTo(ln.sx, ln.sy);
-              /* 분할된 제어점 */
-              var c1x = (1-t)*ln.sx + t*ln.cx;
-              var c1y = (1-t)*ln.sy + t*ln.cy;
-              ctx.quadraticCurveTo(c1x, c1y, mx, my);
+              ctx.lineTo(mx, my);   /* 직선 */
               ctx.strokeStyle = grad;
               ctx.lineWidth   = idx === 1 ? 2.5 : 2;
               ctx.lineCap     = 'round';
-              ctx.shadowBlur  = 12;
-              ctx.shadowColor = 'rgba(80,140,255,0.55)';
+              ctx.shadowBlur  = 10;
+              ctx.shadowColor = 'rgba(80,140,255,0.5)';
               ctx.stroke();
               ctx.shadowBlur  = 0;
             });
