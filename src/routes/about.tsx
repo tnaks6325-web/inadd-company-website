@@ -779,20 +779,22 @@ export const AboutPage = () => (
           setTimeout(function() { s.classList.add('is-visible'); }, i * 150);
         });
 
-        /* ② 카드 완전히 등장(480ms) 후 선 그리기 */
+        /* ② 카드 transition 완전히 끝난 뒤 좌표 읽고 선 그리기
+             — 가장 늦은 카드: delay 0.15s + transition 0.7s = 850ms
+             → 넉넉하게 1000ms 후에 좌표 읽음 */
         setTimeout(function() {
           resizeCanvas();
 
           var topRect = topEl.getBoundingClientRect();
 
-          /* 각 스텝 카드 하단 중앙 (선 시작점)
-             — .aptn-step-card 의 bottom 기준으로 잡아야 카드 경계에 닿음 */
+          /* 각 .aptn-step-card 하단 중앙 좌표 (선 시작점)
+             — transition 완료 후 읽어야 정확한 위치 */
           function getBottom(stepEl) {
             var card = stepEl.querySelector('.aptn-step-card');
             var r = (card || stepEl).getBoundingClientRect();
             return {
               x: r.left + r.width / 2 - topRect.left,
-              y: r.bottom - topRect.top  /* 카드 하단 경계 */
+              y: r.bottom - topRect.top  /* 카드 하단 경계에 딱 닿음 */
             };
           }
 
@@ -800,8 +802,7 @@ export const AboutPage = () => (
           var s1 = getBottom(steps[1]);
           var s2 = getBottom(steps[2]);
 
-          /* 수렴점 = Canvas 하단 중앙 고정
-             (결과 카드는 Canvas 완전히 밖/아래에 있어서 겹치지 않음) */
+          /* 수렴점 = Canvas 하단 중앙 고정 */
           var ex = canvas.width  / 2;
           var ey = canvas.height - 4;
 
@@ -858,7 +859,7 @@ export const AboutPage = () => (
           }
           requestAnimationFrame(drawLines);
 
-        }, 480);
+        }, 1000);
 
       }, { threshold: 0.2 });
 
