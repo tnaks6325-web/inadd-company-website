@@ -288,39 +288,29 @@ export const AboutPage = () => (
           </div>
           {/* /상단 스텝 */}
 
-          {/* 수렴 SVG 라인 — 카드 하단 → 비즈니스 파트너 카드까지 연속 연결 */}
+          {/* 수렴 SVG 라인 — JS로 위→아래 stroke-dashoffset 직접 제어 */}
           <div class="aptn-converge-lines" aria-hidden="true">
-            <svg class="aptn-cvg-svg" viewBox="0 0 900 200" preserveAspectRatio="none" fill="none">
+            <svg id="aptnCvgSvg" class="aptn-cvg-svg" viewBox="0 0 900 200" preserveAspectRatio="none" fill="none">
               <defs>
-                {/* 왼쪽 라인 그라디언트 */}
                 <linearGradient id="cvgGradL" x1="150" y1="0" x2="450" y2="200" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="rgba(80,140,255,0.7)"/>
+                  <stop offset="0%" stop-color="rgba(80,140,255,0.65)"/>
                   <stop offset="100%" stop-color="rgba(120,180,255,0.95)"/>
                 </linearGradient>
-                {/* 오른쪽 라인 그라디언트 */}
                 <linearGradient id="cvgGradR" x1="750" y1="0" x2="450" y2="200" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="rgba(80,140,255,0.7)"/>
+                  <stop offset="0%" stop-color="rgba(80,140,255,0.65)"/>
                   <stop offset="100%" stop-color="rgba(120,180,255,0.95)"/>
                 </linearGradient>
-                {/* 글로우 필터 */}
-                <filter id="cvgGlow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="3" result="blur"/>
+                <filter id="cvgGlow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="2.5" result="blur"/>
                   <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
                 </filter>
               </defs>
-              {/* 왼쪽 카드 → 중앙 수렴 */}
-              <path class="aptn-cvg-path aptn-cvg-path--l" d="M 150 0 C 150 100 450 90 450 200" filter="url(#cvgGlow)"/>
+              {/* 왼쪽 카드 → 중앙 */}
+              <path id="cvgPathL" class="aptn-cvg-path aptn-cvg-path--l" d="M 150 0 C 150 100 450 90 450 200" filter="url(#cvgGlow)"/>
               {/* 중앙 카드 → 직선 */}
-              <path class="aptn-cvg-path aptn-cvg-path--c" d="M 450 0 L 450 200" filter="url(#cvgGlow)"/>
-              {/* 오른쪽 카드 → 중앙 수렴 */}
-              <path class="aptn-cvg-path aptn-cvg-path--r" d="M 750 0 C 750 100 450 90 450 200" filter="url(#cvgGlow)"/>
-              {/* 수렴 파티클 */}
-              <circle class="aptn-cvg-particle aptn-cvg-particle--l" r="3.5"/>
-              <circle class="aptn-cvg-particle aptn-cvg-particle--c" r="3.5"/>
-              <circle class="aptn-cvg-particle aptn-cvg-particle--r" r="3.5"/>
-              {/* 수렴 도착 점 (카드 상단) */}
-              <circle class="aptn-cvg-dot" cx="450" cy="200" r="5"/>
-              <circle class="aptn-cvg-burst" cx="450" cy="200" r="12"/>
+              <path id="cvgPathC" class="aptn-cvg-path aptn-cvg-path--c" d="M 450 0 L 450 200" filter="url(#cvgGlow)"/>
+              {/* 오른쪽 카드 → 중앙 */}
+              <path id="cvgPathR" class="aptn-cvg-path aptn-cvg-path--r" d="M 750 0 C 750 100 450 90 450 200" filter="url(#cvgGlow)"/>
             </svg>
           </div>
 
@@ -772,27 +762,94 @@ export const AboutPage = () => (
   }
   drawParticles();
 
-  /* ── 수렴 플로우 스크롤 진입 애니메이션 ── */
-  var convergeEl = document.getElementById('aptnConverge');
-  if (convergeEl) {
-    var convergeObserver = new IntersectionObserver(function(entries) {
+  /* ══ 수렴 플로우 스크롤 진입 애니메이션 ══
+     - 카드 3개: 각 방향에서 슬라이드 인
+     - SVG 라인: JS requestAnimationFrame으로 stroke-dashoffset 직접 제어
+       → 스크롤 도달 시 위에서 아래로 선이 실시간으로 그려짐
+     - 결과 카드: 선 완성 후 페이드+스케일 인
+  */
+  (function() {
+    var convergeEl = document.getElementById('aptnConverge');
+    if (!convergeEl) return;
+
+    /* 경로 길이 미리 측정 */
+    var pathL = document.getElementById('cvgPathL');
+    var pathC = document.getElementById('cvgPathC');
+    var pathR = document.getElementById('cvgPathR');
+    if (!pathL || !pathC || !pathR) return;
+
+    var lenL = pathL.getTotalLength();
+    var lenC = pathC.getTotalLength();
+    var lenR = pathR.getTotalLength();
+
+    /* 초기값: 완전히 숨김 */
+    function initPaths() {
+      [pathL, pathC, pathR].forEach(function(p, i) {
+        var len = [lenL, lenC, lenR][i];
+        p.style.strokeDasharray  = len;
+        p.style.strokeDashoffset = len;
+        p.style.opacity = '1';
+      });
+    }
+    initPaths();
+
+    var fired = false;
+
+    var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          /* 컨테이너에 is-visible → CSS 전환 트리거 */
-          convergeEl.classList.add('is-visible');
-          /* 각 스텝 카드 순차 등장 */
+        if (entry.isIntersecting && !fired) {
+          fired = true;
+          observer.disconnect();
+
+          /* ① 카드 3개 순차 등장 */
           var steps = convergeEl.querySelectorAll('.aptn-converge-step');
           steps.forEach(function(step, i) {
             setTimeout(function() {
               step.classList.add('is-visible');
-            }, i * 140);
+            }, i * 160);
           });
-          convergeObserver.disconnect();
+
+          /* ② 카드 등장 완료(~600ms) 후 선 그리기 시작 */
+          var LINE_DELAY   = 620;   /* 선 시작 딜레이 (ms) */
+          var LINE_DURATION = 900;  /* 선 그리기 총 시간 (ms) */
+
+          setTimeout(function() {
+            var start = null;
+
+            function easeInOut(t) {
+              return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            }
+
+            function drawFrame(ts) {
+              if (!start) start = ts;
+              var elapsed = ts - start;
+              var progress = Math.min(elapsed / LINE_DURATION, 1);
+              var eased = easeInOut(progress);
+
+              pathL.style.strokeDashoffset = lenL * (1 - eased);
+              pathC.style.strokeDashoffset = lenC * (1 - eased);
+              pathR.style.strokeDashoffset = lenR * (1 - eased);
+
+              if (progress < 1) {
+                requestAnimationFrame(drawFrame);
+              } else {
+                /* ③ 선 완성 → 결과 카드 등장 */
+                var resultEl = convergeEl.querySelector('.aptn-converge-result');
+                if (resultEl) {
+                  resultEl.style.transitionDelay = '0s';
+                  resultEl.classList.add('is-visible');
+                }
+              }
+            }
+
+            requestAnimationFrame(drawFrame);
+          }, LINE_DELAY);
         }
       });
-    }, { threshold: 0.15 });
-    convergeObserver.observe(convergeEl);
-  }
+    }, { threshold: 0.2 });
+
+    observer.observe(convergeEl);
+  })();
 })();
     `}} />
   </>
