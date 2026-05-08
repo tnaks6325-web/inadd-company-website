@@ -238,8 +238,6 @@ export const AboutPage = () => (
                   <li>경쟁 차별화 전략</li>
                 </ul>
               </div>
-              {/* 아래쪽 커넥터 점 */}
-              <div class="aptn-step-connector-dot"></div>
             </div>
 
             {/* STEP 02 — 중앙에서 수렴 */}
@@ -260,7 +258,6 @@ export const AboutPage = () => (
                   <li>성과 데이터 분석</li>
                 </ul>
               </div>
-              <div class="aptn-step-connector-dot aptn-step-connector-dot--accent"></div>
             </div>
 
             {/* STEP 03 — 오른쪽에서 수렴 */}
@@ -282,7 +279,6 @@ export const AboutPage = () => (
                   <li>지속 생태계 설계</li>
                 </ul>
               </div>
-              <div class="aptn-step-connector-dot"></div>
             </div>
 
           </div>
@@ -762,93 +758,86 @@ export const AboutPage = () => (
   }
   drawParticles();
 
-  /* ══ 수렴 플로우 스크롤 진입 애니메이션 ══
-     - 카드 3개: 각 방향에서 슬라이드 인
-     - SVG 라인: JS requestAnimationFrame으로 stroke-dashoffset 직접 제어
-       → 스크롤 도달 시 위에서 아래로 선이 실시간으로 그려짐
-     - 결과 카드: 선 완성 후 페이드+스케일 인
-  */
+  /* ══ 수렴 플로우 ══ */
   (function() {
-    var convergeEl = document.getElementById('aptnConverge');
-    if (!convergeEl) return;
+    function run() {
+      var convergeEl = document.getElementById('aptnConverge');
+      if (!convergeEl) return;
 
-    /* 경로 길이 미리 측정 */
-    var pathL = document.getElementById('cvgPathL');
-    var pathC = document.getElementById('cvgPathC');
-    var pathR = document.getElementById('cvgPathR');
-    if (!pathL || !pathC || !pathR) return;
+      var pathL = document.getElementById('cvgPathL');
+      var pathC = document.getElementById('cvgPathC');
+      var pathR = document.getElementById('cvgPathR');
+      if (!pathL || !pathC || !pathR) return;
 
-    var lenL = pathL.getTotalLength();
-    var lenC = pathC.getTotalLength();
-    var lenR = pathR.getTotalLength();
+      /* SVG 렌더 완료 후 길이 측정 */
+      var lenL = pathL.getTotalLength();
+      var lenC = pathC.getTotalLength();
+      var lenR = pathR.getTotalLength();
 
-    /* 초기값: 완전히 숨김 */
-    function initPaths() {
+      /* 길이가 0이면 아직 렌더 전 → 다음 프레임에 재시도 */
+      if (!lenL || !lenC || !lenR) {
+        requestAnimationFrame(run);
+        return;
+      }
+
+      /* 초기 숨김: setAttribute로 확실하게 */
       [pathL, pathC, pathR].forEach(function(p, i) {
         var len = [lenL, lenC, lenR][i];
-        p.style.strokeDasharray  = len;
-        p.style.strokeDashoffset = len;
-        p.style.opacity = '1';
+        p.setAttribute('stroke-dasharray',  len);
+        p.setAttribute('stroke-dashoffset', len);
       });
+
+      var fired = false;
+
+      var io = new IntersectionObserver(function(entries) {
+        if (!entries[0].isIntersecting || fired) return;
+        fired = true;
+        io.disconnect();
+
+        /* ① 카드 3개 방향별 슬라이드 인 */
+        var steps = convergeEl.querySelectorAll('.aptn-converge-step');
+        steps.forEach(function(s, i) {
+          setTimeout(function() { s.classList.add('is-visible'); }, i * 150);
+        });
+
+        /* ② 카드 완료(450ms) 후 선 빠르게 그리기 */
+        setTimeout(function() {
+          var DUR = 420; /* ms — 빠르게 확 그어짐 */
+          var t0 = null;
+
+          function draw(ts) {
+            if (!t0) t0 = ts;
+            var p = Math.min((ts - t0) / DUR, 1);
+            var e = 1 - Math.pow(1 - p, 2); /* easeOutQuad */
+
+            pathL.setAttribute('stroke-dashoffset', lenL * (1 - e));
+            pathC.setAttribute('stroke-dashoffset', lenC * (1 - e));
+            pathR.setAttribute('stroke-dashoffset', lenR * (1 - e));
+
+            if (p < 1) {
+              requestAnimationFrame(draw);
+            } else {
+              /* ③ 선 완성 → 결과 카드 등장 */
+              var res = convergeEl.querySelector('.aptn-converge-result');
+              if (res) res.classList.add('is-visible');
+            }
+          }
+          requestAnimationFrame(draw);
+        }, 450);
+
+      }, { threshold: 0.15 });
+
+      io.observe(convergeEl);
     }
-    initPaths();
 
-    var fired = false;
-
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting && !fired) {
-          fired = true;
-          observer.disconnect();
-
-          /* ① 카드 3개 순차 등장 */
-          var steps = convergeEl.querySelectorAll('.aptn-converge-step');
-          steps.forEach(function(step, i) {
-            setTimeout(function() {
-              step.classList.add('is-visible');
-            }, i * 160);
-          });
-
-          /* ② 카드 등장 완료(~600ms) 후 선 그리기 시작 */
-          var LINE_DELAY   = 620;   /* 선 시작 딜레이 (ms) */
-          var LINE_DURATION = 900;  /* 선 그리기 총 시간 (ms) */
-
-          setTimeout(function() {
-            var start = null;
-
-            function easeInOut(t) {
-              return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-            }
-
-            function drawFrame(ts) {
-              if (!start) start = ts;
-              var elapsed = ts - start;
-              var progress = Math.min(elapsed / LINE_DURATION, 1);
-              var eased = easeInOut(progress);
-
-              pathL.style.strokeDashoffset = lenL * (1 - eased);
-              pathC.style.strokeDashoffset = lenC * (1 - eased);
-              pathR.style.strokeDashoffset = lenR * (1 - eased);
-
-              if (progress < 1) {
-                requestAnimationFrame(drawFrame);
-              } else {
-                /* ③ 선 완성 → 결과 카드 등장 */
-                var resultEl = convergeEl.querySelector('.aptn-converge-result');
-                if (resultEl) {
-                  resultEl.style.transitionDelay = '0s';
-                  resultEl.classList.add('is-visible');
-                }
-              }
-            }
-
-            requestAnimationFrame(drawFrame);
-          }, LINE_DELAY);
-        }
+    /* DOMContentLoaded 이후에 실행 보장 */
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        requestAnimationFrame(function() { requestAnimationFrame(run); });
       });
-    }, { threshold: 0.2 });
-
-    observer.observe(convergeEl);
+    } else {
+      requestAnimationFrame(function() { requestAnimationFrame(run); });
+    }
   })();
 })();
     `}} />
