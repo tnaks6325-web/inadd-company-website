@@ -1257,3 +1257,83 @@ function loadMarketingSection() {
     initSvcFaqSection();
   }
 }
+
+// ═══════════════ 계정 설정 모달 ═══════════════
+(function() {
+  const overlay   = document.getElementById('credModalOverlay');
+  const openBtn   = document.getElementById('btnOpenCredModal');
+  const cancelBtn = document.getElementById('credBtnCancel');
+  const confirmBtn= document.getElementById('credBtnConfirm');
+  const errEl     = document.getElementById('credError');
+
+  function openModal() {
+    document.getElementById('credCurrentPw').value  = '';
+    document.getElementById('credNewId').value       = '';
+    document.getElementById('credNewPw').value       = '';
+    document.getElementById('credNewPwConfirm').value= '';
+    errEl.textContent = '';
+    overlay.classList.add('open');
+    setTimeout(() => document.getElementById('credCurrentPw').focus(), 50);
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+  }
+
+  if (openBtn)   openBtn.addEventListener('click', openModal);
+  if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+  // 오버레이 바깥 클릭 시 닫기
+  overlay && overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+
+  // ESC 키 닫기
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay && overlay.classList.contains('open')) closeModal();
+  });
+
+  // Enter 키로 확인
+  overlay && overlay.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') confirmBtn && confirmBtn.click();
+  });
+
+  confirmBtn && confirmBtn.addEventListener('click', async () => {
+    const currentPw   = document.getElementById('credCurrentPw').value.trim();
+    const newId       = document.getElementById('credNewId').value.trim();
+    const newPw       = document.getElementById('credNewPw').value;
+    const newPwConfirm= document.getElementById('credNewPwConfirm').value;
+
+    errEl.textContent = '';
+
+    // 클라이언트 유효성 검사
+    if (!currentPw)         { errEl.textContent = '현재 비밀번호를 입력해주세요.'; return; }
+    if (!newId)             { errEl.textContent = '새 아이디를 입력해주세요.'; return; }
+    if (!newPw)             { errEl.textContent = '새 비밀번호를 입력해주세요.'; return; }
+    if (newPw.length < 4)   { errEl.textContent = '비밀번호는 4자 이상이어야 합니다.'; return; }
+    if (newPw !== newPwConfirm) { errEl.textContent = '새 비밀번호가 일치하지 않습니다.'; return; }
+
+    confirmBtn.disabled = true;
+    confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 변경 중...';
+
+    try {
+      const res = await api('PUT', '/change-credentials', { currentPw, newId, newPw });
+      if (res.ok) {
+        closeModal();
+        showToast('계정 정보가 변경되었습니다. 다시 로그인해주세요.');
+        setTimeout(() => {
+          localStorage.removeItem('admin_token');
+          document.cookie = 'admin_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          location.href = '/admin/login';
+        }, 1500);
+      } else {
+        errEl.textContent = res.error || '변경에 실패했습니다.';
+      }
+    } catch(e) {
+      errEl.textContent = '서버 오류가 발생했습니다.';
+    } finally {
+      confirmBtn.disabled = false;
+      confirmBtn.innerHTML = '<i class="fas fa-check"></i> 변경';
+    }
+  });
+})();

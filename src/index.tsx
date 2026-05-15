@@ -251,9 +251,32 @@ function adminDashboardHTML(): string {
   .nav-item:hover { color: #fff; background: #1a1a1a; }
   .nav-item.active { color: #1a6bff; background: rgba(26,107,255,0.08); border-left-color: #1a6bff; }
   .nav-item i { width: 18px; text-align: center; font-size: 13px; }
-  .sidebar-footer { padding: 16px 20px; border-top: 1px solid #222; }
+  .sidebar-footer { padding: 16px 20px; border-top: 1px solid #222; display: flex; flex-direction: column; gap: 8px; }
   .btn-logout { width: 100%; padding: 10px; background: transparent; border: 1px solid #333; border-radius: 6px; color: #666; font-size: 13px; cursor: pointer; transition: all .15s; }
   .btn-logout:hover { border-color: #ff4d4d; color: #ff4d4d; }
+  .btn-change-cred { width: 100%; padding: 10px; background: transparent; border: 1px solid #2a2a2a; border-radius: 6px; color: #555; font-size: 13px; cursor: pointer; transition: all .15s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .btn-change-cred:hover { border-color: #1a6bff; color: #4d9fff; }
+
+  /* ── 계정 변경 모달 ── */
+  .cred-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; align-items: center; justify-content: center; }
+  .cred-modal-overlay.open { display: flex; }
+  .cred-modal { background: #161616; border: 1px solid #2a2a2a; border-radius: 14px; padding: 32px 28px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+  .cred-modal-title { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .cred-modal-title i { color: #1a6bff; }
+  .cred-modal-desc { color: #555; font-size: 12px; margin-bottom: 24px; }
+  .cred-field { margin-bottom: 16px; }
+  .cred-field label { display: block; color: #888; font-size: 11px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 6px; }
+  .cred-field input { width: 100%; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; color: #fff; font-size: 14px; padding: 10px 14px; outline: none; transition: border-color .2s; box-sizing: border-box; }
+  .cred-field input:focus { border-color: #1a6bff; }
+  .cred-divider { border: none; border-top: 1px solid #222; margin: 20px 0; }
+  .cred-modal-actions { display: flex; gap: 8px; margin-top: 4px; }
+  .cred-modal-actions .btn { flex: 1; padding: 11px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; border: none; }
+  .cred-modal-actions .btn-cancel { background: #222; color: #888; border: 1px solid #2a2a2a; }
+  .cred-modal-actions .btn-cancel:hover { background: #2a2a2a; color: #bbb; }
+  .cred-modal-actions .btn-confirm { background: #1a6bff; color: #fff; }
+  .cred-modal-actions .btn-confirm:hover { background: #0f5ae0; }
+  .cred-modal-actions .btn-confirm:disabled { opacity: .5; cursor: not-allowed; }
+  .cred-error { color: #ff4d4d; font-size: 12px; margin-top: 12px; min-height: 16px; text-align: center; }
 
   /* ── Main ── */
   .main { margin-left: 240px; flex: 1; min-height: 100vh; }
@@ -522,9 +545,40 @@ function adminDashboardHTML(): string {
     <div class="nav-item" data-section="contact"><i class="fas fa-envelope"></i> Contact</div>
   </nav>
   <div class="sidebar-footer">
+    <button class="btn-change-cred" id="btnOpenCredModal"><i class="fas fa-key"></i> 계정 설정</button>
     <button class="btn-logout" id="btnLogout"><i class="fas fa-sign-out-alt"></i> 로그아웃</button>
   </div>
 </aside>
+
+<!-- 계정 설정 모달 -->
+<div class="cred-modal-overlay" id="credModalOverlay">
+  <div class="cred-modal">
+    <div class="cred-modal-title"><i class="fas fa-key"></i> 계정 설정</div>
+    <div class="cred-modal-desc">아이디와 비밀번호를 변경합니다. 변경 후 다시 로그인해야 합니다.</div>
+    <div class="cred-field">
+      <label>현재 비밀번호</label>
+      <input type="password" id="credCurrentPw" placeholder="현재 비밀번호 입력" autocomplete="current-password">
+    </div>
+    <hr class="cred-divider">
+    <div class="cred-field">
+      <label>새 아이디</label>
+      <input type="text" id="credNewId" placeholder="새 아이디 입력" autocomplete="username">
+    </div>
+    <div class="cred-field">
+      <label>새 비밀번호</label>
+      <input type="password" id="credNewPw" placeholder="새 비밀번호 입력 (4자 이상)" autocomplete="new-password">
+    </div>
+    <div class="cred-field">
+      <label>새 비밀번호 확인</label>
+      <input type="password" id="credNewPwConfirm" placeholder="새 비밀번호 재입력" autocomplete="new-password">
+    </div>
+    <div class="cred-error" id="credError"></div>
+    <div class="cred-modal-actions">
+      <button class="btn btn-cancel" id="credBtnCancel">취소</button>
+      <button class="btn btn-confirm" id="credBtnConfirm"><i class="fas fa-check"></i> 변경</button>
+    </div>
+  </div>
+</div>
 
 <!-- Main -->
 <main class="main">

@@ -24,11 +24,38 @@ function getCookie(req: Request, name: string): string | null {
 // POST /api/admin/login
 admin.post('/login', async (c) => {
   const { id, pw } = await c.req.json()
-  if (id === 'admin' && pw === 'admin') {
+  const kv = (c.env as any)?.ADMIN_KV
+  // KV에 저장된 계정이 있으면 사용, 없으면 기본값 admin/admin
+  const rawCred = await kvGet(kv, 'admin_credentials')
+  const stored = rawCred ? JSON.parse(rawCred) : null
+  const validId = stored?.id || 'admin'
+  const validPw = stored?.pw || 'admin'
+  if (id === validId && pw === validPw) {
     const token = await signToken({ role: 'admin', id })
     return c.json({ ok: true, token })
   }
   return c.json({ error: '아이디 또는 비밀번호가 올바르지 않습니다.' }, 401)
+})
+
+// PUT /api/admin/change-credentials  (로그인 필요)
+admin.put('/change-credentials', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  const { currentPw, newId, newPw } = await c.req.json()
+  if (!currentPw || !newId || !newPw) {
+    return c.json({ error: '모든 항목을 입력해주세요.' }, 400)
+  }
+  if (newPw.length < 4) {
+    return c.json({ error: '비밀번호는 4자 이상이어야 합니다.' }, 400)
+  }
+  // 현재 비밀번호 확인
+  const rawCred = await kvGet(kv, 'admin_credentials')
+  const stored = rawCred ? JSON.parse(rawCred) : null
+  const validPw = stored?.pw || 'admin'
+  if (currentPw !== validPw) {
+    return c.json({ error: '현재 비밀번호가 올바르지 않습니다.' }, 401)
+  }
+  await kvPut(kv, 'admin_credentials', JSON.stringify({ id: newId, pw: newPw }))
+  return c.json({ ok: true })
 })
 
 // GET /api/admin/verify
