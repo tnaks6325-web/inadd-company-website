@@ -1248,15 +1248,15 @@ function initSvcFaqSection() {
   loadSvcFaq('viral');
 }
 
-// svcfaq 섹션 로드 시 초기화
+// section-marketing 로드 시 FAQ 초기화
 (function patchLoadSection() {
   const _orig = window._loadSectionPatched;
   if (_orig) return;
   window._loadSectionPatched = true;
 
-  // loadSection 호출을 감시: MutationObserver로 svcfaq 섹션 활성화 감지
+  // MutationObserver로 section-marketing 활성화 감지
   const observer = new MutationObserver(() => {
-    const sec = document.getElementById('section-svcfaq');
+    const sec = document.getElementById('section-marketing');
     if (sec && sec.classList.contains('active')) {
       const tabBar = document.getElementById('svcFaqTabBar');
       // 이미 초기화됐으면 스킵

@@ -518,7 +518,6 @@ function adminDashboardHTML(): string {
     <div class="nav-item" data-section="about"><i class="fas fa-building"></i> About</div>
     <div class="nav-item" data-section="works"><i class="fas fa-briefcase"></i> Works</div>
     <div class="nav-item" data-section="insight"><i class="fas fa-newspaper"></i> Insight</div>
-    <div class="nav-item" data-section="svcfaq"><i class="fas fa-question-circle"></i> FAQ</div>
     <div class="nav-item" data-section="marketing"><i class="fas fa-chart-line"></i> Marketing</div>
     <div class="nav-item" data-section="contact"><i class="fas fa-envelope"></i> Contact</div>
   </nav>
@@ -773,8 +772,19 @@ function adminDashboardHTML(): string {
       </div>
     </div>
 
-    <!-- ───────── SERVICE FAQ ───────── -->
-    <div class="section" id="section-svcfaq">
+    <!-- ───────── MARKETING ───────── -->
+    <div class="section" id="section-marketing">
+      <!-- 성과 수치 -->
+      <div class="panel" style="margin-bottom:24px">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fas fa-chart-bar"></i> 마케팅 성과 수치 관리</div>
+        </div>
+        <p style="color:#666;font-size:13px;margin-bottom:24px">각 마케팅 서비스 페이지에 표시되는 실제 성과 수치를 수정할 수 있습니다.</p>
+        <div id="marketingEditor"></div>
+        <button class="btn btn-primary" id="btnSaveMarketing" style="margin-top:16px"><i class="fas fa-save"></i> 모든 수치 저장</button>
+      </div>
+
+      <!-- 서비스별 FAQ -->
       <div class="panel">
         <div class="panel-header">
           <div class="panel-title"><i class="fas fa-question-circle"></i> 서비스별 FAQ 관리</div>
@@ -803,18 +813,6 @@ function adminDashboardHTML(): string {
           <span class="svc-faq-hint" id="svcFaqHint"></span>
           <button class="btn btn-primary" id="btnSaveFaq2"><i class="fas fa-save"></i> 저장</button>
         </div>
-      </div>
-    </div>
-
-    <!-- ───────── MARKETING ───────── -->
-    <div class="section" id="section-marketing">
-      <div class="panel">
-        <div class="panel-header">
-          <div class="panel-title"><i class="fas fa-chart-bar"></i> 마케팅 성과 수치 관리</div>
-        </div>
-        <p style="color:#666;font-size:13px;margin-bottom:24px">각 마케팅 서비스 페이지에 표시되는 실제 성과 수치를 수정할 수 있습니다.</p>
-        <div id="marketingEditor"></div>
-        <button class="btn btn-primary" id="btnSaveMarketing" style="margin-top:16px"><i class="fas fa-save"></i> 모든 수치 저장</button>
       </div>
     </div>
 
