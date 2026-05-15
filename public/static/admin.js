@@ -686,38 +686,55 @@ const SERVICE_NAMES = {
 };
 let heroKpiData = {};
 
+let currentHeroKpiSvc = 'viral';
+
 async function loadHeroKpi() {
   const data = await api('GET', '/hero-kpi');
   heroKpiData = data.kpi || {};
+  initHeroKpiTabs();
   renderHeroKpiEditor();
+}
+
+function initHeroKpiTabs() {
+  const tabBar = document.getElementById('heroKpiTabBar');
+  if (!tabBar || tabBar.dataset.initialized) return;
+  tabBar.dataset.initialized = '1';
+  tabBar.querySelectorAll('.svc-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentHeroKpiSvc = btn.getAttribute('data-svc');
+      tabBar.querySelectorAll('.svc-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderHeroKpiEditor();
+    });
+  });
 }
 
 function renderHeroKpiEditor() {
   const editor = document.getElementById('heroKpiEditor');
   if (!editor) return;
-  let html = '';
-  Object.entries(SERVICE_NAMES).forEach(([svcKey, svcName]) => {
-    const items = heroKpiData[svcKey] || [];
-    html += `<div class="mktg-service">
-      <div class="mktg-service-title"><i class="fas fa-hashtag"></i> ${svcName}</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">`;
-    items.forEach((item, i) => {
-      html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:12px 14px;">
-        <div class="metric-input-wrap">
-          <div class="ml">수치 ${i+1}</div>
-          <input type="text" data-svc="${svcKey}" data-idx="${i}" data-field="num" value="${item.num||''}" placeholder="예: +580%">
-        </div>
-        <div class="metric-input-wrap">
-          <div class="ml">레이블 ${i+1}</div>
-          <input type="text" data-svc="${svcKey}" data-idx="${i}" data-field="label" value="${item.label||''}" placeholder="예: 최대 매출 증가">
-        </div>
-      </div>`;
-    });
-    html += `</div></div>`;
+  const svcKey  = currentHeroKpiSvc;
+  const svcName = SERVICE_NAMES[svcKey] || svcKey;
+  const items   = heroKpiData[svcKey] || [];
+
+  let html = `<div class="mktg-service">
+    <div class="mktg-service-title"><i class="fas fa-hashtag"></i> ${svcName}</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">`;
+  items.forEach((item, i) => {
+    html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;background:#141414;border:1px solid #2a2a2a;border-radius:8px;padding:12px 14px;">
+      <div class="metric-input-wrap">
+        <div class="ml">수치 ${i+1}</div>
+        <input type="text" data-svc="${svcKey}" data-idx="${i}" data-field="num" value="${item.num||''}" placeholder="예: +580%">
+      </div>
+      <div class="metric-input-wrap">
+        <div class="ml">레이블 ${i+1}</div>
+        <input type="text" data-svc="${svcKey}" data-idx="${i}" data-field="label" value="${item.label||''}" placeholder="예: 최대 매출 증가">
+      </div>
+    </div>`;
   });
+  html += `</div></div>`;
   editor.innerHTML = html;
 
-  // data-* 이벤트 바인딩
+  // 인풋 이벤트 바인딩
   editor.querySelectorAll('input[data-svc]').forEach(input => {
     input.addEventListener('input', () => {
       const svc   = input.getAttribute('data-svc');

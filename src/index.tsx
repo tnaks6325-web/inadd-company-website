@@ -784,6 +784,16 @@ function adminDashboardHTML(): string {
           각 마케팅 서비스 페이지 최상단에 표시되는 <strong>KPI 수치와 레이블</strong>을 수정합니다.<br>
           <em style="color:#666">숫자·텍스트 모두 자유롭게 입력 가능 — 저장 즉시 서비스 페이지에 반영됩니다.</em>
         </div>
+        <!-- 서비스 탭 -->
+        <div class="svc-tab-bar" id="heroKpiTabBar">
+          <button class="svc-tab-btn active" data-svc="viral">바이럴</button>
+          <button class="svc-tab-btn" data-svc="influencer">인플루언서</button>
+          <button class="svc-tab-btn" data-svc="seeding">시딩</button>
+          <button class="svc-tab-btn" data-svc="seo">SEO</button>
+          <button class="svc-tab-btn" data-svc="review">리뷰</button>
+          <button class="svc-tab-btn" data-svc="ppl">PPL</button>
+          <button class="svc-tab-btn" data-svc="oliveyoung">올리브영</button>
+        </div>
         <div id="heroKpiEditor"></div>
       </div>
 
