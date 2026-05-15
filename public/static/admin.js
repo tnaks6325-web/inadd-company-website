@@ -691,23 +691,9 @@ let currentHeroKpiSvc = 'viral';
 async function loadHeroKpi() {
   const data = await api('GET', '/hero-kpi');
   heroKpiData = data.kpi || {};
-  initHeroKpiTabs();
   renderHeroKpiEditor();
 }
 
-function initHeroKpiTabs() {
-  const tabBar = document.getElementById('heroKpiTabBar');
-  if (!tabBar || tabBar.dataset.initialized) return;
-  tabBar.dataset.initialized = '1';
-  tabBar.querySelectorAll('.svc-tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      currentHeroKpiSvc = btn.getAttribute('data-svc');
-      tabBar.querySelectorAll('.svc-tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderHeroKpiEditor();
-    });
-  });
-}
 
 function renderHeroKpiEditor() {
   const editor = document.getElementById('heroKpiEditor');
@@ -796,7 +782,7 @@ function loadSection(sec) {
   else if (sec === 'about') loadAbout();
   else if (sec === 'works') loadWorks();
   else if (sec === 'insight') loadInsight();
-  else if (sec === 'marketing') loadHeroKpi();
+  else if (sec === 'marketing') loadMarketingSection();
   else if (sec === 'contact') loadContact();
   else if (sec === 'gallery') loadGallery();
 }
@@ -1246,24 +1232,28 @@ function initSvcFaqSection() {
   loadSvcFaq('viral');
 }
 
-// section-marketing 로드 시 FAQ 초기화
-(function patchLoadSection() {
-  const _orig = window._loadSectionPatched;
-  if (_orig) return;
-  window._loadSectionPatched = true;
+// Marketing 섹션 단일 진입점
+function loadMarketingSection() {
+  // ① Hero KPI 탭 이벤트 바인딩 (최초 1회)
+  const heroTabBar = document.getElementById('heroKpiTabBar');
+  if (heroTabBar && !heroTabBar.dataset.initialized) {
+    heroTabBar.dataset.initialized = '1';
+    heroTabBar.querySelectorAll('.svc-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentHeroKpiSvc = btn.getAttribute('data-svc');
+        heroTabBar.querySelectorAll('.svc-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderHeroKpiEditor();
+      });
+    });
+  }
+  // ② Hero KPI 데이터 로드
+  loadHeroKpi();
 
-  // MutationObserver로 section-marketing 활성화 감지
-  const observer = new MutationObserver(() => {
-    const sec = document.getElementById('section-marketing');
-    if (sec && sec.classList.contains('active')) {
-      const tabBar = document.getElementById('svcFaqTabBar');
-      // 이미 초기화됐으면 스킵
-      if (tabBar && !tabBar.dataset.initialized) {
-        tabBar.dataset.initialized = '1';
-        initSvcFaqSection();
-      }
-    }
-  });
-  const content = document.getElementById('content');
-  if (content) observer.observe(content, { subtree: true, attributeFilter: ['class'] });
-})();
+  // ③ FAQ 섹션 이벤트 바인딩 + 초기 데이터 로드 (최초 1회)
+  const faqTabBar = document.getElementById('svcFaqTabBar');
+  if (faqTabBar && !faqTabBar.dataset.initialized) {
+    faqTabBar.dataset.initialized = '1';
+    initSvcFaqSection();
+  }
+}
