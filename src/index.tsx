@@ -774,14 +774,17 @@ function adminDashboardHTML(): string {
 
     <!-- ───────── MARKETING ───────── -->
     <div class="section" id="section-marketing">
-      <!-- 성과 수치 -->
+      <!-- 히어로 수치 관리 -->
       <div class="panel" style="margin-bottom:24px">
         <div class="panel-header">
-          <div class="panel-title"><i class="fas fa-chart-bar"></i> 마케팅 성과 수치 관리</div>
+          <div class="panel-title"><i class="fas fa-hashtag"></i> 서비스 페이지 히어로 수치 관리</div>
+          <button class="btn btn-primary btn-sm" id="btnSaveMarketing"><i class="fas fa-save"></i> 저장</button>
         </div>
-        <p style="color:#666;font-size:13px;margin-bottom:24px">각 마케팅 서비스 페이지에 표시되는 실제 성과 수치를 수정할 수 있습니다.</p>
-        <div id="marketingEditor"></div>
-        <button class="btn btn-primary" id="btnSaveMarketing" style="margin-top:16px"><i class="fas fa-save"></i> 모든 수치 저장</button>
+        <div class="thumb-spec">
+          각 마케팅 서비스 페이지 최상단에 표시되는 <strong>KPI 수치와 레이블</strong>을 수정합니다.<br>
+          <em style="color:#666">숫자·텍스트 모두 자유롭게 입력 가능 — 저장 즉시 서비스 페이지에 반영됩니다.</em>
+        </div>
+        <div id="heroKpiEditor"></div>
       </div>
 
       <!-- 서비스별 FAQ -->

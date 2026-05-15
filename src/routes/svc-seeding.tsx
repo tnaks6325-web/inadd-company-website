@@ -29,22 +29,21 @@ export const SvcSeedingPage = () => (
           <p class="vh-sub" style="margin-top:12px">다양한 플랫폼에 최적화된 시딩 전략으로 <span style="color:rgba(16,185,129,0.9);font-weight:600">강력한 바이럴 효과를 창출합니다.</span></p>
         </div>
 
-        <div class="vh-kpi-strip" id="sdKpi">
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num" style="color:#10b981">68%</strong>
-            <span class="vh-kpi-label">후기 전환율</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">+230%</strong>
-            <span class="vh-kpi-label">리뷰 전환 효과</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">3배</strong>
-            <span class="vh-kpi-label">브랜드 신뢰도 향상</span>
-          </div>
-        </div>
+        <div class="vh-kpi-strip" id="sdKpi"></div>
+        <script dangerouslySetInnerHTML={{__html:`(function(){
+          fetch('/api/admin/public/hero-kpi/seeding')
+            .then(function(r){return r.json();})
+            .then(function(d){
+              var el=document.getElementById('sdKpi');if(!el||!d.kpi)return;
+              el.innerHTML=d.kpi.map(function(k,i){
+                return (i>0?'<div class="vh-kpi-sep"></div>':'')
+                  +'<div class="vh-kpi-item">'
+                  +'<strong class="vh-kpi-num">'+k.num+'</strong>'
+                  +'<span class="vh-kpi-label">'+k.label+'</span>'
+                  +'</div>';
+              }).join('');
+            }).catch(function(){});
+        })();`}} />
 
         <div class="vh-btns" id="sdBtns">
           <a href="/contact" class="hero-cta-btn primary">

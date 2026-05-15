@@ -25,22 +25,21 @@ export const SvcReviewPage = () => (
           <p class="vh-sub"><strong style="color:rgba(255,255,255,0.9)">네이버 × 쿠팡</strong> — 구매가 일어나는 모든 채널에서</p>
           <p class="vh-sub" style="margin-top:8px"><span style="color:rgba(234,179,8,0.9);font-weight:600">전략적 리뷰 설계로 브랜드 신뢰를 쌓고 전환율을 극대화합니다.</span></p>
         </div>
-        <div class="vh-kpi-strip" id="rvKpi">
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num" style="color:#eab308">+230%</strong>
-            <span class="vh-kpi-label">리뷰 전환율 향상</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">별점 4.9</strong>
-            <span class="vh-kpi-label">평균 달성 실적</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">2개</strong>
-            <span class="vh-kpi-label">핵심 채널 커버</span>
-          </div>
-        </div>
+        <div class="vh-kpi-strip" id="rvKpi"></div>
+        <script dangerouslySetInnerHTML={{__html:`(function(){
+          fetch('/api/admin/public/hero-kpi/review')
+            .then(function(r){return r.json();})
+            .then(function(d){
+              var el=document.getElementById('rvKpi');if(!el||!d.kpi)return;
+              el.innerHTML=d.kpi.map(function(k,i){
+                return (i>0?'<div class="vh-kpi-sep"></div>':'')
+                  +'<div class="vh-kpi-item">'
+                  +'<strong class="vh-kpi-num">'+k.num+'</strong>'
+                  +'<span class="vh-kpi-label">'+k.label+'</span>'
+                  +'</div>';
+              }).join('');
+            }).catch(function(){});
+        })();`}} />
         <div class="vh-btns" id="rvBtns">
           <a href="/contact" class="hero-cta-btn primary">
             <span>무료 전략 상담받기</span>

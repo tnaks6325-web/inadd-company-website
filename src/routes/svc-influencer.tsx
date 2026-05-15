@@ -30,22 +30,21 @@ export const SvcInfluencerPage = () => (
           <p class="vh-sub" style="margin-top:12px">데이터 기반의 정교한 매칭으로 <span style="color:rgba(168,85,247,0.9);font-weight:600">최고의 퍼포먼스를 창출합니다.</span></p>
         </div>
 
-        <div class="vh-kpi-strip" id="ifKpi">
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num" style="color:#a855f7">1,200+</strong>
-            <span class="vh-kpi-label">파트너 크리에이터</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">+580%</strong>
-            <span class="vh-kpi-label">최대 매출 증가</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">98%</strong>
-            <span class="vh-kpi-label">재계약률</span>
-          </div>
-        </div>
+        <div class="vh-kpi-strip" id="ifKpi"></div>
+        <script dangerouslySetInnerHTML={{__html:`(function(){
+          fetch('/api/admin/public/hero-kpi/influencer')
+            .then(function(r){return r.json();})
+            .then(function(d){
+              var el=document.getElementById('ifKpi');if(!el||!d.kpi)return;
+              el.innerHTML=d.kpi.map(function(k,i){
+                return (i>0?'<div class="vh-kpi-sep"></div>':'')
+                  +'<div class="vh-kpi-item">'
+                  +'<strong class="vh-kpi-num">'+k.num+'</strong>'
+                  +'<span class="vh-kpi-label">'+k.label+'</span>'
+                  +'</div>';
+              }).join('');
+            }).catch(function(){});
+        })();`}} />
 
         <div class="vh-btns" id="ifBtns">
           <a href="/contact" class="hero-cta-btn primary">

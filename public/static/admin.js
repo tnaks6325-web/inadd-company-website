@@ -684,63 +684,32 @@ const SERVICE_NAMES = {
   viral:'바이럴 마케팅', influencer:'인플루언서 마케팅', seeding:'시딩 캠페인',
   seo:'SEO 마케팅', review:'리뷰 마케팅', oliveyoung:'올리브영 마케팅', ppl:'PPL 마케팅'
 };
-let marketingStats = {};
+let heroKpiData = {};
 
-async function loadMarketing() {
-  const data = await api('GET', '/marketing');
-  marketingStats = data.stats || {};
-  renderMarketingEditor();
+async function loadHeroKpi() {
+  const data = await api('GET', '/hero-kpi');
+  heroKpiData = data.kpi || {};
+  renderHeroKpiEditor();
 }
 
-function renderMarketingEditor() {
-  const editor = document.getElementById('marketingEditor');
+function renderHeroKpiEditor() {
+  const editor = document.getElementById('heroKpiEditor');
+  if (!editor) return;
   let html = '';
   Object.entries(SERVICE_NAMES).forEach(([svcKey, svcName]) => {
-    const svc = marketingStats[svcKey] || {};
+    const items = heroKpiData[svcKey] || [];
     html += `<div class="mktg-service">
-      <div class="mktg-service-title"><i class="fas fa-chart-bar"></i> ${svcName}</div>
-      <div class="case-grid">`;
-    ['case1','case2','case3'].forEach((cKey, ci) => {
-      const c = svc[cKey] || {};
-      html += `<div class="case-card">
-        <div class="case-tag">케이스 ${ci+1}</div>
-        <div class="metric-input-wrap" style="margin-bottom:8px">
-          <div class="ml">캠페인 설명 태그</div>
-          <input type="text" data-svc="${svcKey}" data-case="${cKey}" data-field="tag" value="${c.tag||''}" placeholder="예: 패션 브랜드 숏폼">
-        </div>
-        <div class="metric-row">
-          <div class="metric-input-wrap">
-            <div class="ml">지표 1 수치</div>
-            <input type="text" data-svc="${svcKey}" data-case="${cKey}" data-field="m1" value="${c.m1||''}" placeholder="2,800만">
-          </div>
-          <div class="metric-input-wrap">
-            <div class="ml">지표 1 레이블</div>
-            <input type="text" data-svc="${svcKey}" data-case="${cKey}" data-field="l1" value="${c.l1||''}" placeholder="조회수">
-          </div>
-        </div>
-        <div class="metric-row">
-          <div class="metric-input-wrap">
-            <div class="ml">지표 2 수치</div>
-            <input type="text" data-svc="${svcKey}" data-case="${cKey}" data-field="m2" value="${c.m2||''}" placeholder="+580%">
-          </div>
-          <div class="metric-input-wrap">
-            <div class="ml">지표 2 레이블</div>
-            <input type="text" data-svc="${svcKey}" data-case="${cKey}" data-field="l2" value="${c.l2||''}" placeholder="매출 증가">
-          </div>
-        </div>
-        <div class="metric-row">
-          <div class="metric-input-wrap">
-            <div class="ml">지표 3 수치 (선택)</div>
-            <input type="text" data-svc="${svcKey}" data-case="${cKey}" data-field="m3" value="${c.m3||''}" placeholder="">
-          </div>
-          <div class="metric-input-wrap">
-            <div class="ml">지표 3 레이블 (선택)</div>
-            <input type="text" data-svc="${svcKey}" data-case="${cKey}" data-field="l3" value="${c.l3||''}" placeholder="">
-          </div>
+      <div class="mktg-service-title"><i class="fas fa-hashtag"></i> ${svcName}</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">`;
+    items.forEach((item, i) => {
+      html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:12px 14px;">
+        <div class="metric-input-wrap">
+          <div class="ml">수치 ${i+1}</div>
+          <input type="text" data-svc="${svcKey}" data-idx="${i}" data-field="num" value="${item.num||''}" placeholder="예: +580%">
         </div>
         <div class="metric-input-wrap">
-          <div class="ml">설명 문구</div>
-          <input type="text" data-svc="${svcKey}" data-case="${cKey}" data-field="desc" value="${c.desc||''}" placeholder="캠페인 설명">
+          <div class="ml">레이블 ${i+1}</div>
+          <input type="text" data-svc="${svcKey}" data-idx="${i}" data-field="label" value="${item.label||''}" placeholder="예: 최대 매출 증가">
         </div>
       </div>`;
     });
@@ -751,19 +720,31 @@ function renderMarketingEditor() {
   // data-* 이벤트 바인딩
   editor.querySelectorAll('input[data-svc]').forEach(input => {
     input.addEventListener('input', () => {
-      const svc = input.getAttribute('data-svc');
-      const caseKey = input.getAttribute('data-case');
+      const svc   = input.getAttribute('data-svc');
+      const idx   = parseInt(input.getAttribute('data-idx'));
       const field = input.getAttribute('data-field');
-      if (!marketingStats[svc]) marketingStats[svc] = {};
-      if (!marketingStats[svc][caseKey]) marketingStats[svc][caseKey] = {};
-      marketingStats[svc][caseKey][field] = input.value;
+      if (!heroKpiData[svc]) heroKpiData[svc] = [];
+      if (!heroKpiData[svc][idx]) heroKpiData[svc][idx] = {};
+      heroKpiData[svc][idx][field] = input.value;
     });
   });
 }
 
 document.getElementById('btnSaveMarketing').addEventListener('click', async () => {
-  await api('PUT', '/marketing', { stats: marketingStats });
-  showToast('성과 수치가 저장되었습니다.');
+  const btn = document.getElementById('btnSaveMarketing');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 저장 중...';
+  try {
+    for (const svc of Object.keys(heroKpiData)) {
+      await api('PUT', `/hero-kpi/${svc}`, { kpi: heroKpiData[svc] });
+    }
+    showToast('히어로 수치가 저장되었습니다.');
+  } catch(e) {
+    showToast('저장 실패', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-save"></i> 저장';
+  }
 });
 
 // ═══════════════ 유틸 ═══════════════
@@ -798,7 +779,7 @@ function loadSection(sec) {
   else if (sec === 'about') loadAbout();
   else if (sec === 'works') loadWorks();
   else if (sec === 'insight') loadInsight();
-  else if (sec === 'marketing') loadMarketing();
+  else if (sec === 'marketing') loadHeroKpi();
   else if (sec === 'contact') loadContact();
   else if (sec === 'gallery') loadGallery();
 }

@@ -25,22 +25,21 @@ export const SvcPplPage = () => (
           <p class="vh-sub">시청자의 마음속에 깊이 각인되는 <strong style="color:rgba(255,255,255,0.9)">프리미엄 광고 전략</strong>입니다.</p>
           <p class="vh-sub" style="margin-top:8px"><span style="color:rgba(239,68,68,0.9);font-weight:600">드라마 · 예능 · 교양 — 타겟이 명확한 프로그램으로 브랜드 가치를 전달합니다.</span></p>
         </div>
-        <div class="vh-kpi-strip" id="ppKpi">
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num" style="color:#ef4444">방송사 협찬</strong>
-            <span class="vh-kpi-label">공식 협찬 광고</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">에피소드 기획</strong>
-            <span class="vh-kpi-label">장면 설계 PPL</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">자연스러운 노출</strong>
-            <span class="vh-kpi-label">거부감 제로 브랜딩</span>
-          </div>
-        </div>
+        <div class="vh-kpi-strip" id="ppKpi"></div>
+        <script dangerouslySetInnerHTML={{__html:`(function(){
+          fetch('/api/admin/public/hero-kpi/ppl')
+            .then(function(r){return r.json();})
+            .then(function(d){
+              var el=document.getElementById('ppKpi');if(!el||!d.kpi)return;
+              el.innerHTML=d.kpi.map(function(k,i){
+                return (i>0?'<div class="vh-kpi-sep"></div>':'')
+                  +'<div class="vh-kpi-item">'
+                  +'<strong class="vh-kpi-num">'+k.num+'</strong>'
+                  +'<span class="vh-kpi-label">'+k.label+'</span>'
+                  +'</div>';
+              }).join('');
+            }).catch(function(){});
+        })();`}} />
         <div class="vh-btns" id="ppBtns">
           <a href="/contact" class="hero-cta-btn primary">
             <span>무료 전략 상담받기</span>

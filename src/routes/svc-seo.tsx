@@ -24,22 +24,21 @@ export const SvcSeoPage = () => (
           <p class="vh-sub"><strong style="color:rgba(255,255,255,0.9)">네이버 플레이스, 자동완성, 유튜브, 인스타그램</strong> — 검색이 일어나는 모든 채널에서</p>
           <p class="vh-sub" style="margin-top:8px"><span style="color:rgba(234,179,8,0.9);font-weight:600">브랜드를 먼저 발견하게 만드는 정교한 SEO 전략.</span></p>
         </div>
-        <div class="vh-kpi-strip" id="seKpi">
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num" style="color:#eab308">TOP3</strong>
-            <span class="vh-kpi-label">검색 순위 달성</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">+1,200%</strong>
-            <span class="vh-kpi-label">최대 검색량 증가</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">4개</strong>
-            <span class="vh-kpi-label">채널 동시 커버</span>
-          </div>
-        </div>
+        <div class="vh-kpi-strip" id="seKpi"></div>
+        <script dangerouslySetInnerHTML={{__html:`(function(){
+          fetch('/api/admin/public/hero-kpi/seo')
+            .then(function(r){return r.json();})
+            .then(function(d){
+              var el=document.getElementById('seKpi');if(!el||!d.kpi)return;
+              el.innerHTML=d.kpi.map(function(k,i){
+                return (i>0?'<div class="vh-kpi-sep"></div>':'')
+                  +'<div class="vh-kpi-item">'
+                  +'<strong class="vh-kpi-num">'+k.num+'</strong>'
+                  +'<span class="vh-kpi-label">'+k.label+'</span>'
+                  +'</div>';
+              }).join('');
+            }).catch(function(){});
+        })();`}} />
         <div class="vh-btns" id="seBtns">
           <a href="/contact" class="hero-cta-btn primary">
             <span>무료 전략 상담받기</span>

@@ -42,27 +42,21 @@ export const SvcViralPage = () => (
         </div>
 
         {/* 구분선 + KPI 스트립 */}
-        <div class="vh-kpi-strip" id="vhKpi">
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">1억+</strong>
-            <span class="vh-kpi-label">누적 콘텐츠 노출</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">48시간</strong>
-            <span class="vh-kpi-label">최단 바이럴 달성</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">98%</strong>
-            <span class="vh-kpi-label">재계약률</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">320+</strong>
-            <span class="vh-kpi-label">완료 프로젝트</span>
-          </div>
-        </div>
+        <div class="vh-kpi-strip" id="vhKpi"></div>
+        <script dangerouslySetInnerHTML={{__html:`(function(){
+          fetch('/api/admin/public/hero-kpi/viral')
+            .then(function(r){return r.json();})
+            .then(function(d){
+              var el=document.getElementById('vhKpi');if(!el||!d.kpi)return;
+              el.innerHTML=d.kpi.map(function(k,i){
+                return (i>0?'<div class="vh-kpi-sep"></div>':'')
+                  +'<div class="vh-kpi-item">'
+                  +'<strong class="vh-kpi-num">'+k.num+'</strong>'
+                  +'<span class="vh-kpi-label">'+k.label+'</span>'
+                  +'</div>';
+              }).join('');
+            }).catch(function(){});
+        })();`}} />
 
         {/* CTA 버튼 */}
         <div class="vh-btns" id="vhBtns">

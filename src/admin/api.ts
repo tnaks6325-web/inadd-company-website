@@ -228,19 +228,78 @@ admin.get('/insight-img/:key', async (c) => {
   return new Response(bytes, { headers: { 'Content-Type': mime } })
 })
 
-// ═══════════════════════ MARKETING STATS ═══════════════════════
+// ═══════════════════════ HERO KPI (서비스 히어로 수치) ═══════════════════════
 
-admin.get('/marketing', authMiddleware, async (c) => {
+const HERO_KPI_DEFAULTS: Record<string, Array<{num:string, label:string}>> = {
+  viral: [
+    { num: '1억+',   label: '누적 콘텐츠 노출' },
+    { num: '48시간', label: '최단 바이럴 달성' },
+    { num: '98%',    label: '재계약률' },
+    { num: '320+',   label: '완료 프로젝트' },
+  ],
+  influencer: [
+    { num: '1,200+', label: '파트너 크리에이터' },
+    { num: '+580%',  label: '최대 매출 증가' },
+    { num: '98%',    label: '재계약률' },
+  ],
+  seeding: [
+    { num: '68%',    label: '후기 전환율' },
+    { num: '+230%',  label: '리뷰 전환 효과' },
+    { num: '3배',    label: '브랜드 신뢰도 향상' },
+  ],
+  seo: [
+    { num: 'TOP3',     label: '검색 순위 달성' },
+    { num: '+1,200%',  label: '최대 검색량 증가' },
+    { num: '4개',      label: '채널 동시 커버' },
+  ],
+  review: [
+    { num: '+230%',   label: '리뷰 전환율 향상' },
+    { num: '별점 4.9', label: '평균 달성 실적' },
+    { num: '2개',     label: '핵심 채널 커버' },
+  ],
+  ppl: [
+    { num: '방송사 협찬',    label: '공식 협찬 광고' },
+    { num: '에피소드 기획',  label: '장면 설계 PPL' },
+    { num: '자연스러운 노출', label: '거부감 제로 브랜딩' },
+  ],
+  oliveyoung: [
+    { num: '+340%', label: '채널 매출 증가' },
+    { num: 'TOP 5', label: '카테고리 순위 달성' },
+    { num: '4개',   label: '통합 서비스 운영' },
+  ],
+}
+
+const VALID_HERO_SVCS = ['viral','influencer','seeding','seo','review','ppl','oliveyoung']
+
+// Auth: 전체 히어로 KPI 조회
+admin.get('/hero-kpi', authMiddleware, async (c) => {
   const kv = (c.env as any)?.ADMIN_KV
-  const raw = await kvGet(kv, 'marketing_stats')
-  return c.json({ stats: JSON.parse(raw!) })
+  const result: Record<string, any> = {}
+  for (const svc of VALID_HERO_SVCS) {
+    const raw = await kvGet(kv, `hero_kpi_${svc}`)
+    result[svc] = raw ? JSON.parse(raw) : (HERO_KPI_DEFAULTS[svc] || [])
+  }
+  return c.json({ kpi: result })
 })
 
-admin.put('/marketing', authMiddleware, async (c) => {
-  const kv = (c.env as any)?.ADMIN_KV
-  const { stats } = await c.req.json()
-  await kvPut(kv, 'marketing_stats', JSON.stringify(stats))
+// Auth: 특정 서비스 히어로 KPI 저장
+admin.put('/hero-kpi/:service', authMiddleware, async (c) => {
+  const service = c.req.param('service')
+  if (!VALID_HERO_SVCS.includes(service)) return c.json({ error: 'Not found' }, 404)
+  const kv   = (c.env as any)?.ADMIN_KV
+  const body = await c.req.json() as any
+  await kvPut(kv, `hero_kpi_${service}`, JSON.stringify(body.kpi))
   return c.json({ ok: true })
+})
+
+// Public: 특정 서비스 히어로 KPI 조회 (서비스 페이지에서 사용)
+admin.get('/public/hero-kpi/:service', async (c) => {
+  const service = c.req.param('service')
+  if (!VALID_HERO_SVCS.includes(service)) return c.json({ error: 'Not found' }, 404)
+  const kv  = (c.env as any)?.ADMIN_KV
+  const raw = await kvGet(kv, `hero_kpi_${service}`)
+  const kpi = raw ? JSON.parse(raw) : (HERO_KPI_DEFAULTS[service] || [])
+  return c.json({ service, kpi })
 })
 
 // ═══════════════════════ PUBLIC DATA API ═══════════════════════

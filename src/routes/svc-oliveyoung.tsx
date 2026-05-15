@@ -25,22 +25,21 @@ export const SvcOliveYoungPage = () => (
           <p class="vh-sub"><strong style="color:rgba(255,255,255,0.9)">리뷰 마케팅, 랭킹 작업, 상위 노출, 구매 전환</strong>까지</p>
           <p class="vh-sub" style="margin-top:8px"><span style="color:rgba(3,199,90,0.9);font-weight:600">최상의 올리브영 커머스 시나리오를 제안합니다.</span></p>
         </div>
-        <div class="vh-kpi-strip" id="oyKpi">
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num" style="color:#03c75a">+340%</strong>
-            <span class="vh-kpi-label">채널 매출 증가</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">TOP 5</strong>
-            <span class="vh-kpi-label">카테고리 순위 달성</span>
-          </div>
-          <div class="vh-kpi-sep"></div>
-          <div class="vh-kpi-item">
-            <strong class="vh-kpi-num">4개</strong>
-            <span class="vh-kpi-label">통합 서비스 운영</span>
-          </div>
-        </div>
+        <div class="vh-kpi-strip" id="oyKpi"></div>
+        <script dangerouslySetInnerHTML={{__html:`(function(){
+          fetch('/api/admin/public/hero-kpi/oliveyoung')
+            .then(function(r){return r.json();})
+            .then(function(d){
+              var el=document.getElementById('oyKpi');if(!el||!d.kpi)return;
+              el.innerHTML=d.kpi.map(function(k,i){
+                return (i>0?'<div class="vh-kpi-sep"></div>':'')
+                  +'<div class="vh-kpi-item">'
+                  +'<strong class="vh-kpi-num">'+k.num+'</strong>'
+                  +'<span class="vh-kpi-label">'+k.label+'</span>'
+                  +'</div>';
+              }).join('');
+            }).catch(function(){});
+        })();`}} />
         <div class="vh-btns" id="oyBtns">
           <a href="/contact" class="hero-cta-btn primary">
             <span>무료 전략 상담받기</span>
