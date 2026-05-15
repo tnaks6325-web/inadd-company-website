@@ -1024,27 +1024,24 @@ export const SvcSeoPage = () => (
           <h2 class="sec-title">자주 하는 질문</h2>
           <p class="sec-sub">SEO 마케팅에 대해 가장 많이 묻는 질문들을 모았습니다.</p>
         </div>
-        <div class="faq-wrap">
-          {[
-            { q:'SEO 마케팅은 광고와 어떻게 다른가요?', a:'광고는 예산이 끊기면 노출도 멈추지만, SEO는 <strong>한 번 상위 노출되면 지속적으로 유입</strong>이 발생합니다. 초기 투자 대비 장기적인 ROI가 매우 높은 마케팅 방식입니다.' },
-            { q:'네이버 플레이스 상위 노출은 어떻게 작동하나요?', a:'방문자 수, 리뷰 수·품질, 저장 수, 체류 시간 등 <strong>다양한 신호</strong>를 네이버 알고리즘이 종합 평가합니다. 인애드컴퍼니는 이 신호들을 체계적으로 강화하는 전략을 적용합니다.' },
-            { q:'효과가 나타나는 데 얼마나 걸리나요?', a:'초기 변화는 <strong>4~8주</strong> 내에 확인되며, 안정적인 상위 노출 유지는 3~6개월이 소요됩니다. 알고리즘 변화에 대응하는 지속 관리가 중요합니다.' },
-            { q:'유튜브 SEO도 따로 필요한가요?', a:'네, 유튜브는 <strong>구글 다음으로 큰 검색 엔진</strong>입니다. 제목·태그·설명·자막 최적화와 초기 조회수 확보를 통해 관련 키워드 검색 시 상위 노출되도록 설계합니다.' },
-            { q:'인스타그램 해시태그 SEO도 가능한가요?', a:'가능합니다. 브랜드·카테고리·트렌드 키워드를 분석해 <strong>최적 해시태그 세트</strong>를 구성하고, 해시태그 검색 상위 노출을 위한 초기 인게이지먼트 전략을 병행합니다.' },
-            { q:'SEO 작업 후 순위가 다시 떨어질 수 있나요?', a:'알고리즘 업데이트나 경쟁사 활동에 따라 변동이 있을 수 있습니다. 인애드컴퍼니는 <strong>월별 모니터링 및 대응 전략</strong>을 제공해 상위 순위를 안정적으로 유지합니다.' },
-          ].map((item, i) => (
-            <div class="faq-item" id={`faq-seo-${i}`}>
-              <button class="faq-q" type="button" onclick={`(function(btn){var item=btn.closest('.faq-item');var isOpen=item.classList.contains('faq-item--open');document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('faq-item--open');});if(!isOpen){item.classList.add('faq-item--open');}})(this)`}>
-                <div class="faq-q-left">
-                  <span class="faq-q-badge">Q</span>
-                  <span class="faq-q-text">{item.q}</span>
-                </div>
-                <span class="faq-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></span>
-              </button>
-              <div class="faq-a"><div class="faq-a-inner" dangerouslySetInnerHTML={{__html: item.a}} /></div>
-            </div>
-          ))}
-        </div>
+        <div class="faq-wrap" id="faqWrap" data-service="seo"></div>
+        <script dangerouslySetInnerHTML={{__html:`(function(){
+          fetch('/api/admin/public/svc-faq/seo')
+            .then(function(r){return r.json();})
+            .then(function(data){
+              var wrap=document.getElementById('faqWrap');
+              if(!wrap||!data.faq)return;
+              wrap.innerHTML=data.faq.map(function(item,i){
+                return '<div class="faq-item" id="faq-seo-'+i+'">'
+                  +'<button class="faq-q" type="button" onclick="(function(btn){var item=btn.closest(\\'.faq-item\\');var isOpen=item.classList.contains(\\'faq-item--open\\');document.querySelectorAll(\\'.faq-item\\').forEach(function(el){el.classList.remove(\\'faq-item--open\\');});if(!isOpen){item.classList.add(\\'faq-item--open\\');}})(this)">'
+                  +'<div class="faq-q-left"><span class="faq-q-badge">Q</span><span class="faq-q-text">'+item.q+'</span></div>'
+                  +'<span class="faq-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></span>'
+                  +'</button>'
+                  +'<div class="faq-a"><div class="faq-a-inner">'+item.a+'</div></div>'
+                  +'</div>';
+              }).join('');
+            }).catch(function(){});
+        })();`}} />
       </div>
     </section>
 

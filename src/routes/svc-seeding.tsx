@@ -622,27 +622,24 @@ export const SvcSeedingPage = () => (
           <h2 class="sec-title">자주 하는 질문</h2>
           <p class="sec-sub">시딩 캠페인에 대해 가장 많이 묻는 질문들을 모았습니다.</p>
         </div>
-        <div class="faq-wrap">
-          {[
-            { q:'시딩 캠페인이란 정확히 무엇인가요?', a:'시딩은 브랜드 제품을 <strong>실제 소비자(블로거·인플루언서)</strong>에게 제공하고 진정성 있는 후기를 생성하는 마케팅입니다. 광고가 아닌 생생한 사용 경험이 전달되어 신뢰도가 높습니다.' },
-            { q:'체험단 규모는 어느 정도가 적당한가요?', a:'제품 카테고리와 예산에 따라 다르지만, 초기 런칭 기준 <strong>100~300명</strong>이 일반적입니다. 플랫폼별(네이버 블로그·인스타·유튜브) 분산 배치 시 더 넓은 커버리지를 확보할 수 있습니다.' },
-            { q:'후기가 자연스럽지 않으면 역효과가 나지 않나요?', a:'그래서 인애드컴퍼니는 <strong>크리에이터 선별 기준</strong>을 매우 엄격하게 적용합니다. 활동 이력, 팔로워 품질, 카테고리 적합도를 데이터로 검증하고, 가이드라인은 제시하되 표현은 자유롭게 합니다.' },
-            { q:'네이버 블로그와 인스타그램 중 어디가 더 효과적인가요?', a:'목적에 따라 다릅니다. <strong>네이버 블로그</strong>는 검색 노출·SEO 자산 축적에 강하고, <strong>인스타그램</strong>은 즉각적인 도달과 브랜드 인지도 확산에 유리합니다. 두 채널 병행이 가장 효과적입니다.' },
-            { q:'캠페인 기간은 얼마나 되나요?', a:'제품 발송부터 최종 게시까지 평균 <strong>4~6주</strong>가 소요됩니다. 전담 PM이 일정 관리를 전담하므로 브랜드 측 업무 부담이 최소화됩니다.' },
-            { q:'캠페인 종료 후 리포트는 어떻게 제공되나요?', a:'<strong>채널별 게시 현황, 조회수·좋아요·댓글 수, 검색 유입 변화, 매출 연계 데이터</strong>를 종합한 성과 리포트를 엑셀·PDF 형식으로 제공합니다. 다음 캠페인 전략 제안도 포함됩니다.' },
-          ].map((item, i) => (
-            <div class="faq-item" id={`faq-seed-${i}`}>
-              <button class="faq-q" type="button" onclick={`(function(btn){var item=btn.closest('.faq-item');var isOpen=item.classList.contains('faq-item--open');document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('faq-item--open');});if(!isOpen){item.classList.add('faq-item--open');}})(this)`}>
-                <div class="faq-q-left">
-                  <span class="faq-q-badge">Q</span>
-                  <span class="faq-q-text">{item.q}</span>
-                </div>
-                <span class="faq-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></span>
-              </button>
-              <div class="faq-a"><div class="faq-a-inner" dangerouslySetInnerHTML={{__html: item.a}} /></div>
-            </div>
-          ))}
-        </div>
+        <div class="faq-wrap" id="faqWrap" data-service="seeding"></div>
+        <script dangerouslySetInnerHTML={{__html:`(function(){
+          fetch('/api/admin/public/svc-faq/seeding')
+            .then(function(r){return r.json();})
+            .then(function(data){
+              var wrap=document.getElementById('faqWrap');
+              if(!wrap||!data.faq)return;
+              wrap.innerHTML=data.faq.map(function(item,i){
+                return '<div class="faq-item" id="faq-seed-'+i+'">'
+                  +'<button class="faq-q" type="button" onclick="(function(btn){var item=btn.closest(\\'.faq-item\\');var isOpen=item.classList.contains(\\'faq-item--open\\');document.querySelectorAll(\\'.faq-item\\').forEach(function(el){el.classList.remove(\\'faq-item--open\\');});if(!isOpen){item.classList.add(\\'faq-item--open\\');}})(this)">'
+                  +'<div class="faq-q-left"><span class="faq-q-badge">Q</span><span class="faq-q-text">'+item.q+'</span></div>'
+                  +'<span class="faq-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></span>'
+                  +'</button>'
+                  +'<div class="faq-a"><div class="faq-a-inner">'+item.a+'</div></div>'
+                  +'</div>';
+              }).join('');
+            }).catch(function(){});
+        })();`}} />
       </div>
     </section>
 

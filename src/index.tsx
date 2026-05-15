@@ -361,6 +361,26 @@ function adminDashboardHTML(): string {
   .gal-admin-empty { grid-column: 1/-1; text-align: center; padding: 48px 0; color: #444; font-size: 13px; }
   .gal-admin-empty i { font-size: 32px; display: block; margin-bottom: 10px; }
 
+  /* ── Service FAQ Admin ── */
+  .svc-tab-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .svc-tab-btn { padding: 7px 16px; border-radius: 20px; border: 1px solid #2a2a2a; background: transparent; color: #666; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s; letter-spacing: .3px; }
+  .svc-tab-btn:hover { border-color: #1a6bff; color: #aaa; }
+  .svc-tab-btn.active { background: rgba(26,107,255,0.15); border-color: #1a6bff; color: #4d9fff; }
+  .svc-faq-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .svc-faq-row { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 14px 16px; }
+  .svc-faq-row-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .svc-faq-num { width: 24px; height: 24px; border-radius: 50%; background: rgba(26,107,255,0.15); border: 1px solid rgba(26,107,255,0.3); color: #4d9fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .svc-faq-row input.svc-faq-q-inp { flex: 1; background: transparent; border: none; border-bottom: 1px solid #333; color: #fff; font-size: 14px; font-weight: 600; padding: 4px 0; outline: none; transition: border-color .2s; }
+  .svc-faq-row input.svc-faq-q-inp:focus { border-bottom-color: #1a6bff; }
+  .svc-faq-row-actions { display: flex; gap: 6px; margin-left: auto; flex-shrink: 0; }
+  .svc-faq-row-actions button { background: none; border: 1px solid #2a2a2a; border-radius: 6px; color: #666; width: 28px; height: 28px; cursor: pointer; font-size: 11px; transition: all .2s; display: flex; align-items: center; justify-content: center; }
+  .svc-faq-row-actions .btn-move-up:hover, .svc-faq-row-actions .btn-move-down:hover { border-color: #555; color: #bbb; }
+  .svc-faq-row-actions .btn-del-faq:hover { border-color: #dc2626; color: #dc2626; }
+  .svc-faq-row textarea.svc-faq-a-inp { width: 100%; background: #141414; border: 1px solid #2a2a2a; border-radius: 6px; color: #ccc; font-size: 13px; line-height: 1.65; padding: 10px 12px; resize: vertical; min-height: 72px; outline: none; font-family: inherit; box-sizing: border-box; }
+  .svc-faq-row textarea.svc-faq-a-inp:focus { border-color: #1a6bff; }
+  .svc-faq-hint { color: #555; font-size: 11px; margin-top: 4px; }
+  .svc-faq-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+
   /* ── Marketing stats ── */
   .mktg-service { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 20px; margin-bottom: 16px; }
   .mktg-service-title { color: #1a6bff; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
@@ -498,6 +518,7 @@ function adminDashboardHTML(): string {
     <div class="nav-item" data-section="about"><i class="fas fa-building"></i> About</div>
     <div class="nav-item" data-section="works"><i class="fas fa-briefcase"></i> Works</div>
     <div class="nav-item" data-section="insight"><i class="fas fa-newspaper"></i> Insight</div>
+    <div class="nav-item" data-section="svcfaq"><i class="fas fa-question-circle"></i> FAQ</div>
     <div class="nav-item" data-section="marketing"><i class="fas fa-chart-line"></i> Marketing</div>
     <div class="nav-item" data-section="contact"><i class="fas fa-envelope"></i> Contact</div>
   </nav>
@@ -749,6 +770,39 @@ function adminDashboardHTML(): string {
           <button class="gal-admin-ftag" data-tag="캠페인">캠페인</button>
         </div>
         <div class="gal-admin-grid" id="galAdminGrid"></div>
+      </div>
+    </div>
+
+    <!-- ───────── SERVICE FAQ ───────── -->
+    <div class="section" id="section-svcfaq">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fas fa-question-circle"></i> 서비스별 FAQ 관리</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-secondary btn-sm" id="btnAddFaq"><i class="fas fa-plus"></i> 질문 추가</button>
+            <button class="btn btn-primary btn-sm" id="btnSaveFaq"><i class="fas fa-save"></i> 저장</button>
+          </div>
+        </div>
+        <div class="thumb-spec">
+          각 마케팅 서비스 페이지 하단 <strong>'자주 하는 질문'</strong> 섹션의 Q&amp;A를 수정합니다.<br>
+          <em style="color:#666">HTML 태그 사용 가능 (예: &lt;strong&gt;강조&lt;/strong&gt;) — 저장 후 서비스 페이지에 즉시 반영됩니다.</em>
+        </div>
+        <!-- 서비스 탭 -->
+        <div class="svc-tab-bar" id="svcFaqTabBar">
+          <button class="svc-tab-btn active" data-svc="viral">바이럴</button>
+          <button class="svc-tab-btn" data-svc="influencer">인플루언서</button>
+          <button class="svc-tab-btn" data-svc="seeding">시딩</button>
+          <button class="svc-tab-btn" data-svc="seo">SEO</button>
+          <button class="svc-tab-btn" data-svc="review">리뷰</button>
+          <button class="svc-tab-btn" data-svc="ppl">PPL</button>
+          <button class="svc-tab-btn" data-svc="oliveyoung">올리브영</button>
+        </div>
+        <!-- FAQ 목록 -->
+        <div class="svc-faq-list" id="svcFaqList"></div>
+        <div class="svc-faq-bottom">
+          <span class="svc-faq-hint" id="svcFaqHint"></span>
+          <button class="btn btn-primary" id="btnSaveFaq2"><i class="fas fa-save"></i> 저장</button>
+        </div>
       </div>
     </div>
 

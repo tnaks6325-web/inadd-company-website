@@ -1225,27 +1225,24 @@ export const SvcInfluencerPage = () => (
           <h2 class="sec-title">자주 하는 질문</h2>
           <p class="sec-sub">인플루언서 마케팅에 대해 가장 많이 묻는 질문들을 모았습니다.</p>
         </div>
-        <div class="faq-wrap">
-          {[
-            { q:'인플루언서 섭외는 어떻게 진행되나요?', a:'보유한 <strong>1,200+ 크리에이터 네트워크</strong>와 데이터 기반 분석 툴을 통해 브랜드 카테고리·타겟 연령·채널 규모에 최적화된 인플루언서를 추천·섭외합니다.' },
-            { q:'팔로워 수가 많을수록 효과가 좋은가요?', a:'반드시 그렇지는 않습니다. <strong>마이크로 인플루언서(1만~10만)</strong>는 팔로워와의 신뢰도가 높아 구매 전환율이 메가 인플루언서보다 평균 3~5배 높은 경우가 많습니다.' },
-            { q:'콘텐츠 방향은 누가 정하나요?', a:'브랜드 가이드라인을 기반으로 인애드컴퍼니가 <strong>크리에이티브 브리프</strong>를 제작합니다. 인플루언서의 자연스러운 톤을 살리면서 브랜드 메시지를 정확히 전달할 수 있도록 조율합니다.' },
-            { q:'유튜브·인스타·블로그 중 어떤 채널이 효과적인가요?', a:'제품 카테고리와 타겟에 따라 다릅니다. <strong>뷰티·식품</strong>은 인스타·유튜브, <strong>건강기능식품·생활용품</strong>은 블로그·유튜브 조합이 효과적입니다. 무료 진단을 통해 최적 채널을 안내해 드립니다.' },
-            { q:'캠페인 기간은 얼마나 되나요?', a:'기획·섭외·제작·게시 전 과정을 포함하면 통상 <strong>3~6주</strong>입니다. 긴급 캠페인의 경우 2주 내 집행도 가능하며, 장기 앰버서더 계약은 별도 협의합니다.' },
-            { q:'광고 표시 의무가 있나요?', a:'네, 공정거래위원회 지침에 따라 <strong>경제적 이해관계 표시(#광고, #협찬)</strong>가 의무입니다. 인애드컴퍼니는 모든 캠페인에서 법적 기준을 준수하며, 관련 가이드를 크리에이터에게 제공합니다.' },
-          ].map((item, i) => (
-            <div class="faq-item" id={`faq-infl-${i}`}>
-              <button class="faq-q" type="button" onclick={`(function(btn){var item=btn.closest('.faq-item');var isOpen=item.classList.contains('faq-item--open');document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('faq-item--open');});if(!isOpen){item.classList.add('faq-item--open');}})(this)`}>
-                <div class="faq-q-left">
-                  <span class="faq-q-badge">Q</span>
-                  <span class="faq-q-text">{item.q}</span>
-                </div>
-                <span class="faq-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></span>
-              </button>
-              <div class="faq-a"><div class="faq-a-inner" dangerouslySetInnerHTML={{__html: item.a}} /></div>
-            </div>
-          ))}
-        </div>
+        <div class="faq-wrap" id="faqWrap" data-service="influencer"></div>
+        <script dangerouslySetInnerHTML={{__html:`(function(){
+          fetch('/api/admin/public/svc-faq/influencer')
+            .then(function(r){return r.json();})
+            .then(function(data){
+              var wrap=document.getElementById('faqWrap');
+              if(!wrap||!data.faq)return;
+              wrap.innerHTML=data.faq.map(function(item,i){
+                return '<div class="faq-item" id="faq-infl-'+i+'">'
+                  +'<button class="faq-q" type="button" onclick="(function(btn){var item=btn.closest(\\'.faq-item\\');var isOpen=item.classList.contains(\\'faq-item--open\\');document.querySelectorAll(\\'.faq-item\\').forEach(function(el){el.classList.remove(\\'faq-item--open\\');});if(!isOpen){item.classList.add(\\'faq-item--open\\');}})(this)">'
+                  +'<div class="faq-q-left"><span class="faq-q-badge">Q</span><span class="faq-q-text">'+item.q+'</span></div>'
+                  +'<span class="faq-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></span>'
+                  +'</button>'
+                  +'<div class="faq-a"><div class="faq-a-inner">'+item.a+'</div></div>'
+                  +'</div>';
+              }).join('');
+            }).catch(function(){});
+        })();`}} />
       </div>
     </section>
 

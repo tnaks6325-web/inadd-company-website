@@ -1093,3 +1093,179 @@ document.getElementById('btnAddGallery').addEventListener('click', () => {
 });
 
 // gallery loadSection is handled in the main loadSection above
+
+// ════════════════════════════════════════════════
+//  SERVICE FAQ ADMIN
+// ════════════════════════════════════════════════
+
+let currentSvcFaqService = 'viral';
+let currentSvcFaqItems   = [];
+
+const SVC_NAMES = {
+  viral:       '바이럴',
+  influencer:  '인플루언서',
+  seeding:     '시딩',
+  seo:         'SEO',
+  review:      '리뷰',
+  ppl:         'PPL',
+  oliveyoung:  '올리브영'
+};
+
+async function loadSvcFaq(service) {
+  currentSvcFaqService = service;
+  try {
+    const data = await api('GET', `/svc-faq/${service}`);
+    currentSvcFaqItems = (data.faq || []).map(item => ({ ...item }));
+    renderSvcFaq();
+    setFaqHint('');
+  } catch(e) {
+    showToast('FAQ 불러오기 실패', 'error');
+  }
+}
+
+function renderSvcFaq() {
+  const list = document.getElementById('svcFaqList');
+  if (!list) return;
+  if (currentSvcFaqItems.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:32px 0;color:#444;font-size:13px"><i class="fas fa-question-circle" style="font-size:28px;display:block;margin-bottom:10px"></i>등록된 FAQ가 없습니다.</div>';
+    return;
+  }
+  list.innerHTML = currentSvcFaqItems.map((item, i) => `
+    <div class="svc-faq-row" data-idx="${i}">
+      <div class="svc-faq-row-head">
+        <span class="svc-faq-num">${i + 1}</span>
+        <input class="svc-faq-q-inp" type="text" placeholder="질문을 입력하세요" value="${escapeAttr(item.q)}" data-field="q" data-idx="${i}">
+        <div class="svc-faq-row-actions">
+          <button class="btn-move-up" title="위로" onclick="moveSvcFaqItem(${i}, -1)"><i class="fas fa-chevron-up"></i></button>
+          <button class="btn-move-down" title="아래로" onclick="moveSvcFaqItem(${i}, 1)"><i class="fas fa-chevron-down"></i></button>
+          <button class="btn-del-faq" title="삭제" onclick="deleteSvcFaqItem(${i})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+      <textarea class="svc-faq-a-inp" placeholder="답변을 입력하세요 (HTML 태그 사용 가능)" rows="3" data-field="a" data-idx="${i}">${escapeText(item.a)}</textarea>
+    </div>
+  `).join('');
+
+  // 인풋 변경 이벤트 바인딩
+  list.querySelectorAll('.svc-faq-q-inp').forEach(inp => {
+    inp.addEventListener('input', e => {
+      const idx = parseInt(e.target.dataset.idx);
+      currentSvcFaqItems[idx].q = e.target.value;
+    });
+  });
+  list.querySelectorAll('.svc-faq-a-inp').forEach(ta => {
+    ta.addEventListener('input', e => {
+      const idx = parseInt(e.target.dataset.idx);
+      currentSvcFaqItems[idx].a = e.target.value;
+    });
+  });
+}
+
+function escapeAttr(str) {
+  return (str || '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+function escapeText(str) {
+  return (str || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function moveSvcFaqItem(idx, dir) {
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= currentSvcFaqItems.length) return;
+  const tmp = currentSvcFaqItems[idx];
+  currentSvcFaqItems[idx]    = currentSvcFaqItems[newIdx];
+  currentSvcFaqItems[newIdx] = tmp;
+  renderSvcFaq();
+  setFaqHint('순서가 변경되었습니다. 저장 버튼을 눌러 반영하세요.');
+}
+
+function deleteSvcFaqItem(idx) {
+  if (!confirm(`${idx + 1}번 FAQ를 삭제하시겠습니까?`)) return;
+  currentSvcFaqItems.splice(idx, 1);
+  renderSvcFaq();
+  setFaqHint('항목이 삭제되었습니다. 저장 버튼을 눌러 반영하세요.');
+}
+
+function addSvcFaqItem() {
+  currentSvcFaqItems.push({ q: '', a: '' });
+  renderSvcFaq();
+  // 새로 추가된 질문 인풋에 포커스
+  const rows = document.querySelectorAll('.svc-faq-row');
+  if (rows.length > 0) {
+    const lastInp = rows[rows.length - 1].querySelector('.svc-faq-q-inp');
+    if (lastInp) lastInp.focus();
+  }
+  setFaqHint('새 질문이 추가되었습니다. 내용 입력 후 저장하세요.');
+}
+
+async function saveSvcFaq() {
+  // 빈 항목 경고
+  const hasEmpty = currentSvcFaqItems.some(item => !item.q.trim() || !item.a.trim());
+  if (hasEmpty) {
+    showToast('질문 또는 답변이 비어있는 항목이 있습니다.', 'error');
+    return;
+  }
+  try {
+    const btns = document.querySelectorAll('#btnSaveFaq, #btnSaveFaq2');
+    btns.forEach(b => { b.disabled = true; b.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 저장 중...'; });
+    await api('PUT', `/svc-faq/${currentSvcFaqService}`, { faq: currentSvcFaqItems });
+    showToast(`${SVC_NAMES[currentSvcFaqService]} FAQ가 저장되었습니다.`);
+    setFaqHint('✓ 저장 완료 — 서비스 페이지에 반영되었습니다.');
+    btns.forEach(b => { b.disabled = false; b.innerHTML = '<i class="fas fa-save"></i> 저장'; });
+  } catch(e) {
+    showToast('저장 실패: ' + (e.message || '오류'), 'error');
+    const btns = document.querySelectorAll('#btnSaveFaq, #btnSaveFaq2');
+    btns.forEach(b => { b.disabled = false; b.innerHTML = '<i class="fas fa-save"></i> 저장'; });
+  }
+}
+
+function setFaqHint(msg) {
+  const el = document.getElementById('svcFaqHint');
+  if (el) el.textContent = msg;
+}
+
+function initSvcFaqSection() {
+  // 탭 클릭
+  const tabBar = document.getElementById('svcFaqTabBar');
+  if (!tabBar) return;
+  tabBar.querySelectorAll('.svc-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBar.querySelectorAll('.svc-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      loadSvcFaq(btn.dataset.svc);
+    });
+  });
+
+  // 질문 추가 버튼
+  const addBtn = document.getElementById('btnAddFaq');
+  if (addBtn) addBtn.addEventListener('click', addSvcFaqItem);
+
+  // 저장 버튼 (상단 / 하단 둘 다)
+  const saveBtn  = document.getElementById('btnSaveFaq');
+  const saveBtn2 = document.getElementById('btnSaveFaq2');
+  if (saveBtn)  saveBtn.addEventListener('click',  saveSvcFaq);
+  if (saveBtn2) saveBtn2.addEventListener('click', saveSvcFaq);
+
+  // 초기 로드
+  loadSvcFaq('viral');
+}
+
+// svcfaq 섹션 로드 시 초기화
+(function patchLoadSection() {
+  const _orig = window._loadSectionPatched;
+  if (_orig) return;
+  window._loadSectionPatched = true;
+
+  // loadSection 호출을 감시: MutationObserver로 svcfaq 섹션 활성화 감지
+  const observer = new MutationObserver(() => {
+    const sec = document.getElementById('section-svcfaq');
+    if (sec && sec.classList.contains('active')) {
+      const tabBar = document.getElementById('svcFaqTabBar');
+      // 이미 초기화됐으면 스킵
+      if (tabBar && !tabBar.dataset.initialized) {
+        tabBar.dataset.initialized = '1';
+        initSvcFaqSection();
+      }
+    }
+  });
+  const content = document.getElementById('content');
+  if (content) observer.observe(content, { subtree: true, attributeFilter: ['class'] });
+})();
