@@ -900,28 +900,59 @@ document.getElementById('btnSaveFaq').addEventListener('click', async () => {
 
 // ═══════════════ GALLERY (인애드 일상) ═══════════════
 
+let allGalAdminItems = [];
+let currentGalAdminTag = 'all';
+
 async function loadGallery() {
   const data = await api('GET', '/gallery');
-  renderGalAdmin(data.items || []);
+  allGalAdminItems = data.items || [];
+  renderGalAdmin(allGalAdminItems);
+  initGalAdminFilter();
 }
+
+function initGalAdminFilter() {
+  const filterEl = document.getElementById('galAdminFilter');
+  if (!filterEl) return;
+  filterEl.querySelectorAll('.gal-admin-ftag').forEach(btn => {
+    btn.addEventListener('click', function() {
+      currentGalAdminTag = this.getAttribute('data-tag');
+      filterEl.querySelectorAll('.gal-admin-ftag').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const filtered = currentGalAdminTag === 'all'
+        ? allGalAdminItems
+        : allGalAdminItems.filter(i => i.tag === currentGalAdminTag);
+      renderGalAdmin(filtered);
+    });
+  });
+}
+
+const TAG_COLORS_ADMIN = {
+  '일상':   { bg:'rgba(41,121,255,0.18)',  border:'rgba(41,121,255,0.5)',  color:'#7ab4ff' },
+  '팀':     { bg:'rgba(41,200,130,0.15)',  border:'rgba(41,200,130,0.45)', color:'#4dd99c' },
+  '오피스': { bg:'rgba(168,85,247,0.15)',  border:'rgba(168,85,247,0.45)', color:'#c084fc' },
+  '행사':   { bg:'rgba(251,146,60,0.15)',  border:'rgba(251,146,60,0.45)', color:'#fb923c' },
+  '캠페인': { bg:'rgba(239,68,68,0.15)',   border:'rgba(239,68,68,0.45)',  color:'#f87171' }
+};
 
 function renderGalAdmin(items) {
   const grid = document.getElementById('galAdminGrid');
   if (!grid) return;
   if (!items.length) {
-    grid.innerHTML = '<p style="color:#555;font-size:13px;padding:20px 0;grid-column:1/-1">등록된 사진이 없습니다. 사진 추가 버튼을 눌러 업로드하세요.</p>';
+    grid.innerHTML = '<div class="gal-admin-empty"><i class="fas fa-images"></i>등록된 사진이 없습니다.<br><span style="font-size:12px;margin-top:4px;display:block">사진 추가 버튼을 눌러 업로드하세요.</span></div>';
     return;
   }
-  grid.innerHTML = items.map(item => `
+  grid.innerHTML = items.map(item => {
+    const col = TAG_COLORS_ADMIN[item.tag] || TAG_COLORS_ADMIN['일상'];
+    return `
     <div class="gal-admin-item">
-      <img src="${item.imageUrl}" alt="${item.caption || ''}" onerror="this.style.background='#222'" />
+      <img src="${item.imageUrl}" alt="${item.caption || ''}" loading="lazy" onerror="this.parentElement.style.background='#1a1a1a'" />
       <div class="gal-admin-item-info">
-        <span class="gal-admin-item-tag">${item.tag || '일상'}</span>
-        <span class="gal-admin-item-cap">${item.caption || ''}</span>
+        <span class="gal-admin-item-tag" style="background:${col.bg};border-color:${col.border};color:${col.color}">${item.tag || '일상'}</span>
+        ${item.caption ? `<span class="gal-admin-item-cap">${item.caption}</span>` : ''}
       </div>
-      <button class="gal-admin-item-del" onclick="deleteGalItem(${item.id})">✕</button>
-    </div>
-  `).join('');
+      <button class="gal-admin-item-del" onclick="deleteGalItem(${item.id})" title="삭제"><i class="fas fa-times"></i></button>
+    </div>`;
+  }).join('');
 }
 
 async function deleteGalItem(id) {
@@ -934,41 +965,86 @@ async function deleteGalItem(id) {
 // 갤러리 사진 추가 모달
 document.getElementById('btnAddGallery').addEventListener('click', () => {
   const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;display:flex;align-items:center;justify-content:center;';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
   overlay.innerHTML = `
-    <div style="background:#111;border:1px solid #2a2a2a;border-radius:14px;padding:28px;width:460px;max-width:96vw;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-        <strong style="color:#fff;font-size:16px">사진 추가</strong>
-        <button id="galModalClose" style="background:none;border:none;color:#888;font-size:20px;cursor:pointer">✕</button>
+    <div style="background:#141414;border:1px solid #2a2a2a;border-radius:16px;padding:0;width:500px;max-width:96vw;overflow:hidden;">
+      <!-- 헤더 -->
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid #222;">
+        <div>
+          <strong style="color:#fff;font-size:16px;font-weight:700">사진 추가</strong>
+          <p style="color:#555;font-size:12px;margin:3px 0 0">인애드 일상 갤러리에 사진을 업로드합니다</p>
+        </div>
+        <button id="galModalClose" style="background:rgba(255,255,255,0.06);border:1px solid #333;color:#888;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
       </div>
-      <div style="margin-bottom:16px">
-        <label style="color:#888;font-size:12px;font-weight:600;display:block;margin-bottom:6px">이미지 파일 *</label>
-        <input type="file" id="galFileInput" accept="image/*" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;padding:10px;font-size:14px;" />
-        <div id="galPreview" style="margin-top:10px;display:none;"><img id="galPreviewImg" style="width:100%;max-height:200px;object-fit:contain;border-radius:8px;border:1px solid #2a2a2a;" /></div>
+      <!-- 본문 -->
+      <div style="padding:24px;display:flex;flex-direction:column;gap:18px;">
+        <!-- 이미지 업로드 드롭존 -->
+        <div>
+          <label style="color:#888;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">이미지 파일 *</label>
+          <label for="galFileInput" id="galDropZone" style="display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed #2a2a2a;border-radius:12px;padding:28px 16px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;gap:8px;">
+            <i class="fas fa-cloud-upload-alt" style="font-size:28px;color:#444;"></i>
+            <span style="color:#555;font-size:13px">클릭하거나 이미지를 드래그하세요</span>
+            <span style="color:#3a3a3a;font-size:11px">JPG · PNG · WebP / 최대 5MB</span>
+          </label>
+          <input type="file" id="galFileInput" accept="image/*" style="display:none;" />
+          <div id="galPreview" style="margin-top:12px;display:none;position:relative;border-radius:10px;overflow:hidden;border:1px solid #2a2a2a;">
+            <img id="galPreviewImg" style="width:100%;max-height:220px;object-fit:contain;display:block;background:#0a0a0a;" />
+            <button id="galPreviewClear" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);border:1px solid #444;color:#fff;border-radius:50%;width:26px;height:26px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+          </div>
+        </div>
+        <!-- 태그 선택 -->
+        <div>
+          <label style="color:#888;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">태그</label>
+          <div id="galTagBtns" style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="gal-tag-btn active" data-val="일상" style="padding:6px 16px;border-radius:20px;border:1px solid rgba(41,121,255,0.5);background:rgba(41,121,255,0.18);color:#7ab4ff;font-size:12px;font-weight:600;cursor:pointer;">일상</button>
+            <button class="gal-tag-btn" data-val="팀" style="padding:6px 16px;border-radius:20px;border:1px solid #2a2a2a;background:transparent;color:#666;font-size:12px;font-weight:600;cursor:pointer;">팀</button>
+            <button class="gal-tag-btn" data-val="오피스" style="padding:6px 16px;border-radius:20px;border:1px solid #2a2a2a;background:transparent;color:#666;font-size:12px;font-weight:600;cursor:pointer;">오피스</button>
+            <button class="gal-tag-btn" data-val="행사" style="padding:6px 16px;border-radius:20px;border:1px solid #2a2a2a;background:transparent;color:#666;font-size:12px;font-weight:600;cursor:pointer;">행사</button>
+            <button class="gal-tag-btn" data-val="캠페인" style="padding:6px 16px;border-radius:20px;border:1px solid #2a2a2a;background:transparent;color:#666;font-size:12px;font-weight:600;cursor:pointer;">캠페인</button>
+          </div>
+          <input type="hidden" id="galTagSelect" value="일상" />
+        </div>
+        <!-- 캡션 -->
+        <div>
+          <label style="color:#888;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">캡션 <span style="color:#444;font-weight:400;text-transform:none">(선택)</span></label>
+          <input type="text" id="galCaptionInput" placeholder="사진에 대한 간단한 설명을 입력하세요" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;padding:10px 14px;font-size:14px;outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='#1a6bff'" onblur="this.style.borderColor='#2a2a2a'" />
+        </div>
       </div>
-      <div style="margin-bottom:16px">
-        <label style="color:#888;font-size:12px;font-weight:600;display:block;margin-bottom:6px">태그</label>
-        <select id="galTagSelect" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;padding:10px;font-size:14px;outline:none;">
-          <option value="일상">일상</option>
-          <option value="팀">팀</option>
-          <option value="오피스">오피스</option>
-          <option value="행사">행사</option>
-          <option value="캠페인">캠페인</option>
-        </select>
-      </div>
-      <div style="margin-bottom:24px">
-        <label style="color:#888;font-size:12px;font-weight:600;display:block;margin-bottom:6px">캡션 (선택)</label>
-        <input type="text" id="galCaptionInput" placeholder="사진 설명을 입력하세요" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;padding:10px 12px;font-size:14px;outline:none;box-sizing:border-box;" />
-      </div>
-      <div style="display:flex;gap:10px;">
-        <button id="galSaveBtn" style="flex:1;background:#1a6bff;border:none;color:#fff;padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">업로드 저장</button>
-        <button id="galCancelBtn" style="padding:12px 20px;background:#1a1a1a;border:1px solid #2a2a2a;color:#aaa;border-radius:8px;font-size:14px;cursor:pointer;">취소</button>
+      <!-- 푸터 -->
+      <div style="display:flex;gap:10px;padding:16px 24px;border-top:1px solid #222;background:#111;">
+        <button id="galSaveBtn" style="flex:1;background:#1a6bff;border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s;">
+          <i class="fas fa-upload" style="margin-right:6px"></i>업로드 저장
+        </button>
+        <button id="galCancelBtn" style="padding:12px 20px;background:#1a1a1a;border:1px solid #2a2a2a;color:#aaa;border-radius:10px;font-size:14px;cursor:pointer;">취소</button>
       </div>
     </div>
   `;
   document.body.appendChild(overlay);
 
   let b64Data = null;
+  let selectedTag = '일상';
+
+  /* 태그 버튼 토글 */
+  overlay.querySelectorAll('.gal-tag-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      selectedTag = this.getAttribute('data-val');
+      document.getElementById('galTagSelect').value = selectedTag;
+      const col = TAG_COLORS_ADMIN[selectedTag] || TAG_COLORS_ADMIN['일상'];
+      overlay.querySelectorAll('.gal-tag-btn').forEach(b => {
+        b.style.background = 'transparent'; b.style.borderColor = '#2a2a2a'; b.style.color = '#666';
+      });
+      this.style.background = col.bg;
+      this.style.borderColor = col.border;
+      this.style.color = col.color;
+    });
+  });
+
+  /* 드롭존 hover */
+  const dropZone = document.getElementById('galDropZone');
+  dropZone.addEventListener('mouseenter', () => { dropZone.style.borderColor='#1a6bff'; dropZone.style.background='rgba(26,107,255,0.05)'; });
+  dropZone.addEventListener('mouseleave', () => { dropZone.style.borderColor='#2a2a2a'; dropZone.style.background=''; });
+
+  /* 파일 선택 */
   document.getElementById('galFileInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -977,8 +1053,17 @@ document.getElementById('btnAddGallery').addEventListener('click', () => {
       b64Data = ev.target.result;
       document.getElementById('galPreviewImg').src = b64Data;
       document.getElementById('galPreview').style.display = 'block';
+      dropZone.style.display = 'none';
     };
     reader.readAsDataURL(file);
+  });
+
+  /* 미리보기 제거 */
+  document.getElementById('galPreviewClear').addEventListener('click', () => {
+    b64Data = null;
+    document.getElementById('galPreview').style.display = 'none';
+    document.getElementById('galFileInput').value = '';
+    dropZone.style.display = 'flex';
   });
 
   function closeModal() { overlay.remove(); }
@@ -989,10 +1074,11 @@ document.getElementById('btnAddGallery').addEventListener('click', () => {
   document.getElementById('galSaveBtn').addEventListener('click', async () => {
     if (!b64Data) { showToast('이미지를 선택해주세요.', 'error'); return; }
     const btn = document.getElementById('galSaveBtn');
-    btn.textContent = '업로드 중...'; btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px"></i>업로드 중...';
+    btn.disabled = true;
     try {
       const imgRes = await api('POST', '/gallery/image', { data: b64Data });
-      const tag     = document.getElementById('galTagSelect').value;
+      const tag     = document.getElementById('galTagSelect').value || '일상';
       const caption = document.getElementById('galCaptionInput').value.trim();
       await api('POST', '/gallery', { imageUrl: imgRes.url, tag, caption });
       showToast('사진이 추가되었습니다.');
@@ -1000,7 +1086,8 @@ document.getElementById('btnAddGallery').addEventListener('click', () => {
       loadGallery();
     } catch(err) {
       showToast('업로드 실패: ' + (err.message || '오류'), 'error');
-      btn.textContent = '업로드 저장'; btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-upload" style="margin-right:6px"></i>업로드 저장';
+      btn.disabled = false;
     }
   });
 });

@@ -51,18 +51,18 @@ export const InsightPage = () => {
           {/* ── 갤러리 (인애드 일상) ── */}
           <div class="insgal-wrap" id="insGalWrap" style="display:none;">
 
-            {/* 갤러리 필터 태그 */}
-            <div class="insgal-filter" id="insGalFilter">
-              <button class="insgal-ftag active" data-tag="all">전체</button>
-              <button class="insgal-ftag" data-tag="일상">일상</button>
-              <button class="insgal-ftag" data-tag="팀">팀</button>
-              <button class="insgal-ftag" data-tag="오피스">오피스</button>
-              <button class="insgal-ftag" data-tag="행사">행사</button>
-              <button class="insgal-ftag" data-tag="캠페인">캠페인</button>
-            </div>
+            {/* 서브 탭 — 콘텐츠별 전략과 동일한 스타일 */}
+            <nav class="ins2-sub-tab-bar insgal-sub-tabs" id="insGalSubTabs">
+              <button class="ins2-sub-tab active" data-tag="all">전체</button>
+              <button class="ins2-sub-tab" data-tag="일상">일상</button>
+              <button class="ins2-sub-tab" data-tag="팀">팀</button>
+              <button class="ins2-sub-tab" data-tag="오피스">오피스</button>
+              <button class="ins2-sub-tab" data-tag="행사">행사</button>
+              <button class="ins2-sub-tab" data-tag="캠페인">캠페인</button>
+            </nav>
 
-            {/* 마소닉 그리드 */}
-            <div class="insgal-grid" id="insGalGrid">
+            {/* 카드 그리드 */}
+            <div class="ins2-grid" id="insGalGrid">
               <div class="ins2-loading" id="insGalLoading">
                 <div class="ins2-spinner"></div>
                 <p>사진을 불러오는 중...</p>
@@ -81,8 +81,10 @@ export const InsightPage = () => {
             <div class="insgal-lb-content">
               <button class="insgal-lb-close" id="insGalLbClose">✕</button>
               <img class="insgal-lb-img" id="insGalLbImg" src="" alt="" />
-              <div class="insgal-lb-caption" id="insGalLbCaption"></div>
-              <span class="insgal-lb-tag" id="insGalLbTag"></span>
+              <div class="insgal-lb-info">
+                <span class="insgal-lb-tag" id="insGalLbTag"></span>
+                <div class="insgal-lb-caption" id="insGalLbCaption"></div>
+              </div>
             </div>
           </div>
 
@@ -103,7 +105,7 @@ export const InsightPage = () => {
   var galGrid    = document.getElementById('insGalGrid');
   var galEmpty   = document.getElementById('insGalEmpty');
   var galLoading = document.getElementById('insGalLoading');
-  var galFilter  = document.getElementById('insGalFilter');
+  var galSubTabs = document.getElementById('insGalSubTabs');
   var lightbox   = document.getElementById('insGalLightbox');
   var lbImg      = document.getElementById('insGalLbImg');
   var lbCaption  = document.getElementById('insGalLbCaption');
@@ -111,13 +113,20 @@ export const InsightPage = () => {
   var lbClose    = document.getElementById('insGalLbClose');
   var lbBackdrop = document.getElementById('insGalLbBackdrop');
 
-  var currentMain = 'all';
-  var currentSub  = 'all-strategy';
+  var currentMain   = 'all';
+  var currentSub    = 'all-strategy';
   var currentGalTag = 'all';
-  var allGalItems = [];
+  var allGalItems   = [];
 
   var CAT_LABELS = { 'content-strategy':'콘텐츠 전략', 'case-study':'실전 사례' };
   var SUB_LABELS = { viral:'바이럴 마케팅', influencer:'인플루언서', seeding:'시딩', seo:'SEO', review:'리뷰', oliveyoung:'올리브영', ppl:'PPL' };
+  var TAG_COLORS = {
+    '일상':    { bg:'rgba(41,121,255,0.18)',  border:'rgba(41,121,255,0.55)',  color:'#7ab4ff' },
+    '팀':      { bg:'rgba(41,200,130,0.15)',  border:'rgba(41,200,130,0.5)',   color:'#4dd99c' },
+    '오피스':  { bg:'rgba(168,85,247,0.15)',  border:'rgba(168,85,247,0.5)',   color:'#c084fc' },
+    '행사':    { bg:'rgba(251,146,60,0.15)',  border:'rgba(251,146,60,0.5)',   color:'#fb923c' },
+    '캠페인':  { bg:'rgba(239,68,68,0.15)',   border:'rgba(239,68,68,0.5)',    color:'#f87171' }
+  };
 
   /* ── 아티클 필터 ── */
   function applyFilter() {
@@ -172,36 +181,41 @@ export const InsightPage = () => {
     var items = currentGalTag === 'all'
       ? allGalItems
       : allGalItems.filter(function(i){ return i.tag === currentGalTag; });
-    renderGalItems(items, false);
+    renderGalCards(items);
   }
 
-  /* ── 갤러리 렌더 ── */
-  function renderGalItems(items, showLoader) {
+  /* ── 갤러리 카드 렌더 (ins2-card 스타일) ── */
+  function renderGalCards(items) {
     if (galLoading) galLoading.style.display = 'none';
-    galGrid.querySelectorAll('.insgal-item').forEach(function(el){ el.remove(); });
+    galGrid.querySelectorAll('.insgal-card').forEach(function(el){ el.remove(); });
     if (!items || !items.length) {
       if (galEmpty) galEmpty.style.display = 'flex';
       return;
     }
     if (galEmpty) galEmpty.style.display = 'none';
 
-    items.forEach(function(item, idx) {
+    items.forEach(function(item) {
+      var col = TAG_COLORS[item.tag] || { bg:'rgba(41,121,255,0.18)', border:'rgba(41,121,255,0.55)', color:'#7ab4ff' };
       var div = document.createElement('div');
-      /* 마소닉: 3/6/9... 번째 아이템을 tall로 */
-      var isTall = (idx % 5 === 2);
-      div.className = 'insgal-item' + (isTall ? ' insgal-item--tall' : '');
+      div.className = 'insgal-card';
       div.setAttribute('data-tag', item.tag || '일상');
       div.innerHTML =
-        '<img src="' + item.imageUrl + '" alt="' + (item.caption||'') + '" loading="lazy" />'
-        + '<div class="insgal-item-overlay">'
-        + (item.tag ? '<span class="insgal-item-tag">' + item.tag + '</span>' : '')
-        + (item.caption ? '<p class="insgal-item-caption">' + item.caption + '</p>' : '')
-        + '</div>';
+        '<div class="insgal-card-thumb">'
+        + '<img src="' + item.imageUrl + '" alt="' + (item.caption||'') + '" loading="lazy" />'
+        + '<span class="insgal-card-tag" style="background:' + col.bg + ';border-color:' + col.border + ';color:' + col.color + '">' + (item.tag || '일상') + '</span>'
+        + '<div class="insgal-card-zoom"><i class="fas fa-expand-alt"></i></div>'
+        + '</div>'
+        + (item.caption
+          ? '<div class="insgal-card-body"><p class="insgal-card-caption">' + item.caption + '</p></div>'
+          : '');
       div.addEventListener('click', function() {
         lbImg.src = item.imageUrl;
         lbCaption.textContent = item.caption || '';
-        lbTag.textContent = item.tag || '';
-        lightbox.style.display = 'flex';
+        lbTag.textContent     = item.tag || '';
+        lbTag.style.background    = col.bg;
+        lbTag.style.borderColor   = col.border;
+        lbTag.style.color         = col.color;
+        lightbox.style.display    = 'flex';
         document.body.style.overflow = 'hidden';
         setTimeout(function(){ lightbox.classList.add('insgal-lb--visible'); }, 10);
       });
@@ -232,7 +246,7 @@ export const InsightPage = () => {
 
   function loadGallery() {
     if (galLoading) galLoading.style.display = 'flex';
-    galGrid.querySelectorAll('.insgal-item').forEach(function(el){ el.remove(); });
+    galGrid.querySelectorAll('.insgal-card').forEach(function(el){ el.remove(); });
     if (galEmpty) galEmpty.style.display = 'none';
     fetch('/api/admin/public/gallery')
       .then(function(r){ return r.json(); })
@@ -253,12 +267,11 @@ export const InsightPage = () => {
       mainTabs.forEach(function(t){ t.classList.remove('active'); });
       this.classList.add('active');
 
-      /* 아티클 영역 vs 갤러리 영역 토글 */
       if (currentMain === 'gallery') {
-        grid.style.display    = 'none';
-        empty.style.display   = 'none';
+        grid.style.display      = 'none';
+        empty.style.display     = 'none';
         subTabBar.style.display = 'none';
-        galWrap.style.display = 'block';
+        galWrap.style.display   = 'block';
         loadGallery();
       } else {
         galWrap.style.display = 'none';
@@ -276,7 +289,7 @@ export const InsightPage = () => {
     });
   });
 
-  /* ── 서브 탭 ── */
+  /* ── 아티클 서브 탭 ── */
   subTabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
       currentSub = this.getAttribute('data-sub');
@@ -286,12 +299,12 @@ export const InsightPage = () => {
     });
   });
 
-  /* ── 갤러리 필터 태그 ── */
-  if (galFilter) {
-    galFilter.querySelectorAll('.insgal-ftag').forEach(function(btn) {
+  /* ── 갤러리 서브 탭 ── */
+  if (galSubTabs) {
+    galSubTabs.querySelectorAll('.ins2-sub-tab').forEach(function(btn) {
       btn.addEventListener('click', function() {
         currentGalTag = this.getAttribute('data-tag');
-        galFilter.querySelectorAll('.insgal-ftag').forEach(function(b){ b.classList.remove('active'); });
+        galSubTabs.querySelectorAll('.ins2-sub-tab').forEach(function(b){ b.classList.remove('active'); });
         this.classList.add('active');
         applyGalFilter();
       });

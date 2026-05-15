@@ -287,14 +287,14 @@ export const AboutPage = () => (
             </div>
             {/* /상단 스텝 */}
 
-            {/* Canvas — aptn-converge-top 내부에서 선을 그림 */}
+            {/* Canvas — convergeEl 전체를 덮는 절대 레이어 (JS가 위치 설정) */}
             <canvas id="cvgCanvas" class="aptn-cvg-canvas" aria-hidden="true"></canvas>
 
           </div>
           {/* /aptn-converge-top */}
 
-          {/* 비즈니스 파트너 결과 카드 — Canvas/선 완전히 아래에 위치 */}
-          <div class="aptn-converge-result">
+          {/* 비즈니스 파트너 결과 카드 — 선 수렴 완료 후 등장 */}
+          <div class="aptn-converge-result" id="aptnConvergeResult">
             {/* 외부 글로우 링들 */}
             <div class="aptn-result-ring aptn-result-ring--outer"></div>
             <div class="aptn-result-ring aptn-result-ring--mid"></div>
@@ -746,26 +746,34 @@ export const AboutPage = () => (
   /* ══ 수렴 플로우 Canvas 애니메이션 ══ */
   (function() {
     function run() {
-      var topEl    = document.getElementById('aptnConvergeTop');
-      var canvas   = document.getElementById('cvgCanvas');
       var convergeEl = document.getElementById('aptnConverge');
-      if (!topEl || !canvas || !convergeEl) return;
+      var topEl      = document.getElementById('aptnConvergeTop');
+      var canvas     = document.getElementById('cvgCanvas');
+      var resultEl   = document.getElementById('aptnConvergeResult');
+      if (!convergeEl || !topEl || !canvas || !resultEl) return;
 
-      var steps    = convergeEl.querySelectorAll('.aptn-converge-step');
-      var resultEl = convergeEl.querySelector('.aptn-converge-result');
-      var ctx = canvas.getContext('2d');
+      var steps = convergeEl.querySelectorAll('.aptn-converge-step');
+      var ctx   = canvas.getContext('2d');
 
-      /* ── Canvas 크기: aptn-converge-top 내부 전체를 덮음 ── */
+      /* ── Canvas를 convergeEl 전체에 절대 포지션으로 오버레이 ──
+         convergeEl 은 CSS에서 position:relative 이므로 canvas를 그 위에 덮음
+         단, pointer-events:none + z-index:0 이라 클릭/터치 방해 없음          */
+      convergeEl.style.position = 'relative';
+      canvas.style.position  = 'absolute';
+      canvas.style.top       = '0';
+      canvas.style.left      = '0';
+      canvas.style.pointerEvents = 'none';
+      canvas.style.zIndex    = '0';
+
       function resizeCanvas() {
-        var r = topEl.getBoundingClientRect();
+        var r = convergeEl.getBoundingClientRect();
         canvas.width  = r.width;
         canvas.height = r.height;
+        canvas.style.width  = r.width  + 'px';
+        canvas.style.height = r.height + 'px';
       }
       resizeCanvas();
       window.addEventListener('resize', resizeCanvas);
-
-      /* aptn-converge-top 에 position:relative 보장 */
-      topEl.style.position = 'relative';
 
       var fired = false;
 
@@ -774,74 +782,87 @@ export const AboutPage = () => (
         fired = true;
         io.disconnect();
 
-        /* ① 카드 3개 방향별 슬라이드 인 (0 / 150 / 300 ms) */
+        /* ① 3개 스텝 카드 순차 등장 (0 / 150 / 300 ms) */
         steps.forEach(function(s, i) {
           setTimeout(function() { s.classList.add('is-visible'); }, i * 150);
         });
 
-        /* ② 카드 transition 완전히 끝난 뒤 좌표 읽고 선 그리기
-             — 가장 늦은 카드: delay 0.15s + transition 0.7s = 850ms
-             → 넉넉하게 1000ms 후에 좌표 읽음 */
+        /* ② 모든 카드 transition 완료 후 선 그리기 시작
+             가장 늦은 카드: 300ms delay + 700ms transition = 1000ms
+             → 1100ms 에 좌표 읽어 선 그리기 시작 (여유 100ms)               */
         setTimeout(function() {
           resizeCanvas();
 
-          var topRect = topEl.getBoundingClientRect();
+          var baseRect = convergeEl.getBoundingClientRect();
 
-          /* 각 .aptn-step-card 하단 중앙 좌표 (선 시작점)
-             — transition 완료 후 읽어야 정확한 위치 */
-          function getBottom(stepEl) {
-            var card = stepEl.querySelector('.aptn-step-card');
-            var r = (card || stepEl).getBoundingClientRect();
+          /* 스텝 카드 하단 중앙 (선 시작점) — 카드 경계 바깥 1px */
+          function getCardBottom(stepEl) {
+            var card = stepEl.querySelector('.aptn-step-card') || stepEl;
+            var r = card.getBoundingClientRect();
             return {
-              x: r.left + r.width / 2 - topRect.left,
-              y: r.bottom - topRect.top  /* 카드 하단 경계에 딱 닿음 */
+              x: (r.left + r.width  / 2) - baseRect.left,
+              y: (r.bottom)              - baseRect.top + 1   /* 카드 밖 1px */
             };
           }
 
-          var s0 = getBottom(steps[0]);
-          var s1 = getBottom(steps[1]);
-          var s2 = getBottom(steps[2]);
+          /* 수렴점: Business Partner 카드 상단 중앙 (선 끝점)
+             결과 카드는 opacity:0 + transform 으로 숨겨져 있어
+             getBoundingClientRect 가 변형된 위치를 반환할 수 있음
+             → 측정 순간만 transform 을 none 으로 바꿔 정확한 위치 확보 */
+          var resCard = resultEl.querySelector('.aptn-result-card') || resultEl;
+          var prevTransition = resultEl.style.transition;
+          var prevTransform  = resultEl.style.transform;
+          resultEl.style.transition = 'none';
+          resultEl.style.transform  = 'none';
+          var resR = resCard.getBoundingClientRect();
+          resultEl.style.transform  = prevTransform;
+          resultEl.style.transition = prevTransition;
 
-          /* 수렴점 = Canvas 하단 중앙 고정 */
-          var ex = canvas.width  / 2;
-          var ey = canvas.height - 4;
+          var ex = (resR.left + resR.width / 2) - baseRect.left;
+          var ey = resR.top                      - baseRect.top - 6; /* 카드 상단 6px 위 */
 
-          /* 3선 정의: 시작(sx,sy) → 수렴점(ex,ey) — 직선이므로 제어점 없음 */
+          var s0 = getCardBottom(steps[0]);
+          var s1 = getCardBottom(steps[1]);
+          var s2 = getCardBottom(steps[2]);
+
+          /* 3선 정의 — 시작(sx,sy) → 수렴점(ex,ey) */
           var lineData = [
             { sx: s0.x, sy: s0.y },
             { sx: s1.x, sy: s1.y },
             { sx: s2.x, sy: s2.y }
           ];
 
-          var DUR = 400; /* 선 그리기 총 시간 ms */
+          var DUR = 450;   /* ms — 선 그리기 총 시간 */
           var t0  = null;
+
+          function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
           function drawLines(ts) {
             if (!t0) t0 = ts;
             var prog = Math.min((ts - t0) / DUR, 1);
-            /* linear — 직선이므로 일정 속도로 */
-            var e = prog;
+            var e    = easeOutCubic(prog);
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             lineData.forEach(function(ln, idx) {
-              /* 직선: 시작점 → 수렴점을 e 비율만큼 그림 */
+              /* 현재 선 끝점: 시작 → 수렴점을 e 비율만큼 진행 */
               var mx = ln.sx + (ex - ln.sx) * e;
               var my = ln.sy + (ey - ln.sy) * e;
 
+              /* 그라데이션: 카드 하단(연한 파랑) → 수렴점(밝은 파랑) */
               var grad = ctx.createLinearGradient(ln.sx, ln.sy, mx, my);
-              grad.addColorStop(0,   'rgba(60,120,255,0.5)');
-              grad.addColorStop(0.5, 'rgba(90,150,255,0.85)');
-              grad.addColorStop(1,   'rgba(140,200,255,1)');
+              grad.addColorStop(0,   'rgba(60,120,255,0.45)');
+              grad.addColorStop(0.5, 'rgba(90,150,255,0.80)');
+              grad.addColorStop(1,   'rgba(140,200,255,0.95)');
 
               ctx.beginPath();
               ctx.moveTo(ln.sx, ln.sy);
-              ctx.lineTo(mx, my);   /* 직선 */
+              ctx.lineTo(mx, my);
               ctx.strokeStyle = grad;
-              ctx.lineWidth   = idx === 1 ? 2.5 : 2;
+              ctx.lineWidth   = idx === 1 ? 2.5 : 1.8;
               ctx.lineCap     = 'round';
-              ctx.shadowBlur  = 10;
-              ctx.shadowColor = 'rgba(80,140,255,0.5)';
+              ctx.shadowBlur  = 8;
+              ctx.shadowColor = 'rgba(80,140,255,0.45)';
               ctx.stroke();
               ctx.shadowBlur  = 0;
             });
@@ -849,15 +870,16 @@ export const AboutPage = () => (
             if (prog < 1) {
               requestAnimationFrame(drawLines);
             } else {
-              /* ③ 선 수렴 완료 → 비즈니스 파트너 카드 등장 */
-              if (resultEl) resultEl.classList.add('is-visible');
+              /* ③ 선 3개 모두 수렴 완료 → Business Partner 카드 등장 */
+              resultEl.classList.add('is-visible');
             }
           }
+
           requestAnimationFrame(drawLines);
 
-        }, 1000);
+        }, 1100);
 
-      }, { threshold: 0.2 });
+      }, { threshold: 0.15 });
 
       io.observe(convergeEl);
     }

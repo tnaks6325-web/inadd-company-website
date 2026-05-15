@@ -344,14 +344,22 @@ function adminDashboardHTML(): string {
   .post-actions { display: flex; gap: 8px; }
 
   /* ── Gallery admin ── */
-  .gal-admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-top: 8px; }
-  .gal-admin-item { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid #2a2a2a; background: #111; aspect-ratio: 1; }
-  .gal-admin-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .gal-admin-item-info { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.85)); padding: 24px 10px 10px; }
-  .gal-admin-item-tag { font-size: 10px; font-weight: 700; color: #4d9fff; letter-spacing: .8px; display: block; }
-  .gal-admin-item-cap { font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 2px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: block; }
-  .gal-admin-item-del { position: absolute; top: 6px; right: 6px; background: rgba(220,38,38,0.85); border: none; color: #fff; width: 24px; height: 24px; border-radius: 50%; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .2s; }
+  .gal-admin-filter { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .gal-admin-ftag { padding: 5px 14px; border-radius: 20px; border: 1px solid #2a2a2a; background: transparent; color: #666; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s; letter-spacing: .3px; }
+  .gal-admin-ftag:hover { border-color: #1a6bff; color: #aaa; }
+  .gal-admin-ftag.active { background: rgba(26,107,255,0.15); border-color: #1a6bff; color: #4d9fff; }
+  .gal-admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+  .gal-admin-item { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid #2a2a2a; background: #111; aspect-ratio: 4/3; cursor: pointer; transition: border-color .2s, transform .2s; }
+  .gal-admin-item:hover { border-color: #333; transform: translateY(-2px); }
+  .gal-admin-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
+  .gal-admin-item:hover img { transform: scale(1.04); }
+  .gal-admin-item-info { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.88)); padding: 28px 10px 10px; }
+  .gal-admin-item-tag { font-size: 9px; font-weight: 700; color: #4d9fff; letter-spacing: 1px; text-transform: uppercase; background: rgba(26,107,255,0.2); border: 1px solid rgba(26,107,255,0.4); border-radius: 10px; padding: 2px 7px; display: inline-block; }
+  .gal-admin-item-cap { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 4px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: block; }
+  .gal-admin-item-del { position: absolute; top: 7px; right: 7px; background: rgba(220,38,38,0.9); border: none; color: #fff; width: 26px; height: 26px; border-radius: 50%; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .2s; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
   .gal-admin-item:hover .gal-admin-item-del { opacity: 1; }
+  .gal-admin-empty { grid-column: 1/-1; text-align: center; padding: 48px 0; color: #444; font-size: 13px; }
+  .gal-admin-empty i { font-size: 32px; display: block; margin-bottom: 10px; }
 
   /* ── Marketing stats ── */
   .mktg-service { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 20px; margin-bottom: 16px; }
@@ -728,8 +736,17 @@ function adminDashboardHTML(): string {
           <button class="btn btn-primary btn-sm" id="btnAddGallery"><i class="fas fa-plus"></i> 사진 추가</button>
         </div>
         <div class="thumb-spec">
-          인사이트 페이지 <strong>'인애드 일상'</strong> 탭에 마소닉 그리드로 표시됩니다. 사진을 업로드하고 태그 및 캐졜을 입력하세요.<br>
-          <em style="color:#666">태그: 일상 · 팀 · 오피스 · 행사 · 캠페인 / 권장 크기 800 × 600 px 이상</em>
+          인사이트 페이지 <strong>'인애드 일상'</strong> 탭에 <strong>카드 그리드</strong>로 표시됩니다. 이미지를 업로드하고 태그와 캡션을 설정하세요.<br>
+          <em style="color:#666">태그: 일상 · 팀 · 오피스 · 행사 · 캠페인 / 권장 비율 4:3 (800 × 600 px 이상)</em>
+        </div>
+        <!-- 갤러리 필터 탭 -->
+        <div class="gal-admin-filter" id="galAdminFilter">
+          <button class="gal-admin-ftag active" data-tag="all">전체</button>
+          <button class="gal-admin-ftag" data-tag="일상">일상</button>
+          <button class="gal-admin-ftag" data-tag="팀">팀</button>
+          <button class="gal-admin-ftag" data-tag="오피스">오피스</button>
+          <button class="gal-admin-ftag" data-tag="행사">행사</button>
+          <button class="gal-admin-ftag" data-tag="캠페인">캠페인</button>
         </div>
         <div class="gal-admin-grid" id="galAdminGrid"></div>
       </div>

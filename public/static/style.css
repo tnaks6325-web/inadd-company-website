@@ -2712,23 +2712,24 @@ em {
   box-shadow: 0 0 8px rgba(41,200,130,0.6);
 }
 
-/* ── 수렴 Canvas 라인 ── */
+/* ── 수렴 Canvas 라인 — convergeEl 전체를 덮는 절대 오버레이 ── */
 .aptn-cvg-canvas {
   position: absolute;
   top: 0; left: 0;
-  width: 100%; height: 100%;
   pointer-events: none;
   z-index: 0;
+  /* 크기는 JS에서 convergeEl 기준으로 설정 */
 }
 
 
-/* ── 하단 수렴 결과: 비즈니스 파트너 카드 (Canvas/선 완전히 아래) ── */
+/* ── 하단 수렴 결과: 비즈니스 파트너 카드 ── */
 .aptn-converge-result {
   position: relative;
+  z-index: 1;          /* canvas(z-index:0) 위에 표시 */
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 16px; /* canvas 하단과 카드 사이 간격 */
+  margin-top: 48px;    /* 스텝 카드와 충분한 간격 — 선이 지나는 공간 */
   /* 초기: 숨김 — JS가 .is-visible 부여 시 등장 */
   opacity: 0;
   transform: translateY(32px) scale(0.88);
@@ -6693,6 +6694,128 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 }
 @media (max-width: 400px) {
   .insgal-grid { columns: 1; }
+}
+
+/* ══════════════════════════════════════════════════
+   인애드 일상 갤러리 카드 (ins2-card 통일 스타일)
+══════════════════════════════════════════════════ */
+
+/* 갤러리 서브탭 — ins2-sub-tab-bar 와 동일하게 상단 여백만 조정 */
+.insgal-sub-tabs {
+  margin-bottom: 32px;
+}
+
+/* 갤러리 카드 그리드 — ins2-grid 와 동일한 3컬럼 */
+#insGalGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+/* ── 갤러리 카드 ── */
+.insgal-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.insgal-card:hover {
+  border-color: rgba(41,121,255,0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.35);
+}
+
+/* 썸네일 */
+.insgal-card-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(135deg, #0d1a2e 0%, #0a0f1e 100%);
+  overflow: hidden;
+}
+.insgal-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.insgal-card:hover .insgal-card-thumb img {
+  transform: scale(1.05);
+}
+
+/* 태그 배지 */
+.insgal-card-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 3px 10px;
+  backdrop-filter: blur(6px);
+}
+
+/* 줌 아이콘 (호버 시) */
+.insgal-card-zoom {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  transition: opacity 0.25s;
+  color: #fff;
+  font-size: 22px;
+}
+.insgal-card:hover .insgal-card-zoom { opacity: 1; }
+
+/* 캡션 영역 */
+.insgal-card-body {
+  padding: 14px 16px;
+  flex: 1;
+}
+.insgal-card-caption {
+  font-size: 13px;
+  color: var(--gray-2);
+  line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── 라이트박스 개선 (태그+캡션 나란히) ── */
+.insgal-lb-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.insgal-lb-caption {
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+  text-align: center;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  #insGalGrid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+@media (max-width: 640px) {
+  #insGalGrid { grid-template-columns: 1fr; gap: 16px; }
+  .insgal-sub-tabs { flex-wrap: wrap; gap: 6px; }
 }
 
 /* ══════════════════════════════════════════════════
