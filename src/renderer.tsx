@@ -7,13 +7,60 @@ declare module 'hono' {
 }
 
 export const renderer = jsxRenderer(({ children, title, description }: { children?: any; title?: string; description?: string }) => {
+  const pageTitle = title ? `${title} | 인애드컴퍼니` : '인애드컴퍼니 — 실전형 크리에이티브 바이럴 마케팅 에이전시'
+  const pageDesc = description || '채팅, 커뮤니티, SNS 중심의 실전형 바이럴 마케팅을 설계하는 인애드컴퍼니. 브랜드 인지도와 전환율을 동시에 실증 있는 퍼포먼스를 제공합니다.'
+  const siteUrl = 'https://www.inadcompany.co.kr'
   return (
     <html lang="ko">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{title ? `${title} | 인애드컴퍼니` : '인애드컴퍼니 — THE CREATIVE MARKETING AGENCY'}</title>
-        <meta name="description" content={description || '크리에이티브와 데이터가 만나는 마케팅 에이전시 인애드컴퍼니 (IN AD COMPANY)'} />
+        <title>{pageTitle}</title>
+
+        {/* ── SEO 기본 메타태그 ── */}
+        <meta name="description" content={pageDesc} />
+        <meta name="keywords" content="바이럴마케팅, 인플루언서마케팅, 시딩캠페인, SEO마케팅, 리뷰마케팅, 올리브영마케팅, PPL마케팅, 마케팅에이전시, 인애드컴퍼니, inadcompany" />
+        <meta name="author" content="인애드컴퍼니 (IN AD COMPANY)" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={siteUrl} />
+
+        {/* ── Open Graph (SNS 공유) ── */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="인애드컴퍼니" />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDesc} />
+        <meta property="og:url" content={siteUrl} />
+        <meta property="og:image" content={`${siteUrl}/static/og-image.png`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="ko_KR" />
+
+        {/* ── Twitter Card ── */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDesc} />
+        <meta name="twitter:image" content={`${siteUrl}/static/og-image.png`} />
+
+        {/* ── 네이버 웹마스터 인증 ── */}
+        <meta name="naver-site-verification" content="9d12802cf3021d63f7403fd275a35888ecc26ec0" />
+
+        {/* ── Google Analytics (GA4) ── */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-474V2Z6PHE"></script>
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-474V2Z6PHE');
+        `}} />
+
+        {/* ── 네이버 애널리틱스 ── */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          if(!wcs_add) var wcs_add={};
+          wcs_add["wa"] = "4cf8723bdd3578";
+          if(window.wcs) wcs_do();
+        `}} />
+        <script async src="//wcs.naver.net/wcslog.js"></script>
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />

@@ -41,6 +41,52 @@ app.get('/admin/*', (c) => {
   return c.html(adminDashboardHTML())
 })
 
+// ─────────────────────────────────────────────
+// SEO: sitemap.xml
+// ─────────────────────────────────────────────
+app.get('/sitemap.xml', (c) => {
+  const base = 'https://www.inadcompany.co.kr'
+  const today = new Date().toISOString().split('T')[0]
+  const urls = [
+    { loc: base, priority: '1.0', changefreq: 'weekly' },
+    { loc: `${base}/about`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${base}/works`, priority: '0.8', changefreq: 'weekly' },
+    { loc: `${base}/insight`, priority: '0.8', changefreq: 'weekly' },
+    { loc: `${base}/marketing`, priority: '0.9', changefreq: 'monthly' },
+    { loc: `${base}/marketing/viral`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${base}/marketing/influencer`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${base}/marketing/seeding`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${base}/marketing/seo`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${base}/marketing/review`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${base}/marketing/oliveyoung`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${base}/marketing/ppl`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${base}/contact`, priority: '0.7', changefreq: 'monthly' },
+  ]
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(u => `  <url>
+    <loc>${u.loc}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`).join('\n')}
+</urlset>`
+  return c.text(xml, 200, { 'Content-Type': 'application/xml' })
+})
+
+// ─────────────────────────────────────────────
+// SEO: robots.txt
+// ─────────────────────────────────────────────
+app.get('/robots.txt', (c) => {
+  const txt = `User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://www.inadcompany.co.kr/sitemap.xml`
+  return c.text(txt, 200, { 'Content-Type': 'text/plain' })
+})
+
 // Routes
 app.get('/', (c) => {
   return c.render(<HomePage />, { title: '브랜드를 움직이는 힘' })
