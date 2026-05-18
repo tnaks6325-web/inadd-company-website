@@ -379,8 +379,11 @@ function adminDashboardHTML(): string {
   .gal-admin-item-info { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.88)); padding: 28px 10px 10px; }
   .gal-admin-item-tag { font-size: 9px; font-weight: 700; color: #4d9fff; letter-spacing: 1px; text-transform: uppercase; background: rgba(26,107,255,0.2); border: 1px solid rgba(26,107,255,0.4); border-radius: 10px; padding: 2px 7px; display: inline-block; }
   .gal-admin-item-cap { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 4px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: block; }
-  .gal-admin-item-del { position: absolute; top: 7px; right: 7px; background: rgba(220,38,38,0.9); border: none; color: #fff; width: 26px; height: 26px; border-radius: 50%; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .2s; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
-  .gal-admin-item:hover .gal-admin-item-del { opacity: 1; }
+  .gal-admin-count-badge { position: absolute; top: 7px; left: 7px; background: rgba(0,0,0,0.72); border: 1px solid rgba(255,255,255,0.18); color: #fff; font-size: 10px; font-weight: 700; border-radius: 8px; padding: 2px 7px; display: flex; align-items: center; gap: 3px; letter-spacing: .3px; }
+  .gal-admin-item-actions { position: absolute; top: 7px; right: 7px; display: flex; gap: 5px; opacity: 0; transition: opacity .2s; }
+  .gal-admin-item:hover .gal-admin-item-actions { opacity: 1; }
+  .gal-admin-item-edit { background: rgba(26,107,255,0.85); border: none; color: #fff; width: 26px; height: 26px; border-radius: 50%; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .gal-admin-item-del { background: rgba(220,38,38,0.9); border: none; color: #fff; width: 26px; height: 26px; border-radius: 50%; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
   .gal-admin-empty { grid-column: 1/-1; text-align: center; padding: 48px 0; color: #444; font-size: 13px; }
   .gal-admin-empty i { font-size: 32px; display: block; margin-bottom: 10px; }
 

@@ -75,13 +75,17 @@ export const InsightPage = () => {
 
           </div>
 
-          {/* 라이트박스 */}
+          {/* 라이트박스 — 패키지 슬라이더 */}
           <div class="insgal-lightbox" id="insGalLightbox" style="display:none;">
             <div class="insgal-lb-backdrop" id="insGalLbBackdrop"></div>
             <div class="insgal-lb-content">
               <button class="insgal-lb-close" id="insGalLbClose">✕</button>
+              {/* 슬라이더 prev/next */}
+              <button class="insgal-lb-prev" id="insGalLbPrev">&#8249;</button>
+              <button class="insgal-lb-next" id="insGalLbNext">&#8250;</button>
               <img class="insgal-lb-img" id="insGalLbImg" src="" alt="" />
               <div class="insgal-lb-info">
+                <span class="insgal-lb-counter" id="insGalLbCounter"></span>
                 <span class="insgal-lb-tag" id="insGalLbTag"></span>
                 <div class="insgal-lb-caption" id="insGalLbCaption"></div>
               </div>
@@ -110,13 +114,20 @@ export const InsightPage = () => {
   var lbImg      = document.getElementById('insGalLbImg');
   var lbCaption  = document.getElementById('insGalLbCaption');
   var lbTag      = document.getElementById('insGalLbTag');
+  var lbCounter  = document.getElementById('insGalLbCounter');
   var lbClose    = document.getElementById('insGalLbClose');
   var lbBackdrop = document.getElementById('insGalLbBackdrop');
+  var lbPrev     = document.getElementById('insGalLbPrev');
+  var lbNext     = document.getElementById('insGalLbNext');
 
   var currentMain   = 'all';
   var currentSub    = 'all-strategy';
   var currentGalTag = 'all';
   var allGalItems   = [];
+
+  /* 라이트박스 슬라이더 상태 */
+  var lbImages  = [];  // 현재 패키지의 이미지 배열
+  var lbCurrent = 0;  // 현재 인덱스
 
   var CAT_LABELS = { 'content-strategy':'콘텐츠 전략', 'case-study':'실전 사례' };
   var SUB_LABELS = { viral:'바이럴 마케팅', influencer:'인플루언서', seeding:'시딩', seo:'SEO', review:'리뷰', oliveyoung:'올리브영', ppl:'PPL' };
@@ -184,7 +195,54 @@ export const InsightPage = () => {
     renderGalCards(items);
   }
 
-  /* ── 갤러리 카드 렌더 (ins2-card 스타일) ── */
+  /* ── 라이트박스 슬라이더 ── */
+  function updateLbSlide() {
+    var img = lbImages[lbCurrent];
+    lbImg.style.opacity = '0';
+    setTimeout(function() {
+      lbImg.src         = img || '';
+      lbImg.style.opacity = '1';
+    }, 120);
+    if (lbCounter) {
+      lbCounter.textContent = lbImages.length > 1 ? (lbCurrent + 1) + ' / ' + lbImages.length : '';
+    }
+    if (lbPrev) lbPrev.style.display = (lbImages.length > 1 && lbCurrent > 0) ? 'flex' : 'none';
+    if (lbNext) lbNext.style.display = (lbImages.length > 1 && lbCurrent < lbImages.length - 1) ? 'flex' : 'none';
+  }
+
+  function openLightbox(item) {
+    var col = TAG_COLORS[item.tag] || TAG_COLORS['일상'];
+    /* 패키지 구조 우선, 레거시 imageUrl 폴백 */
+    lbImages = [];
+    if (item.images && item.images.length) {
+      lbImages = item.images.map(function(img){ return img.url; });
+    } else if (item.imageUrl) {
+      lbImages = [item.imageUrl];
+    }
+    lbCurrent = 0;
+
+    lbCaption.textContent    = item.caption || '';
+    lbTag.textContent        = item.tag || '';
+    lbTag.style.background   = col.bg;
+    lbTag.style.borderColor  = col.border;
+    lbTag.style.color        = col.color;
+
+    updateLbSlide();
+    lightbox.style.display   = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){ lightbox.classList.add('insgal-lb--visible'); }, 10);
+  }
+
+  if (lbPrev) lbPrev.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (lbCurrent > 0) { lbCurrent--; updateLbSlide(); }
+  });
+  if (lbNext) lbNext.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (lbCurrent < lbImages.length - 1) { lbCurrent++; updateLbSlide(); }
+  });
+
+  /* ── 갤러리 카드 렌더 ── */
   function renderGalCards(items) {
     if (galLoading) galLoading.style.display = 'none';
     galGrid.querySelectorAll('.insgal-card').forEach(function(el){ el.remove(); });
@@ -195,30 +253,30 @@ export const InsightPage = () => {
     if (galEmpty) galEmpty.style.display = 'none';
 
     items.forEach(function(item) {
-      var col = TAG_COLORS[item.tag] || { bg:'rgba(41,121,255,0.18)', border:'rgba(41,121,255,0.55)', color:'#7ab4ff' };
+      var col = TAG_COLORS[item.tag] || TAG_COLORS['일상'];
+      /* 패키지 구조 우선, 레거시 imageUrl 폴백 */
+      var images = (item.images && item.images.length)
+        ? item.images
+        : (item.imageUrl ? [{ url: item.imageUrl }] : []);
+      var coverUrl = images[0] ? images[0].url : '';
+      var imgCount = images.length;
+
       var div = document.createElement('div');
       div.className = 'insgal-card';
       div.setAttribute('data-tag', item.tag || '일상');
       div.innerHTML =
         '<div class="insgal-card-thumb">'
-        + '<img src="' + item.imageUrl + '" alt="' + (item.caption||'') + '" loading="lazy" />'
+        + (coverUrl ? '<img src="' + coverUrl + '" alt="' + (item.caption||'') + '" loading="lazy" />' : '')
+        + (imgCount > 1
+          ? '<span class="insgal-card-count"><i class="fas fa-images" style="font-size:9px;margin-right:3px;"></i>' + imgCount + '</span>'
+          : '')
         + '<span class="insgal-card-tag" style="background:' + col.bg + ';border-color:' + col.border + ';color:' + col.color + '">' + (item.tag || '일상') + '</span>'
-        + '<div class="insgal-card-zoom"><i class="fas fa-expand-alt"></i></div>'
+        + '<div class="insgal-card-zoom"><i class="fas fa-' + (imgCount > 1 ? 'th' : 'expand-alt') + '"></i></div>'
         + '</div>'
         + (item.caption
           ? '<div class="insgal-card-body"><p class="insgal-card-caption">' + item.caption + '</p></div>'
           : '');
-      div.addEventListener('click', function() {
-        lbImg.src = item.imageUrl;
-        lbCaption.textContent = item.caption || '';
-        lbTag.textContent     = item.tag || '';
-        lbTag.style.background    = col.bg;
-        lbTag.style.borderColor   = col.border;
-        lbTag.style.color         = col.color;
-        lightbox.style.display    = 'flex';
-        document.body.style.overflow = 'hidden';
-        setTimeout(function(){ lightbox.classList.add('insgal-lb--visible'); }, 10);
-      });
+      div.addEventListener('click', function() { openLightbox(item); });
       galGrid.appendChild(div);
     });
   }
@@ -233,7 +291,13 @@ export const InsightPage = () => {
   }
   if (lbClose)    lbClose.addEventListener('click', closeLightbox);
   if (lbBackdrop) lbBackdrop.addEventListener('click', closeLightbox);
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeLightbox(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') { closeLightbox(); return; }
+    if (lightbox.style.display !== 'none') {
+      if (e.key === 'ArrowLeft'  && lbCurrent > 0)                   { lbCurrent--; updateLbSlide(); }
+      if (e.key === 'ArrowRight' && lbCurrent < lbImages.length - 1) { lbCurrent++; updateLbSlide(); }
+    }
+  });
 
   /* ── 데이터 로드 ── */
   fetch('/api/admin/public/insight')

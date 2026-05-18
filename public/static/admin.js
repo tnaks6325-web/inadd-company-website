@@ -927,23 +927,245 @@ function renderGalAdmin(items) {
   }
   grid.innerHTML = items.map(item => {
     const col = TAG_COLORS_ADMIN[item.tag] || TAG_COLORS_ADMIN['일상'];
+    // 패키지 구조: item.images = [{key, url}, ...]  /   레거시: item.imageUrl
+    const images = item.images && item.images.length
+      ? item.images
+      : (item.imageUrl ? [{ key: '', url: item.imageUrl }] : []);
+    const coverUrl = images[0]?.url || '';
+    const imgCount = images.length;
     return `
-    <div class="gal-admin-item">
-      <img src="${item.imageUrl}" alt="${item.caption || ''}" loading="lazy" onerror="this.parentElement.style.background='#1a1a1a'" />
+    <div class="gal-admin-item" onclick="editGalPackage(${item.id})">
+      ${coverUrl
+        ? `<img src="${coverUrl}" alt="${item.caption || ''}" loading="lazy" onerror="this.parentElement.style.background='#1a1a1a'" />`
+        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-image" style="color:#333;font-size:28px;"></i></div>`
+      }
+      ${imgCount > 1 ? `<span class="gal-admin-count-badge"><i class="fas fa-images" style="font-size:9px;margin-right:3px;"></i>${imgCount}</span>` : ''}
       <div class="gal-admin-item-info">
         <span class="gal-admin-item-tag" style="background:${col.bg};border-color:${col.border};color:${col.color}">${item.tag || '일상'}</span>
         ${item.caption ? `<span class="gal-admin-item-cap">${item.caption}</span>` : ''}
       </div>
-      <button class="gal-admin-item-del" onclick="deleteGalItem(${item.id})" title="삭제"><i class="fas fa-times"></i></button>
+      <div class="gal-admin-item-actions">
+        <button class="gal-admin-item-edit" onclick="event.stopPropagation();editGalPackage(${item.id})" title="수정"><i class="fas fa-pen"></i></button>
+        <button class="gal-admin-item-del" onclick="event.stopPropagation();deleteGalItem(${item.id})" title="삭제"><i class="fas fa-times"></i></button>
+      </div>
     </div>`;
   }).join('');
 }
 
 async function deleteGalItem(id) {
-  if (!confirm('이 사진을 삭제하시겠습니까?')) return;
+  if (!confirm('이 패키지를 삭제하시겠습니까?\n(포함된 사진이 모두 삭제됩니다)')) return;
   await api('DELETE', `/gallery/${id}`);
-  showToast('사진이 삭제되었습니다.');
+  showToast('삭제되었습니다.');
   loadGallery();
+}
+
+// ── 패키지 수정 모달 ──────────────────────────────────────
+async function editGalPackage(id) {
+  // 현재 패키지 데이터 찾기
+  const pkg = allGalAdminItems.find(i => i.id === id);
+  if (!pkg) return;
+
+  // 레거시 호환: imageUrl → images 변환
+  const initImages = pkg.images && pkg.images.length
+    ? pkg.images.map(img => ({ key: img.key || '', url: img.url, b64: null }))
+    : (pkg.imageUrl ? [{ key: '', url: pkg.imageUrl, b64: null }] : []);
+
+  const MAX_PHOTOS = 5;
+  let editImages = [...initImages]; // { key, url, b64(새 업로드 시) }
+  let editTag    = pkg.tag || '일상';
+
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
+  overlay.innerHTML = `
+    <div style="background:#141414;border:1px solid #2a2a2a;border-radius:16px;padding:0;width:540px;max-width:96vw;max-height:92vh;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid #222;flex-shrink:0;">
+        <div>
+          <strong style="color:#fff;font-size:16px;font-weight:700">패키지 수정</strong>
+          <p style="color:#555;font-size:12px;margin:3px 0 0">사진 추가·삭제, 태그·캡션 변경이 가능합니다</p>
+        </div>
+        <button id="galEditClose" style="background:rgba(255,255,255,0.06);border:1px solid #333;color:#888;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+      </div>
+      <div style="padding:24px;display:flex;flex-direction:column;gap:18px;overflow-y:auto;flex:1;">
+        <!-- 현재 이미지 그리드 -->
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <label style="color:#888;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">사진</label>
+            <span id="galEditCount" style="color:#555;font-size:11px;">0 / ${MAX_PHOTOS}장</span>
+          </div>
+          <div id="galEditGrid" style="display:grid;gap:8px;"></div>
+          <!-- 추가 업로드 드롭존 (5장 미만일 때만 표시) -->
+          <label for="galEditFileInput" id="galEditDropZone" style="display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed #2a2a2a;border-radius:12px;padding:20px 16px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;gap:6px;margin-top:10px;">
+            <i class="fas fa-plus-circle" style="font-size:22px;color:#444;"></i>
+            <span style="color:#555;font-size:12px">사진 추가 (클릭 또는 드래그)</span>
+          </label>
+          <input type="file" id="galEditFileInput" accept="image/*" multiple style="display:none;" />
+        </div>
+        <!-- 태그 -->
+        <div>
+          <label style="color:#888;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">태그</label>
+          <div id="galEditTagBtns" style="display:flex;gap:8px;flex-wrap:wrap;">
+            ${['일상','팀','오피스','행사','캠페인'].map(t => {
+              const col = TAG_COLORS_ADMIN[t];
+              const isActive = t === editTag;
+              return `<button class="gal-edit-tag-btn${isActive?' active':''}" data-val="${t}"
+                style="padding:6px 16px;border-radius:20px;border:1px solid ${isActive?col.border:'#2a2a2a'};background:${isActive?col.bg:'transparent'};color:${isActive?col.color:'#666'};font-size:12px;font-weight:600;cursor:pointer;">${t}</button>`;
+            }).join('')}
+          </div>
+          <input type="hidden" id="galEditTagVal" value="${editTag}" />
+        </div>
+        <!-- 캡션 -->
+        <div>
+          <label style="color:#888;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">캡션 <span style="color:#444;font-weight:400;text-transform:none">(선택)</span></label>
+          <input type="text" id="galEditCaption" value="${pkg.caption || ''}" placeholder="사진에 대한 간단한 설명" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;padding:10px 14px;font-size:14px;outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='#1a6bff'" onblur="this.style.borderColor='#2a2a2a'" />
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;padding:16px 24px;border-top:1px solid #222;background:#111;flex-shrink:0;">
+        <button id="galEditSaveBtn" style="flex:1;background:#1a6bff;border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;">
+          <i class="fas fa-save" style="margin-right:6px"></i>저장
+        </button>
+        <button id="galEditCancelBtn" style="padding:12px 20px;background:#1a1a1a;border:1px solid #2a2a2a;color:#aaa;border-radius:10px;font-size:14px;cursor:pointer;">취소</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  /* ── 이미지 그리드 렌더 ── */
+  function renderEditGrid() {
+    const grid    = document.getElementById('galEditGrid');
+    const countEl = document.getElementById('galEditCount');
+    const dz      = document.getElementById('galEditDropZone');
+    if (!grid) return;
+    countEl.textContent = `${editImages.length} / ${MAX_PHOTOS}장`;
+    dz.style.display = editImages.length >= MAX_PHOTOS ? 'none' : 'flex';
+
+    if (!editImages.length) {
+      grid.style.display = 'none';
+      return;
+    }
+    const cols = Math.min(Math.max(editImages.length, 2), MAX_PHOTOS);
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    grid.innerHTML = editImages.map((img, idx) => `
+      <div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid #2a2a2a;background:#0a0a0a;">
+        <img src="${img.url}" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        <button class="gal-edit-img-del" data-idx="${idx}" style="position:absolute;top:4px;right:4px;background:rgba(220,38,38,0.85);border:none;color:#fff;border-radius:50%;width:22px;height:22px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;" title="제거"><i class="fas fa-times"></i></button>
+        <span style="position:absolute;bottom:4px;left:4px;background:rgba(0,0,0,0.6);color:#ccc;font-size:10px;padding:2px 5px;border-radius:4px;">${idx+1}</span>
+      </div>
+    `).join('');
+    grid.querySelectorAll('.gal-edit-img-del').forEach(btn => {
+      btn.addEventListener('click', async function() {
+        const i = parseInt(this.getAttribute('data-idx'));
+        const removed = editImages.splice(i, 1)[0];
+        // 기존 KV 이미지이면 서버에서도 삭제
+        if (removed.key && !removed.b64) {
+          try { await api('DELETE', `/gallery/image/${removed.key}`); } catch(e) {}
+        }
+        renderEditGrid();
+      });
+    });
+  }
+
+  renderEditGrid();
+
+  /* ── 태그 버튼 ── */
+  overlay.querySelectorAll('.gal-edit-tag-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      editTag = this.getAttribute('data-val');
+      document.getElementById('galEditTagVal').value = editTag;
+      const col = TAG_COLORS_ADMIN[editTag] || TAG_COLORS_ADMIN['일상'];
+      overlay.querySelectorAll('.gal-edit-tag-btn').forEach(b => {
+        b.style.background = 'transparent'; b.style.borderColor = '#2a2a2a'; b.style.color = '#666';
+      });
+      this.style.background = col.bg; this.style.borderColor = col.border; this.style.color = col.color;
+    });
+  });
+
+  /* ── 드롭존 hover ── */
+  const dz = document.getElementById('galEditDropZone');
+  dz.addEventListener('mouseenter', () => { dz.style.borderColor='#1a6bff'; dz.style.background='rgba(26,107,255,0.05)'; });
+  dz.addEventListener('mouseleave', () => { dz.style.borderColor='#2a2a2a'; dz.style.background=''; });
+
+  /* ── 파일 추가 ── */
+  document.getElementById('galEditFileInput').addEventListener('change', function(e) {
+    const files   = Array.from(e.target.files);
+    const remain  = MAX_PHOTOS - editImages.length;
+    if (remain <= 0) { showToast(`최대 ${MAX_PHOTOS}장까지만 추가할 수 있습니다.`, 'error'); this.value=''; return; }
+    const toAdd   = files.slice(0, remain);
+    if (files.length > remain) showToast(`${remain}장만 추가되었습니다.`, 'error');
+    let loaded = 0;
+    toAdd.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        editImages.push({ key: null, url: ev.target.result, b64: ev.target.result });
+        loaded++;
+        if (loaded === toAdd.length) renderEditGrid();
+      };
+      reader.readAsDataURL(file);
+    });
+    this.value = '';
+  });
+
+  /* ── 드래그 앤 드롭 ── */
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor='#1a6bff'; dz.style.background='rgba(26,107,255,0.05)'; });
+  dz.addEventListener('dragleave', () => { dz.style.borderColor='#2a2a2a'; dz.style.background=''; });
+  dz.addEventListener('drop', e => {
+    e.preventDefault(); dz.style.borderColor='#2a2a2a'; dz.style.background='';
+    const files  = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+    const remain = MAX_PHOTOS - editImages.length;
+    if (remain <= 0) { showToast(`최대 ${MAX_PHOTOS}장까지만 추가할 수 있습니다.`, 'error'); return; }
+    const toAdd  = files.slice(0, remain);
+    if (files.length > remain) showToast(`${remain}장만 추가되었습니다.`, 'error');
+    let loaded = 0;
+    toAdd.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        editImages.push({ key: null, url: ev.target.result, b64: ev.target.result });
+        loaded++;
+        if (loaded === toAdd.length) renderEditGrid();
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+
+  /* ── 닫기 ── */
+  function closeEditModal() { overlay.remove(); }
+  document.getElementById('galEditClose').addEventListener('click', closeEditModal);
+  document.getElementById('galEditCancelBtn').addEventListener('click', closeEditModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeEditModal(); });
+
+  /* ── 저장 ── */
+  document.getElementById('galEditSaveBtn').addEventListener('click', async () => {
+    if (!editImages.length) { showToast('사진이 최소 1장 있어야 합니다.', 'error'); return; }
+    const btn = document.getElementById('galEditSaveBtn');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px"></i>저장 중...';
+    btn.disabled = true;
+
+    try {
+      // 새로 추가된 이미지(b64 있는 것)는 서버에 업로드
+      const finalImages = [];
+      for (const img of editImages) {
+        if (img.b64) {
+          // 새 업로드
+          const res = await api('POST', '/gallery/image', { data: img.b64 });
+          finalImages.push({ key: res.key, url: res.url });
+        } else {
+          finalImages.push({ key: img.key, url: img.url });
+        }
+      }
+
+      const tag     = document.getElementById('galEditTagVal').value || '일상';
+      const caption = document.getElementById('galEditCaption').value.trim();
+      await api('PUT', `/gallery/${id}`, { images: finalImages, tag, caption });
+
+      showToast('수정되었습니다.');
+      closeEditModal();
+      loadGallery();
+    } catch(err) {
+      showToast('저장 실패: ' + (err.message || '오류'), 'error');
+      btn.innerHTML = '<i class="fas fa-save" style="margin-right:6px"></i>저장';
+      btn.disabled = false;
+    }
+  });
 }
 
 // 갤러리 사진 추가 모달 (최대 5장 다중 업로드)
@@ -1137,7 +1359,7 @@ document.getElementById('btnAddGallery').addEventListener('click', () => {
   document.getElementById('galCancelBtn').addEventListener('click', closeModal);
   overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
 
-  /* ── 업로드 저장 (순차 처리) ── */
+  /* ── 업로드 저장 (모든 이미지를 하나의 패키지로) ── */
   document.getElementById('galSaveBtn').addEventListener('click', async () => {
     if (!selectedImages.length) { showToast('이미지를 선택해주세요.', 'error'); return; }
     const btn = document.getElementById('galSaveBtn');
@@ -1148,34 +1370,24 @@ document.getElementById('btnAddGallery').addEventListener('click', () => {
     btn.innerHTML = `<i class="fas fa-spinner fa-spin" style="margin-right:6px"></i>업로드 중... (0 / ${total})`;
     btn.disabled = true;
 
-    let successCount = 0;
-    let failCount    = 0;
-
-    for (let i = 0; i < selectedImages.length; i++) {
-      btn.innerHTML = `<i class="fas fa-spinner fa-spin" style="margin-right:6px"></i>업로드 중... (${i + 1} / ${total})`;
-      try {
+    try {
+      const uploadedImages = [];
+      for (let i = 0; i < selectedImages.length; i++) {
+        btn.innerHTML = `<i class="fas fa-spinner fa-spin" style="margin-right:6px"></i>업로드 중... (${i + 1} / ${total})`;
         const imgRes = await api('POST', '/gallery/image', { data: selectedImages[i].b64 });
-        await api('POST', '/gallery', { imageUrl: imgRes.url, tag, caption });
-        successCount++;
-      } catch(err) {
-        failCount++;
-        console.error(`이미지 ${i+1} 업로드 실패:`, err);
+        uploadedImages.push({ key: imgRes.key, url: imgRes.url });
       }
-    }
 
-    if (failCount === 0) {
-      showToast(`${successCount}장 모두 추가되었습니다.`);
-    } else if (successCount > 0) {
-      showToast(`${successCount}장 업로드 완료 (${failCount}장 실패)`, 'error');
-    } else {
-      showToast('업로드에 실패했습니다.', 'error');
+      // 하나의 패키지로 저장
+      await api('POST', '/gallery', { images: uploadedImages, tag, caption });
+      showToast(`${total}장 패키지로 추가되었습니다.`);
+      closeModal();
+      loadGallery();
+    } catch(err) {
+      showToast('업로드 실패: ' + (err.message || '오류'), 'error');
       btn.innerHTML = '<i class="fas fa-upload" style="margin-right:6px"></i>업로드 저장';
       btn.disabled = false;
-      return;
     }
-
-    closeModal();
-    loadGallery();
   });
 });
 
