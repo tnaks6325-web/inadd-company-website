@@ -80,10 +80,12 @@ export const InsightPage = () => {
             <div class="insgal-lb-backdrop" id="insGalLbBackdrop"></div>
             <div class="insgal-lb-content">
               <button class="insgal-lb-close" id="insGalLbClose">✕</button>
-              {/* 슬라이더 prev/next */}
-              <button class="insgal-lb-prev" id="insGalLbPrev">&#8249;</button>
-              <button class="insgal-lb-next" id="insGalLbNext">&#8250;</button>
-              <img class="insgal-lb-img" id="insGalLbImg" src="" alt="" />
+              {/* 고정 비율 이미지 컨테이너 — prev/next 버튼 포함 */}
+              <div class="insgal-lb-img-wrap">
+                <button class="insgal-lb-prev" id="insGalLbPrev">&#8249;</button>
+                <img class="insgal-lb-img" id="insGalLbImg" src="" alt="" />
+                <button class="insgal-lb-next" id="insGalLbNext">&#8250;</button>
+              </div>
               <div class="insgal-lb-info">
                 <span class="insgal-lb-counter" id="insGalLbCounter"></span>
                 <span class="insgal-lb-tag" id="insGalLbTag"></span>

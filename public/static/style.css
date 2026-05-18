@@ -6632,12 +6632,24 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .insgal-lb-content {
   position: relative;
   z-index: 1;
-  max-width: min(90vw, 860px);
-  max-height: 90vh;
+  width: min(88vw, 860px);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 14px;
+}
+/* 이미지를 감싸는 고정 비율 컨테이너 — 항상 동일한 크기 유지 */
+.insgal-lb-img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0a0a0a;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 .insgal-lb-close {
   position: absolute;
@@ -6655,11 +6667,10 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 }
 .insgal-lb-close:hover { background: rgba(255,255,255,0.2); }
 .insgal-lb-img {
-  max-width: 100%;
-  max-height: 75vh;
-  border-radius: 16px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  display: block;
 }
 .insgal-lb-caption {
   font-size: 15px;
@@ -6813,20 +6824,18 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   min-width: 40px;
   text-align: center;
 }
-/* prev / next 버튼 */
+/* prev / next 버튼 — img-wrap 내부에 absolute */
 .insgal-lb-prev,
 .insgal-lb-next {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
+  top: 0;
+  height: 100%;
+  width: 56px;
+  border: none;
   color: #fff;
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  font-size: 28px;
+  font-size: 32px;
   cursor: pointer;
-  display: none;
+  display: none;             /* JS에서 flex로 전환 */
   align-items: center;
   justify-content: center;
   transition: background .2s;
@@ -6835,16 +6844,24 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   padding: 0;
   user-select: none;
 }
-.insgal-lb-prev { left: -60px; }
-.insgal-lb-next { right: -60px; }
-.insgal-lb-prev:hover,
-.insgal-lb-next:hover { background: rgba(255,255,255,0.22); }
-@media (max-width: 768px) {
-  .insgal-lb-prev { left: -40px; width: 36px; height: 36px; font-size: 22px; }
-  .insgal-lb-next { right: -40px; width: 36px; height: 36px; font-size: 22px; }
+.insgal-lb-prev {
+  left: 0;
+  border-radius: 16px 0 0 16px;
+  background: linear-gradient(to right, rgba(0,0,0,0.4), transparent);
 }
+.insgal-lb-next {
+  right: 0;
+  border-radius: 0 16px 16px 0;
+  background: linear-gradient(to left, rgba(0,0,0,0.4), transparent);
+}
+.insgal-lb-prev:hover { background: linear-gradient(to right, rgba(0,0,0,0.6), transparent); }
+.insgal-lb-next:hover { background: linear-gradient(to left, rgba(0,0,0,0.6), transparent); }
 /* 이미지 페이드 트랜지션 */
 .insgal-lb-img { transition: opacity 0.12s ease; }
+@media (max-width: 640px) {
+  .insgal-lb-content { width: 96vw; }
+  .insgal-lb-prev, .insgal-lb-next { width: 40px; font-size: 22px; }
+}
 
 /* 갤러리 카드 — 이미지 장수 배지 */
 .insgal-card-count {
