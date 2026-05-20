@@ -89,67 +89,179 @@ Sitemap: https://www.inadcompany.co.kr/sitemap.xml`
 
 // Routes
 app.get('/', (c) => {
-  return c.render(<HomePage />, { title: '브랜드를 움직이는 힘' })
+  return c.render(<HomePage />, {
+    title: '브랜드를 움직이는 힘',
+    description: '채팅·커뮤니티·SNS 중심의 실전형 바이럴 마케팅 에이전시 인애드컴퍼니. 바이럴·인플루언서·시딩·SEO·리뷰·올리브영·PPL 마케팅 전문.',
+    canonical: 'https://www.inadcompany.co.kr',
+    schema: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.inadcompany.co.kr/#organization",
+          "name": "(주)인애드컴퍼니",
+          "alternateName": "IN AD COMPANY",
+          "url": "https://www.inadcompany.co.kr",
+          "logo": "https://www.inadcompany.co.kr/static/logo.png",
+          "description": "채팅, 커뮤니티, SNS 중심의 실전형 바이럴 마케팅을 설계하는 에이전시",
+          "telephone": "010-9186-9944",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "고잔로 51, 타워아이즈빌 2F, 204호",
+            "addressLocality": "안산시 단원구",
+            "addressRegion": "경기도",
+            "addressCountry": "KR"
+          },
+          "sameAs": ["https://www.inadcompany.co.kr"]
+        },
+        {
+          "@type": "LocalBusiness",
+          "@id": "https://www.inadcompany.co.kr/#localbusiness",
+          "name": "(주)인애드컴퍼니",
+          "image": "https://www.inadcompany.co.kr/static/og-image.png",
+          "url": "https://www.inadcompany.co.kr",
+          "telephone": "010-9186-9944",
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "고잔로 51, 타워아이즈빌 2F, 204호",
+            "addressLocality": "안산시 단원구",
+            "addressRegion": "경기도",
+            "postalCode": "15380",
+            "addressCountry": "KR"
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.inadcompany.co.kr/#website",
+          "url": "https://www.inadcompany.co.kr",
+          "name": "인애드컴퍼니",
+          "description": "실전형 크리에이티브 바이럴 마케팅 에이전시",
+          "publisher": { "@id": "https://www.inadcompany.co.kr/#organization" }
+        }
+      ]
+    })
+  })
 })
 
 app.get('/about', (c) => {
-  return c.render(<AboutPage />, { title: 'About' })
+  return c.render(<AboutPage />, {
+    title: '회사 소개',
+    description: '인애드컴퍼니는 채팅·커뮤니티·SNS 중심의 실전형 바이럴 마케팅 에이전시입니다. 브랜드 인지도와 전환율을 동시에 높이는 퍼포먼스 마케팅 전문 기업.',
+    canonical: 'https://www.inadcompany.co.kr/about'
+  })
 })
 
 app.get('/works', (c) => {
-  return c.render(<WorksPage />, { title: 'Works' })
+  return c.render(<WorksPage />, {
+    title: '포트폴리오',
+    description: '인애드컴퍼니의 바이럴·인플루언서·시딩·SEO 마케팅 성공 사례를 확인하세요. 다양한 브랜드의 실전 캠페인 포트폴리오.',
+    canonical: 'https://www.inadcompany.co.kr/works'
+  })
 })
 
 app.get('/insight', (c) => {
-  return c.render(<InsightPage />, { title: 'Marketing Insight' })
+  return c.render(<InsightPage />, {
+    title: '마케팅 인사이트',
+    description: '바이럴 마케팅, 인플루언서 마케팅, SEO, 리뷰 마케팅 최신 트렌드와 실전 전략을 인애드컴퍼니 전문가가 알려드립니다.',
+    canonical: 'https://www.inadcompany.co.kr/insight'
+  })
 })
 
 app.get('/insight/:id', (c) => {
   const id = c.req.param('id')
-  return c.render(<InsightDetailPage id={id} />, { title: 'Insight' })
+  return c.render(<InsightDetailPage id={id} />, {
+    title: '마케팅 인사이트',
+    canonical: `https://www.inadcompany.co.kr/insight/${id}`
+  })
 })
 
 // Marketing 메인 (서비스 목록 페이지)
 app.get('/marketing', (c) => {
-  return c.render(<ViralPage />, { title: 'Marketing 서비스' })
+  return c.render(<ViralPage />, {
+    title: '마케팅 서비스',
+    description: '인애드컴퍼니의 바이럴·인플루언서·시딩·SEO·리뷰·올리브영·PPL 마케팅 서비스. 브랜드에 맞는 최적의 마케팅 솔루션을 제공합니다.',
+    canonical: 'https://www.inadcompany.co.kr/marketing'
+  })
 })
 
 // 기존 /viral 경로 유지 (호환성)
 app.get('/viral', (c) => {
-  return c.render(<ViralPage />, { title: 'Marketing 서비스' })
+  return c.render(<ViralPage />, {
+    title: '마케팅 서비스',
+    canonical: 'https://www.inadcompany.co.kr/marketing'
+  })
 })
 
 // 개별 서비스 페이지
 app.get('/marketing/viral', (c) => {
-  return c.render(<SvcViralPage />, { title: '바이럴 마케팅' })
+  return c.render(<SvcViralPage />, {
+    title: '바이럴 마케팅',
+    description: '커뮤니티·카페·SNS 기반 자연확산 바이럴 마케팅 전문. 실제 사용자 리뷰와 입소문으로 브랜드 인지도를 높이는 인애드컴퍼니의 바이럴 전략.',
+    canonical: 'https://www.inadcompany.co.kr/marketing/viral'
+  })
 })
 
 app.get('/marketing/influencer', (c) => {
-  return c.render(<SvcInfluencerPage />, { title: '인플루언서 마케팅' })
+  return c.render(<SvcInfluencerPage />, {
+    title: '인플루언서 마케팅',
+    description: '1,200+ 크리에이터 네트워크를 활용한 인플루언서 마케팅. 브랜드에 최적화된 인플루언서 섭외부터 콘텐츠 제작까지 인애드컴퍼니가 책임집니다.',
+    canonical: 'https://www.inadcompany.co.kr/marketing/influencer'
+  })
 })
 
 app.get('/marketing/seeding', (c) => {
-  return c.render(<SvcSeedingPage />, { title: '시딩 캠페인' })
+  return c.render(<SvcSeedingPage />, {
+    title: '시딩 캠페인',
+    description: '샘플 배포와 체험단 운영으로 진짜 후기를 만드는 시딩 캠페인. 소비자 신뢰를 높이는 인애드컴퍼니의 시딩 마케팅 전략.',
+    canonical: 'https://www.inadcompany.co.kr/marketing/seeding'
+  })
 })
 
 app.get('/marketing/seo', (c) => {
-  return c.render(<SvcSeoPage />, { title: 'SEO 마케팅' })
+  return c.render(<SvcSeoPage />, {
+    title: 'SEO 마케팅',
+    description: '네이버·구글 검색 상위 노출을 위한 SEO 마케팅 전문. 키워드 분석부터 콘텐츠 최적화까지 인애드컴퍼니의 검색엔진 최적화 서비스.',
+    canonical: 'https://www.inadcompany.co.kr/marketing/seo'
+  })
 })
 
 app.get('/marketing/review', (c) => {
-  return c.render(<SvcReviewPage />, { title: '리뷰 마케팅' })
+  return c.render(<SvcReviewPage />, {
+    title: '리뷰 마케팅',
+    description: '브랜드 신뢰도와 구매 전환율을 높이는 리뷰 마케팅. 진성 리뷰 수집과 리뷰 관리로 온라인 평판을 관리하는 인애드컴퍼니.',
+    canonical: 'https://www.inadcompany.co.kr/marketing/review'
+  })
 })
 
 app.get('/marketing/oliveyoung', (c) => {
-  return c.render(<SvcOliveYoungPage />, { title: '올리브영 마케팅' })
+  return c.render(<SvcOliveYoungPage />, {
+    title: '올리브영 마케팅',
+    description: '올리브영 랭킹 최적화와 H&B 채널 마케팅 전문. 올리브영 입점 브랜드의 매출 성장을 이끄는 인애드컴퍼니의 올리브영 마케팅.',
+    canonical: 'https://www.inadcompany.co.kr/marketing/oliveyoung'
+  })
 })
 
 app.get('/marketing/ppl', (c) => {
-  return c.render(<SvcPplPage />, { title: 'PPL 마케팅' })
+  return c.render(<SvcPplPage />, {
+    title: 'PPL 마케팅',
+    description: '드라마·예능·유튜브 콘텐츠 속 자연스러운 브랜드 노출 PPL 마케팅. 시청자에게 거부감 없이 브랜드를 각인시키는 인애드컴퍼니의 PPL 전략.',
+    canonical: 'https://www.inadcompany.co.kr/marketing/ppl'
+  })
 })
 
 app.get('/contact', (c) => {
-  return c.render(<ContactPage />, { title: 'Contact' })
+  return c.render(<ContactPage />, {
+    title: '문의하기',
+    description: '인애드컴퍼니에 마케팅 프로젝트를 문의하세요. 바이럴·인플루언서·SEO 등 최적의 마케팅 솔루션을 제안해드립니다.',
+    canonical: 'https://www.inadcompany.co.kr/contact'
+  })
 })
 
 // ─────────────────────────────────────────────

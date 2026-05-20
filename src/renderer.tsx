@@ -2,14 +2,15 @@ import { jsxRenderer } from 'hono/jsx-renderer'
 
 declare module 'hono' {
   interface ContextRenderer {
-    (content: string | Promise<string>, props?: { title?: string; description?: string }): Response
+    (content: string | Promise<string>, props?: { title?: string; description?: string; canonical?: string; schema?: string }): Response
   }
 }
 
-export const renderer = jsxRenderer(({ children, title, description }: { children?: any; title?: string; description?: string }) => {
+export const renderer = jsxRenderer(({ children, title, description, canonical, schema }: { children?: any; title?: string; description?: string; canonical?: string; schema?: string }) => {
   const pageTitle = title ? `${title} | 인애드컴퍼니` : '인애드컴퍼니 — 실전형 크리에이티브 바이럴 마케팅 에이전시'
-  const pageDesc = description || '채팅, 커뮤니티, SNS 중심의 실전형 바이럴 마케팅을 설계하는 인애드컴퍼니. 브랜드 인지도와 전환율을 동시에 실증 있는 퍼포먼스를 제공합니다.'
+  const pageDesc = description || '채팅, 커뮤니티, SNS 중심의 실전형 바이럴 마케팅을 설계하는 인애드컴퍼니. 브랜드 인지도와 전환율을 동시에 높이는 퍼포먼스를 제공합니다.'
   const siteUrl = 'https://www.inadcompany.co.kr'
+  const canonicalUrl = canonical || siteUrl
   return (
     <html lang="ko">
       <head>
@@ -22,14 +23,14 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
         <meta name="keywords" content="바이럴마케팅, 인플루언서마케팅, 시딩캠페인, SEO마케팅, 리뷰마케팅, 올리브영마케팅, PPL마케팅, 마케팅에이전시, 인애드컴퍼니, inadcompany" />
         <meta name="author" content="인애드컴퍼니 (IN AD COMPANY)" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={siteUrl} />
+        <link rel="canonical" href={canonicalUrl} />
 
         {/* ── Open Graph (SNS 공유) ── */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="인애드컴퍼니" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDesc} />
-        <meta property="og:url" content={siteUrl} />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:image" content={`${siteUrl}/static/og-image.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -60,6 +61,11 @@ export const renderer = jsxRenderer(({ children, title, description }: { childre
           if(window.wcs) wcs_do();
         `}} />
         <script async src="//wcs.naver.net/wcslog.js"></script>
+
+        {/* ── 구조화 데이터 (Schema.org JSON-LD) ── */}
+        {schema && (
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
+        )}
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
