@@ -896,7 +896,32 @@ export const HomePage = () => (
 
 /* ─────────────────────────────────────────────
    0. HERO SLIDER — 영상 자동 전환 (7초 간격 dissolve)
+   모바일: YouTube iframe 차단 대응 → 정적 배경 그라디언트로 폴백
 ───────────────────────────────────────────── */
+
+// 모바일 감지 (터치 디바이스 + 768px 이하)
+var isMobile = (window.innerWidth <= 768) || ('ontouchstart' in window);
+
+// 모바일이면 iframe 제거 후 정적 배경으로 교체
+if(isMobile){
+  var ytSlides = document.getElementById('ytSlides');
+  if(ytSlides){
+    // iframe 모두 제거 (모바일에서 YouTube iframe = 흰 화면 원인)
+    var iframes = ytSlides.querySelectorAll('iframe');
+    iframes.forEach(function(f){ f.remove(); });
+    // 정적 그라디언트 배경 적용
+    ytSlides.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #0d1a3a 40%, #0a1628 70%, #050505 100%)';
+    // 첫 슬라이드만 active 유지 (텍스트 표시용)
+    var slides = ytSlides.querySelectorAll('.yt-slide');
+    slides.forEach(function(s,i){
+      s.style.background = i===0
+        ? 'linear-gradient(135deg, #0a0a0a 0%, #0d1a3a 50%, #050505 100%)'
+        : 'transparent';
+      s.classList.toggle('active', i===0);
+    });
+  }
+}
+
 var _sliderTimer = null;
 function initSlider(intervalSec){
   if(_sliderTimer){ clearInterval(_sliderTimer); _sliderTimer = null; }
@@ -931,7 +956,8 @@ function initSlider(intervalSec){
     goTo(next);
   }, ms);
 }
-initSlider(7);
+// 모바일에서는 슬라이더 자동전환 없음 (iframe 없으므로)
+if(!isMobile){ initSlider(7); }
 
 /* ─────────────────────────────────────────────
    2. STATS — 숫자 카운팅 + stagger fade-up
@@ -1139,22 +1165,33 @@ initSlider(7);
       if(data.videos && data.videos.length){
         var slidesWrap = document.getElementById('ytSlides');
         if(slidesWrap){
-          var html = data.videos.map(function(vid, i){
-            return '<div class="yt-slide'+(i===0?' active':'')+'" data-index="'+i+'">'
-              +'<div class="yt-iframe-wrap">'
-              +'<iframe class="yt-iframe" src="https://www.youtube.com/embed/'+vid+'?autoplay=1&mute=1&controls=0&loop=1&playlist='+vid+'&playsinline=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
-              +'</div>'
-              +'<div class="yt-overlay"></div>'
-              +'</div>';
-          }).join('');
-          slidesWrap.innerHTML = html;
-
-          // 영상 교체 후 슬라이더 재시작 — API interval 적용
-          initSlider(adminInterval);
+          if(isMobile){
+            // 모바일: iframe 없이 정적 슬라이드만 생성
+            var mHtml = data.videos.map(function(vid, i){
+              return '<div class="yt-slide'+(i===0?' active':'')+'" data-index="'+i+'" style="background:linear-gradient(135deg,#0a0a0a 0%,#0d1a3a 50%,#050505 100%)">'
+                +'<div class="yt-overlay"></div>'
+                +'</div>';
+            }).join('');
+            slidesWrap.innerHTML = mHtml;
+            slidesWrap.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #0d1a3a 40%, #050505 100%)';
+          } else {
+            // 데스크탑: iframe 정상 로드
+            var html = data.videos.map(function(vid, i){
+              return '<div class="yt-slide'+(i===0?' active':'')+'" data-index="'+i+'">'
+                +'<div class="yt-iframe-wrap">'
+                +'<iframe class="yt-iframe" src="https://www.youtube.com/embed/'+vid+'?autoplay=1&mute=1&controls=0&loop=1&playlist='+vid+'&playsinline=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+                +'</div>'
+                +'<div class="yt-overlay"></div>'
+                +'</div>';
+            }).join('');
+            slidesWrap.innerHTML = html;
+            // 영상 교체 후 슬라이더 재시작 — API interval 적용
+            initSlider(adminInterval);
+          }
         }
       } else {
-        // 영상 교체 없이 간격만 바뀐 경우도 재시작
-        initSlider(adminInterval);
+        // 영상 교체 없이 간격만 바뀐 경우도 재시작 (데스크탑만)
+        if(!isMobile){ initSlider(adminInterval); }
       }
       // ── 회사소개서 링크 교체 ──
       if(data.brochure){

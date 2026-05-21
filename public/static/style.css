@@ -308,6 +308,7 @@ em {
   position: relative;
   width: 100%;
   height: 100vh;
+  height: 100dvh; /* 모바일 주소창 포함한 실제 뷰포트 높이 */
   min-height: 600px;
   overflow: hidden;
   background: var(--black);
@@ -317,6 +318,29 @@ em {
 .yt-slides {
   position: absolute;
   inset: 0;
+}
+
+/* 모바일 hero — iframe 없으므로 최소 높이 보장 */
+@media (max-width: 768px) {
+  .hero-slider {
+    height: 100svh; /* 작은 뷰포트 높이 — iOS Safari 주소창 대응 */
+    min-height: 560px;
+  }
+  .yt-iframe-wrap,
+  .yt-iframe {
+    display: none !important; /* 모바일에서 iframe 완전 숨김 */
+  }
+  .yt-slide {
+    background: linear-gradient(135deg, #0a0a0a 0%, #0d1a3a 50%, #050505 100%);
+  }
+  .hero-text-inner {
+    padding: 0 24px;
+    padding-top: 100px;
+  }
+  .hero-headline {
+    font-size: clamp(36px, 10vw, 56px);
+    letter-spacing: -1.5px;
+  }
 }
 
 /* ── 크로스페이드 Dissolve ──
