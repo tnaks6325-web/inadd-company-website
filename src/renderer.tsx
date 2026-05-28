@@ -148,7 +148,6 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
                   </div>
                 </div>
               </div>
-              <a href="/development" class="nav-link">Development</a>
               <a href="/contact" class="nav-link nav-cta">Contact</a>
             </nav>
           </div>
@@ -179,7 +178,6 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
                 <a href="/about">About</a>
                 <a href="/works">Works</a>
                 <a href="/insight">Insight</a>
-                <a href="/development">Development</a>
                 <a href="/contact">Contact</a>
               </div>
             </div>
