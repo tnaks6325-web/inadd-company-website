@@ -15,6 +15,7 @@ import { SvcSeoPage } from './routes/svc-seo'
 import { SvcReviewPage } from './routes/svc-review'
 import { SvcOliveYoungPage } from './routes/svc-oliveyoung'
 import { SvcPplPage } from './routes/svc-ppl'
+import { DevelopmentPage } from './routes/development'
 import { admin } from './admin/api'
 
 const app = new Hono()
@@ -60,6 +61,7 @@ app.get('/sitemap.xml', (c) => {
     { loc: `${base}/marketing/review`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/marketing/oliveyoung`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/marketing/ppl`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${base}/development`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/contact`, priority: '0.7', changefreq: 'monthly' },
   ]
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -261,6 +263,14 @@ app.get('/contact', (c) => {
     title: '문의하기',
     description: '인애드컴퍼니에 마케팅 프로젝트를 문의하세요. 바이럴·인플루언서·SEO 등 최적의 마케팅 솔루션을 제안해드립니다.',
     canonical: 'https://www.inadcompany.co.kr/contact'
+  })
+})
+
+app.get('/development', (c) => {
+  return c.render(<DevelopmentPage />, {
+    title: '마케팅 자동화 개발',
+    description: '인애드컴퍼니의 마케팅 자동화 개발 서비스. 캠페인 운영, 리뷰 관리, 데이터 수집 등 마케팅 전 과정을 자동화합니다.',
+    canonical: 'https://www.inadcompany.co.kr/development'
   })
 })
 
