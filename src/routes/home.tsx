@@ -1091,18 +1091,22 @@ export const HomePage = () => (
   fetch('/api/admin/public/home')
     .then(function(r){ return r.json(); })
     .then(function(data){
-      // ── KV 영상 ID로 썸네일 플로우 컬럼 교체 ──
-      if(data.videos && data.videos.length >= 3){
+      // ── KV 영상 ID로 썸네일 플로우 행 전체 교체 ──
+      if(data.videos && data.videos.length){
         var flow = document.getElementById('thumbFlow');
         if(flow){
           var ids = data.videos;
-          var cols = flow.querySelectorAll('.thumb-col');
-          cols.forEach(function(col, ci){
-            var cards = col.querySelectorAll('.thumb-card img');
-            cards.forEach(function(img, ii){
-              var id = ids[(ci * 3 + ii) % ids.length];
-              img.src = 'https://img.youtube.com/vi/'+id+'/maxresdefault.jpg';
-            });
+          // 각 행에 ids를 골고루 배분 (최소 10장씩 채워서 루프 끊김 없게)
+          var rows = flow.querySelectorAll('.thumb-row');
+          rows.forEach(function(row, ri){
+            // 행마다 시작 오프셋 다르게 → 각 행이 다른 썸네일로 시작
+            var offset = Math.floor(ri * ids.length / 3);
+            var html = '';
+            for(var i = 0; i < 10; i++){
+              var id = ids[(offset + i) % ids.length];
+              html += '<div class="thumb-card"><img src="https://img.youtube.com/vi/'+id+'/maxresdefault.jpg" alt="" loading="lazy"></div>';
+            }
+            row.innerHTML = html;
           });
         }
       }
