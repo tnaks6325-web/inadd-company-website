@@ -8,6 +8,7 @@ import { InsightPage } from './routes/insight'
 import { InsightDetailPage } from './routes/insight-detail'
 import { ViralPage } from './routes/viral'
 import { ContactPage } from './routes/contact'
+import { DevelopmentPage } from './routes/development'
 import { SvcViralPage } from './routes/svc-viral'
 import { SvcInfluencerPage } from './routes/svc-influencer'
 import { SvcSeedingPage } from './routes/svc-seeding'
@@ -60,6 +61,7 @@ app.get('/sitemap.xml', (c) => {
     { loc: `${base}/marketing/review`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/marketing/oliveyoung`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/marketing/ppl`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${base}/development`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/contact`, priority: '0.7', changefreq: 'monthly' },
   ]
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -253,6 +255,14 @@ app.get('/marketing/ppl', (c) => {
     title: 'PPL 마케팅',
     description: '드라마·예능·유튜브 콘텐츠 속 자연스러운 브랜드 노출 PPL 마케팅. 시청자에게 거부감 없이 브랜드를 각인시키는 인애드컴퍼니의 PPL 전략.',
     canonical: 'https://www.inadcompany.co.kr/marketing/ppl'
+  })
+})
+
+app.get('/development', (c) => {
+  return c.render(<DevelopmentPage />, {
+    title: '마케팅 자동화 개발',
+    description: '인애드컴퍼니의 마케팅 자동화 개발 서비스. 반복 업무를 자동화하고 데이터 기반 운영 체계를 구축합니다.',
+    canonical: 'https://www.inadcompany.co.kr/development'
   })
 })
 

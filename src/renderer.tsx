@@ -69,8 +69,11 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-        <link href="/static/style.css?v=20260427j" rel="stylesheet" />
+        {/* Pretendard — 한국어/영문 본문 최적화 무료 폰트 */}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+        {/* DM Sans — 헤드라인·숫자용 기하학적 산세리프 (S-Core Dream 유사) */}
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet" />
+        <link href="/static/style.css?v=20260605a" rel="stylesheet" />
       </head>
       <body>
         <header class="site-header" id="site-header">
@@ -148,6 +151,7 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
                   </div>
                 </div>
               </div>
+              <a href="/development" class="nav-link">Our Tech</a>
               <a href="/contact" class="nav-link nav-cta">Contact</a>
             </nav>
           </div>
