@@ -120,11 +120,11 @@ export const AboutPage = () => (
               </div>
               <div class="ai-svc-item">
                 <span class="ai-svc-dot"></span>
-                <span class="ai-svc-name">인플루언서</span>
+                <span class="ai-svc-name">인플루언서 마케팅</span>
               </div>
               <div class="ai-svc-item">
                 <span class="ai-svc-dot"></span>
-                <span class="ai-svc-name">SEO 최적화</span>
+                <span class="ai-svc-name">검색/SEO 마케팅</span>
               </div>
               <div class="ai-svc-item">
                 <span class="ai-svc-dot"></span>
@@ -140,11 +140,7 @@ export const AboutPage = () => (
               </div>
               <div class="ai-svc-item">
                 <span class="ai-svc-dot"></span>
-                <span class="ai-svc-name">올리브영</span>
-              </div>
-              <div class="ai-svc-item">
-                <span class="ai-svc-dot"></span>
-                <span class="ai-svc-name">유튜브 광고</span>
+                <span class="ai-svc-name">올리브영 마케팅</span>
               </div>
             </div>
 
