@@ -76,8 +76,8 @@ export const AboutPage = () => (
       <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
       <div class="container">
         <span class="sec-label">About Us</span>
-        <h1 class="page-title">크리에이티브와 데이터가<br /><em>만나는 마케팅 에이전시</em></h1>
-        <p class="page-desc">인애드컴퍼니는 단순한 노출을 넘어 브랜드의 가치를 전달하고<br />실질적인 성과로 이어지는 마케팅을 설계합니다.</p>
+        <h1 class="page-title">브랜드의 설득력을<br /><em>설계하는 크리에이티브 퍼포먼스</em></h1>
+        <p class="page-desc">단순 노출이 아니라, 타깃이 '행동'하게 만드는 캠페인을 설계합니다.</p>
       </div>
     </section>
 
