@@ -119,11 +119,11 @@ export const ViralPage = () => (
         <div class="mkt-features-head reveal-up">
           <p class="mkt-feat-eyebrow">Why INAAD</p>
           <h2 class="mkt-feat-title">
-            단순 대행사가 아닌<br />
-            <span class="mkt-feat-accent">퍼널을 설계하는 파트너</span>
+            대행을 넘어,<br />
+            <span class="mkt-feat-accent">퍼널 전체를 책임지는 마케팅 파트너</span>
           </h2>
           <p class="mkt-feat-sub">
-            노출에서 끝나지 않고, 소비자의 행동 흐름을 데이터로 설계합니다.
+            채널이 아니라 '고객의 흐름'을 봅니다. 각 단계에 필요한 메시지와 접점을 정교하게 연결합니다.
           </p>
         </div>
 
