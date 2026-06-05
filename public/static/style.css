@@ -59,6 +59,12 @@ body {
   line-height: 1.7;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  cursor: none; /* BlobCursor: OS 기본 커서 숨김 */
+}
+
+/* BlobCursor: 호버 요소도 기본 커서 숨김 */
+a, button, [role="button"], input[type="submit"], input[type="button"], label[for] {
+  cursor: none;
 }
 
 img { max-width: 100%; display: block; }

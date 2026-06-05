@@ -206,6 +206,9 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
           </div>
         </div>
         <script src="/static/main.js"></script>
+        {/* ── BlobCursor: GSAP + 커스텀 커서 ── */}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9d/6tD8X01HoS68aOvJABQZl4m4fTHAO45CGNTQ/LkATF/yCCdGBD6G9V8OymKNFVf6a8TSFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="/static/blob-cursor.js"></script>
       </body>
     </html>
   )
