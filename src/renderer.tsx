@@ -226,11 +226,11 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
             shadowOffsetY:      0,
             filterId:           'blob-filter',
             filterStdDeviation: 25,
-            useFilter:          true,
-            fastDuration:       0.1,
-            slowDuration:       0.5,
+            useFilter:          false,
+            fastDuration:       0.08,
+            slowDuration:       0.08,
             fastEase:           'power3.out',
-            slowEase:           'power1.out',
+            slowEase:           'power3.out',
             zIndex:             999
           });
         `}} />
