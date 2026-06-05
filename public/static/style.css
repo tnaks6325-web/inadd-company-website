@@ -314,24 +314,17 @@ em {
   background: var(--black);
 }
 
-/* --- YouTube Slides 컨테이너 --- */
+/* --- 썸네일 슬라이드 컨테이너 --- */
 .yt-slides {
   position: absolute;
   inset: 0;
 }
 
-/* 모바일 hero — iframe 없으므로 최소 높이 보장 */
+/* 모바일 — 썸네일 이미지 그대로 표시 */
 @media (max-width: 768px) {
   .hero-slider {
-    height: 100svh; /* 작은 뷰포트 높이 — iOS Safari 주소창 대응 */
+    height: 100svh;
     min-height: 560px;
-  }
-  .yt-iframe-wrap,
-  .yt-iframe {
-    display: none !important; /* 모바일에서 iframe 완전 숨김 */
-  }
-  .yt-slide {
-    background: linear-gradient(135deg, #0a0a0a 0%, #0d1a3a 50%, #050505 100%);
   }
   .hero-text-inner {
     padding: 0 24px;
@@ -343,59 +336,55 @@ em {
   }
 }
 
-/* ── 크로스페이드 Dissolve ──
-   기본 상태:  opacity 0, z-index 1  → 투명하게 대기
-   .active  :  opacity 1, z-index 2  → 보임 (enter)
-   .leaving :  opacity 0, z-index 3  → 위에서 fade-out (leave)
-
-   leave 슬라이드가 z-index 3으로 active(2) 위에서
-   1.0s 동안 opacity 0으로 사라지므로 두 영상이
-   겹치며 자연스럽게 녹아드는 dissolve 효과를 만들어냄. */
-
+/* ── 크로스페이드 Dissolve ── */
 .yt-slide {
   position: absolute;
   inset: 0;
   opacity: 0;
   z-index: 1;
-  transition: opacity 0.5s ease;
+  transition: opacity 1.2s ease;
   pointer-events: none;
   will-change: opacity;
+  overflow: hidden;
 }
 
-/* enter 슬라이드 */
 .yt-slide.active {
   opacity: 1;
   z-index: 2;
   pointer-events: auto;
 }
 
-/* leave 슬라이드: z-index 3으로 올린 뒤 fade-out → dissolve 완성 */
 .yt-slide.leaving {
   opacity: 0;
   z-index: 3;
   pointer-events: none;
-  transition: opacity 0.5s ease;
+  transition: opacity 1.2s ease;
 }
 
-/* YouTube iframe wrapper */
-.yt-iframe-wrap {
+/* 썸네일 이미지 wrapper — Ken Burns 효과 */
+.yt-thumb-wrap {
   position: absolute;
   inset: 0;
   overflow: hidden;
 }
 
-/* 16:9 영상을 화면에 항상 꽉 채우기 */
-.yt-iframe {
+/* 썸네일 배경 이미지 — active 시 천천히 확대·이동 */
+.yt-thumb-bg {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 177.78vh;   /* 화면 높이 기준 16:9 */
-  height: 56.25vw;   /* 화면 너비 기준 16:9 */
-  min-width: 100%;
-  min-height: 100%;
-  border: none;
-  pointer-events: none;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1) translate(0, 0);
+  transition: transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* active 슬라이드의 썸네일 → Ken Burns 시작 */
+.yt-slide.active .yt-thumb-bg {
+  transform: scale(1.08) translate(-1%, -1%);
 }
 
 /* 텍스트 가독성을 위한 어두운 그라디언트 오버레이 */

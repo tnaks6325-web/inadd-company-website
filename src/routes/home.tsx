@@ -1158,37 +1158,23 @@ if(!isMobile){ initSlider(7); }
     .then(function(r){ return r.json(); })
     .then(function(data){
       var adminInterval = (data.interval && data.interval >= 1) ? data.interval : 7;
-      // ── 영상 교체 ──
+      // ── 썸네일 슬라이드 교체 ──
       if(data.videos && data.videos.length){
         var slidesWrap = document.getElementById('ytSlides');
         if(slidesWrap){
-          if(isMobile){
-            // 모바일: iframe 없이 정적 슬라이드만 생성
-            var mHtml = data.videos.map(function(vid, i){
-              return '<div class="yt-slide'+(i===0?' active':'')+'" data-index="'+i+'" style="background:linear-gradient(135deg,#0a0a0a 0%,#0d1a3a 50%,#050505 100%)">'
-                +'<div class="yt-overlay"></div>'
-                +'</div>';
-            }).join('');
-            slidesWrap.innerHTML = mHtml;
-            slidesWrap.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #0d1a3a 40%, #050505 100%)';
-          } else {
-            // 데스크탑: iframe 정상 로드
-            var html = data.videos.map(function(vid, i){
-              return '<div class="yt-slide'+(i===0?' active':'')+'" data-index="'+i+'">'
-                +'<div class="yt-iframe-wrap">'
-                +'<iframe class="yt-iframe" src="https://www.youtube.com/embed/'+vid+'?autoplay=1&mute=1&controls=0&loop=1&playlist='+vid+'&playsinline=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
-                +'</div>'
-                +'<div class="yt-overlay"></div>'
-                +'</div>';
-            }).join('');
-            slidesWrap.innerHTML = html;
-            // 영상 교체 후 슬라이더 재시작 — API interval 적용
-            initSlider(adminInterval);
-          }
+          var html = data.videos.map(function(vid, i){
+            return '<div class="yt-slide'+(i===0?' active':'')+'" data-index="'+i+'">'
+              +'<div class="yt-thumb-wrap">'
+              +'<div class="yt-thumb-bg" style="background-image:url(\'https://img.youtube.com/vi/'+vid+'/maxresdefault.jpg\')"></div>'
+              +'</div>'
+              +'<div class="yt-overlay"></div>'
+              +'</div>';
+          }).join('');
+          slidesWrap.innerHTML = html;
+          initSlider(adminInterval);
         }
       } else {
-        // 영상 교체 없이 간격만 바뀐 경우도 재시작 (데스크탑만)
-        if(!isMobile){ initSlider(adminInterval); }
+        initSlider(adminInterval);
       }
       // ── 회사소개서 링크 교체 ──
       if(data.brochure){
