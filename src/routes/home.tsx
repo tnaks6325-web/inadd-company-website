@@ -8,29 +8,23 @@ export const HomePage = () => (
         ============================================================ */}
     <section class="hero-slider" id="heroSlider">
 
-      {/* ── 영상 슬라이드 ── */}
-      <div class="yt-slides" id="ytSlides">
+      {/* ── 썸네일 대각선 플로우 배경 ── */}
+      <div class="thumb-flow" id="thumbFlow">
         {[
-          'HZaDW00sldo',
-          'yiWPCX7Qwug',
-          'Qh6H3hRXEcs',
-          'mdinL3IgKG8',
-          '4Vlqt4F1lGY',
-          'SjiizDuxmK0'
-        ].map((id, i) => (
-          <div class={`yt-slide${i === 0 ? ' active' : ''}`} data-index={i}>
-            <div class="yt-iframe-wrap">
-              <iframe
-                class="yt-iframe"
-                src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&controls=0&loop=1&playlist=${id}&playsinline=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1`}
-                allow="autoplay; encrypted-media"
-                allowfullscreen
-              ></iframe>
-            </div>
-            <div class="yt-overlay"></div>
+          ['HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs','mdinL3IgKG8','4Vlqt4F1lGY','SjiizDuxmK0','HZaDW00sldo','yiWPCX7Qwug'],
+          ['mdinL3IgKG8','SjiizDuxmK0','HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs','4Vlqt4F1lGY','mdinL3IgKG8','SjiizDuxmK0'],
+          ['Qh6H3hRXEcs','4Vlqt4F1lGY','SjiizDuxmK0','HZaDW00sldo','mdinL3IgKG8','yiWPCX7Qwug','Qh6H3hRXEcs','4Vlqt4F1lGY'],
+        ].map((col, ci) => (
+          <div class={`thumb-col thumb-col--${ci % 2 === 0 ? 'up' : 'down'}`}>
+            {col.map((id) => (
+              <div class="thumb-card">
+                <img src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`} alt="" loading="lazy" />
+              </div>
+            ))}
           </div>
         ))}
       </div>
+      <div class="yt-overlay"></div>
 
       {/* ── 메인 텍스트 레이어 ── */}
       <div class="hero-text-layer" id="heroTextLayer">
@@ -892,69 +886,9 @@ export const HomePage = () => (
 (function(){
 
 /* ─────────────────────────────────────────────
-   0. HERO SLIDER — 영상 자동 전환 (7초 간격 dissolve)
-   모바일: YouTube iframe 차단 대응 → 정적 배경 그라디언트로 폴백
+   0. HERO — 썸네일 대각선 플로우 (CSS animation 기반, JS 불필요)
 ───────────────────────────────────────────── */
-
-// 모바일 감지 (터치 디바이스 + 768px 이하)
-var isMobile = (window.innerWidth <= 768) || ('ontouchstart' in window);
-
-// 모바일이면 iframe 제거 후 정적 배경으로 교체
-if(isMobile){
-  var ytSlides = document.getElementById('ytSlides');
-  if(ytSlides){
-    // iframe 모두 제거 (모바일에서 YouTube iframe = 흰 화면 원인)
-    var iframes = ytSlides.querySelectorAll('iframe');
-    iframes.forEach(function(f){ f.remove(); });
-    // 정적 그라디언트 배경 적용
-    ytSlides.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #0d1a3a 40%, #0a1628 70%, #050505 100%)';
-    // 첫 슬라이드만 active 유지 (텍스트 표시용)
-    var slides = ytSlides.querySelectorAll('.yt-slide');
-    slides.forEach(function(s,i){
-      s.style.background = i===0
-        ? 'linear-gradient(135deg, #0a0a0a 0%, #0d1a3a 50%, #050505 100%)'
-        : 'transparent';
-      s.classList.toggle('active', i===0);
-    });
-  }
-}
-
-var _sliderTimer = null;
-function initSlider(intervalSec){
-  if(_sliderTimer){ clearInterval(_sliderTimer); _sliderTimer = null; }
-  var slides = document.querySelectorAll('.yt-slide');
-  if(slides.length < 2) return;
-
-  var current = 0;
-  var total   = slides.length;
-  var ms = ((intervalSec && intervalSec >= 1) ? intervalSec : 7) * 1000;
-
-  // 첫 슬라이드 활성화 보정
-  slides.forEach(function(s,i){ s.classList.toggle('active', i===0); s.classList.remove('leaving'); });
-
-  function goTo(next){
-    var prev = current;
-    if(next === prev) return;
-
-    slides[prev].classList.add('leaving');
-    slides[prev].classList.remove('active');
-    slides[next].classList.add('active');
-
-    setTimeout(function(){
-      slides[prev].classList.remove('leaving');
-    }, 1000);
-
-    current = next;
-  }
-
-  // 설정된 간격(ms)마다 다음 슬라이드로
-  _sliderTimer = setInterval(function(){
-    var next = (current + 1) % total;
-    goTo(next);
-  }, ms);
-}
-// 모바일에서는 슬라이더 자동전환 없음 (iframe 없으므로)
-if(!isMobile){ initSlider(7); }
+// thumb-flow는 순수 CSS 애니메이션으로 동작 — JS 제어 없음
 
 /* ─────────────────────────────────────────────
    2. STATS — 숫자 카운팅 + stagger fade-up
@@ -1157,24 +1091,20 @@ if(!isMobile){ initSlider(7); }
   fetch('/api/admin/public/home')
     .then(function(r){ return r.json(); })
     .then(function(data){
-      var adminInterval = (data.interval && data.interval >= 1) ? data.interval : 7;
-      // ── 썸네일 슬라이드 교체 ──
-      if(data.videos && data.videos.length){
-        var slidesWrap = document.getElementById('ytSlides');
-        if(slidesWrap){
-          var html = data.videos.map(function(vid, i){
-            return '<div class="yt-slide'+(i===0?' active':'')+'" data-index="'+i+'">'
-              +'<div class="yt-thumb-wrap">'
-              +'<div class="yt-thumb-bg" style="background-image:url(\'https://img.youtube.com/vi/'+vid+'/maxresdefault.jpg\')"></div>'
-              +'</div>'
-              +'<div class="yt-overlay"></div>'
-              +'</div>';
-          }).join('');
-          slidesWrap.innerHTML = html;
-          initSlider(adminInterval);
+      // ── KV 영상 ID로 썸네일 플로우 컬럼 교체 ──
+      if(data.videos && data.videos.length >= 3){
+        var flow = document.getElementById('thumbFlow');
+        if(flow){
+          var ids = data.videos;
+          var cols = flow.querySelectorAll('.thumb-col');
+          cols.forEach(function(col, ci){
+            var cards = col.querySelectorAll('.thumb-card img');
+            cards.forEach(function(img, ii){
+              var id = ids[(ci * 3 + ii) % ids.length];
+              img.src = 'https://img.youtube.com/vi/'+id+'/maxresdefault.jpg';
+            });
+          });
         }
-      } else {
-        initSlider(adminInterval);
       }
       // ── 회사소개서 링크 교체 ──
       if(data.brochure){
