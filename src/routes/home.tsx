@@ -233,14 +233,11 @@ export const HomePage = () => (
 
             {/* 패널 1 — INFLUENCER */}
             <div class="svc-panel" data-panel="1">
-              <div class="svc-panel-img svc-panel-img--video" style="background-image:url('/static/svc-images/influencer.png'); background-size:cover; background-position:center; position:relative;"
-                onmouseenter="(function(el){var v=el.querySelector('.svc-hover-video');if(v){v.style.opacity='1';v.play().catch(function(){});}})(this)"
-                onmouseleave="(function(el){var v=el.querySelector('.svc-hover-video');if(v){v.pause();v.currentTime=0;v.style.opacity='0';}})(this)">
-                <video class="svc-hover-video" src="/static/svc-images/influencer-video.mp4"
-                  muted playsinline loop preload="none"
-                  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.4s ease;pointer-events:none;z-index:2;">
-                </video>
-                <div class="svc-real-img-overlay" style="z-index:3;"></div>
+              <div class="svc-panel-img svc-panel-img--thumb"
+                onmousemove="(function(el,e){var r=el.getBoundingClientRect();var x=(e.clientX-r.left)/r.width-0.5;var y=(e.clientY-r.top)/r.height-0.5;el.querySelector('.svc-thumb-bg').style.transform='scale(1.08) translate('+(x*-18)+'px,'+(y*-18)+'px)'})(this,event)"
+                onmouseleave="(function(el){el.querySelector('.svc-thumb-bg').style.transform='scale(1) translate(0,0)'})(this)">
+                <div class="svc-thumb-bg" style="background-image:url('/static/svc-images/influencer.png');"></div>
+                <div class="svc-real-img-overlay"></div>
               </div>
               <div class="svc-panel-info">
                 <span class="svc-panel-tag">Influencer &amp; YouTube</span>
