@@ -32,9 +32,9 @@ export const ViralPage = () => (
           </div>
 
           <p class="mkt-hero-desc">
-            단순한 노출을 넘어 <strong>소비자의 행동을 설계</strong>합니다.<br />
-            검색 → 발견 → 신뢰 → 구매 → 재방문까지,<br />
-            인애드컴퍼니가 퍼널 전 단계를 책임집니다.
+            노출은 시작일 뿐입니다.<br />
+            검색에서의 첫 만남부터 신뢰의 축적, 구매 이후의 재방문까지<br />
+            고객 여정 전체를 한 흐름으로 설계합니다.
           </p>
 
           <div class="mkt-hero-btns">
