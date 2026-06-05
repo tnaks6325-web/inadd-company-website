@@ -662,9 +662,9 @@ export const AboutPage = () => (
       var progress = Math.min((ts - startTime) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 3);
       var val = Math.floor(from + (target - from) * eased);
-      el.textContent = val.toLocaleString();
+      el.textContent = isYear ? String(val) : val.toLocaleString();
       if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = target.toLocaleString();
+      else el.textContent = isYear ? String(target) : target.toLocaleString();
     }
     requestAnimationFrame(step);
   }
