@@ -51,6 +51,19 @@
 
 html { scroll-behavior: smooth; }
 
+/* ── Ribbons 커서 마운트 ── */
+#ribbon-mount {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+}
+#ribbon-mount canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
 body {
   background: var(--black);
   color: var(--white);

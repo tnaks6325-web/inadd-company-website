@@ -76,6 +76,8 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
         <link href="/static/style.css?v=20260606a" rel="stylesheet" />
       </head>
       <body>
+        {/* Ribbons 마운트 포인트 */}
+        <div id="ribbon-mount"></div>
         <header class="site-header" id="site-header">
           <div class="header-inner">
             <a href="/" class="logo">
@@ -206,6 +208,24 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
           </div>
         </div>
         <script src="/static/main.js"></script>
+        {/* ── Ribbons 커서 ── */}
+        <script type="module" dangerouslySetInnerHTML={{ __html: `
+          import { initRibbons } from '/static/ribbons.js';
+          initRibbons('ribbon-mount', {
+            colors:             ['#1a6bff'],
+            baseThickness:      30,
+            baseSpring:         0.03,
+            baseFriction:       0.9,
+            offsetFactor:       0,
+            maxAge:             500,
+            pointCount:         50,
+            speedMultiplier:    0.5,
+            enableFade:         false,
+            enableShaderEffect: true,
+            effectAmplitude:    2,
+            backgroundColor:    [0, 0, 0, 0]
+          });
+        `}} />
       </body>
     </html>
   )
