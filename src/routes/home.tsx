@@ -8,15 +8,15 @@ export const HomePage = () => (
         ============================================================ */}
     <section class="hero-slider" id="heroSlider">
 
-      {/* ── 썸네일 대각선 플로우 배경 ── */}
+      {/* ── 썸네일 가로 플로우 배경 ── */}
       <div class="thumb-flow" id="thumbFlow">
         {[
-          ['HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs','mdinL3IgKG8','4Vlqt4F1lGY','SjiizDuxmK0','HZaDW00sldo','yiWPCX7Qwug'],
-          ['mdinL3IgKG8','SjiizDuxmK0','HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs','4Vlqt4F1lGY','mdinL3IgKG8','SjiizDuxmK0'],
-          ['Qh6H3hRXEcs','4Vlqt4F1lGY','SjiizDuxmK0','HZaDW00sldo','mdinL3IgKG8','yiWPCX7Qwug','Qh6H3hRXEcs','4Vlqt4F1lGY'],
-        ].map((col, ci) => (
-          <div class={`thumb-col thumb-col--${ci % 2 === 0 ? 'up' : 'down'}`}>
-            {col.map((id) => (
+          ['HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs','mdinL3IgKG8','4Vlqt4F1lGY','SjiizDuxmK0','HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs','mdinL3IgKG8'],
+          ['mdinL3IgKG8','4Vlqt4F1lGY','SjiizDuxmK0','HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs','mdinL3IgKG8','4Vlqt4F1lGY','SjiizDuxmK0','HZaDW00sldo'],
+          ['Qh6H3hRXEcs','SjiizDuxmK0','mdinL3IgKG8','4Vlqt4F1lGY','HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs','SjiizDuxmK0','mdinL3IgKG8','4Vlqt4F1lGY'],
+        ].map((row, ri) => (
+          <div class={`thumb-row thumb-row--${ri % 2 === 0 ? 'ltr' : 'rtl'}`}>
+            {row.map((id) => (
               <div class="thumb-card">
                 <img src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`} alt="" loading="lazy" />
               </div>
