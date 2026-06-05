@@ -1,38 +1,38 @@
 /* ============================================
-   NOVA STUDIO — Design System
-   Black Background + Deep Blue Accent
+   IN AD COMPANY — Design System
+   White Background + Deep Blue Accent
    ============================================ */
 
 /* --- Reset & Base --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* Colors */
-  --black:       #000000;
-  --black-2:     #080808;
-  --black-3:     #0d0d0d;
-  --black-4:     #111111;
-  --black-5:     #161616;
+  /* Backgrounds — 밝은 화이트 톤 */
+  --black:       #ffffff;   /* 기존 검정 → 흰색 (body 기본) */
+  --black-2:     #f5f6f8;   /* 섹션 교차 배경 */
+  --black-3:     #eef0f4;   /* 살짝 더 어두운 섹션 */
+  --black-4:     #e8eaf0;
+  --black-5:     #dde0e8;
 
-  /* Deep Blue - Main Accent */
+  /* Deep Blue - Main Accent (유지) */
   --blue:        #1a6bff;
   --blue-bright: #2979ff;
   --blue-deep:   #0d47d6;
   --blue-light:  #4d94ff;
-  --blue-glow:   rgba(26, 107, 255, 0.35);
-  --blue-glow-s: rgba(26, 107, 255, 0.15);
+  --blue-glow:   rgba(26, 107, 255, 0.25);
+  --blue-glow-s: rgba(26, 107, 255, 0.10);
 
-  /* Text */
-  --white:   #ffffff;
-  --gray-1:  #e8e8e8;
-  --gray-2:  #b0b0b0;
-  --gray-3:  #707070;
-  --gray-4:  #404040;
-  --gray-5:  #252525;
+  /* Text — 어두운 계열로 반전 */
+  --white:   #0d1117;   /* 기존 흰 텍스트 → 거의 검정 */
+  --gray-1:  #1e2530;
+  --gray-2:  #4a5568;
+  --gray-3:  #718096;
+  --gray-4:  #a0aec0;
+  --gray-5:  #cbd5e0;
 
   /* Borders */
-  --border:     rgba(255,255,255,0.07);
-  --border-md:  rgba(255,255,255,0.12);
+  --border:     rgba(0,0,0,0.07);
+  --border-md:  rgba(0,0,0,0.12);
   --border-blue: rgba(26,107,255,0.3);
 
   /* Fonts */
@@ -127,11 +127,12 @@ em {
 }
 
 .site-header.scrolled {
-  background: rgba(0, 0, 0, 0.92);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   padding: 14px 0;
   border-bottom-color: var(--border);
+  box-shadow: 0 1px 20px rgba(0,0,0,0.08);
 }
 
 .header-inner {
@@ -163,7 +164,7 @@ em {
 
 /* 헤더 워드마크 — IN AD COMPANY 텍스트 전용 */
 .logo-wordmark {
-  font-family: var(--font-en);
+  font-family: 'S-Core Dream', 'Pretendard', sans-serif;
   font-size: 17px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -214,7 +215,7 @@ em {
   letter-spacing: 0.3px;
 }
 
-.nav-link:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+.nav-link:hover { color: var(--blue); background: rgba(26,107,255,0.06); }
 
 .nav-cta {
   background: var(--blue) !important;
@@ -530,7 +531,7 @@ em {
 .black-curtain {
   position: absolute;
   inset: 0;
-  background: #000;
+  background: var(--black);
   opacity: 0;
   pointer-events: none;
   z-index: 30;
@@ -1576,7 +1577,7 @@ em {
   border-radius: 20px;
   letter-spacing: 1px;
   border: 1px solid rgba(41,121,255,0.5);
-  font-family: var(--font);
+  font-family: 'Noto Sans KR', sans-serif;
 }
 .hn-card-title {
   font-size: 14px;
@@ -2023,7 +2024,7 @@ em {
   color: var(--gray-3);
   transition: color var(--t) var(--ease);
 }
-.footer-col a:hover { color: var(--white); }
+.footer-col a:hover { color: var(--blue); }
 
 .footer-bottom {
   max-width: 1280px;
@@ -2468,7 +2469,7 @@ em {
 ══════════════════════════════════════════════ */
 .about-partner-section {
   position: relative;
-  background: #03020d;
+  background: var(--black-2);
   overflow: hidden;
   padding: 120px 0 110px;
 }
@@ -3653,7 +3654,7 @@ em {
   padding: 14px 16px;
   color: var(--white);
   font-size: 14px;
-  font-family: var(--font);
+  font-family: 'Noto Sans KR', sans-serif;
   transition: border-color var(--t) var(--ease);
   width: 100%;
   outline: none;
@@ -3870,7 +3871,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   gap: 12px;
   text-align: left;
   transition: color var(--t) var(--ease);
-  font-family: var(--font);
+  font-family: 'Noto Sans KR', sans-serif;
 }
 .cif-q:hover { color: var(--white); }
 .cif-arr { font-size: 18px; flex-shrink: 0; transition: transform var(--t) var(--ease); color: rgba(26,107,255,0.7); }
@@ -4184,7 +4185,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   padding: 16px 20px;
   color: var(--white);
   font-size: 14px;
-  font-family: var(--font);
+  font-family: 'Noto Sans KR', sans-serif;
   outline: none;
 }
 .ins-nl-input-wrap input::placeholder { color: var(--gray-4); }
@@ -4452,7 +4453,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   cursor: pointer;
   transition: all var(--t) var(--ease);
   width: 100%;
-  font-family: var(--font);
+  font-family: 'Noto Sans KR', sans-serif;
 }
 .cf-submit svg { width: 18px; height: 18px; }
 .cf-submit:hover { background: rgba(26,107,255,1); transform: translateY(-2px); box-shadow: 0 10px 36px rgba(26,107,255,0.35); }
@@ -4502,7 +4503,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   gap: 12px;
   text-align: left;
   transition: color var(--t) var(--ease);
-  font-family: var(--font);
+  font-family: 'Noto Sans KR', sans-serif;
 }
 .faq-q:hover { color: var(--white); }
 .faq-arr { flex-shrink: 0; transition: transform 0.3s ease; }
@@ -5771,7 +5772,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .vs-scene-bg {
   position: absolute;
   inset: 0;
-  background: #050508;
+  background: var(--black-3);
   z-index: 0;
 }
 .vs-scene-bg--glow {
@@ -6368,7 +6369,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .ins2-thumb-fallback {
   width: 100%; height: 100%;
   display: flex; align-items: center; justify-content: center;
-  background: #1a1a2e;
+  background: var(--black-2);
   color: #333;
   font-size: 36px;
 }
@@ -6681,7 +6682,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   aspect-ratio: 16 / 10;
   border-radius: 16px;
   overflow: hidden;
-  background: #0a0a0a;
+  background: var(--black-2);
   box-shadow: 0 24px 80px rgba(0,0,0,0.6);
   display: flex;
   align-items: center;
@@ -7149,7 +7150,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: #020814;
+  background: var(--black-2);
 }
 
 /* 전체 배경 3D 캔버스 */
@@ -7727,7 +7728,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 
 /* ══ FEATURES 섹션 ══ */
 .mkt-features-section {
-  background: #05080f;
+  background: var(--black-2);
   padding: 112px 0;
   position: relative;
   overflow: hidden;
@@ -7860,7 +7861,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 
 /* ══ STATS BELT ══ */
 .mkt-stats-belt {
-  background: #060c1a;
+  background: var(--black-2);
   border-top: 1px solid rgba(255,255,255,0.05);
   border-bottom: 1px solid rgba(255,255,255,0.05);
   padding: 52px 0;
@@ -7904,7 +7905,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 /* ══ CTA 섹션 v2 ══ */
 .mkt-cta-section {
   position: relative;
-  background: #020814;
+  background: var(--black-2);
   padding: 100px 0 120px;
   overflow: hidden;
   text-align: center;
@@ -8363,7 +8364,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   color: inherit;
   display: block;
   cursor: pointer;
-  background: #080e1e;
+  background: var(--black-2);
   border: 1px solid rgba(255,255,255,0.06);
   transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
 }
@@ -8699,7 +8700,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   position: relative;
   overflow: hidden;
   padding: 120px 0;
-  background: #020814;
+  background: var(--black-2);
 }
 
 /* 파티클 캔버스 */
@@ -10249,7 +10250,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 
 /* ── 메인 타이틀 ── */
 .vh-title {
-  font-family: var(--font);
+  font-family: var(--font-en);
   font-size: clamp(28px, 4.2vw, 56px);
   font-weight: 900;
   line-height: 1.2;
@@ -10708,7 +10709,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   user-select: none;
 }
 .ifl-svc-title {
-  font-family: var(--font);
+  font-family: var(--font-en);
   font-size: clamp(26px, 3.5vw, 44px);
   font-weight: 800;
   line-height: 1.2;
@@ -11014,7 +11015,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   color: rgba(255,255,255,0.3); margin-bottom: 24px;
 }
 .ifl-conf-title {
-  font-family: var(--font);
+  font-family: var(--font-en);
   font-size: clamp(32px, 5vw, 56px);
   font-weight: 900; line-height: 1.15;
   color: #fff; margin: 0 0 36px;
@@ -11078,7 +11079,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   display: flex; align-items: center; justify-content: center;
   gap: 8px; margin-top: 20px;
   font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
-  color: rgba(255,255,255,0.20); font-family: 'Space Grotesk', monospace;
+  color: rgba(255,255,255,0.20); font-family: var(--font-en);
 }
 .ifl-conf-dot {
   width: 6px; height: 6px; border-radius: 50%;
@@ -12371,7 +12372,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   margin-bottom: 20px; position:relative; z-index:1;
 }
 .ifl2-cc-index {
-  font-family: 'Space Grotesk', monospace;
+  font-family: var(--font-en);
   font-size: 12px; font-weight: 700; letter-spacing: .12em;
   color: var(--cc-accent, rgba(168,85,247,0.85));
   opacity: .7;
@@ -12455,7 +12456,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   background: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,255,255,0.04) 0%, transparent 70%);
 }
 .ifl2-pair-num {
-  font-family: 'Space Grotesk', monospace;
+  font-family: var(--font-en);
   font-size: 11px; font-weight:800; letter-spacing:.18em;
   color: var(--pair-accent);
   margin-bottom: 8px; opacity:.8;
@@ -12536,7 +12537,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .ifl2-yt-card:hover .ifl2-yt-visual { color: rgba(168,85,247,0.6); }
 .ifl2-yt-visual svg { width:48px; height:48px; }
 .ifl2-yt-card h4 {
-  font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700;
+  font-family:var(--font-en); font-size:15px; font-weight:700;
   color:#fff; margin:0 0 10px; line-height:1.3;
 }
 .ifl2-yt-card p {
@@ -12592,7 +12593,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   display:flex; align-items:center; gap:12px; margin-bottom:18px;
 }
 .ifl2-mc-num {
-  font-family:'Space Grotesk',monospace; font-size:11px; font-weight:800;
+  font-family:var(--font-en); font-size:11px; font-weight:800;
   letter-spacing:.15em; color:rgba(255,255,255,0.2);
 }
 .ifl2-mc-icon {
@@ -12605,7 +12606,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .ifl2-mc-icon--teal   { background:rgba(20,184,166,0.08);   color:rgba(20,184,166,0.75); }
 .ifl2-mc-icon svg { width:18px; height:18px; }
 .ifl2-model-card h4 {
-  font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:800;
+  font-family:var(--font-en); font-size:18px; font-weight:800;
   color:#fff; margin:0 0 16px;
 }
 .ifl2-mc-list {
@@ -12643,7 +12644,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   display:flex; flex-direction:column; align-items:center;
 }
 .ifl2-conf-snum {
-  font-family:'Space Grotesk',monospace; font-size:80px; font-weight:900;
+  font-family:var(--font-en); font-size:80px; font-weight:900;
   color:rgba(255,255,255,0.03); letter-spacing:-4px; line-height:1;
   user-select:none; margin-bottom:4px;
 }
@@ -12652,7 +12653,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   color:rgba(168,85,247,0.65); font-weight:700; margin-bottom:20px;
 }
 .ifl2-conf-title {
-  font-family:'Space Grotesk',sans-serif;
+  font-family:var(--font-en);
   font-size:clamp(28px,4vw,48px); font-weight:900;
   color:#fff; line-height:1.15; letter-spacing:-0.5px; margin:0 0 24px;
 }
@@ -12671,7 +12672,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   animation: ifl2StampPulse 3s ease-in-out infinite;
 }
 .ifl2-conf-stamp span {
-  font-family:'Space Grotesk',monospace; font-size:14px; font-weight:900;
+  font-family:var(--font-en); font-size:14px; font-weight:900;
   letter-spacing:.25em; color:rgba(168,85,247,0.75); text-transform:uppercase;
 }
 @keyframes ifl2StampPulse {
@@ -12706,7 +12707,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   display:flex; align-items:center; justify-content:center;
   gap:8px; margin-top:20px;
   font-size:9.5px; letter-spacing:.18em; text-transform:uppercase;
-  color:rgba(255,255,255,0.18); font-family:'Space Grotesk',monospace;
+  color:rgba(255,255,255,0.18); font-family:var(--font-en);
 }
 .ifl2-conf-dot {
   width:6px; height:6px; border-radius:50%;
@@ -13132,7 +13133,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 }
 .ifl2-proc-icon svg { width: 100%; height: 100%; }
 .ifl2-proc-num {
-  font-family: 'Space Grotesk', monospace;
+  font-family: var(--font-en);
   font-size: 11px; font-weight: 800; letter-spacing: .12em;
   color: var(--step-accent, rgba(168,85,247,0.7));
   opacity: .7;
@@ -13266,7 +13267,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 }
 .ifl2-ps-icon svg { width: 18px; height: 18px; }
 .ifl2-ps-num {
-  font-family: 'Space Grotesk', monospace;
+  font-family: var(--font-en);
   font-size: 28px; font-weight: 900;
   color: rgba(255,255,255,0.04);
   letter-spacing: -1px;

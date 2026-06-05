@@ -76,8 +76,6 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
         <link href="/static/style.css?v=20260605d" rel="stylesheet" />
       </head>
       <body>
-        {/* BlobCursor 마운트 포인트 — body 최상단 */}
-        <div id="blob-cursor-mount"></div>
         <header class="site-header" id="site-header">
           <div class="header-inner">
             <a href="/" class="logo">
@@ -208,32 +206,6 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
           </div>
         </div>
         <script src="/static/main.js"></script>
-        {/* ── BlobCursor: GSAP UMD 먼저, 그 다음 module ── */}
-        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-        <script type="module" dangerouslySetInnerHTML={{ __html: `
-          import { initBlobCursor } from '/static/blob-cursor.js';
-          initBlobCursor('blob-cursor-mount', {
-            blobType:           'circle',
-            fillColor:          '#1a6bff',
-            trailCount:         1,
-            sizes:              [60],
-            innerSizes:         [20],
-            innerColor:         'rgba(255,255,255,0.15)',
-            opacities:          [0.8],
-            shadowColor:        'rgba(26,107,255,0.4)',
-            shadowBlur:         20,
-            shadowOffsetX:      0,
-            shadowOffsetY:      0,
-            filterId:           'blob-filter',
-            filterStdDeviation: 25,
-            useFilter:          false,
-            fastDuration:       0.08,
-            slowDuration:       0.08,
-            fastEase:           'power3.out',
-            slowEase:           'power3.out',
-            zIndex:             999
-          });
-        `}} />
       </body>
     </html>
   )
