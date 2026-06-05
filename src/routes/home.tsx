@@ -574,7 +574,7 @@ export const HomePage = () => (
       <div class="container">
         <div class="section-head testi-head">
           <span class="sec-label">Client Voice</span>
-          <h2 class="sec-title">클라이언트가<br /><em>직접 말합니다</em></h2>
+          <h2 class="sec-title">광고주가<br /><em>직접 전하는 리얼 후기</em></h2>
         </div>
       </div>
 
