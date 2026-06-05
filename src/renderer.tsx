@@ -76,6 +76,8 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
         <link href="/static/style.css?v=20260605d" rel="stylesheet" />
       </head>
       <body>
+        {/* BlobCursor 마운트 포인트 — body 최상단 */}
+        <div id="blob-cursor-mount"></div>
         <header class="site-header" id="site-header">
           <div class="header-inner">
             <a href="/" class="logo">
@@ -206,9 +208,32 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
           </div>
         </div>
         <script src="/static/main.js"></script>
-        {/* ── BlobCursor: GSAP + 커스텀 커서 ── */}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9d/6tD8X01HoS68aOvJABQZl4m4fTHAO45CGNTQ/LkATF/yCCdGBD6G9V8OymKNFVf6a8TSFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="/static/blob-cursor.js"></script>
+        {/* ── BlobCursor: GSAP UMD 먼저, 그 다음 module ── */}
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        <script type="module" dangerouslySetInnerHTML={{ __html: `
+          import { initBlobCursor } from '/static/blob-cursor.js';
+          initBlobCursor('blob-cursor-mount', {
+            blobType:           'circle',
+            fillColor:          '#1a6bff',
+            trailCount:         3,
+            sizes:              [60, 125, 75],
+            innerSizes:         [20, 35, 25],
+            innerColor:         'rgba(255,255,255,0.15)',
+            opacities:          [0.55, 0.45, 0.5],
+            shadowColor:        'rgba(26,107,255,0.4)',
+            shadowBlur:         20,
+            shadowOffsetX:      0,
+            shadowOffsetY:      0,
+            filterId:           'blob-filter',
+            filterStdDeviation: 25,
+            useFilter:          true,
+            fastDuration:       0.1,
+            slowDuration:       0.5,
+            fastEase:           'power3.out',
+            slowEase:           'power1.out',
+            zIndex:             999
+          });
+        `}} />
       </body>
     </html>
   )

@@ -67,6 +67,14 @@ a, button, [role="button"], input[type="submit"], input[type="button"], label[fo
   cursor: none;
 }
 
+/* BlobCursor 마운트 포인트 */
+#blob-cursor-mount {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+}
+
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
