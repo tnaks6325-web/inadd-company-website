@@ -73,7 +73,7 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
         {/* DM Sans — 헤드라인·숫자용 기하학적 산세리프 (S-Core Dream 유사) */}
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet" />
-        <link href="/static/style.css?v=20260605c" rel="stylesheet" />
+        <link href="/static/style.css?v=20260605a" rel="stylesheet" />
       </head>
       <body>
         <header class="site-header" id="site-header">
