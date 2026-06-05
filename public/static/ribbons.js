@@ -84,7 +84,8 @@ export class Ribbons {
     this.baseSpring         = o.baseSpring         ?? 0.03;
     this.baseFriction       = o.baseFriction       ?? 0.9;
     this.baseThickness      = o.baseThickness      ?? 30;
-    this.offsetFactor       = o.offsetFactor       ?? 0.05;
+    // offsetFactor: 0 → 리본 간 오프셋 없음 (1개짜리일 때 완전히 중앙 고정)
+    this.offsetFactor       = o.offsetFactor       ?? 0;
     this.maxAge             = o.maxAge             ?? 500;
     this.pointCount         = o.pointCount         ?? 50;
     this.speedMultiplier    = o.speedMultiplier    ?? 0.6;
@@ -109,6 +110,9 @@ export class Ribbons {
     const { container } = this;
     if (!container) return;
 
+    // ── 중복 초기화 방지: 이미 canvas가 있으면 건너뜀 ──
+    if (container.querySelector('canvas')) return;
+
     this._renderer = new Renderer({ dpr: window.devicePixelRatio || 2, alpha: true });
     const gl = this._renderer.gl;
     this._gl = gl;
@@ -127,17 +131,16 @@ export class Ribbons {
 
     this._scene = new Transform();
 
-    // colors 배열 길이만큼만 리본 생성 — 1개면 1개만
-    const center = (this.colors.length - 1) / 2;
-    this.colors.forEach((color, index) => {
-      const spring    = this.baseSpring    + (Math.random() - 0.5) * 0.05;
-      const friction  = this.baseFriction  + (Math.random() - 0.5) * 0.05;
-      const thickness = this.baseThickness + (Math.random() - 0.5) * 3;
-      const mouseOffset = new Vec3(
-        (index - center) * this.offsetFactor + (Math.random() - 0.5) * 0.01,
-        (Math.random() - 0.5) * 0.1,
-        0
-      );
+    // colors 배열 길이만큼만 리본 생성
+    // 1개 원소 배열 → 리본 정확히 1개
+    // offsetFactor=0 이므로 모든 오프셋 = 0, mouseOffset은 (0,0,0) 고정
+    this.colors.forEach((color) => {
+      const spring    = this.baseSpring;
+      const friction  = this.baseFriction;
+      const thickness = this.baseThickness;
+
+      // offsetFactor=0 → X/Y 랜덤 오프셋 없음 → 단일 리본이 정확히 커서를 추적
+      const mouseOffset = new Vec3(0, 0, 0);
 
       const points = Array.from({ length: this.pointCount }, () => new Vec3());
 
@@ -243,8 +246,15 @@ export class Ribbons {
   }
 }
 
+// ── 전역 싱글턴 가드: 페이지당 1개 인스턴스만 허용 ──
+let _globalInstance = null;
+
 export function initRibbons(containerId, opts = {}) {
+  // 이미 실행 중이면 기존 인스턴스 반환
+  if (_globalInstance) return _globalInstance;
+
   const instance = new Ribbons(containerId, opts);
   instance.init();
+  _globalInstance = instance;
   return instance;
 }
