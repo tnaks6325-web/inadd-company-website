@@ -76,7 +76,6 @@ async function loadHome() {
   document.getElementById('statContracts').value = s.contracts || '';
   document.getElementById('statExperience').value = s.experience || '';
   document.getElementById('statPartners').value = s.partners || '';
-  document.getElementById('slideInterval').value = data.interval || 7;
   renderVideoList();
 }
 
@@ -164,14 +163,6 @@ document.getElementById('btnSaveVideos').addEventListener('click', async () => {
   await api('PUT', '/home', { videos: cleaned });
   renderVideoList();
   showToast('영상 링크가 저장되었습니다.');
-});
-
-document.getElementById('btnSaveInterval').addEventListener('click', async () => {
-  const raw = parseInt(document.getElementById('slideInterval').value, 10);
-  const sec = Math.max(1, Math.min(30, isNaN(raw) ? 7 : raw));
-  document.getElementById('slideInterval').value = sec;
-  await api('PUT', '/home', { interval: sec });
-  showToast(`슬라이드 전환 간격이 ${sec}초로 저장되었습니다.`);
 });
 
 document.getElementById('btnSaveBrochure').addEventListener('click', async () => {
