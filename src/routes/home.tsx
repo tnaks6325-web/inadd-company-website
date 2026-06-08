@@ -10,24 +10,9 @@ export const HomePage = () => (
 
       {/* ── 썸네일 가로 플로우 배경 ── */}
       <div class="thumb-flow" id="thumbFlow">
-        {[
-          ['HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs','mdinL3IgKG8','4Vlqt4F1lGY','SjiizDuxmK0','HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs','mdinL3IgKG8'],
-          ['mdinL3IgKG8','4Vlqt4F1lGY','SjiizDuxmK0','HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs','mdinL3IgKG8','4Vlqt4F1lGY','SjiizDuxmK0','HZaDW00sldo'],
-          ['Qh6H3hRXEcs','SjiizDuxmK0','mdinL3IgKG8','4Vlqt4F1lGY','HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs','SjiizDuxmK0','mdinL3IgKG8','4Vlqt4F1lGY'],
-        ].map((row, ri) => (
-          <div class={`thumb-row thumb-row--${ri % 2 === 0 ? 'ltr' : 'rtl'}`}>
-            {row.map((id) => (
-              <div class="thumb-card">
-                <img
-                  src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`}
-                  alt=""
-                  loading="lazy"
-                  onerror={`if(this.dataset.retry==='1'){this.parentNode.classList.add('thumb-deleted');this.remove()}else{this.dataset.retry='1';this.src='https://img.youtube.com/vi/${id}/hqdefault.jpg'}`}
-                />
-              </div>
-            ))}
-          </div>
-        ))}
+        <div class="thumb-row thumb-row--ltr"></div>
+        <div class="thumb-row thumb-row--rtl"></div>
+        <div class="thumb-row thumb-row--ltr"></div>
       </div>
       <div class="yt-overlay"></div>
 

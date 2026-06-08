@@ -158,11 +158,19 @@ document.getElementById('btnAddVideo').addEventListener('click', () => {
 });
 
 document.getElementById('btnSaveVideos').addEventListener('click', async () => {
-  const cleaned = homeVideos.map(v => extractYouTubeId(v)).filter(v => v.trim());
+  // input DOM에서 직접 최신 값을 읽어서 저장 (homeVideos 동기화 문제 방지)
+  const inputs = document.querySelectorAll('#videoList input[data-idx]');
+  const fromDOM = Array.from(inputs).map(inp => extractYouTubeId(inp.value)).filter(v => v.trim());
+  // DOM에서 읽은 값이 있으면 그것을 우선 사용
+  const cleaned = fromDOM.length ? fromDOM : homeVideos.map(v => extractYouTubeId(v)).filter(v => v.trim());
   homeVideos = cleaned;
-  await api('PUT', '/home', { videos: cleaned });
+  const result = await api('PUT', '/home', { videos: cleaned });
   renderVideoList();
-  showToast('영상 링크가 저장되었습니다.');
+  if (result && result.ok) {
+    showToast('✅ 영상 링크가 저장되었습니다. (' + cleaned.length + '개)');
+  } else {
+    showToast('❌ 저장 중 오류가 발생했습니다.', 'error');
+  }
 });
 
 document.getElementById('btnSaveBrochure').addEventListener('click', async () => {
