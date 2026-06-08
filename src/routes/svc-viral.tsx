@@ -34,11 +34,8 @@ export const SvcViralPage = () => (
 
         {/* 서브 카피 — 단어 단위 페이드 인 */}
         <div class="vh-sub-wrap" id="vhSub">
-          <p class="vh-sub">콘텐츠의 시작부터 소비자의 기억에 남는 순간까지.</p>
-          <p class="vh-sub">온라인 채널 속 깊숙이 파고들어 정교한 마케팅으로</p>
-          <p class="vh-sub vh-sub--em">기획, 전략, 실행을 모두 아우르며</p>
-          <p class="vh-sub">브랜드의 가치를 확산시키고 성과로 이어지는</p>
-          <p class="vh-sub vh-sub--highlight">퍼포먼스를 만들어 냅니다.<span class="vh-cursor"></span></p>
+          <p class="vh-sub">콘텐츠의 시작부터 기억에 남는 순간까지—고객 여정 전체를 따라가서</p>
+          <p class="vh-sub vh-sub--highlight">채널 안쪽의 데이터를 읽고, 크리에이티브로 설득을 더합니다.<span class="vh-cursor"></span></p>
         </div>
 
         {/* 구분선 + KPI 스트립 */}
