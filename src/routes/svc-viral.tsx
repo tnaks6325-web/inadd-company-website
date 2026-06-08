@@ -114,13 +114,13 @@ export const SvcViralPage = () => (
           {/* ── 좌측 텍스트 ── */}
           <div class="svc-intro-text vi-text" id="viText">
             <span class="sec-label vi-label">WHAT WE DO</span>
-            <h2 class="sec-title vi-title">광고가 아닌<br /><em>경험으로 퍼집니다</em></h2>
-            <p class="vi-desc">소비자는 광고를 피하지만, 경험은 스스로 공유합니다. 인애드컴퍼니는 맘카페, 네이버카페, 커뮤니티 등 소비자가 직접 모이는 공간에서 자연스럽게 확산되는 바이럴 구조를 설계합니다.</p>
+            <h2 class="sec-title vi-title">광고보다 강한 건,<br /><em>후기처럼 퍼지는 경험</em></h2>
+            <p class="vi-desc">사람들은 설득당하기보다 납득할 때 움직입니다. 커뮤니티에서 '정보'로 받아들여지는 콘텐츠를 만들고, 공유된 흐름이 검색과 전환으로 이어지게 연결합니다.</p>
 
             {/* 강조 인용구 */}
             <blockquote class="vi-quote">
               <span class="vi-quote-bar"></span>
-              <p>광고처럼 느껴지지 않는 콘텐츠가 공유되고,<br />공유는 검색으로, 검색은 <strong>구매로 연결</strong>됩니다.</p>
+              <p>공유 → 검색 → 구매.<br />퍼지는 이유가 분명하면 <strong>결과도 따라옵니다.</strong></p>
             </blockquote>
 
             {/* 피처 리스트 — 번호 + 아이콘 */}
