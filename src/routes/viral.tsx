@@ -119,7 +119,7 @@ export const ViralPage = () => (
         <div class="mkt-features-head reveal-up">
           <p class="mkt-feat-eyebrow">Why INAAD</p>
           <h2 class="mkt-feat-title">
-            대행을 넘어,<br />
+            대행을 넘어,{' '}
             <span class="mkt-feat-accent">퍼널 전체를 책임지는 마케팅 파트너</span>
           </h2>
           <p class="mkt-feat-sub">

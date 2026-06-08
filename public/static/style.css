@@ -7716,9 +7716,11 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   font-size: clamp(28px, 4vw, 46px);
   font-weight: 800;
   color: #fff;
-  line-height: 1.18;
+  line-height: 1.28;
   letter-spacing: -0.04em;
   margin-bottom: 20px;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 .mkt-feat-accent {
   background: linear-gradient(90deg, #38bdf8, #a78bfa);
