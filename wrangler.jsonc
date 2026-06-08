@@ -9,7 +9,8 @@
   "kv_namespaces": [
     {
       "binding": "ADMIN_KV",
-      "id": "1f904f24e9cb4942b204b9259fd10267"
+      "id": "1f904f24e9cb4942b204b9259fd10267",
+      "preview_id": "1f904f24e9cb4942b204b9259fd10267"
     }
   ]
 }
