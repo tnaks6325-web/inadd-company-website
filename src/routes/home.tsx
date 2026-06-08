@@ -9,23 +9,32 @@ export const HomePage = () => (
     <section class="hero-slider" id="heroSlider">
 
       {/* ── 썸네일 가로 플로우 배경 ── */}
-      {/* 관리자 KV에서 로드한 ID로 JS가 교체. 아래는 초기 렌더용 기본값 */}
+      {/* 무한루프: 동일 세트를 2번 반복해야 translateX(-50%) 애니메이션이 끊김 없이 이어짐 */}
       <div class="thumb-flow" id="thumbFlow">
-        {[
-          ['bxSyt_y_Ais','Czd_fG-vw28','i2RUW-aBVOs','-cLr1dIyr3E','ZALygWK_vfY','tnzX39otCIs','IfEJ_v7Ep_A','gHJgYEAuCR0','sUcFRbbXMgw','tZkiS4_kOVc'],
-          ['1XcMjXaZqjU','FfS0ME4jX6g','bxSyt_y_Ais','Czd_fG-vw28','i2RUW-aBVOs','-cLr1dIyr3E','ZALygWK_vfY','tnzX39otCIs','IfEJ_v7Ep_A','gHJgYEAuCR0'],
-          ['sUcFRbbXMgw','tZkiS4_kOVc','1XcMjXaZqjU','FfS0ME4jX6g','bxSyt_y_Ais','Czd_fG-vw28','i2RUW-aBVOs','-cLr1dIyr3E','ZALygWK_vfY','tnzX39otCIs'],
-        ].map((row, ri) => (
-          <div class={`thumb-row thumb-row--${ri % 2 === 0 ? 'ltr' : 'rtl'}`}>
-            {row.map((id) => (
-              <div class="thumb-card">
-                <img src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`} alt="" loading="lazy"
-                  onerror={`if(!this.dataset.fb){this.dataset.fb='1';this.src='https://img.youtube.com/vi/${id}/hqdefault.jpg';}else{this.parentNode.style.display='none';}`}
-                  onload={`if(this.naturalWidth<=120){this.parentNode.style.display='none';}`} />
+        {(() => {
+          const ids = ['bxSyt_y_Ais','Czd_fG-vw28','i2RUW-aBVOs','-cLr1dIyr3E','ZALygWK_vfY','tnzX39otCIs','IfEJ_v7Ep_A','gHJgYEAuCR0','sUcFRbbXMgw','tZkiS4_kOVc','1XcMjXaZqjU','FfS0ME4jX6g'];
+          // 행마다 시작 오프셋 다르게 → 각 행이 다른 썸네일로 시작
+          const rows = [
+            ids,                                         // 행1: 0~11
+            [...ids.slice(4), ...ids.slice(0,4)],        // 행2: 4~11, 0~3
+            [...ids.slice(8), ...ids.slice(0,8)],        // 행3: 8~11, 0~7
+          ];
+          return rows.map((row, ri) => {
+            // 2배 복제 → translateX(-50%) 애니메이션이 끊김 없이 루프
+            const doubled = [...row, ...row];
+            return (
+              <div class={`thumb-row thumb-row--${ri % 2 === 0 ? 'ltr' : 'rtl'}`}>
+                {doubled.map((id) => (
+                  <div class="thumb-card">
+                    <img src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`} alt="" loading="lazy"
+                      onerror={`if(!this.dataset.fb){this.dataset.fb='1';this.src='https://img.youtube.com/vi/${id}/hqdefault.jpg';}else{this.parentNode.style.display='none';}`}
+                      onload={`if(this.naturalWidth<=120){this.parentNode.style.display='none';}`} />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        ))}
+            );
+          });
+        })()}
       </div>
       <div class="yt-overlay"></div>
 
@@ -1099,16 +1108,21 @@ export const HomePage = () => (
         var flow = document.getElementById('thumbFlow');
         if(flow){
           var ids = data.videos;
-          // 각 행에 ids를 골고루 배분 (최소 10장씩 채워서 루프 끊김 없게)
           var rows = flow.querySelectorAll('.thumb-row');
           rows.forEach(function(row, ri){
             // 행마다 시작 오프셋 다르게 → 각 행이 다른 썸네일로 시작
-            var offset = Math.floor(ri * ids.length / 3);
-            var html = '';
-            for(var i = 0; i < 10; i++){
-              var id = ids[(offset + i) % ids.length];
-              html += '<div class="thumb-card"><img src="https://img.youtube.com/vi/'+id+'/maxresdefault.jpg" alt="" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb=\'1\';this.src=\'https://img.youtube.com/vi/'+id+'/hqdefault.jpg\';}else{this.parentNode.style.display=\'none\';}" onload="if(this.naturalWidth<=120){this.parentNode.style.display=\'none\';}"></div>';
+            var offset = Math.floor(ri * ids.length / rows.length);
+            // 한 세트 구성
+            var set = [];
+            for(var i = 0; i < ids.length; i++){
+              set.push(ids[(offset + i) % ids.length]);
             }
+            // 2배 복제 → translateX(-50%) 무한루프 끊김 없이
+            var doubled = set.concat(set);
+            var html = '';
+            doubled.forEach(function(id){
+              html += '<div class="thumb-card"><img src="https://img.youtube.com/vi/'+id+'/maxresdefault.jpg" alt="" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb=\'1\';this.src=\'https://img.youtube.com/vi/'+id+'/hqdefault.jpg\';}else{this.parentNode.style.display=\'none\';}" onload="if(this.naturalWidth<=120){this.parentNode.style.display=\'none\';}"></div>';
+            });
             row.innerHTML = html;
           });
         }
