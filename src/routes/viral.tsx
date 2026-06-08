@@ -299,8 +299,8 @@ export const ViralPage = () => (
             <span class="mkt-cta-grad">모르겠다면?</span>
           </h2>
           <p class="mkt-cta-desc">
-            무료 상담을 통해 브랜드에 가장 효과적인 퍼널 솔루션을 찾아드립니다.<br />
-            전략 설계부터 실행까지 인애드컴퍼니가 함께합니다.
+            무료 상담을 통해 브랜드에 가장 효과적인 퍼널 솔루션을 찾아드리고<br />
+            전략 설계부터 실행까지 인애드컴퍼니가 함께하겠습니다.
           </p>
           <div class="mkt-cta-pills">
             <span>✅ 무료 상담</span>
