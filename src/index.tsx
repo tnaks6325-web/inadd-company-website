@@ -817,24 +817,6 @@ function adminDashboardHTML(): string {
         <button class="btn btn-primary" style="margin-top:20px" id="btnSaveStats"><i class="fas fa-save"></i> 수치 저장</button>
       </div>
 
-      <!-- 슬라이드 전환 간격 -->
-      <div class="panel">
-        <div class="panel-header">
-          <div class="panel-title"><i class="fas fa-clock"></i> 슬라이드 전환 간격</div>
-        </div>
-        <p style="color:#666;font-size:13px;margin-bottom:16px">메인 영상이 자동으로 넘어가는 시간 간격을 설정합니다. <strong>최소 1초 / 최대 30초</strong></p>
-        <div class="form-row single">
-          <div class="form-group" style="max-width:200px">
-            <label>전환 간격 (초)</label>
-            <div style="display:flex;align-items:center;gap:10px">
-              <input type="number" id="slideInterval" min="1" max="30" step="1" value="7" style="width:90px;text-align:center;font-size:18px;font-weight:700">
-              <span style="color:#888;font-size:14px">초마다 전환</span>
-            </div>
-            <small style="color:#555;font-size:11px;margin-top:6px;display:block">기본값 7초 · 범위 1 ~ 30초</small>
-          </div>
-        </div>
-        <button class="btn btn-primary" style="margin-top:16px" id="btnSaveInterval"><i class="fas fa-save"></i> 간격 저장</button>
-      </div>
     </div>
 
     <!-- ───────── ABOUT ───────── -->
