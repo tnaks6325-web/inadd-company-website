@@ -19383,3 +19383,58 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   .dct-check-grid { grid-template-columns: 1fr; }
   .dct-radio-grid { flex-direction: column; }
 }
+
+/* ═══════════════════════════════════════════════
+   CUSTOM CURSOR — dot + ring
+   모바일/터치에서는 JS가 실행 안 되므로 기본 커서 유지
+═══════════════════════════════════════════════ */
+/* 기본 커서 숨김 (JS 로드 후 .cursor-ready body에서만) */
+body.cursor-ready * { cursor: none !important; }
+
+/* dot — 작은 흰 원, 즉시 이동 */
+#cursorDot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 8px; height: 8px;
+  background: #ffffff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity 0.2s, width 0.18s, height 0.18s, background 0.18s;
+  will-change: transform;
+}
+/* ring — 파란 링, lerp으로 따라옴 */
+#cursorRing {
+  position: fixed;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(41, 121, 255, 0.7);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  opacity: 0;
+  transition: opacity 0.2s, width 0.22s cubic-bezier(0.34,1.56,0.64,1), height 0.22s cubic-bezier(0.34,1.56,0.64,1), border-color 0.22s;
+  will-change: transform;
+}
+
+/* hover 상태 — ring 커짐, dot 색 전환 */
+#cursorRing.cursor-ring--hover {
+  width: 52px; height: 52px;
+  border-color: rgba(41, 121, 255, 0.5);
+  background: rgba(41, 121, 255, 0.06);
+}
+#cursorDot.cursor-dot--hover {
+  width: 6px; height: 6px;
+  background: var(--blue-bright, #2979ff);
+}
+
+/* 클릭 상태 — 수축 */
+#cursorRing.cursor-ring--click {
+  width: 26px; height: 26px;
+  border-color: rgba(41, 121, 255, 0.9);
+}
+#cursorDot.cursor-dot--click {
+  width: 10px; height: 10px;
+  background: var(--blue-bright, #2979ff);
+}

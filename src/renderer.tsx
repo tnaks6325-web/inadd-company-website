@@ -76,6 +76,9 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
         <link href="/static/style.css?v=20260606a" rel="stylesheet" />
       </head>
       <body>
+        {/* ── 커스텀 커서 ── */}
+        <div id="cursorDot" aria-hidden="true"></div>
+        <div id="cursorRing" aria-hidden="true"></div>
         {/* Ribbons 마운트 포인트 */}
         <div id="ribbon-mount"></div>
         <header class="site-header" id="site-header">
@@ -207,6 +210,7 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
             <p class="call-modal-hours">운영시간 · 평일 09:00 – 18:00</p>
           </div>
         </div>
+        <script src="/static/cursor.js"></script>
         <script src="/static/main.js"></script>
         {/* ── Ribbons 커서 ── */}
         <script type="module" dangerouslySetInnerHTML={{ __html: `
