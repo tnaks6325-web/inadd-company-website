@@ -1211,13 +1211,21 @@ export const ContactPage = () => (
             date2: '2순위 날짜', time2: '2순위 시간',
             note: '사전 질문 / 궁금한 점'
           };
+          var mailPayload = {};
           fd.forEach(function(val, key) {
             if (key === 'privacyAgree') return;
             if (!val || val === '') return;
             var label = kLabelMap[key] || key;
             var displayVal = (key === 'meetingType') ? (meetingTypeLabel[val] || val) : val;
             _kickoffFormData[label] = displayVal;
+            mailPayload[key] = displayVal;
           });
+          // 메일 발송 (백그라운드)
+          fetch('/api/mail/kickoff', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(mailPayload)
+          }).catch(function(){});
 
           form.style.transition = 'opacity 0.3s ease';
           form.style.opacity = '0';
@@ -1233,6 +1241,20 @@ export const ContactPage = () => (
           e.preventDefault();
           var form    = document.getElementById('brochureForm');
           var success = document.getElementById('brochureSuccess');
+          // 폼 데이터 수집
+          var fd = new FormData(form);
+          var mailPayload = {};
+          fd.forEach(function(val, key) {
+            if (key === 'privacy') return;
+            mailPayload[key] = val;
+          });
+          // 메일 발송 (백그라운드)
+          fetch('/api/mail/brochure', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(mailPayload)
+          }).catch(function(){});
+
           form.style.transition = 'opacity 0.3s ease';
           form.style.opacity = '0';
           setTimeout(function() {
@@ -1262,12 +1284,23 @@ export const ContactPage = () => (
             service:'관심 서비스'
           };
           var services = [];
+          var mailPayload = { formType: type };
           fd.forEach(function(val, key) {
             if (key === 'service') { services.push(val); return; }
             if (key === 'privacy') return;
             _submittedFormData[labelMap[key] || key] = val;
+            mailPayload[key] = val;
           });
-          if (services.length) _submittedFormData['관심 서비스'] = services.join(', ');
+          if (services.length) {
+            _submittedFormData['관심 서비스'] = services.join(', ');
+            mailPayload['services'] = services.join(', ');
+          }
+          // 메일 발송 (백그라운드)
+          fetch('/api/mail/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(mailPayload)
+          }).catch(function(){});
 
           form.style.transition = 'opacity 0.3s ease';
           form.style.opacity = '0';

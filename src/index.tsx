@@ -17,6 +17,7 @@ import { SvcReviewPage } from './routes/svc-review'
 import { SvcOliveYoungPage } from './routes/svc-oliveyoung'
 import { SvcPplPage } from './routes/svc-ppl'
 import { admin } from './admin/api'
+import { MailRouter } from './routes/api-mail'
 
 const app = new Hono()
 
@@ -25,6 +26,7 @@ app.use('/static/*', serveStatic({ root: './' }))
 
 // Admin API
 app.route('/api/admin', admin)
+app.route('/api/mail', MailRouter)
 
 // Renderer middleware
 app.use(renderer)
