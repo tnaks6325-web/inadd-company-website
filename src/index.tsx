@@ -765,12 +765,12 @@ function adminDashboardHTML(): string {
       <!-- 영상 링크 -->
       <div class="panel">
         <div class="panel-header">
-          <div class="panel-title"><i class="fas fa-video"></i> 메인 영상 링크</div>
+          <div class="panel-title"><i class="fas fa-th-large"></i> 홈 썸네일 배경 영상</div>
           <button class="btn btn-secondary btn-sm" id="btnAddVideo"><i class="fas fa-plus"></i> 추가</button>
         </div>
-        <p style="color:#666;font-size:13px;margin-bottom:16px">YouTube 링크 또는 영상 ID를 붙여넣으면 자동으로 인식합니다.<br><small style="color:#444">예시: https://www.youtube.com/watch?v=<strong style="color:#1a6bff">HZaDW00sldo</strong> 또는 https://youtu.be/<strong style="color:#1a6bff">HZaDW00sldo</strong></small></p>
+        <p style="color:#666;font-size:13px;margin-bottom:16px">홈 메인 화면 배경에 흐르는 <strong style="color:#1a6bff">유튜브 썸네일 그리드</strong>에 표시할 영상을 등록합니다.<br>YouTube 링크 또는 영상 ID를 붙여넣으면 자동으로 인식합니다.<br><small style="color:#444">예시: https://www.youtube.com/watch?v=<strong style="color:#1a6bff">HZaDW00sldo</strong> 또는 https://youtu.be/<strong style="color:#1a6bff">HZaDW00sldo</strong></small></p>
         <div class="video-list" id="videoList"></div>
-        <button class="btn btn-primary" id="btnSaveVideos"><i class="fas fa-save"></i> 영상 저장</button>
+        <button class="btn btn-primary" id="btnSaveVideos"><i class="fas fa-save"></i> 썸네일 저장</button>
       </div>
 
       <!-- 회사소개서 링크 -->
