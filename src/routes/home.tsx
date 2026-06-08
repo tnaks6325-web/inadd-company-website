@@ -9,21 +9,26 @@ export const HomePage = () => (
     <section class="hero-slider" id="heroSlider">
 
       {/* ── 썸네일 가로 플로우 배경 ── */}
-      {/* 무한루프: 동일 세트를 2번 반복해야 translateX(-50%) 애니메이션이 끊김 없이 이어짐 */}
+      {/* 각 행마다 다른 순서로 섞어서 다양해 보이게 + 2배 복제로 끊김 없는 무한루프 */}
       <div class="thumb-flow" id="thumbFlow">
         {(() => {
           const ids = ['bxSyt_y_Ais','Czd_fG-vw28','i2RUW-aBVOs','-cLr1dIyr3E','ZALygWK_vfY','tnzX39otCIs','IfEJ_v7Ep_A','gHJgYEAuCR0','sUcFRbbXMgw','tZkiS4_kOVc','1XcMjXaZqjU','FfS0ME4jX6g'];
-          // 행마다 시작 오프셋 다르게 → 각 행이 다른 썸네일로 시작
+          // 각 행마다 고정된 다른 순서 (시드 기반 셔플)
           const rows = [
-            ids,                                         // 행1: 0~11
-            [...ids.slice(4), ...ids.slice(0,4)],        // 행2: 4~11, 0~3
-            [...ids.slice(8), ...ids.slice(0,8)],        // 행3: 8~11, 0~7
+            // 행1 → ltr (왼쪽으로)
+            ['bxSyt_y_Ais','IfEJ_v7Ep_A','Czd_fG-vw28','tZkiS4_kOVc','i2RUW-aBVOs','gHJgYEAuCR0','-cLr1dIyr3E','FfS0ME4jX6g','ZALygWK_vfY','sUcFRbbXMgw','tnzX39otCIs','1XcMjXaZqjU'],
+            // 행2 → rtl (오른쪽으로)
+            ['gHJgYEAuCR0','-cLr1dIyr3E','1XcMjXaZqjU','bxSyt_y_Ais','sUcFRbbXMgw','Czd_fG-vw28','FfS0ME4jX6g','tnzX39otCIs','tZkiS4_kOVc','IfEJ_v7Ep_A','ZALygWK_vfY','i2RUW-aBVOs'],
+            // 행3 → ltr (왼쪽으로)
+            ['tnzX39otCIs','tZkiS4_kOVc','gHJgYEAuCR0','ZALygWK_vfY','1XcMjXaZqjU','bxSyt_y_Ais','sUcFRbbXMgw','-cLr1dIyr3E','IfEJ_v7Ep_A','Czd_fG-vw28','i2RUW-aBVOs','FfS0ME4jX6g'],
           ];
+          // 방향: ltr, rtl, ltr
+          const dirs = ['ltr', 'rtl', 'ltr'];
           return rows.map((row, ri) => {
-            // 2배 복제 → translateX(-50%) 애니메이션이 끊김 없이 루프
+            // 2배 복제 → translateX(-50%) 무한루프 끊김 없이
             const doubled = [...row, ...row];
             return (
-              <div class={`thumb-row thumb-row--${ri % 2 === 0 ? 'ltr' : 'rtl'}`}>
+              <div class={`thumb-row thumb-row--${dirs[ri]}`}>
                 {doubled.map((id) => (
                   <div class="thumb-card">
                     <img src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`} alt="" loading="lazy"
@@ -1109,16 +1114,21 @@ export const HomePage = () => (
         if(flow){
           var ids = data.videos;
           var rows = flow.querySelectorAll('.thumb-row');
-          rows.forEach(function(row, ri){
-            // 행마다 시작 오프셋 다르게 → 각 행이 다른 썸네일로 시작
-            var offset = Math.floor(ri * ids.length / rows.length);
-            // 한 세트 구성
-            var set = [];
-            for(var i = 0; i < ids.length; i++){
-              set.push(ids[(offset + i) % ids.length]);
+          // 시드 기반 셔플 — 행마다 다른 순서
+          function seededShuffle(arr, seed) {
+            var a = arr.slice();
+            for(var i = a.length - 1; i > 0; i--){
+              seed = (seed * 1664525 + 1013904223) & 0xffffffff;
+              var j = Math.abs(seed) % (i + 1);
+              var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
             }
+            return a;
+          }
+          rows.forEach(function(row, ri){
+            // 행마다 다른 시드로 셔플 → 완전히 다른 순서
+            var shuffled = seededShuffle(ids, ri * 31337 + 42);
             // 2배 복제 → translateX(-50%) 무한루프 끊김 없이
-            var doubled = set.concat(set);
+            var doubled = shuffled.concat(shuffled);
             var html = '';
             doubled.forEach(function(id){
               html += '<div class="thumb-card"><img src="https://img.youtube.com/vi/'+id+'/maxresdefault.jpg" alt="" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb=\'1\';this.src=\'https://img.youtube.com/vi/'+id+'/hqdefault.jpg\';}else{this.parentNode.style.display=\'none\';}" onload="if(this.naturalWidth<=120){this.parentNode.style.display=\'none\';}"></div>';
