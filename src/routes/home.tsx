@@ -9,10 +9,22 @@ export const HomePage = () => (
     <section class="hero-slider" id="heroSlider">
 
       {/* ── 썸네일 가로 플로우 배경 ── */}
+      {/* 관리자 KV에서 로드한 ID로 JS가 교체. 아래는 초기 렌더용 기본값 */}
       <div class="thumb-flow" id="thumbFlow">
-        <div class="thumb-row thumb-row--ltr"></div>
-        <div class="thumb-row thumb-row--rtl"></div>
-        <div class="thumb-row thumb-row--ltr"></div>
+        {[
+          ['bxSyt_y_Ais','Czd_fG-vw28','i2RUW-aBVOs','-cLr1dIyr3E','ZALygWK_vfY','tnzX39otCIs','IfEJ_v7Ep_A','gHJgYEAuCR0','sUcFRbbXMgw','tZkiS4_kOVc'],
+          ['1XcMjXaZqjU','FfS0ME4jX6g','bxSyt_y_Ais','Czd_fG-vw28','i2RUW-aBVOs','-cLr1dIyr3E','ZALygWK_vfY','tnzX39otCIs','IfEJ_v7Ep_A','gHJgYEAuCR0'],
+          ['sUcFRbbXMgw','tZkiS4_kOVc','1XcMjXaZqjU','FfS0ME4jX6g','bxSyt_y_Ais','Czd_fG-vw28','i2RUW-aBVOs','-cLr1dIyr3E','ZALygWK_vfY','tnzX39otCIs'],
+        ].map((row, ri) => (
+          <div class={`thumb-row thumb-row--${ri % 2 === 0 ? 'ltr' : 'rtl'}`}>
+            {row.map((id) => (
+              <div class="thumb-card">
+                <img src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`} alt="" loading="lazy"
+                  onerror={`this.src='https://img.youtube.com/vi/${id}/hqdefault.jpg'`} />
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
       <div class="yt-overlay"></div>
 
