@@ -20,7 +20,8 @@ export const HomePage = () => (
             {row.map((id) => (
               <div class="thumb-card">
                 <img src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`} alt="" loading="lazy"
-                  onerror={`this.src='https://img.youtube.com/vi/${id}/hqdefault.jpg'`} />
+                  onerror={`if(!this.dataset.fb){this.dataset.fb='1';this.src='https://img.youtube.com/vi/${id}/hqdefault.jpg';}else{this.parentNode.style.display='none';}`}
+                  onload={`if(this.naturalWidth<=120){this.parentNode.style.display='none';}`} />
               </div>
             ))}
           </div>
@@ -1106,7 +1107,7 @@ export const HomePage = () => (
             var html = '';
             for(var i = 0; i < 10; i++){
               var id = ids[(offset + i) % ids.length];
-              html += '<div class="thumb-card"><img src="https://img.youtube.com/vi/'+id+'/maxresdefault.jpg" alt="" loading="lazy" onerror="if(this.dataset.retry===\'1\'){this.parentNode.classList.add(\'thumb-deleted\');this.remove()}else{this.dataset.retry=\'1\';this.src=\'https://img.youtube.com/vi/'+id+'/hqdefault.jpg\'}"></div>';
+              html += '<div class="thumb-card"><img src="https://img.youtube.com/vi/'+id+'/maxresdefault.jpg" alt="" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb=\'1\';this.src=\'https://img.youtube.com/vi/'+id+'/hqdefault.jpg\';}else{this.parentNode.style.display=\'none\';}" onload="if(this.naturalWidth<=120){this.parentNode.style.display=\'none\';}"></div>';
             }
             row.innerHTML = html;
           });
