@@ -358,7 +358,7 @@ em {
 
 /* 짝수 행: 왼쪽→오른쪽 */
 .thumb-row--rtl {
-  animation: thumbScrollRtl 36s linear infinite;
+  animation: thumbScrollLtr 36s linear infinite reverse;
 }
 
 @keyframes thumbScrollLtr {
@@ -366,10 +366,7 @@ em {
   to   { transform: translateX(-50%); }
 }
 
-@keyframes thumbScrollRtl {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
-}
+/* rtl용 keyframe 삭제 — thumbScrollLtr + reverse로 대체 */
 
 /* 썸네일 카드 */
 .thumb-card {
