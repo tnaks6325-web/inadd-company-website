@@ -20,14 +20,14 @@ export const SvcInfluencerPage = () => (
         </div>
 
         <h1 class="vh-title">
-          <span class="vh-tline" id="ifL1">'좋은것 같다'는 추측이 아닌,</span>
-          <span class="vh-tline" id="ifL2" style="background:linear-gradient(135deg,#fff 20%,rgba(168,85,247,0.95) 60%,rgba(236,72,153,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">'이겁니다'를 말해드립니다.</span>
+          <span class="vh-tline" id="ifL1">'좋은 것 같다'는 추측이 아닌,</span>
+          <span class="vh-tline" id="ifL2" style="background:linear-gradient(135deg,#fff 20%,rgba(168,85,247,0.95) 60%,rgba(236,72,153,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">'이겁니다'를 근거로 말합니다.</span>
         </h1>
 
         <div class="vh-sub-wrap" id="ifSub">
-          <p class="vh-sub">인애드만의 <strong style="color:rgba(255,255,255,0.9)">인플루언서 분석 프로그램</strong>을 통해 필터링 후</p>
-          <p class="vh-sub">브랜드 메시지와 크리에이터 핏을 비교 및 제안합니다.</p>
-          <p class="vh-sub" style="margin-top:12px">데이터 기반의 정교한 매칭으로 <span style="color:rgba(168,85,247,0.9);font-weight:600">최고의 퍼포먼스를 창출합니다.</span></p>
+          <p class="vh-sub">인애드만의 <strong style="color:rgba(255,255,255,0.9)">인플루언서 분석 프로세스</strong>로 후보를 먼저 걸러냅니다.</p>
+          <p class="vh-sub">그다음 브랜드 메시지와 크리에이터의 결을 비교해, <span style="color:rgba(255,255,255,0.85);font-weight:500">"왜 이 조합인지"까지 제안합니다.</span></p>
+          <p class="vh-sub" style="margin-top:12px">데이터 기반 매칭으로 <span style="color:rgba(168,85,247,0.9);font-weight:600">캠페인의 퍼포먼스를 시작부터 유리하게 만듭니다.</span></p>
         </div>
 
         <div class="vh-kpi-strip" id="ifKpi"></div>
