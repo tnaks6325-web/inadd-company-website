@@ -213,22 +213,22 @@ export const SvcInfluencerPage = () => (
           </div>
           <div class="ifl-data-text">
             <div class="ifl-data-num">02</div>
-            <h3 class="ifl-data-title">어떤 조건이든 세밀하게 맞춰<br /><strong>꼭 맞는 크리에이터를 찾아드립니다</strong></h3>
+            <h3 class="ifl-data-title">조건이 까다로울수록 강해집니다.<br /><strong>맞는 크리에이터, 정확히 찾아드립니다.</strong></h3>
             <p class="ifl-data-desc">
-              카테고리, 구독자 규모, 업로드 주기 등 —
-              브랜드의 목적과 예산에 맞는 채널을 <strong>1,520+개 검증 DB에서 신중하게 추려</strong>
-              제안드립니다. 기준에 미치지 못하는 채널은 DB에서 지속적으로 정리됩니다.
+              카테고리·구독자·타깃·업로드 주기까지, 목적과 예산에 맞춰 후보를 좁힙니다.<br />
+              <strong>1,520+ 검증 DB</strong>를 기반으로 선별하고, 기준에 맞지 않는 채널은 데이터로 지속 정리합니다.<br />
+              그래서 "아무나"가 아니라 <strong>"딱 맞는" 제안</strong>이 나옵니다.
             </p>
 
             {/* 필터 태그 칩 */}
             <div class="ifl-data-tags">
-              <span class="ifl-data-tag"># 영상 조회수 유지율 최상위</span>
-              <span class="ifl-data-tag"># 연예인/셀럽 인플루언서</span>
-              <span class="ifl-data-tag"># 커플/부부 라이프스타일</span>
-              <span class="ifl-data-tag"># 먹방/맛집 투어 전문</span>
-              <span class="ifl-data-tag"># 남성 패션/그루밍</span>
-              <span class="ifl-data-tag"># 급상승 구독자 알고리즘 침투</span>
-              <span class="ifl-data-tag ifl-data-tag--more"># 조회수 대비 저평가 가성비 유튜버</span>
+              <span class="ifl-data-tag"># 조회수 강한 유튜브</span>
+              <span class="ifl-data-tag"># 셀럽/매니지먼트 크리에이터</span>
+              <span class="ifl-data-tag"># 커플·부부 라이프</span>
+              <span class="ifl-data-tag"># IT·디바이스 리뷰</span>
+              <span class="ifl-data-tag"># 남성 패션·그루밍</span>
+              <span class="ifl-data-tag"># 성장세 높은 채널</span>
+              <span class="ifl-data-tag ifl-data-tag--more"># 가성비 좋은 채널(조회수 대비 단가)</span>
             </div>
 
             {/* 실시간 DB 배지 */}
