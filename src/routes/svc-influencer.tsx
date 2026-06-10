@@ -184,16 +184,16 @@ export const SvcInfluencerPage = () => (
         <div class="ifl-data-row">
           <div class="ifl-data-text">
             <div class="ifl-data-num">01</div>
-            <h3 class="ifl-data-title">구독자 수 너머의 지표로<br /><strong>광고 효과를 미리 가늠합니다</strong></h3>
+            <h3 class="ifl-data-title">구독자보다 중요한 건 '실제 반응'입니다.<br /><strong>광고 효과를 예측합니다.</strong></h3>
             <p class="ifl-data-desc">
-              크리에이터를 제안드릴 때, 구독자 수는 하나의 참고 지표일 뿐입니다.
-              <strong>구독자 대비 실제 조회수 달성률</strong>, 영상별 유지율을 함께 살펴보고
-              광고 효과를 미리 검토한 뒤 제안드립니다.
+              크리에이터를 제안할 때 구독자 수는 참고일 뿐입니다.<br />
+              실제 조회수 흐름, 평균 조회수, 참여율 같은 지표로 채널의 영향력을 먼저 확인합니다.<br />
+              노출과 반응이 어디서 만들어지는지까지 보고, <strong>캠페인 성과를 더 정확하게 그립니다.</strong>
             </p>
             <ul class="ifl-data-points">
-              <li><span class="ifl-data-dot"></span>구독자 대비 조회수 달성률 — 채널 실질 영향력 파악</li>
-              <li><span class="ifl-data-dot"></span>조회수 유지율 — 광고 노출 구간 예측</li>
-              <li><span class="ifl-data-dot"></span>구독자 이상 급증 채널은 제안 대상에서 제외</li>
+              <li><span class="ifl-data-dot"></span>구독자 대비 '실조회수' 분석 → 채널의 실제 영향력 확인</li>
+              <li><span class="ifl-data-dot"></span>조회수 유지율(시청 지속) 체크 → 광고 노출 구간/이탈 구간 예측</li>
+              <li><span class="ifl-data-dot"></span>지표 왜곡이 의심되는 채널 제외 → 리스크를 사전에 차단</li>
             </ul>
             <div class="ifl-data-insight-bar">
               <svg viewBox="0 0 18 18" fill="none" width="16" height="16"><circle cx="9" cy="9" r="8" stroke="#1a6bff" stroke-width="1.4"/><path d="M9 5v4l3 2" stroke="#1a6bff" stroke-width="1.4" stroke-linecap="round"/></svg>
