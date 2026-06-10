@@ -31,14 +31,7 @@ export const DEFAULT_DATA = {
   ]),
 
   // ── Works ──
-  works_items: JSON.stringify([
-    { id:1, brand:'파파레시피', overlay:'papa recipe', thumb:'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80', tags:['viral','influencer'], services:'프로모션 바이럴 · 브랜드 콘텐츠 제작 · PPL' },
-    { id:2, brand:'롯데제과', overlay:'빼빼로', thumb:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80', tags:['viral'], services:'프로모션 바이럴 · 브랜드 콘텐츠 제작 · 신제품 런칭' },
-    { id:3, brand:'지마켓', overlay:'G market', thumb:'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80', tags:['influencer','seo'], services:'프로모션 바이럴 · 마케팅 기획' },
-    { id:4, brand:'LG전자', overlay:'LG', thumb:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80', tags:['influencer','seeding'], services:'브랜드 런레포 제작 · 소셜미디어 체험단 · 프로모션 바이럴' },
-    { id:5, brand:'식품브랜드', overlay:'FOOD', thumb:'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=80', tags:['review','seeding'], services:'리뷰 마케팅 · 시딩 캠페인' },
-    { id:6, brand:'뷰티브랜드', overlay:'BEAUTY', thumb:'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80', tags:['seeding','oliveyoung'], services:'올리브영 마케팅 · 시딩 캠페인' },
-  ]),
+  works_items: JSON.stringify([]),
 
   // ── Insight ──
   insight_posts: JSON.stringify([]),
