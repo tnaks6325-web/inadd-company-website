@@ -58,13 +58,13 @@ async function sendMail(
 
 /* ─────────────────────────────────────────────
    Google Drive URL → 직접 다운로드 URL 변환
-   /view  →  /export?format=pdf
+   일반 업로드 PDF: /uc?export=download&id=FILE_ID
+   (Google Docs /export?format=pdf 는 Docs 전용 — 일반 PDF에 사용 불가)
 ───────────────────────────────────────────── */
 function toDriveDownloadUrl(driveUrl: string): string {
-  // https://drive.google.com/file/d/FILE_ID/view  →  /export?format=pdf
   const match = driveUrl.match(/\/file\/d\/([^/]+)/)
   if (match) {
-    return `https://drive.google.com/file/d/${match[1]}/export?format=pdf`
+    return `https://drive.google.com/uc?export=download&id=${match[1]}`
   }
   return driveUrl
 }
