@@ -116,8 +116,7 @@ export const SvcInfluencerPage = () => (
           </h2>
           <p class="ifl-data-subhead">
             구독자 수치만으로는 광고의 성과를 담보할 수 없습니다.<br />
-            실질적인 데이터를 기반으로 <strong>브랜드에 진짜 맞는 크리에이터</strong>를
-            신중하게 검토하고 제안해 드립니다.
+            실질적인 데이터를 기반으로 <strong>브랜드에 진짜 맞는 크리에이터</strong>를 신중하게 검토하고 제안해 드립니다.
           </p>
 
           {/* 3단계 플로우 */}
