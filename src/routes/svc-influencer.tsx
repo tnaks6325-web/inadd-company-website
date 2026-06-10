@@ -267,33 +267,31 @@ export const SvcInfluencerPage = () => (
             <span class="ifl2-diff-sup">INFLUENCER &amp; YOUTUBE MARKETING</span>
             <h2 class="ifl2-diff-title">
               인애드컴퍼니의<br />
-              <em>제안 크리에이터</em>
+              <em>크리에이터 제안 기준</em>
             </h2>
             <blockquote class="ifl2-diff-quote">
-              "인애드컴퍼니는<br />
-              대한민국 크리에이터 시장의<br />
-              <strong>거품가를 인지하고</strong><br />
-              최대한 <strong>합리적인 크리에이터</strong>로<br />
-              제안드립니다."
+              "시장 단가를 아는 만큼,<br />
+              예산을 <strong>'합리화'</strong>합니다.<br />
+              유명함보다 <strong>성과 가능성</strong>을 먼저 봅니다."
             </blockquote>
             <ul class="ifl2-diff-criteria">
               <li>
                 <div class="ifl2-diff-cicon ifl2-diff-cicon--ban">
                   <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M4 4l12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </div>
-                <span>시장 과열가 배제</span>
+                <span>과열 단가, 먼저 걸러냅니다</span>
               </li>
               <li>
                 <div class="ifl2-diff-cicon ifl2-diff-cicon--search">
                   <svg viewBox="0 0 20 20" fill="none"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M14 14l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </div>
-                <span>비용 대비 퍼포먼스 검증</span>
+                <span>비용 대비 성과 가능성 검증</span>
               </li>
               <li>
                 <div class="ifl2-diff-cicon ifl2-diff-cicon--growth">
                   <svg viewBox="0 0 20 20" fill="none"><path d="M3 15l4-5 4 3 6-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
-                <span>성장 포텐셜 분석</span>
+                <span>성장 가능성까지 함께 봅니다</span>
               </li>
             </ul>
           </div>
@@ -304,7 +302,7 @@ export const SvcInfluencerPage = () => (
           {/* ── 오른쪽: 케이스 카드 ── */}
           <div class="ifl2-diff-right">
 
-            {/* CASE 1 — 합리적 제안 */}
+            {/* CASE 1 — 효율 기준 통과 */}
             <div class="ifl2-case-card ifl2-case-card--good">
               <div class="ifl2-case-glow"></div>
               <div class="ifl2-case-header">
@@ -312,60 +310,43 @@ export const SvcInfluencerPage = () => (
                   <svg viewBox="0 0 12 12" fill="none" width="10" height="10"><circle cx="6" cy="6" r="5" fill="rgba(26,107,255,0.3)"/><path d="M3 6l2 2 4-4" stroke="rgba(26,107,255,1)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   진행 확정
                 </div>
-                <span class="ifl2-case-title">CASE: 합리적 제안</span>
+                <span class="ifl2-case-title">CASE: 효율 기준 통과</span>
                 <div class="ifl2-case-check">
                   <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="10" fill="rgba(26,107,255,0.15)" stroke="rgba(26,107,255,0.5)" stroke-width="1.5"/><path d="M7 12l3.5 3.5L17 8" stroke="rgba(26,107,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
               </div>
-              <div class="ifl2-case-price">
-                <div class="ifl2-case-price-from">
-                  <span class="ifl2-case-price-label">내부 예상 단가</span>
-                  <span class="ifl2-case-price-val">800 – 1,000만원</span>
-                </div>
-                <div class="ifl2-case-arrow">
-                  <svg viewBox="0 0 24 10" fill="none" width="28"><path d="M0 5h22M17 1l5 4-5 4" stroke="rgba(26,107,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <div class="ifl2-case-price-to">
-                  <span class="ifl2-case-price-label ifl2-case-price-label--em">실제 집행 비용</span>
-                  <span class="ifl2-case-price-num ifl2-case-price-num--good">500만원</span>
-                </div>
-              </div>
+              <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:0 0 12px;line-height:1.6;">
+                예산 안에서 성과 확률이 높은 조합만 남깁니다.<br />
+                단가·반응지표·콘텐츠 적합도를 기준으로 검증했고,<br />진행 가능한 안으로 확정합니다.
+              </p>
               <ul class="ifl2-case-points ifl2-case-points--good">
-                <li>예상보다 하회 단가 / 높은 퍼포먼스 / 팬층 반응도 고루 보유</li>
-                <li>비슷한 수준의 퍼포먼스는 보통 준메이저급부터 나오는 편</li>
-                <li>향후 성장 포텐셜 <strong>매우 높음</strong></li>
+                <li>예산 대비 성과 가능성 기준으로 선별</li>
+                <li>단가·조회수 흐름·반응지표 교차 검증</li>
+                <li>브랜드 메시지 적합도까지 확인 후 <strong>확정</strong></li>
               </ul>
             </div>
 
-            {/* CASE 2 — 비효율 제안 */}
+            {/* CASE 2 — 기준 미달 제외 */}
             <div class="ifl2-case-card ifl2-case-card--bad">
               <div class="ifl2-case-header">
                 <div class="ifl2-case-badge ifl2-case-badge--bad">
                   <svg viewBox="0 0 12 12" fill="none" width="10" height="10"><circle cx="6" cy="6" r="5" fill="rgba(100,100,120,0.3)"/><path d="M4 4l4 4M8 4l-4 4" stroke="rgba(140,140,160,0.8)" stroke-width="1.2" stroke-linecap="round"/></svg>
-                  리스트 삭제
+                  리스트 제외
                 </div>
-                <span class="ifl2-case-title ifl2-case-title--bad">CASE: 비효율 제안</span>
+                <span class="ifl2-case-title ifl2-case-title--bad">CASE: 기준 미달 제외</span>
                 <div class="ifl2-case-check ifl2-case-check--bad">
                   <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="10" fill="rgba(80,80,100,0.15)" stroke="rgba(100,100,130,0.35)" stroke-width="1.5"/><path d="M8 8l8 8M16 8l-8 8" stroke="rgba(120,120,140,0.6)" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </div>
               </div>
-              <div class="ifl2-case-price ifl2-case-price--bad">
-                <div class="ifl2-case-price-from">
-                  <span class="ifl2-case-price-label">내부 예상 단가</span>
-                  <span class="ifl2-case-price-val">200 – 300만원</span>
-                </div>
-                <div class="ifl2-case-arrow">
-                  <svg viewBox="0 0 24 10" fill="none" width="28"><path d="M0 5h22M17 1l5 4-5 4" stroke="rgba(120,120,140,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <div class="ifl2-case-price-to">
-                  <span class="ifl2-case-price-label">실제 집행 비용</span>
-                  <span class="ifl2-case-price-num ifl2-case-price-num--bad">500만원</span>
-                </div>
-              </div>
+              <p style="font-size:12px;color:rgba(255,255,255,0.3);margin:0 0 12px;line-height:1.6;">
+                성과 대비 비용이 과하거나, 지표가 불안정한 채널은<br />
+                리스트에서 자체 제외합니다.<br />
+                <span style="color:rgba(255,255,255,0.45)">"그럴듯한 제안"보다, 예산을 지키는 정리가 먼저입니다.</span>
+              </p>
               <ul class="ifl2-case-points ifl2-case-points--bad">
-                <li>1개월 내 광고 미집행 / 낮은 퍼포먼스 / 예상대비 고비용</li>
-                <li>광고 시장득성상 괜찮은 크리에이터는 1개월 내 광고 필수 진행</li>
-                <li>향후 성장 포텐셜 <strong>낮음</strong> (리스트 가치가 낮음)</li>
+                <li>단가 대비 기대효과 낮음 → <strong style="color:rgba(120,120,140,0.8)">제외</strong></li>
+                <li>조회수 편차 / 지표 불안정 → <strong style="color:rgba(120,120,140,0.8)">제외</strong></li>
+                <li>브랜드 적합도 낮음 → <strong style="color:rgba(120,120,140,0.8)">제외</strong></li>
               </ul>
             </div>
 
