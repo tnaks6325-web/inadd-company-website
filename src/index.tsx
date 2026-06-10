@@ -789,6 +789,41 @@ function adminDashboardHTML(): string {
         <button class="btn btn-primary" id="btnSaveBrochure"><i class="fas fa-save"></i> 저장</button>
       </div>
 
+      <!-- 소개서 메일 템플릿 -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fas fa-envelope-open-text"></i> 소개서 메일 템플릿</div>
+        </div>
+        <p style="color:#666;font-size:13px;margin-bottom:20px;">
+          광고주가 소개서를 신청하면 자동 발송되는 이메일의 내용을 수정합니다.<br>
+          <small style="color:#444">줄바꿈은 Enter를 누르면 메일에서도 줄바꿈으로 적용됩니다.</small>
+        </p>
+        <div class="form-row single" style="margin-bottom:16px;">
+          <div class="form-group">
+            <label>헤더 제목 <small style="color:#555;font-weight:400">(이메일 상단 큰 제목)</small></label>
+            <textarea id="brochureMailHeadline" rows="2"
+              style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;font-size:14px;padding:10px 14px;resize:vertical;font-family:inherit;"
+              placeholder="회사소개서를&#10;보내드립니다."></textarea>
+          </div>
+        </div>
+        <div class="form-row single" style="margin-bottom:20px;">
+          <div class="form-group">
+            <label>헤더 서브 문구 <small style="color:#555;font-weight:400">(제목 아래 작은 설명)</small></label>
+            <textarea id="brochureMailBody" rows="3"
+              style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;font-size:14px;padding:10px 14px;resize:vertical;font-family:inherit;"
+              placeholder="요청해 주셔서 감사합니다.&#10;인애드컴퍼니의 서비스와 레퍼런스를 담은 소개서입니다."></textarea>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:20px;">
+          <label>서비스 태그 칩 <small style="color:#555;font-weight:400">(쉼표로 구분, 최대 6개 권장)</small></label>
+          <input type="text" id="brochureMailTags"
+            style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;font-size:14px;padding:10px 14px;"
+            placeholder="인플루언서, 바이럴 마케팅, SEO · 리뷰, PPL">
+          <div id="brochureTagPreview" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;"></div>
+        </div>
+        <button class="btn btn-primary" id="btnSaveBrochureMail"><i class="fas fa-save"></i> 템플릿 저장</button>
+      </div>
+
       <!-- KPI 수치 -->
       <div class="panel">
         <div class="panel-header">

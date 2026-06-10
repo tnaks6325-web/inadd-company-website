@@ -39,6 +39,11 @@ export const DEFAULT_DATA = {
   // ── Gallery (인애드 일상) ──
   gallery_items: JSON.stringify([]),
 
+  // ── 소개서 메일 템플릿 ──
+  brochure_mail_headline: '회사소개서를\n보내드립니다.',
+  brochure_mail_body: '요청해 주셔서 감사합니다.\n인애드컴퍼니의 서비스와 레퍼런스를 담은 소개서입니다.',
+  brochure_mail_tags: JSON.stringify(['인플루언서', '바이럴 마케팅', 'SEO · 리뷰', 'PPL']),
+
   // ── Contact ──
   contact_privacy_officer: JSON.stringify({
     manager: '김주희',

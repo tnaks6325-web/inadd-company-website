@@ -329,6 +329,31 @@ admin.get('/public/hero-kpi/:service', async (c) => {
   return c.json({ service, kpi })
 })
 
+// ═══════════════════════ BROCHURE MAIL TEMPLATE ═══════════════════════
+
+admin.get('/brochure-mail', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  const [headline, body, tags] = await Promise.all([
+    kvGet(kv, 'brochure_mail_headline'),
+    kvGet(kv, 'brochure_mail_body'),
+    kvGet(kv, 'brochure_mail_tags'),
+  ])
+  return c.json({
+    headline: headline ?? '회사소개서를\n보내드립니다.',
+    body: body ?? '요청해 주셔서 감사합니다.\n인애드컴퍼니의 서비스와 레퍼런스를 담은 소개서입니다.',
+    tags: tags ? JSON.parse(tags) : ['인플루언서', '바이럴 마케팅', 'SEO · 리뷰', 'PPL'],
+  })
+})
+
+admin.put('/brochure-mail', authMiddleware, async (c) => {
+  const kv   = (c.env as any)?.ADMIN_KV
+  const body = await c.req.json() as any
+  if (body.headline !== undefined) await kvPut(kv, 'brochure_mail_headline', body.headline)
+  if (body.body     !== undefined) await kvPut(kv, 'brochure_mail_body',     body.body)
+  if (body.tags     !== undefined) await kvPut(kv, 'brochure_mail_tags',     JSON.stringify(body.tags))
+  return c.json({ ok: true })
+})
+
 // ═══════════════════════ PUBLIC DATA API ═══════════════════════
 // 프론트엔드에서 호출하는 공개 데이터 API
 

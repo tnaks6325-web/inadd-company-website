@@ -118,8 +118,17 @@ function internalTemplate(title: string, rows: { label: string; value: string }[
 
 /* ─────────────────────────────────────────────
    광고주용 소개서 회신 이메일 템플릿
+   headline : "회사소개서를\n보내드립니다." (줄바꿈 \n → <br>)
+   bodyText : 헤더 서브 문구 (줄바꿈 \n → <br>)
+   tags     : 서비스 태그 배열
 ───────────────────────────────────────────── */
-function brochureReplyTemplate(pdfUrl: string, downloadUrl: string): string {
+function brochureReplyTemplate(
+  pdfUrl: string,
+  downloadUrl: string,
+  headline: string,
+  bodyText: string,
+  tags: string[]
+): string {
   const year = new Date().getFullYear()
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -141,11 +150,10 @@ function brochureReplyTemplate(pdfUrl: string, downloadUrl: string): string {
         <!-- 로고 텍스트 -->
         <p style="margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:0.25em;color:rgba(26,107,255,0.8);text-transform:uppercase;">IN AD COMPANY</p>
         <h1 style="margin:0;font-size:28px;font-weight:800;color:#ffffff;letter-spacing:-0.02em;line-height:1.3;">
-          회사소개서를<br>보내드립니다.
+          ${headline.replace(/\n/g, '<br>')}
         </h1>
         <p style="margin:16px 0 0;font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;">
-          요청해 주셔서 감사합니다.<br>
-          인애드컴퍼니의 서비스와 레퍼런스를 담은 소개서입니다.
+          ${bodyText.replace(/\n/g, '<br>')}
         </p>
       </td>
     </tr>
@@ -167,13 +175,18 @@ function brochureReplyTemplate(pdfUrl: string, downloadUrl: string): string {
               <!-- 태그 칩 -->
               <table cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="padding:5px 10px;background:rgba(26,107,255,0.15);border:1px solid rgba(26,107,255,0.3);border-radius:20px;font-size:11px;color:rgba(26,107,255,0.9);white-space:nowrap;">인플루언서</td>
-                  <td width="6"></td>
-                  <td style="padding:5px 10px;background:rgba(168,85,247,0.12);border:1px solid rgba(168,85,247,0.3);border-radius:20px;font-size:11px;color:rgba(168,85,247,0.9);white-space:nowrap;">바이럴 마케팅</td>
-                  <td width="6"></td>
-                  <td style="padding:5px 10px;background:rgba(20,184,166,0.1);border:1px solid rgba(20,184,166,0.3);border-radius:20px;font-size:11px;color:rgba(20,184,166,0.9);white-space:nowrap;">SEO · 리뷰</td>
-                  <td width="6"></td>
-                  <td style="padding:5px 10px;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.3);border-radius:20px;font-size:11px;color:rgba(249,115,22,0.9);white-space:nowrap;">PPL</td>
+                  ${tags.map((tag, i) => {
+                    const colors = [
+                      { bg: 'rgba(26,107,255,0.15)',  border: 'rgba(26,107,255,0.3)',  text: 'rgba(26,107,255,0.9)'  },
+                      { bg: 'rgba(168,85,247,0.12)',  border: 'rgba(168,85,247,0.3)',  text: 'rgba(168,85,247,0.9)'  },
+                      { bg: 'rgba(20,184,166,0.1)',   border: 'rgba(20,184,166,0.3)',  text: 'rgba(20,184,166,0.9)'  },
+                      { bg: 'rgba(249,115,22,0.1)',   border: 'rgba(249,115,22,0.3)',  text: 'rgba(249,115,22,0.9)'  },
+                      { bg: 'rgba(236,72,153,0.1)',   border: 'rgba(236,72,153,0.3)',  text: 'rgba(236,72,153,0.9)'  },
+                      { bg: 'rgba(234,179,8,0.1)',    border: 'rgba(234,179,8,0.3)',   text: 'rgba(234,179,8,0.9)'   },
+                    ]
+                    const c = colors[i % colors.length]
+                    return `${i > 0 ? '<td width="6"></td>' : ''}<td style="padding:5px 10px;background:${c.bg};border:1px solid ${c.border};border-radius:20px;font-size:11px;color:${c.text};white-space:nowrap;">${tag}</td>`
+                  }).join('')}
                 </tr>
               </table>
             </td>
@@ -367,15 +380,23 @@ mail.post('/brochure', async (c) => {
       return c.json({ ok: false, error: '이메일 주소가 없습니다.' }, 400)
     }
 
-    // KV에서 PDF URL 읽기 (관리자가 업데이트하면 자동 반영)
-    const rawPdfUrl = (await c.env.ADMIN_KV.get('home_brochure_url'))
-      ?? 'https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view'
-    const downloadUrl = toDriveDownloadUrl(rawPdfUrl)
+    // KV에서 PDF URL + 메일 템플릿 내용 읽기
+    const [rawPdfUrl, rawHeadline, rawBodyText, rawTags] = await Promise.all([
+      c.env.ADMIN_KV.get('home_brochure_url'),
+      c.env.ADMIN_KV.get('brochure_mail_headline'),
+      c.env.ADMIN_KV.get('brochure_mail_body'),
+      c.env.ADMIN_KV.get('brochure_mail_tags'),
+    ])
+    const pdfUrl     = rawPdfUrl     ?? 'https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view'
+    const headline   = rawHeadline   ?? '회사소개서를\n보내드립니다.'
+    const bodyText   = rawBodyText   ?? '요청해 주셔서 감사합니다.\n인애드컴퍼니의 서비스와 레퍼런스를 담은 소개서입니다.'
+    const tags: string[] = rawTags   ? JSON.parse(rawTags) : ['인플루언서', '바이럴 마케팅', 'SEO · 리뷰', 'PPL']
+    const downloadUrl = toDriveDownloadUrl(pdfUrl)
 
     // ① 내부 알림 메일 (관리자용)
     const internalRows = [
       { label: '이메일', value: toEmail },
-      { label: '소개서 URL', value: rawPdfUrl },
+      { label: '소개서 URL', value: pdfUrl },
       { label: '신청 시각', value: new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) },
     ]
     await sendMail(
@@ -384,12 +405,12 @@ mail.post('/brochure', async (c) => {
       internalTemplate('📄 회사소개서 요청이 접수됐습니다', internalRows)
     )
 
-    // ② 광고주 회신 메일 (소개서 PDF 링크 포함)
+    // ② 광고주 회신 메일 (소개서 PDF 링크 + KV 템플릿 내용 포함)
     await sendMailTo(
       c.env,
       toEmail,
       '[인애드컴퍼니] 요청하신 회사소개서를 보내드립니다.',
-      brochureReplyTemplate(rawPdfUrl, downloadUrl)
+      brochureReplyTemplate(pdfUrl, downloadUrl, headline, bodyText, tags)
     )
 
     return c.json({ ok: true })

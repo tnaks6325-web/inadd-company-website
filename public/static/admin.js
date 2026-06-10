@@ -77,6 +77,7 @@ async function loadHome() {
   document.getElementById('statExperience').value = s.experience || '';
   document.getElementById('statPartners').value = s.partners || '';
   renderVideoList();
+  loadBrochureMail();
 }
 
 // YouTube 링크에서 ID 추출
@@ -176,6 +177,44 @@ document.getElementById('btnSaveVideos').addEventListener('click', async () => {
 document.getElementById('btnSaveBrochure').addEventListener('click', async () => {
   await api('PUT', '/home', { brochure: document.getElementById('brochureUrl').value });
   showToast('회사소개서 링크가 저장되었습니다.');
+});
+
+// ── 소개서 메일 템플릿 로드 & 저장 ──
+async function loadBrochureMail() {
+  const data = await api('GET', '/brochure-mail');
+  document.getElementById('brochureMailHeadline').value = data.headline || '';
+  document.getElementById('brochureMailBody').value     = data.body     || '';
+  const tags = data.tags || [];
+  document.getElementById('brochureMailTags').value     = tags.join(', ');
+  renderBrochureTagPreview(tags);
+}
+
+function renderBrochureTagPreview(tags) {
+  const colors = [
+    '#1a6bff','#a855f7','#14b8a6','#f97316','#ec4899','#eab308'
+  ];
+  const wrap = document.getElementById('brochureTagPreview');
+  if (!wrap) return;
+  wrap.innerHTML = tags.map(function(tag, i) {
+    const c = colors[i % colors.length];
+    return '<span style="padding:4px 12px;border-radius:20px;font-size:12px;border:1px solid '+ c +'40;background:'+ c +'18;color:'+ c +';">' + tag.trim() + '</span>';
+  }).join('');
+}
+
+// 태그 입력 시 실시간 미리보기
+document.getElementById('brochureMailTags').addEventListener('input', function() {
+  var tags = this.value.split(',').map(function(t){ return t.trim(); }).filter(Boolean);
+  renderBrochureTagPreview(tags);
+});
+
+document.getElementById('btnSaveBrochureMail').addEventListener('click', async () => {
+  const headline = document.getElementById('brochureMailHeadline').value.trim();
+  const body     = document.getElementById('brochureMailBody').value.trim();
+  const tagsRaw  = document.getElementById('brochureMailTags').value;
+  const tags     = tagsRaw.split(',').map(function(t){ return t.trim(); }).filter(Boolean);
+  if (!headline) { showToast('헤더 제목을 입력해 주세요.', 'error'); return; }
+  await api('PUT', '/brochure-mail', { headline, body, tags });
+  showToast('소개서 메일 템플릿이 저장되었습니다.');
 });
 
 document.getElementById('btnSaveStats').addEventListener('click', async () => {
