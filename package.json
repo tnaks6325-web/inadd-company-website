@@ -2,6 +2,7 @@
   "name": "webapp",
   "type": "module",
   "scripts": {
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "dev": "vite",
     "build": "vite build",
     "preview": "wrangler pages dev",

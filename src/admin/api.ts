@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { kvGet, kvPut, kvDelete, signToken, verifyToken, type Bindings } from './store'
+import { DEFAULT_HOME_EDITOR_CONFIG, sanitizeHomeEditorConfig } from './editor-config'
 
 const admin = new Hono<{ Bindings: Bindings }>()
 
@@ -87,6 +88,27 @@ admin.put('/home', authMiddleware, async (c) => {
   if (body.stats !== undefined)     await kvPut(kv, 'home_stats', JSON.stringify(body.stats))
   if (body.interval !== undefined)  await kvPut(kv, 'home_slide_interval', String(Number(body.interval) || 7))
   return c.json({ ok: true })
+})
+
+admin.get('/editor/home', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  const raw = await kvGet(kv, 'home_editor_config')
+  let parsed: unknown = DEFAULT_HOME_EDITOR_CONFIG
+  try { parsed = raw ? JSON.parse(raw) : DEFAULT_HOME_EDITOR_CONFIG } catch {}
+  return c.json({ config: sanitizeHomeEditorConfig(parsed) })
+})
+
+admin.put('/editor/home', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  let body: unknown
+  try { body = await c.req.json() } catch {
+    return c.json({ error: '올바른 JSON 형식이 아닙니다.' }, 400)
+  }
+  const serialized = JSON.stringify(body)
+  if (serialized.length > 60_000) return c.json({ error: '편집 데이터가 너무 큽니다.' }, 413)
+  const config = sanitizeHomeEditorConfig(body)
+  await kvPut(kv, 'home_editor_config', JSON.stringify(config))
+  return c.json({ ok: true, config })
 })
 
 // ═══════════════════════ ABOUT ═══════════════════════
@@ -366,6 +388,14 @@ admin.get('/public/home', async (c) => {
     kvGet(kv, 'home_slide_interval'),
   ])
   return c.json({ videos: JSON.parse(videos!), brochure, stats: JSON.parse(stats!), interval: Number(interval) || 7 })
+})
+
+admin.get('/public/editor/home', async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  const raw = await kvGet(kv, 'home_editor_config')
+  let parsed: unknown = DEFAULT_HOME_EDITOR_CONFIG
+  try { parsed = raw ? JSON.parse(raw) : DEFAULT_HOME_EDITOR_CONFIG } catch {}
+  return c.json({ config: sanitizeHomeEditorConfig(parsed) }, 200, { 'Cache-Control': 'no-store' })
 })
 
 admin.get('/public/about', async (c) => {
