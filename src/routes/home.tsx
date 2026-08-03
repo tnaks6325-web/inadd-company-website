@@ -22,7 +22,7 @@ export const HomePage = () => (
         <div class="hero-text-inner">
           <div class="hero-eyebrow">
             <span class="eyebrow-line"></span>
-            <span class="eyebrow-text">THE CREATIVE MARKETING AGENCY</span>
+            <span class="eyebrow-text" id="editorHeroEyebrow">THE CREATIVE MARKETING AGENCY</span>
           </div>
           <div class="hero-headline-wrap">
             <h1 class="hero-headline">
@@ -34,7 +34,7 @@ export const HomePage = () => (
           <p class="hero-sub" id="heroSub"></p>
           <div class="hero-cta-group" id="heroCta">
             <a href="/contact" class="hero-cta-btn primary">
-              <span>상담 신청하기</span>
+              <span id="editorHeroCta">상담 신청하기</span>
               <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
           </div>
@@ -103,9 +103,9 @@ export const HomePage = () => (
 
         {/* ── 헤드 ── */}
         <div class="section-head">
-          <span class="sec-label">What We Do</span>
-          <h2 class="sec-title">당신은 아직 <em>진짜 마케팅의 힘</em>을<br />만나지 못했습니다</h2>
-          <p class="sec-sub">단순한 노출을 넘어 브랜드의 가치를 전달하고<br />실질적인 성과로 이어지는 인애드만의 솔루션을 경험해보세요</p>
+          <span class="sec-label" id="editorServicesLabel">What We Do</span>
+          <h2 class="sec-title"><span id="editorServicesTitleLead">당신은 아직 </span><em id="editorServicesTitleAccent">진짜 마케팅의 힘</em><br /><span id="editorServicesTitleTail">만나지 못했습니다</span></h2>
+          <p class="sec-sub" id="editorServicesSub">단순한 노출을 넘어 브랜드의 가치를 전달하고{`\n`}실질적인 성과로 이어지는 인애드만의 솔루션을 경험해보세요</p>
         </div>
 
         {/* ── 서비스 인터랙티브 ── */}
@@ -434,7 +434,7 @@ export const HomePage = () => (
     </section>
 
     {/* ============ STATS ============ */}
-    <section class="stats-section">
+    <section class="stats-section" id="homeStats">
       <div class="container">
         <div class="stats-grid">
           <div class="stat-block">
@@ -467,9 +467,9 @@ export const HomePage = () => (
         {/* 헤더 */}
         <div class="hist-head">
           <div>
-            <span class="sec-label">Company Growth</span>
-            <h2 class="sec-title hist-title">IN AD <em>HISTORY</em></h2>
-            <p class="hist-subtitle">2019 – 2026 Continuous Growth</p>
+            <span class="sec-label" id="editorHistoryLabel">Company Growth</span>
+            <h2 class="sec-title hist-title"><span id="editorHistoryTitleLead">IN AD </span><em id="editorHistoryTitleAccent">HISTORY</em></h2>
+            <p class="hist-subtitle" id="editorHistorySub">2019 — 2026 Continuous Growth</p>
           </div>
         </div>
 
@@ -561,11 +561,11 @@ export const HomePage = () => (
     </section>
 
     {/* ============ TESTIMONIALS — 두 줄 무한 슬라이드 ============ */}
-    <section class="testimonials-section">
+    <section class="testimonials-section" id="homeTestimonials">
       <div class="container">
         <div class="section-head testi-head">
-          <span class="sec-label">Client Voice</span>
-          <h2 class="sec-title">광고주가<br /><em>직접 전하는 리얼 후기</em></h2>
+          <span class="sec-label" id="editorTestimonialsLabel">Client Voice</span>
+          <h2 class="sec-title"><span id="editorTestimonialsTitleLead">광고주가</span><br /><em id="editorTestimonialsTitleAccent">직접 전하는 리얼 후기</em></h2>
         </div>
       </div>
 
@@ -889,17 +889,17 @@ export const HomePage = () => (
       <div class="container">
         <div class="home-cta-inner">
           {/* 상단 뱃지 */}
-          <div class="hcta-badge">
+          <div class="hcta-badge" id="editorCtaBadge">
             <span class="hcta-badge-dot"></span>
             FREE CONSULTATION
           </div>
           <h2 class="hcta-title">
-            <span class="hcta-line hcta-line--1">지금 당신의 브랜드에</span>
-            <em class="hcta-line hcta-line--2">필요한 것은 무엇인가요?</em>
+            <span class="hcta-line hcta-line--1" id="editorCtaTitleLead">지금 당신의 브랜드에</span>
+            <em class="hcta-line hcta-line--2" id="editorCtaTitleAccent">필요한 것은 무엇인가요?</em>
           </h2>
           <p class="hcta-desc">
             인애드컴퍼니와 함께라면 시작이 달라집니다.<br />
-            <span class="hcta-desc-sub">검색 → 발견 → 신뢰 → 구매 → 재방문, 퍼널 전 단계를 책임집니다.</span>
+            <span class="hcta-desc-sub" id="editorCtaSub">검색 → 발견 → 신뢰 → 구매 → 재방문, 퍼널 전 단계를 책임집니다.</span>
           </p>
           {/* KPI 수치 */}
           <div class="hcta-kpi">
@@ -918,7 +918,7 @@ export const HomePage = () => (
           {/* 버튼 그룹 */}
           <div class="hcta-btns">
             <a href="/contact" class="hero-cta-btn primary hcta-btn-main">
-              <span>무료 상담 신청하기</span>
+              <span id="editorCtaButton">무료 상담 신청하기</span>
               <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <button type="button" class="hero-cta-btn ghost hcta-btn-call" onclick="openCallModal()">
@@ -928,5 +928,6 @@ export const HomePage = () => (
         </div>
       </div>
     </section>
+    <script src="/static/home-editor.js" />
   </>
 )

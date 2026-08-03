@@ -17,6 +17,7 @@ import { SvcReviewPage } from './routes/svc-review'
 import { SvcOliveYoungPage } from './routes/svc-oliveyoung'
 import { SvcPplPage } from './routes/svc-ppl'
 import { admin } from './admin/api'
+import { adminEditorHTML } from './admin/editor-page'
 import { MailRouter } from './routes/api-mail'
 
 const app = new Hono()
@@ -38,6 +39,10 @@ app.get('/admin/login', (c) => {
 
 app.get('/admin', (c) => {
   return c.html(adminDashboardHTML())
+})
+
+app.get('/admin/editor', (c) => {
+  return c.html(adminEditorHTML())
 })
 
 app.get('/admin/*', (c) => {
@@ -711,6 +716,7 @@ function adminDashboardHTML(): string {
   <nav class="sidebar-nav">
     <div class="nav-section">페이지 관리</div>
     <div class="nav-item active" data-section="home"><i class="fas fa-home"></i> 홈</div>
+    <a href="/admin/editor" style="display:flex;align-items:center;gap:12px;margin:6px 10px 16px;padding:12px 14px;border-radius:8px;background:#1769ff;color:#fff;text-decoration:none;font-weight:700"><i class="fas fa-pen-ruler"></i> 비주얼 편집기</a>
     <div class="nav-item" data-section="about"><i class="fas fa-building"></i> About</div>
     <div class="nav-item" data-section="works"><i class="fas fa-briefcase"></i> Works</div>
     <div class="nav-item" data-section="insight"><i class="fas fa-newspaper"></i> Insight</div>
