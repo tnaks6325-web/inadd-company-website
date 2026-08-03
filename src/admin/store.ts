@@ -1,3 +1,5 @@
+import { DEFAULT_HOME_EDITOR_CONFIG } from './editor-config'
+
 // ═══════════════════════════════════════════════════════
 //  Admin Store — KV 폴백 메모리 스토어
 //  KV 바인딩이 없을 때 인메모리로 동작 (개발 환경)
@@ -19,6 +21,7 @@ export const DEFAULT_DATA = {
     projects: 320, contracts: 98, experience: 6, partners: 50
   }),
   home_slide_interval: '7',
+  home_editor_config: JSON.stringify(DEFAULT_HOME_EDITOR_CONFIG),
 
   // ── About ──
   about_address: '경기도 안산시 단원구 고잔로 51',

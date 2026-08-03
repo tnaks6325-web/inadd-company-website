@@ -103,6 +103,15 @@ if (menuToggle && mainNav) {
     sub: '데이터가 말하고, 크리에이티브가 설득하고,\n전략이 전환을 만듭니다.'
   };
 
+  function syncEditorCopy(config) {
+    if (!config || !config.fields) return;
+    COPY.l1 = config.fields.heroLine1?.text || COPY.l1;
+    COPY.l2 = config.fields.heroLine2?.text || COPY.l2;
+    COPY.l3 = config.fields.heroLine3?.text || COPY.l3;
+    COPY.sub = config.fields.heroSub?.text || COPY.sub;
+  }
+  window.addEventListener('inad:home-editor-config', (event) => syncEditorCopy(event.detail));
+
   /* ─── 상태 ─── */
   const STATE_HERO = 'hero';
   const STATE_LOGO = 'logo';
@@ -313,7 +322,15 @@ if (menuToggle && mainNav) {
   slides.forEach(s => s.classList.remove('active', 'leaving'));
   if (slides[0]) slides[0].classList.add('active');
   scheduleNext();
-  runTextSequence();
+  const editorReady = window.__INAD_HOME_EDITOR__?.ready;
+  if (editorReady) {
+    editorReady.then((config) => {
+      syncEditorCopy(config);
+      runTextSequence();
+    }).catch(runTextSequence);
+  } else {
+    runTextSequence();
+  }
 
 })();
 
