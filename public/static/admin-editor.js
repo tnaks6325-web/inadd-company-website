@@ -6,6 +6,7 @@ import {
   normalizeLiveEditorRoute,
   toLiveEditorUrl,
 } from '/static/live-editor-contract.js';
+import { createLiveEditorSavePlan, hasLiveEditorChanges } from '/static/live-editor-save-plan.js';
 
 (() => {
   'use strict';
@@ -93,6 +94,20 @@ import {
   let activeLiveUrlRegion = null;
   let livePatches = {};
   let globalLivePatches = {};
+  let dirty = { home: false, route: false, global: false };
+  let changeRevision = { home: 0, route: 0, global: 0 };
+  let isSaving = false;
+
+  function updateSaveStatus(cleanMessage = '저장됨') {
+    const dirtyCount = Object.values(dirty).filter(Boolean).length;
+    $('saveStatus').textContent = dirtyCount ? `저장되지 않은 변경 ${dirtyCount}개` : cleanMessage;
+  }
+
+  function markDirty(scope) {
+    changeRevision[scope] += 1;
+    dirty[scope] = true;
+    updateSaveStatus();
+  }
 
   function isGlobalLiveRegion(regionId) {
     return typeof regionId === 'string' && regionId.startsWith('global.');
@@ -132,7 +147,7 @@ import {
     const requestedRoute = route;
     try {
       const result = await api(`/editor/live?route=${encodeURIComponent(route)}`);
-      if (activeRoute !== requestedRoute) return;
+      if (activeRoute !== requestedRoute || dirty.route) return;
       livePatches = result.patches || {};
     } catch (error) {
       if (activeRoute === requestedRoute) toast(error.message);
@@ -142,6 +157,7 @@ import {
   async function loadGlobalLivePatches() {
     try {
       const result = await api('/editor/live-global');
+      if (dirty.global) return;
       globalLivePatches = result.patches || {};
     } catch (error) {
       toast(error.message);
@@ -234,9 +250,21 @@ import {
     postLiveMode();
   }
 
-  function navigateLiveRoute(route) {
+  async function navigateLiveRoute(route) {
     const target = toLiveEditorUrl(route);
     if (!target) return;
+    if (isSaving) {
+      $('liveRoutePicker').value = activeRoute;
+      return;
+    }
+    if (route === activeRoute) return;
+    if (hasLiveEditorChanges(dirty)) {
+      const shouldSave = window.confirm('저장되지 않은 변경이 있습니다. 저장한 뒤 페이지를 이동할까요? 취소를 누르면 현재 편집을 계속합니다.');
+      if (!shouldSave || !await savePendingChanges({ announce: false })) {
+        $('liveRoutePicker').value = activeRoute;
+        return;
+      }
+    }
     editability(false);
     activeKey = null;
     activeSection = null;
@@ -271,7 +299,7 @@ import {
     if (undoStack.length > 30) undoStack.shift();
     redoStack = [];
     updateHistoryButtons();
-    $('saveStatus').textContent = '저장되지 않은 변경';
+    markDirty('home');
   }
 
   function editability(enabled, editableKey = activeKey) {
@@ -295,7 +323,7 @@ import {
         element.addEventListener('click', (event) => event.preventDefault());
         element.addEventListener('input', () => {
           config.fields[key].text = element.innerText.replace(/\r\n?/g, '\n').slice(0, 300);
-          $('saveStatus').textContent = '입력 중…';
+          markDirty('home');
         });
         element.addEventListener('blur', () => {
           const changed = JSON.stringify(focusSnapshot) !== JSON.stringify(config);
@@ -397,7 +425,7 @@ import {
     if (['content', 'field', 'media', 'link'].includes(kind)) showLiveContentInspector(event.data.regionId);
   });
   populateRoutePicker();
-  $('liveRoutePicker').addEventListener('change', (event) => navigateLiveRoute(event.target.value));
+  $('liveRoutePicker').addEventListener('change', async (event) => navigateLiveRoute(event.target.value));
   document.querySelectorAll('[data-live-mode]').forEach((button) => button.addEventListener('click', () => setLiveMode(button.dataset.liveMode)));
   $('fontFamily').addEventListener('change', (event) => mutate((field) => { field.fontFamily = event.target.value; }));
   $('fontWeight').addEventListener('change', (event) => mutate((field) => { field.fontWeight = Number(event.target.value); }));
@@ -416,7 +444,7 @@ import {
     livePatchesFor(activeLiveRegion)[activeLiveRegion] = { text };
     postLiveMode();
     frame.contentWindow?.postMessage(createLiveEditorMessage('apply', { regionId: activeLiveRegion, text }), window.location.origin);
-    $('saveStatus').textContent = '저장되지 않은 변경';
+    markDirty(isGlobalLiveRegion(activeLiveRegion) ? 'global' : 'route');
   });
   $('liveContentUrl').addEventListener('change', (event) => {
     if (!activeLiveUrlRegion) return;
@@ -428,7 +456,7 @@ import {
     livePatchesFor(activeLiveUrlRegion)[activeLiveUrlRegion] = { url };
     postLiveMode();
     frame.contentWindow?.postMessage(createLiveEditorMessage('apply', { regionId: activeLiveUrlRegion, field: 'url', value: url }), window.location.origin);
-    $('saveStatus').textContent = '저장되지 않은 변경';
+    markDirty(isGlobalLiveRegion(activeLiveUrlRegion) ? 'global' : 'route');
   });
 
   document.querySelectorAll('.device-btn').forEach((button) => button.addEventListener('click', () => {
@@ -455,7 +483,7 @@ import {
     apply();
     if (activeKey) selectField(activeKey); else if (activeSection) selectSection(activeSection);
     updateHistoryButtons();
-    $('saveStatus').textContent = '저장되지 않은 변경';
+    markDirty('home');
   }
   $('undoBtn').addEventListener('click', () => restore(undoStack.pop(), redoStack));
   $('redoBtn').addEventListener('click', () => restore(redoStack.pop(), undoStack));
@@ -471,13 +499,16 @@ import {
     setLiveMode('interact');
   });
   $('resetLiveBtn').addEventListener('click', async () => {
+    if (isSaving) return;
     if (!window.confirm('이 페이지에 저장된 라이브 편집 변경을 모두 지우고 원본 상태로 돌아갈까요?')) return;
     try {
       $('resetLiveBtn').disabled = true;
       const result = await api(`/editor/live?route=${encodeURIComponent(activeRoute)}`, { method: 'DELETE' });
       livePatches = result.patches || {};
+      changeRevision.route += 1;
+      dirty.route = false;
       frame.src = toLiveEditorUrl(activeRoute);
-      $('saveStatus').textContent = '원본 상태';
+      updateSaveStatus('원본 상태');
       toast('이 페이지를 원본 상태로 복구했습니다.');
     } catch (error) {
       toast(error.message);
@@ -486,13 +517,16 @@ import {
     }
   });
   $('resetGlobalLiveBtn').addEventListener('click', async () => {
+    if (isSaving) return;
     if (!window.confirm('모든 페이지에 적용된 공통 메뉴·푸터 편집을 지우고 원본 상태로 돌아갈까요?')) return;
     try {
       $('resetGlobalLiveBtn').disabled = true;
       const result = await api('/editor/live-global', { method: 'DELETE' });
       globalLivePatches = result.patches || {};
+      changeRevision.global += 1;
+      dirty.global = false;
       frame.src = toLiveEditorUrl(activeRoute);
-      $('saveStatus').textContent = '공통 원본 상태';
+      updateSaveStatus('공통 원본 상태');
       toast('공통 메뉴·푸터를 원본 상태로 복구했습니다.');
     } catch (error) {
       toast(error.message);
@@ -500,28 +534,61 @@ import {
       $('resetGlobalLiveBtn').disabled = false;
     }
   });
-  $('saveBtn').addEventListener('click', async () => {
-    try {
-      $('saveBtn').disabled = true;
-      $('saveStatus').textContent = '저장 중…';
-      const isGlobalSelection = isGlobalLiveRegion(activeLiveUrlRegion || activeLiveRegion);
-      const isRouteLiveSelection = Boolean(activeLiveRegion || activeLiveUrlRegion) && !isGlobalSelection;
-      const result = isGlobalSelection
-        ? await api('/editor/live-global', { method: 'PUT', body: JSON.stringify({ patches: globalLivePatches }) })
-        : isRouteLiveSelection
-          ? await api(`/editor/live?route=${encodeURIComponent(activeRoute)}`, { method: 'PUT', body: JSON.stringify({ patches: livePatches }) })
-          : await api('/editor/home', { method: 'PUT', body: JSON.stringify(config) });
-      if (isGlobalSelection) globalLivePatches = result.patches;
-      else if (isRouteLiveSelection) livePatches = result.patches;
-      else config = result.config;
-      undoStack = []; redoStack = []; updateHistoryButtons();
-      $('saveStatus').textContent = '저장됨';
-      toast('홈페이지 변경사항을 저장했습니다.');
-    } catch (error) {
-      $('saveStatus').textContent = '저장 실패';
-      toast(error.message);
-    } finally { $('saveBtn').disabled = false; }
-  });
+  async function savePendingChanges({ announce = true } = {}) {
+    const plan = createLiveEditorSavePlan({
+      dirty,
+      route: activeRoute,
+      config,
+      routePatches: livePatches,
+      globalPatches: globalLivePatches,
+    });
+    if (!plan.length) {
+      updateSaveStatus('저장할 변경사항이 없습니다.');
+      if (announce) toast('저장할 변경사항이 없습니다.');
+      return true;
+    }
+    isSaving = true;
+    $('saveBtn').disabled = true;
+    $('saveStatus').textContent = '저장 중…';
+    const results = await Promise.all(plan.map(async (action) => {
+      const revision = changeRevision[action.scope];
+      try {
+        return { action, revision, payload: await api(action.path, { method: 'PUT', body: JSON.stringify(action.body) }) };
+      } catch (error) {
+        return { action, revision, error };
+      }
+    }));
+    const successful = results.filter((result) => !result.error);
+    const currentSuccesses = successful.filter(({ action, revision }) => changeRevision[action.scope] === revision);
+    currentSuccesses.forEach(({ action, payload }) => {
+      dirty[action.scope] = false;
+      if (action.scope === 'home') config = payload.config;
+      if (action.scope === 'route') livePatches = payload.patches;
+      if (action.scope === 'global') globalLivePatches = payload.patches;
+    });
+    if (currentSuccesses.some(({ action }) => action.scope === 'home')) {
+      undoStack = [];
+      redoStack = [];
+      updateHistoryButtons();
+    }
+    const failures = results.filter((result) => result.error);
+    isSaving = false;
+    $('saveBtn').disabled = false;
+    if (failures.length) {
+      updateSaveStatus(successful.length ? '일부 저장 실패' : '저장 실패');
+      toast(failures[0].error.message);
+      return false;
+    }
+    if (currentSuccesses.length !== successful.length) {
+      updateSaveStatus('저장 도중 새 변경 감지');
+      if (announce) toast('저장 중 새 변경이 있어 다시 저장해야 합니다.');
+      return false;
+    }
+    updateSaveStatus();
+    if (announce) toast(`${currentSuccesses.length}개 편집 범위를 저장했습니다.`);
+    return true;
+  }
+  $('saveBtn').addEventListener('click', () => savePendingChanges());
 
   const theme = localStorage.getItem('inadd_editor_theme');
   if (['studio','paper','sky'].includes(theme)) {
