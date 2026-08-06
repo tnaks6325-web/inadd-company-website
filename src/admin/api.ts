@@ -112,6 +112,12 @@ admin.put('/editor/home', authMiddleware, async (c) => {
   return c.json({ ok: true, config })
 })
 
+admin.delete('/editor/home', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  await kvDelete(kv, 'home_editor_config')
+  return c.json({ ok: true, config: sanitizeHomeEditorConfig(DEFAULT_HOME_EDITOR_CONFIG) })
+})
+
 function liveEditorPatchKey(route: string) {
   return `live_editor_patches:${route}`
 }

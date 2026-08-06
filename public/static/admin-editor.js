@@ -49,6 +49,17 @@ import { createLiveEditorSavePlan, hasLiveEditorChanges } from '/static/live-edi
     $('previewBtn').before(button);
   }
   ensureLiveResetAction();
+  function ensureHomeResetAction() {
+    if ($('resetHomeBtn')) return;
+    const button = document.createElement('button');
+    button.id = 'resetHomeBtn';
+    button.className = 'btn secondary';
+    button.type = 'button';
+    button.hidden = true;
+    button.textContent = '홈 원본 복구';
+    $('previewBtn').before(button);
+  }
+  ensureHomeResetAction();
   function ensureGlobalResetAction() {
     if ($('resetGlobalLiveBtn')) return;
     const button = document.createElement('button');
@@ -124,6 +135,7 @@ import { createLiveEditorSavePlan, hasLiveEditorChanges } from '/static/live-edi
 
   function updateLiveRecoveryActions() {
     const hasRouteLiveSelection = Boolean(activeLiveRegion || activeLiveUrlRegion) && !isGlobalLiveRegion(activeLiveUrlRegion || activeLiveRegion);
+    $('resetHomeBtn').hidden = activeRoute !== '/';
     $('resetLiveBtn').hidden = activeRoute === '/' && !hasRouteLiveSelection;
     $('resetGlobalLiveBtn').hidden = !isGlobalLiveRegion(activeLiveUrlRegion || activeLiveRegion);
   }
@@ -497,6 +509,28 @@ import { createLiveEditorSavePlan, hasLiveEditorChanges } from '/static/live-edi
     const preview = document.body.classList.toggle('preview');
     $('previewBtn').textContent = preview ? '편집으로 돌아가기' : '미리보기';
     setLiveMode('interact');
+  });
+  $('resetHomeBtn').addEventListener('click', async () => {
+    if (isSaving) return;
+    if (!window.confirm('홈 문구와 스타일의 저장된 편집을 지우고 기본 상태로 돌아갈까요?')) return;
+    try {
+      $('resetHomeBtn').disabled = true;
+      const result = await api('/editor/home', { method: 'DELETE' });
+      config = result.config;
+      changeRevision.home += 1;
+      dirty.home = false;
+      undoStack = [];
+      redoStack = [];
+      updateHistoryButtons();
+      apply();
+      if (activeKey) selectField(activeKey); else if (activeSection) selectSection(activeSection);
+      updateSaveStatus('홈 원본 상태');
+      toast('홈 편집을 기본 상태로 복구했습니다.');
+    } catch (error) {
+      toast(error.message);
+    } finally {
+      $('resetHomeBtn').disabled = false;
+    }
   });
   $('resetLiveBtn').addEventListener('click', async () => {
     if (isSaving) return;
