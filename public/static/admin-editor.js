@@ -37,6 +37,17 @@ import {
   const deepCopy = (value) => JSON.parse(JSON.stringify(value));
   const $ = (id) => document.getElementById(id);
   const frame = $('siteFrame');
+  function ensureLiveResetAction() {
+    if ($('resetLiveBtn')) return;
+    const button = document.createElement('button');
+    button.id = 'resetLiveBtn';
+    button.className = 'btn secondary';
+    button.type = 'button';
+    button.hidden = true;
+    button.textContent = '원본 복구';
+    $('previewBtn').before(button);
+  }
+  ensureLiveResetAction();
   function ensureLiveUrlInspector() {
     const textField = $('liveContentText')?.closest('label');
     if (!textField || $('liveContentUrl')) return;
@@ -149,6 +160,7 @@ import {
     document.querySelector('.page-chip b').textContent = entry.label;
     document.querySelector('.page-chip small').textContent = entry.path;
     $('saveBtn').disabled = false;
+    $('resetLiveBtn').hidden = entry.path === '/';
     if (entry.path !== '/') loadLivePatches(entry.path);
   }
 
@@ -399,6 +411,21 @@ import {
     const preview = document.body.classList.toggle('preview');
     $('previewBtn').textContent = preview ? '편집으로 돌아가기' : '미리보기';
     setLiveMode('interact');
+  });
+  $('resetLiveBtn').addEventListener('click', async () => {
+    if (activeRoute === '/' || !window.confirm('이 페이지에 저장된 편집 변경을 모두 지우고 원본 상태로 돌아갈까요?')) return;
+    try {
+      $('resetLiveBtn').disabled = true;
+      const result = await api(`/editor/live?route=${encodeURIComponent(activeRoute)}`, { method: 'DELETE' });
+      livePatches = result.patches || {};
+      frame.src = toLiveEditorUrl(activeRoute);
+      $('saveStatus').textContent = '원본 상태';
+      toast('이 페이지를 원본 상태로 복구했습니다.');
+    } catch (error) {
+      toast(error.message);
+    } finally {
+      $('resetLiveBtn').disabled = false;
+    }
   });
   $('saveBtn').addEventListener('click', async () => {
     try {

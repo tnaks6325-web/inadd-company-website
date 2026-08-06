@@ -146,6 +146,14 @@ admin.put('/editor/live', authMiddleware, async (c) => {
   return c.json({ ok: true, route, patches })
 })
 
+admin.delete('/editor/live', authMiddleware, async (c) => {
+  const route = getLiveEditorRoute(c)
+  if (!route) return c.json({ error: '지원하지 않는 페이지입니다.' }, 400)
+  const kv = (c.env as any)?.ADMIN_KV
+  await kvDelete(kv, liveEditorPatchKey(route))
+  return c.json({ ok: true, route, patches: {} })
+})
+
 // ═══════════════════════ ABOUT ═══════════════════════
 
 admin.get('/about', authMiddleware, async (c) => {
