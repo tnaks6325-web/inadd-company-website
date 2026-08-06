@@ -30,6 +30,10 @@
     mono: "'SFMono-Regular', Consolas, monospace"
   };
 
+  function isManagedElement(element) {
+    return element instanceof Element && Object.values(fields).some((selector) => element.matches(selector));
+  }
+
   function setScaledSize(element, percent) {
     if (!element.dataset.editorBaseSize) {
       element.dataset.editorBaseSize = String(parseFloat(getComputedStyle(element).fontSize) || 16);
@@ -79,5 +83,5 @@
     })
     .catch(() => null);
 
-  window.__INAD_HOME_EDITOR__ = { fields, sections, accents, applyConfig, ready };
+  window.__INAD_HOME_EDITOR__ = { fields, sections, accents, applyConfig, isManagedElement, ready };
 })();

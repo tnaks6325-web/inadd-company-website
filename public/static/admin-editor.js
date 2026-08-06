@@ -108,7 +108,8 @@ import {
   }
 
   function updateLiveRecoveryActions() {
-    $('resetLiveBtn').hidden = activeRoute === '/';
+    const hasRouteLiveSelection = Boolean(activeLiveRegion || activeLiveUrlRegion) && !isGlobalLiveRegion(activeLiveUrlRegion || activeLiveRegion);
+    $('resetLiveBtn').hidden = activeRoute === '/' && !hasRouteLiveSelection;
     $('resetGlobalLiveBtn').hidden = !isGlobalLiveRegion(activeLiveUrlRegion || activeLiveRegion);
   }
 
@@ -216,7 +217,7 @@ import {
     document.querySelector('.page-chip small').textContent = entry.path;
     $('saveBtn').disabled = false;
     updateLiveRecoveryActions();
-    if (entry.path !== '/') loadLivePatches(entry.path);
+    loadLivePatches(entry.path);
   }
 
   function postLiveMode() {
@@ -393,7 +394,7 @@ import {
       return;
     }
     const kind = liveRegionKind(event.data.regionId);
-    if (['content', 'field', 'media', 'link'].includes(kind) && (activeRoute !== '/' || isGlobalLiveRegion(event.data.regionId))) showLiveContentInspector(event.data.regionId);
+    if (['content', 'field', 'media', 'link'].includes(kind)) showLiveContentInspector(event.data.regionId);
   });
   populateRoutePicker();
   $('liveRoutePicker').addEventListener('change', (event) => navigateLiveRoute(event.target.value));
@@ -410,7 +411,7 @@ import {
   $('clearSection').addEventListener('click', () => mutateSection((section) => { section.backgroundColor = 'transparent'; }));
   document.querySelectorAll('[data-align]').forEach((button) => button.addEventListener('click', () => mutate((field) => { field.textAlign = button.dataset.align; })));
   $('liveContentText').addEventListener('input', (event) => {
-    if (!activeLiveRegion || (activeRoute === '/' && !isGlobalLiveRegion(activeLiveRegion))) return;
+    if (!activeLiveRegion) return;
     const text = event.target.value.replace(/\r\n?/g, '\n').slice(0, 500);
     livePatchesFor(activeLiveRegion)[activeLiveRegion] = { text };
     postLiveMode();
@@ -418,7 +419,7 @@ import {
     $('saveStatus').textContent = '저장되지 않은 변경';
   });
   $('liveContentUrl').addEventListener('change', (event) => {
-    if (!activeLiveUrlRegion || (activeRoute === '/' && !isGlobalLiveRegion(activeLiveUrlRegion))) return;
+    if (!activeLiveUrlRegion) return;
     const url = event.target.value.trim();
     if (!isSafeLiveUrl(url, activeLiveUrlRegion)) {
       toast('HTTPS 주소 또는 사이트 내부 경로만 사용할 수 있습니다.');
@@ -470,7 +471,7 @@ import {
     setLiveMode('interact');
   });
   $('resetLiveBtn').addEventListener('click', async () => {
-    if (activeRoute === '/' || !window.confirm('이 페이지에 저장된 편집 변경을 모두 지우고 원본 상태로 돌아갈까요?')) return;
+    if (!window.confirm('이 페이지에 저장된 라이브 편집 변경을 모두 지우고 원본 상태로 돌아갈까요?')) return;
     try {
       $('resetLiveBtn').disabled = true;
       const result = await api(`/editor/live?route=${encodeURIComponent(activeRoute)}`, { method: 'DELETE' });
@@ -504,14 +505,15 @@ import {
       $('saveBtn').disabled = true;
       $('saveStatus').textContent = '저장 중…';
       const isGlobalSelection = isGlobalLiveRegion(activeLiveUrlRegion || activeLiveRegion);
+      const isRouteLiveSelection = Boolean(activeLiveRegion || activeLiveUrlRegion) && !isGlobalSelection;
       const result = isGlobalSelection
         ? await api('/editor/live-global', { method: 'PUT', body: JSON.stringify({ patches: globalLivePatches }) })
-        : activeRoute === '/'
-          ? await api('/editor/home', { method: 'PUT', body: JSON.stringify(config) })
-          : await api(`/editor/live?route=${encodeURIComponent(activeRoute)}`, { method: 'PUT', body: JSON.stringify({ patches: livePatches }) });
+        : isRouteLiveSelection
+          ? await api(`/editor/live?route=${encodeURIComponent(activeRoute)}`, { method: 'PUT', body: JSON.stringify({ patches: livePatches }) })
+          : await api('/editor/home', { method: 'PUT', body: JSON.stringify(config) });
       if (isGlobalSelection) globalLivePatches = result.patches;
-      else if (activeRoute === '/') config = result.config;
-      else livePatches = result.patches;
+      else if (isRouteLiveSelection) livePatches = result.patches;
+      else config = result.config;
       undoStack = []; redoStack = []; updateHistoryButtons();
       $('saveStatus').textContent = '저장됨';
       toast('홈페이지 변경사항을 저장했습니다.');

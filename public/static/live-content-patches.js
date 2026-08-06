@@ -45,9 +45,13 @@ function scopedPrefix(scope, kind) {
   return scope ? `${scope}.${kind}` : kind;
 }
 
+function isHomeEditorManaged(element) {
+  return element.dataset.homeEditorKey || window.__INAD_HOME_EDITOR__?.isManagedElement?.(element);
+}
+
 function registerRegionsIn(root, regions, scope = '') {
   root.querySelectorAll(textSelector).forEach((element) => {
-    if (element.children.length > 0 || !element.textContent?.trim()) return;
+    if (element.children.length > 0 || !element.textContent?.trim() || isHomeEditorManaged(element)) return;
     registerRegion(regions, element, scopedPrefix(scope, 'content'), root);
   });
   root.querySelectorAll('input[placeholder], textarea[placeholder]').forEach((element) => registerRegion(regions, element, scopedPrefix(scope, 'field'), root));
@@ -80,7 +84,7 @@ function patchKind(regionId) {
 }
 
 const route = window.location.pathname;
-const regions = route === '/' ? new Map() : registerLiveContentRegions();
+const regions = registerLiveContentRegions();
 const globalRegions = registerLiveGlobalRegions();
 let activePatches = {};
 let activeGlobalPatches = {};
@@ -127,7 +131,7 @@ export function applyLiveContentPatches(patches) {
   document.dispatchEvent(new CustomEvent('live-editor-content-applied'));
 }
 
-const routeReady = route === '/' ? Promise.resolve() : fetch(`/api/admin/public/editor/live?route=${encodeURIComponent(route)}`)
+const routeReady = fetch(`/api/admin/public/editor/live?route=${encodeURIComponent(route)}`)
   .then((response) => response.ok ? response.json() : { patches: {} })
   .then((payload) => applyLiveContentPatches(payload.patches))
   .catch(() => {});
@@ -137,18 +141,16 @@ const globalReady = fetch('/api/admin/public/editor/live-global')
   .catch(() => {});
 const ready = Promise.all([routeReady, globalReady]);
 
-if (route !== '/') {
-  let observerQueued = false;
-  new MutationObserver(() => {
-    if (observerQueued) return;
-    observerQueued = true;
-    queueMicrotask(() => {
-      observerQueued = false;
-      registerLiveContentRegions(regions);
-      if (Object.keys(activePatches).length) applyLiveContentPatches(activePatches);
-      if (Object.keys(activeGlobalPatches).length) applyLiveContentPatches(activeGlobalPatches);
-    });
-  }).observe(document.body, { childList: true, subtree: true });
-}
+let observerQueued = false;
+new MutationObserver(() => {
+  if (observerQueued) return;
+  observerQueued = true;
+  queueMicrotask(() => {
+    observerQueued = false;
+    registerLiveContentRegions(regions);
+    if (Object.keys(activePatches).length) applyLiveContentPatches(activePatches);
+    if (Object.keys(activeGlobalPatches).length) applyLiveContentPatches(activeGlobalPatches);
+  });
+}).observe(document.body, { childList: true, subtree: true });
 
 window.__INAD_LIVE_CONTENT__ = { regions, globalRegions, applyLiveContentPatches, ready };
