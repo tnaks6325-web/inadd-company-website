@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { kvGet, kvPut, kvDelete, signToken, verifyToken, type Bindings } from './store'
 import { DEFAULT_HOME_EDITOR_CONFIG, sanitizeHomeEditorConfig } from './editor-config'
-import { isLiveEditorRoute, sanitizeLiveEditorPatches } from './live-editor-config'
+import { isLiveEditorRoute, sanitizeGlobalLiveEditorPatches, sanitizeLiveEditorPatches } from './live-editor-config'
 
 const admin = new Hono<{ Bindings: Bindings }>()
 
@@ -116,6 +116,8 @@ function liveEditorPatchKey(route: string) {
   return `live_editor_patches:${route}`
 }
 
+const liveEditorGlobalPatchKey = 'live_editor_patches:global'
+
 function getLiveEditorRoute(c: any) {
   const route = new URL(c.req.url).searchParams.get('route')
   return isLiveEditorRoute(route) ? route : null
@@ -152,6 +154,33 @@ admin.delete('/editor/live', authMiddleware, async (c) => {
   const kv = (c.env as any)?.ADMIN_KV
   await kvDelete(kv, liveEditorPatchKey(route))
   return c.json({ ok: true, route, patches: {} })
+})
+
+admin.get('/editor/live-global', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  const raw = await kvGet(kv, liveEditorGlobalPatchKey)
+  let parsed: unknown = {}
+  try { parsed = raw ? JSON.parse(raw) : {} } catch {}
+  return c.json({ scope: 'global', patches: sanitizeGlobalLiveEditorPatches(parsed) })
+})
+
+admin.put('/editor/live-global', authMiddleware, async (c) => {
+  let body: unknown
+  try { body = await c.req.json() } catch {
+    return c.json({ error: '올바른 JSON 형식이 아닙니다.' }, 400)
+  }
+  const serialized = JSON.stringify(body)
+  if (serialized.length > 120_000) return c.json({ error: '편집 데이터가 너무 큽니다.' }, 413)
+  const patches = sanitizeGlobalLiveEditorPatches((body as { patches?: unknown })?.patches)
+  const kv = (c.env as any)?.ADMIN_KV
+  await kvPut(kv, liveEditorGlobalPatchKey, JSON.stringify(patches))
+  return c.json({ ok: true, scope: 'global', patches })
+})
+
+admin.delete('/editor/live-global', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  await kvDelete(kv, liveEditorGlobalPatchKey)
+  return c.json({ ok: true, scope: 'global', patches: {} })
 })
 
 // ═══════════════════════ ABOUT ═══════════════════════
@@ -449,6 +478,14 @@ admin.get('/public/editor/live', async (c) => {
   let parsed: unknown = {}
   try { parsed = raw ? JSON.parse(raw) : {} } catch {}
   return c.json({ route, patches: sanitizeLiveEditorPatches(parsed) }, 200, { 'Cache-Control': 'no-store' })
+})
+
+admin.get('/public/editor/live-global', async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  const raw = await kvGet(kv, liveEditorGlobalPatchKey)
+  let parsed: unknown = {}
+  try { parsed = raw ? JSON.parse(raw) : {} } catch {}
+  return c.json({ scope: 'global', patches: sanitizeGlobalLiveEditorPatches(parsed) }, 200, { 'Cache-Control': 'no-store' })
 })
 
 admin.get('/public/about', async (c) => {

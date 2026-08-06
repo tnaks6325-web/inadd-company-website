@@ -48,6 +48,17 @@ import {
     $('previewBtn').before(button);
   }
   ensureLiveResetAction();
+  function ensureGlobalResetAction() {
+    if ($('resetGlobalLiveBtn')) return;
+    const button = document.createElement('button');
+    button.id = 'resetGlobalLiveBtn';
+    button.className = 'btn secondary';
+    button.type = 'button';
+    button.hidden = true;
+    button.textContent = '공통 원본 복구';
+    $('previewBtn').before(button);
+  }
+  ensureGlobalResetAction();
   function ensureLiveUrlInspector() {
     const textField = $('liveContentText')?.closest('label');
     if (!textField || $('liveContentUrl')) return;
@@ -81,6 +92,25 @@ import {
   let activeLiveRegion = null;
   let activeLiveUrlRegion = null;
   let livePatches = {};
+  let globalLivePatches = {};
+
+  function isGlobalLiveRegion(regionId) {
+    return typeof regionId === 'string' && regionId.startsWith('global.');
+  }
+
+  function liveRegionKind(regionId) {
+    const scopedRegionId = isGlobalLiveRegion(regionId) ? regionId.slice('global.'.length) : regionId;
+    return scopedRegionId.split('.', 1)[0];
+  }
+
+  function livePatchesFor(regionId) {
+    return isGlobalLiveRegion(regionId) ? globalLivePatches : livePatches;
+  }
+
+  function updateLiveRecoveryActions() {
+    $('resetLiveBtn').hidden = activeRoute === '/';
+    $('resetGlobalLiveBtn').hidden = !isGlobalLiveRegion(activeLiveUrlRegion || activeLiveRegion);
+  }
 
   async function api(path, options = {}) {
     const response = await fetch('/api/admin' + path, {
@@ -108,6 +138,15 @@ import {
     }
   }
 
+  async function loadGlobalLivePatches() {
+    try {
+      const result = await api('/editor/live-global');
+      globalLivePatches = result.patches || {};
+    } catch (error) {
+      toast(error.message);
+    }
+  }
+
   function showLiveContentInspector(regionId) {
     const element = [...frameDocument().querySelectorAll('[data-live-editor-region]')]
       .find((candidate) => candidate.getAttribute('data-live-editor-region') === regionId);
@@ -115,26 +154,28 @@ import {
     activeKey = null;
     activeSection = null;
     activeLiveRegion = regionId;
+    const patches = livePatchesFor(regionId);
+    const kind = liveRegionKind(regionId);
     $('selectedName').textContent = '실제 페이지 문구';
-    $('selectionBadge').textContent = 'TEXT';
+    $('selectionBadge').textContent = isGlobalLiveRegion(regionId) ? 'GLOBAL' : 'TEXT';
     $('emptyInspector').hidden = true;
     $('inspectorControls').hidden = true;
     $('liveContentInspector').hidden = false;
-    const isField = regionId.startsWith('field.');
-    $('liveContentText').value = livePatches[regionId]?.text ?? (isField ? element.getAttribute('placeholder') : element.textContent) ?? '';
+    const isField = kind === 'field';
+    $('liveContentText').value = patches[regionId]?.text ?? (isField ? element.getAttribute('placeholder') : element.textContent) ?? '';
     const textField = $('liveContentText').closest('label');
     const anchor = element instanceof HTMLAnchorElement ? element : element.closest('a[href]');
-    const urlRegion = regionId.startsWith('media.') || regionId.startsWith('link.')
+    const urlRegion = kind === 'media' || kind === 'link'
       ? regionId
       : anchor?.dataset.liveEditorLinkRegion;
-    const isMedia = regionId.startsWith('media.');
+    const isMedia = kind === 'media';
     activeLiveUrlRegion = urlRegion || null;
-    textField.hidden = !(regionId.startsWith('content.') || isField);
+    textField.hidden = !(kind === 'content' || isField);
     $('liveContentUrlField').hidden = !activeLiveUrlRegion;
     $('liveContentUrlInfo').hidden = !activeLiveUrlRegion;
     $('liveContentInspector').querySelector('.compact-info:not(#liveContentUrlInfo)').hidden = Boolean(activeLiveUrlRegion);
     if (activeLiveUrlRegion) {
-      $('liveContentUrl').value = livePatches[activeLiveUrlRegion]?.url
+      $('liveContentUrl').value = livePatchesFor(activeLiveUrlRegion)[activeLiveUrlRegion]?.url
         ?? (isMedia ? (element.getAttribute('src') || element.dataset.liveEditorMediaUrl) : (anchor?.dataset.liveEditorPatchedHref || anchor?.dataset.liveEditorOriginalHref || anchor?.getAttribute('href')))
         ?? '';
       $('selectedName').textContent = isMedia ? '실제 페이지 미디어' : '실제 페이지 링크';
@@ -143,6 +184,8 @@ import {
       $('selectedName').textContent = '실제 페이지 입력 안내';
       $('selectionBadge').textContent = 'FORM';
     }
+    if (isGlobalLiveRegion(regionId)) $('selectedName').textContent = isMedia ? '공통 미디어' : (activeLiveUrlRegion ? '공통 링크' : '공통 메뉴·푸터 문구');
+    updateLiveRecoveryActions();
   }
 
   function toast(message) {
@@ -172,7 +215,7 @@ import {
     document.querySelector('.page-chip b').textContent = entry.label;
     document.querySelector('.page-chip small').textContent = entry.path;
     $('saveBtn').disabled = false;
-    $('resetLiveBtn').hidden = entry.path === '/';
+    updateLiveRecoveryActions();
     if (entry.path !== '/') loadLivePatches(entry.path);
   }
 
@@ -198,6 +241,7 @@ import {
     activeSection = null;
     activeLiveRegion = null;
     activeLiveUrlRegion = null;
+    updateLiveRecoveryActions();
     $('liveContentInspector').hidden = true;
     $('emptyInspector').hidden = false;
     $('inspectorControls').hidden = true;
@@ -348,7 +392,8 @@ import {
       frameDocument()?.querySelector(frameEditor().fields[key])?.focus();
       return;
     }
-    if ((event.data.regionId.startsWith('content.') || event.data.regionId.startsWith('field.') || event.data.regionId.startsWith('media.') || event.data.regionId.startsWith('link.')) && activeRoute !== '/') showLiveContentInspector(event.data.regionId);
+    const kind = liveRegionKind(event.data.regionId);
+    if (['content', 'field', 'media', 'link'].includes(kind) && (activeRoute !== '/' || isGlobalLiveRegion(event.data.regionId))) showLiveContentInspector(event.data.regionId);
   });
   populateRoutePicker();
   $('liveRoutePicker').addEventListener('change', (event) => navigateLiveRoute(event.target.value));
@@ -365,21 +410,21 @@ import {
   $('clearSection').addEventListener('click', () => mutateSection((section) => { section.backgroundColor = 'transparent'; }));
   document.querySelectorAll('[data-align]').forEach((button) => button.addEventListener('click', () => mutate((field) => { field.textAlign = button.dataset.align; })));
   $('liveContentText').addEventListener('input', (event) => {
-    if (!activeLiveRegion || activeRoute === '/') return;
+    if (!activeLiveRegion || (activeRoute === '/' && !isGlobalLiveRegion(activeLiveRegion))) return;
     const text = event.target.value.replace(/\r\n?/g, '\n').slice(0, 500);
-    livePatches[activeLiveRegion] = { text };
+    livePatchesFor(activeLiveRegion)[activeLiveRegion] = { text };
     postLiveMode();
     frame.contentWindow?.postMessage(createLiveEditorMessage('apply', { regionId: activeLiveRegion, text }), window.location.origin);
     $('saveStatus').textContent = '저장되지 않은 변경';
   });
   $('liveContentUrl').addEventListener('change', (event) => {
-    if (!activeLiveUrlRegion || activeRoute === '/') return;
+    if (!activeLiveUrlRegion || (activeRoute === '/' && !isGlobalLiveRegion(activeLiveUrlRegion))) return;
     const url = event.target.value.trim();
     if (!isSafeLiveUrl(url, activeLiveUrlRegion)) {
       toast('HTTPS 주소 또는 사이트 내부 경로만 사용할 수 있습니다.');
       return;
     }
-    livePatches[activeLiveUrlRegion] = { url };
+    livePatchesFor(activeLiveUrlRegion)[activeLiveUrlRegion] = { url };
     postLiveMode();
     frame.contentWindow?.postMessage(createLiveEditorMessage('apply', { regionId: activeLiveUrlRegion, field: 'url', value: url }), window.location.origin);
     $('saveStatus').textContent = '저장되지 않은 변경';
@@ -439,14 +484,33 @@ import {
       $('resetLiveBtn').disabled = false;
     }
   });
+  $('resetGlobalLiveBtn').addEventListener('click', async () => {
+    if (!window.confirm('모든 페이지에 적용된 공통 메뉴·푸터 편집을 지우고 원본 상태로 돌아갈까요?')) return;
+    try {
+      $('resetGlobalLiveBtn').disabled = true;
+      const result = await api('/editor/live-global', { method: 'DELETE' });
+      globalLivePatches = result.patches || {};
+      frame.src = toLiveEditorUrl(activeRoute);
+      $('saveStatus').textContent = '공통 원본 상태';
+      toast('공통 메뉴·푸터를 원본 상태로 복구했습니다.');
+    } catch (error) {
+      toast(error.message);
+    } finally {
+      $('resetGlobalLiveBtn').disabled = false;
+    }
+  });
   $('saveBtn').addEventListener('click', async () => {
     try {
       $('saveBtn').disabled = true;
       $('saveStatus').textContent = '저장 중…';
-      const result = activeRoute === '/'
-        ? await api('/editor/home', { method: 'PUT', body: JSON.stringify(config) })
-        : await api(`/editor/live?route=${encodeURIComponent(activeRoute)}`, { method: 'PUT', body: JSON.stringify({ patches: livePatches }) });
-      if (activeRoute === '/') config = result.config;
+      const isGlobalSelection = isGlobalLiveRegion(activeLiveUrlRegion || activeLiveRegion);
+      const result = isGlobalSelection
+        ? await api('/editor/live-global', { method: 'PUT', body: JSON.stringify({ patches: globalLivePatches }) })
+        : activeRoute === '/'
+          ? await api('/editor/home', { method: 'PUT', body: JSON.stringify(config) })
+          : await api(`/editor/live?route=${encodeURIComponent(activeRoute)}`, { method: 'PUT', body: JSON.stringify({ patches: livePatches }) });
+      if (isGlobalSelection) globalLivePatches = result.patches;
+      else if (activeRoute === '/') config = result.config;
       else livePatches = result.patches;
       undoStack = []; redoStack = []; updateHistoryButtons();
       $('saveStatus').textContent = '저장됨';
@@ -463,7 +527,7 @@ import {
     document.querySelectorAll('.theme-swatch').forEach((item) => item.classList.toggle('active', item.dataset.theme === theme));
   }
 
-  api('/editor/home').then((data) => {
+  Promise.all([api('/editor/home'), loadGlobalLivePatches()]).then(([data]) => {
     config = data.config;
     $('saveStatus').textContent = '저장됨';
     connectFrame();

@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   isLiveEditorRoute,
+  sanitizeGlobalLiveEditorPatches,
   sanitizeLiveEditorPatches,
 } from "../src/admin/live-editor-config.ts";
 
@@ -49,4 +50,27 @@ test("keeps only safe media and link URLs for their matching live regions", () =
   assert.equal("media.hero.script" in patches, false);
   assert.equal("link.hero.data" in patches, false);
   assert.equal("content.hero.title" in patches, false);
+});
+
+test("keeps shared header and footer patches in the same safe shape", () => {
+  const patches = sanitizeLiveEditorPatches({
+    "global.content.header.title": { text: "IN AD COMPANY" },
+    "global.link.header.contact": { url: "/contact" },
+    "global.media.footer.logo": { url: "https://cdn.example.com/logo.svg" },
+    "global.link.header.unsafe": { url: "javascript:alert(1)" },
+  });
+
+  assert.deepEqual(patches["global.content.header.title"], { text: "IN AD COMPANY" });
+  assert.deepEqual(patches["global.link.header.contact"], { url: "/contact" });
+  assert.deepEqual(patches["global.media.footer.logo"], { url: "https://cdn.example.com/logo.svg" });
+  assert.equal("global.link.header.unsafe" in patches, false);
+});
+
+test("rejects page-only regions from the shared site scope", () => {
+  const patches = sanitizeGlobalLiveEditorPatches({
+    "global.content.header.title": { text: "IN AD COMPANY" },
+    "content.hero.title": { text: "Page-only title" },
+  });
+
+  assert.deepEqual(patches, { "global.content.header.title": { text: "IN AD COMPANY" } });
 });
