@@ -323,7 +323,7 @@ if (menuToggle && mainNav) {
   /* ─── 초기화 ─── */
   slides.forEach(s => s.classList.remove('active', 'leaving'));
   if (slides[0]) slides[0].classList.add('active');
-  scheduleNext();
+  if (TOTAL) scheduleNext();
   const editorReady = window.__INAD_HOME_EDITOR__?.ready;
   if (editorReady) {
     editorReady.then((config) => {
