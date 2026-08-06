@@ -42,8 +42,7 @@ function backgroundImageUrl(element) {
   return match?.[2] || '';
 }
 
-export function registerLiveContentRegions() {
-  const regions = new Map();
+export function registerLiveContentRegions(regions = new Map()) {
   document.querySelectorAll(textSelector).forEach((element) => {
     if (element.children.length > 0 || !element.textContent?.trim()) return;
     registerRegion(regions, element, 'content');
@@ -64,32 +63,54 @@ export function registerLiveContentRegions() {
 
 const route = window.location.pathname;
 const regions = route === '/' ? new Map() : registerLiveContentRegions();
+let activePatches = {};
 
 export function applyLiveContentPatches(patches) {
   if (!patches || typeof patches !== 'object') return;
+  activePatches = { ...activePatches, ...patches };
   Object.entries(patches).forEach(([regionId, patch]) => {
     const element = regions.get(regionId);
     if (!element || !patch || typeof patch !== 'object') return;
-    if (regionId.startsWith('content.') && typeof patch.text === 'string') element.textContent = patch.text;
-    if (regionId.startsWith('field.') && (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) && typeof patch.text === 'string') element.placeholder = patch.text;
+    if (regionId.startsWith('content.') && typeof patch.text === 'string' && element.textContent !== patch.text) element.textContent = patch.text;
+    if (regionId.startsWith('field.') && (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) && typeof patch.text === 'string' && element.placeholder !== patch.text) element.placeholder = patch.text;
     if (regionId.startsWith('media.') && isSafeLiveUrl(patch.url, regionId)) {
-      if (element instanceof HTMLImageElement) element.src = patch.url;
+      if (element instanceof HTMLImageElement && element.getAttribute('src') !== patch.url) element.src = patch.url;
       else if (element instanceof HTMLMediaElement || element instanceof HTMLSourceElement) {
-        element.src = patch.url;
-        element.closest('video, audio')?.load();
+        if (element.getAttribute('src') !== patch.url) {
+          element.src = patch.url;
+          element.closest('video, audio')?.load();
+        }
       }
-      else if (element instanceof HTMLElement) {
+      else if (element instanceof HTMLElement && element.dataset.liveEditorMediaUrl !== patch.url) {
         element.style.backgroundImage = `url(${JSON.stringify(patch.url)})`;
         element.dataset.liveEditorMediaUrl = patch.url;
       }
     }
-    if (regionId.startsWith('link.') && element instanceof HTMLAnchorElement && isSafeLiveUrl(patch.url, regionId)) element.href = patch.url;
+    if (regionId.startsWith('link.') && element instanceof HTMLAnchorElement && isSafeLiveUrl(patch.url, regionId) && element.dataset.liveEditorPatchedHref !== patch.url) {
+      element.dataset.liveEditorPatchedHref = patch.url;
+      delete element.dataset.liveEditorLinked;
+      element.href = patch.url;
+    }
   });
+  document.dispatchEvent(new CustomEvent('live-editor-content-applied'));
 }
 
 const ready = route === '/' ? Promise.resolve() : fetch(`/api/admin/public/editor/live?route=${encodeURIComponent(route)}`)
   .then((response) => response.ok ? response.json() : { patches: {} })
   .then((payload) => applyLiveContentPatches(payload.patches))
   .catch(() => {});
+
+if (route !== '/') {
+  let observerQueued = false;
+  new MutationObserver(() => {
+    if (observerQueued) return;
+    observerQueued = true;
+    queueMicrotask(() => {
+      observerQueued = false;
+      registerLiveContentRegions(regions);
+      if (Object.keys(activePatches).length) applyLiveContentPatches(activePatches);
+    });
+  }).observe(document.body, { childList: true, subtree: true });
+}
 
 window.__INAD_LIVE_CONTENT__ = { regions, applyLiveContentPatches, ready };

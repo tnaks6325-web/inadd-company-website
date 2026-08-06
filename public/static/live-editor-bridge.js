@@ -42,11 +42,13 @@ if (isLiveEditorFrame && window.parent !== window) {
   function preserveEditorQuery() {
     document.querySelectorAll('a[href]').forEach((anchor) => {
       if (anchor.dataset.liveEditorLinked === '1') return;
-      const route = normalizeLiveEditorRoute(anchor.href, window.location.origin);
+      const sourceHref = anchor.dataset.liveEditorPatchedHref || anchor.getAttribute('href') || '';
+      const route = normalizeLiveEditorRoute(sourceHref, window.location.origin);
       if (!route || anchor.target || anchor.hasAttribute('download')) return;
-      const url = new URL(anchor.href, window.location.origin);
+      const url = new URL(sourceHref, window.location.origin);
       url.searchParams.set('editor', '1');
       anchor.href = url.pathname + url.search + url.hash;
+      anchor.dataset.liveEditorOriginalHref = sourceHref;
       anchor.dataset.liveEditorLinked = '1';
     });
   }
@@ -73,6 +75,7 @@ if (isLiveEditorFrame && window.parent !== window) {
   }, true);
 
   preserveEditorQuery();
+  document.addEventListener('live-editor-content-applied', preserveEditorQuery);
   updateMode('interact');
   send('ready', { route: window.location.pathname, regions: getRegions() });
 }

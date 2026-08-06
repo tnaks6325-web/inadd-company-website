@@ -135,7 +135,7 @@ import {
     $('liveContentInspector').querySelector('.compact-info:not(#liveContentUrlInfo)').hidden = Boolean(activeLiveUrlRegion);
     if (activeLiveUrlRegion) {
       $('liveContentUrl').value = livePatches[activeLiveUrlRegion]?.url
-        ?? (isMedia ? (element.getAttribute('src') || element.dataset.liveEditorMediaUrl) : anchor?.getAttribute('href'))
+        ?? (isMedia ? (element.getAttribute('src') || element.dataset.liveEditorMediaUrl) : (anchor?.dataset.liveEditorPatchedHref || anchor?.dataset.liveEditorOriginalHref || anchor?.getAttribute('href')))
         ?? '';
       $('selectedName').textContent = isMedia ? '실제 페이지 미디어' : '실제 페이지 링크';
       $('selectionBadge').textContent = isMedia ? 'MEDIA' : 'LINK';
