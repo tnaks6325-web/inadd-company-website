@@ -81,7 +81,7 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
         <div id="cursorRing" aria-hidden="true"></div>
         {/* Ribbons 마운트 포인트 */}
         <div id="ribbon-mount"></div>
-        <header class="site-header" id="site-header">
+        <header class="site-header" id="site-header" data-live-editor-region="global-header">
           <div class="header-inner">
             <a href="/" class="logo">
               <span class="logo-wordmark">IN AD COMPANY</span>
@@ -212,6 +212,7 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
         </div>
         <script src="/static/cursor.js"></script>
         <script src="/static/main.js"></script>
+        <script type="module" src="/static/live-editor-bridge.js"></script>
         {/* ── Ribbons 커서 ── */}
         <script type="module" dangerouslySetInnerHTML={{ __html: `
           import { initRibbons } from '/static/ribbons.js';

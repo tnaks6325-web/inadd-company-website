@@ -20,6 +20,13 @@ export function adminEditorHTML() {
         <button class="device-btn" data-device="tablet">태블릿</button>
         <button class="device-btn" data-device="mobile">모바일</button>
       </div>
+      <div class="live-canvas-tools" aria-label="라이브 캔버스 도구">
+        <select id="liveRoutePicker" aria-label="편집할 실제 페이지"></select>
+        <div class="live-mode-toggle" role="group" aria-label="캔버스 모드">
+          <button type="button" class="live-mode-btn active" data-live-mode="interact">상호작용</button>
+          <button type="button" class="live-mode-btn" data-live-mode="select">선택</button>
+        </div>
+      </div>
       <div class="top-actions">
         <span id="saveStatus" class="save-status">불러오는 중…</span>
         <button id="previewBtn" class="btn secondary">미리보기</button>
@@ -77,7 +84,7 @@ export function adminEditorHTML() {
     </aside>
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="/static/admin-editor.js"></script>
+  <script type="module" src="/static/admin-editor.js"></script>
 </body>
 </html>`
 }

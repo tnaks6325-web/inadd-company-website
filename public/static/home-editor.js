@@ -54,6 +54,7 @@
       const field = config.fields?.[key];
       if (!element || !field) return;
       element.dataset.homeEditorKey = key;
+      element.dataset.liveEditorRegion = `home.${key}`;
       element.textContent = field.text;
       element.style.whiteSpace = 'pre-line';
       element.style.color = field.color;

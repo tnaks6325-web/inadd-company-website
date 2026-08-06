@@ -4592,6 +4592,17 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .nav-dropdown {
   position: relative;
 }
+
+/* Editor-only selection state. Visitor pages never receive the editor query. */
+html[data-live-editor-mode="select"] [data-live-editor-region] {
+  outline: 2px dashed rgba(26, 107, 255, 0.72);
+  outline-offset: -2px;
+  cursor: crosshair;
+}
+html[data-live-editor-mode="select"] [data-live-editor-region].live-editor-selected {
+  outline: 3px solid #1a6bff;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.7);
+}
 .nav-dropdown-trigger {
   display: flex;
   align-items: center;

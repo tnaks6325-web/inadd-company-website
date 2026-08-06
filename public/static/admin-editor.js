@@ -1,3 +1,11 @@
+import {
+  LIVE_EDITOR_ROUTES,
+  createLiveEditorMessage,
+  isLiveEditorMessage,
+  normalizeLiveEditorRoute,
+  toLiveEditorUrl,
+} from '/static/live-editor-contract.js';
+
 (() => {
   'use strict';
 
@@ -34,6 +42,8 @@
   let undoStack = [];
   let redoStack = [];
   let focusSnapshot = null;
+  let activeRoute = '/';
+  let liveMode = 'interact';
 
   async function api(path, options = {}) {
     const response = await fetch('/api/admin' + path, {
@@ -58,9 +68,56 @@
     toast.timer = setTimeout(() => element.classList.remove('show'), 2800);
   }
 
-  function frameEditor() { return frame.contentWindow && frame.contentWindow.__INAD_HOME_EDITOR__; }
+  function frameEditor() { return activeRoute === '/' && frame.contentWindow && frame.contentWindow.__INAD_HOME_EDITOR__; }
   function frameDocument() { return frame.contentDocument; }
   function apply() { if (config && frameEditor()) frameEditor().applyConfig(config); }
+
+  function setRouteDisplay(route) {
+    const entry = LIVE_EDITOR_ROUTES.find((item) => item.path === route) || LIVE_EDITOR_ROUTES[0];
+    activeRoute = entry.path;
+    $('liveRoutePicker').value = entry.path;
+    document.querySelector('.page-chip b').textContent = entry.label;
+    document.querySelector('.page-chip small').textContent = entry.path;
+    $('saveBtn').disabled = entry.path !== '/';
+  }
+
+  function postLiveMode() {
+    frame.contentWindow?.postMessage(createLiveEditorMessage('set-mode', { mode: liveMode }), window.location.origin);
+  }
+
+  function setLiveMode(nextMode) {
+    liveMode = nextMode;
+    document.querySelectorAll('[data-live-mode]').forEach((button) => button.classList.toggle('active', button.dataset.liveMode === liveMode));
+    document.querySelector('.canvas-hint').innerHTML = liveMode === 'interact'
+      ? '<span class="pulse"></span><b>상호작용 모드</b>에서 실제 메뉴와 페이지 동작을 확인하세요.'
+      : '<span class="pulse"></span><b>선택 모드</b>에서 파란 윤곽선으로 표시된 편집 영역을 선택하세요.';
+    if (liveMode === 'interact') editability(false);
+    postLiveMode();
+  }
+
+  function navigateLiveRoute(route) {
+    const target = toLiveEditorUrl(route);
+    if (!target) return;
+    editability(false);
+    activeKey = null;
+    activeSection = null;
+    $('emptyInspector').hidden = false;
+    $('inspectorControls').hidden = true;
+    $('selectedName').textContent = '요소를 선택하세요';
+    $('selectionBadge').textContent = '—';
+    setRouteDisplay(route);
+    frame.src = target;
+  }
+
+  function populateRoutePicker() {
+    LIVE_EDITOR_ROUTES.forEach((route) => {
+      const option = document.createElement('option');
+      option.value = route.path;
+      option.textContent = route.label;
+      $('liveRoutePicker').append(option);
+    });
+    setRouteDisplay(activeRoute);
+  }
   function updateHistoryButtons() {
     $('undoBtn').disabled = undoStack.length === 0;
     $('redoBtn').disabled = redoStack.length === 0;
@@ -74,18 +131,19 @@
     $('saveStatus').textContent = '저장되지 않은 변경';
   }
 
-  function editability(enabled) {
+  function editability(enabled, editableKey = activeKey) {
     const doc = frameDocument();
     if (!doc || !frameEditor()) return;
     Object.entries(frameEditor().fields).forEach(([key, selector]) => {
       const element = doc.querySelector(selector);
       if (!element) return;
-      element.contentEditable = enabled ? 'true' : 'false';
+      const canEdit = enabled && key === editableKey;
+      element.contentEditable = canEdit ? 'true' : 'false';
       element.spellcheck = false;
-      element.style.outline = enabled ? '1px dashed rgba(38,103,255,.55)' : '';
-      element.style.outlineOffset = enabled ? '5px' : '';
-      element.style.cursor = enabled ? 'text' : '';
-      if (enabled && !element.dataset.editorBound) {
+      element.style.outline = canEdit ? '1px dashed rgba(38,103,255,.55)' : '';
+      element.style.outlineOffset = canEdit ? '5px' : '';
+      element.style.cursor = canEdit ? 'text' : '';
+      if (!element.dataset.editorBound) {
         element.dataset.editorBound = '1';
         element.addEventListener('focus', () => {
           focusSnapshot = deepCopy(config);
@@ -161,15 +219,40 @@
   }
 
   async function connectFrame() {
+    try {
+      const route = normalizeLiveEditorRoute(frame.contentWindow?.location?.pathname);
+      if (route) setRouteDisplay(route);
+    } catch {}
     const editor = frameEditor();
-    if (!editor) return;
-    await editor.ready.catch(() => null);
-    if (!config) return;
-    apply();
-    editability(!document.body.classList.contains('preview'));
+    if (editor) {
+      await editor.ready.catch(() => null);
+      if (config) apply();
+    }
+    editability(false);
+    postLiveMode();
   }
 
   frame.addEventListener('load', connectFrame);
+  window.addEventListener('message', (event) => {
+    if (event.origin !== window.location.origin || event.source !== frame.contentWindow || !isLiveEditorMessage(event.data)) return;
+    if (event.data.type === 'ready' || event.data.type === 'route-change') {
+      const route = normalizeLiveEditorRoute(event.data.route);
+      if (route) setRouteDisplay(route);
+      postLiveMode();
+      return;
+    }
+    if (event.data.type !== 'select' || liveMode !== 'select') return;
+    if (event.data.regionId.startsWith('home.') && activeRoute === '/') {
+      const key = event.data.regionId.slice('home.'.length);
+      if (!config?.fields[key]) return;
+      selectField(key);
+      editability(true, key);
+      frameDocument()?.querySelector(frameEditor().fields[key])?.focus();
+    }
+  });
+  populateRoutePicker();
+  $('liveRoutePicker').addEventListener('change', (event) => navigateLiveRoute(event.target.value));
+  document.querySelectorAll('[data-live-mode]').forEach((button) => button.addEventListener('click', () => setLiveMode(button.dataset.liveMode)));
   $('fontFamily').addEventListener('change', (event) => mutate((field) => { field.fontFamily = event.target.value; }));
   $('fontWeight').addEventListener('change', (event) => mutate((field) => { field.fontWeight = Number(event.target.value); }));
   $('fontSize').addEventListener('change', (event) => mutate((field) => { field.fontSize = Number(event.target.value); }));
@@ -219,7 +302,7 @@
   $('previewBtn').addEventListener('click', () => {
     const preview = document.body.classList.toggle('preview');
     $('previewBtn').textContent = preview ? '편집으로 돌아가기' : '미리보기';
-    editability(!preview);
+    setLiveMode('interact');
   });
   $('saveBtn').addEventListener('click', async () => {
     try {
