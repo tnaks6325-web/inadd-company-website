@@ -20,6 +20,7 @@ export const LIVE_EDITOR_ROUTES = [
 
 const allowedMessageTypes = new Set(['ready', 'route-change', 'select', 'set-mode', 'apply']);
 const allowedRoutes = new Set(LIVE_EDITOR_ROUTES.map((route) => route.path));
+const regionIdPattern = /^[a-z0-9][a-z0-9._-]{0,79}$/i;
 
 export function normalizeLiveEditorRoute(value, origin = 'https://www.inadcompany.co.kr') {
   if (typeof value !== 'string' || value.length > 240) return null;
@@ -38,6 +39,21 @@ export function toLiveEditorUrl(route) {
   return normalizedRoute ? `${normalizedRoute}?editor=1` : null;
 }
 
+export function isSafeLiveUrl(value, regionId) {
+  if (typeof value !== 'string' || typeof regionId !== 'string') return false;
+  const url = value.trim();
+  if (!url || url.length > 2048 || /[\u0000-\u001f\\]/.test(url)) return false;
+  if (url.startsWith('/') && !url.startsWith('//')) return true;
+  if (regionId.startsWith('link.') && url.startsWith('#')) return true;
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'https:'
+      || (regionId.startsWith('link.') && (parsed.protocol === 'mailto:' || parsed.protocol === 'tel:'));
+  } catch {
+    return false;
+  }
+}
+
 export function isLiveEditorMessage(value) {
   if (!value || typeof value !== 'object') return false;
   const message = value;
@@ -45,12 +61,16 @@ export function isLiveEditorMessage(value) {
   if (!allowedMessageTypes.has(message.type)) return false;
   if (message.type === 'set-mode') return message.mode === 'interact' || message.mode === 'select';
   if (message.type === 'ready' || message.type === 'route-change') return normalizeLiveEditorRoute(message.route) !== null;
-  if (message.type === 'select') return typeof message.regionId === 'string' && /^[a-z0-9][a-z0-9._-]{0,79}$/i.test(message.regionId);
+  if (message.type === 'select') return typeof message.regionId === 'string' && regionIdPattern.test(message.regionId);
   if (message.type === 'apply') {
-    return typeof message.regionId === 'string'
-      && /^[a-z0-9][a-z0-9._-]{0,79}$/i.test(message.regionId)
-      && typeof message.text === 'string'
-      && message.text.length <= 500;
+    if (typeof message.regionId !== 'string' || !regionIdPattern.test(message.regionId)) return false;
+    if (message.regionId.startsWith('content.')) {
+      const text = message.field === 'text' ? message.value : message.text;
+      return typeof text === 'string' && text.length <= 500;
+    }
+    return (message.regionId.startsWith('media.') || message.regionId.startsWith('link.'))
+      && message.field === 'url'
+      && isSafeLiveUrl(message.value, message.regionId);
   }
   return false;
 }

@@ -1,3 +1,5 @@
+import { isSafeLiveUrl } from '/static/live-editor-contract.js';
+
 const textSelector = 'main h1, main h2, main h3, main h4, main p, main a, main button, main li, main span, main strong, main em, main small, main label';
 
 function stablePath(element) {
@@ -16,25 +18,35 @@ function stablePath(element) {
   return current === main ? segments.join('.') : null;
 }
 
-function regionIdFor(element) {
+function regionIdFor(element, prefix) {
   const path = stablePath(element);
   if (!path) return null;
-  const identifier = `content.${path}`;
+  const identifier = `${prefix}.${path}`;
   if (identifier.length <= 80) return identifier;
 
   let hash = 2166136261;
   for (const character of path) hash = Math.imul(hash ^ character.charCodeAt(0), 16777619);
-  return `content.${(hash >>> 0).toString(36)}`;
+  return `${prefix}.${(hash >>> 0).toString(36)}`;
+}
+
+function registerRegion(regions, element, prefix, selectable = true) {
+  const regionId = regionIdFor(element, prefix);
+  if (!regionId || regions.has(regionId)) return null;
+  if (selectable) element.dataset.liveEditorRegion = regionId;
+  regions.set(regionId, element);
+  return regionId;
 }
 
 export function registerLiveContentRegions() {
   const regions = new Map();
   document.querySelectorAll(textSelector).forEach((element) => {
     if (element.children.length > 0 || !element.textContent?.trim()) return;
-    const regionId = regionIdFor(element);
-    if (!regionId || regions.has(regionId)) return;
-    element.dataset.liveEditorRegion = regionId;
-    regions.set(regionId, element);
+    registerRegion(regions, element, 'content');
+  });
+  document.querySelectorAll('main img[src]').forEach((element) => registerRegion(regions, element, 'media'));
+  document.querySelectorAll('main a[href]').forEach((element) => {
+    const regionId = registerRegion(regions, element, 'link', !element.dataset.liveEditorRegion);
+    if (regionId) element.dataset.liveEditorLinkRegion = regionId;
   });
   return regions;
 }
@@ -46,8 +58,10 @@ export function applyLiveContentPatches(patches) {
   if (!patches || typeof patches !== 'object') return;
   Object.entries(patches).forEach(([regionId, patch]) => {
     const element = regions.get(regionId);
-    if (!element || !patch || typeof patch !== 'object' || typeof patch.text !== 'string') return;
-    element.textContent = patch.text;
+    if (!element || !patch || typeof patch !== 'object') return;
+    if (regionId.startsWith('content.') && typeof patch.text === 'string') element.textContent = patch.text;
+    if (regionId.startsWith('media.') && element instanceof HTMLImageElement && isSafeLiveUrl(patch.url, regionId)) element.src = patch.url;
+    if (regionId.startsWith('link.') && element instanceof HTMLAnchorElement && isSafeLiveUrl(patch.url, regionId)) element.href = patch.url;
   });
 }
 

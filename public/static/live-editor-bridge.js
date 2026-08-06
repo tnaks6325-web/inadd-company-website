@@ -55,7 +55,9 @@ if (isLiveEditorFrame && window.parent !== window) {
     if (event.origin !== window.location.origin || event.source !== window.parent || !isLiveEditorMessage(event.data)) return;
     if (event.data.type === 'set-mode') updateMode(event.data.mode);
     if (event.data.type === 'apply') {
-      const patches = { [event.data.regionId]: { text: event.data.text } };
+      const patches = event.data.field === 'url'
+        ? { [event.data.regionId]: { url: event.data.value } }
+        : { [event.data.regionId]: { text: event.data.field === 'text' ? event.data.value : event.data.text } };
       window.__INAD_LIVE_CONTENT__?.applyLiveContentPatches(patches);
     }
   });
