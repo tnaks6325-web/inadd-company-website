@@ -76,6 +76,8 @@ if (isLiveEditorFrame && window.parent !== window) {
 
   preserveEditorQuery();
   document.addEventListener('live-editor-content-applied', preserveEditorQuery);
+  new MutationObserver(() => preserveEditorQuery())
+    .observe(document.body, { childList: true, subtree: true });
   updateMode('interact');
   send('ready', { route: window.location.pathname, regions: getRegions() });
 }
