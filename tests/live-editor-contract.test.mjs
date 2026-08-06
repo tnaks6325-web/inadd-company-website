@@ -25,6 +25,20 @@ test("accepts only versioned live editor messages with an allowlisted type", () 
     mode: "interact",
   }), false);
   assert.equal(isLiveEditorMessage({ type: "run-code", code: "alert(1)" }), false);
+  assert.equal(isLiveEditorMessage({
+    channel: LIVE_EDITOR_CHANNEL,
+    version: LIVE_EDITOR_VERSION,
+    type: "apply",
+    regionId: "content.main.h2",
+    text: "안전한 문구",
+  }), true);
+  assert.equal(isLiveEditorMessage({
+    channel: LIVE_EDITOR_CHANNEL,
+    version: LIVE_EDITOR_VERSION,
+    type: "apply",
+    regionId: "content.main.h2",
+    text: "x".repeat(501),
+  }), false);
 });
 
 test("normalizes only public editor routes and removes query state", () => {

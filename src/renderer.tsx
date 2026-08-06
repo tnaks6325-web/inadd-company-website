@@ -212,6 +212,7 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
         </div>
         <script src="/static/cursor.js"></script>
         <script src="/static/main.js"></script>
+        <script type="module" src="/static/live-content-patches.js"></script>
         <script type="module" src="/static/live-editor-bridge.js"></script>
         {/* ── Ribbons 커서 ── */}
         <script type="module" dangerouslySetInnerHTML={{ __html: `

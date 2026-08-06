@@ -46,7 +46,13 @@ export function isLiveEditorMessage(value) {
   if (message.type === 'set-mode') return message.mode === 'interact' || message.mode === 'select';
   if (message.type === 'ready' || message.type === 'route-change') return normalizeLiveEditorRoute(message.route) !== null;
   if (message.type === 'select') return typeof message.regionId === 'string' && /^[a-z0-9][a-z0-9._-]{0,79}$/i.test(message.regionId);
-  return true;
+  if (message.type === 'apply') {
+    return typeof message.regionId === 'string'
+      && /^[a-z0-9][a-z0-9._-]{0,79}$/i.test(message.regionId)
+      && typeof message.text === 'string'
+      && message.text.length <= 500;
+  }
+  return false;
 }
 
 export function createLiveEditorMessage(type, payload = {}) {

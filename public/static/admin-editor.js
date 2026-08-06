@@ -44,6 +44,8 @@ import {
   let focusSnapshot = null;
   let activeRoute = '/';
   let liveMode = 'interact';
+  let activeLiveRegion = null;
+  let livePatches = {};
 
   async function api(path, options = {}) {
     const response = await fetch('/api/admin' + path, {
@@ -58,6 +60,32 @@ import {
     const body = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(body.error || '요청을 처리하지 못했습니다.');
     return body;
+  }
+
+  async function loadLivePatches(route) {
+    const requestedRoute = route;
+    try {
+      const result = await api(`/editor/live?route=${encodeURIComponent(route)}`);
+      if (activeRoute !== requestedRoute) return;
+      livePatches = result.patches || {};
+    } catch (error) {
+      if (activeRoute === requestedRoute) toast(error.message);
+    }
+  }
+
+  function showLiveContentInspector(regionId) {
+    const element = [...frameDocument().querySelectorAll('[data-live-editor-region]')]
+      .find((candidate) => candidate.getAttribute('data-live-editor-region') === regionId);
+    if (!element) return;
+    activeKey = null;
+    activeSection = null;
+    activeLiveRegion = regionId;
+    $('selectedName').textContent = '실제 페이지 문구';
+    $('selectionBadge').textContent = 'TEXT';
+    $('emptyInspector').hidden = true;
+    $('inspectorControls').hidden = true;
+    $('liveContentInspector').hidden = false;
+    $('liveContentText').value = livePatches[regionId]?.text ?? element.textContent ?? '';
   }
 
   function toast(message) {
@@ -78,7 +106,8 @@ import {
     $('liveRoutePicker').value = entry.path;
     document.querySelector('.page-chip b').textContent = entry.label;
     document.querySelector('.page-chip small').textContent = entry.path;
-    $('saveBtn').disabled = entry.path !== '/';
+    $('saveBtn').disabled = false;
+    if (entry.path !== '/') loadLivePatches(entry.path);
   }
 
   function postLiveMode() {
@@ -101,6 +130,8 @@ import {
     editability(false);
     activeKey = null;
     activeSection = null;
+    activeLiveRegion = null;
+    $('liveContentInspector').hidden = true;
     $('emptyInspector').hidden = false;
     $('inspectorControls').hidden = true;
     $('selectedName').textContent = '요소를 선택하세요';
@@ -248,7 +279,9 @@ import {
       selectField(key);
       editability(true, key);
       frameDocument()?.querySelector(frameEditor().fields[key])?.focus();
+      return;
     }
+    if (event.data.regionId.startsWith('content.') && activeRoute !== '/') showLiveContentInspector(event.data.regionId);
   });
   populateRoutePicker();
   $('liveRoutePicker').addEventListener('change', (event) => navigateLiveRoute(event.target.value));
@@ -264,6 +297,14 @@ import {
   $('clearHighlight').addEventListener('click', () => mutate((field) => { field.backgroundColor = 'transparent'; }));
   $('clearSection').addEventListener('click', () => mutateSection((section) => { section.backgroundColor = 'transparent'; }));
   document.querySelectorAll('[data-align]').forEach((button) => button.addEventListener('click', () => mutate((field) => { field.textAlign = button.dataset.align; })));
+  $('liveContentText').addEventListener('input', (event) => {
+    if (!activeLiveRegion || activeRoute === '/') return;
+    const text = event.target.value.replace(/\r\n?/g, '\n').slice(0, 500);
+    livePatches[activeLiveRegion] = { text };
+    postLiveMode();
+    frame.contentWindow?.postMessage(createLiveEditorMessage('apply', { regionId: activeLiveRegion, text }), window.location.origin);
+    $('saveStatus').textContent = '저장되지 않은 변경';
+  });
 
   document.querySelectorAll('.device-btn').forEach((button) => button.addEventListener('click', () => {
     document.querySelectorAll('.device-btn').forEach((item) => item.classList.remove('active'));
@@ -308,8 +349,11 @@ import {
     try {
       $('saveBtn').disabled = true;
       $('saveStatus').textContent = '저장 중…';
-      const result = await api('/editor/home', { method: 'PUT', body: JSON.stringify(config) });
-      config = result.config;
+      const result = activeRoute === '/'
+        ? await api('/editor/home', { method: 'PUT', body: JSON.stringify(config) })
+        : await api(`/editor/live?route=${encodeURIComponent(activeRoute)}`, { method: 'PUT', body: JSON.stringify({ patches: livePatches }) });
+      if (activeRoute === '/') config = result.config;
+      else livePatches = result.patches;
       undoStack = []; redoStack = []; updateHistoryButtons();
       $('saveStatus').textContent = '저장됨';
       toast('홈페이지 변경사항을 저장했습니다.');

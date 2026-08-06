@@ -66,6 +66,9 @@ export function adminEditorHTML() {
     <aside class="right-panel">
       <div class="inspector-head"><div><small>선택한 요소</small><b id="selectedName">텍스트를 선택하세요</b></div><span id="selectionBadge">—</span></div>
       <div id="emptyInspector" class="empty-inspector"><div class="cursor-graphic">T</div><p>캔버스에서 수정할 텍스트를 클릭하세요.</p><small>문구, 글꼴, 색상, 정렬과 섹션 배경을 편집할 수 있습니다.</small></div>
+      <div id="liveContentInspector" class="inspector-controls" hidden>
+        <section class="control-section"><h3>실제 페이지 문구</h3><label>선택한 문구<textarea id="liveContentText" rows="6" maxlength="500"></textarea></label><p class="compact-info">텍스트만 변경됩니다. 링크와 실제 페이지 동작은 유지됩니다.</p></section>
+      </div>
       <div id="inspectorControls" class="inspector-controls" hidden>
         <section class="control-section" id="typographyControls">
           <h3>타이포그래피</h3>

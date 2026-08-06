@@ -113,13 +113,14 @@ function isLiveEditorMessage(event) {
 
 ### Phase 2: Make real content editable page by page
 
-- [ ] Task 3: Migrate the existing home field registry to the shared bridge with selection overlays.
-- [ ] Task 4: Add inspectable, allowlisted regions for About, Works, Contact, and Marketing overview.
-- [ ] Task 5: Add route-specific region adapters for each Marketing submenu route.
+- [ ] Task 3: Migrate the existing home field registry to the shared bridge with selection overlays. (Completed in the first live canvas slice.)
+- [ ] Task 4: Add a generic, text-only region registry for real `main` content. It derives stable route-local identifiers, persists only sanitized text patches, and applies them on visitor pages before editor selection. This makes all public routes editable without maintaining a duplicate renderer.
+- [ ] Task 5: Add route-specific adapters for images, collections, forms, and interactive content that cannot safely use the generic text registry.
 
 ### Checkpoint: content and safety
 
 - [ ] Every primary and submenu route opens actual markup and declares its editable regions.
+- [ ] Every registered text patch is rendered on both the visitor page and live editor canvas without HTML injection.
 - [ ] Unregistered elements remain view-only.
 - [ ] Saving changes is authenticated and scoped to the active route.
 

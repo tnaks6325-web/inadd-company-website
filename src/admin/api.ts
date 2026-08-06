@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { kvGet, kvPut, kvDelete, signToken, verifyToken, type Bindings } from './store'
 import { DEFAULT_HOME_EDITOR_CONFIG, sanitizeHomeEditorConfig } from './editor-config'
+import { isLiveEditorRoute, sanitizeLiveEditorPatches } from './live-editor-config'
 
 const admin = new Hono<{ Bindings: Bindings }>()
 
@@ -109,6 +110,40 @@ admin.put('/editor/home', authMiddleware, async (c) => {
   const config = sanitizeHomeEditorConfig(body)
   await kvPut(kv, 'home_editor_config', JSON.stringify(config))
   return c.json({ ok: true, config })
+})
+
+function liveEditorPatchKey(route: string) {
+  return `live_editor_patches:${route}`
+}
+
+function getLiveEditorRoute(c: any) {
+  const route = new URL(c.req.url).searchParams.get('route')
+  return isLiveEditorRoute(route) ? route : null
+}
+
+admin.get('/editor/live', authMiddleware, async (c) => {
+  const route = getLiveEditorRoute(c)
+  if (!route) return c.json({ error: '지원하지 않는 페이지입니다.' }, 400)
+  const kv = (c.env as any)?.ADMIN_KV
+  const raw = await kvGet(kv, liveEditorPatchKey(route))
+  let parsed: unknown = {}
+  try { parsed = raw ? JSON.parse(raw) : {} } catch {}
+  return c.json({ route, patches: sanitizeLiveEditorPatches(parsed) })
+})
+
+admin.put('/editor/live', authMiddleware, async (c) => {
+  const route = getLiveEditorRoute(c)
+  if (!route) return c.json({ error: '지원하지 않는 페이지입니다.' }, 400)
+  let body: unknown
+  try { body = await c.req.json() } catch {
+    return c.json({ error: '올바른 JSON 형식이 아닙니다.' }, 400)
+  }
+  const serialized = JSON.stringify(body)
+  if (serialized.length > 120_000) return c.json({ error: '편집 데이터가 너무 큽니다.' }, 413)
+  const patches = sanitizeLiveEditorPatches((body as { patches?: unknown })?.patches)
+  const kv = (c.env as any)?.ADMIN_KV
+  await kvPut(kv, liveEditorPatchKey(route), JSON.stringify(patches))
+  return c.json({ ok: true, route, patches })
 })
 
 // ═══════════════════════ ABOUT ═══════════════════════
@@ -396,6 +431,16 @@ admin.get('/public/editor/home', async (c) => {
   let parsed: unknown = DEFAULT_HOME_EDITOR_CONFIG
   try { parsed = raw ? JSON.parse(raw) : DEFAULT_HOME_EDITOR_CONFIG } catch {}
   return c.json({ config: sanitizeHomeEditorConfig(parsed) }, 200, { 'Cache-Control': 'no-store' })
+})
+
+admin.get('/public/editor/live', async (c) => {
+  const route = getLiveEditorRoute(c)
+  if (!route) return c.json({ error: '지원하지 않는 페이지입니다.' }, 400)
+  const kv = (c.env as any)?.ADMIN_KV
+  const raw = await kvGet(kv, liveEditorPatchKey(route))
+  let parsed: unknown = {}
+  try { parsed = raw ? JSON.parse(raw) : {} } catch {}
+  return c.json({ route, patches: sanitizeLiveEditorPatches(parsed) }, 200, { 'Cache-Control': 'no-store' })
 })
 
 admin.get('/public/about', async (c) => {

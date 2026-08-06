@@ -54,6 +54,10 @@ if (isLiveEditorFrame && window.parent !== window) {
   window.addEventListener('message', (event) => {
     if (event.origin !== window.location.origin || event.source !== window.parent || !isLiveEditorMessage(event.data)) return;
     if (event.data.type === 'set-mode') updateMode(event.data.mode);
+    if (event.data.type === 'apply') {
+      const patches = { [event.data.regionId]: { text: event.data.text } };
+      window.__INAD_LIVE_CONTENT__?.applyLiveContentPatches(patches);
+    }
   });
 
   document.addEventListener('click', (event) => {
