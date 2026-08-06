@@ -81,7 +81,7 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
         <div id="cursorRing" aria-hidden="true"></div>
         {/* Ribbons 마운트 포인트 */}
         <div id="ribbon-mount"></div>
-        <header class="site-header" id="site-header" data-live-editor-region="global-header">
+        <header class="site-header" id="site-header">
           <div class="header-inner">
             <a href="/" class="logo">
               <span class="logo-wordmark">IN AD COMPANY</span>
