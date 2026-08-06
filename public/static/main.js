@@ -50,12 +50,14 @@ if (menuToggle && mainNav) {
   menuToggle.addEventListener('click', () => {
     const o = menuToggle.classList.toggle('open');
     mainNav.classList.toggle('open', o);
+    menuToggle.setAttribute('aria-expanded', String(o));
     document.body.style.overflow = o ? 'hidden' : '';
   });
   mainNav.querySelectorAll('.nav-link').forEach(a =>
     a.addEventListener('click', () => {
       menuToggle.classList.remove('open');
       mainNav.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
     })
   );

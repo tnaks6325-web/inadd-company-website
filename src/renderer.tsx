@@ -86,7 +86,7 @@ export const renderer = jsxRenderer(({ children, title, description, canonical, 
             <a href="/" class="logo">
               <span class="logo-wordmark">IN AD COMPANY</span>
             </a>
-            <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기">
+            <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mainNav">
               <span></span><span></span><span></span>
             </button>
             <nav class="main-nav" id="mainNav">
