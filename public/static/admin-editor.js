@@ -136,8 +136,8 @@ import {
       $('liveContentUrl').value = livePatches[activeLiveUrlRegion]?.url
         ?? (isMedia ? (element.getAttribute('src') || element.dataset.liveEditorMediaUrl) : anchor?.getAttribute('href'))
         ?? '';
-      $('selectedName').textContent = isMedia ? '실제 페이지 이미지' : '실제 페이지 링크';
-      $('selectionBadge').textContent = isMedia ? 'IMAGE' : 'LINK';
+      $('selectedName').textContent = isMedia ? '실제 페이지 미디어' : '실제 페이지 링크';
+      $('selectionBadge').textContent = isMedia ? 'MEDIA' : 'LINK';
     }
   }
 

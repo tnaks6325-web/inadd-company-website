@@ -49,6 +49,7 @@ export function registerLiveContentRegions() {
     registerRegion(regions, element, 'content');
   });
   document.querySelectorAll('main img[src]').forEach((element) => registerRegion(regions, element, 'media'));
+  document.querySelectorAll('main video[src], main source[src]').forEach((element) => registerRegion(regions, element, 'media'));
   document.querySelectorAll('main [style*="background-image"]').forEach((element) => {
     const regionId = registerRegion(regions, element, 'media');
     if (regionId) element.dataset.liveEditorMediaUrl = backgroundImageUrl(element);
@@ -71,6 +72,10 @@ export function applyLiveContentPatches(patches) {
     if (regionId.startsWith('content.') && typeof patch.text === 'string') element.textContent = patch.text;
     if (regionId.startsWith('media.') && isSafeLiveUrl(patch.url, regionId)) {
       if (element instanceof HTMLImageElement) element.src = patch.url;
+      else if (element instanceof HTMLMediaElement || element instanceof HTMLSourceElement) {
+        element.src = patch.url;
+        element.closest('video, audio')?.load();
+      }
       else if (element instanceof HTMLElement) {
         element.style.backgroundImage = `url(${JSON.stringify(patch.url)})`;
         element.dataset.liveEditorMediaUrl = patch.url;
