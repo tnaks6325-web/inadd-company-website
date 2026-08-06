@@ -17,6 +17,8 @@ test("keeps only known route text patches with safe region identifiers", () => {
   assert.equal("content.invalid<script>" in patches, false);
   assert.equal(patches["content.summary"].text.length, 500);
   assert.equal(isLiveEditorRoute("/marketing/seo"), true);
+  assert.equal(isLiveEditorRoute("/insight/admin_article-42"), true);
+  assert.equal(isLiveEditorRoute("/insight/a/b"), false);
   assert.equal(isLiveEditorRoute("/admin/editor"), false);
 });
 

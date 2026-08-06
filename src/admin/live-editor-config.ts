@@ -1,5 +1,5 @@
 export const LIVE_EDITOR_ROUTE_PATHS = [
-  '/', '/about', '/works', '/insight', '/marketing',
+  '/', '/about', '/works', '/insight', '/marketing', '/viral',
   '/marketing/viral', '/marketing/influencer', '/marketing/seeding',
   '/marketing/seo', '/marketing/review', '/marketing/oliveyoung', '/marketing/ppl',
   '/development', '/contact',
@@ -10,11 +10,12 @@ export type LiveEditorPatches = Record<string, LiveEditorPatch>
 
 const knownRoutes = new Set<string>(LIVE_EDITOR_ROUTE_PATHS)
 const regionIdPattern = /^[a-z0-9][a-z0-9._-]{0,79}$/i
+const insightDetailPattern = /^\/insight\/(?:admin_)?[a-z0-9][a-z0-9_-]{0,79}$/i
 const maxTextLength = 500
 const maxUrlLength = 2_048
 
-export function isLiveEditorRoute(route: unknown): route is typeof LIVE_EDITOR_ROUTE_PATHS[number] {
-  return typeof route === 'string' && knownRoutes.has(route)
+export function isLiveEditorRoute(route: unknown): route is string {
+  return typeof route === 'string' && (knownRoutes.has(route) || insightDetailPattern.test(route))
 }
 
 function safeLiveUrl(value: unknown, regionId: string) {

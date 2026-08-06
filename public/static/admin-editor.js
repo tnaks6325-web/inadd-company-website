@@ -158,9 +158,17 @@ import {
   function apply() { if (config && frameEditor()) frameEditor().applyConfig(config); }
 
   function setRouteDisplay(route) {
-    const entry = LIVE_EDITOR_ROUTES.find((item) => item.path === route) || LIVE_EDITOR_ROUTES[0];
+    const entry = LIVE_EDITOR_ROUTES.find((item) => item.path === route)
+      || (route.startsWith('/insight/') ? { path: route, label: 'Insight article' } : LIVE_EDITOR_ROUTES[0]);
     activeRoute = entry.path;
-    $('liveRoutePicker').value = entry.path;
+    const picker = $('liveRoutePicker');
+    if (![...picker.options].some((option) => option.value === entry.path)) {
+      const option = document.createElement('option');
+      option.value = entry.path;
+      option.textContent = entry.label;
+      picker.append(option);
+    }
+    picker.value = entry.path;
     document.querySelector('.page-chip b').textContent = entry.label;
     document.querySelector('.page-chip small').textContent = entry.path;
     $('saveBtn').disabled = false;

@@ -7,6 +7,7 @@ export const LIVE_EDITOR_ROUTES = [
   { path: '/works', label: 'Works' },
   { path: '/insight', label: 'Insight' },
   { path: '/marketing', label: 'Marketing' },
+  { path: '/viral', label: 'Viral (legacy)' },
   { path: '/marketing/viral', label: 'Viral Marketing' },
   { path: '/marketing/influencer', label: 'Influencer Marketing' },
   { path: '/marketing/seeding', label: 'Seeding Campaign' },
@@ -21,6 +22,11 @@ export const LIVE_EDITOR_ROUTES = [
 const allowedMessageTypes = new Set(['ready', 'route-change', 'select', 'set-mode', 'apply']);
 const allowedRoutes = new Set(LIVE_EDITOR_ROUTES.map((route) => route.path));
 const regionIdPattern = /^[a-z0-9][a-z0-9._-]{0,79}$/i;
+const insightDetailPattern = /^\/insight\/(?:admin_)?[a-z0-9][a-z0-9_-]{0,79}$/i;
+
+function isAllowedLiveEditorPath(path) {
+  return allowedRoutes.has(path) || insightDetailPattern.test(path);
+}
 
 export function normalizeLiveEditorRoute(value, origin = 'https://www.inadcompany.co.kr') {
   if (typeof value !== 'string' || value.length > 240) return null;
@@ -28,7 +34,7 @@ export function normalizeLiveEditorRoute(value, origin = 'https://www.inadcompan
   try {
     const url = new URL(value, origin);
     if (url.origin !== origin) return null;
-    return allowedRoutes.has(url.pathname) ? url.pathname : null;
+    return isAllowedLiveEditorPath(url.pathname) ? url.pathname : null;
   } catch {
     return null;
   }
