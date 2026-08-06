@@ -64,7 +64,7 @@ export function isLiveEditorMessage(value) {
   if (message.type === 'select') return typeof message.regionId === 'string' && regionIdPattern.test(message.regionId);
   if (message.type === 'apply') {
     if (typeof message.regionId !== 'string' || !regionIdPattern.test(message.regionId)) return false;
-    if (message.regionId.startsWith('content.')) {
+    if (message.regionId.startsWith('content.') || message.regionId.startsWith('field.')) {
       const text = message.field === 'text' ? message.value : message.text;
       return typeof text === 'string' && text.length <= 500;
     }

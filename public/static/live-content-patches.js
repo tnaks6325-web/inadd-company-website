@@ -48,6 +48,7 @@ export function registerLiveContentRegions() {
     if (element.children.length > 0 || !element.textContent?.trim()) return;
     registerRegion(regions, element, 'content');
   });
+  document.querySelectorAll('main input[placeholder], main textarea[placeholder]').forEach((element) => registerRegion(regions, element, 'field'));
   document.querySelectorAll('main img[src]').forEach((element) => registerRegion(regions, element, 'media'));
   document.querySelectorAll('main video[src], main source[src]').forEach((element) => registerRegion(regions, element, 'media'));
   document.querySelectorAll('main [style*="background-image"]').forEach((element) => {
@@ -70,6 +71,7 @@ export function applyLiveContentPatches(patches) {
     const element = regions.get(regionId);
     if (!element || !patch || typeof patch !== 'object') return;
     if (regionId.startsWith('content.') && typeof patch.text === 'string') element.textContent = patch.text;
+    if (regionId.startsWith('field.') && (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) && typeof patch.text === 'string') element.placeholder = patch.text;
     if (regionId.startsWith('media.') && isSafeLiveUrl(patch.url, regionId)) {
       if (element instanceof HTMLImageElement) element.src = patch.url;
       else if (element instanceof HTMLMediaElement || element instanceof HTMLSourceElement) {

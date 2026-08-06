@@ -52,6 +52,14 @@ test("accepts only versioned live editor messages with an allowlisted type", () 
     channel: LIVE_EDITOR_CHANNEL,
     version: LIVE_EDITOR_VERSION,
     type: "apply",
+    regionId: "field.contact.email",
+    field: "text",
+    value: "Email address",
+  }), true);
+  assert.equal(isLiveEditorMessage({
+    channel: LIVE_EDITOR_CHANNEL,
+    version: LIVE_EDITOR_VERSION,
+    type: "apply",
     regionId: "link.hero.cta",
     field: "url",
     value: "javascript:alert(1)",

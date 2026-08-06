@@ -120,7 +120,8 @@ import {
     $('emptyInspector').hidden = true;
     $('inspectorControls').hidden = true;
     $('liveContentInspector').hidden = false;
-    $('liveContentText').value = livePatches[regionId]?.text ?? element.textContent ?? '';
+    const isField = regionId.startsWith('field.');
+    $('liveContentText').value = livePatches[regionId]?.text ?? (isField ? element.getAttribute('placeholder') : element.textContent) ?? '';
     const textField = $('liveContentText').closest('label');
     const anchor = element instanceof HTMLAnchorElement ? element : element.closest('a[href]');
     const urlRegion = regionId.startsWith('media.') || regionId.startsWith('link.')
@@ -128,7 +129,7 @@ import {
       : anchor?.dataset.liveEditorLinkRegion;
     const isMedia = regionId.startsWith('media.');
     activeLiveUrlRegion = urlRegion || null;
-    textField.hidden = !regionId.startsWith('content.');
+    textField.hidden = !(regionId.startsWith('content.') || isField);
     $('liveContentUrlField').hidden = !activeLiveUrlRegion;
     $('liveContentUrlInfo').hidden = !activeLiveUrlRegion;
     $('liveContentInspector').querySelector('.compact-info:not(#liveContentUrlInfo)').hidden = Boolean(activeLiveUrlRegion);
@@ -138,6 +139,9 @@ import {
         ?? '';
       $('selectedName').textContent = isMedia ? '실제 페이지 미디어' : '실제 페이지 링크';
       $('selectionBadge').textContent = isMedia ? 'MEDIA' : 'LINK';
+    } else if (isField) {
+      $('selectedName').textContent = '실제 페이지 입력 안내';
+      $('selectionBadge').textContent = 'FORM';
     }
   }
 
@@ -336,7 +340,7 @@ import {
       frameDocument()?.querySelector(frameEditor().fields[key])?.focus();
       return;
     }
-    if ((event.data.regionId.startsWith('content.') || event.data.regionId.startsWith('media.') || event.data.regionId.startsWith('link.')) && activeRoute !== '/') showLiveContentInspector(event.data.regionId);
+    if ((event.data.regionId.startsWith('content.') || event.data.regionId.startsWith('field.') || event.data.regionId.startsWith('media.') || event.data.regionId.startsWith('link.')) && activeRoute !== '/') showLiveContentInspector(event.data.regionId);
   });
   populateRoutePicker();
   $('liveRoutePicker').addEventListener('change', (event) => navigateLiveRoute(event.target.value));

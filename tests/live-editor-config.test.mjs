@@ -34,6 +34,7 @@ test("keeps only safe media and link URLs for their matching live regions", () =
     "media.hero.image": { url: "/static/hero.jpg" },
     "link.hero.cta": { url: "https://example.com/contact" },
     "link.hero.phone": { url: "tel:01012345678" },
+    "field.contact.name": { text: "Name" },
     "media.hero.script": { url: "javascript:alert(1)" },
     "link.hero.data": { url: "data:text/html,nope" },
     "content.hero.title": { url: "/wrong-shape" },
@@ -42,6 +43,7 @@ test("keeps only safe media and link URLs for their matching live regions", () =
   assert.deepEqual(patches["media.hero.image"], { url: "/static/hero.jpg" });
   assert.deepEqual(patches["link.hero.cta"], { url: "https://example.com/contact" });
   assert.deepEqual(patches["link.hero.phone"], { url: "tel:01012345678" });
+  assert.deepEqual(patches["field.contact.name"], { text: "Name" });
   assert.equal("media.hero.script" in patches, false);
   assert.equal("link.hero.data" in patches, false);
   assert.equal("content.hero.title" in patches, false);

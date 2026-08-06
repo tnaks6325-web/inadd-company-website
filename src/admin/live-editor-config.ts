@@ -42,7 +42,7 @@ export function sanitizeLiveEditorPatches(value: unknown): LiveEditorPatches {
     if (count >= 200) break
     if (!regionIdPattern.test(regionId) || !patch || typeof patch !== 'object' || Array.isArray(patch)) continue
 
-    if (regionId.startsWith('content.') && typeof (patch as { text?: unknown }).text === 'string') {
+    if ((regionId.startsWith('content.') || regionId.startsWith('field.')) && typeof (patch as { text?: unknown }).text === 'string') {
       patches[regionId] = { text: (patch as { text: string }).text.replace(/\r\n?/g, '\n').slice(0, maxTextLength) }
       count += 1
       continue
