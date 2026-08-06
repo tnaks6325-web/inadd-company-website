@@ -37,6 +37,11 @@ function registerRegion(regions, element, prefix, selectable = true) {
   return regionId;
 }
 
+function backgroundImageUrl(element) {
+  const match = element.style.backgroundImage.match(/^url\((["']?)(.*)\1\)$/);
+  return match?.[2] || '';
+}
+
 export function registerLiveContentRegions() {
   const regions = new Map();
   document.querySelectorAll(textSelector).forEach((element) => {
@@ -44,6 +49,10 @@ export function registerLiveContentRegions() {
     registerRegion(regions, element, 'content');
   });
   document.querySelectorAll('main img[src]').forEach((element) => registerRegion(regions, element, 'media'));
+  document.querySelectorAll('main [style*="background-image"]').forEach((element) => {
+    const regionId = registerRegion(regions, element, 'media');
+    if (regionId) element.dataset.liveEditorMediaUrl = backgroundImageUrl(element);
+  });
   document.querySelectorAll('main a[href]').forEach((element) => {
     const regionId = registerRegion(regions, element, 'link', !element.dataset.liveEditorRegion);
     if (regionId) element.dataset.liveEditorLinkRegion = regionId;
@@ -60,7 +69,13 @@ export function applyLiveContentPatches(patches) {
     const element = regions.get(regionId);
     if (!element || !patch || typeof patch !== 'object') return;
     if (regionId.startsWith('content.') && typeof patch.text === 'string') element.textContent = patch.text;
-    if (regionId.startsWith('media.') && element instanceof HTMLImageElement && isSafeLiveUrl(patch.url, regionId)) element.src = patch.url;
+    if (regionId.startsWith('media.') && isSafeLiveUrl(patch.url, regionId)) {
+      if (element instanceof HTMLImageElement) element.src = patch.url;
+      else if (element instanceof HTMLElement) {
+        element.style.backgroundImage = `url(${JSON.stringify(patch.url)})`;
+        element.dataset.liveEditorMediaUrl = patch.url;
+      }
+    }
     if (regionId.startsWith('link.') && element instanceof HTMLAnchorElement && isSafeLiveUrl(patch.url, regionId)) element.href = patch.url;
   });
 }
