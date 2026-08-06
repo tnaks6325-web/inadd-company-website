@@ -2,6 +2,7 @@ import {
   LIVE_EDITOR_ROUTES,
   createLiveEditorMessage,
   isLiveEditorMessage,
+  isSafeLiveUrl,
   normalizeLiveEditorRoute,
   toLiveEditorUrl,
 } from '/static/live-editor-contract.js';
@@ -36,6 +37,28 @@ import {
   const deepCopy = (value) => JSON.parse(JSON.stringify(value));
   const $ = (id) => document.getElementById(id);
   const frame = $('siteFrame');
+  function ensureLiveUrlInspector() {
+    const textField = $('liveContentText')?.closest('label');
+    if (!textField || $('liveContentUrl')) return;
+    const urlField = document.createElement('label');
+    urlField.id = 'liveContentUrlField';
+    urlField.hidden = true;
+    urlField.textContent = 'URL';
+    const input = document.createElement('input');
+    input.id = 'liveContentUrl';
+    input.type = 'url';
+    input.maxLength = 2048;
+    input.inputMode = 'url';
+    input.autocomplete = 'off';
+    urlField.append(input);
+    const info = document.createElement('p');
+    info.id = 'liveContentUrlInfo';
+    info.className = 'compact-info';
+    info.hidden = true;
+    info.textContent = 'HTTPS 주소 또는 사이트 내부 경로만 사용할 수 있습니다.';
+    textField.after(urlField, info);
+  }
+  ensureLiveUrlInspector();
   let config = null;
   let activeKey = null;
   let activeSection = null;
@@ -45,6 +68,7 @@ import {
   let activeRoute = '/';
   let liveMode = 'interact';
   let activeLiveRegion = null;
+  let activeLiveUrlRegion = null;
   let livePatches = {};
 
   async function api(path, options = {}) {
@@ -86,6 +110,24 @@ import {
     $('inspectorControls').hidden = true;
     $('liveContentInspector').hidden = false;
     $('liveContentText').value = livePatches[regionId]?.text ?? element.textContent ?? '';
+    const textField = $('liveContentText').closest('label');
+    const anchor = element instanceof HTMLAnchorElement ? element : element.closest('a[href]');
+    const urlRegion = regionId.startsWith('media.') || regionId.startsWith('link.')
+      ? regionId
+      : anchor?.dataset.liveEditorLinkRegion;
+    const isMedia = regionId.startsWith('media.');
+    activeLiveUrlRegion = urlRegion || null;
+    textField.hidden = !regionId.startsWith('content.');
+    $('liveContentUrlField').hidden = !activeLiveUrlRegion;
+    $('liveContentUrlInfo').hidden = !activeLiveUrlRegion;
+    $('liveContentInspector').querySelector('.compact-info:not(#liveContentUrlInfo)').hidden = Boolean(activeLiveUrlRegion);
+    if (activeLiveUrlRegion) {
+      $('liveContentUrl').value = livePatches[activeLiveUrlRegion]?.url
+        ?? (isMedia ? element.getAttribute('src') : anchor?.getAttribute('href'))
+        ?? '';
+      $('selectedName').textContent = isMedia ? '실제 페이지 이미지' : '실제 페이지 링크';
+      $('selectionBadge').textContent = isMedia ? 'IMAGE' : 'LINK';
+    }
   }
 
   function toast(message) {
@@ -131,6 +173,7 @@ import {
     activeKey = null;
     activeSection = null;
     activeLiveRegion = null;
+    activeLiveUrlRegion = null;
     $('liveContentInspector').hidden = true;
     $('emptyInspector').hidden = false;
     $('inspectorControls').hidden = true;
@@ -281,7 +324,7 @@ import {
       frameDocument()?.querySelector(frameEditor().fields[key])?.focus();
       return;
     }
-    if (event.data.regionId.startsWith('content.') && activeRoute !== '/') showLiveContentInspector(event.data.regionId);
+    if ((event.data.regionId.startsWith('content.') || event.data.regionId.startsWith('media.') || event.data.regionId.startsWith('link.')) && activeRoute !== '/') showLiveContentInspector(event.data.regionId);
   });
   populateRoutePicker();
   $('liveRoutePicker').addEventListener('change', (event) => navigateLiveRoute(event.target.value));
@@ -303,6 +346,18 @@ import {
     livePatches[activeLiveRegion] = { text };
     postLiveMode();
     frame.contentWindow?.postMessage(createLiveEditorMessage('apply', { regionId: activeLiveRegion, text }), window.location.origin);
+    $('saveStatus').textContent = '저장되지 않은 변경';
+  });
+  $('liveContentUrl').addEventListener('change', (event) => {
+    if (!activeLiveUrlRegion || activeRoute === '/') return;
+    const url = event.target.value.trim();
+    if (!isSafeLiveUrl(url, activeLiveUrlRegion)) {
+      toast('HTTPS 주소 또는 사이트 내부 경로만 사용할 수 있습니다.');
+      return;
+    }
+    livePatches[activeLiveUrlRegion] = { url };
+    postLiveMode();
+    frame.contentWindow?.postMessage(createLiveEditorMessage('apply', { regionId: activeLiveUrlRegion, field: 'url', value: url }), window.location.origin);
     $('saveStatus').textContent = '저장되지 않은 변경';
   });
 
