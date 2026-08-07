@@ -74,7 +74,7 @@ export function registerLiveContentRegions(regions = new Map()) {
 }
 
 export function registerLiveGlobalRegions(regions = new Map()) {
-  document.querySelectorAll('header#site-header, footer.site-footer').forEach((root) => registerRegionsIn(root, regions, 'global'));
+  document.querySelectorAll('header, footer').forEach((root) => registerRegionsIn(root, regions, 'global'));
   return regions;
 }
 
@@ -83,7 +83,7 @@ function patchKind(regionId) {
   return scopedRegionId.split('.', 1)[0];
 }
 
-const route = window.location.pathname;
+const route = window.__INAD_LIVE_EDITOR_ROUTE__ || window.location.pathname;
 const regions = registerLiveContentRegions();
 const globalRegions = registerLiveGlobalRegions();
 let activePatches = {};

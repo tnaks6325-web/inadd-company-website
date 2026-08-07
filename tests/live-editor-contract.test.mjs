@@ -94,9 +94,9 @@ test("normalizes only public editor routes and removes query state", () => {
 });
 
 test("keeps editor context when the canvas changes to another public route", () => {
-  assert.equal(toLiveEditorUrl("/"), "/?editor=1");
-  assert.equal(toLiveEditorUrl("/contact"), "/contact?editor=1");
-  assert.equal(toLiveEditorUrl("/insight/admin_article-42"), "/insight/admin_article-42?editor=1");
+  assert.equal(toLiveEditorUrl("/"), "/admin/editor/live-snapshot/?editor=1");
+  assert.equal(toLiveEditorUrl("/contact"), "/admin/editor/live-snapshot/contact?editor=1");
+  assert.equal(toLiveEditorUrl("/insight/admin_article-42"), "/admin/editor/live-snapshot/insight/admin_article-42?editor=1");
   assert.equal(toLiveEditorUrl("/admin/editor"), null);
 });
 

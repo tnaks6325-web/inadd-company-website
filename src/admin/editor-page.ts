@@ -59,7 +59,7 @@ export function adminEditorHTML() {
     <main class="canvas-area">
       <div class="canvas-hint"><span class="pulse"></span><b>텍스트를 직접 클릭</b>하면 바로 편집할 수 있습니다.</div>
       <div id="frameWrap" class="frame-wrap device-desktop">
-        <iframe id="siteFrame" src="/?editor=1" title="홈페이지 편집 캔버스"></iframe>
+        <iframe id="siteFrame" src="/admin/editor/live-snapshot/?editor=1" title="홈페이지 편집 캔버스"></iframe>
       </div>
     </main>
 

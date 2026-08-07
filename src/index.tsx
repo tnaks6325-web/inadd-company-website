@@ -19,8 +19,62 @@ import { SvcPplPage } from './routes/svc-ppl'
 import { admin } from './admin/api'
 import { adminEditorHTML } from './admin/editor-page'
 import { MailRouter } from './routes/api-mail'
+import {
+  PRODUCTION_SNAPSHOT_ORIGIN,
+  PRODUCTION_SNAPSHOT_PREFIX,
+  normalizeProductionSnapshotPath,
+  rewriteProductionSnapshotAssetText,
+  rewriteProductionSnapshotDocument,
+  toProductionSnapshotRedirect,
+} from './editor/production-snapshot'
 
 const app = new Hono()
+
+async function serveProductionSnapshot(c: any) {
+  const requestedPath = c.req.path.slice(PRODUCTION_SNAPSHOT_PREFIX.length) || '/'
+  const path = normalizeProductionSnapshotPath(requestedPath, true)
+  if (!path) return c.text('Not found', 404)
+
+  const upstreamUrl = new URL(path, PRODUCTION_SNAPSHOT_ORIGIN)
+  if (path.startsWith('/static/') || path.startsWith('/api/')) {
+    const query = new URL(c.req.url).search
+    if (query) upstreamUrl.search = query
+  }
+
+  let upstream: Response
+  try {
+    upstream = await fetch(upstreamUrl, {
+      headers: { Accept: c.req.header('Accept') || '*/*' },
+      redirect: 'manual',
+    })
+  } catch {
+    return c.text('Production snapshot is temporarily unavailable', 502)
+  }
+  if ([301, 302, 303, 307, 308].includes(upstream.status)) {
+    const redirect = toProductionSnapshotRedirect(upstream.headers.get('Location') || '', upstreamUrl.toString())
+    return redirect
+      ? c.redirect(redirect, upstream.status as 301 | 302 | 303 | 307 | 308)
+      : c.text('Production snapshot redirect is unavailable', 502)
+  }
+  if (!upstream.ok) return c.text('Production snapshot resource not found', upstream.status)
+
+  const contentType = upstream.headers.get('Content-Type') || 'application/octet-stream'
+  const headers = {
+    'Content-Type': contentType,
+    'Cache-Control': contentType.includes('text/html') ? 'no-store' : 'public, max-age=300',
+    'X-Content-Type-Options': 'nosniff',
+  }
+  if (contentType.includes('text/html')) {
+    return c.body(rewriteProductionSnapshotDocument(await upstream.text(), path), upstream.status, headers)
+  }
+  if (contentType.includes('text/css') || contentType.includes('javascript')) {
+    return c.body(rewriteProductionSnapshotAssetText(await upstream.text()), upstream.status, headers)
+  }
+  return c.body(await upstream.arrayBuffer(), upstream.status, headers)
+}
+
+app.get(PRODUCTION_SNAPSHOT_PREFIX, serveProductionSnapshot)
+app.get(`${PRODUCTION_SNAPSHOT_PREFIX}/*`, serveProductionSnapshot)
 
 // Static files
 app.use('/static/*', serveStatic({ root: './' }))

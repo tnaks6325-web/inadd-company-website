@@ -1,5 +1,6 @@
 export const LIVE_EDITOR_CHANNEL = 'inad-live-editor';
 export const LIVE_EDITOR_VERSION = 1;
+export const LIVE_EDITOR_CANVAS_PREFIX = '/admin/editor/live-snapshot';
 
 export const LIVE_EDITOR_ROUTES = [
   { path: '/', label: 'Home' },
@@ -47,7 +48,7 @@ export function normalizeLiveEditorRoute(value, origin = 'https://www.inadcompan
 
 export function toLiveEditorUrl(route) {
   const normalizedRoute = normalizeLiveEditorRoute(route);
-  return normalizedRoute ? `${normalizedRoute}?editor=1` : null;
+  return normalizedRoute ? `${LIVE_EDITOR_CANVAS_PREFIX}${normalizedRoute}?editor=1` : null;
 }
 
 export function isSafeLiveUrl(value, regionId) {

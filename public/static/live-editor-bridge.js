@@ -6,6 +6,9 @@ import {
 
 const params = new URLSearchParams(window.location.search);
 const isLiveEditorFrame = params.get('editor') === '1';
+const snapshotPrefix = window.__INAD_LIVE_EDITOR_SNAPSHOT_PREFIX__ || '';
+const sourceRoute = normalizeLiveEditorRoute(window.__INAD_LIVE_EDITOR_ROUTE__ || window.location.pathname)
+  || window.location.pathname;
 
 if (isLiveEditorFrame && window.parent !== window) {
   let mode = 'interact';
@@ -43,11 +46,14 @@ if (isLiveEditorFrame && window.parent !== window) {
     document.querySelectorAll('a[href]').forEach((anchor) => {
       if (anchor.dataset.liveEditorLinked === '1') return;
       const sourceHref = anchor.dataset.liveEditorPatchedHref || anchor.getAttribute('href') || '';
-      const route = normalizeLiveEditorRoute(sourceHref, window.location.origin);
+      const sourceUrl = new URL(sourceHref, window.location.origin);
+      const candidatePath = snapshotPrefix && sourceUrl.pathname.startsWith(snapshotPrefix)
+        ? (sourceUrl.pathname.slice(snapshotPrefix.length) || '/')
+        : sourceHref;
+      const route = normalizeLiveEditorRoute(candidatePath, window.location.origin);
       if (!route || anchor.target || anchor.hasAttribute('download')) return;
-      const url = new URL(sourceHref, window.location.origin);
-      url.searchParams.set('editor', '1');
-      anchor.href = url.pathname + url.search + url.hash;
+      sourceUrl.searchParams.set('editor', '1');
+      anchor.href = sourceUrl.pathname + sourceUrl.search + sourceUrl.hash;
       anchor.dataset.liveEditorOriginalHref = sourceHref;
       anchor.dataset.liveEditorLinked = '1';
     });
@@ -79,5 +85,5 @@ if (isLiveEditorFrame && window.parent !== window) {
   new MutationObserver(() => preserveEditorQuery())
     .observe(document.body, { childList: true, subtree: true });
   updateMode('interact');
-  send('ready', { route: window.location.pathname, regions: getRegions() });
+  send('ready', { route: sourceRoute, regions: getRegions() });
 }
