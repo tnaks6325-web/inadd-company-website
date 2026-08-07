@@ -74,6 +74,7 @@ async function serveProductionSnapshot(c: any) {
 }
 
 app.get(PRODUCTION_SNAPSHOT_PREFIX, serveProductionSnapshot)
+app.get(`${PRODUCTION_SNAPSHOT_PREFIX}/`, serveProductionSnapshot)
 app.get(`${PRODUCTION_SNAPSHOT_PREFIX}/*`, serveProductionSnapshot)
 
 // Static files
