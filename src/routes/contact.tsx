@@ -452,17 +452,8 @@ export const ContactPage = () => (
                 </div>
               </div>
               <p class="ct-brochure-preview-desc">
-                서비스 소개, 실적, 사례 레퍼런스가<br />담긴 디지털 소개서를 이메일로 보내드립니다.
+                서비스 소개, 실적, 사례 레퍼런스가<br />담긴 PDF 소개서를 이메일로 보내드립니다.
               </p>
-              <a
-                href="/static/company-profile.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hero-cta-btn ghost"
-              >
-                <span>소개서 바로 보기</span>
-                <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </a>
             </div>
 
             {/* 오른쪽: 신청 폼 */}

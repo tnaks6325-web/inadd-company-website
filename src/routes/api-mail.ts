@@ -17,9 +17,6 @@ type Bindings = {
 
 const mail = new Hono<{ Bindings: Bindings }>()
 
-const DEFAULT_BROCHURE_URL = 'https://www.inadcompany.co.kr/static/company-profile.html'
-const LEGACY_BROCHURE_URL = 'https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view'
-
 /* ─────────────────────────────────────────────
    공통: 지정 수신자에게 메일 발송
 ───────────────────────────────────────────── */
@@ -196,13 +193,13 @@ function brochureReplyTemplate(
           </tr>
         </table>
 
-        <!-- 소개서 뷰어 버튼 -->
+        <!-- PDF 다운로드 버튼 -->
         <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
           <tr>
             <td align="center">
               <a href="${downloadUrl}"
                  style="display:inline-block;padding:16px 48px;background:linear-gradient(135deg,#1a6bff,#0d47d6);color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;border-radius:10px;letter-spacing:0.02em;">
-                📄&nbsp;&nbsp;회사소개서 보기
+                📄&nbsp;&nbsp;소개서 다운로드 (PDF)
               </a>
             </td>
           </tr>
@@ -210,7 +207,7 @@ function brochureReplyTemplate(
 
         <!-- 미리보기 링크 -->
         <p style="margin:0;text-align:center;font-size:12px;color:rgba(255,255,255,0.3);">
-          뷰어가 열리지 않으면
+          다운로드가 안 되시면
           <a href="${pdfUrl}" style="color:rgba(26,107,255,0.7);text-decoration:underline;">여기서 미리보기</a>를 클릭해 주세요.
         </p>
 
@@ -390,7 +387,7 @@ mail.post('/brochure', async (c) => {
       c.env.ADMIN_KV.get('brochure_mail_body'),
       c.env.ADMIN_KV.get('brochure_mail_tags'),
     ])
-    const pdfUrl     = rawPdfUrl === LEGACY_BROCHURE_URL ? DEFAULT_BROCHURE_URL : rawPdfUrl ?? DEFAULT_BROCHURE_URL
+    const pdfUrl     = rawPdfUrl     ?? 'https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view'
     const headline   = rawHeadline   ?? '회사소개서를\n보내드립니다.'
     const bodyText   = rawBodyText   ?? '요청해 주셔서 감사합니다.\n인애드컴퍼니의 서비스와 레퍼런스를 담은 소개서입니다.'
     const tags: string[] = rawTags   ? JSON.parse(rawTags) : ['인플루언서', '바이럴 마케팅', 'SEO · 리뷰', 'PPL']

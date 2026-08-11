@@ -16,7 +16,7 @@ export const DEFAULT_DATA = {
     'HZaDW00sldo','yiWPCX7Qwug','Qh6H3hRXEcs',
     'mdinL3IgKG8','4Vlqt4F1lGY','SjiizDuxmK0'
   ]),
-  home_brochure_url: 'https://www.inadcompany.co.kr/static/company-profile.html',
+  home_brochure_url: 'https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view',
   home_stats: JSON.stringify({
     projects: 320, contracts: 98, experience: 6, partners: 50
   }),
