@@ -10,6 +10,16 @@
 
 export const MAIL_RECIPIENTS_KEY = 'mail_recipients'
 
+/**
+ * 코드에 등록된 상시 수신자.
+ * 관리자 페이지 목록이 비어 있을 때 RESEND_TO 와 함께 기본 수신자로 사용된다.
+ */
+export const DEFAULT_RECIPIENTS = [
+  'tnaks6325@inadcompany.com', // 김수만
+  'inadkwj@inadcompany.com',   // 강우진
+  'dndvkr41@inadcompany.com',  // 박재웅
+]
+
 /** Resend API 1회 발송 최대 수신자 */
 export const MAX_RECIPIENTS = 50
 
@@ -59,8 +69,17 @@ export function parseStoredRecipients(rawValue: string | null | undefined): stri
 }
 
 /**
+ * 관리자 페이지 목록이 비어 있을 때 사용되는 기본 수신자
+ * RESEND_TO 환경변수 + DEFAULT_RECIPIENTS 를 합쳐서 중복 제거
+ */
+export function fallbackRecipients(envTo: string | undefined): string[] {
+  return normalizeRecipients([...normalizeRecipients(envTo), ...DEFAULT_RECIPIENTS])
+}
+
+/**
  * 실제 발송에 사용할 수신자 목록
- * KV 목록이 비어 있으면 RESEND_TO 환경변수로 폴백
+ * 관리자 페이지에 등록된 목록이 있으면 그것이 우선(전체 대체),
+ * 비어 있으면 기본 수신자로 폴백
  */
 export async function resolveRecipients(
   kv: KVNamespace | undefined,
@@ -75,5 +94,5 @@ export async function resolveRecipients(
     }
   }
   if (stored.length) return stored
-  return normalizeRecipients(fallbackTo)
+  return fallbackRecipients(fallbackTo)
 }

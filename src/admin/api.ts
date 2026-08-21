@@ -4,6 +4,7 @@ import { DEFAULT_HOME_EDITOR_CONFIG, sanitizeHomeEditorConfig } from './editor-c
 import {
   MAIL_RECIPIENTS_KEY,
   MAX_RECIPIENTS,
+  fallbackRecipients,
   normalizeRecipients,
   parseStoredRecipients,
 } from '../routes/mail-recipients'
@@ -389,7 +390,7 @@ admin.put('/brochure-mail', authMiddleware, async (c) => {
 admin.get('/mail-recipients', authMiddleware, async (c) => {
   const kv = (c.env as any)?.ADMIN_KV
   const raw = await kvGet(kv, MAIL_RECIPIENTS_KEY)
-  const fallback = normalizeRecipients((c.env as any)?.RESEND_TO)
+  const fallback = fallbackRecipients((c.env as any)?.RESEND_TO)
   const recipients = parseStoredRecipients(raw)
   return c.json({
     recipients,

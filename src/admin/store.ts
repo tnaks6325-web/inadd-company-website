@@ -1,4 +1,5 @@
 import { DEFAULT_HOME_EDITOR_CONFIG } from './editor-config'
+import { DEFAULT_RECIPIENTS } from '../routes/mail-recipients'
 
 // ═══════════════════════════════════════════════════════
 //  Admin Store — KV 폴백 메모리 스토어
@@ -43,7 +44,7 @@ export const DEFAULT_DATA = {
   gallery_items: JSON.stringify([]),
 
   // ── 문의 접수 메일 수신자 (비어 있으면 RESEND_TO 로 폴백) ──
-  mail_recipients: JSON.stringify([]),
+  mail_recipients: JSON.stringify(DEFAULT_RECIPIENTS),
 
   // ── 소개서 메일 템플릿 ──
   brochure_mail_headline: '회사소개서를\n보내드립니다.',

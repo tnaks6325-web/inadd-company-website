@@ -26,5 +26,8 @@ const app = new Hono<{ Bindings: CloudflareBindings }>()
 
 1. **관리자 페이지** — `/admin` → `Contact 관리` → `문의 접수 메일 수신자`
    등록한 이메일 전원에게 동시에 발송됩니다. (KV `mail_recipients`, 최대 50명)
-2. **환경변수 `RESEND_TO`** — 관리자 페이지 목록이 비어 있을 때 사용되는 기본 수신자입니다.
+   여기에 목록이 저장되어 있으면 아래 2·3번은 무시되고 이 목록만 사용됩니다.
+2. **코드 기본 수신자** — `src/routes/mail-recipients.ts` 의 `DEFAULT_RECIPIENTS`.
+   관리자 페이지 목록이 비어 있을 때 항상 포함되는 상시 수신자입니다.
+3. **환경변수 `RESEND_TO`** — 2번과 합쳐져 기본 수신자로 사용됩니다.
    `a@example.com, b@example.com` 처럼 쉼표로 여러 명을 지정할 수 있습니다.

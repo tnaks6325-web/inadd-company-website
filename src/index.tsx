@@ -1091,7 +1091,7 @@ function adminDashboardHTML(): string {
         <p style="color:#666;font-size:13px;margin-bottom:16px">
           홈페이지에서 <strong style="color:#aaa">상담 신청 · 회사소개서 요청 · 킥오프 미팅 신청</strong>이 접수되면
           아래 등록된 <strong style="color:#1a6bff">모든 이메일</strong>로 동시에 알림이 발송됩니다.<br>
-          <small style="color:#444">비워두면 기본 수신자에게만 발송됩니다. 최대 50명까지 등록할 수 있습니다.</small>
+          <small style="color:#444">목록을 저장하면 이 목록만 사용됩니다. 모두 비우면 기본 수신자에게 발송됩니다. 최대 50명까지 등록할 수 있습니다.</small>
         </p>
         <div id="mailRecipientList" style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px"></div>
         <p id="mailRecipientFallback" style="color:#555;font-size:12px;margin-bottom:16px"></p>
