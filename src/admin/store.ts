@@ -42,6 +42,9 @@ export const DEFAULT_DATA = {
   // ── Gallery (인애드 일상) ──
   gallery_items: JSON.stringify([]),
 
+  // ── 문의 접수 메일 수신자 (비어 있으면 RESEND_TO 로 폴백) ──
+  mail_recipients: JSON.stringify([]),
+
   // ── 소개서 메일 템플릿 ──
   brochure_mail_headline: '회사소개서를\n보내드립니다.',
   brochure_mail_body: '요청해 주셔서 감사합니다.\n인애드컴퍼니의 서비스와 레퍼런스를 담은 소개서입니다.',

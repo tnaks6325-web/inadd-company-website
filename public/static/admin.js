@@ -843,6 +843,8 @@ async function loadContact() {
   // FAQ
   faqItems = (data.faq || []).map(f => ({ q: f.q || '', a: f.a || '' }));
   renderFaqList();
+  // 문의 접수 메일 수신자
+  await loadMailRecipients();
 }
 
 function renderFaqList() {
@@ -897,6 +899,87 @@ document.getElementById('btnAddFaq').addEventListener('click', () => {
   const items = document.querySelectorAll('.faq-edit-item');
   const last = items[items.length - 1];
   if (last) last.querySelector('input').focus();
+});
+
+// ── 문의 접수 메일 수신자 ──
+let mailRecipients = [];
+let mailRecipientFallback = [];
+const MAX_MAIL_RECIPIENTS = 50;
+
+async function loadMailRecipients() {
+  const data = await api('GET', '/mail-recipients');
+  mailRecipients = data.recipients || [];
+  mailRecipientFallback = data.fallback || [];
+  renderMailRecipients();
+}
+
+function renderMailRecipients() {
+  const wrap = document.getElementById('mailRecipientList');
+  if (!wrap) return;
+
+  const addBtn = document.getElementById('btnAddMailRecipient');
+  if (addBtn) addBtn.disabled = mailRecipients.length >= MAX_MAIL_RECIPIENTS;
+
+  if (!mailRecipients.length) {
+    wrap.innerHTML = '<p style="color:#555;font-size:13px;text-align:center;padding:18px 0">등록된 수신자가 없습니다. 추가 버튼을 눌러 이메일을 등록하세요.</p>';
+  } else {
+    wrap.innerHTML = mailRecipients.map(function(email, i) {
+      return '<div style="display:flex;gap:10px;align-items:center">' +
+        '<input type="email" value="' + escHtml(email) + '" oninput="mailRecipients[' + i + ']=this.value" ' +
+        'placeholder="예: name@inadcompany.com" ' +
+        'style="flex:1;background:#111;border:1px solid #2a2a2a;border-radius:8px;color:#fff;font-size:14px;padding:10px 14px;outline:none;box-sizing:border-box">' +
+        '<button onclick="removeMailRecipient(' + i + ')" title="삭제" ' +
+        'style="background:none;border:none;color:#555;cursor:pointer;font-size:14px;padding:4px 8px" ' +
+        'onmouseover="this.style.color=\'#ff4d4d\'" onmouseout="this.style.color=\'#555\'">' +
+        '<i class="fas fa-trash"></i></button>' +
+      '</div>';
+    }).join('');
+  }
+
+  const note = document.getElementById('mailRecipientFallback');
+  if (note) {
+    note.innerHTML = mailRecipients.length
+      ? '현재 <strong style="color:#1a6bff">' + mailRecipients.length + '명</strong>이 문의 알림 메일을 받습니다.'
+      : (mailRecipientFallback.length
+          ? '현재 기본 수신자 <strong style="color:#aaa">' + mailRecipientFallback.map(escHtml).join(', ') + '</strong> 에게만 발송됩니다.'
+          : '수신자가 없어 문의 알림 메일이 발송되지 않습니다. 최소 1명은 등록해 주세요.');
+  }
+}
+
+function removeMailRecipient(idx) {
+  mailRecipients.splice(idx, 1);
+  renderMailRecipients();
+}
+
+document.getElementById('btnAddMailRecipient').addEventListener('click', () => {
+  if (mailRecipients.length >= MAX_MAIL_RECIPIENTS) {
+    showToast('수신자는 최대 ' + MAX_MAIL_RECIPIENTS + '명까지 등록 가능합니다.', 'error');
+    return;
+  }
+  mailRecipients.push('');
+  renderMailRecipients();
+  const inputs = document.querySelectorAll('#mailRecipientList input');
+  const last = inputs[inputs.length - 1];
+  if (last) last.focus();
+});
+
+document.getElementById('btnSaveMailRecipients').addEventListener('click', async () => {
+  const cleaned = mailRecipients.map(function(e){ return String(e || '').trim(); }).filter(Boolean);
+  const invalid = cleaned.filter(function(e){ return !/^[^\s@,;<>]+@[^\s@,;<>]+\.[^\s@,;<>]{2,}$/.test(e); });
+  if (invalid.length) {
+    showToast('이메일 형식이 올바르지 않습니다: ' + invalid.join(', '), 'error');
+    return;
+  }
+  const result = await api('PUT', '/mail-recipients', { recipients: cleaned });
+  if (result && result.ok) {
+    mailRecipients = result.recipients || cleaned;
+    renderMailRecipients();
+    showToast(mailRecipients.length
+      ? '✅ 문의 알림 수신자 ' + mailRecipients.length + '명이 저장되었습니다.'
+      : '수신자 목록을 비웠습니다. 기본 수신자에게만 발송됩니다.');
+  } else {
+    showToast('❌ ' + ((result && result.error) || '저장 중 오류가 발생했습니다.'), 'error');
+  }
 });
 
 document.getElementById('btnSavePrivacyOfficer').addEventListener('click', async () => {

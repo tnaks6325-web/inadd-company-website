@@ -7,25 +7,31 @@
  */
 
 import { Hono } from 'hono'
+import { resolveRecipients } from './mail-recipients'
 
 type Bindings = {
   RESEND_API_KEY: string     // re_xxxx
   RESEND_FROM: string        // noreply@inadcompany.co.kr
-  RESEND_TO: string          // tnaks6325@inadcompany.com
-  ADMIN_KV: KVNamespace      // home_brochure_url 등 KV 값 읽기용
+  RESEND_TO: string          // 기본 수신자 (쉼표로 여러 명 지정 가능)
+  ADMIN_KV?: KVNamespace     // home_brochure_url / mail_recipients 등 KV 값 읽기용
 }
 
 const mail = new Hono<{ Bindings: Bindings }>()
 
 /* ─────────────────────────────────────────────
    공통: 지정 수신자에게 메일 발송
+   to 는 문자열 또는 이메일 배열 (Resend 최대 50명)
 ───────────────────────────────────────────── */
 async function sendMailTo(
   env: Bindings,
-  to: string,
+  to: string | string[],
   subject: string,
   htmlBody: string
 ): Promise<void> {
+  const toList = (Array.isArray(to) ? to : [to]).filter(Boolean)
+  if (!toList.length) {
+    throw new Error('메일 수신자가 설정되지 않았습니다.')
+  }
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -34,7 +40,7 @@ async function sendMailTo(
     },
     body: JSON.stringify({
       from: env.RESEND_FROM,
-      to: [to],
+      to: toList,
       subject,
       html: htmlBody,
     }),
@@ -47,13 +53,16 @@ async function sendMailTo(
 
 /* ─────────────────────────────────────────────
    편의 래퍼: 내부(관리자) 알림용
+   관리자 페이지에 등록된 수신자 전원에게 발송하고,
+   등록된 목록이 없으면 RESEND_TO 로 폴백
 ───────────────────────────────────────────── */
 async function sendMail(
   env: Bindings,
   subject: string,
   htmlBody: string
 ): Promise<void> {
-  return sendMailTo(env, env.RESEND_TO, subject, htmlBody)
+  const recipients = await resolveRecipients(env.ADMIN_KV, env.RESEND_TO)
+  return sendMailTo(env, recipients, subject, htmlBody)
 }
 
 /* ─────────────────────────────────────────────
@@ -381,11 +390,12 @@ mail.post('/brochure', async (c) => {
     }
 
     // KV에서 PDF URL + 메일 템플릿 내용 읽기
+    const kv = c.env.ADMIN_KV
     const [rawPdfUrl, rawHeadline, rawBodyText, rawTags] = await Promise.all([
-      c.env.ADMIN_KV.get('home_brochure_url'),
-      c.env.ADMIN_KV.get('brochure_mail_headline'),
-      c.env.ADMIN_KV.get('brochure_mail_body'),
-      c.env.ADMIN_KV.get('brochure_mail_tags'),
+      kv?.get('home_brochure_url') ?? null,
+      kv?.get('brochure_mail_headline') ?? null,
+      kv?.get('brochure_mail_body') ?? null,
+      kv?.get('brochure_mail_tags') ?? null,
     ])
     const pdfUrl     = rawPdfUrl     ?? 'https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view'
     const headline   = rawHeadline   ?? '회사소개서를\n보내드립니다.'
