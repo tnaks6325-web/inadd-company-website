@@ -2,7 +2,7 @@
  * Resend Mail API — 상담 폼 이메일 발송
  *
  * POST /api/mail/contact   (일반 상담 - 에이전시/브랜드)
- * POST /api/mail/brochure  (회사소개서 요청)
+ * POST /api/mail/brochure  (회사소개서 요청 — 광고주에게만 발송, 내부 알림 없음)
  * POST /api/mail/kickoff   (킥오프 미팅 신청)
  */
 
@@ -377,8 +377,9 @@ mail.post('/contact', async (c) => {
 
 /* ─────────────────────────────────────────────
    API 라우트 — 회사소개서 요청
-   1) 내부 알림  → RESEND_TO (관리자)
-   2) 소개서 발송 → 광고주 이메일 (브랜딩 템플릿)
+   광고주에게 소개서만 발송하고, 내부 알림 메일은 보내지 않는다.
+   (상담 신청이 들어오면 어차피 소개서도 받아간 것이므로
+    소개서 요청 건마다 내부 알림을 받을 필요가 없음)
 ───────────────────────────────────────────── */
 mail.post('/brochure', async (c) => {
   try {
@@ -403,19 +404,7 @@ mail.post('/brochure', async (c) => {
     const tags: string[] = rawTags   ? JSON.parse(rawTags) : ['인플루언서', '바이럴 마케팅', 'SEO · 리뷰', 'PPL']
     const downloadUrl = toDriveDownloadUrl(pdfUrl)
 
-    // ① 내부 알림 메일 (관리자용)
-    const internalRows = [
-      { label: '이메일', value: toEmail },
-      { label: '소개서 URL', value: pdfUrl },
-      { label: '신청 시각', value: new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) },
-    ]
-    await sendMail(
-      c.env,
-      `[소개서 요청] ${toEmail}`,
-      internalTemplate('📄 회사소개서 요청이 접수됐습니다', internalRows)
-    )
-
-    // ② 광고주 회신 메일 (소개서 PDF 링크 + KV 템플릿 내용 포함)
+    // 광고주 회신 메일 (소개서 PDF 링크 + KV 템플릿 내용 포함)
     await sendMailTo(
       c.env,
       toEmail,
