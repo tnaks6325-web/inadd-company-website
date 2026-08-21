@@ -2,30 +2,36 @@
  * Resend Mail API — 상담 폼 이메일 발송
  *
  * POST /api/mail/contact   (일반 상담 - 에이전시/브랜드)
- * POST /api/mail/brochure  (회사소개서 요청)
+ * POST /api/mail/brochure  (회사소개서 요청 — 광고주에게만 발송, 내부 알림 없음)
  * POST /api/mail/kickoff   (킥오프 미팅 신청)
  */
 
 import { Hono } from 'hono'
+import { resolveRecipients } from './mail-recipients'
 
 type Bindings = {
   RESEND_API_KEY: string     // re_xxxx
   RESEND_FROM: string        // noreply@inadcompany.co.kr
-  RESEND_TO: string          // tnaks6325@inadcompany.com
-  ADMIN_KV: KVNamespace      // home_brochure_url 등 KV 값 읽기용
+  RESEND_TO: string          // 기본 수신자 (쉼표로 여러 명 지정 가능)
+  ADMIN_KV?: KVNamespace     // home_brochure_url / mail_recipients 등 KV 값 읽기용
 }
 
 const mail = new Hono<{ Bindings: Bindings }>()
 
 /* ─────────────────────────────────────────────
    공통: 지정 수신자에게 메일 발송
+   to 는 문자열 또는 이메일 배열 (Resend 최대 50명)
 ───────────────────────────────────────────── */
 async function sendMailTo(
   env: Bindings,
-  to: string,
+  to: string | string[],
   subject: string,
   htmlBody: string
 ): Promise<void> {
+  const toList = (Array.isArray(to) ? to : [to]).filter(Boolean)
+  if (!toList.length) {
+    throw new Error('메일 수신자가 설정되지 않았습니다.')
+  }
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -34,7 +40,7 @@ async function sendMailTo(
     },
     body: JSON.stringify({
       from: env.RESEND_FROM,
-      to: [to],
+      to: toList,
       subject,
       html: htmlBody,
     }),
@@ -47,13 +53,16 @@ async function sendMailTo(
 
 /* ─────────────────────────────────────────────
    편의 래퍼: 내부(관리자) 알림용
+   관리자 페이지에 등록된 수신자 전원에게 발송하고,
+   등록된 목록이 없으면 RESEND_TO 로 폴백
 ───────────────────────────────────────────── */
 async function sendMail(
   env: Bindings,
   subject: string,
   htmlBody: string
 ): Promise<void> {
-  return sendMailTo(env, env.RESEND_TO, subject, htmlBody)
+  const recipients = await resolveRecipients(env.ADMIN_KV, env.RESEND_TO)
+  return sendMailTo(env, recipients, subject, htmlBody)
 }
 
 /* ─────────────────────────────────────────────
@@ -368,8 +377,9 @@ mail.post('/contact', async (c) => {
 
 /* ─────────────────────────────────────────────
    API 라우트 — 회사소개서 요청
-   1) 내부 알림  → RESEND_TO (관리자)
-   2) 소개서 발송 → 광고주 이메일 (브랜딩 템플릿)
+   광고주에게 소개서만 발송하고, 내부 알림 메일은 보내지 않는다.
+   (상담 신청이 들어오면 어차피 소개서도 받아간 것이므로
+    소개서 요청 건마다 내부 알림을 받을 필요가 없음)
 ───────────────────────────────────────────── */
 mail.post('/brochure', async (c) => {
   try {
@@ -381,11 +391,12 @@ mail.post('/brochure', async (c) => {
     }
 
     // KV에서 PDF URL + 메일 템플릿 내용 읽기
+    const kv = c.env.ADMIN_KV
     const [rawPdfUrl, rawHeadline, rawBodyText, rawTags] = await Promise.all([
-      c.env.ADMIN_KV.get('home_brochure_url'),
-      c.env.ADMIN_KV.get('brochure_mail_headline'),
-      c.env.ADMIN_KV.get('brochure_mail_body'),
-      c.env.ADMIN_KV.get('brochure_mail_tags'),
+      kv?.get('home_brochure_url') ?? null,
+      kv?.get('brochure_mail_headline') ?? null,
+      kv?.get('brochure_mail_body') ?? null,
+      kv?.get('brochure_mail_tags') ?? null,
     ])
     const pdfUrl     = rawPdfUrl     ?? 'https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view'
     const headline   = rawHeadline   ?? '회사소개서를\n보내드립니다.'
@@ -393,19 +404,7 @@ mail.post('/brochure', async (c) => {
     const tags: string[] = rawTags   ? JSON.parse(rawTags) : ['인플루언서', '바이럴 마케팅', 'SEO · 리뷰', 'PPL']
     const downloadUrl = toDriveDownloadUrl(pdfUrl)
 
-    // ① 내부 알림 메일 (관리자용)
-    const internalRows = [
-      { label: '이메일', value: toEmail },
-      { label: '소개서 URL', value: pdfUrl },
-      { label: '신청 시각', value: new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) },
-    ]
-    await sendMail(
-      c.env,
-      `[소개서 요청] ${toEmail}`,
-      internalTemplate('📄 회사소개서 요청이 접수됐습니다', internalRows)
-    )
-
-    // ② 광고주 회신 메일 (소개서 PDF 링크 + KV 템플릿 내용 포함)
+    // 광고주 회신 메일 (소개서 PDF 링크 + KV 템플릿 내용 포함)
     await sendMailTo(
       c.env,
       toEmail,

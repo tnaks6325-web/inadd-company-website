@@ -1,6 +1,13 @@
 import { Hono } from 'hono'
 import { kvGet, kvPut, kvDelete, signToken, verifyToken, type Bindings } from './store'
 import { DEFAULT_HOME_EDITOR_CONFIG, sanitizeHomeEditorConfig } from './editor-config'
+import {
+  MAIL_RECIPIENTS_KEY,
+  MAX_RECIPIENTS,
+  fallbackRecipients,
+  normalizeRecipients,
+  parseStoredRecipients,
+} from '../routes/mail-recipients'
 
 const admin = new Hono<{ Bindings: Bindings }>()
 
@@ -374,6 +381,47 @@ admin.put('/brochure-mail', authMiddleware, async (c) => {
   if (body.body     !== undefined) await kvPut(kv, 'brochure_mail_body',     body.body)
   if (body.tags     !== undefined) await kvPut(kv, 'brochure_mail_tags',     JSON.stringify(body.tags))
   return c.json({ ok: true })
+})
+
+// ═══════════════════════ 문의 접수 메일 수신자 ═══════════════════════
+// 홈페이지 상담/소개서/킥오프 문의가 접수될 때 알림 메일을 받을 이메일 목록.
+// 비워두면 환경변수 RESEND_TO 로 폴백한다.
+
+admin.get('/mail-recipients', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  const raw = await kvGet(kv, MAIL_RECIPIENTS_KEY)
+  const fallback = fallbackRecipients((c.env as any)?.RESEND_TO)
+  const recipients = parseStoredRecipients(raw)
+  return c.json({
+    recipients,
+    fallback,          // 목록이 비었을 때 실제로 발송되는 주소
+    max: MAX_RECIPIENTS,
+  })
+})
+
+admin.put('/mail-recipients', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  let body: any
+  try { body = await c.req.json() } catch {
+    return c.json({ error: '올바른 JSON 형식이 아닙니다.' }, 400)
+  }
+
+  const input = body?.recipients ?? []
+  const rawList = (Array.isArray(input) ? input : String(input).split(/[,;\n\r\s]+/))
+    .map((v: unknown) => String(v ?? '').trim())
+    .filter(Boolean)
+
+  const recipients = normalizeRecipients(rawList)
+  const invalid = rawList.filter((v: string) => !recipients.includes(v.toLowerCase()))
+  if (invalid.length) {
+    return c.json({ error: `이메일 형식이 올바르지 않습니다: ${invalid.join(', ')}` }, 400)
+  }
+  if (rawList.length > MAX_RECIPIENTS) {
+    return c.json({ error: `수신자는 최대 ${MAX_RECIPIENTS}명까지 등록할 수 있습니다.` }, 400)
+  }
+
+  await kvPut(kv, MAIL_RECIPIENTS_KEY, JSON.stringify(recipients))
+  return c.json({ ok: true, recipients })
 })
 
 // ═══════════════════════ PUBLIC DATA API ═══════════════════════
