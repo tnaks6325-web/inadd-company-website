@@ -127,9 +127,31 @@ export async function kvDelete(kv: KVNamespace|undefined, key: string): Promise<
 }
 
 // JWT 서명 (HMAC-SHA256, Web Crypto API)
-const SECRET = 'inadcompany-admin-secret-2024'
+// 서명 비밀키는 코드에 두지 않고 KV(token_secret)에 무작위로 생성해 보관한다.
+// (저장소가 공개라 코드에 두면 누구나 관리자 토큰을 위조할 수 있음)
+let cachedSecret: string | null = null
+let cachedAt = 0
+// 요청마다 src/main.tsx 가 KV 바인딩을 넣어 준다 (api.ts 를 건드리지 않기 위함)
+let tokenKv: KVNamespace | undefined
+export function setTokenKv(kv: KVNamespace | undefined) { if (kv) tokenKv = kv }
+async function getSecret(kvArg: KVNamespace | undefined): Promise<string> {
+  const kv = kvArg || tokenKv
+  // 60초만 캐시: 최초 생성 시 여러 서버가 동시에 만들어도 KV의 최종 값으로 수렴
+  if (cachedSecret && Date.now() - cachedAt < 60_000) return cachedSecret
+  let secret = kv ? await kv.get('token_secret') : memStore['token_secret']
+  if (!secret) {
+    const bytes = crypto.getRandomValues(new Uint8Array(32))
+    secret = Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('')
+    if (kv) await kv.put('token_secret', secret)
+    else memStore['token_secret'] = secret
+  }
+  cachedSecret = secret
+  cachedAt = Date.now()
+  return secret
+}
 
-export async function signToken(payload: object): Promise<string> {
+export async function signToken(payload: object, kv?: KVNamespace): Promise<string> {
+  const SECRET = await getSecret(kv)
   const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
   const body   = btoa(JSON.stringify({ ...payload, exp: Date.now() + 24*60*60*1000 }))
   const data   = `${header}.${body}`
@@ -142,8 +164,9 @@ export async function signToken(payload: object): Promise<string> {
   return `${data}.${sigB64}`
 }
 
-export async function verifyToken(token: string): Promise<boolean> {
+export async function verifyToken(token: string, kv?: KVNamespace): Promise<boolean> {
   try {
+    const SECRET = await getSecret(kv)
     const parts = token.split('.')
     if (parts.length !== 3) return false
     const [header, body, sig] = parts

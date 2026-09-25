@@ -5,10 +5,11 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [
-    build(),
+    // src/main.tsx 가 인사이트·자동 발행 경로를 처리하고 나머지는 src/index.tsx 로 넘긴다
+    build({ entry: 'src/main.tsx' }),
     devServer({
       adapter,
-      entry: 'src/index.tsx'
+      entry: 'src/main.tsx'
     })
   ]
 })
