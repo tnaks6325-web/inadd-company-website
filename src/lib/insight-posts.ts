@@ -27,7 +27,7 @@ export const CAT_LABEL: Record<string, string> = {
   'content-strategy': '콘텐츠 별 전략',
 }
 export const SUB_LABEL: Record<string, string> = {
-  viral: '바이럴 마케팅', influencer: '인플루언서', seeding: '시딩',
+  viral: '바이럴 마케팅', influencer: '인플루언서', seeding: '체험단',
   seo: 'SEO', review: '리뷰', oliveyoung: '올리브영', ppl: 'PPL',
 }
 
