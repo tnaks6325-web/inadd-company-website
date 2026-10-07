@@ -1,0 +1,12 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="165" height="224" viewBox="0 0 165 224" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="PPL/Spotlight-Beam">
+<path id="Spotlight-Beam/Shape-01" d="M60 5L160 215C104.667 227 53 226 5 212L60 5Z" fill="url(#paint0_linear_0_44)"/>
+<path id="Spotlight-Beam/Shape-02" d="M82 221C123.421 221 157 216.523 157 211C157 205.477 123.421 201 82 201C40.5786 201 7 205.477 7 211C7 216.523 40.5786 221 82 221Z" fill="white"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_44" x1="5" y1="5" x2="5" y2="223.308" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.8"/>
+<stop offset="1" stop-color="#E8ECF3" stop-opacity="0.12"/>
+</linearGradient>
+</defs>
+</svg>

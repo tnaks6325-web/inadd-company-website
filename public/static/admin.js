@@ -9,7 +9,9 @@ async function api(method, path, body) {
     body: body ? JSON.stringify(body) : undefined
   });
   if (res.status === 401) { localStorage.removeItem('admin_token'); window.location.href = '/admin/login'; }
-  return res.json();
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || ('요청 실패 (' + res.status + ')'));
+  return data;
 }
 
 function showToast(msg, type) {
@@ -19,6 +21,11 @@ function showToast(msg, type) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 4000);
 }
+
+window.addEventListener('unhandledrejection', event => {
+  const message = event.reason && event.reason.message ? event.reason.message : '요청 처리 중 오류가 발생했습니다.';
+  showToast(message, 'error');
+});
 
 // ── 로그아웃 ──
 document.getElementById('btnLogout').addEventListener('click', () => {
@@ -182,6 +189,7 @@ document.getElementById('btnSaveBrochure').addEventListener('click', async () =>
 // ── 소개서 메일 템플릿 로드 & 저장 ──
 async function loadBrochureMail() {
   const data = await api('GET', '/brochure-mail');
+  document.getElementById('brochureMailSubject').value  = data.subject  || '';
   document.getElementById('brochureMailHeadline').value = data.headline || '';
   document.getElementById('brochureMailBody').value     = data.body     || '';
   const tags = data.tags || [];
@@ -191,13 +199,13 @@ async function loadBrochureMail() {
 
 function renderBrochureTagPreview(tags) {
   const colors = [
-    '#1a6bff','#a855f7','#14b8a6','#f97316','#ec4899','#eab308'
+    '#285CCC','#7E22CE','#0F766E','#C2410C','#BE185D','#A16207'
   ];
   const wrap = document.getElementById('brochureTagPreview');
   if (!wrap) return;
   wrap.innerHTML = tags.map(function(tag, i) {
     const c = colors[i % colors.length];
-    return '<span style="padding:4px 12px;border-radius:20px;font-size:12px;border:1px solid '+ c +'40;background:'+ c +'18;color:'+ c +';">' + tag.trim() + '</span>';
+    return '<span style="padding:4px 12px;border-radius:20px;font-size:12px;border:1px solid '+ c +'40;background:'+ c +'18;color:'+ c +';">' + escHtml(tag.trim()) + '</span>';
   }).join('');
 }
 
@@ -208,12 +216,14 @@ document.getElementById('brochureMailTags').addEventListener('input', function()
 });
 
 document.getElementById('btnSaveBrochureMail').addEventListener('click', async () => {
+  const subject  = document.getElementById('brochureMailSubject').value.trim();
   const headline = document.getElementById('brochureMailHeadline').value.trim();
   const body     = document.getElementById('brochureMailBody').value.trim();
   const tagsRaw  = document.getElementById('brochureMailTags').value;
   const tags     = tagsRaw.split(',').map(function(t){ return t.trim(); }).filter(Boolean);
   if (!headline) { showToast('헤더 제목을 입력해 주세요.', 'error'); return; }
-  await api('PUT', '/brochure-mail', { headline, body, tags });
+  if (!subject) { showToast('메일 제목을 입력해 주세요.', 'error'); return; }
+  await api('PUT', '/brochure-mail', { subject, headline, body, tags });
   showToast('소개서 메일 템플릿이 저장되었습니다.');
 });
 
@@ -344,10 +354,10 @@ function loadDaumPostcode() {
 async function renderLogoGrid() {
   const grid = document.getElementById('logoGrid');
   if (!aboutLogos.length) {
-    grid.innerHTML = '<p style="color:#555;font-size:13px">등록된 로고가 없습니다.</p>';
+    grid.innerHTML = '<p style="color:#8A8A90;font-size:13px">등록된 로고가 없습니다.</p>';
     return;
   }
-  grid.innerHTML = '<p style="color:#666;font-size:12px;margin-bottom:8px">로고 불러오는 중...</p>';
+  grid.innerHTML = '<p style="color:#7A7A80;font-size:12px;margin-bottom:8px">로고 불러오는 중...</p>';
   const items = await Promise.all(aboutLogos.map(async key => {
     try {
       const res = await api('GET', '/logo/' + key);
@@ -356,7 +366,7 @@ async function renderLogoGrid() {
   }));
   grid.innerHTML = items.map(({key, src}) => `
     <div class="logo-card">
-      ${src ? `<img src="${src}" alt="logo">` : `<div style="width:80px;height:50px;background:#222;border-radius:4px;margin:0 auto"></div>`}
+      ${src ? `<img src="${src}" alt="logo">` : `<div style="width:80px;height:50px;background:#F8F8F8;border-radius:4px;margin:0 auto"></div>`}
       <button class="btn-del" data-key="${key}">✕</button>
       <div class="logo-name">${key.split('_')[1] || key}</div>
     </div>
@@ -413,18 +423,94 @@ document.getElementById('btnSaveAddress').addEventListener('click', async () => 
   showToast('✅ 주소와 지도 위치가 저장되었습니다.');
 });
 
+// 로고 배경 검사: 가장자리 픽셀이 흰색/투명이 아니면 색 배경 로고로 판정 (그리드 균형 보호)
+function checkWhiteBackground(dataUrl) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const c = document.createElement('canvas');
+        const w = c.width = Math.max(4, Math.min(64, img.width));
+        const h = c.height = Math.max(4, Math.min(64, img.height));
+        const x = c.getContext('2d');
+        x.drawImage(img, 0, 0, w, h);
+        const d = x.getImageData(0, 0, w, h).data;
+        let bad = 0, total = 0;
+        function px(i) {
+          total++;
+          if (d[i+3] < 16) return;                       // 투명 → OK
+          if (d[i] >= 232 && d[i+1] >= 232 && d[i+2] >= 232) return; // 흰색 계열 → OK
+          bad++;
+        }
+        for (let i = 0; i < w; i++) { px(i*4); px(((h-1)*w+i)*4); }
+        for (let j = 0; j < h; j++) { px(j*w*4); px((j*w+w-1)*4); }
+        resolve({ ok: (bad / total) <= 0.15, img });     // 가장자리 15%까지는 로고 획이 닿는 것 허용
+      } catch(e) { resolve({ ok: true, img }); }
+    };
+    img.onerror = () => resolve({ ok: false, img: null });
+    img.src = dataUrl;
+  });
+}
+
+// 로고 콘텐츠 영역 탐지 (흰색/투명 여백 제거용) — 축소 샘플로 스캔 후 원본 좌표 환산
+function trimContentBounds(img) {
+  const sw = Math.max(8, Math.min(300, img.width));
+  const sh = Math.max(8, Math.round(img.height * sw / img.width));
+  const c = document.createElement('canvas'); c.width = sw; c.height = sh;
+  const x = c.getContext('2d'); x.drawImage(img, 0, 0, sw, sh);
+  try {
+    const d = x.getImageData(0, 0, sw, sh).data;
+    let minX = sw, minY = sh, maxX = -1, maxY = -1;
+    for (let y = 0; y < sh; y++) for (let xx = 0; xx < sw; xx++) {
+      const i = (y * sw + xx) * 4;
+      if (d[i+3] >= 16 && !(d[i] >= 245 && d[i+1] >= 245 && d[i+2] >= 245)) {
+        if (xx < minX) minX = xx; if (xx > maxX) maxX = xx;
+        if (y < minY) minY = y; if (y > maxY) maxY = y;
+      }
+    }
+    if (maxX < minX || maxY < minY) return { sx:0, sy:0, sw:img.width, sh:img.height };
+    const rx = img.width / sw, ry = img.height / sh;
+    return {
+      sx: Math.max(0, Math.floor(minX * rx)), sy: Math.max(0, Math.floor(minY * ry)),
+      sw: Math.min(img.width, Math.ceil((maxX - minX + 1) * rx)),
+      sh: Math.min(img.height, Math.ceil((maxY - minY + 1) * ry))
+    };
+  } catch(e) { return { sx:0, sy:0, sw:img.width, sh:img.height }; }
+}
+
+// 흰 캔버스 200×80 정규화: 여백 자동 제거 후 로고 실물을 꽉 차게 배치
+function normalizeLogoWhite(img, W, H) {
+  const c = document.createElement('canvas');
+  c.width = W; c.height = H;
+  const x = c.getContext('2d');
+  x.imageSmoothingQuality = 'high';
+  x.fillStyle = '#ffffff';
+  x.fillRect(0, 0, W, H);
+  const t = trimContentBounds(img);
+  const iw = W - 8, ih = H - 16;   // 소여백만 남기고 최대 크기
+  const s = Math.min(iw / t.sw, ih / t.sh);
+  const w = Math.max(1, Math.round(t.sw * s)), h = Math.max(1, Math.round(t.sh * s));
+  x.drawImage(img, t.sx, t.sy, t.sw, t.sh, Math.round((W - w) / 2), Math.round((H - h) / 2), w, h);
+  return c.toDataURL('image/jpeg', 0.9);
+}
+
 document.getElementById('logoUploadZone').addEventListener('click', () => document.getElementById('logoFileInput').click());
 document.getElementById('logoFileInput').addEventListener('change', async (e) => {
   const files = Array.from(e.target.files);
+  let okCount = 0;
+  const rejected = [];
   for (const file of files) {
     const dataUrl = await readFileAsDataUrl(file);
-    const resized = await resizeImage(dataUrl, 200, 80);
+    const check = await checkWhiteBackground(dataUrl);
+    if (!check.ok) { rejected.push(file.name); continue; }   // 색 배경 로고 차단
+    const resized = normalizeLogoWhite(check.img, 200, 80);
     const name = file.name.replace(/\.[^.]+$/, '');
     const res = await api('POST', '/about/logo', { name, dataUrl: resized });
-    if (res.ok) { aboutLogos.push(res.key); }
+    if (res.ok) { aboutLogos.push(res.key); okCount++; }
   }
   renderLogoGrid();
-  showToast(files.length + '개 로고가 업로드되었습니다.');
+  if (okCount) showToast(okCount + '개 로고가 업로드되었습니다.');
+  if (rejected.length) showToast('❌ 배경이 흰색/투명이 아니라 제외됨: ' + rejected.join(', ') + ' (흰 배경 로고만 등록 가능)', 'error');
   e.target.value = '';
 });
 
@@ -432,6 +518,7 @@ document.getElementById('logoFileInput').addEventListener('change', async (e) =>
 let worksItems = [];
 let editingWorkId = null;
 let wThumbDataUrl = '';
+let wCoverDataUrl = '';
 
 const PRODUCT_LABELS = { viral:'바이럴', influencer:'인플루언서', seeding:'시딩', seo:'SEO', review:'리뷰', oliveyoung:'올리브영', ppl:'PPL' };
 
@@ -446,11 +533,13 @@ function renderWorksTable() {
   tbody.innerHTML = worksItems.map((item, i) => {
     const tags = (item.tags || []).map(t => `<span class="tag-chip">${PRODUCT_LABELS[t]||t}</span>`).join('');
     return `<tr>
+      <td>${item.cover ? `<img class="works-thumb" src="${item.cover}" onerror="this.style.opacity=0">` : '<span style="color:#8A8A90;font-size:12px">없음</span>'}</td>
       <td><img class="works-thumb" src="${item.thumb||''}" onerror="this.style.opacity=0"></td>
-      <td style="color:#fff;font-weight:600">${item.brand||''}</td>
-      <td style="color:#aaa">${item.overlay||''}</td>
+      <td style="color:#393939;font-weight:600">${item.brand||''}</td>
+      <td style="color:#6E6E6E">${item.overlay||''}</td>
       <td>${tags}</td>
       <td style="color:#777;font-size:13px">${item.services||''}</td>
+      <td>${item.featuredRank ? `<span class="tag-chip" style="color:#fff;background:#285CCC;border-color:#285CCC">${item.featuredRank}번째</span>` : '<span style="color:#8A8A90;font-size:12px">-</span>'}</td>
       <td style="white-space:nowrap">
         <button class="btn btn-secondary btn-sm" data-edit="${i}"><i class="fas fa-edit"></i></button>
         <button class="btn btn-danger btn-sm" data-del="${i}" style="margin-left:6px"><i class="fas fa-trash"></i></button>
@@ -466,25 +555,31 @@ function renderWorksTable() {
 }
 
 function openAddWork() {
-  editingWorkId = null; wThumbDataUrl = '';
+  editingWorkId = null; wThumbDataUrl = ''; wCoverDataUrl = '';
   document.getElementById('workModalTitle').textContent = '새 포트폴리오 추가';
-  ['wBrand','wOverlay','wServices','wThumbUrl'].forEach(id => { document.getElementById(id).value = ''; });
+  ['wBrand','wOverlay','wServices','wThumbUrl','wCoverUrl'].forEach(id => { document.getElementById(id).value = ''; });
   document.querySelectorAll('[name="wTag"]').forEach(cb => cb.checked = false);
+  document.getElementById('wFeaturedRank').value = '';
   document.getElementById('wThumbPreview').innerHTML = '';
+  document.getElementById('wCoverPreview').innerHTML = '';
   document.getElementById('workModal').classList.add('open');
 }
 
 function openEditWork(i) {
-  editingWorkId = i; wThumbDataUrl = '';
+  editingWorkId = i; wThumbDataUrl = ''; wCoverDataUrl = '';
   const item = worksItems[i];
   document.getElementById('workModalTitle').textContent = '포트폴리오 수정';
   document.getElementById('wBrand').value = item.brand || '';
   document.getElementById('wOverlay').value = item.overlay || '';
   document.getElementById('wServices').value = item.services || '';
   document.getElementById('wThumbUrl').value = item.thumb || '';
+  document.getElementById('wCoverUrl').value = item.cover || '';
   document.querySelectorAll('[name="wTag"]').forEach(cb => cb.checked = (item.tags||[]).includes(cb.value));
+  document.getElementById('wFeaturedRank').value = item.featuredRank ? String(item.featuredRank) : '';
   document.getElementById('wThumbPreview').innerHTML = item.thumb
     ? `<img src="${item.thumb}" style="max-height:80px;border-radius:6px">` : '';
+  document.getElementById('wCoverPreview').innerHTML = item.cover
+    ? `<img src="${item.cover}" style="max-height:80px;border-radius:6px">` : '';
   document.getElementById('workModal').classList.add('open');
 }
 
@@ -504,10 +599,22 @@ document.getElementById('wThumbZone').addEventListener('click', () => document.g
 document.getElementById('wThumbFile').addEventListener('change', async (e) => {
   const file = e.target.files[0]; if (!file) return;
   const dataUrl = await readFileAsDataUrl(file);
-  const resized = await resizeImage(dataUrl, 600, 450);
+  // 16:10 흰 배경 캔버스에 통일 규격으로 정규화 (잘림·여백 불일치 방지)
+  const resized = await normalizeThumb(dataUrl, 600, 375, 24);
   const res = await api('POST', '/works/thumb', { dataUrl: resized });
   if (res.ok) { wThumbDataUrl = res.url; document.getElementById('wThumbUrl').value = res.url; }
   document.getElementById('wThumbPreview').innerHTML = `<img src="${resized}" style="max-height:80px;border-radius:6px">`;
+});
+
+// 대표 이미지 업로드 — 원본을 자르지 않고 1:1 정사각형 캔버스에 맞춤
+document.getElementById('wCoverZone').addEventListener('click', () => document.getElementById('wCoverFile').click());
+document.getElementById('wCoverFile').addEventListener('change', async (e) => {
+  const file = e.target.files[0]; if (!file) return;
+  const dataUrl = await readFileAsDataUrl(file);
+  const resized = await normalizeCover(dataUrl, 800, 800);
+  const res = await api('POST', '/works/thumb', { dataUrl: resized });
+  if (res.ok) { wCoverDataUrl = res.url; document.getElementById('wCoverUrl').value = res.url; }
+  document.getElementById('wCoverPreview').innerHTML = `<img src="${resized}" style="max-height:80px;border-radius:6px">`;
 });
 
 document.getElementById('btnSaveWork').addEventListener('click', async () => {
@@ -515,10 +622,21 @@ document.getElementById('btnSaveWork').addEventListener('click', async () => {
   const overlay = document.getElementById('wOverlay').value.trim();
   const services = document.getElementById('wServices').value.trim();
   const thumbUrl = document.getElementById('wThumbUrl').value.trim() || wThumbDataUrl;
+  const coverUrl = document.getElementById('wCoverUrl').value.trim() || wCoverDataUrl;
   const tags = Array.from(document.querySelectorAll('[name="wTag"]:checked')).map(cb => cb.value);
+  const featuredRankValue = document.getElementById('wFeaturedRank').value;
+  const featuredRank = featuredRankValue ? Number(featuredRankValue) : undefined;
   if (!brand) { showToast('업체명을 입력해주세요.', 'error'); return; }
+  if (featuredRank) {
+    const duplicate = worksItems.find((existing, index) => index !== editingWorkId && Number(existing.featuredRank) === featuredRank);
+    if (duplicate) {
+      showToast(`대표 ${featuredRank}번째는 이미 ${duplicate.brand}에 설정되어 있습니다.`, 'error');
+      return;
+    }
+  }
   const item = {
-    brand, overlay, services, thumb: thumbUrl, tags,
+    brand, overlay, services, thumb: thumbUrl, cover: coverUrl, tags,
+    ...(featuredRank ? { featuredRank } : {}),
     id: editingWorkId !== null ? worksItems[editingWorkId].id : Date.now()
   };
   if (editingWorkId !== null) { worksItems[editingWorkId] = item; }
@@ -545,12 +663,12 @@ async function loadInsight() {
 function renderPostList() {
   const list = document.getElementById('postList');
   if (!insightPosts.length) {
-    list.innerHTML = '<p style="color:#555;font-size:13px;text-align:center;padding:40px">등록된 게시물이 없습니다.</p>';
+    list.innerHTML = '<p style="color:#8A8A90;font-size:13px;text-align:center;padding:40px">등록된 게시물이 없습니다.</p>';
     return;
   }
   list.innerHTML = insightPosts.map(post => `
     <div class="post-item">
-      <img class="post-thumb" src="${post.thumbnail||''}" onerror="this.style.background='#2a2a2a';this.src=''">
+      <img class="post-thumb" src="${post.thumbnail||''}" onerror="this.style.background='#E6E7EA';this.src=''">
       <div class="post-info">
         <div class="post-title">${post.title||'제목 없음'}</div>
         <div class="post-meta">${post.mainCategory||''} · ${post.subCategory||''} · ${(post.createdAt||'').slice(0,10)}</div>
@@ -744,7 +862,7 @@ function renderHeroKpiEditor() {
     <div class="mktg-service-title"><i class="fas fa-hashtag"></i> ${svcName}</div>
     <div style="display:flex;flex-direction:column;gap:8px;">`;
   items.forEach((item, i) => {
-    html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;background:#141414;border:1px solid #2a2a2a;border-radius:8px;padding:12px 14px;">
+    html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;background:#FFFFFF;border:1px solid #E6E7EA;border-radius:8px;padding:12px 14px;">
       <div class="metric-input-wrap">
         <div class="ml">수치 ${i+1}</div>
         <input type="text" data-svc="${svcKey}" data-idx="${i}" data-field="num" value="${item.num||''}" placeholder="예: +580%">
@@ -814,6 +932,45 @@ function resizeImage(dataUrl, maxW, maxH) {
   });
 }
 
+// 원본 비율을 보존하면서 최대 800×800 안으로만 축소 — 어떤 영역도 자르지 않음
+function normalizeCover(dataUrl, W, H) {
+  return new Promise(resolve => {
+      const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(W / img.width, H / img.height, 1);
+      const w = Math.max(1, Math.round(img.width * scale));
+      const h = Math.max(1, Math.round(img.height * scale));
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL('image/jpeg', 0.9));
+    };
+    img.src = dataUrl;
+  });
+}
+
+// 고정 규격(W×H) 흰 배경 캔버스에 이미지를 잘리지 않게(contain) 중앙 배치 — 썸네일 규격 통일용
+function normalizeThumb(dataUrl, W, H, pad) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = W; canvas.height = H;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';           // 투명 PNG가 JPEG에서 검게 변하는 것도 방지
+      ctx.fillRect(0, 0, W, H);
+      const p = pad || 0;
+      // 작은 로고는 확대해서 캔버스를 채움 (최대 3배 — 과도한 블러 방지)
+      const scale = Math.min((W - p * 2) / img.width, (H - p * 2) / img.height, 3);
+      const w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+      ctx.drawImage(img, Math.round((W - w) / 2), Math.round((H - h) / 2), w, h);
+      resolve(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.src = dataUrl;
+  });
+}
+
 // ═══════════════ 섹션 로드 ═══════════════
 function loadSection(sec) {
   if (sec === 'home') loadHome();
@@ -822,7 +979,7 @@ function loadSection(sec) {
   else if (sec === 'insight') loadInsight();
   else if (sec === 'marketing') loadMarketingSection();
   else if (sec === 'contact') loadContact();
-  else if (sec === 'gallery') loadGallery();
+  /* gallery는 Insight 섹션 안 패널 — loadInsight()에서 함께 로드됨 */
 }
 
 // 초기 로드
@@ -843,8 +1000,6 @@ async function loadContact() {
   // FAQ
   faqItems = (data.faq || []).map(f => ({ q: f.q || '', a: f.a || '' }));
   renderFaqList();
-  // 문의 접수 메일 수신자
-  await loadMailRecipients();
 }
 
 function renderFaqList() {
@@ -854,28 +1009,28 @@ function renderFaqList() {
   if (addBtn) addBtn.disabled = faqItems.length >= 5;
 
   if (!faqItems.length) {
-    wrap.innerHTML = '<p style="color:#555;font-size:13px;text-align:center;padding:20px 0">등록된 FAQ가 없습니다. 추가 버튼을 눌러 질문을 등록하세요.</p>';
+    wrap.innerHTML = '<p style="color:#8A8A90;font-size:13px;text-align:center;padding:20px 0">등록된 FAQ가 없습니다. 추가 버튼을 눌러 질문을 등록하세요.</p>';
     return;
   }
 
   wrap.innerHTML = faqItems.map((f, i) => `
-    <div class="faq-edit-item" data-idx="${i}" style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:16px">
+    <div class="faq-edit-item" data-idx="${i}" style="background:#FFFFFF;border:1px solid #E6E7EA;border-radius:10px;padding:16px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-        <span style="color:#888;font-size:12px;font-weight:700">FAQ ${i + 1}</span>
-        <button onclick="removeFaqItem(${i})" style="background:none;border:none;color:#555;cursor:pointer;font-size:14px;padding:2px 6px;transition:color .15s" onmouseover="this.style.color='#ff4d4d'" onmouseout="this.style.color='#555'">
+        <span style="color:#6E6E6E;font-size:12px;font-weight:700">FAQ ${i + 1}</span>
+        <button onclick="removeFaqItem(${i})" style="background:none;border:none;color:#8A8A90;cursor:pointer;font-size:14px;padding:2px 6px;transition:color .15s" onmouseover="this.style.color='#DC2626'" onmouseout="this.style.color='#8A8A90'">
           <i class="fas fa-trash"></i>
         </button>
       </div>
       <div class="form-group" style="margin-bottom:10px">
-        <label style="font-size:11px;color:#888;margin-bottom:5px;display:block">질문</label>
+        <label style="font-size:11px;color:#6E6E6E;margin-bottom:5px;display:block">질문</label>
         <input type="text" value="${escHtml(f.q)}" oninput="faqItems[${i}].q=this.value"
-          style="width:100%;background:#111;border:1px solid #2a2a2a;border-radius:6px;color:#fff;font-size:14px;padding:9px 12px;outline:none;box-sizing:border-box"
+          style="width:100%;background:#FFFFFF;border:1px solid #E6E7EA;border-radius:6px;color:#393939;font-size:14px;padding:9px 12px;outline:none;box-sizing:border-box"
           placeholder="예: 프로젝트 기간은 얼마나 걸리나요?">
       </div>
       <div class="form-group">
-        <label style="font-size:11px;color:#888;margin-bottom:5px;display:block">답변</label>
+        <label style="font-size:11px;color:#6E6E6E;margin-bottom:5px;display:block">답변</label>
         <textarea oninput="faqItems[${i}].a=this.value" rows="3"
-          style="width:100%;background:#111;border:1px solid #2a2a2a;border-radius:6px;color:#ccc;font-size:13px;padding:9px 12px;outline:none;resize:vertical;line-height:1.6;box-sizing:border-box;font-family:inherit"
+          style="width:100%;background:#FFFFFF;border:1px solid #E6E7EA;border-radius:6px;color:#4A4B52;font-size:13px;padding:9px 12px;outline:none;resize:vertical;line-height:1.6;box-sizing:border-box;font-family:inherit"
           placeholder="답변을 입력하세요...">${escHtml(f.a)}</textarea>
       </div>
     </div>
@@ -899,87 +1054,6 @@ document.getElementById('btnAddFaq').addEventListener('click', () => {
   const items = document.querySelectorAll('.faq-edit-item');
   const last = items[items.length - 1];
   if (last) last.querySelector('input').focus();
-});
-
-// ── 문의 접수 메일 수신자 ──
-let mailRecipients = [];
-let mailRecipientFallback = [];
-const MAX_MAIL_RECIPIENTS = 50;
-
-async function loadMailRecipients() {
-  const data = await api('GET', '/mail-recipients');
-  mailRecipients = data.recipients || [];
-  mailRecipientFallback = data.fallback || [];
-  renderMailRecipients();
-}
-
-function renderMailRecipients() {
-  const wrap = document.getElementById('mailRecipientList');
-  if (!wrap) return;
-
-  const addBtn = document.getElementById('btnAddMailRecipient');
-  if (addBtn) addBtn.disabled = mailRecipients.length >= MAX_MAIL_RECIPIENTS;
-
-  if (!mailRecipients.length) {
-    wrap.innerHTML = '<p style="color:#555;font-size:13px;text-align:center;padding:18px 0">등록된 수신자가 없습니다. 추가 버튼을 눌러 이메일을 등록하세요.</p>';
-  } else {
-    wrap.innerHTML = mailRecipients.map(function(email, i) {
-      return '<div style="display:flex;gap:10px;align-items:center">' +
-        '<input type="email" value="' + escHtml(email) + '" oninput="mailRecipients[' + i + ']=this.value" ' +
-        'placeholder="예: name@inadcompany.com" ' +
-        'style="flex:1;background:#111;border:1px solid #2a2a2a;border-radius:8px;color:#fff;font-size:14px;padding:10px 14px;outline:none;box-sizing:border-box">' +
-        '<button onclick="removeMailRecipient(' + i + ')" title="삭제" ' +
-        'style="background:none;border:none;color:#555;cursor:pointer;font-size:14px;padding:4px 8px" ' +
-        'onmouseover="this.style.color=\'#ff4d4d\'" onmouseout="this.style.color=\'#555\'">' +
-        '<i class="fas fa-trash"></i></button>' +
-      '</div>';
-    }).join('');
-  }
-
-  const note = document.getElementById('mailRecipientFallback');
-  if (note) {
-    note.innerHTML = mailRecipients.length
-      ? '현재 <strong style="color:#1a6bff">' + mailRecipients.length + '명</strong>이 문의 알림 메일을 받습니다.'
-      : (mailRecipientFallback.length
-          ? '현재 기본 수신자 <strong style="color:#aaa">' + mailRecipientFallback.map(escHtml).join(', ') + '</strong> 에게만 발송됩니다.'
-          : '수신자가 없어 문의 알림 메일이 발송되지 않습니다. 최소 1명은 등록해 주세요.');
-  }
-}
-
-function removeMailRecipient(idx) {
-  mailRecipients.splice(idx, 1);
-  renderMailRecipients();
-}
-
-document.getElementById('btnAddMailRecipient').addEventListener('click', () => {
-  if (mailRecipients.length >= MAX_MAIL_RECIPIENTS) {
-    showToast('수신자는 최대 ' + MAX_MAIL_RECIPIENTS + '명까지 등록 가능합니다.', 'error');
-    return;
-  }
-  mailRecipients.push('');
-  renderMailRecipients();
-  const inputs = document.querySelectorAll('#mailRecipientList input');
-  const last = inputs[inputs.length - 1];
-  if (last) last.focus();
-});
-
-document.getElementById('btnSaveMailRecipients').addEventListener('click', async () => {
-  const cleaned = mailRecipients.map(function(e){ return String(e || '').trim(); }).filter(Boolean);
-  const invalid = cleaned.filter(function(e){ return !/^[^\s@,;<>]+@[^\s@,;<>]+\.[^\s@,;<>]{2,}$/.test(e); });
-  if (invalid.length) {
-    showToast('이메일 형식이 올바르지 않습니다: ' + invalid.join(', '), 'error');
-    return;
-  }
-  const result = await api('PUT', '/mail-recipients', { recipients: cleaned });
-  if (result && result.ok) {
-    mailRecipients = result.recipients || cleaned;
-    renderMailRecipients();
-    showToast(mailRecipients.length
-      ? '✅ 문의 알림 수신자 ' + mailRecipients.length + '명이 저장되었습니다.'
-      : '수신자 목록을 비웠습니다. 기본 수신자에게만 발송됩니다.');
-  } else {
-    showToast('❌ ' + ((result && result.error) || '저장 중 오류가 발생했습니다.'), 'error');
-  }
 });
 
 document.getElementById('btnSavePrivacyOfficer').addEventListener('click', async () => {
@@ -1032,7 +1106,7 @@ function initGalAdminFilter() {
 }
 
 const TAG_COLORS_ADMIN = {
-  '일상':   { bg:'rgba(41,121,255,0.18)',  border:'rgba(41,121,255,0.5)',  color:'#7ab4ff' },
+  '일상':   { bg:'rgba(40,92,204,0.16)',  border:'rgba(40,92,204,0.45)',  color:'#7ab4ff' },
   '팀':     { bg:'rgba(41,200,130,0.15)',  border:'rgba(41,200,130,0.45)', color:'#4dd99c' },
   '오피스': { bg:'rgba(168,85,247,0.15)',  border:'rgba(168,85,247,0.45)', color:'#c084fc' },
   '행사':   { bg:'rgba(251,146,60,0.15)',  border:'rgba(251,146,60,0.45)', color:'#fb923c' },
@@ -1057,8 +1131,8 @@ function renderGalAdmin(items) {
     return `
     <div class="gal-admin-item" onclick="editGalPackage(${item.id})">
       ${coverUrl
-        ? `<img src="${coverUrl}" alt="${item.caption || ''}" loading="lazy" onerror="this.parentElement.style.background='#1a1a1a'" />`
-        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-image" style="color:#333;font-size:28px;"></i></div>`
+        ? `<img src="${coverUrl}" alt="${item.caption || ''}" loading="lazy" onerror="this.parentElement.style.background='#FFFFFF'" />`
+        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-image" style="color:#DDDEE2;font-size:28px;"></i></div>`
       }
       ${imgCount > 1 ? `<span class="gal-admin-count-badge"><i class="fas fa-images" style="font-size:9px;margin-right:3px;"></i>${imgCount}</span>` : ''}
       <div class="gal-admin-item-info">
@@ -1096,55 +1170,55 @@ async function editGalPackage(id) {
   let editTag    = pkg.tag || '일상';
 
   const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(26,31,46,0.55);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
   overlay.innerHTML = `
-    <div style="background:#141414;border:1px solid #2a2a2a;border-radius:16px;padding:0;width:540px;max-width:96vw;max-height:92vh;overflow:hidden;display:flex;flex-direction:column;">
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid #222;flex-shrink:0;">
+    <div style="background:#FFFFFF;border:1px solid #E6E7EA;border-radius:16px;padding:0;width:540px;max-width:96vw;max-height:92vh;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid #F8F8F8;flex-shrink:0;">
         <div>
-          <strong style="color:#fff;font-size:16px;font-weight:700">패키지 수정</strong>
-          <p style="color:#555;font-size:12px;margin:3px 0 0">사진 추가·삭제, 태그·캡션 변경이 가능합니다</p>
+          <strong style="color:#393939;font-size:16px;font-weight:700">패키지 수정</strong>
+          <p style="color:#8A8A90;font-size:12px;margin:3px 0 0">사진 추가·삭제, 태그·캡션 변경이 가능합니다</p>
         </div>
-        <button id="galEditClose" style="background:rgba(255,255,255,0.06);border:1px solid #333;color:#888;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+        <button id="galEditClose" style="background:rgba(26,31,46,0.06);border:1px solid #DDDEE2;color:#6E6E6E;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
       </div>
       <div style="padding:24px;display:flex;flex-direction:column;gap:18px;overflow-y:auto;flex:1;">
         <!-- 현재 이미지 그리드 -->
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-            <label style="color:#888;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">사진</label>
-            <span id="galEditCount" style="color:#555;font-size:11px;">0 / ${MAX_PHOTOS}장</span>
+            <label style="color:#6E6E6E;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">사진</label>
+            <span id="galEditCount" style="color:#8A8A90;font-size:11px;">0 / ${MAX_PHOTOS}장</span>
           </div>
           <div id="galEditGrid" style="display:grid;gap:8px;"></div>
           <!-- 추가 업로드 드롭존 (5장 미만일 때만 표시) -->
-          <label for="galEditFileInput" id="galEditDropZone" style="display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed #2a2a2a;border-radius:12px;padding:20px 16px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;gap:6px;margin-top:10px;">
-            <i class="fas fa-plus-circle" style="font-size:22px;color:#444;"></i>
-            <span style="color:#555;font-size:12px">사진 추가 (클릭 또는 드래그)</span>
+          <label for="galEditFileInput" id="galEditDropZone" style="display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed #E6E7EA;border-radius:12px;padding:20px 16px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;gap:6px;margin-top:10px;">
+            <i class="fas fa-plus-circle" style="font-size:22px;color:#8A8A90;"></i>
+            <span style="color:#8A8A90;font-size:12px">사진 추가 (클릭 또는 드래그)</span>
           </label>
           <input type="file" id="galEditFileInput" accept="image/*" multiple style="display:none;" />
         </div>
         <!-- 태그 -->
         <div>
-          <label style="color:#888;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">태그</label>
+          <label style="color:#6E6E6E;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">태그</label>
           <div id="galEditTagBtns" style="display:flex;gap:8px;flex-wrap:wrap;">
             ${['일상','팀','오피스','행사','캠페인'].map(t => {
               const col = TAG_COLORS_ADMIN[t];
               const isActive = t === editTag;
               return `<button class="gal-edit-tag-btn${isActive?' active':''}" data-val="${t}"
-                style="padding:6px 16px;border-radius:20px;border:1px solid ${isActive?col.border:'#2a2a2a'};background:${isActive?col.bg:'transparent'};color:${isActive?col.color:'#666'};font-size:12px;font-weight:600;cursor:pointer;">${t}</button>`;
+                style="padding:6px 16px;border-radius:20px;border:1px solid ${isActive?col.border:'#E6E7EA'};background:${isActive?col.bg:'transparent'};color:${isActive?col.color:'#7A7A80'};font-size:12px;font-weight:600;cursor:pointer;">${t}</button>`;
             }).join('')}
           </div>
           <input type="hidden" id="galEditTagVal" value="${editTag}" />
         </div>
         <!-- 캡션 -->
         <div>
-          <label style="color:#888;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">캡션 <span style="color:#444;font-weight:400;text-transform:none">(선택)</span></label>
-          <input type="text" id="galEditCaption" value="${pkg.caption || ''}" placeholder="사진에 대한 간단한 설명" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;padding:10px 14px;font-size:14px;outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='#1a6bff'" onblur="this.style.borderColor='#2a2a2a'" />
+          <label style="color:#6E6E6E;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">캡션 <span style="color:#8A8A90;font-weight:400;text-transform:none">(선택)</span></label>
+          <input type="text" id="galEditCaption" value="${pkg.caption || ''}" placeholder="사진에 대한 간단한 설명" style="width:100%;background:#FFFFFF;border:1px solid #E6E7EA;border-radius:8px;color:#393939;padding:10px 14px;font-size:14px;outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='#285CCC'" onblur="this.style.borderColor='#E6E7EA'" />
         </div>
       </div>
-      <div style="display:flex;gap:10px;padding:16px 24px;border-top:1px solid #222;background:#111;flex-shrink:0;">
-        <button id="galEditSaveBtn" style="flex:1;background:#1a6bff;border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;">
+      <div style="display:flex;gap:10px;padding:16px 24px;border-top:1px solid #F8F8F8;background:#FFFFFF;flex-shrink:0;">
+        <button id="galEditSaveBtn" style="flex:1;background:#285CCC;border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;">
           <i class="fas fa-save" style="margin-right:6px"></i>저장
         </button>
-        <button id="galEditCancelBtn" style="padding:12px 20px;background:#1a1a1a;border:1px solid #2a2a2a;color:#aaa;border-radius:10px;font-size:14px;cursor:pointer;">취소</button>
+        <button id="galEditCancelBtn" style="padding:12px 20px;background:#FFFFFF;border:1px solid #E6E7EA;color:#6E6E6E;border-radius:10px;font-size:14px;cursor:pointer;">취소</button>
       </div>
     </div>
   `;
@@ -1167,10 +1241,10 @@ async function editGalPackage(id) {
     grid.style.display = 'grid';
     grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     grid.innerHTML = editImages.map((img, idx) => `
-      <div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid #2a2a2a;background:#0a0a0a;">
+      <div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid #E6E7EA;background:#F1F1F1;">
         <img src="${img.url}" style="width:100%;height:100%;object-fit:cover;display:block;" />
-        <button class="gal-edit-img-del" data-idx="${idx}" style="position:absolute;top:4px;right:4px;background:rgba(220,38,38,0.85);border:none;color:#fff;border-radius:50%;width:22px;height:22px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;" title="제거"><i class="fas fa-times"></i></button>
-        <span style="position:absolute;bottom:4px;left:4px;background:rgba(0,0,0,0.6);color:#ccc;font-size:10px;padding:2px 5px;border-radius:4px;">${idx+1}</span>
+        <button class="gal-edit-img-del" data-idx="${idx}" style="position:absolute;top:4px;right:4px;background:rgba(220,38,38,0.85);border:none;color:#ffffff;border-radius:50%;width:22px;height:22px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;" title="제거"><i class="fas fa-times"></i></button>
+        <span style="position:absolute;bottom:4px;left:4px;background:rgba(26,31,46,0.45);color:#4A4B52;font-size:10px;padding:2px 5px;border-radius:4px;">${idx+1}</span>
       </div>
     `).join('');
     grid.querySelectorAll('.gal-edit-img-del').forEach(btn => {
@@ -1195,7 +1269,7 @@ async function editGalPackage(id) {
       document.getElementById('galEditTagVal').value = editTag;
       const col = TAG_COLORS_ADMIN[editTag] || TAG_COLORS_ADMIN['일상'];
       overlay.querySelectorAll('.gal-edit-tag-btn').forEach(b => {
-        b.style.background = 'transparent'; b.style.borderColor = '#2a2a2a'; b.style.color = '#666';
+        b.style.background = 'transparent'; b.style.borderColor = '#E6E7EA'; b.style.color = '#7A7A80';
       });
       this.style.background = col.bg; this.style.borderColor = col.border; this.style.color = col.color;
     });
@@ -1203,8 +1277,8 @@ async function editGalPackage(id) {
 
   /* ── 드롭존 hover ── */
   const dz = document.getElementById('galEditDropZone');
-  dz.addEventListener('mouseenter', () => { dz.style.borderColor='#1a6bff'; dz.style.background='rgba(26,107,255,0.05)'; });
-  dz.addEventListener('mouseleave', () => { dz.style.borderColor='#2a2a2a'; dz.style.background=''; });
+  dz.addEventListener('mouseenter', () => { dz.style.borderColor='#285CCC'; dz.style.background='rgba(40,92,204,0.06)'; });
+  dz.addEventListener('mouseleave', () => { dz.style.borderColor='#E6E7EA'; dz.style.background=''; });
 
   /* ── 파일 추가 ── */
   document.getElementById('galEditFileInput').addEventListener('change', function(e) {
@@ -1227,10 +1301,10 @@ async function editGalPackage(id) {
   });
 
   /* ── 드래그 앤 드롭 ── */
-  dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor='#1a6bff'; dz.style.background='rgba(26,107,255,0.05)'; });
-  dz.addEventListener('dragleave', () => { dz.style.borderColor='#2a2a2a'; dz.style.background=''; });
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor='#285CCC'; dz.style.background='rgba(40,92,204,0.06)'; });
+  dz.addEventListener('dragleave', () => { dz.style.borderColor='#E6E7EA'; dz.style.background=''; });
   dz.addEventListener('drop', e => {
-    e.preventDefault(); dz.style.borderColor='#2a2a2a'; dz.style.background='';
+    e.preventDefault(); dz.style.borderColor='#E6E7EA'; dz.style.background='';
     const files  = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
     const remain = MAX_PHOTOS - editImages.length;
     if (remain <= 0) { showToast(`최대 ${MAX_PHOTOS}장까지만 추가할 수 있습니다.`, 'error'); return; }
@@ -1292,29 +1366,29 @@ async function editGalPackage(id) {
 // 갤러리 사진 추가 모달 (최대 5장 다중 업로드)
 document.getElementById('btnAddGallery').addEventListener('click', () => {
   const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(26,31,46,0.55);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
   overlay.innerHTML = `
-    <div style="background:#141414;border:1px solid #2a2a2a;border-radius:16px;padding:0;width:540px;max-width:96vw;max-height:92vh;overflow:hidden;display:flex;flex-direction:column;">
+    <div style="background:#FFFFFF;border:1px solid #E6E7EA;border-radius:16px;padding:0;width:540px;max-width:96vw;max-height:92vh;overflow:hidden;display:flex;flex-direction:column;">
       <!-- 헤더 -->
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid #222;flex-shrink:0;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid #F8F8F8;flex-shrink:0;">
         <div>
-          <strong style="color:#fff;font-size:16px;font-weight:700">사진 추가</strong>
-          <p style="color:#555;font-size:12px;margin:3px 0 0">최대 5장까지 한 번에 업로드할 수 있습니다</p>
+          <strong style="color:#393939;font-size:16px;font-weight:700">사진 추가</strong>
+          <p style="color:#8A8A90;font-size:12px;margin:3px 0 0">최대 5장까지 한 번에 업로드할 수 있습니다</p>
         </div>
-        <button id="galModalClose" style="background:rgba(255,255,255,0.06);border:1px solid #333;color:#888;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+        <button id="galModalClose" style="background:rgba(26,31,46,0.06);border:1px solid #DDDEE2;color:#6E6E6E;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
       </div>
       <!-- 본문 (스크롤 가능) -->
       <div style="padding:24px;display:flex;flex-direction:column;gap:18px;overflow-y:auto;flex:1;">
         <!-- 이미지 업로드 드롭존 -->
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-            <label style="color:#888;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">이미지 파일 *</label>
-            <span id="galFileCount" style="color:#555;font-size:11px;">0 / 5장</span>
+            <label style="color:#6E6E6E;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">이미지 파일 *</label>
+            <span id="galFileCount" style="color:#8A8A90;font-size:11px;">0 / 5장</span>
           </div>
-          <label for="galFileInput" id="galDropZone" style="display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed #2a2a2a;border-radius:12px;padding:28px 16px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;gap:8px;">
-            <i class="fas fa-cloud-upload-alt" style="font-size:28px;color:#444;"></i>
-            <span style="color:#555;font-size:13px">클릭하거나 이미지를 드래그하세요</span>
-            <span style="color:#3a3a3a;font-size:11px">JPG · PNG · WebP / 장당 최대 5MB · 최대 5장</span>
+          <label for="galFileInput" id="galDropZone" style="display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed #E6E7EA;border-radius:12px;padding:28px 16px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;gap:8px;">
+            <i class="fas fa-cloud-upload-alt" style="font-size:28px;color:#8A8A90;"></i>
+            <span style="color:#8A8A90;font-size:13px">클릭하거나 이미지를 드래그하세요</span>
+            <span style="color:#8A8A90;font-size:11px">JPG · PNG · WebP / 장당 최대 5MB · 최대 5장</span>
           </label>
           <input type="file" id="galFileInput" accept="image/*" multiple style="display:none;" />
           <!-- 미리보기 그리드 (최대 5장) -->
@@ -1322,28 +1396,28 @@ document.getElementById('btnAddGallery').addEventListener('click', () => {
         </div>
         <!-- 태그 선택 (공통 적용) -->
         <div>
-          <label style="color:#888;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">태그 <span style="color:#444;font-weight:400;text-transform:none">(전체 사진 공통 적용)</span></label>
+          <label style="color:#6E6E6E;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">태그 <span style="color:#8A8A90;font-weight:400;text-transform:none">(전체 사진 공통 적용)</span></label>
           <div id="galTagBtns" style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="gal-tag-btn active" data-val="일상" style="padding:6px 16px;border-radius:20px;border:1px solid rgba(41,121,255,0.5);background:rgba(41,121,255,0.18);color:#7ab4ff;font-size:12px;font-weight:600;cursor:pointer;">일상</button>
-            <button class="gal-tag-btn" data-val="팀" style="padding:6px 16px;border-radius:20px;border:1px solid #2a2a2a;background:transparent;color:#666;font-size:12px;font-weight:600;cursor:pointer;">팀</button>
-            <button class="gal-tag-btn" data-val="오피스" style="padding:6px 16px;border-radius:20px;border:1px solid #2a2a2a;background:transparent;color:#666;font-size:12px;font-weight:600;cursor:pointer;">오피스</button>
-            <button class="gal-tag-btn" data-val="행사" style="padding:6px 16px;border-radius:20px;border:1px solid #2a2a2a;background:transparent;color:#666;font-size:12px;font-weight:600;cursor:pointer;">행사</button>
-            <button class="gal-tag-btn" data-val="캠페인" style="padding:6px 16px;border-radius:20px;border:1px solid #2a2a2a;background:transparent;color:#666;font-size:12px;font-weight:600;cursor:pointer;">캠페인</button>
+            <button class="gal-tag-btn active" data-val="일상" style="padding:6px 16px;border-radius:20px;border:1px solid rgba(40,92,204,0.45);background:rgba(40,92,204,0.16);color:#7ab4ff;font-size:12px;font-weight:600;cursor:pointer;">일상</button>
+            <button class="gal-tag-btn" data-val="팀" style="padding:6px 16px;border-radius:20px;border:1px solid #E6E7EA;background:transparent;color:#7A7A80;font-size:12px;font-weight:600;cursor:pointer;">팀</button>
+            <button class="gal-tag-btn" data-val="오피스" style="padding:6px 16px;border-radius:20px;border:1px solid #E6E7EA;background:transparent;color:#7A7A80;font-size:12px;font-weight:600;cursor:pointer;">오피스</button>
+            <button class="gal-tag-btn" data-val="행사" style="padding:6px 16px;border-radius:20px;border:1px solid #E6E7EA;background:transparent;color:#7A7A80;font-size:12px;font-weight:600;cursor:pointer;">행사</button>
+            <button class="gal-tag-btn" data-val="캠페인" style="padding:6px 16px;border-radius:20px;border:1px solid #E6E7EA;background:transparent;color:#7A7A80;font-size:12px;font-weight:600;cursor:pointer;">캠페인</button>
           </div>
           <input type="hidden" id="galTagSelect" value="일상" />
         </div>
         <!-- 캡션 -->
         <div>
-          <label style="color:#888;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">캡션 <span style="color:#444;font-weight:400;text-transform:none">(선택 · 전체 공통 적용)</span></label>
-          <input type="text" id="galCaptionInput" placeholder="사진에 대한 간단한 설명을 입력하세요" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;color:#fff;padding:10px 14px;font-size:14px;outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='#1a6bff'" onblur="this.style.borderColor='#2a2a2a'" />
+          <label style="color:#6E6E6E;font-size:11px;font-weight:700;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">캡션 <span style="color:#8A8A90;font-weight:400;text-transform:none">(선택 · 전체 공통 적용)</span></label>
+          <input type="text" id="galCaptionInput" placeholder="사진에 대한 간단한 설명을 입력하세요" style="width:100%;background:#FFFFFF;border:1px solid #E6E7EA;border-radius:8px;color:#393939;padding:10px 14px;font-size:14px;outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='#285CCC'" onblur="this.style.borderColor='#E6E7EA'" />
         </div>
       </div>
       <!-- 푸터 -->
-      <div style="display:flex;gap:10px;padding:16px 24px;border-top:1px solid #222;background:#111;flex-shrink:0;">
-        <button id="galSaveBtn" style="flex:1;background:#1a6bff;border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s;">
+      <div style="display:flex;gap:10px;padding:16px 24px;border-top:1px solid #F8F8F8;background:#FFFFFF;flex-shrink:0;">
+        <button id="galSaveBtn" style="flex:1;background:#285CCC;border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s;">
           <i class="fas fa-upload" style="margin-right:6px"></i>업로드 저장
         </button>
-        <button id="galCancelBtn" style="padding:12px 20px;background:#1a1a1a;border:1px solid #2a2a2a;color:#aaa;border-radius:10px;font-size:14px;cursor:pointer;">취소</button>
+        <button id="galCancelBtn" style="padding:12px 20px;background:#FFFFFF;border:1px solid #E6E7EA;color:#6E6E6E;border-radius:10px;font-size:14px;cursor:pointer;">취소</button>
       </div>
     </div>
   `;
@@ -1380,10 +1454,10 @@ document.getElementById('btnAddGallery').addEventListener('click', () => {
     grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
 
     grid.innerHTML = selectedImages.map((item, idx) => `
-      <div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid #2a2a2a;background:#0a0a0a;" data-idx="${idx}">
+      <div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid #E6E7EA;background:#F1F1F1;" data-idx="${idx}">
         <img src="${item.b64}" style="width:100%;height:100%;object-fit:cover;display:block;" />
-        <button class="gal-preview-del" data-idx="${idx}" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.75);border:1px solid #444;color:#fff;border-radius:50%;width:22px;height:22px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0;" title="제거">✕</button>
-        <span style="position:absolute;bottom:4px;left:4px;background:rgba(0,0,0,0.6);color:#ccc;font-size:10px;padding:2px 5px;border-radius:4px;">${idx+1}</span>
+        <button class="gal-preview-del" data-idx="${idx}" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.75);border:1px solid #C9CBD1;color:#393939;border-radius:50%;width:22px;height:22px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0;" title="제거">✕</button>
+        <span style="position:absolute;bottom:4px;left:4px;background:rgba(26,31,46,0.45);color:#4A4B52;font-size:10px;padding:2px 5px;border-radius:4px;">${idx+1}</span>
       </div>
     `).join('');
 
@@ -1405,7 +1479,7 @@ document.getElementById('btnAddGallery').addEventListener('click', () => {
       document.getElementById('galTagSelect').value = selectedTag;
       const col = TAG_COLORS_ADMIN[selectedTag] || TAG_COLORS_ADMIN['일상'];
       overlay.querySelectorAll('.gal-tag-btn').forEach(b => {
-        b.style.background = 'transparent'; b.style.borderColor = '#2a2a2a'; b.style.color = '#666';
+        b.style.background = 'transparent'; b.style.borderColor = '#E6E7EA'; b.style.color = '#7A7A80';
       });
       this.style.background = col.bg;
       this.style.borderColor = col.border;
@@ -1415,8 +1489,8 @@ document.getElementById('btnAddGallery').addEventListener('click', () => {
 
   /* ── 드롭존 hover ── */
   const dropZone = document.getElementById('galDropZone');
-  dropZone.addEventListener('mouseenter', () => { dropZone.style.borderColor='#1a6bff'; dropZone.style.background='rgba(26,107,255,0.05)'; });
-  dropZone.addEventListener('mouseleave', () => { dropZone.style.borderColor='#2a2a2a'; dropZone.style.background=''; });
+  dropZone.addEventListener('mouseenter', () => { dropZone.style.borderColor='#285CCC'; dropZone.style.background='rgba(40,92,204,0.06)'; });
+  dropZone.addEventListener('mouseleave', () => { dropZone.style.borderColor='#E6E7EA'; dropZone.style.background=''; });
 
   /* ── 파일 선택 (다중) ── */
   document.getElementById('galFileInput').addEventListener('change', function(e) {
@@ -1452,11 +1526,11 @@ document.getElementById('btnAddGallery').addEventListener('click', () => {
   });
 
   /* ── 드래그 앤 드롭 ── */
-  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor='#1a6bff'; dropZone.style.background='rgba(26,107,255,0.05)'; });
-  dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor='#2a2a2a'; dropZone.style.background=''; });
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor='#285CCC'; dropZone.style.background='rgba(40,92,204,0.06)'; });
+  dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor='#E6E7EA'; dropZone.style.background=''; });
   dropZone.addEventListener('drop', e => {
     e.preventDefault();
-    dropZone.style.borderColor='#2a2a2a'; dropZone.style.background='';
+    dropZone.style.borderColor='#E6E7EA'; dropZone.style.background='';
     const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
     const remaining = MAX_PHOTOS - selectedImages.length;
     if (remaining <= 0) { showToast(`최대 ${MAX_PHOTOS}장까지만 선택할 수 있습니다.`, 'error'); return; }
@@ -1547,7 +1621,7 @@ function renderSvcFaq() {
   const list = document.getElementById('svcFaqList');
   if (!list) return;
   if (currentSvcFaqItems.length === 0) {
-    list.innerHTML = '<div style="text-align:center;padding:32px 0;color:#444;font-size:13px"><i class="fas fa-question-circle" style="font-size:28px;display:block;margin-bottom:10px"></i>등록된 FAQ가 없습니다.</div>';
+    list.innerHTML = '<div style="text-align:center;padding:32px 0;color:#8A8A90;font-size:13px"><i class="fas fa-question-circle" style="font-size:28px;display:block;margin-bottom:10px"></i>등록된 FAQ가 없습니다.</div>';
     return;
   }
   list.innerHTML = currentSvcFaqItems.map((item, i) => `

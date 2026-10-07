@@ -1,9 +1,11 @@
+import { icon } from '../icons'
 export const SvcViralPage = () => (
   <>
     {/* ════════════════════════════════════════
         VIRAL HERO — 시네마틱 풀스크린
     ════════════════════════════════════════ */}
-    <section class="vh-hero">
+    <section class="vh-hero vh-hero--photo">
+      <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/mkt-images/hero-viral.png')"></div>
       {/* 배경 캔버스 파티클 */}
       <canvas id="vhCanvas" class="vh-canvas"></canvas>
 
@@ -18,7 +20,7 @@ export const SvcViralPage = () => (
 
       {/* 콘텐츠 */}
       <div class="container vh-inner">
-        <a href="/marketing" class="svc-back-link vh-back">← Marketing 전체보기</a>
+        <a href="/#services" class="svc-back-link vh-back">← 서비스 전체보기</a>
 
         {/* 상단 배지 */}
         <div class="vh-badge">
@@ -28,13 +30,13 @@ export const SvcViralPage = () => (
 
         {/* 메인 카피 — 줄별 슬라이드 인 + 글리치 효과 */}
         <h1 class="vh-title">
-          <span class="vh-tline" id="vhL1">단순한 광고를 넘어,</span>
-          <span class="vh-tline vh-tline--accent" id="vhL2">브랜드와 소비자의<br class="vh-br" />진짜 연결을 만듭니다.</span>
+          <span class="vh-tline" id="vhL1">광고가 아니라,</span>
+          <span class="vh-tline vh-tline--accent" id="vhL2"><span class="vh-hl">이야기로 퍼집니다</span></span>
         </h1>
 
         {/* 서브 카피 — 단어 단위 페이드 인 */}
         <div class="vh-sub-wrap" id="vhSub">
-          <p class="vh-sub">콘텐츠의 시작부터 기억에 남는 순간까지—고객 여정 전체를 따라가서</p>
+          <p class="vh-sub">카페·커뮤니티·SNS·언론까지, 사람들이 모이는 곳을 따라가</p>
           <p class="vh-sub vh-sub--highlight">채널 안쪽의 데이터를 읽고, 크리에이티브로 설득을 더합니다.<span class="vh-cursor"></span></p>
         </div>
 
@@ -57,9 +59,9 @@ export const SvcViralPage = () => (
 
         {/* CTA 버튼 */}
         <div class="vh-btns" id="vhBtns">
-          <a href="/contact" class="hero-cta-btn primary">
-            <span>무료 전략 상담받기</span>
-            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="/contact" class="vh-cta-btn">
+            <span>문의하기</span>
+            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a href="#viral-content" class="vh-scroll-btn">
             <span>자세히 보기</span>
@@ -73,14 +75,9 @@ export const SvcViralPage = () => (
         <div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div>
       </div>
 
-      {/* JS — Three.js 3D 배경 + 순차 애니메이션 + 카운터업 */}
+      {/* JS — 순차 등장 애니메이션 */}
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
-  /* ── Three.js 3D 배경 ── */
-  var s=document.createElement('script');
-  s.src='/static/svc-three-bg.js';
-  s.onload=function(){ initSvcThreeBg(0x1a6bff, 0x00d4a8, 0x6440ff); };
-  document.head.appendChild(s);
 
   /* ── 순차 등장 애니메이션 (스윽 fade+slide) ── */
   function animIn(el, delay){
@@ -105,87 +102,36 @@ export const SvcViralPage = () => (
       `}} />
     </section>
 
+    {/* ══ 라이트 테마 콘텐츠 래퍼 (히어로 제외) ══ */}
+    <div class="svc-light">
+
     {/* ============ 서비스 소개 ============ */}
     <section class="section svc-intro-section" id="viral-content">
       <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div></div>
       <div class="container">
-        <div class="svc-intro-grid vi-grid">
-
-          {/* ── 좌측 텍스트 ── */}
-          <div class="svc-intro-text vi-text" id="viText">
-            <span class="sec-label vi-label">WHAT WE DO</span>
-            <h2 class="sec-title vi-title">광고보다 강한 건,<br /><em>후기처럼 퍼지는 경험</em></h2>
-            <p class="vi-desc">사람들은 설득당하기보다 납득할 때 움직입니다. 커뮤니티에서 '정보'로 받아들여지는 콘텐츠를 만들고, 공유된 흐름이 검색과 전환으로 이어지게 연결합니다.</p>
-
-            {/* 강조 인용구 */}
-            <blockquote class="vi-quote">
-              <span class="vi-quote-bar"></span>
-              <p>공유 → 검색 → 구매.<br />퍼지는 이유가 분명하면 <strong>결과도 따라옵니다.</strong></p>
-            </blockquote>
-
-            {/* 피처 리스트 — 번호 + 아이콘 */}
-            <ul class="vi-feat-list">
-              <li class="vi-feat-item">
-                <span class="vi-feat-num">01</span>
-                <span class="vi-feat-text">커뮤니티 이슈화 기획 및 운영</span>
-              </li>
-              <li class="vi-feat-item">
-                <span class="vi-feat-num">02</span>
-                <span class="vi-feat-text">맘카페·SNS 자연확산 설계</span>
-              </li>
-              <li class="vi-feat-item">
-                <span class="vi-feat-num">03</span>
-                <span class="vi-feat-text">UGC(사용자 생성 콘텐츠) 유도 전략</span>
-              </li>
-              <li class="vi-feat-item">
-                <span class="vi-feat-num">04</span>
-                <span class="vi-feat-text">버즈 모니터링 및 실시간 대응</span>
-              </li>
-              <li class="vi-feat-item">
-                <span class="vi-feat-num">05</span>
-                <span class="vi-feat-text">바이럴 후 SEO 연계 전략</span>
-              </li>
-            </ul>
+        <div class="vi-story vi-text" id="viText">
+          <h2 class="vi-story-title">광고를 더 많이 보여주는 것이 아닌,<br /><em>사람들이 <span class="vi-story-highlight">먼저 말하고 싶게!<svg class="vi-story-underline" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M 5 11 C 70 15, 132 6, 196 10 C 235 12, 266 9, 295 6" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" vector-effect="non-scaling-stroke" /></svg></span></em></h2>
+          <div class="vi-story-flow" aria-label="바이럴 마케팅 확산 과정">
+            <article class="vi-story-step">
+              <span class="vi-story-num">01</span>
+              <strong>발견</strong>
+              <p>필요한 순간,<br />광고가 아닌 정보로 만납니다.</p>
+            </article>
+            <span class="vi-story-line" aria-hidden="true"></span>
+            <article class="vi-story-step">
+              <span class="vi-story-num">02</span>
+              <strong>납득</strong>
+              <p>실제 경험과 맥락이<br />브랜드의 신뢰를 만듭니다.</p>
+            </article>
+            <span class="vi-story-line" aria-hidden="true"></span>
+            <article class="vi-story-step">
+              <span class="vi-story-num">03</span>
+              <strong>확산</strong>
+              <p>공유된 이야기가 검색과<br />구매까지 이어집니다.</p>
+            </article>
           </div>
 
-          {/* ── 우측 비주얼 ── */}
-          <div class="svc-intro-visual vi-visual" id="viVisual">
-            {/* 글로우 배경 */}
-            <div class="vi-glow"></div>
-
-            {/* 메인 이미지 */}
-            <div class="vi-img-frame">
-              <img src="/static/svc-images/viral.png" alt="바이럴 마케팅 비주얼" class="vi-photo" loading="lazy" />
-              {/* 이미지 상단 오버레이 배지 */}
-              <div class="vi-badge vi-badge--tl">
-                <span class="vi-badge-icon">📣</span>
-                <span class="vi-badge-label">바이럴 확산</span>
-              </div>
-              <div class="vi-badge vi-badge--br">
-                <span class="vi-badge-dot vi-badge-dot--live"></span>
-                <span class="vi-badge-label">실시간 모니터링</span>
-              </div>
-            </div>
-
-            {/* 하단 스탯 바 */}
-            <div class="vi-stat-bar">
-              <div class="vi-stat">
-                <strong>1억+</strong>
-                <span>누적 노출</span>
-              </div>
-              <div class="vi-stat-div"></div>
-              <div class="vi-stat">
-                <strong>98%</strong>
-                <span>재계약률</span>
-              </div>
-              <div class="vi-stat-div"></div>
-              <div class="vi-stat">
-                <strong>320+</strong>
-                <span>완료 프로젝트</span>
-              </div>
-            </div>
-          </div>
-
+          <p class="vi-story-closing">인애드는 <strong>노출량보다, 반응이 나오는 맥락부터 설계합니다.</strong></p>
         </div>
       </div>
     </section>
@@ -198,72 +144,59 @@ export const SvcViralPage = () => (
           <span class="sec-label">Service Products</span>
           <h2 class="sec-title">바이럴 마케팅<br /><em>상품 라인업</em></h2>
         </div>
-        <div class="vp-grid">
+        <div class="vp-tiles">
           {[
             {
-              icon:'☕', name:'카페 침투 마케팅', sub:'Cafe Viral',
-              desc:'맘카페·네이버카페 등 소비자가 모이는 커뮤니티에 자연스럽게 스며드는 바이럴 콘텐츠 기획·운영',
-              kpis:[
-                { val:'1,965개', label:'보유 카페 수' },
-                { val:'19개', label:'진행 카테고리 수' },
-              ]
+              img:'cafe', name:'카페 바이럴', sub:'Cafe Viral',
+              needs:['검색해도 후기가 없어 신뢰가 안 생길 때', '맘카페·육아·뷰티 등 타깃 커뮤니티에 스며들고 싶을 때', '커뮤니티 맥락에 맞는 콘텐츠로 알리고 싶을 때'],
+              kpis:[ { val:'1,965개', label:'보유 카페' }, { val:'19개', label:'진행 카테고리' } ]
             },
             {
-              icon:'💬', name:'커뮤니티 바이럴', sub:'Community Viral',
-              desc:'온라인 커뮤니티 내 이슈화로 브랜드 검색량과 자연 유입을 폭발적으로 증가시킵니다',
-              kpis:[
-                { val:'72+', label:'진행 가능 커뮤니티' },
-              ]
+              img:'community', name:'커뮤니티 바이럴', sub:'Community Viral',
+              needs:['관심사 커뮤니티에 자연스럽게 진입하고 싶을 때', '광고 거부감이 큰 채널에서 화제를 만들고 싶을 때', '타깃이 뾰족한 채널에서 화제를 만들고 싶을 때'],
+              kpis:[ { val:'72+', label:'진행 가능 커뮤니티' } ]
             },
             {
-              icon:'📱', name:'SNS 바이럴', sub:'SNS Viral',
-              desc:'인스타그램·틱톡·유튜브 등 SNS 채널에서의 자연스러운 확산 구조를 설계합니다',
-              kpis:[
-                { val:'450개+', label:'진행 가능 계정' },
-              ],
-              tags:['인스타 카드뉴스','먹스타그램 배포','숏폼 배포','숏폼 제작','X (구 트위터)','스레드'],
+              img:'sns', name:'SNS 바이럴', sub:'SNS Viral',
+              needs:['인스타·유튜브에서 브랜드가 안 보일 때', '해시태그·탐색탭에서 발견되고 싶을 때', 'MZ 타깃에게 트렌디하게 다가가고 싶을 때'],
+              kpis:[ { val:'450개+', label:'진행 가능 계정' } ]
             },
             {
-              icon:'📰', name:'언론 바이럴', sub:'Press Viral',
-              desc:'뉴스·매체 배포를 통해 브랜드의 공신력과 검색 노출을 동시에 강화합니다',
-              kpis:[
-                { val:'153+', label:'보유 매체 수' },
-                { val:'7개', label:'보유 카테고리 수' },
-              ]
+              img:'press', name:'언론 바이럴', sub:'Press Viral',
+              needs:['검색했을 때 기사가 떠서 믿음을 주고 싶을 때', '브랜드 공신력·신뢰도가 필요할 때', '투자·제휴·B2B 등 공식 레퍼런스가 중요할 때'],
+              kpis:[ { val:'153+', label:'보유 매체' }, { val:'7개', label:'보유 카테고리' } ]
             },
-          ].map((p, i) => (
-            <div class="vp-card" id={`vp-card-${i}`} onclick={`toggleVpCard(${i})`}>
-              <div class="vp-card-top">
-                <div class="vp-icon">{p.icon}</div>
-                <div class="vp-body">
-                  <h3>{p.name}</h3>
-                  <span class="vp-sub">{p.sub}</span>
-                  <p>{p.desc}</p>
+          ].map((p) => (
+            <div class="vp-tile" style={`background-image:url('/static/viral-products/${p.img}.jpg')`}>
+              <div class="vp-tile-overlay"></div>
+              <div class="vp-tile-inner">
+                {/* 기본(항상 노출): 한글명 + 첫 니즈 한 줄 — hover 없이도 내용이 읽히게 */}
+                <div class="vp-tile-front">
+                  <span class="vp-tile-front-en">{p.sub}</span>
+                  <strong class="vp-tile-front-name">{p.name}</strong>
+                  <span class="vp-tile-front-hook">{p.needs[0]}</span>
+                  <span class="vp-tile-more">자세히 보기<svg viewBox="0 0 24 24" fill="none" width="13" height="13"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 </div>
-                <div class="vp-toggle-btn" id={`vp-toggle-${i}`}>
-                  <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-              </div>
-              <div class="vp-kpi-panel" id={`vp-kpi-${i}`}>
-                <div class="vp-kpi-divider"></div>
-                <div class="vp-kpi-row">
-                  {p.kpis.map(k => (
-                    <div class="vp-kpi-item">
-                      <strong class="vp-kpi-val">{k.val}</strong>
-                      <span class="vp-kpi-label">{k.label}</span>
-                    </div>
-                  ))}
-                </div>
-                {p.tags && (
-                  <div class="vp-tags-row">
-                    <span class="vp-tags-label">상품군</span>
-                    <div class="vp-tags-wrap">
-                      {p.tags.map(t => (
-                        <span class="vp-tag">{t}</span>
+                {/* 호버: 한글 + 서브 + 설명/수치 */}
+                <div class="vp-tile-detail">
+                  <span class="vp-tile-eyebrow">{p.sub}</span>
+                  <h3 class="vp-tile-name">{p.name}</h3>
+                  <div class="vp-tile-needs">
+                    <span class="vp-tile-needs-label">이럴 때 필요해요</span>
+                    <ul class="vp-tile-needs-list">
+                      {p.needs.map(n => (
+                        <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>{n}</span></li>
+                      ))}
+                    </ul>
+                  </div>
+                  {p.kpis && (
+                    <div class="vp-tile-kpis">
+                      {p.kpis.map(k => (
+                        <span class="vp-tile-kpi"><strong>{k.val}</strong> {k.label}</span>
                       ))}
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           ))}
@@ -271,16 +204,6 @@ export const SvcViralPage = () => (
 
         {/* 자세히 보기 — 상담 신청 연결 */}
         <div class="vp-brochure-wrap">
-          <a
-            href="/contact"
-            class="vp-brochure-btn"
-          >
-            <span class="vp-brochure-dot"></span>
-            <span class="vp-brochure-text">상담 신청하기</span>
-            <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
-              <path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
           <p class="vp-brochure-hint">무료 상담으로 맞춤 전략을 확인해보세요</p>
         </div>
 
@@ -299,8 +222,8 @@ export const SvcViralPage = () => (
           {[
             { num:'01', title:'브랜드 분석', desc:'브랜드 특성, 타겟 소비자, 경쟁 환경을 분석해 바이럴 포인트를 발굴합니다.', img:'/static/process-images/process-01.png', accent:'#1a6bff' },
             { num:'02', title:'채널 전략 수립', desc:'맘카페, 커뮤니티, SNS 등 타겟이 모이는 최적 채널과 확산 시나리오를 설계합니다.', img:'/static/process-images/process-02.png', accent:'#7c3aed' },
-            { num:'03', title:'콘텐츠 제작', desc:'광고처럼 느껴지지 않는 자연스러운 경험 콘텐츠를 기획·제작합니다.', img:'/static/process-images/process-03.png', accent:'#059669' },
-            { num:'04', title:'시드 배포', desc:'핵심 커뮤니티에 콘텐츠를 전략적으로 배포하고 초기 반응을 모니터링합니다.', img:'/static/process-images/process-04.png', accent:'#0891b2' },
+            { num:'03', title:'콘텐츠 제작', desc:'타깃이 공감하는 경험 콘텐츠를 기획·제작합니다.', img:'/static/process-images/process-03.png', accent:'#059669' },
+            { num:'04', title:'시드 배포', desc:'핵심 커뮤니티에 콘텐츠를 먼저 풀고, 초기 반응을 지켜봅니다.', img:'/static/process-images/process-04.png', accent:'#0891b2' },
             { num:'05', title:'확산 관리', desc:'버즈가 확산되는 과정을 실시간 모니터링하고 추가 확산 전략을 실행합니다.', img:'/static/process-images/process-05.png', accent:'#dc2626' },
             { num:'06', title:'성과 리포팅', desc:'도달, 공유, 검색량 변화, 매출 연계 등 종합 성과 리포트를 제공합니다.', img:'/static/process-images/process-06.png', accent:'#d97706' },
           ].map(s => (
@@ -356,43 +279,13 @@ export const SvcViralPage = () => (
 
     {/* ============ CTA ============ */}
     <section class="svc-cta-section">
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-viral.png')"></div>
 
-    <script dangerouslySetInnerHTML={{ __html: `
-      function toggleVpCard(idx) {
-        var panel = document.getElementById('vp-kpi-' + idx);
-        var btn   = document.getElementById('vp-toggle-' + idx);
-        var card  = document.getElementById('vp-card-' + idx);
-        if (!panel) return;
-        var isOpen = panel.classList.contains('vp-kpi-panel--open');
-        // 모든 카드 닫기
-        for (var i = 0; i < 4; i++) {
-          var p = document.getElementById('vp-kpi-' + i);
-          var b = document.getElementById('vp-toggle-' + i);
-          var c = document.getElementById('vp-card-' + i);
-          if (p) p.classList.remove('vp-kpi-panel--open');
-          if (b) b.classList.remove('vp-toggle-btn--open');
-          if (c) c.classList.remove('vp-card--active');
-        }
-        // 클릭한 카드가 닫혀있었으면 열기
-        if (!isOpen) {
-          panel.classList.add('vp-kpi-panel--open');
-          btn.classList.add('vp-toggle-btn--open');
-          card.classList.add('vp-card--active');
-        }
-      }
-    `}} />
       <div class="container">
         <div class="svc-cta-inner">
           <div class="svc-cta-text">
-            <h2>바이럴 마케팅으로<br /><em>브랜드를 폭발적으로 성장시키세요</em></h2>
+            <h2>바이럴 마케팅으로<br /><em>브랜드 성장의 흐름을 만드세요</em></h2>
             <p>인애드컴퍼니 전문가가 우리 브랜드에 맞는 바이럴 전략을 무료로 진단해드립니다.</p>
-          </div>
-          <div class="svc-cta-btns">
-            <a href="/contact" class="hero-cta-btn primary">
-              <span>무료 상담 신청하기</span>
-              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <button type="button" class="hero-cta-btn ghost" onclick="openCallModal()"><span>📞 바로 전화하기</span></button>
           </div>
         </div>
       </div>
@@ -403,7 +296,7 @@ export const SvcViralPage = () => (
     <script dangerouslySetInnerHTML={{__html: `
 (function(){
   var s = document.createElement('script');
-  s.src = '/static/scroll-reveal.js';
+  s.src = '/static/scroll-reveal.js?v=20260722b';
   document.head.appendChild(s);
 
   /* vi- 섹션 진입 애니메이션 */
@@ -452,5 +345,6 @@ export const SvcViralPage = () => (
     }).catch(function(){});
 })();
     `}} />
+    </div>{/* /svc-light */}
   </>
 )

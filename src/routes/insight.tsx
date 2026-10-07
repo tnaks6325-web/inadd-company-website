@@ -3,13 +3,17 @@ export const InsightPage = () => {
     <>
       {/* ── Page Hero ── */}
       <section class="page-hero insight-hero">
+        <div class="page-hero-img-bg" aria-hidden="true"></div>
         <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
         <div class="container">
           <span class="sec-label">[ IN AD COMPANY INSIGHT ]</span>
-          <h1 class="page-title">인애드컴퍼니가<br /><em>알려드립니다</em></h1>
-          <p class="page-desc">마케팅 전략·실전 사례, 그리고 인애드컴퍼니의 일상을 함께 나눕니다.</p>
+          <h1 class="page-title">현장에서<br /><em>쌓인 이야기</em></h1>
+          <p class="page-desc">전략과 실전 사례, 그리고 우리가 일하는 방식까지 — 인애드컴퍼니의 기록.</p>
         </div>
       </section>
+
+      {/* ══ 라이트 테마 콘텐츠 래퍼 (히어로 제외) ══ */}
+      <div class="svc-light">
 
       {/* ── 콘텐츠 영역 ── */}
       <section class="section insight-list-section">
@@ -30,8 +34,7 @@ export const InsightPage = () => {
             <button class="ins2-sub-tab active" data-sub="all-strategy">전체</button>
             <button class="ins2-sub-tab" data-sub="viral">바이럴 마케팅</button>
             <button class="ins2-sub-tab" data-sub="influencer">인플루언서 마케팅</button>
-            <button class="ins2-sub-tab" data-sub="seeding">시딩 캠페인</button>
-            <button class="ins2-sub-tab" data-sub="seo">SEO 마케팅</button>
+            <button class="ins2-sub-tab" data-sub="seeding">체험단 마케팅</button>
             <button class="ins2-sub-tab" data-sub="review">리뷰 마케팅</button>
             <button class="ins2-sub-tab" data-sub="oliveyoung">올리브영 마케팅</button>
             <button class="ins2-sub-tab" data-sub="ppl">PPL 마케팅</button>
@@ -51,15 +54,7 @@ export const InsightPage = () => {
           {/* ── 갤러리 (인애드 일상) ── */}
           <div class="insgal-wrap" id="insGalWrap" style="display:none;">
 
-            {/* 서브 탭 — 콘텐츠별 전략과 동일한 스타일 */}
-            <nav class="ins2-sub-tab-bar insgal-sub-tabs" id="insGalSubTabs">
-              <button class="ins2-sub-tab active" data-tag="all">전체</button>
-              <button class="ins2-sub-tab" data-tag="일상">일상</button>
-              <button class="ins2-sub-tab" data-tag="팀">팀</button>
-              <button class="ins2-sub-tab" data-tag="오피스">오피스</button>
-              <button class="ins2-sub-tab" data-tag="행사">행사</button>
-              <button class="ins2-sub-tab" data-tag="캠페인">캠페인</button>
-            </nav>
+            {/* 서브 탭 제거 — 사진첩처럼 전체 노출 */}
 
             {/* 카드 그리드 */}
             <div class="ins2-grid" id="insGalGrid">
@@ -132,7 +127,7 @@ export const InsightPage = () => {
   var lbCurrent = 0;  // 현재 인덱스
 
   var CAT_LABELS = { 'content-strategy':'콘텐츠 전략', 'case-study':'실전 사례' };
-  var SUB_LABELS = { viral:'바이럴 마케팅', influencer:'인플루언서', seeding:'시딩', seo:'SEO', review:'리뷰', oliveyoung:'올리브영', ppl:'PPL' };
+  var SUB_LABELS = { viral:'바이럴 마케팅', influencer:'인플루언서', seeding:'체험단', seo:'SEO', review:'리뷰', oliveyoung:'올리브영', ppl:'PPL' };
   var TAG_COLORS = {
     '일상':    { bg:'rgba(41,121,255,0.18)',  border:'rgba(41,121,255,0.55)',  color:'#7ab4ff' },
     '팀':      { bg:'rgba(41,200,130,0.15)',  border:'rgba(41,200,130,0.5)',   color:'#4dd99c' },
@@ -274,10 +269,10 @@ export const InsightPage = () => {
           : '')
         + '<span class="insgal-card-tag" style="background:' + col.bg + ';border-color:' + col.border + ';color:' + col.color + '">' + (item.tag || '일상') + '</span>'
         + '<div class="insgal-card-zoom"><i class="fas fa-' + (imgCount > 1 ? 'th' : 'expand-alt') + '"></i></div>'
-        + '</div>'
-        + (item.caption
-          ? '<div class="insgal-card-body"><p class="insgal-card-caption">' + item.caption + '</p></div>'
-          : '');
+        + (item.createdAt
+          ? '<span class="insgal-card-date">' + String(item.createdAt).slice(0, 10) + '</span>'
+          : '')
+        + '</div>';
       div.addEventListener('click', function() { openLightbox(item); });
       galGrid.appendChild(div);
     });
@@ -381,18 +376,16 @@ export const InsightPage = () => {
 
       {/* ── CTA ── */}
       <section class="home-cta">
+        <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/우리 브랜드에 맞는 마케팅 전략이 궁금하신가요.png')"></div>
         <div class="home-cta-bg"><div class="hcta-glow"></div></div>
         <div class="container">
           <div class="home-cta-inner">
             <h2>우리 브랜드에 맞는<br /><em>마케팅 전략이 궁금하신가요?</em></h2>
             <p>인애드컴퍼니 전문가가 무료로 진단해드립니다.</p>
-            <a href="/contact" class="hero-cta-btn primary">
-              <span>무료 마케팅 상담 받기</span>
-              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
           </div>
         </div>
       </section>
+      </div>{/* /svc-light */}
     </>
   )
 }

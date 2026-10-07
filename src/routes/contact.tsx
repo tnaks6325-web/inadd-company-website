@@ -1,89 +1,20 @@
+import { icon } from '../icons'
 export const ContactPage = () => (
   <>
-    {/* ══════════════════════════════════════
-        STEP 1 — 풀스크린 반반 선택 화면
-        ══════════════════════════════════════ */}
-    <div class="ct-split-screen" id="ct-split">
-
-      {/* 왼쪽 — 대행사 */}
-      <div class="ct-split-panel ct-panel--agency" id="panel-agency"
-           onmouseenter="hoverPanel('agency')"
-           onmouseleave="resetPanel()"
-           onclick="enterForm('agency')">
-        <div class="ct-panel-bg"></div>
-        <div class="ct-panel-content">
-          <div class="ct-panel-label">AGENCY</div>
-          <h2 class="ct-panel-title">대행사<br />이신가요?</h2>
-          <p class="ct-panel-desc">마케팅 에이전시 · 광고대행사<br />파트너십 상담을 도와드립니다</p>
-          <div class="ct-panel-cta">
-            <span>상담 신청하기</span>
-            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="ct-panel-num">01</div>
-      </div>
-
-      {/* 가운데 구분선 (왼쪽↔가운데) */}
-      <div class="ct-split-divider ct-divider--left">
-        <span>OR</span>
-      </div>
-      <div class="ct-split-panel ct-panel--brochure" id="panel-brochure"
-           onmouseenter="hoverPanel('brochure')"
-           onmouseleave="resetPanel()"
-           onclick="enterBrochure()">
-        <div class="ct-panel-bg"></div>
-        <div class="ct-panel-content">
-          <div class="ct-panel-label">BROCHURE</div>
-          <h2 class="ct-panel-title">회사소개서<br />받아보기</h2>
-          <p class="ct-panel-desc">이메일 하나면 충분합니다<br />인애드컴퍼니 소개서를 보내드립니다</p>
-          <div class="ct-panel-cta">
-            <span>소개서 신청하기</span>
-            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2v13M7 10l5 5 5-5M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="ct-panel-num">03</div>
-      </div>
-
-      {/* 오른쪽 구분선 (가운데↔오른쪽) */}
-      <div class="ct-split-divider ct-divider--right">
-        <span>OR</span>
-      </div>
-
-      {/* 오른쪽 — 브랜드 */}
-      <div class="ct-split-panel ct-panel--brand" id="panel-brand"
-           onmouseenter="hoverPanel('brand')"
-           onmouseleave="resetPanel()"
-           onclick="enterForm('brand')">
-        <div class="ct-panel-bg"></div>
-        <div class="ct-panel-content">
-          <div class="ct-panel-label">BRAND</div>
-          <h2 class="ct-panel-title">브랜드<br />이신가요?</h2>
-          <p class="ct-panel-desc">직접 운영하는 브랜드 · 기업<br />마케팅 상담을 도와드립니다</p>
-          <div class="ct-panel-cta">
-            <span>상담 신청하기</span>
-            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="ct-panel-num">02</div>
-      </div>
-
-    </div>
+    {/* ══ 라이트 테마 래퍼 ══ */}
+    <div class="svc-light">
 
     {/* ══════════════════════════════════════
-        STEP 2 — 상담 폼 (진입 후)
+        메인 — 간편 문의 (단일 폼)
         ══════════════════════════════════════ */}
-    <div class="ct-form-screen" id="ct-form-screen" style="display:none;">
+    <div id="ct-main">
 
       {/* 페이지 히어로 */}
       <section class="page-hero contact-hero ct-form-hero">
         <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
         <div class="container">
-          <button class="step-back-btn" id="form-back-btn" onclick="backToSelect()">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 18L5 12L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            유형 다시 선택
-          </button>
-          <div class="ct-form-type-badge" id="form-type-badge"></div>
-          <h1 class="page-title" id="form-hero-title"></h1>
+          <span class="sec-label">Contact</span>
+          <h1 class="page-title">문의<em>하기</em></h1>
           <p class="page-desc">어떤 고민이든 괜찮습니다.<br />인애드컴퍼니가 함께 방향을 잡아드립니다.</p>
         </div>
       </section>
@@ -96,73 +27,57 @@ export const ContactPage = () => (
               <div class="cfw-head">
                 <span class="sec-label">Consultation</span>
                 <h2>상담 신청</h2>
-                <p>빠른 시일 내에 담당자가 연락드립니다.<br />보통 1 영업일 이내 응답합니다.</p>
+                <p>빠른 시일 내에 담당자가 메일로 연락드립니다.<br />보통 1영업일 이내 응답합니다.</p>
               </div>
 
-              {/* ── 대행사 폼 ── */}
-              <form class="contact-form ct-typed-form" id="agencyForm"
-                    style="display:none;"
-                    onsubmit="return handleContactSubmit(event,'agency')">
+              {/* ── 간편 문의 폼 ── */}
+              <form class="contact-form" id="simpleForm" onsubmit="return handleContactSubmit(event)">
+
+                {/* ── 대체 문의 안내: 모바일 이메일 입력 이탈 방지 ── */}
+                <p class="cf-altmail">
+                  <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.5" y="4.5" width="15" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 6l6.5 4.5L16.5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>이메일 입력이 어려우신 경우, 아래 메일로 직접 문의 주셔도 됩니다.<br />
+                    <a href="mailto:dndvkr41@inadcompany.com">dndvkr41@inadcompany.com</a>
+                  </span>
+                </p>
 
                 <div class="cf-row cf-row--2">
                   <div class="cf-group">
-                    <label for="ag-name">담당자 이름 <span class="cf-req">*</span></label>
-                    <input type="text" id="ag-name" name="name" placeholder="홍길동" required />
+                    <label for="ct-company">회사 / 브랜드명 <span class="cf-req">*</span></label>
+                    <input type="text" id="ct-company" name="company" placeholder="브랜드명 또는 회사명" required />
                   </div>
                   <div class="cf-group">
-                    <label for="ag-position">직급 <span class="cf-req">*</span></label>
-                    <input type="text" id="ag-position" name="position" placeholder="팀장 / 대리 / 과장" required />
+                    <label for="ct-name">이름 <span class="cf-req">*</span></label>
+                    <input type="text" id="ct-name" name="name" placeholder="홍길동" required />
                   </div>
                 </div>
 
                 <div class="cf-row cf-row--2">
                   <div class="cf-group">
-                    <label for="ag-phone">연락처 <span class="cf-req">*</span></label>
-                    <input type="tel" id="ag-phone" name="phone" placeholder="010-0000-0000" required />
+                    <label for="ct-phone">연락처 <span class="cf-req">*</span></label>
+                    <input type="tel" id="ct-phone" name="phone" placeholder="010-0000-0000" required />
                   </div>
                   <div class="cf-group">
-                    <label for="ag-email">이메일 <span class="cf-req">*</span></label>
-                    <input type="email" id="ag-email" name="email" placeholder="hello@agency.com" required />
-                  </div>
-                </div>
-
-                <div class="cf-row cf-row--2">
-                  <div class="cf-group">
-                    <label for="ag-company">회사명 <span class="cf-req">*</span></label>
-                    <input type="text" id="ag-company" name="company" placeholder="(주)에이전시명" required />
-                  </div>
-                  <div class="cf-group">
-                    <label for="ag-company-url">회사 URL</label>
-                    <input type="url" id="ag-company-url" name="companyUrl" placeholder="https://agency.com" />
-                  </div>
-                </div>
-
-                <div class="cf-row cf-row--2">
-                  <div class="cf-group">
-                    <label for="ag-brand">담당 브랜드 <span class="cf-req">*</span></label>
-                    <input type="text" id="ag-brand" name="brand" placeholder="담당하시는 브랜드명" required />
-                  </div>
-                  <div class="cf-group">
-                    <label for="ag-brand-url">브랜드 URL</label>
-                    <input type="url" id="ag-brand-url" name="brandUrl" placeholder="https://brand.com" />
+                    <label for="ct-email">메일 주소 <span class="cf-req">*</span></label>
+                    <input type="email" id="ct-email" name="email" placeholder="hello@yourcompany.com" required />
                   </div>
                 </div>
 
                 <div class="cf-group">
-                  <label>관심 서비스 <span class="cf-req">*</span></label>
+                  <label>관심 서비스 <span class="cf-opt">(복수 선택 가능)</span></label>
                   <div class="cf-chips">
                     {[
                       { val: 'viral', label: '바이럴 마케팅' },
+                      { val: 'performance', label: '퍼포먼스 마케팅' },
                       { val: 'influencer', label: '인플루언서·유튜브' },
-                      { val: 'seeding', label: '시딩 캠페인' },
-                      { val: 'seo', label: 'SEO 마케팅' },
+                      { val: 'seeding', label: '체험단' },
                       { val: 'review', label: '고객 리뷰' },
                       { val: 'oliveyoung', label: '올리브영' },
                       { val: 'ppl', label: 'PPL' },
                       { val: 'other', label: '기타' },
                     ].map(s => (
                       <label class="cf-chip" key={s.val}>
-                        <input type="checkbox" name="service" value={s.val} />
+                        <input type="checkbox" name="service" value={s.label} />
                         <span>{s.label}</span>
                       </label>
                     ))}
@@ -170,29 +85,11 @@ export const ContactPage = () => (
                 </div>
 
                 <div class="cf-group">
-                  <label>예상 예산</label>
-                  <div class="cf-budget-wrap">
-                    <div class="cf-select-wrap">
-                      <select name="budget" onchange="toggleCustomBudget(this,'ag-custom-budget')">
-                        <option value="">선택해주세요</option>
-                        <option value="under300">300만원 미만</option>
-                        <option value="300to1000">300만원 ~ 1,000만원</option>
-                        <option value="1000to3000">1,000만원 ~ 3,000만원</option>
-                        <option value="over3000">3,000만원 이상</option>
-                        <option value="custom">직접 입력</option>
-                      </select>
-                      <span class="cf-sel-arrow">▾</span>
-                    </div>
-                    <div class="cf-custom-budget" id="ag-custom-budget" style="display:none;">
-                      <input type="text" name="budgetCustom" placeholder="예: 월 500만원, 총 2,000만원 등 자유롭게 입력" />
-                    </div>
-                  </div>
+                  <label for="ct-message">문의 내용</label>
+                  <textarea id="ct-message" name="message" rows={5} placeholder="브랜드 상황, 마케팅 목표 등 편하게 적어주세요. 간단히 적어주셔도 괜찮습니다."></textarea>
                 </div>
 
-                <div class="cf-group">
-                  <label for="ag-message">문의 내용 <span class="cf-req">*</span></label>
-                  <textarea id="ag-message" name="message" rows={5} placeholder="클라이언트 업종, 캠페인 목표, 현재 상황 등 자유롭게 작성해 주세요." required></textarea>
-                </div>
+                {/* 회사소개서 체크박스 제거 — 문의 접수 시 항상 함께 발송 */}
 
                 <div class="cf-group cf-privacy-group">
                   <label class="cf-privacy-check">
@@ -204,108 +101,10 @@ export const ContactPage = () => (
                 </div>
 
                 <button type="submit" class="cf-submit">
-                  <span>상담 신청하기</span>
+                  <span>문의하기</span>
                   <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
-              </form>
-
-              {/* ── 브랜드 폼 ── */}
-              <form class="contact-form ct-typed-form" id="brandForm"
-                    style="display:none;"
-                    onsubmit="return handleContactSubmit(event,'brand')">
-
-                <div class="cf-row cf-row--2">
-                  <div class="cf-group">
-                    <label for="br-name">담당자 이름 <span class="cf-req">*</span></label>
-                    <input type="text" id="br-name" name="name" placeholder="홍길동" required />
-                  </div>
-                  <div class="cf-group">
-                    <label for="br-position">직급 <span class="cf-req">*</span></label>
-                    <input type="text" id="br-position" name="position" placeholder="대표 / 팀장 / 담당자" required />
-                  </div>
-                </div>
-
-                <div class="cf-row cf-row--2">
-                  <div class="cf-group">
-                    <label for="br-phone">연락처 <span class="cf-req">*</span></label>
-                    <input type="tel" id="br-phone" name="phone" placeholder="010-0000-0000" required />
-                  </div>
-                  <div class="cf-group">
-                    <label for="br-email">이메일 <span class="cf-req">*</span></label>
-                    <input type="email" id="br-email" name="email" placeholder="hello@brand.com" required />
-                  </div>
-                </div>
-
-                <div class="cf-row cf-row--2">
-                  <div class="cf-group">
-                    <label for="br-company">회사명 <span class="cf-req">*</span></label>
-                    <input type="text" id="br-company" name="company" placeholder="(주)브랜드명" required />
-                  </div>
-                  <div class="cf-group">
-                    <label for="br-company-url">회사 URL</label>
-                    <input type="url" id="br-company-url" name="companyUrl" placeholder="https://brand.com" />
-                  </div>
-                </div>
-
-                <div class="cf-group">
-                  <label>관심 서비스 <span class="cf-req">*</span></label>
-                  <div class="cf-chips">
-                    {[
-                      { val: 'viral', label: '바이럴 마케팅' },
-                      { val: 'influencer', label: '인플루언서·유튜브' },
-                      { val: 'seeding', label: '시딩 캠페인' },
-                      { val: 'seo', label: 'SEO 마케팅' },
-                      { val: 'review', label: '고객 리뷰' },
-                      { val: 'oliveyoung', label: '올리브영' },
-                      { val: 'ppl', label: 'PPL' },
-                      { val: 'other', label: '기타' },
-                    ].map(s => (
-                      <label class="cf-chip" key={s.val}>
-                        <input type="checkbox" name="service" value={s.val} />
-                        <span>{s.label}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div class="cf-group">
-                  <label>예상 예산</label>
-                  <div class="cf-budget-wrap">
-                    <div class="cf-select-wrap">
-                      <select name="budget" onchange="toggleCustomBudget(this,'br-custom-budget')">
-                        <option value="">선택해주세요</option>
-                        <option value="under300">300만원 미만</option>
-                        <option value="300to1000">300만원 ~ 1,000만원</option>
-                        <option value="1000to3000">1,000만원 ~ 3,000만원</option>
-                        <option value="over3000">3,000만원 이상</option>
-                        <option value="custom">직접 입력</option>
-                      </select>
-                      <span class="cf-sel-arrow">▾</span>
-                    </div>
-                    <div class="cf-custom-budget" id="br-custom-budget" style="display:none;">
-                      <input type="text" name="budgetCustom" placeholder="예: 월 300만원, 총 1,000만원 등 자유롭게 입력" />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="cf-group">
-                  <label for="br-message">문의 내용 <span class="cf-req">*</span></label>
-                  <textarea id="br-message" name="message" rows={5} placeholder="브랜드 소개, 마케팅 목표, 현재 상황 등 자유롭게 작성해 주세요." required></textarea>
-                </div>
-
-                <div class="cf-group cf-privacy-group">
-                  <label class="cf-privacy-check">
-                    <input type="checkbox" name="privacy" required />
-                    <span class="cf-privacy-box"></span>
-                    <span>개인정보 수집 및 이용에 동의합니다.</span>
-                  </label>
-                  <button type="button" class="cf-privacy-view-btn" onclick="openPrivacyModal()">내용 확인</button>
-                </div>
-
-                <button type="submit" class="cf-submit">
-                  <span>상담 신청하기</span>
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
+                <p class="cf-brochure-note">문의를 접수하시면 회사소개서도 함께 보내드립니다.</p>
               </form>
 
               {/* 완료 메시지 */}
@@ -314,10 +113,11 @@ export const ContactPage = () => (
                   <div class="cs-check">
                     <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(26,107,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
-                  <h3>상담 신청이 완료되었습니다!</h3>
+                  <h3>문의가 접수되었습니다!</h3>
                 </div>
-                <p class="cs-notify">담당자가 <strong>1영업일 이내</strong> 연락 드립니다.<br />급한 문의는 아래로 연락 주세요.</p>
-                <p class="cs-contact-info">📞 <a href="tel:010-9186-9944">010-9186-9944</a></p>
+                <p class="cs-notify">담당자가 <strong>1영업일 이내</strong> 메일로 연락드립니다.<br />급한 문의는 아래로 연락 주세요.</p>
+                <p class="cs-notify cm-bro-note" id="csBroNote" style="display:none;">입력하신 이메일로 <strong>회사소개서</strong>도 보내드립니다.</p>
+                <p class="cs-contact-info"><a href="tel:010-9186-9944">010-9186-9944</a></p>
 
                 {/* 작성 내용 보기 */}
                 <button class="cs-review-btn" onclick="openSubmitReviewModal('contact')">
@@ -325,20 +125,12 @@ export const ContactPage = () => (
                   <span>작성 내용 보기</span>
                 </button>
 
-                <div class="cs-divider"></div>
-                <p class="cs-kickoff-label">인애드컴퍼니와 미팅 일정을 잡고 싶으신가요?</p>
-                <button class="cs-kickoff-btn" onclick="goToKickoff()">
-                  <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <span>인애드컴퍼니 미팅일정 잡기</span>
-                </button>
-                <p class="cs-kickoff-desc">킥오프 미팅에서 인애드컴퍼니의 독점 마케팅 상품을 확인하세요</p>
               </div>
 
             </div>{/* /contact-form-wrap */}
+          </div>{/* /contact-layout */}
 
-          </div>{/* /contact-layout (폼 영역만) */}
-
-          {/* ── 자주 묻는 질문 — 폼 아래 풀 너비 ── */}
+          {/* ── 자주 묻는 질문 ── */}
           <div class="ct-faq-section">
             <div class="ct-faq-head">
               <span class="sec-label">FAQ</span>
@@ -385,14 +177,14 @@ export const ContactPage = () => (
                   <span>상담 신청 후 연락은 얼마나 걸리나요?</span>
                   <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </button>
-                <div class="faq-a">영업일 기준 24시간 이내에 담당 매니저가 직접 연락드립니다. 긴급한 경우 전화 문의를 이용해 주세요.</div>
+                <div class="faq-a">영업일 기준 24시간 이내에 담당 매니저가 메일로 연락드립니다. 긴급한 경우 전화 문의를 이용해 주세요.</div>
               </div>
               <div class="faq-item">
                 <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
                   <span>여러 마케팅 상품을 동시에 진행할 수 있나요?</span>
                   <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </button>
-                <div class="faq-a">가능합니다. 바이럴·시딩·인플루언서 등 복수 상품을 통합 운영하면 채널 간 시너지 효과가 극대화됩니다. 통합 패키지 할인도 제공합니다.</div>
+                <div class="faq-a">가능합니다. 바이럴·체험단·인플루언서를 함께 운영하면 채널이 서로 받쳐주면서 효과가 더 커집니다. 통합 패키지 할인도 드립니다.</div>
               </div>
               <div class="faq-item">
                 <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
@@ -406,114 +198,10 @@ export const ContactPage = () => (
 
         </div>
       </section>
-    </div>{/* /ct-form-screen */}
+    </div>{/* /ct-main */}
 
     {/* ══════════════════════════════════════
-        STEP 3 — 회사소개서 신청 화면
-        ══════════════════════════════════════ */}
-    <div class="ct-brochure-screen" id="ct-brochure-screen" style="display:none;">
-
-      {/* 페이지 히어로 */}
-      <section class="page-hero contact-hero ct-form-hero">
-        <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
-        <div class="container">
-          <button class="step-back-btn" onclick="backToSelect()">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 18L5 12L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            유형 다시 선택
-          </button>
-          <div class="ct-form-type-badge ct-badge--brochure">회사소개서 신청</div>
-          <h1 class="page-title">소개서<br /><em>신청하기</em></h1>
-          <p class="page-desc">이메일 주소만 입력해 주세요.<br />인애드컴퍼니 소개서를 바로 보내드립니다.</p>
-        </div>
-      </section>
-
-      {/* 소개서 신청 폼 */}
-      <section class="section contact-main-section">
-        <div class="container">
-          <div class="ct-brochure-wrap">
-
-            {/* 왼쪽: 소개서 카드 미리보기 */}
-            <div class="ct-brochure-preview">
-              <div class="ct-brochure-card">
-                <div class="ct-brochure-card-inner">
-                  <div class="ct-bc-logo">IN AD<br />COMPANY</div>
-                  <div class="ct-bc-title">회사소개서</div>
-                  <div class="ct-bc-year">2024</div>
-                  <div class="ct-bc-tags">
-                    <span>바이럴 마케팅</span>
-                    <span>인플루언서</span>
-                    <span>시딩</span>
-                    <span>SEO</span>
-                    <span>PPL</span>
-                  </div>
-                  <div class="ct-bc-footer">
-                    <span>인애드컴퍼니 · inadcompany.com</span>
-                  </div>
-                </div>
-              </div>
-              <p class="ct-brochure-preview-desc">
-                서비스 소개, 실적, 사례 레퍼런스가<br />담긴 PDF 소개서를 이메일로 보내드립니다.
-              </p>
-            </div>
-
-            {/* 오른쪽: 신청 폼 */}
-            <div class="ct-brochure-form-wrap">
-              <form class="contact-form" id="brochureForm"
-                    onsubmit="return handleBrochureSubmit(event)">
-                <div class="ct-brochure-form-head">
-                  <span class="sec-label">Brochure Request</span>
-                  <h2>회사소개서 받기</h2>
-                  <p>이메일 주소만 입력하면 바로 발송됩니다.<br />스팸이나 광고 메일은 절대 발송하지 않습니다.</p>
-                </div>
-
-                <div class="cf-group">
-                  <label for="br-req-email">이메일 주소 <span class="cf-req">*</span></label>
-                  <input type="email" id="br-req-email" name="email"
-                         placeholder="hello@yourcompany.com" required
-                         autocomplete="email" />
-                </div>
-
-                <div class="cf-group ct-brochure-agree-group">
-                  <label class="cf-privacy-check">
-                    <input type="checkbox" name="emailAgree" id="br-email-agree" required />
-                    <span class="cf-privacy-box"></span>
-                    <span>이메일 수신에 동의합니다.</span>
-                  </label>
-                  <p class="ct-brochure-agree-note">
-                    회사소개서 발송 목적으로만 사용되며, 이후 마케팅 수신 동의로 활용될 수 있습니다.<br />
-                    언제든지 수신 거부 가능합니다.
-                  </p>
-                </div>
-
-                <button type="submit" class="cf-submit ct-brochure-submit">
-                  <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M12 2v13M7 10l5 5 5-5M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <span>소개서 받기</span>
-                </button>
-              </form>
-
-              {/* 완료 메시지 */}
-              <div class="contact-success" id="brochureSuccess" style="display:none;">
-                <p class="cs-notify">이메일을 확인해 주세요.<br />소개서 발송 준비 중입니다.</p>
-                <div class="cs-main">
-                  <div class="cs-check">
-                    <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(26,107,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                  <h3>신청이 완료되었습니다!</h3>
-                </div>
-                <p style="color:rgba(255,255,255,0.5); font-size:14px; text-align:center; margin-top:12px;">
-                  입력하신 이메일로 소개서를 발송해 드립니다.<br />
-                  (발송까지 최대 1영업일 소요될 수 있습니다)
-                </p>
-              </div>
-            </div>
-
-          </div>{/* /ct-brochure-wrap */}
-        </div>
-      </section>
-    </div>{/* /ct-brochure-screen */}
-
-    {/* ══════════════════════════════════════
-        STEP 4 — 킥오프 미팅 신청 화면
+        킥오프 미팅 신청 화면 (문의 완료 후 진입)
         ══════════════════════════════════════ */}
     <div class="ct-kickoff-screen" id="ct-kickoff-screen" style="display:none;">
 
@@ -537,9 +225,8 @@ export const ContactPage = () => (
           <div class="ct-kickoff-form-solo">
             <form class="contact-form" id="kickoffForm" onsubmit="return handleKickoffSubmit(event)">
 
-              {/* hidden: 상담 신청 시 입력한 담당자 정보 자동 전달 */}
+              {/* hidden: 문의 시 입력한 담당자 정보 자동 전달 */}
               <input type="hidden" id="kf-name" name="kf_name" />
-              <input type="hidden" id="kf-position" name="kf_position" />
               <input type="hidden" id="kf-phone" name="kf_phone" />
               <input type="hidden" id="kf-email" name="kf_email" />
               <input type="hidden" id="kf-company" name="kf_company" />
@@ -557,7 +244,7 @@ export const ContactPage = () => (
                   <label class="kf-method-card" id="kmc-visit">
                     <input type="radio" name="meetingType" value="visit" required
                            onchange="onMeetingTypeChange('visit')" />
-                    <div class="kf-mc-icon">🏢</div>
+                    <div class="kf-mc-icon">{icon('building')}</div>
                     <div class="kf-mc-body">
                       <strong>인애드컴퍼니 방문</strong>
                       <p>저희 사무실로 직접 방문하시는 미팅</p>
@@ -569,7 +256,7 @@ export const ContactPage = () => (
                   <label class="kf-method-card" id="kmc-onsite">
                     <input type="radio" name="meetingType" value="onsite" required
                            onchange="onMeetingTypeChange('onsite')" />
-                    <div class="kf-mc-icon">🚗</div>
+                    <div class="kf-mc-icon">{icon('car')}</div>
                     <div class="kf-mc-body">
                       <strong>방문 상담 요청</strong>
                       <p>담당자가 직접 방문하는 출장 미팅</p>
@@ -581,7 +268,7 @@ export const ContactPage = () => (
                   <label class="kf-method-card" id="kmc-zoom">
                     <input type="radio" name="meetingType" value="zoom" required
                            onchange="onMeetingTypeChange('zoom')" />
-                    <div class="kf-mc-icon">💻</div>
+                    <div class="kf-mc-icon">{icon('monitor')}</div>
                     <div class="kf-mc-body">
                       <strong>ZOOM 미팅</strong>
                       <p>Zoom / Google Meet 온라인 미팅</p>
@@ -608,12 +295,12 @@ export const ContactPage = () => (
                   <div class="kf-fixed-addr-card">
                     <svg viewBox="0 0 24 24" fill="none" width="18" height="18" style="flex-shrink:0;margin-top:2px"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" stroke="rgba(160,120,255,0.85)" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="10" r="3" stroke="rgba(160,120,255,0.85)" stroke-width="1.8"/></svg>
                     <div>
-                      <p class="kf-fixed-addr-main">경기도 안산시 단원구 고잔로 51, 타락아이즈빌 2F, 204호</p>
+                      <p class="kf-fixed-addr-main">경기도 안산시 단원구 고잔로 51, 타워아이즈빌 2F, 204호</p>
                       <p class="kf-fixed-addr-sub">주차 가능 · 지하철 4호선 중앙역 도보 5분</p>
                     </div>
                   </div>
                   {/* hidden으로 form 데이터에 포함 */}
-                  <input type="hidden" name="address" value="경기도 안산시 단원구 고잔로 51, 타락아이즈빌 2F, 204호" />
+                  <input type="hidden" name="visitAddress" value="경기도 안산시 단원구 고잔로 51, 타워아이즈빌 2F, 204호" />
                 </div>
 
                 {/* onsite: 주소 직접 입력 */}
@@ -765,12 +452,12 @@ export const ContactPage = () => (
 
             {/* 완료 메시지 */}
             <div class="ct-kickoff-done" id="kickoffSuccess" style="display:none;">
-              <div class="ckd-icon">📅</div>
+              <div class="ckd-icon">{icon('calendar')}</div>
               <h3 class="ckd-title">미팅일정 신청이 완료되었습니다</h3>
               <p class="ckd-msg">
                 인애드컴퍼니에서 일정을 확인 후<br />
                 <strong>1영업일 이내</strong> 회신 드리겠습니다.<br />
-                감사합니다 😊
+                감사합니다
               </p>
               <div class="ckd-info-list">
                 <div class="ckd-info-item">
@@ -844,15 +531,15 @@ export const ContactPage = () => (
             <table class="prv-table">
               <thead><tr><th>구분</th><th>필수 항목</th><th>선택 항목</th></tr></thead>
               <tbody>
-                <tr><td>대행사</td><td>담당자 이름, 직급, 연락처, 이메일, 회사명, 담당 브랜드</td><td>회사 URL, 브랜드 URL, 예산, 문의 내용</td></tr>
-                <tr><td>브랜드</td><td>담당자 이름, 직급, 연락처, 이메일, 회사명</td><td>회사 URL, 예산, 문의 내용</td></tr>
+                <tr><td>문의</td><td>회사/브랜드명, 이름, 연락처, 이메일</td><td>관심 서비스, 문의 내용</td></tr>
+                <tr><td>미팅 신청</td><td>미팅 방식, 희망 일정, 참여 인원</td><td>주소, 사전 질문</td></tr>
               </tbody>
             </table>
           </section>
 
           <section class="prv-section">
             <h3>■ 수집 방법</h3>
-            <p>홈페이지 상담 신청 폼을 통한 직접 입력</p>
+            <p>홈페이지 문의 폼을 통한 직접 입력</p>
           </section>
 
           <section class="prv-section">
@@ -883,10 +570,10 @@ export const ContactPage = () => (
             <h3>■ 개인정보 보호 책임자</h3>
             <table class="prv-table">
               <tbody id="privacyOfficerTable">
-                <tr><td>책임자</td><td>김주희</td></tr>
-                <tr><td>담당자</td><td>이승노</td></tr>
-                <tr><td>웹사이트</td><td><a href="https://www.majestade.co.kr" target="_blank" rel="noopener">www.majestade.co.kr</a></td></tr>
-                <tr><td>이메일</td><td><a href="mailto:maze_official@majestade.co.kr">maze_official@majestade.co.kr</a></td></tr>
+                <tr><td>책임자</td><td>김수만</td></tr>
+                <tr><td>담당자</td><td>김수만</td></tr>
+                <tr><td>웹사이트</td><td><a href="https://www.inadcompany.co.kr" target="_blank" rel="noopener">www.inadcompany.co.kr</a></td></tr>
+                <tr><td>이메일</td><td><a href="mailto:tnaks6325@inadcompany.com">tnaks6325@inadcompany.com</a></td></tr>
               </tbody>
             </table>
           </section>
@@ -920,129 +607,95 @@ export const ContactPage = () => (
     {/* ── JS ── */}
     <script dangerouslySetInnerHTML={{__html: `
       (function() {
-        function hoverPanel(type) {
-          var agency   = document.getElementById('panel-agency');
-          var brand    = document.getElementById('panel-brand');
-          var brochure = document.getElementById('panel-brochure');
-          var all = [agency, brand, brochure];
-          all.forEach(function(el) { el && el.classList.remove('ct-active','ct-shrink'); });
-          var active = document.getElementById('panel-' + type);
-          if (active) active.classList.add('ct-active');
-          all.forEach(function(el) { if (el && el !== active) el.classList.add('ct-shrink'); });
-        }
-        function resetPanel() {
-          ['panel-agency','panel-brand','panel-brochure'].forEach(function(id) {
-            var el = document.getElementById(id);
-            if (el) el.classList.remove('ct-active','ct-shrink');
-          });
-        }
-        function enterForm(type) {
-          var split  = document.getElementById('ct-split');
-          var screen = document.getElementById('ct-form-screen');
-          var badge  = document.getElementById('form-type-badge');
-          var title  = document.getElementById('form-hero-title');
-          var agForm = document.getElementById('agencyForm');
-          var brForm = document.getElementById('brandForm');
+        /* ── 간편 문의 제출 ── */
+        var _submittedFormData = {};
+        var _kickoffFormData   = {};
+        async function handleContactSubmit(e) {
+          e.preventDefault();
+          var form = document.getElementById('simpleForm');
+          var success = document.getElementById('contactSuccess');
 
-          // 배지 & 타이틀 세팅
-          if (type === 'agency') {
-            badge.textContent = '대행사 파트너십 상담';
-            badge.className = 'ct-form-type-badge ct-badge--agency';
-            title.innerHTML = '파트너십<br><em>상담 신청</em>';
-            agForm.style.display = 'block';
-            brForm.style.display = 'none';
-          } else {
-            badge.textContent = '브랜드 마케팅 상담';
-            badge.className = 'ct-form-type-badge ct-badge--brand';
-            title.innerHTML = '마케팅<br><em>상담 신청</em>';
-            agForm.style.display = 'none';
-            brForm.style.display = 'block';
+          _submittedFormData = {};
+          var fd = new FormData(form);
+          var labelMap = {
+            company:'회사/브랜드명', name:'이름', phone:'연락처', email:'이메일', message:'문의 내용'
+          };
+          var services = [];
+          var mailPayload = {};
+          fd.forEach(function(val, key) {
+            if (key === 'service') { services.push(val); return; }
+            if (key === 'privacy') return;
+            if (!val) return;
+            _submittedFormData[labelMap[key] || key] = val;
+            mailPayload[key] = val;
+          });
+          if (services.length) {
+            _submittedFormData['관심 서비스'] = services.join(', ');
+            mailPayload['services'] = services.join(', ');
           }
+          /* 회사소개서는 선택이 아니라 문의 접수 시 항상 함께 발송 */
+          var wantsBrochure = !!mailPayload.email;
+          try {
+            var responses = await Promise.all([
+              fetch('/api/mail/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(mailPayload)
+              }),
+              fetch('/api/mail/brochure', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: mailPayload.email, emailAgree: 'on' })
+              })
+            ]);
+            /* 소개서 발송 실패로 문의 접수까지 실패 처리하지 않는다 */
+            if (!responses[0].ok) throw new Error('mail failed');
+          } catch (err) {
+            alert('접수 중 오류가 발생했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.');
+            return false;
+          }
+          var broNote = document.getElementById('csBroNote');
+          if (broNote) broNote.style.display = wantsBrochure ? 'block' : 'none';
 
-          // 화면 전환
-          split.style.animation = 'ctSplitOut 0.5s cubic-bezier(0.4,0,0.2,1) forwards';
+          form.style.transition = 'opacity 0.3s ease';
+          form.style.opacity = '0';
           setTimeout(function() {
-            split.style.display = 'none';
-            screen.style.display = 'block';
-            screen.style.animation = 'ctFormIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }, 450);
+            form.style.display = 'none';
+            success.style.display = 'flex';
+            success.style.animation = 'ctFormIn 0.5s ease forwards';
+          }, 300);
+          return false;
         }
-        function backToSelect() {
-          var split     = document.getElementById('ct-split');
-          var screen    = document.getElementById('ct-form-screen');
-          var bScreen   = document.getElementById('ct-brochure-screen');
-          var kScreen   = document.getElementById('ct-kickoff-screen');
-          [screen, bScreen, kScreen].forEach(function(s) {
-            if (s && s.style.display !== 'none') {
-              s.style.animation = 'ctSplitOut 0.4s ease forwards';
-              setTimeout(function() {
-                s.style.display = 'none';
-                split.style.display = 'flex';
-                split.style.animation = 'ctFormIn 0.5s ease forwards';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }, 350);
-            }
-          });
-        }
-        function enterKickoff() {
-          var split   = document.getElementById('ct-split');
-          var kScreen = document.getElementById('ct-kickoff-screen');
-          split.style.animation = 'ctSplitOut 0.5s cubic-bezier(0.4,0,0.2,1) forwards';
-          setTimeout(function() {
-            split.style.display = 'none';
-            kScreen.style.display = 'block';
-            kScreen.style.animation = 'ctFormIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }, 450);
-        }
+
+        /* ── 킥오프 화면 전환 ── */
         function goToKickoff() {
-          // 상담 폼에서 입력한 담당자 정보 → 킥오프 hidden 필드에 자동 복사
-          var fieldMap = [
-            { from: ['ag-name','br-name'],         to: 'kf-name' },
-            { from: ['ag-position','br-position'],  to: 'kf-position' },
-            { from: ['ag-phone','br-phone'],         to: 'kf-phone' },
-            { from: ['ag-email','br-email'],         to: 'kf-email' },
-            { from: ['ag-company','br-company'],     to: 'kf-company' }
-          ];
-          fieldMap.forEach(function(m) {
-            var val = '';
-            m.from.forEach(function(id) {
-              var el = document.getElementById(id);
-              if (el && el.value) val = el.value;
+          // 문의 폼에서 입력한 담당자 정보 → 킥오프 hidden 필드에 자동 복사
+          [['ct-name','kf-name'],['ct-phone','kf-phone'],['ct-email','kf-email'],['ct-company','kf-company']]
+            .forEach(function(m) {
+              var src = document.getElementById(m[0]);
+              var dest = document.getElementById(m[1]);
+              if (src && dest) dest.value = src.value || '';
             });
-            var dest = document.getElementById(m.to);
-            if (dest) dest.value = val;
-          });
 
-          var formScreen = document.getElementById('ct-form-screen');
-          var kScreen    = document.getElementById('ct-kickoff-screen');
-          formScreen.style.animation = 'ctSplitOut 0.4s ease forwards';
+          var main    = document.getElementById('ct-main');
+          var kScreen = document.getElementById('ct-kickoff-screen');
+          main.style.animation = 'ctSplitOut 0.4s ease forwards';
           setTimeout(function() {
-            formScreen.style.display = 'none';
+            main.style.display = 'none';
             kScreen.style.display = 'block';
             kScreen.style.animation = 'ctFormIn 0.5s ease forwards';
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }, 380);
         }
         function backFromKickoff() {
-          var formScreen = document.getElementById('ct-form-screen');
-          var kScreen    = document.getElementById('ct-kickoff-screen');
-          var successEl  = document.getElementById('contactSuccess');
+          var main    = document.getElementById('ct-main');
+          var kScreen = document.getElementById('ct-kickoff-screen');
           kScreen.style.animation = 'ctSplitOut 0.4s ease forwards';
           setTimeout(function() {
             kScreen.style.display = 'none';
-            // 상담완료 화면에서 왔으면 그쪽으로 돌아가기
-            if (successEl && successEl.style.display !== 'none') {
-              formScreen.style.display = 'block';
-              formScreen.style.animation = 'ctFormIn 0.5s ease forwards';
-            } else {
-              var split = document.getElementById('ct-split');
-              split.style.display = 'flex';
-              split.style.animation = 'ctFormIn 0.5s ease forwards';
-            }
+            main.style.display = 'block';
+            main.style.animation = 'ctFormIn 0.5s ease forwards';
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            // 킥오프 폼 초기화
             resetKickoffForm();
           }, 350);
         }
@@ -1051,18 +704,14 @@ export const ContactPage = () => (
           var success = document.getElementById('kickoffSuccess');
           if (form) { form.reset(); form.style.display = 'block'; form.style.opacity = '1'; }
           if (success) success.style.display = 'none';
-          // 조건부 섹션 모두 숨기기
           ['kf-location-section','kf-members-section','kf-schedule-section','kf-note-section'].forEach(function(id) {
             var el = document.getElementById(id);
             if (el) el.style.display = 'none';
           });
-          // 방식 카드 선택 해제
           document.querySelectorAll('.kf-method-card').forEach(function(c) { c.classList.remove('kf-mc--selected'); });
-          // step 번호 리셋
           updateKickoffStepNums('visit');
         }
         function onMeetingTypeChange(type) {
-          // 카드 선택 효과
           document.querySelectorAll('.kf-method-card').forEach(function(c) { c.classList.remove('kf-mc--selected'); });
           var card = document.getElementById('kmc-' + type);
           if (card) card.classList.add('kf-mc--selected');
@@ -1077,36 +726,30 @@ export const ContactPage = () => (
             requestAnimationFrame(function() { el.classList.add('kf-section--visible'); });
           }
 
-          // 이미 열린 것 닫기
           [locSection, memSection, schSection, noteSection].forEach(function(s) {
             if (s) { s.style.display = 'none'; s.classList.remove('kf-section--visible'); }
           });
 
           if (type === 'zoom') {
-            // ZOOM: 장소 없이 바로 인원 → 일정 → 사전질문
             setTimeout(function() { showSection(memSection); }, 100);
             setTimeout(function() { showSection(schSection); }, 200);
             setTimeout(function() { showSection(noteSection); }, 300);
           } else {
-            // 방문/출장: 장소 섹션 표시
             var addrFixed  = document.getElementById('kf-addr-fixed');
             var addrSearch = document.getElementById('kf-addr-search');
             var locTitle   = document.getElementById('kf-location-title');
             var locDesc    = document.getElementById('kf-location-desc');
 
             if (type === 'visit') {
-              // 고정 주소 카드 표시, 주소 찾기 숨김
               if (addrFixed)  addrFixed.style.display  = 'block';
               if (addrSearch) addrSearch.style.display = 'none';
               if (locTitle)   locTitle.textContent = '미팅 장소';
               if (locDesc)    locDesc.textContent  = '방문하실 인애드컴퍼니 주소입니다';
             } else {
-              // 주소 찾기 표시, 고정 주소 숨김
               if (addrFixed)  addrFixed.style.display  = 'none';
               if (addrSearch) addrSearch.style.display = 'block';
               if (locTitle)   locTitle.innerHTML = '미팅 장소 <span class="cf-req">*</span>';
               if (locDesc)    locDesc.textContent = '담당자가 방문할 주소를 입력해 주세요';
-              // 입력값 초기화
               var pc2  = document.getElementById('kf-postcode');
               var adr2 = document.getElementById('kf-address');
               if (pc2)  pc2.value  = '';
@@ -1121,8 +764,6 @@ export const ContactPage = () => (
           updateKickoffStepNums(type);
         }
         function updateKickoffStepNums(type) {
-          // ZOOM이면 02=인원, 03=일정, 04=사전질문
-          // visit/onsite이면 02=장소, 03=인원, 04=일정, 05=사전질문
           var isZoom = (type === 'zoom');
           var stepMem  = document.getElementById('kf-step-members');
           var stepSch  = document.getElementById('kf-step-schedule');
@@ -1132,7 +773,6 @@ export const ContactPage = () => (
           if (stepNote) stepNote.textContent = isZoom ? '04' : '05';
         }
         function openAddressSearch() {
-          // Daum 우편번호 서비스 로드 및 실행
           function execDaum() {
             new daum.Postcode({
               oncomplete: function(data) {
@@ -1151,9 +791,64 @@ export const ContactPage = () => (
             document.head.appendChild(s);
           }
         }
-        // 상담 완료 후 작성내용 팝업
-        var _submittedFormData = {};
-        var _kickoffFormData   = {};
+        async function handleKickoffSubmit(e) {
+          e.preventDefault();
+          var form    = document.getElementById('kickoffForm');
+          var success = document.getElementById('kickoffSuccess');
+
+          _kickoffFormData = {};
+          var fd = new FormData(form);
+          var meetingTypeLabel = { visit: '인애드컴퍼니 방문', onsite: '방문 상담 요청', zoom: 'ZOOM 미팅' };
+          var kLabelMap = {
+            kf_name: '이름', kf_phone: '연락처',
+            kf_email: '이메일', kf_company: '회사/브랜드명',
+            meetingType: '미팅 방식', postcode: '우편번호', address: '기본 주소',
+            addressDetail: '상세 주소', memberCount: '참여 인원',
+            date1: '1순위 날짜', time1: '1순위 시간',
+            date2: '2순위 날짜', time2: '2순위 시간',
+            note: '사전 질문 / 궁금한 점'
+          };
+          var mailPayload = {};
+          fd.forEach(function(val, key) {
+            if (key === 'privacyAgree' || key === 'visitAddress') return;
+            if (!val || val === '') return;
+            var label = kLabelMap[key] || key;
+            var displayVal = (key === 'meetingType') ? (meetingTypeLabel[val] || val) : val;
+            _kickoffFormData[label] = displayVal;
+            mailPayload[key] = displayVal;
+          });
+          var meetingType = fd.get('meetingType');
+          if (meetingType === 'visit') {
+            mailPayload.address = fd.get('visitAddress') || '';
+            _kickoffFormData['기본 주소'] = mailPayload.address;
+          } else if (meetingType === 'zoom') {
+            delete mailPayload.address;
+            delete mailPayload.addressDetail;
+          }
+          try {
+            var response = await fetch('/api/mail/kickoff', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(mailPayload)
+            });
+            if (!response.ok) throw new Error('mail failed');
+          } catch (err) {
+            alert('접수 중 오류가 발생했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.');
+            return false;
+          }
+
+          form.style.transition = 'opacity 0.3s ease';
+          form.style.opacity = '0';
+          setTimeout(function() {
+            form.style.display = 'none';
+            success.style.display = 'flex';
+            success.style.animation = 'ctFormIn 0.5s ease forwards';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }, 300);
+          return false;
+        }
+
+        /* ── 작성 내용 보기 모달 ── */
         function openSubmitReviewModal(source) {
           var modal = document.getElementById('submit-review-modal');
           if (!modal) return;
@@ -1162,8 +857,8 @@ export const ContactPage = () => (
           if (body) {
             if (Object.keys(dataToShow).length) {
               var title = source === 'kickoff'
-                ? '<div class="srm-source-title">📅 미팅일정 신청 내용</div>'
-                : '<div class="srm-source-title">📋 상담 신청 내용</div>';
+                ? '<div class="srm-source-title">미팅일정 신청 내용</div>'
+                : '<div class="srm-source-title">문의 내용</div>';
               var rows = Object.entries(dataToShow).map(function(kv) {
                 return '<div class="srm-row"><span class="srm-key">' + kv[0] + '</span><span class="srm-val">' + (kv[1] || '-') + '</span></div>';
               }).join('');
@@ -1182,136 +877,8 @@ export const ContactPage = () => (
           modal.classList.remove('prv-open');
           setTimeout(function() { modal.style.display = 'none'; document.body.style.overflow = ''; }, 260);
         }
-        function enterBrochure() {
-          var split   = document.getElementById('ct-split');
-          var bScreen = document.getElementById('ct-brochure-screen');
-          split.style.animation = 'ctSplitOut 0.5s cubic-bezier(0.4,0,0.2,1) forwards';
-          setTimeout(function() {
-            split.style.display = 'none';
-            bScreen.style.display = 'block';
-            bScreen.style.animation = 'ctFormIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }, 450);
-        }
-        function handleKickoffSubmit(e) {
-          e.preventDefault();
-          var form    = document.getElementById('kickoffForm');
-          var success = document.getElementById('kickoffSuccess');
 
-          // ── 작성 내용 수집 (킥오프 전용) ──
-          _kickoffFormData = {};
-          var fd = new FormData(form);
-          var meetingTypeLabel = { visit: '인애드컴퍼니 방문', onsite: '방문 상담 요청', zoom: 'ZOOM 미팅' };
-          var kLabelMap = {
-            kf_name: '담당자 이름', kf_position: '직급', kf_phone: '연락처',
-            kf_email: '이메일', kf_company: '회사명',
-            meetingType: '미팅 방식', postcode: '우편번호', address: '기본 주소',
-            addressDetail: '상세 주소', memberCount: '참여 인원',
-            date1: '1순위 날짜', time1: '1순위 시간',
-            date2: '2순위 날짜', time2: '2순위 시간',
-            note: '사전 질문 / 궁금한 점'
-          };
-          var mailPayload = {};
-          fd.forEach(function(val, key) {
-            if (key === 'privacyAgree') return;
-            if (!val || val === '') return;
-            var label = kLabelMap[key] || key;
-            var displayVal = (key === 'meetingType') ? (meetingTypeLabel[val] || val) : val;
-            _kickoffFormData[label] = displayVal;
-            mailPayload[key] = displayVal;
-          });
-          // 메일 발송 (백그라운드)
-          fetch('/api/mail/kickoff', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(mailPayload)
-          }).catch(function(){});
-
-          form.style.transition = 'opacity 0.3s ease';
-          form.style.opacity = '0';
-          setTimeout(function() {
-            form.style.display = 'none';
-            success.style.display = 'flex';
-            success.style.animation = 'ctFormIn 0.5s ease forwards';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }, 300);
-          return false;
-        }
-        function handleBrochureSubmit(e) {
-          e.preventDefault();
-          var form    = document.getElementById('brochureForm');
-          var success = document.getElementById('brochureSuccess');
-          // 폼 데이터 수집
-          var fd = new FormData(form);
-          var mailPayload = {};
-          fd.forEach(function(val, key) {
-            if (key === 'privacy') return;
-            mailPayload[key] = val;
-          });
-          // 메일 발송 (백그라운드)
-          fetch('/api/mail/brochure', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(mailPayload)
-          }).catch(function(){});
-
-          form.style.transition = 'opacity 0.3s ease';
-          form.style.opacity = '0';
-          setTimeout(function() {
-            form.style.display = 'none';
-            success.style.display = 'flex';
-            success.style.animation = 'ctFormIn 0.5s ease forwards';
-          }, 300);
-          return false;
-        }
-        function toggleCustomBudget(sel, targetId) {
-          var wrap = document.getElementById(targetId);
-          if (wrap) wrap.style.display = sel.value === 'custom' ? 'block' : 'none';
-        }
-        function handleContactSubmit(e, type) {
-          e.preventDefault();
-          var formId = type === 'agency' ? 'agencyForm' : 'brandForm';
-          var form = document.getElementById(formId);
-          var success = document.getElementById('contactSuccess');
-
-          // 작성 내용 수집
-          _submittedFormData = {};
-          var fd = new FormData(form);
-          var labelMap = {
-            name:'이름', position:'직급', phone:'연락처', email:'이메일',
-            company:'회사명', companyUrl:'회사 URL', brand:'담당 브랜드', brandUrl:'브랜드 URL',
-            budget:'예상 예산', budgetCustom:'예산(직접입력)', message:'문의 내용',
-            service:'관심 서비스'
-          };
-          var services = [];
-          var mailPayload = { formType: type };
-          fd.forEach(function(val, key) {
-            if (key === 'service') { services.push(val); return; }
-            if (key === 'privacy') return;
-            _submittedFormData[labelMap[key] || key] = val;
-            mailPayload[key] = val;
-          });
-          if (services.length) {
-            _submittedFormData['관심 서비스'] = services.join(', ');
-            mailPayload['services'] = services.join(', ');
-          }
-          // 메일 발송 (백그라운드)
-          fetch('/api/mail/contact', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(mailPayload)
-          }).catch(function(){});
-
-          form.style.transition = 'opacity 0.3s ease';
-          form.style.opacity = '0';
-          setTimeout(function() {
-            form.style.display = 'none';
-            success.style.display = 'flex';
-            success.style.animation = 'ctFormIn 0.5s ease forwards';
-          }, 300);
-          return false;
-        }
-        // 개인정보 모달
+        /* ── 개인정보 모달 ── */
         function openPrivacyModal() {
           var m = document.getElementById('privacy-modal');
           if (!m) return;
@@ -1328,29 +895,27 @@ export const ContactPage = () => (
             document.body.style.overflow = '';
           }, 260);
         }
-        // ESC 키 닫기
         document.addEventListener('keydown', function(e) {
           if (e.key === 'Escape') { closePrivacyModal(); closeSubmitReviewModal(); }
         });
 
+        // ── 네이버 전환추적: 콘텐츠 조회(view_content) ──
+        if (window.wcs) {
+          if (!window.wcs_add) window.wcs_add = {};
+          window.wcs_add['wa'] = 's_dcdf9038a76';
+          wcs.trans({ type: 'view_content' });
+        }
+
         // 전역 노출
-        window.hoverPanel = hoverPanel;
-        window.resetPanel = resetPanel;
-        window.enterForm = enterForm;
-        window.enterBrochure = enterBrochure;
-        window.enterKickoff = enterKickoff;
+        window.handleContactSubmit = handleContactSubmit;
         window.goToKickoff = goToKickoff;
-        window.backToSelect = backToSelect;
         window.backFromKickoff = backFromKickoff;
         window.resetKickoffForm = resetKickoffForm;
         window.onMeetingTypeChange = onMeetingTypeChange;
         window.openAddressSearch = openAddressSearch;
+        window.handleKickoffSubmit = handleKickoffSubmit;
         window.openSubmitReviewModal = openSubmitReviewModal;
         window.closeSubmitReviewModal = closeSubmitReviewModal;
-        window.handleKickoffSubmit = handleKickoffSubmit;
-        window.toggleCustomBudget = toggleCustomBudget;
-        window.handleContactSubmit = handleContactSubmit;
-        window.handleBrochureSubmit = handleBrochureSubmit;
         window.openPrivacyModal = openPrivacyModal;
         window.closePrivacyModal = closePrivacyModal;
 
@@ -1358,7 +923,6 @@ export const ContactPage = () => (
         fetch('/api/admin/public/contact')
           .then(function(r) { return r.json(); })
           .then(function(data) {
-            // 개인정보 보호 책임자 업데이트
             if (data.officer) {
               var o = data.officer;
               var tbody = document.getElementById('privacyOfficerTable');
@@ -1370,7 +934,6 @@ export const ContactPage = () => (
                   '<tr><td>이메일</td><td>' + (o.email ? '<a href="mailto:' + o.email + '">' + o.email + '</a>' : '') + '</td></tr>';
               }
             }
-            // FAQ 업데이트
             if (data.faq && data.faq.length) {
               var faqList = document.getElementById('dynamicFaqList');
               if (faqList) {
@@ -1389,5 +952,6 @@ export const ContactPage = () => (
           .catch(function() { /* 조용히 실패 */ });
       })();
     `}} />
+    </div>{/* /svc-light */}
   </>
 )

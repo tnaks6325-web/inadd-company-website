@@ -1,0 +1,29 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="150" height="92" viewBox="0 0 150 92" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Influencer/Profile-Card" filter="url(#filter0_d_0_66)">
+<path id="Profile-Card/Shape-01" d="M123 13H34C24.0589 13 16 21.0589 16 31V61C16 70.9411 24.0589 79 34 79H123C132.941 79 141 70.9411 141 61V31C141 21.0589 132.941 13 123 13Z" fill="url(#paint0_linear_0_66)"/>
+<path id="Profile-Card/Shape-02" d="M116 6H28C18.0589 6 10 14.0589 10 24V54C10 63.9411 18.0589 72 28 72H116C125.941 72 134 63.9411 134 54V24C134 14.0589 125.941 6 116 6Z" fill="url(#paint1_linear_0_66)" stroke="#D9E1ED" stroke-width="2"/>
+<path id="Profile-Card/Shape-03" d="M40 51C48.2843 51 55 44.2843 55 36C55 27.7157 48.2843 21 40 21C31.7157 21 25 27.7157 25 36C25 44.2843 31.7157 51 40 51Z" fill="#DCE7FA"/>
+<path id="Profile-Card/Shape-04" d="M40 37C42.7614 37 45 34.7614 45 32C45 29.2386 42.7614 27 40 27C37.2386 27 35 29.2386 35 32C35 34.7614 37.2386 37 40 37Z" fill="#285CCC"/>
+<path id="Profile-Card/Shape-05" d="M30 45C36.6667 37 43.3333 37 50 45Z" fill="#285CCC"/>
+<path id="Profile-Card/Shape-06" d="M67 28H112M67 42H98" stroke="#BDCBE2" stroke-width="5" stroke-linecap="round"/>
+</g>
+<defs>
+<filter id="filter0_d_0_66" x="0" y="0" width="151" height="93" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="4.5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.14 0 0 0 0 0.2 0 0 0 0 0.3 0 0 0 0.09 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_66"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_66" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_0_66" x1="16" y1="13" x2="16" y2="79" gradientUnits="userSpaceOnUse">
+<stop stop-color="#285CCC"/>
+<stop offset="1" stop-color="#214CA8"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_66" x1="10" y1="6" x2="64.748" y2="108.86" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#E9EDF4"/>
+</linearGradient>
+</defs>
+</svg>

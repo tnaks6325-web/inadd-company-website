@@ -1,0 +1,75 @@
+/* DEV-only Figma split graphics. Card, copy, tabs and CTA retain the existing layout. */
+#services .hsvc-panel--motion .hsvc-panel-img {
+  animation: none;
+  transform: none;
+  overflow: hidden;
+}
+#services #hsvcIconAsset[hidden],
+#services .hsvc-motion-viewport[hidden] { display: none !important; }
+#services .hsvc-panel--motion .hsvc-motion-viewport {
+  position: relative;
+  width: min(480px, calc(100% - 32px));
+  aspect-ratio: 4 / 3;
+  overflow: visible;
+}
+.hsvc-motion-world {
+  position: absolute;
+  width: 480px;
+  height: 360px;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+}
+.hsvc-motion-scene { margin-left: -20px; }
+.hsvc-motion-scene img, .hsvc-motion-scene svg { max-width: none; }
+.hsvc-motion-scene [data-name$="Ground-Shadow"] { opacity: .7; }
+.hsvc-motion-scene [data-name^="Performance/Bar-"] { transform-origin: 50% 100%; }
+.hsvc-motion-scene [data-name="Experience/Box-Lid-Left"] { transform-origin: 100% 85%; }
+.hsvc-motion-scene [data-name="Experience/Box-Lid-Right"] { transform-origin: 0% 75%; }
+.hsvc-motion-scene [data-name="Viral/Megaphone"] { transform-origin: 42% 64%; }
+.hsvc-motion-scene [data-name="OliveYoung/Magnifier"] { transform-origin: 41% 37%; }
+.hsvc-motion-scene[data-phase="idle"] [data-name="Viral/Megaphone"] {
+  animation: hsvc-part-drift 5s ease-in-out infinite;
+  --drift: -3px;
+}
+.hsvc-motion-scene[data-phase="idle"] [data-name^="Viral/Bubble-0"]:not([data-name$="03"]) {
+  animation: hsvc-part-drift 5s ease-in-out infinite;
+  --drift: -2px;
+}
+.hsvc-motion-scene[data-phase="idle"] [data-name="Viral/Bubble-02"] { animation-delay: -.8s; }
+.hsvc-motion-scene[data-phase="idle"] [data-name^="Viral/Wave-"] {
+  animation: hsvc-wave-pass 5s ease-out infinite;
+}
+.hsvc-motion-scene[data-phase="idle"] [data-name="Viral/Wave-02"] { animation-delay: -.2s; }
+.hsvc-motion-scene[data-phase="idle"] [data-name="Viral/Wave-01"] { animation-delay: -.4s; }
+.hsvc-motion-scene[data-phase="idle"] [data-name="Performance/Graph-Panel"],
+.hsvc-motion-scene[data-phase="idle"] [data-name^="Performance/Bar-"],
+.hsvc-motion-scene[data-phase="idle"] [data-name="Performance/Arrow"],
+.hsvc-motion-scene[data-phase="idle"] [data-name="Performance/Target"],
+.hsvc-motion-scene[data-phase="idle"] [data-name="Influencer/Video-Card"],
+.hsvc-motion-scene[data-phase="idle"] [data-name="Influencer/Play-Button"],
+.hsvc-motion-scene[data-phase="idle"] [data-name="Influencer/Reaction-01"],
+.hsvc-motion-scene[data-phase="idle"] [data-name="Experience/Sample-Product"],
+.hsvc-motion-scene[data-phase="idle"] [data-name="Review/Review-Card-01"],
+.hsvc-motion-scene[data-phase="idle"] [data-name^="Review/Star-"],
+.hsvc-motion-scene[data-phase="idle"] [data-name="PPL/Product"] {
+  animation: hsvc-part-drift 5s ease-in-out infinite;
+  --drift: -2px;
+}
+/* Keep symbols locked to their moving card instead of drifting out of alignment. */
+.hsvc-motion-scene[data-phase="idle"] [data-name="Influencer/Reaction-01"] { animation-delay: -.65s; }
+@keyframes hsvc-part-drift { 0%, 100% { translate: 0 0; } 50% { translate: 0 var(--drift, -2px); } }
+@keyframes hsvc-wave-pass { 0%, 32%, 72%, 100% { opacity: 0; translate: 0 0; } 16%, 82% { opacity: .8; translate: 6px 0; } 28%, 94% { opacity: 0; translate: 13px 0; } }
+#services .hsvc-panel--motion[data-icon-float="paused"] .hsvc-motion-scene,
+#services .hsvc-panel--motion[data-icon-float="paused"] .hsvc-motion-scene * { animation-play-state: paused !important; }
+#services .hsvc-panel--motion[data-icon-motion="reduced"] .hsvc-motion-scene,
+#services .hsvc-panel--motion[data-icon-motion="reduced"] .hsvc-motion-scene * { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .hsvc-motion-scene, .hsvc-motion-scene * { animation: none !important; }
+}
+@media (max-width: 900px) {
+  #services .hsvc-panel--motion .hsvc-motion-viewport { width: min(368px, calc(100% - 32px)); }
+}
+@media (max-width: 480px) {
+  #services .hsvc-panel--motion .hsvc-motion-viewport { width: min(332px, calc(100% - 24px)); }
+}

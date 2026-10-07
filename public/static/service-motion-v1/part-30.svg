@@ -1,0 +1,12 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="163.839" height="70" viewBox="0 0 163.839 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Experience/Box-Lid-Right">
+<path id="Box-Lid-Right/Shape-01" d="M2.83857 52L129.839 25L162.839 1L23.8386 29L2.83857 52Z" fill="url(#paint0_linear_0_69)" stroke="#D7DFEA" stroke-width="2"/>
+<path id="Box-Lid-Right/Shape-02" d="M2.83857 52L23.8386 58L162.839 28V1L129.839 25L2.83857 52Z" fill="#E1E8F3"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_69" x1="2.83857" y1="1" x2="32.3524" y2="93.5925" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#E9EDF4"/>
+</linearGradient>
+</defs>
+</svg>

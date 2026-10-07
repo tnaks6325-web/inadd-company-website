@@ -1,0 +1,12 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="66" height="52" viewBox="0 0 66 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Influencer/Reaction-02">
+<path id="Reaction-02/Shape-01" d="M13 1H53C61 1 65 5 65 13V35C65 43 61 47 53 47H31L19 52L21 47H13C5 47 1 43 1 35V13C1 5 5 1 13 1Z" fill="url(#paint0_linear_0_21)"/>
+<path id="Reaction-02/Shape-02" d="M16 18H49M16 29H39" stroke="white" stroke-width="4" stroke-linecap="round"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_21" x1="1" y1="1" x2="50.713" y2="63.3849" gradientUnits="userSpaceOnUse">
+<stop stop-color="#6F97ED"/>
+<stop offset="1" stop-color="#285CCC"/>
+</linearGradient>
+</defs>
+</svg>

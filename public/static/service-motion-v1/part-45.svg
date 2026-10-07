@@ -1,0 +1,18 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="60" height="120" viewBox="0 0 60 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="OliveYoung/Cosmetic-Tube">
+<path id="Cosmetic-Tube/Shape-01" d="M5 2H55L50 99H10L5 2Z" fill="url(#paint0_linear_0_38)" stroke="#D7DFEA" stroke-width="2"/>
+<path id="Cosmetic-Tube/Shape-02" d="M8 16H52" stroke="#DCE4F1" stroke-width="4"/>
+<path id="Cosmetic-Tube/Shape-03" d="M15 50H45M15 63H36" stroke="#285CCC" stroke-width="4" stroke-linecap="round"/>
+<path id="Cosmetic-Tube/Shape-04" d="M45 97H15C12.2386 97 10 99.2386 10 102V111C10 113.761 12.2386 116 15 116H45C47.7614 116 50 113.761 50 111V102C50 99.2386 47.7614 97 45 97Z" fill="url(#paint1_linear_0_38)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_38" x1="5" y1="2" x2="84.0075" y2="42.7255" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#E9EDF4"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_38" x1="10" y1="97" x2="24.7272" y2="128.005" gradientUnits="userSpaceOnUse">
+<stop stop-color="#6F97ED"/>
+<stop offset="1" stop-color="#285CCC"/>
+</linearGradient>
+</defs>
+</svg>

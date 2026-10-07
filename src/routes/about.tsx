@@ -1,78 +1,9 @@
+import { icon } from '../icons'
 export const AboutPage = () => (
   <>
-    {/* ============ SCROLL STORY INTRO ============ */}
-    <section class="viral-story">
-
-      {/* Scene 1 */}
-      <div class="vs-scene" id="vs1">
-        <div class="vs-scene-bg"></div>
-        <p class="vs-text vs-text--large">에너지드링크,<br /><em>어떻게 플레이 할까요?</em></p>
-      </div>
-
-      {/* Scene 2 */}
-      <div class="vs-scene" id="vs2">
-        <div class="vs-scene-bg"></div>
-        <p class="vs-text">99%는 에너지드링크만 생각하며<br />콘텐츠를 구상합니다</p>
-      </div>
-
-      {/* Scene 3 */}
-      <div class="vs-scene" id="vs3">
-        <div class="vs-scene-bg"></div>
-        <p class="vs-text vs-text--accent">하지만</p>
-      </div>
-
-      {/* Scene 4 */}
-      <div class="vs-scene" id="vs4">
-        <div class="vs-scene-bg"></div>
-        <p class="vs-text vs-text--em">1%만<br />에너지드링크를 <em>마시는 사람</em>으로<br />구상합니다</p>
-      </div>
-
-      {/* Scene 5 */}
-      <div class="vs-scene" id="vs5">
-        <div class="vs-scene-bg"></div>
-        <p class="vs-text">고객의 모든 검색환경에서부터<br />시작합니다.</p>
-      </div>
-
-      {/* Scene 6 — CTA */}
-      <div class="vs-scene vs-scene--cta" id="vs6">
-        <div class="vs-scene-bg vs-scene-bg--glow"></div>
-        <div class="vs-cta-wrap">
-          <span class="sec-label">IN AD COMPANY</span>
-          <p class="vs-text vs-text--cta"><em>시각을 뒤집는</em> 인애드가<br />함께 하겠습니다.</p>
-          <div class="vs-scroll-hint">
-            <span>인애드컴퍼니 더 알아보기</span>
-            <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* 스크롤 스토리 JS */}
-    <script dangerouslySetInnerHTML={{__html: `
-(function() {
-  var story = document.querySelector('.viral-story');
-  var header = document.querySelector('.site-header');
-  var scenes = document.querySelectorAll('.vs-scene');
-  if (!story || scenes.length === 0) return;
-
-  var io = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      var el = entry.target.querySelector('.vs-text, .vs-cta-wrap');
-      if (!el) return;
-      if (entry.isIntersecting) { el.classList.add('vs-visible'); }
-      else { el.classList.remove('vs-visible'); }
-    });
-  }, { threshold: 0.5 });
-
-  scenes.forEach(function(s) { io.observe(s); });
-
-  /* 헤더는 항상 표시 - 숨김 처리 제거 */
-  if (header) { header.classList.remove('header--hidden'); }
-})();
-    `}} />
-
     {/* ── Page Hero ── */}
     <section class="page-hero about-hero">
+      <div class="page-hero-img-bg" aria-hidden="true"></div>
       <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
       <div class="container">
         <span class="sec-label">About Us</span>
@@ -80,6 +11,23 @@ export const AboutPage = () => (
         <p class="page-desc">단순 노출이 아니라, 타깃이 '행동'하게 만드는 캠페인을 설계합니다.</p>
       </div>
     </section>
+
+    {/* 밴드 등장 — 뷰포트 진입 시 reveal */}
+    <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  var band = document.querySelector('.about-hero-band');
+  if (!band) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { band.classList.add('revealed'); return; }
+  if (!('IntersectionObserver' in window)) { band.classList.add('revealed'); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) { band.classList.add('revealed'); io.disconnect(); } });
+  }, { threshold: 0.2 });
+  io.observe(band);
+})();
+    `}} />
+
+    {/* ══ 라이트 테마 콘텐츠 래퍼 (히어로 제외) ══ */}
+    <div class="svc-light">
 
     {/* ── 회사 소개 ── */}
     <section class="about-intro-section">
@@ -109,7 +57,7 @@ export const AboutPage = () => (
 
             <div class="ai-desc-block">
               <p>인애드컴퍼니는 2019년부터 "보이기 위한 광고"보다 "선택받는 이유"를 만드는 데 집중해왔습니다.</p>
-              <p>바이럴·인플루언서·유튜브·검색/SEO·리뷰·PPL까지 상황에 맞게 조합하되, 기준은 하나입니다: 설득력 있는 메시지. 자연스러운 확산을 만들고, 그 흐름이 전환으로 이어지도록 끝까지 설계합니다.</p>
+              <p>바이럴·인플루언서·유튜브·리뷰·PPL까지 상황에 맞게 조합하되, 기준은 하나입니다: 설득력 있는 메시지. 브랜드 콘텐츠가 널리 닿게 만들고, 그 흐름이 전환으로 이어지도록 끝까지 설계합니다.</p>
             </div>
 
             {/* 서비스 태그 그리드 */}
@@ -124,11 +72,7 @@ export const AboutPage = () => (
               </div>
               <div class="ai-svc-item">
                 <span class="ai-svc-dot"></span>
-                <span class="ai-svc-name">검색/SEO 마케팅</span>
-              </div>
-              <div class="ai-svc-item">
-                <span class="ai-svc-dot"></span>
-                <span class="ai-svc-name">시딩 캠페인</span>
+                <span class="ai-svc-name">체험단 마케팅</span>
               </div>
               <div class="ai-svc-item">
                 <span class="ai-svc-dot"></span>
@@ -144,50 +88,36 @@ export const AboutPage = () => (
               </div>
             </div>
 
-            <a href="/contact" class="ai-cta-link">
-              <span>상담 신청하기</span>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
           </div>
 
-          {/* 오른쪽: 스탯 카드 4개 */}
-          <div class="about-stats-grid">
+          {/* 오른쪽: 숫자 스토리 (에디토리얼 타이포) */}
+          <div class="about-stats-grid about-stats-grid--editorial">
             <div class="astat-card" data-target="2019" data-suffix="년" data-label="설립">
-              <div class="astat-glow"></div>
-              <div class="astat-scan"></div>
-              <div class="astat-inner">
-                <p class="astat-label-top">설립 연도</p>
-                <div class="astat-num"><span class="astat-counter">2019</span><span class="astat-unit">년</span></div>
-                <div class="astat-bar"><div class="astat-bar-fill"></div></div>
+              <div class="astat-num"><span class="astat-counter">2019</span><span class="astat-unit">년</span></div>
+              <div class="astat-copy">
+                <p class="astat-copy-label">설립</p>
+                <p class="astat-copy-desc">7년째, 이론이 아니라 실전에서 배웠습니다</p>
               </div>
             </div>
-            <div class="astat-card astat-card--highlight" data-target="320" data-suffix="+" data-label="완료 프로젝트">
-              <div class="astat-glow"></div>
-              <div class="astat-scan"></div>
-              <div class="astat-inner">
-                <p class="astat-label-top">완료 프로젝트</p>
-                <div class="astat-num"><span class="astat-counter">320</span><span class="astat-unit">+</span></div>
-                <div class="astat-bar"><div class="astat-bar-fill"></div></div>
+            <div class="astat-card astat-card--highlight" data-target="37000" data-suffix="+" data-label="완료 캠페인">
+              <div class="astat-num"><span class="astat-counter">37,000</span><span class="astat-unit">+</span></div>
+              <div class="astat-copy">
+                <p class="astat-copy-label">완료 캠페인</p>
+                <p class="astat-copy-desc">업종을 가리지 않고, 퍼널 단위로 설계했습니다</p>
               </div>
             </div>
             <div class="astat-card" data-target="98" data-suffix="%" data-label="재계약률">
-              <div class="astat-glow"></div>
-              <div class="astat-scan"></div>
-              <div class="astat-inner">
-                <p class="astat-label-top">재계약률</p>
-                <div class="astat-num"><span class="astat-counter">98</span><span class="astat-unit">%</span></div>
-                <div class="astat-bar"><div class="astat-bar-fill"></div></div>
+              <div class="astat-num"><span class="astat-counter">98</span><span class="astat-unit">%</span></div>
+              <div class="astat-copy">
+                <p class="astat-copy-label">재계약률</p>
+                <p class="astat-copy-desc">한 번 함께한 브랜드가 다시 찾습니다</p>
               </div>
             </div>
             <div class="astat-card" data-target="50" data-suffix="+" data-label="파트너 브랜드">
-              <div class="astat-glow"></div>
-              <div class="astat-scan"></div>
-              <div class="astat-inner">
-                <p class="astat-label-top">파트너 브랜드</p>
-                <div class="astat-num"><span class="astat-counter">50</span><span class="astat-unit">+</span></div>
-                <div class="astat-bar"><div class="astat-bar-fill"></div></div>
+              <div class="astat-num"><span class="astat-counter">50</span><span class="astat-unit">+</span></div>
+              <div class="astat-copy">
+                <p class="astat-copy-label">파트너 브랜드</p>
+                <p class="astat-copy-desc">스타트업부터 대기업까지, 함께 성장 중입니다</p>
               </div>
             </div>
           </div>
@@ -196,9 +126,167 @@ export const AboutPage = () => (
       </div>
     </section>
 
+    {/* ============ HISTORY (홈에서 이관) ============ */}
+    <section class="section history-section" id="history">
+      <div class="container">
+
+        {/* 헤더 */}
+        <div class="hist-head">
+          <div>
+            <span class="sec-label">Company Growth</span>
+            <h2 class="sec-title hist-title">IN AD <em>HISTORY</em></h2>
+            <p class="hist-subtitle">2019 – 2026 Continuous Growth</p>
+          </div>
+        </div>
+
+        {/* SVG 성장 곡선 + 노드 컨테이너 */}
+        <div class="hist-track-wrap" id="histTrackWrap">
+
+          {/* 배경 SVG 곡선 */}
+          <svg class="hist-curve-svg" viewBox="0 0 1200 260" preserveAspectRatio="none" aria-hidden="true">
+            {/* 글로우 선 */}
+            <path class="hist-curve-glow"
+              d="M 0,220 C 100,210 180,200 250,185 C 330,168 390,148 470,128 C 550,108 610,92 690,75 C 770,58 840,44 920,32 C 980,22 1050,16 1200,12"
+              fill="none" />
+            {/* 메인 선 */}
+            <path class="hist-curve-line"
+              d="M 0,220 C 100,210 180,200 250,185 C 330,168 390,148 470,128 C 550,108 610,92 690,75 C 770,58 840,44 920,32 C 980,22 1050,16 1200,12"
+              fill="none" />
+          </svg>
+
+          {/* 노드 8개 — 각 연도 */}
+          {[
+            {
+              year: '2019', label: '설립 및 런칭', pos: 12,
+              items: ['인아웃컴퍼니 설립', '카페 바이럴 런칭'],
+              now: false
+            },
+            {
+              year: '2020', label: '서비스 확장', pos: 24,
+              items: ['확장 이전', 'SNS 채널 런칭', '커뮤니티 바이럴 런칭'],
+              now: false
+            },
+            {
+              year: '2021', label: '브랜드 재정립', pos: 36,
+              items: ['"인애드컴퍼니" 사명 변경'],
+              now: false
+            },
+            {
+              year: '2022', label: '법인 전환 & 도약', pos: 48,
+              items: ['주식회사 전환', '유튜브 마케팅 런칭', '2차 가공 콘텐츠 런칭'],
+              now: false
+            },
+            {
+              year: '2023', label: '조직 전문화', pos: 60,
+              items: ['확장 이전', '유튜브 에이전시 팀'],
+              now: false
+            },
+            {
+              year: '2024', label: '시스템 고도화', pos: 72,
+              items: ['퍼스널 마케팅 구축', '브랜딩 TF팀 구축', '유튜브 릴리즈 개발'],
+              now: false
+            },
+            {
+              year: '2025', label: '업무 시스템 자동화', pos: 84,
+              items: ['사내 인트라넷 구축', '카피하우스 자동화 개발'],
+              now: false
+            },
+            {
+              year: '2026', label: '글로벌 & 퍼포먼스', pos: 96,
+              items: ['콘텐츠 마케팅 정립', '글로벌 마케팅 런칭', '퍼포먼스 마케팅 런칭'],
+              now: true
+            }
+          ].map((node) => (
+            <div
+              class={`hn-node${node.now ? ' hn-node--future' : ''}`}
+              style={`left:${node.pos}%`}
+              data-year={node.year}
+            >
+              {/* 동그라미 */}
+              <div class="hn-circle">
+                <span class="hn-circle-inner"></span>
+                <span class="hn-pulse"></span>
+              </div>
+
+              {/* 툴팁 카드 */}
+              <div class="hn-card">
+                <div class="hn-card-year">{node.year}{node.now && <span class="hn-future-badge">예정</span>}</div>
+                <div class="hn-card-title">{node.label}</div>
+                <ul class="hn-card-list">
+                  {node.items.map(item => <li>{item}</li>)}
+                </ul>
+              </div>
+
+              {/* 연도 라벨 (평소에 보임) */}
+              <span class="hn-year-label">{node.year}</span>
+            </div>
+          ))}
+
+        </div>{/* /hist-track-wrap */}
+      </div>
+
+      {/* 곡선 드로잉 + 노드 순차 등장 (home.js에서 이관) */}
+      <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  var histSection = document.querySelector('.history-section');
+  if(!histSection) return;
+  var triggered = false;
+
+  var nodes = histSection.querySelectorAll('.hn-node');
+  nodes.forEach(function(n){
+    n.style.opacity = '0';
+    n.style.transform = 'translateY(20px) scale(0.8)';
+    n.style.transition = 'none';
+  });
+
+  var line = histSection.querySelector('.hist-curve-line');
+  if(line){
+    var len = line.getTotalLength ? line.getTotalLength() : 1800;
+    line.style.strokeDasharray = len;
+    line.style.strokeDashoffset = len;
+    line.style.transition = 'none';
+  }
+  var glow = histSection.querySelector('.hist-curve-glow');
+  if(glow){
+    var glen = glow.getTotalLength ? glow.getTotalLength() : 1800;
+    glow.style.strokeDasharray = glen;
+    glow.style.strokeDashoffset = glen;
+    glow.style.transition = 'none';
+  }
+
+  function runAnim(){
+    if(triggered) return;
+    var rect = histSection.getBoundingClientRect();
+    if(rect.top > window.innerHeight - 80) return;
+    triggered = true;
+
+    if(line){
+      line.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.4,0,0.2,1)';
+      line.style.strokeDashoffset = '0';
+    }
+    if(glow){
+      glow.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.4,0,0.2,1) 0.1s';
+      glow.style.strokeDashoffset = '0';
+    }
+
+    nodes.forEach(function(n, i){
+      var delay = 0.3 + i * 0.18;
+      setTimeout(function(){
+        n.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1)';
+        n.style.opacity = '1';
+        n.style.transform = 'translateY(0) scale(1)';
+      }, delay * 1000);
+    });
+  }
+
+  window.addEventListener('scroll', runAnim, { passive: true });
+  runAnim();
+})();
+      `}} />
+    </section>
+
     {/* ── 비즈니스 파트너 섹션 ── */}
     <section class="about-partner-section">
-      <canvas class="aptn-canvas" id="aptnCanvas"></canvas>
       <div class="aptn-bg-orb aptn-bg-orb--a"></div>
       <div class="aptn-bg-orb aptn-bg-orb--b"></div>
 
@@ -208,7 +296,7 @@ export const AboutPage = () => (
         <div class="aptn-header">
           <p class="aptn-eyebrow">OUR IDENTITY</p>
           <h2 class="aptn-main-title">비즈니스 파트너</h2>
-          <p class="aptn-main-sub">인애드컴퍼니는 단순한 대행사가 아닙니다.<br />차별화된 전략으로 성장을 만들고, 광고주와 함께 진정한 파트너가 됩니다.</p>
+          <p class="aptn-main-sub">인애드컴퍼니는 일을 받아 처리하는 대행사가 아닙니다.<br />브랜드의 성장을 같이 고민하고, 끝까지 함께 가는 파트너입니다.</p>
         </div>
 
         {/* ── 수렴 플로우 다이어그램 ── */}
@@ -230,7 +318,7 @@ export const AboutPage = () => (
                     </svg>
                   </div>
                   <strong class="aptn-step-title">차별화된 솔루션</strong>
-                  <p class="aptn-step-desc">브랜드 특성을 분석해 경쟁사와 다른 최적의 채널 전략을 설계합니다.</p>
+                  <p class="aptn-step-desc">브랜드의 강점과 경쟁 환경을 뜯어보고, 남들과 다르게 갈 채널부터 정합니다.</p>
                   <ul class="aptn-step-list">
                     <li>브랜드 심층 분석</li>
                     <li>맞춤 채널 기획</li>
@@ -271,7 +359,7 @@ export const AboutPage = () => (
                     </svg>
                   </div>
                   <strong class="aptn-step-title">브랜딩 강화</strong>
-                  <p class="aptn-step-desc">소비자 인식에 자연스럽게 각인되는 지속 가능한 마케팅 생태계를 구축합니다.</p>
+                  <p class="aptn-step-desc">소비자가 브랜드를 자연스럽게 기억하고, 다시 찾게 만듭니다.</p>
                   <ul class="aptn-step-list">
                     <li>브랜드 아이덴티티 구축</li>
                     <li>소비자 신뢰도 향상</li>
@@ -299,11 +387,11 @@ export const AboutPage = () => (
             <div class="aptn-result-card">
               <div class="aptn-result-card-inner">
                 <div class="aptn-result-icon-wrap">
-                  <span class="aptn-result-icon">🤝</span>
+                  <span class="aptn-result-icon">{icon('handshake')}</span>
                 </div>
                 <strong class="aptn-result-label">Business Partner</strong>
                 <p class="aptn-result-tagline">STRATEGY · GROWTH · IDENTITY</p>
-                <p class="aptn-result-sub">단순 대행을 넘어,<br />브랜드의 장기 성장을 설계합니다</p>
+                <p class="aptn-result-sub">한 번의 캠페인이 아니라,<br />브랜드의 다음 단계까지 설계합니다</p>
                 <div class="aptn-result-divider"></div>
                 <div class="aptn-result-metrics">
                   <div class="aptn-result-metric">
@@ -352,7 +440,7 @@ export const AboutPage = () => (
               </div>
               <div class="aptn-vm-item-content">
                 <span class="aptn-vm-item-label">VISION</span>
-                <p class="aptn-vm-item-text">고객사 비즈니스의 <strong>성공</strong>만을 위한,<br />효과적인 <strong>퍼널 솔루션</strong>을 제공합니다.</p>
+                <p class="aptn-vm-item-text">오직 고객사의 <strong>매출과 성장</strong>을 위해,<br />검색부터 재구매까지 <strong>퍼널 전 단계</strong>를 설계합니다.</p>
               </div>
             </div>
 
@@ -377,71 +465,7 @@ export const AboutPage = () => (
       </div>
     </section>
 
-    {/* ── 상담 CTA 배너 ── */}
-    <section class="about-cta-section">
-      <div class="about-cta-inner">
-        <p class="about-cta-text">
-          아래 상담을 남기시면 유형에 맞는 레퍼런스를 받아 보실 수 있습니다.
-        </p>
-        <a href="/contact" class="about-cta-btn">
-          상담 남기기 <span class="about-cta-arrow">→</span>
-        </a>
-      </div>
-    </section>
-
-    {/* ── 클라이언트 ── */}
-    <section class="acl-section">
-
-      {/* 헤더 */}
-      <div class="acl-header">
-        <p class="acl-eyebrow">OUR CLIENTS</p>
-        <h2 class="acl-heading">함께한 브랜드</h2>
-        <p class="acl-sub">인애드컴퍼니와 함께 성장한 브랜드들입니다</p>
-      </div>
-
-      {/* 마퀴 래퍼 — 흰 배경, 양끝 페이드 */}
-      <div class="acl-marquee-wrap">
-
-        {/* Row 1 — 왼쪽으로 */}
-        <div class="acl-row">
-          <div class="acl-track acl-track--fwd">
-            {[
-              'lg','cj','cocacola','maeil','daangn','harim','knotted','gmarket',
-              'bodylab','madeu','snp','yakson','secretage','medience','pulio','petitelin',
-              'airmade','echo','bon','bobsnu','elravie','dailyco','happyprince',
-              /* 루프용 복제 */
-              'lg','cj','cocacola','maeil','daangn','harim','knotted','gmarket',
-              'bodylab','madeu','snp','yakson','secretage','medience','pulio','petitelin',
-              'airmade','echo','bon','bobsnu','elravie','dailyco','happyprince',
-            ].map((name, i) => (
-              <div class="acl-logo-box" key={i}>
-                <img src={`/static/logos/${name}.png`} alt={name} class="acl-logo-img" loading="lazy" />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Row 2 — 오른쪽으로 */}
-        <div class="acl-row">
-          <div class="acl-track acl-track--rev">
-            {[
-              'petitelin','pulio','medience','secretage','yakson','snp','madeu','bodylab',
-              'gmarket','knotted','harim','daangn','maeil','cocacola','cj','lg',
-              'jangsoo','suvid','ofmom','nutseline','woori',
-              /* 루프용 복제 */
-              'petitelin','pulio','medience','secretage','yakson','snp','madeu','bodylab',
-              'gmarket','knotted','harim','daangn','maeil','cocacola','cj','lg',
-              'jangsoo','suvid','ofmom','nutseline','woori',
-            ].map((name, i) => (
-              <div class="acl-logo-box" key={i}>
-                <img src={`/static/logos/${name}.png`} alt={name} class="acl-logo-img" loading="lazy" />
-              </div>
-            ))}
-          </div>
-        </div>
-
-      </div>
-    </section>
+    {/* ── 클라이언트 섹션 제거(2026-07) — 파트너 로고 흐름은 홈 히어로 아래 마퀴로 이동 ── */}
 
     {/* ── 오시는 길 ── */}
     <section class="section about-location-section" id="location">
@@ -507,14 +531,10 @@ export const AboutPage = () => (
                 </div>
               </li>
             </ul>
-
-            <div class="location-cta-row">
-              <a href="/contact" class="hero-cta-btn primary">
-                <span>상담 신청하기</span>
-                <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-              <button type="button" class="hero-cta-btn ghost" onclick="openCallModal()"><span>📞 바로 전화하기</span></button>
-            </div>
+            <a href="/contact" class="why-cta cta-inq-btn cta-inq-btn--block">
+              <span>문의하기</span>
+              <svg class="why-cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
           </div>
         </div>
       </div>
@@ -650,7 +670,7 @@ export const AboutPage = () => (
   /* ── 카운터 애니메이션 ── */
   function animateCounter(el, target, duration) {
     var start = 0, startTime = null;
-    var isYear = target >= 2000;
+    var isYear = target >= 1990 && target <= 2100;
     var from = isYear ? target : 0;
     function step(ts) {
       if (!startTime) startTime = ts;
@@ -683,61 +703,6 @@ export const AboutPage = () => (
   }, { threshold: 0.3 });
   var statsGrid = document.querySelector('.about-stats-grid');
   if (statsGrid) io.observe(statsGrid);
-
-  /* ── 파티클 캔버스 ── */
-  var canvas = document.getElementById('aptnCanvas');
-  if (!canvas) return;
-  var ctx = canvas.getContext('2d');
-  var particles = [];
-  function resize() {
-    canvas.width  = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  for (var i = 0; i < 55; i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: Math.random() * 1.4 + 0.3,
-      dx: (Math.random() - 0.5) * 0.35,
-      dy: (Math.random() - 0.5) * 0.35,
-      a: Math.random() * 0.5 + 0.1
-    });
-  }
-
-  function drawParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(function(p) {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(41,121,255,' + p.a + ')';
-      ctx.fill();
-      p.x += p.dx; p.y += p.dy;
-      if (p.x < 0 || p.x > canvas.width)  p.dx *= -1;
-      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-    });
-    /* 가까운 파티클끼리 연결 */
-    for (var i = 0; i < particles.length; i++) {
-      for (var j = i + 1; j < particles.length; j++) {
-        var dx = particles[i].x - particles[j].x;
-        var dy = particles[i].y - particles[j].y;
-        var dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 100) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = 'rgba(41,121,255,' + (0.12 * (1 - dist/100)) + ')';
-          ctx.lineWidth = 0.6;
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(drawParticles);
-  }
-  drawParticles();
-
 
   /* ══ 수렴 플로우 Canvas 애니메이션 ══ */
   (function() {
@@ -890,5 +855,6 @@ export const AboutPage = () => (
   })();
 })();
     `}} />
+    </div>{/* /svc-light */}
   </>
 )

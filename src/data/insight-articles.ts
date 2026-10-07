@@ -24,7 +24,7 @@ export type ContentSubCategory =
 export const CONTENT_SUB_LABELS: Record<ContentSubCategory, string> = {
   viral:       '바이럴 마케팅',
   influencer:  '인플루언서 마케팅',
-  seeding:     '시딩 캠페인',
+  seeding:     '체험단',
   seo:         'SEO 마케팅',
   review:      '리뷰 마케팅',
   oliveyoung:  '올리브영 마케팅',

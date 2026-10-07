@@ -1,0 +1,12 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="84" height="59.582" viewBox="0 0 84 59.582" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Viral/Bubble-03">
+<path id="Bubble-03/Shape-01" d="M15 2H67C77 2 82 7 82 17V39C82 48.3333 77 53 67 53H43L27 58L29 53H15C6.33333 53 2 48.3333 2 39V17C2 7 6.33333 2 15 2Z" fill="url(#paint0_linear_0_80)" stroke="#D7DFEA" stroke-width="2"/>
+<path id="Bubble-03/Shape-02" d="M22 22H60M22 34H48" stroke="#8DABE9" stroke-width="5" stroke-linecap="round"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_80" x1="2" y1="2" x2="54.6174" y2="77.1678" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#E9EDF4"/>
+</linearGradient>
+</defs>
+</svg>

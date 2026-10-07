@@ -1,0 +1,73 @@
+/* DEV-only header masks. The controller owns the entrance and accent motion;
+   CSS keeps the existing editorial dimensions and a visible no-JS fallback. */
+#services.hsvc-redesign .hsvc-redesign-heading,
+#services.hsvc-redesign .hsvc-redesign-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  white-space: normal;
+}
+#services.hsvc-redesign .hsvc-heading-line,
+#services.hsvc-redesign .hsvc-intro-line {
+  display: block;
+  flex: 0 0 auto;
+  max-width: 100%;
+  overflow: clip;
+  padding-block: .16em;
+  margin-block: -.16em;
+  white-space: normal;
+}
+#services.hsvc-redesign .hsvc-redesign-kicker {
+  overflow: clip;
+  padding-block: .16em;
+  margin-top: -.16em;
+  margin-bottom: calc(8px - .16em);
+  white-space: normal;
+}
+#services.hsvc-redesign .hsvc-header-part {
+  display: block;
+  max-width: 100%;
+  opacity: 1;
+  translate: none;
+  rotate: none;
+  scale: none;
+  transform-origin: 0 100%;
+  white-space: normal;
+}
+#services.hsvc-redesign .hsvc-redesign-kicker .hsvc-header-part {
+  display: inline-block;
+  transform-origin: 0 50%;
+}
+#services.hsvc-redesign .hsvc-heading-accent {
+  display: inline-block;
+  color: #285ccc !important;
+  -webkit-text-fill-color: #285ccc !important;
+  white-space: nowrap;
+}
+#services.hsvc-redesign .hsvc-heading-letter {
+  display: inline-block;
+  opacity: 1;
+  translate: none;
+  rotate: none;
+  scale: none;
+  transform-origin: 50% 80%;
+  color: #285ccc !important;
+  -webkit-text-fill-color: #285ccc !important;
+}
+@media (max-width: 760px) {
+  #services.hsvc-redesign .hsvc-redesign-kicker {
+    margin-bottom: calc(21px - .16em);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #services.hsvc-redesign .hsvc-redesign-header [data-header-part],
+  #services.hsvc-redesign .hsvc-redesign-header [data-header-letter] {
+    opacity: 1 !important;
+    translate: none !important;
+    rotate: none !important;
+    scale: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}

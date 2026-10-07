@@ -1,0 +1,17 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="191" height="100.803" viewBox="0 0 191 100.803" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Experience/Box-Front">
+<path id="Box-Front/Shape-01" d="M1 0.803098L62 30.8031V99.8031L1 69.8031V0.803098Z" fill="url(#paint0_linear_0_59)" stroke="#D7DFEA"/>
+<path id="Box-Front/Shape-02" d="M62 30.8031L190 1.8031V70.8031L62 99.8031V30.8031Z" fill="url(#paint1_linear_0_59)" stroke="#D7DFEA"/>
+<path id="Box-Front/Shape-03" d="M77 65.8031L113 57.8031" stroke="#B4C8EE" stroke-width="6" stroke-linecap="round"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_59" x1="1" y1="0.803098" x2="89.4279" y2="55.289" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#E9EDF4"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_59" x1="62" y1="1.8031" x2="156.606" y2="125.37" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#E9EDF4"/>
+</linearGradient>
+</defs>
+</svg>

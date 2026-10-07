@@ -1,0 +1,29 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="255" height="176" viewBox="0 0 255 176" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Review/Review-Card-02" filter="url(#filter0_d_0_82)">
+<path id="Review-Card-02/Shape-01" d="M228 13H34C24.0589 13 16 21.0589 16 31V145C16 154.941 24.0589 163 34 163H228C237.941 163 246 154.941 246 145V31C246 21.0589 237.941 13 228 13Z" fill="url(#paint0_linear_0_82)"/>
+<path id="Review-Card-02/Shape-02" d="M221 6H28C18.0589 6 10 14.0589 10 24V138C10 147.941 18.0589 156 28 156H221C230.941 156 239 147.941 239 138V24C239 14.0589 230.941 6 221 6Z" fill="url(#paint1_linear_0_82)" stroke="#D9E1ED" stroke-width="2"/>
+<path id="Review-Card-02/Shape-03" d="M207.5 62H34.5C32.567 62 31 63.567 31 65.5C31 67.433 32.567 69 34.5 69H207.5C209.433 69 211 67.433 211 65.5C211 63.567 209.433 62 207.5 62Z" fill="#D8E0EC"/>
+<path id="Review-Card-02/Shape-04" d="M182.5 82H34.5C32.567 82 31 83.567 31 85.5C31 87.433 32.567 89 34.5 89H182.5C184.433 89 186 87.433 186 85.5C186 83.567 184.433 82 182.5 82Z" fill="#E1E7EF"/>
+<path id="Review-Card-02/Shape-05" d="M41 46C47.0751 46 52 41.0751 52 35C52 28.9249 47.0751 24 41 24C34.9249 24 30 28.9249 30 35C30 41.0751 34.9249 46 41 46Z" fill="#CBD9F1"/>
+<path id="Review-Card-02/Shape-06" d="M138 31H66C64.3431 31 63 32.3431 63 34C63 35.6569 64.3431 37 66 37H138C139.657 37 141 35.6569 141 34C141 32.3431 139.657 31 138 31Z" fill="#BCCCE6"/>
+</g>
+<defs>
+<filter id="filter0_d_0_82" x="0" y="0" width="256" height="177" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="4.5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.14 0 0 0 0 0.2 0 0 0 0 0.3 0 0 0 0.09 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_82"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_82" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_0_82" x1="16" y1="13" x2="16" y2="163" gradientUnits="userSpaceOnUse">
+<stop stop-color="#285CCC"/>
+<stop offset="1" stop-color="#214CA8"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_82" x1="10" y1="6" x2="147.508" y2="215.929" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#E9EDF4"/>
+</linearGradient>
+</defs>
+</svg>

@@ -1,0 +1,229 @@
+/* DEV-only selection choreography. Original Figma geometry remains the resting pose.
+   Every semantic action uses one shared 1.6s clock, with stagger encoded in keyframes
+   rather than delays. The controller enters idle on the final animationend event. */
+.hsvc-motion-scene[data-phase="perform"] [data-name$="Ground-Shadow"] {
+  animation: hsvc-action-ground 1.6s ease-in-out both;
+}
+@keyframes hsvc-action-ground {
+  0%, 100% { opacity: .7; scale: 1; }
+  24% { opacity: .5; scale: .88 1; }
+  52% { opacity: .78; scale: 1.08 1; }
+  82% { opacity: .7; scale: 1; }
+}
+
+/* VIRAL: an audible recoil, expanding wavefronts, then an outward conversation. */
+.hsvc-motion-scene[data-phase="perform"] [data-name="Viral/Megaphone"] {
+  animation: hsvc-action-broadcast 1.6s cubic-bezier(.22,.8,.3,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name^="Viral/Wave-"] {
+  transform-origin: 0 50%;
+  animation: hsvc-action-wave 1.6s ease-out both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Viral/Wave-01"] { --wave-shift: 12px; --wave-start: .52; }
+.hsvc-motion-scene[data-phase="perform"] [data-name="Viral/Wave-02"] { --wave-shift: 20px; --wave-start: .66; }
+.hsvc-motion-scene[data-phase="perform"] [data-name="Viral/Wave-03"] { --wave-shift: 28px; --wave-start: .8; }
+.hsvc-motion-scene[data-phase="perform"] [data-name="Viral/Bubble-01"] {
+  --fan-x: 8px; --fan-y: -22px; --fan-turn: -7deg;
+  animation: hsvc-action-fan-a 1.6s cubic-bezier(.22,.8,.3,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Viral/Bubble-02"] {
+  --fan-x: 24px; --fan-y: -4px; --fan-turn: 7deg;
+  animation: hsvc-action-fan-b 1.6s cubic-bezier(.22,.8,.3,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Viral/Bubble-03"] {
+  --fan-x: 10px; --fan-y: 16px; --fan-turn: 6deg;
+  animation: hsvc-action-fan-c 1.6s cubic-bezier(.22,.8,.3,1) both;
+}
+@keyframes hsvc-action-broadcast {
+  0%, 100% { translate: 0 0; rotate: 0deg; scale: 1; }
+  12% { translate: 8px 2px; rotate: 4deg; scale: .96; }
+  28% { translate: -15px -4px; rotate: -8deg; scale: 1.1; }
+  48% { translate: 5px 0; rotate: 2deg; scale: 1.02; }
+  70% { translate: -4px -2px; rotate: -2deg; scale: 1.025; }
+  90% { translate: 0 0; rotate: 0deg; scale: 1; }
+}
+@keyframes hsvc-action-wave {
+  0% { opacity: .15; translate: -12px 0; scale: var(--wave-start, .65); }
+  14% { opacity: .4; translate: -6px 0; scale: .85; }
+  36% { opacity: 1; translate: var(--wave-shift, 20px) 0; scale: 1.16; }
+  57% { opacity: .08; translate: calc(var(--wave-shift, 20px) + 12px) 0; scale: 1.3; }
+  58% { opacity: 0; translate: -8px 0; scale: .85; }
+  72% { opacity: .9; translate: 10px 0; scale: 1.1; }
+  94%, 100% { opacity: 0; translate: 0 0; scale: 1; }
+}
+@keyframes hsvc-action-fan-a {
+  0%, 100% { translate: 0 0; rotate: 0deg; scale: 1; }
+  10% { translate: -8px 10px; rotate: 2deg; scale: .86; }
+  34% { translate: var(--fan-x) var(--fan-y); rotate: var(--fan-turn); scale: 1.18; }
+  58% { translate: 1px -8px; rotate: -2deg; scale: 1.04; }
+  88% { translate: 0 0; rotate: 0deg; scale: 1; }
+}
+@keyframes hsvc-action-fan-b {
+  0%, 100% { translate: 0 0; rotate: 0deg; scale: 1; }
+  18% { translate: -10px 0; rotate: -3deg; scale: .86; }
+  43% { translate: var(--fan-x) var(--fan-y); rotate: var(--fan-turn); scale: 1.16; }
+  65% { translate: 8px 0; rotate: 2deg; scale: 1.03; }
+  92% { translate: 0 0; rotate: 0deg; scale: 1; }
+}
+@keyframes hsvc-action-fan-c {
+  0%, 100% { translate: 0 0; rotate: 0deg; scale: 1; }
+  24% { translate: -6px -10px; rotate: -2deg; scale: .88; }
+  51% { translate: var(--fan-x) var(--fan-y); rotate: var(--fan-turn); scale: 1.16; }
+  71% { translate: 3px 5px; rotate: 1deg; scale: 1.02; }
+  96% { translate: 0 0; rotate: 0deg; scale: 1; }
+}
+
+/* PERFORMANCE: growth is anchored to each bar's baseline; the path hits its target. */
+.hsvc-motion-scene[data-phase="perform"] [data-name="Performance/Bar-01"] {
+  animation: hsvc-action-growth-a 1.6s cubic-bezier(.2,.78,.32,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Performance/Bar-02"] {
+  animation: hsvc-action-growth-b 1.6s cubic-bezier(.2,.78,.32,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Performance/Bar-03"] {
+  animation: hsvc-action-growth-c 1.6s cubic-bezier(.2,.78,.32,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Arrow/Shape-01"] path {
+  stroke-dasharray: 1 1;
+  animation: hsvc-action-chart-draw 1.6s ease-out both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Arrow/Shape-02"] path {
+  stroke-dasharray: 1 1;
+  animation: hsvc-action-arrow-tip 1.6s ease-out both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Performance/Target"] {
+  animation: hsvc-action-hit 1.6s cubic-bezier(.22,.8,.3,1) both;
+}
+@keyframes hsvc-action-growth-a { 0% { scale: 1 .32; } 22% { scale: 1 1.18; } 40%, 100% { scale: 1; } }
+@keyframes hsvc-action-growth-b { 0%, 8% { scale: 1 .3; } 30% { scale: 1 1.14; } 48%, 100% { scale: 1; } }
+@keyframes hsvc-action-growth-c { 0%, 16% { scale: 1 .28; } 40% { scale: 1 1.12; } 58%, 100% { scale: 1; } }
+@keyframes hsvc-action-chart-draw { 0%, 12% { stroke-dashoffset: 1; } 49%, 100% { stroke-dashoffset: 0; } }
+@keyframes hsvc-action-arrow-tip { 0%, 40% { stroke-dashoffset: 1; } 52%, 100% { stroke-dashoffset: 0; } }
+@keyframes hsvc-action-hit {
+  0%, 32%, 100% { scale: 1; rotate: 0deg; translate: 0 0; }
+  49% { scale: .87; rotate: -9deg; translate: 4px 3px; }
+  61% { scale: 1.2; rotate: 5deg; translate: -4px -4px; }
+  78% { scale: .98; rotate: -1deg; translate: 0 0; }
+  93% { scale: 1; rotate: 0deg; translate: 0 0; }
+}
+
+/* INFLUENCER: playback triggers a connected chain of reactions. */
+.hsvc-motion-scene[data-phase="perform"] [data-name="Influencer/Play-Button"] {
+  animation: hsvc-action-play 1.6s cubic-bezier(.2,.8,.28,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Connection-01/Shape-01"] path {
+  stroke-dasharray: 1 1;
+  animation: hsvc-action-connect-a 1.6s ease-out both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Connection-01/Shape-02"] path {
+  stroke-dasharray: 1 1;
+  animation: hsvc-action-connect-b 1.6s ease-out both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Influencer/Reaction-01"] {
+  animation: hsvc-action-reaction-a 1.6s cubic-bezier(.2,.8,.28,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Influencer/Reaction-02"] {
+  animation: hsvc-action-reaction-b 1.6s cubic-bezier(.2,.8,.28,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Influencer/Profile-Card"] {
+  animation: hsvc-action-profile 1.6s cubic-bezier(.2,.8,.28,1) both;
+}
+@keyframes hsvc-action-play { 0%, 100% { scale: 1; } 10% { scale: .84; } 26% { scale: 1.3; } 43% { scale: .98; } 64% { scale: 1.06; } 86% { scale: 1; } }
+@keyframes hsvc-action-connect-a { 0%, 12% { stroke-dashoffset: 1; } 43%, 100% { stroke-dashoffset: 0; } }
+@keyframes hsvc-action-connect-b { 0%, 26% { stroke-dashoffset: 1; } 59%, 100% { stroke-dashoffset: 0; } }
+@keyframes hsvc-action-reaction-a {
+  0%, 100% { scale: 1; rotate: 0deg; translate: 0 0; }
+  21% { scale: .78; rotate: 3deg; translate: -6px 8px; }
+  44% { scale: 1.2; rotate: -7deg; translate: 14px -16px; }
+  68% { scale: .98; rotate: 1deg; translate: 3px -4px; }
+  92% { scale: 1; rotate: 0deg; translate: 0 0; }
+}
+@keyframes hsvc-action-reaction-b {
+  0%, 100% { scale: 1; rotate: 0deg; translate: 0 0; }
+  33% { scale: .8; rotate: -2deg; translate: 7px 0; }
+  58% { scale: 1.19; rotate: 7deg; translate: -16px -9px; }
+  78% { scale: .99; rotate: -1deg; translate: -3px -2px; }
+  96% { scale: 1; rotate: 0deg; translate: 0 0; }
+}
+@keyframes hsvc-action-profile { 0%, 30%, 100% { scale: 1; rotate: 0deg; } 54% { scale: 1.07; rotate: -4deg; } 72% { scale: .99; rotate: 1deg; } 92% { scale: 1; rotate: 0deg; } }
+
+/* EXPERIENCE: the package opens around a rising sample, followed by confirmation. */
+.hsvc-motion-scene[data-phase="perform"] [data-name="Experience/Box-Lid-Left"] {
+  animation: hsvc-action-lid-left 1.6s cubic-bezier(.2,.78,.3,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Experience/Box-Lid-Right"] {
+  animation: hsvc-action-lid-right 1.6s cubic-bezier(.2,.78,.3,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Experience/Sample-Product"] {
+  animation: hsvc-action-unbox 1.6s cubic-bezier(.2,.78,.3,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Check-Mark/Shape-01"] path {
+  stroke-dasharray: 1 1;
+  animation: hsvc-action-confirm-draw 1.6s ease-out both;
+}
+@keyframes hsvc-action-lid-left { 0% { rotate: 16deg; translate: 3px 4px; } 31% { rotate: -20deg; translate: -6px -8px; } 58% { rotate: 3deg; translate: 0 0; } 85%, 100% { rotate: 0deg; translate: 0 0; } }
+@keyframes hsvc-action-lid-right { 0% { rotate: -12deg; translate: -3px 4px; } 36% { rotate: 18deg; translate: 7px -9px; } 62% { rotate: -2deg; translate: 0 0; } 88%, 100% { rotate: 0deg; translate: 0 0; } }
+@keyframes hsvc-action-unbox { 0% { translate: 0 15px; rotate: 0deg; scale: .96; } 19% { translate: 0 9px; rotate: 0deg; scale: .96; } 43% { translate: -4px -33px; rotate: -5deg; scale: 1.08; } 64% { translate: 2px -8px; rotate: 2deg; scale: 1.01; } 91%, 100% { translate: 0 0; rotate: 0deg; scale: 1; } }
+@keyframes hsvc-action-confirm-draw { 0%, 43% { stroke-dashoffset: 1; } 68%, 100% { stroke-dashoffset: 0; } }
+
+/* REVIEW: five anchored stars activate in order, then the verified badge lands. */
+.hsvc-motion-scene[data-phase="perform"] [data-name="Review/Review-Card-02"] {
+  animation: hsvc-action-review-stack 1.6s cubic-bezier(.2,.8,.28,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="Review/Star-01"] { animation: hsvc-action-star-a 1.6s ease-out both; }
+.hsvc-motion-scene[data-phase="perform"] [data-name="Review/Star-02"] { animation: hsvc-action-star-b 1.6s ease-out both; }
+.hsvc-motion-scene[data-phase="perform"] [data-name="Review/Star-03"] { animation: hsvc-action-star-c 1.6s ease-out both; }
+.hsvc-motion-scene[data-phase="perform"] [data-name="Review/Star-04"] { animation: hsvc-action-star-d 1.6s ease-out both; }
+.hsvc-motion-scene[data-phase="perform"] [data-name="Review/Star-05"] { animation: hsvc-action-star-e 1.6s ease-out both; }
+.hsvc-motion-scene[data-phase="perform"] [data-name="Review/Check-Badge"] {
+  animation: hsvc-action-verified 1.6s cubic-bezier(.2,.8,.28,1) both;
+}
+@keyframes hsvc-action-review-stack { 0%, 100% { translate: 0 0; rotate: 0deg; } 26% { translate: -12px -12px; rotate: -3deg; } 55% { translate: 2px 1px; rotate: 1deg; } 84% { translate: 0 0; rotate: 0deg; } }
+@keyframes hsvc-action-star-a { 0% { opacity: .45; scale: .68; } 15% { opacity: 1; scale: 1.45; } 30%, 100% { opacity: 1; scale: 1; } }
+@keyframes hsvc-action-star-b { 0%, 9% { opacity: .45; scale: .68; } 24% { opacity: 1; scale: 1.45; } 39%, 100% { opacity: 1; scale: 1; } }
+@keyframes hsvc-action-star-c { 0%, 18% { opacity: .45; scale: .68; } 33% { opacity: 1; scale: 1.45; } 48%, 100% { opacity: 1; scale: 1; } }
+@keyframes hsvc-action-star-d { 0%, 27% { opacity: .45; scale: .68; } 42% { opacity: 1; scale: 1.45; } 57%, 100% { opacity: 1; scale: 1; } }
+@keyframes hsvc-action-star-e { 0%, 36% { opacity: .45; scale: .68; } 51% { opacity: 1; scale: 1.45; } 66%, 100% { opacity: 1; scale: 1; } }
+@keyframes hsvc-action-verified { 0%, 43% { scale: .86; rotate: -6deg; opacity: .65; } 67% { scale: 1.2; rotate: 5deg; opacity: 1; } 81% { scale: .98; rotate: -1deg; opacity: 1; } 96%, 100% { scale: 1; rotate: 0deg; opacity: 1; } }
+
+/* OLIVE YOUNG: a real search sweep crosses the range; each discovered product reacts. */
+.hsvc-motion-scene[data-phase="perform"] [data-name="OliveYoung/Magnifier"] {
+  animation: hsvc-action-search 1.6s cubic-bezier(.25,.7,.3,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name^="OliveYoung/Cosmetic-"] { transform-origin: 50% 100%; }
+.hsvc-motion-scene[data-phase="perform"] [data-name="OliveYoung/Cosmetic-Bottle"] { animation: hsvc-action-discover-bottle 1.6s ease-out both; }
+.hsvc-motion-scene[data-phase="perform"] [data-name="OliveYoung/Cosmetic-Tube"] { animation: hsvc-action-discover-tube 1.6s ease-out both; }
+.hsvc-motion-scene[data-phase="perform"] [data-name="OliveYoung/Cosmetic-Jar"] { animation: hsvc-action-discover-jar 1.6s ease-out both; }
+@keyframes hsvc-action-search {
+  0%, 100% { translate: 0 0; rotate: 0deg; scale: 1; }
+  15% { translate: 10px 14px; rotate: 8deg; scale: 1.08; }
+  41% { translate: -155px 22px; rotate: -12deg; scale: 1.06; }
+  65% { translate: -65px -12px; rotate: -5deg; scale: 1.04; }
+  85% { translate: 9px -2px; rotate: 3deg; scale: 1.02; }
+  97% { translate: 0 0; rotate: 0deg; scale: 1; }
+}
+@keyframes hsvc-action-discover-bottle { 0%, 22%, 100% { scale: 1; } 43% { scale: 1.1; } 63% { scale: .99; } 84% { scale: 1; } }
+@keyframes hsvc-action-discover-tube { 0%, 46%, 100% { scale: 1; } 65% { scale: 1.13; } 85% { scale: .99; } 97% { scale: 1; } }
+@keyframes hsvc-action-discover-jar { 0%, 100% { scale: 1; } 18% { scale: 1.18; } 37% { scale: .99; } 55% { scale: 1; } }
+
+/* PPL: the moving light finds the product, which lifts into its hero moment. */
+.hsvc-motion-scene[data-phase="perform"] [data-name="PPL/Spotlight-Beam"] {
+  transform-origin: 54% 0;
+  animation: hsvc-action-light-sweep 1.6s cubic-bezier(.25,.7,.3,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="PPL/Spotlight"] {
+  transform-origin: 50% 55%;
+  animation: hsvc-action-lamp-sweep 1.6s cubic-bezier(.25,.7,.3,1) both;
+}
+.hsvc-motion-scene[data-phase="perform"] [data-name="PPL/Product"] {
+  animation: hsvc-action-product-hero 1.6s cubic-bezier(.2,.8,.28,1) both;
+}
+@keyframes hsvc-action-light-sweep { 0% { rotate: -15deg; opacity: .38; } 24% { rotate: 15deg; opacity: .78; } 48% { rotate: -7deg; opacity: .92; } 69% { rotate: 2deg; opacity: 1; } 93%, 100% { rotate: 0deg; opacity: 1; } }
+@keyframes hsvc-action-lamp-sweep { 0% { rotate: -15deg; } 24% { rotate: 15deg; } 48% { rotate: -7deg; } 69% { rotate: 2deg; } 93%, 100% { rotate: 0deg; } }
+@keyframes hsvc-action-product-hero { 0% { translate: 0 8px; scale: .92; rotate: 0deg; } 20% { translate: 0 4px; scale: .94; rotate: 0deg; } 51% { translate: 0 -16px; scale: 1.13; rotate: -3deg; } 72% { translate: 0 -4px; scale: 1.03; rotate: 1deg; } 95%, 100% { translate: 0 0; scale: 1; rotate: 0deg; } }
+
+/* Keep the original visibility pause and static accessibility path authoritative. */
+@media (prefers-reduced-motion: reduce) {
+  .hsvc-motion-scene[data-phase="perform"],
+  .hsvc-motion-scene[data-phase="perform"] * { animation: none !important; }
+}

@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="85" height="60.6723" viewBox="0 0 85 60.6723" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Viral/Bubble-01">
+<path id="Bubble-01/Shape-01" d="M15 2H67C77 2 82 7 82 17V39C82 48.3333 77 53 67 53H43L27 59L29 53H15C6.33333 53 2 48.3333 2 39V17C2 7 6.33333 2 15 2Z" fill="url(#paint0_linear_0_93)" stroke="#D7DFEA" stroke-width="2"/>
+<path id="Bubble-01/Shape-02" d="M25 32C27.2091 32 29 30.2091 29 28C29 25.7909 27.2091 24 25 24C22.7909 24 21 25.7909 21 28C21 30.2091 22.7909 32 25 32Z" fill="#285CCC"/>
+<path id="Bubble-01/Shape-03" d="M42 32C44.2091 32 46 30.2091 46 28C46 25.7909 44.2091 24 42 24C39.7909 24 38 25.7909 38 28C38 30.2091 39.7909 32 42 32Z" fill="#285CCC"/>
+<path id="Bubble-01/Shape-04" d="M59 32C61.2091 32 63 30.2091 63 28C63 25.7909 61.2091 24 59 24C56.7909 24 55 25.7909 55 28C55 30.2091 56.7909 32 59 32Z" fill="#285CCC"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_93" x1="2" y1="2" x2="55.875" y2="77.6141" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#E9EDF4"/>
+</linearGradient>
+</defs>
+</svg>

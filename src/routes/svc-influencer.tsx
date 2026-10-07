@@ -1,7 +1,9 @@
+import { icon } from '../icons'
 export const SvcInfluencerPage = () => (
   <>
     {/* ══ HERO ══ */}
-    <section class="vh-hero">
+    <section class="vh-hero vh-hero--photo">
+      <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/mkt-images/hero-influencer.png')"></div>
       <canvas id="vhCanvas2" class="vh-canvas"></canvas>
       <div class="vh-bg">
         <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(168,85,247,0.26) 0%,transparent 70%)"></div>
@@ -12,7 +14,7 @@ export const SvcInfluencerPage = () => (
       </div>
 
       <div class="container vh-inner">
-        <a href="/marketing" class="svc-back-link vh-back">← Marketing 전체보기</a>
+        <a href="/#services" class="svc-back-link vh-back">← 서비스 전체보기</a>
 
         <div class="vh-badge" style="color:rgba(168,85,247,0.95);border-color:rgba(168,85,247,0.35);background:rgba(168,85,247,0.08)">
           <span class="vh-badge-dot" style="background:rgba(168,85,247,1);box-shadow:0 0 8px rgba(168,85,247,0.9)"></span>
@@ -20,14 +22,14 @@ export const SvcInfluencerPage = () => (
         </div>
 
         <h1 class="vh-title">
-          <span class="vh-tline" id="ifL1">'좋은 것 같다'는 추측이 아닌,</span>
-          <span class="vh-tline" id="ifL2" style="background:linear-gradient(135deg,#fff 20%,rgba(168,85,247,0.95) 60%,rgba(236,72,153,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">'이겁니다'를 근거로 말합니다.</span>
+          <span class="vh-tline" id="ifL1">'좋은 것 같다'는 <span class="vh-hl">추측이 아닌,</span></span>
+          <span class="vh-tline" id="ifL2" style="background:linear-gradient(135deg,#fff 20%,rgba(168,85,247,0.95) 60%,rgba(236,72,153,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">'이겁니다'를 <span class="vh-hl">근거</span>로</span>
         </h1>
 
         <div class="vh-sub-wrap" id="ifSub">
-          <p class="vh-sub">인애드만의 <strong style="color:rgba(255,255,255,0.9)">인플루언서 분석 프로세스</strong>로 후보를 먼저 걸러냅니다.</p>
-          <p class="vh-sub">그다음 브랜드 메시지와 크리에이터의 결을 비교해, <span style="color:rgba(255,255,255,0.85);font-weight:500">"왜 이 조합인지"까지 제안합니다.</span></p>
-          <p class="vh-sub" style="margin-top:12px">데이터 기반 매칭으로 <span style="color:rgba(168,85,247,0.9);font-weight:600">캠페인의 퍼포먼스를 시작부터 유리하게 만듭니다.</span></p>
+          <p class="vh-sub"><strong style="color:rgba(255,255,255,0.9)">인플루언서 분석 프로세스</strong>로 후보를 먼저 걸러낸 후</p>
+          <p class="vh-sub">브랜드 메시지와 크리에이터의 결을 비교해, <span style="color:rgba(255,255,255,0.85);font-weight:500">"왜 이 조합인지"까지 제안합니다.</span></p>
+          <p class="vh-sub" style="margin-top:12px">인애드는 감이 아니라 숫자로 고른 매칭이 <span style="color:rgba(168,85,247,0.9);font-weight:600">캠페인의 출발선을 바꿉니다.</span></p>
         </div>
 
         <div class="vh-kpi-strip" id="ifKpi"></div>
@@ -47,9 +49,9 @@ export const SvcInfluencerPage = () => (
         })();`}} />
 
         <div class="vh-btns" id="ifBtns">
-          <a href="/contact" class="hero-cta-btn primary">
-            <span>무료 전략 상담받기</span>
-            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="/contact" class="vh-cta-btn">
+            <span>문의하기</span>
+            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a href="#ifl-services" class="vh-scroll-btn">
             <span>서비스 보기</span>
@@ -64,10 +66,6 @@ export const SvcInfluencerPage = () => (
 
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
-  var s=document.createElement('script');
-  s.src='/static/svc-three-bg.js';
-  s.onload=function(){ initSvcThreeBg(0xa855f7, 0xec4899, 0x6478ff); };
-  document.head.appendChild(s);
   function anim(el,delay,dir){if(!el)return;el.style.opacity='0';el.style.transform=dir==='up'?'translateY(32px)':'translateX(-32px)';el.style.transition='opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)';setTimeout(function(){el.style.opacity='1';el.style.transform='none';},delay);}
   anim(document.getElementById('ifL1'),200,'left');
   anim(document.getElementById('ifL2'),440,'left');
@@ -77,6 +75,9 @@ export const SvcInfluencerPage = () => (
 })();
       `}} />
     </section>
+
+    {/* ══ 라이트 테마 콘텐츠 래퍼 (히어로 제외) ══ */}
+    <div class="svc-light">
 
     {/* ══ 서비스 앵커 ══ */}
     <div id="ifl-services"></div>
@@ -109,54 +110,30 @@ export const SvcInfluencerPage = () => (
 
         {/* ── 섹션 헤드 ── */}
         <div class="ifl-data-head">
-          <span class="ifl-data-eyebrow">DATA-DRIVEN CREATOR CURATION</span>
-          <h2 class="ifl-data-heading">
-            숫자보다 맥락을 읽고,<br />
-            <em>맞는 크리에이터를 찾아드립니다</em>
-          </h2>
-          <p class="ifl-data-subhead">
-            구독자 수치만으로는 광고의 성과를 담보할 수 없습니다.<br />
-            실질적인 데이터를 기반으로 <strong>브랜드에 진짜 맞는 크리에이터</strong>를 신중하게 검토하고 제안해 드립니다.
+          <div class="ifl-story-quotes" aria-label="기존 인플루언서 마케팅의 뻔한 제안">
+            <p class="ifl-story-line">“10만 크리에이터 진행하는 데 3,000만 원 정도 들어가세요.”</p>
+            <p class="ifl-story-line">“메이저 크리에이터 진행하시려면 1억 정도 예상하셔야 해요.”</p>
+            <p class="ifl-story-line">“구독자 많은 크리에이터일수록 좋습니다.”</p>
+          </div>
+
+          <h2 class="ifl-story-turn">이런 뻔한 이야기, <span class="ifl-turn-highlight">이제는 없애야 합니다.<svg viewBox="0 0 360 22" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M5 12 C82 18 155 6 232 11 C278 14 319 10 355 7" /></svg></span></h2>
+
+          <p class="ifl-story-question">
+            원하는 크리에이터의 단가와<br />
+            대행 수수료까지 투명하게 공개하는 업체를 찾고 계신가요?
           </p>
 
-          {/* 3단계 플로우 */}
-          <div class="ifl-data-flow">
-            <div class="ifl-data-flow-step" data-step="01">
-              <div class="ifl-data-flow-img-wrap">
-                <img src="/static/images/process/flow-collect.jpg" alt="데이터 수집" />
-                <div class="ifl-data-flow-img-overlay"></div>
-                <div class="ifl-data-flow-label-wrap">
-                  <div class="ifl-data-flow-label">데이터 수집</div>
-                  <div class="ifl-data-flow-sub">조회수 · 구독자 · 유지율</div>
-                </div>
-              </div>
-            </div>
-            <div class="ifl-data-flow-arrow">
-              <svg viewBox="0 0 40 12" fill="none"><path d="M0 6 H34 M28 1 L34 6 L28 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <div class="ifl-data-flow-step" data-step="02">
-              <div class="ifl-data-flow-img-wrap">
-                <img src="/static/images/process/flow-review.jpg" alt="면밀한 검토" />
-                <div class="ifl-data-flow-img-overlay"></div>
-                <div class="ifl-data-flow-label-wrap">
-                  <div class="ifl-data-flow-label">면밀한 검토</div>
-                  <div class="ifl-data-flow-sub">전문가 기준으로 엄선</div>
-                </div>
-              </div>
-            </div>
-            <div class="ifl-data-flow-arrow">
-              <svg viewBox="0 0 40 12" fill="none"><path d="M0 6 H34 M28 1 L34 6 L28 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <div class="ifl-data-flow-step ifl-data-flow-step--accent" data-step="03">
-              <div class="ifl-data-flow-img-wrap">
-                <img src="/static/images/process/flow-propose.jpg" alt="합리적 제안" />
-                <div class="ifl-data-flow-img-overlay ifl-data-flow-img-overlay--accent"></div>
-                <div class="ifl-data-flow-label-wrap">
-                  <div class="ifl-data-flow-label">합리적 제안</div>
-                  <div class="ifl-data-flow-sub">거품 없이, 목적에 맞게</div>
-                </div>
-              </div>
-            </div>
+          <p class="ifl-story-proof">
+            인애드컴퍼니는 아래의 <span class="ifl-story-ring">세 개의 검증
+              <svg viewBox="0 0 240 76" aria-hidden="true"><path d="M8 39C15 12 63 4 124 5c65 1 108 15 108 36 0 22-48 31-112 30C56 70 5 59 8 39Z" /></svg>
+            </span>을 통해<br />
+            크리에이터를 선별하고 투명하게 제안합니다.
+          </p>
+
+          <div class="ifl-story-criteria" aria-label="크리에이터 검증 기준">
+            <div class="ifl-story-criterion"><span>01</span><strong>타깃 적합도</strong><p>브랜드가 만나야 할 고객과<br /><em>실제 구독자가 일치</em>하는가</p></div>
+            <div class="ifl-story-criterion"><span>02</span><strong>반응의 밀도</strong><p>좋아요를 넘어 <em>댓글·저장·공유</em>가<br />꾸준히 발생하는 채널인가</p></div>
+            <div class="ifl-story-criterion"><span>03</span><strong>브랜드 맥락</strong><p>콘텐츠의 결이 <em>브랜드 메시지</em>와<br />자연스럽게 이어지는가</p></div>
           </div>
 
           {/* 카운터 배지 바 */}
@@ -181,19 +158,18 @@ export const SvcInfluencerPage = () => (
         </div>
 
         {/* ── 01 — 데이터를 읽는 눈 ── */}
-        <div class="ifl-data-row">
+        <div class="ifl-data-row ifl-analysis-row">
           <div class="ifl-data-text">
-            <div class="ifl-data-num">01</div>
-            <h3 class="ifl-data-title">구독자보다 중요한 건 '실제 반응'입니다.<br /><strong>광고 효과를 예측합니다.</strong></h3>
+            <h3 class="ifl-data-title ifl-fx-title">구독자보다 중요한 건<br /><em class="ifl-scribble">‘실제 반응’<svg class="ifl-scribble-svg" viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M 200 14 C 150 6, 80 8, 45 22 C 8 36, 6 66, 42 82 C 95 100, 210 100, 262 82 C 300 68, 298 34, 258 20 C 225 12, 170 12, 148 18" fill="none" stroke="var(--blue)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg></em></h3>
             <p class="ifl-data-desc">
-              크리에이터를 제안할 때 구독자 수는 참고일 뿐입니다.<br />
-              실제 조회수 흐름, 평균 조회수, 참여율 같은 지표로 채널의 영향력을 먼저 확인합니다.<br />
-              노출과 반응이 어디서 만들어지는지까지 보고, <strong>캠페인 성과를 더 정확하게 그립니다.</strong>
+              크리에이터를 제안할 때 구독자 수는 참고일 뿐<br />
+              실제 조회수 흐름, 평균 조회수, 참여율 같은 지표로 채널의 영향력을 먼저 확인하고<br />
+              더 높은 캠페인 성과를 위해 <strong>노출과 반응을 예상하며 기획합니다.</strong>
             </p>
-            <ul class="ifl-data-points">
-              <li><span class="ifl-data-dot"></span>구독자 대비 '실조회수' 분석 → 채널의 실제 영향력 확인</li>
-              <li><span class="ifl-data-dot"></span>조회수 유지율(시청 지속) 체크 → 광고 노출 구간/이탈 구간 예측</li>
-              <li><span class="ifl-data-dot"></span>지표 왜곡이 의심되는 채널 제외 → 리스크를 사전에 차단</li>
+            <ul class="ifl-data-points ifl-analysis-points">
+              <li><b>실조회수</b><span>구독자 대비 실제 영향력 확인</span></li>
+              <li><b>시청 지속</b><span>노출 구간과 이탈 구간 분석</span></li>
+              <li><b>지표 신뢰도</b><span>왜곡 채널을 사전에 선별·제외</span></li>
             </ul>
             <div class="ifl-data-insight-bar">
               <svg viewBox="0 0 18 18" fill="none" width="16" height="16"><circle cx="9" cy="9" r="8" stroke="#1a6bff" stroke-width="1.4"/><path d="M9 5v4l3 2" stroke="#1a6bff" stroke-width="1.4" stroke-linecap="round"/></svg>
@@ -206,29 +182,28 @@ export const SvcInfluencerPage = () => (
         </div>
 
         {/* ── 02 — 합리적 제안을 위한 선별 시스템 ── */}
-        <div class="ifl-data-row ifl-data-row--rev">
+        <div class="ifl-data-row ifl-data-row--rev ifl-matching-row">
           <div class="ifl-data-img-wrap ifl-data-img-wrap--filter">
             <img src="/static/images/process/filter-list.jpg" alt="크리에이터 상세 분석 리스트 뷰" class="ifl-filter-img ifl-filter-img--top" />
             <img src="/static/images/process/filter-grid.jpg" alt="크리에이터 그리드 필터링 시스템" class="ifl-filter-img ifl-filter-img--bottom" />
           </div>
           <div class="ifl-data-text">
-            <div class="ifl-data-num">02</div>
-            <h3 class="ifl-data-title">조건이 까다로울수록 강해집니다.<br /><strong>맞는 크리에이터, 정확히 찾아드립니다.</strong></h3>
+            <h3 class="ifl-data-title ifl-fx-title">원하는 조건이 디테일할수록,<br /><em class="ifl-underline">최적의 크리에이터<svg class="ifl-underline-svg" viewBox="0 0 320 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M6 12 C 74 4, 150 17, 212 10 C 262 4, 298 14, 314 9" fill="none" stroke="var(--blue)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg></em>가 매칭</h3>
             <p class="ifl-data-desc">
-              카테고리·구독자·타깃·업로드 주기까지, 목적과 예산에 맞춰 후보를 좁힙니다.<br />
-              <strong>1,520+ 검증 DB</strong>를 기반으로 선별하고, 기준에 맞지 않는 채널은 데이터로 지속 정리합니다.<br />
-              그래서 "아무나"가 아니라 <strong>"딱 맞는" 제안</strong>이 나옵니다.
+              카테고리·구독자·타깃·업로드 주기까지, 목적과 예산에 맞춰 후보를 좁히고<br />
+              <strong>1,520+ 검증 DB</strong>를 기반으로 선별, 기준에 맞지 않는 채널은 데이터로 지속 정리합니다.<br />
+              그래서 "아무나"가 아니라 <strong>"적절한" 제안</strong>을 드릴 수 있습니다.
             </p>
 
             {/* 필터 태그 칩 */}
             <div class="ifl-data-tags">
-              <span class="ifl-data-tag"># 조회수 강한 유튜브</span>
-              <span class="ifl-data-tag"># 셀럽/매니지먼트 크리에이터</span>
-              <span class="ifl-data-tag"># 커플·부부 라이프</span>
-              <span class="ifl-data-tag"># IT·디바이스 리뷰</span>
-              <span class="ifl-data-tag"># 남성 패션·그루밍</span>
-              <span class="ifl-data-tag"># 성장세 높은 채널</span>
-              <span class="ifl-data-tag ifl-data-tag--more"># 가성비 좋은 채널(조회수 대비 단가)</span>
+              <span class="ifl-data-tag">조회수 강한 유튜브</span>
+              <span class="ifl-data-tag">셀럽·매니지먼트</span>
+              <span class="ifl-data-tag">커플·부부 라이프</span>
+              <span class="ifl-data-tag">IT·디바이스 리뷰</span>
+              <span class="ifl-data-tag">남성 패션·그루밍</span>
+              <span class="ifl-data-tag">성장세 높은 채널</span>
+              <span class="ifl-data-tag ifl-data-tag--more">조회수 대비 합리적인 단가</span>
             </div>
 
             {/* 실시간 DB 배지 */}
@@ -240,7 +215,7 @@ export const SvcInfluencerPage = () => (
               <div class="ifl-data-db-right">
                 <strong class="ifl-data-counter-num" data-target="1520">0</strong>
                 <span class="ifl-data-db-plus">+</span>
-                <span class="ifl-data-db-label">Verified Creators</span>
+                <span class="ifl-data-db-label">검증 크리에이터</span>
               </div>
               <div class="ifl-data-db-sub">기준 미달 크리에이터는 실시간으로 DB에서 제외됩니다</div>
             </div>
@@ -253,7 +228,7 @@ export const SvcInfluencerPage = () => (
     {/* ══════════════════════════════════════════
         DIFFERENTIATOR — 인애드컴퍼니의 제안 크리에이터
     ══════════════════════════════════════════ */}
-    <section class="ifl2-diff-section">
+    <section class="ifl2-diff-section ifl-editorial-proposal" id="creatorProposalCriteria">
       <div class="ifl2-diff-bg">
         <div class="ifl2-diff-orb ifl2-diff-orb--blue"></div>
         <div class="ifl2-diff-orb ifl2-diff-orb--purple"></div>
@@ -306,48 +281,55 @@ export const SvcInfluencerPage = () => (
             <div class="ifl2-case-card ifl2-case-card--good">
               <div class="ifl2-case-glow"></div>
               <div class="ifl2-case-header">
-                <div class="ifl2-case-badge ifl2-case-badge--good">
-                  <svg viewBox="0 0 12 12" fill="none" width="10" height="10"><circle cx="6" cy="6" r="5" fill="rgba(26,107,255,0.3)"/><path d="M3 6l2 2 4-4" stroke="rgba(26,107,255,1)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  진행 확정
+                <div class="ifl2-case-badge ifl2-case-badge--good">CASE 01</div>
+                <span class="ifl2-case-title">효율 기준 통과</span>
+              </div>
+              <div class="ifl2-case-price">
+                <div class="ifl2-case-price-from">
+                  <span class="ifl2-case-price-label">내부 예상 단가</span>
+                  <span class="ifl2-case-price-val">800 – 1,000만원</span>
                 </div>
-                <span class="ifl2-case-title">CASE: 효율 기준 통과</span>
-                <div class="ifl2-case-check">
-                  <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="10" fill="rgba(26,107,255,0.15)" stroke="rgba(26,107,255,0.5)" stroke-width="1.5"/><path d="M7 12l3.5 3.5L17 8" stroke="rgba(26,107,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="ifl2-case-arrow">
+                  <svg viewBox="0 0 24 10" fill="none" width="28"><path d="M0 5h22M17 1l5 4-5 4" stroke="rgba(26,107,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="ifl2-case-price-to">
+                  <span class="ifl2-case-price-label ifl2-case-price-label--em">실제 집행 비용</span>
+                  <span class="ifl2-case-price-num ifl2-case-price-num--good">500만원</span>
                 </div>
               </div>
-              <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:0 0 12px;line-height:1.6;">
-                예산 안에서 성과 확률이 높은 조합만 남깁니다.<br />
-                단가·반응지표·콘텐츠 적합도를 기준으로 검증했고,<br />진행 가능한 안으로 확정합니다.
-              </p>
               <ul class="ifl2-case-points ifl2-case-points--good">
                 <li>예산 대비 성과 가능성 기준으로 선별</li>
                 <li>단가·조회수 흐름·반응지표 교차 검증</li>
                 <li>브랜드 메시지 적합도까지 확인 후 <strong>확정</strong></li>
               </ul>
+              <div class="ifl2-case-status ifl2-case-status--good">진행 확정</div>
             </div>
 
             {/* CASE 2 — 기준 미달 제외 */}
             <div class="ifl2-case-card ifl2-case-card--bad">
               <div class="ifl2-case-header">
-                <div class="ifl2-case-badge ifl2-case-badge--bad">
-                  <svg viewBox="0 0 12 12" fill="none" width="10" height="10"><circle cx="6" cy="6" r="5" fill="rgba(100,100,120,0.3)"/><path d="M4 4l4 4M8 4l-4 4" stroke="rgba(140,140,160,0.8)" stroke-width="1.2" stroke-linecap="round"/></svg>
-                  리스트 제외
+                <div class="ifl2-case-badge ifl2-case-badge--bad">CASE 02</div>
+                <span class="ifl2-case-title ifl2-case-title--bad">기준 미달 제외</span>
+              </div>
+              <div class="ifl2-case-price ifl2-case-price--bad">
+                <div class="ifl2-case-price-from">
+                  <span class="ifl2-case-price-label">내부 예상 단가</span>
+                  <span class="ifl2-case-price-val">200 – 300만원</span>
                 </div>
-                <span class="ifl2-case-title ifl2-case-title--bad">CASE: 기준 미달 제외</span>
-                <div class="ifl2-case-check ifl2-case-check--bad">
-                  <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="10" fill="rgba(80,80,100,0.15)" stroke="rgba(100,100,130,0.35)" stroke-width="1.5"/><path d="M8 8l8 8M16 8l-8 8" stroke="rgba(120,120,140,0.6)" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <div class="ifl2-case-arrow">
+                  <svg viewBox="0 0 24 10" fill="none" width="28"><path d="M0 5h22M17 1l5 4-5 4" stroke="rgba(120,120,140,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="ifl2-case-price-to">
+                  <span class="ifl2-case-price-label">실제 집행 비용</span>
+                  <span class="ifl2-case-price-num ifl2-case-price-num--bad">500만원</span>
                 </div>
               </div>
-              <p style="font-size:12px;color:rgba(255,255,255,0.3);margin:0 0 12px;line-height:1.6;">
-                성과 대비 비용이 과하거나, 지표가 불안정한 채널은<br />
-                리스트에서 자체 제외합니다.<br />
-                <span style="color:rgba(255,255,255,0.45)">"그럴듯한 제안"보다, 예산을 지키는 정리가 먼저입니다.</span>
-              </p>
               <ul class="ifl2-case-points ifl2-case-points--bad">
-                <li>단가 대비 기대효과 낮음 → <strong style="color:rgba(120,120,140,0.8)">제외</strong></li>
-                <li>조회수 편차 / 지표 불안정 → <strong style="color:rgba(120,120,140,0.8)">제외</strong></li>
-                <li>브랜드 적합도 낮음 → <strong style="color:rgba(120,120,140,0.8)">제외</strong></li>
+                <li>단가 대비 기대효과 낮음</li>
+                <li>조회수 편차 / 지표 불안정</li>
+                <li>브랜드 적합도 낮음</li>
               </ul>
+              <div class="ifl2-case-status ifl2-case-status--bad">진행 불가</div>
             </div>
 
           </div>
@@ -391,9 +373,8 @@ export const SvcInfluencerPage = () => (
         {/* ── 탭 패널 0 : 섭외 / 협찬 ── */}
         <div class="svctab-panel active" id="svctabPanel0">
           <div class="svctab-panel-head">
-            <p class="svctab-panel-eyebrow">CREATOR CASTING</p>
-            <h2 class="svctab-panel-title">연예인 &amp; 인플루언서 <em>섭외 / 협찬</em></h2>
-            <p class="svctab-panel-lead">브랜드 예산과 목적에 맞게, <strong>최적의 크리에이터 전략</strong>을 설계합니다.</p>
+            <h2 class="svctab-panel-title">섭외 / 협찬 <em>서비스 목록</em></h2>
+            <p class="svctab-panel-lead">예산과 목표를 먼저 정리한 뒤, 브랜드에 <strong>"맞는 얼굴"</strong>과 <strong>"맞는 채널"</strong>을 조합합니다. 섭외는 과정이고, 결과는 전환과 확산입니다.</p>
           </div>
 
           {/* 중분류 아코디언 */}
@@ -406,7 +387,6 @@ export const SvcInfluencerPage = () => (
                   <span class="svctab-item-idx">01</span>
                   <div class="svctab-item-info">
                     <span class="svctab-item-name">연예인 섭외 / 협찬</span>
-                    <span class="svctab-item-en">Celebrity Casting</span>
                   </div>
                 </div>
                 <div class="svctab-item-arrow">
@@ -415,39 +395,24 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body open">
                 <div class="svctab-item-content">
-                  <div class="svctab-infocard" style="border-top-color:#fbbf24">
-                    <div class="sic-header">
-                      <span class="sic-icon">🎬</span>
-                      <span class="sic-label">Celebrity Casting</span>
+                  <div class="svctab-photo svctab-photo--filled" style="--img:url('/static/mkt-images/casting-celebrity.png')">
+                    <div class="svctab-photo-ph">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></svg>
+                      <span>Celebrity Casting</span>
                     </div>
-                    <div class="sic-stats">
-                      <div class="sic-stat">
-                        <span class="sic-num">Top</span>
-                        <span class="sic-desc">탑·미들 연예인<br/>전 구간 대응</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">∞</span>
-                        <span class="sic-desc">팬덤 기반<br/>폭발적 확산</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">PPL</span>
-                        <span class="sic-desc">협찬·광고<br/>통합 운영</span>
-                      </div>
-                    </div>
-                    <p class="sic-quote">"연예인 파워로 브랜드를 단숨에 각인"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#fbbf24">브랜딩 강화</span>
-                      <span style="--tc:#fbbf24">팬덤 마케팅</span>
-                      <span style="--tc:#fbbf24">퍼포먼스 광고</span>
-                      <span style="--tc:#fbbf24">판매 촉진</span>
+                      <span style="--tc:#285CCC">브랜딩 강화</span>
+                      <span style="--tc:#285CCC">팬덤 마케팅</span>
+                      <span style="--tc:#285CCC">퍼포먼스 광고</span>
+                      <span style="--tc:#285CCC">판매 촉진</span>
                     </div>
-                    <p class="svctab-desc-text">연예인의 강력한 <strong>팬덤과 채널 콘텐츠</strong>를 동시에 활용해 팬층을 집중 공략하고, 브랜드 인지도를 폭발적으로 확장합니다. 공식 협찬부터 자연스러운 PPL까지 목적에 맞는 방식을 제안합니다.</p>
+                    <p class="svctab-desc-text">연예인이 가진 팬덤과 콘텐츠 파급력은 "인지"를 빠르게 만듭니다. 다만 중요한 건 노출이 아니라 맥락. <strong>노출형 협업부터 스토리형 PPL까지,</strong> 브랜드 목표에 맞는 형태로 제안합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#fbbf24"></span>강력한 팬덤 기반 빠른 인지도 확산</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#fbbf24"></span>채널 콘텐츠 + 협찬 연계로 시너지 극대화</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#fbbf24"></span>미들~탑 연예인 섭외 모두 대응 가능</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>팬덤 기반 확산으로 인지도 부스팅</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>채널 콘텐츠 + 협찬 콘텐츠를 함께 굴려 효과 확대</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>메가부터 마이크로까지, 예산/목표에 맞춘 캐스팅 범위</li>
                     </ul>
                   </div>
                 </div>
@@ -461,7 +426,6 @@ export const SvcInfluencerPage = () => (
                   <span class="svctab-item-idx">02</span>
                   <div class="svctab-item-info">
                     <span class="svctab-item-name">인플루언서 섭외 / 협찬</span>
-                    <span class="svctab-item-en">Influencer Casting</span>
                   </div>
                 </div>
                 <div class="svctab-item-arrow">
@@ -470,39 +434,24 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-infocard" style="border-top-color:#a78bfa">
-                    <div class="sic-header">
-                      <span class="sic-icon">⭐</span>
-                      <span class="sic-label">Influencer Casting</span>
+                  <div class="svctab-photo svctab-photo--filled" style="--img:url('/static/mkt-images/casting-influencer.png')">
+                    <div class="svctab-photo-ph">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></svg>
+                      <span>Influencer Casting</span>
                     </div>
-                    <div class="sic-stats">
-                      <div class="sic-stat">
-                        <span class="sic-num">1,520<span class="sic-unit">+</span></span>
-                        <span class="sic-desc">검증된<br/>크리에이터 DB</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">Nano<br/><span style="font-size:11px">~Mega</span></span>
-                        <span class="sic-desc">전 구간<br/>대응 가능</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">ROI</span>
-                        <span class="sic-desc">데이터 기반<br/>고효율 매칭</span>
-                      </div>
-                    </div>
-                    <p class="sic-quote">"정확한 타겟에 정확히 도달하는 방법"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#a78bfa">인지도 상승</span>
-                      <span style="--tc:#a78bfa">시청층 타겟</span>
-                      <span style="--tc:#a78bfa">합리적 비용</span>
-                      <span style="--tc:#a78bfa">판매 촉진</span>
+                      <span style="--tc:#285CCC">인지도 상승</span>
+                      <span style="--tc:#285CCC">시청층 타겟</span>
+                      <span style="--tc:#285CCC">합리적 비용</span>
+                      <span style="--tc:#285CCC">판매 촉진</span>
                     </div>
-                    <p class="svctab-desc-text">연예인 대비 <strong>합리적인 비용으로 고효율</strong>을 끌어내는 전략. 검증된 1,520+ DB에서 브랜드 목표에 딱 맞는 크리에이터를 선별해 정확한 타겟에게 도달합니다.</p>
+                    <p class="svctab-desc-text">연예인 대비 더 <strong>합리적인 비용으로, 고효율을 노릴 수 있는 선택지.</strong> 검증된 1,520+ DB 안에서 브랜드 목표와 타깃에 맞는 조합만 남깁니다. 핵심은 '누가 유명한가'가 아니라, <strong>'누가 전환을 만드는가'</strong>입니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#a78bfa"></span>조회율·구독자 품질 기준 검증된 크리에이터 매칭</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#a78bfa"></span>나노~메가 인플루언서 전 구간 대응</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#a78bfa"></span>인스타그램 피드 연계 확산까지 통합 운영</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>조회수·반응지표·성장 흐름까지 보고, 검증된 크리에이터만 매칭</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>나노–메가까지 폭넓게 구성, 예산/목표에 맞춘 스케일링</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>인스타그램 피드 연계까지 묶어 확산–검색–전환 흐름으로 운영</li>
                     </ul>
                   </div>
                 </div>
@@ -515,8 +464,7 @@ export const SvcInfluencerPage = () => (
                 <div class="svctab-item-left">
                   <span class="svctab-item-idx">03</span>
                   <div class="svctab-item-info">
-                    <span class="svctab-item-name">인스타 피드 연계</span>
-                    <span class="svctab-item-en">Instagram Feed Integration</span>
+                    <span class="svctab-item-name">인스타그램 피드 연계<br />(확산/리포스트)</span>
                   </div>
                 </div>
                 <div class="svctab-item-arrow">
@@ -525,39 +473,24 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-infocard" style="border-top-color:#f472b6">
-                    <div class="sic-header">
-                      <span class="sic-icon">📸</span>
-                      <span class="sic-label">Instagram Feed</span>
+                  <div class="svctab-photo svctab-photo--filled" style="--img:url('/static/mkt-images/casting-instagram.png')">
+                    <div class="svctab-photo-ph">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></svg>
+                      <span>Instagram Feed</span>
                     </div>
-                    <div class="sic-stats">
-                      <div class="sic-stat">
-                        <span class="sic-num">Feed</span>
-                        <span class="sic-desc">인스타 피드<br/>자연 노출</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">Reels</span>
-                        <span class="sic-desc">숏폼 연계<br/>바이럴 확산</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">2배</span>
-                        <span class="sic-desc">유튜브 연계 시<br/>도달 시너지</span>
-                      </div>
-                    </div>
-                    <p class="sic-quote">"유튜브 협찬 + 인스타 확산 동시 집행"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#f472b6">팬덤 소통</span>
-                      <span style="--tc:#f472b6">브랜드 친밀감</span>
-                      <span style="--tc:#f472b6">피드 전략</span>
-                      <span style="--tc:#f472b6">진정성</span>
+                      <span style="--tc:#285CCC">팬덤 소통</span>
+                      <span style="--tc:#285CCC">브랜드 친밀감</span>
+                      <span style="--tc:#285CCC">피드 전략</span>
+                      <span style="--tc:#285CCC">진정성</span>
                     </div>
-                    <p class="svctab-desc-text">단순 노출을 넘어 <strong>팬덤 소통과 브랜드 친밀감</strong>을 동시에 강화합니다. 정교한 인스타그램 피드 전략으로 진정성 있는 팬층을 공략하고 브랜드 확산을 유도합니다.</p>
+                    <p class="svctab-desc-text">단순 노출이 아니라, 브랜드의 <strong>'분위기'가 쌓이게 만듭니다.</strong> 피드·릴스·스토리 흐름을 한 톤으로 맞추고, 리포스트 확산까지 연결합니다. 결과는 저장·공유·재방문, 그리고 <strong>검색으로 이어지는 잔상.</strong></p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#f472b6"></span>피드·스토리·릴스 통합 콘텐츠 기획</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#f472b6"></span>팬덤 기반 자연스러운 브랜드 노출</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#f472b6"></span>인플루언서 협찬과 연계해 확산 시너지 극대화</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>피드/스토리/릴스 흐름을 고려한 콘텐츠 릴레이 기획</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>인플루언서 콘텐츠 리포스트로 브랜드 채널 신뢰도 강화</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>확산 이후 유입 동선까지 정리(프로필·링크·하이라이트)</li>
                     </ul>
                   </div>
                 </div>
@@ -571,12 +504,6 @@ export const SvcInfluencerPage = () => (
             <p class="svctab-cta-msg">
               상담을 남기시면 유형에 맞는 <strong>레퍼런스</strong>를 받아 보실 수 있습니다.
             </p>
-            <a href="/contact" class="svctab-cta-btn">
-              상담 남기기
-              <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
-                <path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
           </div>
 
         </div>{/* /panel0 */}
@@ -584,7 +511,6 @@ export const SvcInfluencerPage = () => (
         {/* ── 탭 패널 1 : 콘텐츠 유형 ── */}
         <div class="svctab-panel" id="svctabPanel1">
           <div class="svctab-panel-head">
-            <p class="svctab-panel-eyebrow">CONTENT TYPES</p>
             <h2 class="svctab-panel-title">콘텐츠 <em>유형</em></h2>
             <p class="svctab-panel-lead">브랜드 메시지가 콘텐츠 자체가 되도록 — 목적별 <strong>4가지 콘텐츠 유형</strong>을 제공합니다.</p>
           </div>
@@ -598,7 +524,6 @@ export const SvcInfluencerPage = () => (
                   <span class="svctab-item-idx">01</span>
                   <div class="svctab-item-info">
                     <span class="svctab-item-name">브랜디드 콘텐츠</span>
-                    <span class="svctab-item-en">Branded Content</span>
                   </div>
                 </div>
                 <div class="svctab-item-arrow">
@@ -607,38 +532,23 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body open">
                 <div class="svctab-item-content">
-                  <div class="svctab-infocard" style="border-top-color:#60a5fa">
-                    <div class="sic-header">
-                      <span class="sic-icon">🎨</span>
-                      <span class="sic-label">Branded Content</span>
+                  <div class="svctab-photo svctab-photo--filled" style="--img:url('/static/mkt-images/content-branded.png')">
+                    <div class="svctab-photo-ph">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></svg>
+                      <span>Branded Content</span>
                     </div>
-                    <div class="sic-stats">
-                      <div class="sic-stat">
-                        <span class="sic-num">100%</span>
-                        <span class="sic-desc">광고 인식<br/>없는 자연 노출</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">세계관</span>
-                        <span class="sic-desc">크리에이터<br/>스토리 융합</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">프리미엄</span>
-                        <span class="sic-desc">고관여<br/>콘텐츠 설계</span>
-                      </div>
-                    </div>
-                    <p class="sic-quote">"광고가 아닌 콘텐츠로 소비자를 설득"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#60a5fa">스토리텔링</span>
-                      <span style="--tc:#60a5fa">프리미엄 제작</span>
-                      <span style="--tc:#60a5fa">세계관 연계</span>
+                      <span style="--tc:#285CCC">스토리텔링</span>
+                      <span style="--tc:#285CCC">프리미엄 제작</span>
+                      <span style="--tc:#285CCC">세계관 연계</span>
                     </div>
-                    <p class="svctab-desc-text">브랜드 메시지를 콘텐츠 그 자체로 승화시킵니다. 광고라는 인식 없이 크리에이터의 세계관과 브랜드 스토리가 완벽하게 융합된 <strong>프리미엄 콘텐츠</strong>를 제작합니다.</p>
+                    <p class="svctab-desc-text">브랜드 메시지를 콘텐츠 그 자체로 승화시킵니다. 크리에이터의 세계관과 브랜드 스토리가 결합된 <strong>프리미엄 콘텐츠</strong>를 제작합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#60a5fa"></span>크리에이터 세계관 연계 기획</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#60a5fa"></span>브랜드 스토리텔링 극대화</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#60a5fa"></span>자연스러운 메시지 임베딩</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>크리에이터 세계관 연계 기획</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>브랜드 스토리를 더 길게 끌고 감</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>자연스러운 메시지 임베딩</li>
                     </ul>
                   </div>
                 </div>
@@ -652,7 +562,6 @@ export const SvcInfluencerPage = () => (
                   <span class="svctab-item-idx">02</span>
                   <div class="svctab-item-info">
                     <span class="svctab-item-name">기획 PPL</span>
-                    <span class="svctab-item-en">Planned PPL</span>
                   </div>
                 </div>
                 <div class="svctab-item-arrow">
@@ -661,38 +570,23 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-infocard" style="border-top-color:#34d399">
-                    <div class="sic-header">
-                      <span class="sic-icon">🎭</span>
-                      <span class="sic-label">Planned PPL</span>
+                  <div class="svctab-photo svctab-photo--filled" style="--img:url('/static/mkt-images/content-ppl.png')">
+                    <div class="svctab-photo-ph">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></svg>
+                      <span>Planned PPL</span>
                     </div>
-                    <div class="sic-stats">
-                      <div class="sic-stat">
-                        <span class="sic-num">자연</span>
-                        <span class="sic-desc">콘텐츠 흐름<br/>속 자연 배치</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">低</span>
-                        <span class="sic-desc">시청자<br/>이탈률 최소화</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">신뢰</span>
-                        <span class="sic-desc">브랜드<br/>친밀감 형성</span>
-                      </div>
-                    </div>
-                    <p class="sic-quote">"보는 사람이 광고라 느끼지 않는 광고"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#34d399">자연 노출</span>
-                      <span style="--tc:#34d399">이탈률 최소화</span>
-                      <span style="--tc:#34d399">브랜드 친밀감</span>
+                      <span style="--tc:#285CCC">자연 노출</span>
+                      <span style="--tc:#285CCC">이탈률 최소화</span>
+                      <span style="--tc:#285CCC">브랜드 친밀감</span>
                     </div>
-                    <p class="svctab-desc-text">소비자가 광고임을 인식하지 못한 채 브랜드를 자연스럽게 경험하게 하는 방식. 콘텐츠 흐름 안에 제품을 녹여내어 <strong>거부감 없이 브랜드 인지도</strong>를 높입니다.</p>
+                    <p class="svctab-desc-text">콘텐츠 흐름 안에 브랜드를 자연스럽게 담아, 시청자가 <strong>거부감 없이 브랜드를 경험</strong>하게 합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#34d399"></span>콘텐츠 흐름 내 자연스러운 제품 노출</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#34d399"></span>시청자 이탈률 최소화</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#34d399"></span>브랜드 친밀감 및 신뢰 형성</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>콘텐츠 흐름 내 자연스러운 제품 노출</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>시청자 이탈률 최소화</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>브랜드 친밀감 및 신뢰 형성</li>
                     </ul>
                   </div>
                 </div>
@@ -706,7 +600,6 @@ export const SvcInfluencerPage = () => (
                   <span class="svctab-item-idx">03</span>
                   <div class="svctab-item-info">
                     <span class="svctab-item-name">숏폼 콘텐츠</span>
-                    <span class="svctab-item-en">Short-form Content</span>
                   </div>
                 </div>
                 <div class="svctab-item-arrow">
@@ -715,39 +608,24 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-infocard" style="border-top-color:#f87171">
-                    <div class="sic-header">
-                      <span class="sic-icon">📱</span>
-                      <span class="sic-label">Short-form Content</span>
+                  <div class="svctab-photo svctab-photo--filled" style="--img:url('/static/mkt-images/content-shortform.png')">
+                    <div class="svctab-photo-ph">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></svg>
+                      <span>Short-form Content</span>
                     </div>
-                    <div class="sic-stats">
-                      <div class="sic-stat">
-                        <span class="sic-num">크리에이터</span>
-                        <span class="sic-desc">전문 크리에이터<br/>직접 기획·출연</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">릴스<br/><span style="font-size:11px">/ 쇼츠</span></span>
-                        <span class="sic-desc">플랫폼별<br/>최적화 포맷</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">바이럴</span>
-                        <span class="sic-desc">자연스러운<br/>광고 확산</span>
-                      </div>
-                    </div>
-                    <p class="sic-quote">"크리에이터가 직접 만드는 찐 광고 콘텐츠"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#f87171">크리에이터 제작</span>
-                      <span style="--tc:#f87171">릴스 / 쇼츠</span>
-                      <span style="--tc:#f87171">자연 노출</span>
-                      <span style="--tc:#f87171">바이럴</span>
+                      <span style="--tc:#285CCC">크리에이터 제작</span>
+                      <span style="--tc:#285CCC">릴스 / 쇼츠</span>
+                      <span style="--tc:#285CCC">자연 노출</span>
+                      <span style="--tc:#285CCC">바이럴</span>
                     </div>
-                    <p class="svctab-desc-text">크리에이터가 <strong>직접 기획하고 출연</strong>하는 숏폼 광고 콘텐츠. 광고처럼 느껴지지 않는 자연스러운 포맷으로 시청자의 공감을 이끌어내고 빠른 확산을 유도합니다.</p>
+                    <p class="svctab-desc-text">크리에이터가 <strong>직접 기획하고 출연</strong>하는 숏폼 콘텐츠. 크리에이터 고유의 톤으로 시청자의 공감을 이끌어내고 빠른 확산을 만듭니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#f87171"></span>크리에이터 고유 톤·스타일로 브랜드 자연 녹여내기</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#f87171"></span>릴스·쇼츠·틱톡 각 플랫폼 특성에 맞는 포맷 기획</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#f87171"></span>광고 거부감 없이 높은 시청 완료율 달성</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>크리에이터 고유 톤·스타일로 브랜드 자연 녹여내기</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>릴스·쇼츠 각 플랫폼 특성에 맞는 포맷 기획</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>광고 거부감 없이 높은 시청 완료율 달성</li>
                     </ul>
                   </div>
                 </div>
@@ -761,7 +639,6 @@ export const SvcInfluencerPage = () => (
                   <span class="svctab-item-idx">04</span>
                   <div class="svctab-item-info">
                     <span class="svctab-item-name">유튜브 영상 제작</span>
-                    <span class="svctab-item-en">YouTube Video Production</span>
                   </div>
                 </div>
                 <div class="svctab-item-arrow">
@@ -770,39 +647,24 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-infocard" style="border-top-color:#a78bfa">
-                    <div class="sic-header">
-                      <span class="sic-icon">▶️</span>
-                      <span class="sic-label">YouTube Video Production</span>
+                  <div class="svctab-photo svctab-photo--filled" style="--img:url('/static/mkt-images/content-youtube.png')">
+                    <div class="svctab-photo-ph">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></svg>
+                      <span>YouTube Video Production</span>
                     </div>
-                    <div class="sic-stats">
-                      <div class="sic-stat">
-                        <span class="sic-num">롱폼</span>
-                        <span class="sic-desc">브랜드 스토리<br/>심층 전달</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">AI</span>
-                        <span class="sic-desc">AI 롱폼·숏폼<br/>합리적 제작</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">Premium</span>
-                        <span class="sic-desc">고품질<br/>프리미엄 영상</span>
-                      </div>
-                    </div>
-                    <p class="sic-quote">"브랜드 스토리를 깊이 있게, 효율적으로"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#a78bfa">유튜브</span>
-                      <span style="--tc:#a78bfa">롱폼</span>
-                      <span style="--tc:#a78bfa">AI 롱폼·숏폼</span>
-                      <span style="--tc:#a78bfa">프리미엄</span>
+                      <span style="--tc:#285CCC">유튜브</span>
+                      <span style="--tc:#285CCC">롱폼</span>
+                      <span style="--tc:#285CCC">AI 롱폼·숏폼</span>
+                      <span style="--tc:#285CCC">프리미엄</span>
                     </div>
                     <p class="svctab-desc-text">브랜드 메시지를 <strong>깊이 있는 스토리</strong>로 풀어내는 유튜브 전문 영상 제작. 프리미엄 롱폼부터 AI 기반 롱폼·숏폼까지 예산과 목적에 맞게 선택할 수 있습니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#a78bfa"></span>프리미엄 롱폼 — 브랜드 스토리 심층 전달</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#a78bfa"></span>AI 롱폼·AI 숏폼 — 합리적 단가의 스마트한 제작</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#a78bfa"></span>유튜브 알고리즘 최적화 기획·편집 포함</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>프리미엄 롱폼 — 브랜드 스토리 심층 전달</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>AI 롱폼·AI 숏폼 — 합리적 단가의 스마트한 제작</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>유튜브 알고리즘 최적화 기획·편집 포함</li>
                     </ul>
                   </div>
                 </div>
@@ -816,12 +678,6 @@ export const SvcInfluencerPage = () => (
             <p class="svctab-cta-msg">
               상담을 남기시면 유형에 맞는 <strong>레퍼런스</strong>를 받아 보실 수 있습니다.
             </p>
-            <a href="/contact" class="svctab-cta-btn">
-              상담 남기기
-              <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
-                <path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
           </div>
 
         </div>{/* /panel1 */}
@@ -829,7 +685,6 @@ export const SvcInfluencerPage = () => (
         {/* ── 탭 패널 2 : 모델 ── */}
         <div class="svctab-panel" id="svctabPanel2">
           <div class="svctab-panel-head">
-            <p class="svctab-panel-eyebrow">MODEL SERVICE</p>
             <h2 class="svctab-panel-title">모델 <em>서비스</em></h2>
             <p class="svctab-panel-lead">브랜드 목표와 예산에 최적화된 <strong>모델 전략</strong>을 함께 설계합니다.</p>
           </div>
@@ -843,7 +698,6 @@ export const SvcInfluencerPage = () => (
                   <span class="svctab-item-idx">01</span>
                   <div class="svctab-item-info">
                     <span class="svctab-item-name">유튜버 모델</span>
-                    <span class="svctab-item-en">YouTuber Model</span>
                   </div>
                 </div>
                 <div class="svctab-item-arrow">
@@ -852,38 +706,23 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body open">
                 <div class="svctab-item-content">
-                  <div class="svctab-infocard" style="border-top-color:#fb923c">
-                    <div class="sic-header">
-                      <span class="sic-icon">📺</span>
-                      <span class="sic-label">YouTuber Model</span>
+                  <div class="svctab-photo svctab-photo--filled" style="--img:url('/static/mkt-images/model-youtuber.png')">
+                    <div class="svctab-photo-ph">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></svg>
+                      <span>YouTuber Model</span>
                     </div>
-                    <div class="sic-stats">
-                      <div class="sic-stat">
-                        <span class="sic-num">High</span>
-                        <span class="sic-desc">팬층 기반<br/>구매 전환율</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">동시</span>
-                        <span class="sic-desc">채널 콘텐츠<br/>광고 동시 집행</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">ROI</span>
-                        <span class="sic-desc">합리적 비용<br/>높은 수익률</span>
-                      </div>
-                    </div>
-                    <p class="sic-quote">"연예인 효과를 합리적 비용으로 실현"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#fb923c">커머스 활성화</span>
-                      <span style="--tc:#fb923c">팬층 타겟</span>
-                      <span style="--tc:#fb923c">합리적 비용</span>
+                      <span style="--tc:#285CCC">커머스 활성화</span>
+                      <span style="--tc:#285CCC">팬층 타겟</span>
+                      <span style="--tc:#285CCC">합리적 비용</span>
                     </div>
-                    <p class="svctab-desc-text">크리에이터 커머스 활성화 &amp; 팬층 타겟 마케팅에 최적화된 모델. 연예인 모델 대비 <strong>합리적인 비용</strong>으로 미들급 연예인 이상의 퍼포먼스를 창출합니다.</p>
+                    <p class="svctab-desc-text">크리에이터 커머스와 팬층 타겟에 맞는 모델. 연예인 모델보다 <strong>합리적인 비용</strong>으로 그 이상의 반응을 끌어내기도 합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#fb923c"></span>팬층 기반 구매 전환율 높음</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#fb923c"></span>채널 연계 콘텐츠 광고 동시 집행 가능</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#fb923c"></span>합리적 금액대로 높은 ROI 실현</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>팬층 기반 구매 전환율 높음</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>채널 연계 콘텐츠 광고 동시 집행 가능</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>합리적 금액대로 높은 ROI 실현</li>
                     </ul>
                   </div>
                 </div>
@@ -897,7 +736,6 @@ export const SvcInfluencerPage = () => (
                   <span class="svctab-item-idx">02</span>
                   <div class="svctab-item-info">
                     <span class="svctab-item-name">연예인 모델</span>
-                    <span class="svctab-item-en">Celebrity Model</span>
                   </div>
                 </div>
                 <div class="svctab-item-arrow">
@@ -906,38 +744,23 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-infocard" style="border-top-color:#e879f9">
-                    <div class="sic-header">
-                      <span class="sic-icon">✨</span>
-                      <span class="sic-label">Celebrity Model</span>
+                  <div class="svctab-photo svctab-photo--filled" style="--img:url('/static/mkt-images/model-celebrity.png')">
+                    <div class="svctab-photo-ph">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></svg>
+                      <span>Celebrity Model</span>
                     </div>
-                    <div class="sic-stats">
-                      <div class="sic-stat">
-                        <span class="sic-num">Premium</span>
-                        <span class="sic-desc">브랜드<br/>이미지 프리미엄화</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">대중</span>
-                        <span class="sic-desc">대중적 신뢰도<br/>즉각 확보</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">탄력</span>
-                        <span class="sic-desc">규모별<br/>탄력적 예산 협의</span>
-                      </div>
-                    </div>
-                    <p class="sic-quote">"브랜드 고급화의 가장 확실한 방법"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#e879f9">이미지 제고</span>
-                      <span style="--tc:#e879f9">프리미엄</span>
-                      <span style="--tc:#e879f9">탄력적 비용</span>
+                      <span style="--tc:#285CCC">이미지 제고</span>
+                      <span style="--tc:#285CCC">프리미엄</span>
+                      <span style="--tc:#285CCC">탄력적 비용</span>
                     </div>
-                    <p class="svctab-desc-text">브랜드 확실한 <strong>이미지 제고</strong>가 필요할 때 가장 강력한 선택. 촬영 콘텐츠와 규모에 따라 탄력적 비용 구조로 협의합니다.</p>
+                    <p class="svctab-desc-text">브랜드 <strong>이미지를 끌어올려야 할 때</strong> 어울리는 선택. 촬영 분량과 규모에 따라 비용을 유연하게 협의합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#e879f9"></span>브랜드 고급화 이미지 순간 확립</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#e879f9"></span>대중적 신뢰도와 인지도 극대화</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#e879f9"></span>규모에 따른 탄력적 예산 협의</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>브랜드 고급화 이미지 순간 확립</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>대중 신뢰도와 인지도 확대</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>규모에 따른 탄력적 예산 협의</li>
                     </ul>
                   </div>
                 </div>
@@ -951,7 +774,6 @@ export const SvcInfluencerPage = () => (
                   <span class="svctab-item-idx">03</span>
                   <div class="svctab-item-info">
                     <span class="svctab-item-name">일반 모델</span>
-                    <span class="svctab-item-en">Commercial Model</span>
                   </div>
                 </div>
                 <div class="svctab-item-arrow">
@@ -960,38 +782,23 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body">
                 <div class="svctab-item-content">
-                  <div class="svctab-infocard" style="border-top-color:#2dd4bf">
-                    <div class="sic-header">
-                      <span class="sic-icon">💡</span>
-                      <span class="sic-label">Commercial Model</span>
+                  <div class="svctab-photo svctab-photo--filled" style="--img:url('/static/mkt-images/model-commercial.png')">
+                    <div class="svctab-photo-ph">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></svg>
+                      <span>Commercial Model</span>
                     </div>
-                    <div class="sic-stats">
-                      <div class="sic-stat">
-                        <span class="sic-num">직관</span>
-                        <span class="sic-desc">제품 핵심<br/>직관적 전달</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">합리</span>
-                        <span class="sic-desc">합리적 비용<br/>고품질 촬영</span>
-                      </div>
-                      <div class="sic-stat">
-                        <span class="sic-num">다양</span>
-                        <span class="sic-desc">다양한<br/>모델 풀 보유</span>
-                      </div>
-                    </div>
-                    <p class="sic-quote">"제품을 가장 아름답게 보여주는 방법"</p>
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#2dd4bf">시각 표현</span>
-                      <span style="--tc:#2dd4bf">합리적 비용</span>
-                      <span style="--tc:#2dd4bf">제품 표현</span>
+                      <span style="--tc:#285CCC">시각 표현</span>
+                      <span style="--tc:#285CCC">합리적 비용</span>
+                      <span style="--tc:#285CCC">제품 표현</span>
                     </div>
                     <p class="svctab-desc-text">브랜드 제품을 <strong>시각적으로 표현</strong>할 때 최적화된 모델. 비교적 합리적인 비용으로 모델 특색을 살려 제품 핵심을 고급스럽게 표현합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#2dd4bf"></span>제품 핵심을 직관적으로 전달</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#2dd4bf"></span>합리적 비용으로 고품질 촬영</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#2dd4bf"></span>상황·컨셉에 맞는 다양한 모델 풀 보유</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>제품 핵심을 직관적으로 전달</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>합리적 비용으로 고품질 촬영</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>상황·컨셉에 맞는 다양한 모델 풀 보유</li>
                     </ul>
                   </div>
                 </div>
@@ -1005,12 +812,6 @@ export const SvcInfluencerPage = () => (
             <p class="svctab-cta-msg">
               상담을 남기시면 유형에 맞는 <strong>레퍼런스</strong>를 받아 보실 수 있습니다.
             </p>
-            <a href="/contact" class="svctab-cta-btn">
-              상담 남기기
-              <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
-                <path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
           </div>
 
         </div>{/* /panel2 */}
@@ -1018,9 +819,16 @@ export const SvcInfluencerPage = () => (
       </div>
 
       <script dangerouslySetInnerHTML={{__html:`(function(){
-  // ── 대분류 탭 전환 ──
+  // ── 대분류 탭: 컴팩트화 + 활성 패널의 서브 문구(헤드) 아래로 이동 ──
+  var nav = document.getElementById('svctabNav');
+  if (nav) nav.classList.add('svctab-nav--compact');
   var tabBtns = document.querySelectorAll('#svctabNav .svctab-btn');
   var panels  = document.querySelectorAll('.svctab-panel');
+  function placeNav(panel){
+    if (!nav || !panel) return;
+    var acc = panel.querySelector('.svctab-acc');
+    if (acc) panel.insertBefore(nav, acc); else panel.appendChild(nav);
+  }
   tabBtns.forEach(function(btn){
     btn.addEventListener('click', function(){
       var idx = parseInt(btn.dataset.tab);
@@ -1028,29 +836,61 @@ export const SvcInfluencerPage = () => (
       panels.forEach(function(p){ p.classList.remove('active'); });
       btn.classList.add('active');
       panels[idx].classList.add('active');
+      placeNav(panels[idx]);
     });
   });
-  // ── 중분류 아코디언 ──
-  var triggers = document.querySelectorAll('.svctab-item-trigger');
-  triggers.forEach(function(trigger){
-    trigger.addEventListener('click', function(){
-      var item  = trigger.closest('.svctab-item');
-      var body  = item.querySelector('.svctab-item-body');
-      var acc   = item.closest('.svctab-acc');
-      var isOpen = body.classList.contains('open');
-      // 같은 아코디언 내 모두 닫기
-      acc.querySelectorAll('.svctab-item-body').forEach(function(b){ b.classList.remove('open'); b.style.maxHeight=''; });
-      acc.querySelectorAll('.svctab-item-trigger').forEach(function(t){ t.classList.remove('active'); });
-      if(!isOpen){
-        body.classList.add('open');
-        trigger.classList.add('active');
-        body.style.maxHeight = body.scrollHeight + 'px';
-      }
+  // 초기: 활성 패널의 헤드 아래로 탭 배치
+  placeNav(document.querySelector('.svctab-panel.active') || panels[0]);
+  // ── 강조 이펙트(동그라미·밑줄) — 스크롤 진입 시 그리기 ──
+  var fxTitles = document.querySelectorAll('.ifl-fx-title');
+  if (fxTitles.length && 'IntersectionObserver' in window) {
+    var fxIo = new IntersectionObserver(function(ents){
+      ents.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('is-in'); fxIo.unobserve(e.target); }
+      });
+    }, { threshold: 0.6 });
+    fxTitles.forEach(function(t){ fxIo.observe(t); });
+  }
+  // ── 중분류: 아코디언 → 2-Pane 변환 (좌측 리스트 / 우측 상세 고정) ──
+  var ARROW = '<span class="svctab-sub-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+  document.querySelectorAll('.svctab-acc').forEach(function(acc){
+    var items = Array.prototype.slice.call(acc.querySelectorAll('.svctab-item'));
+    if(!items.length) return;
+    var sublist = document.createElement('div'); sublist.className = 'svctab-sublist';
+    var stage   = document.createElement('div'); stage.className = 'svctab-stage';
+    items.forEach(function(item, i){
+      var trig = item.querySelector('.svctab-item-trigger');
+      var g = function(sel){ var e = trig.querySelector(sel); return e ? e.textContent : ''; };
+      var gHtml = function(sel){ var e = trig.querySelector(sel); return e ? e.innerHTML : ''; };
+      var on = (trig && trig.classList.contains('active')) || i === 0;
+      var btn = document.createElement('button');
+      btn.className = 'svctab-sub' + (on ? ' active' : '');
+      btn.setAttribute('data-i', i);
+      btn.innerHTML =
+        '<span class="svctab-sub-idx">'+ g('.svctab-item-idx') +'</span>'
+        + '<span class="svctab-sub-info"><span class="svctab-sub-name">'+ gHtml('.svctab-item-name') +'</span></span>' + ARROW;
+      sublist.appendChild(btn);
+      var content = item.querySelector('.svctab-item-content');
+      var panel = document.createElement('div');
+      panel.className = 'svctab-stage-item' + (on ? ' active' : '');
+      panel.setAttribute('data-i', i);
+      if(content) panel.appendChild(content);   // 노드 이동(콘텐츠 보존)
+      stage.appendChild(panel);
     });
-  });
-  // 초기 열림 항목 maxHeight 설정
-  document.querySelectorAll('.svctab-item-body.open').forEach(function(b){
-    b.style.maxHeight = b.scrollHeight + 'px';
+    acc.innerHTML = '';
+    var pane = document.createElement('div'); pane.className = 'svctab-2pane';
+    pane.appendChild(sublist); pane.appendChild(stage);
+    acc.appendChild(pane);
+    sublist.querySelectorAll('.svctab-sub').forEach(function(b){
+      b.addEventListener('click', function(){
+        var i = b.getAttribute('data-i');
+        sublist.querySelectorAll('.svctab-sub').forEach(function(x){ x.classList.remove('active'); });
+        stage.querySelectorAll('.svctab-stage-item').forEach(function(x){ x.classList.remove('active'); });
+        b.classList.add('active');
+        var t = stage.querySelector('.svctab-stage-item[data-i="'+i+'"]');
+        if(t) t.classList.add('active');
+      });
+    });
   });
 })();`}} />
     </section>
@@ -1060,52 +900,33 @@ export const SvcInfluencerPage = () => (
     {/* ══════════════════════════════════════════
         SERVICE 07 — 미디어믹스 2차가공 콘텐츠
     ══════════════════════════════════════════ */}
-    <section class="ifl2-section ifl2-section--confidential">
-      <canvas id="ifl2ConfCanvas" class="ifl2-conf-canvas"></canvas>
+    <section class="ifl2-section ifl2-section--confidential ifl2-media-light" id="mediaMixContent">
       <div class="ifl2-conf-inner container">
         <div class="ifl2-conf-body">
-          <div class="ifl2-conf-snum">07</div>
-          <div class="ifl2-conf-label">Media Mix Content</div>
           <h2 class="ifl2-conf-title">미디어믹스<br /><em>2차가공 콘텐츠</em></h2>
 
-          <div class="ifl2-conf-stamp">
-            <span>CONFIDENTIAL</span>
-          </div>
-
-          <p class="ifl2-conf-sub">보안상 오픈소스에서는 공개할 수 없는 캠페인이 대부분입니다.</p>
+          <p class="ifl2-conf-sub">하나의 원본으로<br />매체와 고객을 재설계합니다.</p>
 
           <div class="ifl2-conf-box">
-            <div class="ifl2-conf-lock">
-              <svg viewBox="0 0 24 24" fill="none" width="28" height="28">
-                <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                <circle cx="12" cy="16" r="1.5" fill="currentColor"/>
-              </svg>
+            <div class="ifl2-media-formula" aria-label="하나의 원본을 매체별로 최적화">
+              <strong>하나의 원본</strong>
+              <span><i></i><b>→</b></span>
+              <strong>매체별 최적화</strong>
             </div>
-            <p class="ifl2-conf-box-main">대기업들도 선택하는 <strong>인애드컴퍼니의 고유 마케팅 상품</strong></p>
-            <p class="ifl2-conf-box-sub">미디어믹스 2차가공 콘텐츠는<br /><strong>킥오프 미팅에서만 디테일을 공개합니다.</strong></p>
-            <div class="ifl2-conf-security">
-              <span class="ifl2-conf-dot"></span>
-              SECURITY LEVEL: HIGH · INTERNAL USE ONLY
+            <div class="ifl2-media-point">
+              <span>01</span><strong>매체별 규격</strong><p>채널 특성과 노출 위치에 맞게 화면과 호흡을 조정합니다.</p>
             </div>
+            <div class="ifl2-media-point">
+              <span>02</span><strong>메시지 재편집</strong><p>매체별 고객이 반응하는 장면과 메시지를 다시 선별합니다.</p>
+            </div>
+            <div class="ifl2-media-point">
+              <span>03</span><strong>전환 흐름</strong><p>노출 이후 검색과 구매로 이어지는 동선을 함께 설계합니다.</p>
+            </div>
+            <p class="ifl2-media-note">캠페인 상세 사례는 계약상 공개 범위가 제한될 수 있으며, 미팅에서 브랜드 상황에 맞춘 적용 방식을 안내합니다.</p>
           </div>
 
-          <a href="/contact?type=kickoff" class="hero-cta-btn primary ifl2-conf-cta">
-            <span>상담 신청하기</span>
-            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
         </div>
       </div>
-
-      <script dangerouslySetInnerHTML={{ __html: `
-(function(){
-  var cvs=document.getElementById('ifl2ConfCanvas'); if(!cvs)return;
-  var ctx=cvs.getContext('2d'),W,H,chars='01CONFIDENTIAL秘密機密SECURE'.split(''),drops=[];
-  function resize(){W=cvs.width=window.innerWidth;H=cvs.height=cvs.closest('section').offsetHeight||600;drops=[];var cols=Math.floor(W/22);for(var i=0;i<cols;i++)drops.push(Math.random()*H/18);}
-  function draw(){ctx.fillStyle='rgba(2,4,8,0.07)';ctx.fillRect(0,0,W,H);ctx.font='13px monospace';drops.forEach(function(y,i){var ch=chars[Math.floor(Math.random()*chars.length)];var alpha=Math.random()>.88?0.5:0.1;ctx.fillStyle='rgba(168,85,247,'+alpha+')';ctx.fillText(ch,i*22,y*18);drops[i]=y>H/18+Math.random()*20?0:y+1;});requestAnimationFrame(draw);}
-  resize();draw();window.addEventListener('resize',resize);
-})();
-      `}} />
     </section>
 
     {/* ══ PROCESS ══ (iflp 카드 그리드 유지) */}
@@ -1118,9 +939,7 @@ export const SvcInfluencerPage = () => (
       </div>
       <div class="container" style="position:relative;z-index:1">
         <div class="iflp-head">
-          <div class="iflp-eyebrow"><span class="iflp-eyebrow-dot"></span>INFLUENCER MARKETING PROCESS<span class="iflp-eyebrow-dot"></span></div>
           <h2 class="iflp-title">캠페인 시작부터 성과까지<br /><em>7단계 정밀 프로세스</em></h2>
-          <p class="iflp-sub">단순 섭외를 넘어 — 전략 설계, 크리에이터 매칭, 콘텐츠 제작, 바이럴 확산까지<br />인애드컴퍼니가 전 과정을 책임집니다.</p>
         </div>
         <div class="iflp2-wrap" id="iflp2Wrap">
           <ul class="iflp2-list" id="iflp2List">
@@ -1137,8 +956,8 @@ export const SvcInfluencerPage = () => (
               <div class="iflp2-panel-img"><img src="/static/images/process/step01.png" alt="상담 진행" loading="lazy" /></div>
               <div class="iflp2-panel-body">
                 <span class="iflp2-panel-tag" style="--pc:#2563eb">Strategy Consultation</span>
-                <p class="iflp2-panel-desc">브랜드 목표·예산·타겟을 심층 분석합니다.<br />캠페인 KPI와 방향성을 함께 정의하고 맞춤 전략을 제안합니다.<br />단순한 견적 상담이 아닌 브랜드 성장 전략 미팅입니다.</p>
-                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#2563eb">🎯 목표 정의</span><span class="iflp2-ptag" style="--pc:#2563eb">💰 예산 협의</span><span class="iflp2-ptag" style="--pc:#2563eb">📊 KPI 설정</span><span class="iflp2-ptag" style="--pc:#2563eb">🗺 전략 수립</span></div></div>
+                <p class="iflp2-panel-desc">브랜드 목표·예산·타겟을 먼저 뜯어봅니다.<br />KPI와 방향을 같이 정하고 맞춤 전략을 제안합니다.<br />견적만 받는 상담이 아니라, 성장 전략을 짜는 미팅입니다.</p>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#2563eb">목표 정의</span><span class="iflp2-ptag" style="--pc:#2563eb">예산 협의</span><span class="iflp2-ptag" style="--pc:#2563eb">KPI 설정</span><span class="iflp2-ptag" style="--pc:#2563eb">전략 수립</span></div></div>
               </div>
             </div>
             <div class="iflp2-panel" data-panel="1">
@@ -1146,7 +965,7 @@ export const SvcInfluencerPage = () => (
               <div class="iflp2-panel-body">
                 <span class="iflp2-panel-tag" style="--pc:#7c3aed">Contract &amp; Scope</span>
                 <p class="iflp2-panel-desc">진행 범위·일정·성과 지표를 명문화합니다.<br />투명한 비용 구조와 명확한 계약서로 신뢰를 보장합니다.<br />모든 조건이 계약서에 명시되어 불필요한 분쟁을 방지합니다.</p>
-                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#7c3aed">📋 범위 확정</span><span class="iflp2-ptag" style="--pc:#7c3aed">📅 일정 조율</span><span class="iflp2-ptag" style="--pc:#7c3aed">✍️ 계약 체결</span><span class="iflp2-ptag" style="--pc:#7c3aed">🔒 비용 명문화</span></div></div>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#7c3aed">범위 확정</span><span class="iflp2-ptag" style="--pc:#7c3aed">일정 조율</span><span class="iflp2-ptag" style="--pc:#7c3aed">계약 체결</span><span class="iflp2-ptag" style="--pc:#7c3aed">비용 명문화</span></div></div>
               </div>
             </div>
             <div class="iflp2-panel" data-panel="2">
@@ -1154,7 +973,7 @@ export const SvcInfluencerPage = () => (
               <div class="iflp2-panel-body">
                 <span class="iflp2-panel-tag" style="--pc:#059669">Creative Briefing</span>
                 <p class="iflp2-panel-desc">브랜드 메시지·금지 표현·톤앤매너를 담은 크리에이터 브리핑 가이드를 제작합니다.<br />크리에이터가 브랜드의 언어로 콘텐츠를 만들 수 있도록 상세 지침을 제공합니다.</p>
-                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#059669">🎨 톤앤매너</span><span class="iflp2-ptag" style="--pc:#059669">📄 브리핑 문서</span><span class="iflp2-ptag" style="--pc:#059669">✅ 승인 기준</span><span class="iflp2-ptag" style="--pc:#059669">🚫 금지 표현</span></div></div>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#059669">톤앤매너</span><span class="iflp2-ptag" style="--pc:#059669">브리핑 문서</span><span class="iflp2-ptag" style="--pc:#059669">승인 기준</span><span class="iflp2-ptag" style="--pc:#059669">금지 표현</span></div></div>
               </div>
             </div>
             <div class="iflp2-panel" data-panel="3">
@@ -1162,7 +981,7 @@ export const SvcInfluencerPage = () => (
               <div class="iflp2-panel-body">
                 <span class="iflp2-panel-tag" style="--pc:#0891b2">Creator Matching</span>
                 <p class="iflp2-panel-desc">1,200+ 크리에이터 DB에서 타겟 적합성·퍼포먼스·단가를 종합 분석합니다.<br />단순 팔로워 수가 아닌 실제 전환율과 브랜드 핏을 기준으로 최적 크리에이터를 선별합니다.</p>
-                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#0891b2">🗄 DB 분석</span><span class="iflp2-ptag" style="--pc:#0891b2">🔍 적합성 검증</span><span class="iflp2-ptag" style="--pc:#0891b2">💹 단가 협의</span><span class="iflp2-ptag" style="--pc:#0891b2">📈 전환율 선별</span></div></div>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#0891b2">DB 분석</span><span class="iflp2-ptag" style="--pc:#0891b2">적합성 검증</span><span class="iflp2-ptag" style="--pc:#0891b2">단가 협의</span><span class="iflp2-ptag" style="--pc:#0891b2">전환율 선별</span></div></div>
               </div>
             </div>
             <div class="iflp2-panel" data-panel="4">
@@ -1170,15 +989,15 @@ export const SvcInfluencerPage = () => (
               <div class="iflp2-panel-body">
                 <span class="iflp2-panel-tag" style="--pc:#d97706">Content Production</span>
                 <p class="iflp2-panel-desc">가이드라인 기반으로 크리에이터가 콘텐츠를 제작합니다.<br />브랜드 검수와 피드백을 거쳐 최종 확정합니다.<br />완성도 높은 콘텐츠가 나올 때까지 함께 조율합니다.</p>
-                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#d97706">🎬 제작 관리</span><span class="iflp2-ptag" style="--pc:#d97706">🔎 브랜드 검수</span><span class="iflp2-ptag" style="--pc:#d97706">✅ 최종 승인</span><span class="iflp2-ptag" style="--pc:#d97706">🔄 피드백 반영</span></div></div>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#d97706">제작 관리</span><span class="iflp2-ptag" style="--pc:#d97706">브랜드 검수</span><span class="iflp2-ptag" style="--pc:#d97706">최종 승인</span><span class="iflp2-ptag" style="--pc:#d97706">피드백 반영</span></div></div>
               </div>
             </div>
             <div class="iflp2-panel" data-panel="5">
               <div class="iflp2-panel-img"><img src="/static/images/process/step06.png" alt="연계 바이럴 확산" loading="lazy" /></div>
               <div class="iflp2-panel-body">
                 <span class="iflp2-panel-tag" style="--pc:#dc2626">Viral Amplification</span>
-                <p class="iflp2-panel-desc">최적 시간에 콘텐츠를 게시하고 커뮤니티·SNS 연계 확산 전략을 병행 실행합니다.<br />인플루언서 콘텐츠를 씨앗으로 바이럴 파급력을 극대화합니다.</p>
-                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#dc2626">📱 SNS 확산</span><span class="iflp2-ptag" style="--pc:#dc2626">💬 커뮤니티 연계</span><span class="iflp2-ptag" style="--pc:#dc2626">📡 실시간 모니터링</span><span class="iflp2-ptag" style="--pc:#dc2626">⚡ 추가 확산</span></div></div>
+                <p class="iflp2-panel-desc">반응이 가장 좋은 시간에 게시하고, 커뮤니티·SNS로 확산을 같이 굴립니다.<br />인플루언서 콘텐츠를 시작점 삼아 노출을 더 넓게 확대합니다.</p>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#dc2626">SNS 확산</span><span class="iflp2-ptag" style="--pc:#dc2626">커뮤니티 연계</span><span class="iflp2-ptag" style="--pc:#dc2626">실시간 모니터링</span><span class="iflp2-ptag" style="--pc:#dc2626">추가 확산</span></div></div>
               </div>
             </div>
             <div class="iflp2-panel" data-panel="6">
@@ -1186,7 +1005,7 @@ export const SvcInfluencerPage = () => (
               <div class="iflp2-panel-body">
                 <span class="iflp2-panel-tag" style="--pc:#a855f7">Performance Reporting</span>
                 <p class="iflp2-panel-desc">조회수·도달·클릭·전환·매출까지 전 과정을 투명하게 리포팅합니다.<br />단순 수치 나열이 아닌 인사이트와 차기 캠페인 전략까지 함께 제공합니다.</p>
-                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#a855f7">📊 성과 리포트</span><span class="iflp2-ptag" style="--pc:#a855f7">🔬 인사이트 분석</span><span class="iflp2-ptag" style="--pc:#a855f7">🚀 차기 전략</span><span class="iflp2-ptag" style="--pc:#a855f7">📈 ROI 정산</span></div></div>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#a855f7">성과 리포트</span><span class="iflp2-ptag" style="--pc:#a855f7">인사이트 분석</span><span class="iflp2-ptag" style="--pc:#a855f7">차기 전략</span><span class="iflp2-ptag" style="--pc:#a855f7">ROI 정산</span></div></div>
               </div>
             </div>
           </div>
@@ -1227,15 +1046,12 @@ export const SvcInfluencerPage = () => (
 
     {/* ══ CTA ══ */}
     <section class="svc-cta-section">
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/우리 브랜드에 맞는 인플루언서를 찾아드립니다.png')"></div>
       <div class="container">
         <div class="svc-cta-inner">
           <div class="svc-cta-text">
             <h2>우리 브랜드에 맞는<br /><em>인플루언서를 찾아드립니다</em></h2>
-            <p>1,200+ 크리에이터 네트워크에서 최적의 파트너를 무료로 추천해드립니다.</p>
-          </div>
-          <div class="svc-cta-btns">
-            <a href="/contact" class="hero-cta-btn primary"><span>무료 상담 신청하기</span><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-            <button type="button" class="hero-cta-btn ghost" onclick="openCallModal()"><span>📞 바로 전화하기</span></button>
+            <p>1,200+ 크리에이터 네트워크에서 브랜드에 맞는 파트너를 무료로 추천해드립니다.</p>
           </div>
         </div>
       </div>
@@ -1243,10 +1059,11 @@ export const SvcInfluencerPage = () => (
 
 
     {/* ── Scroll Reveal ── */}
+    <script src="/static/influencer-counter.js?v=20260722u2"></script>
     <script dangerouslySetInnerHTML={{__html: `
 (function(){
   var s = document.createElement('script');
-  s.src = '/static/scroll-reveal.js';
+  s.src = '/static/scroll-reveal.js?v=20260722b';
   document.head.appendChild(s);
 })();
     `}} />
@@ -1286,5 +1103,6 @@ export const SvcInfluencerPage = () => (
     }).catch(function(){});
 })();
     `}} />
+    </div>{/* /svc-light */}
   </>
 )

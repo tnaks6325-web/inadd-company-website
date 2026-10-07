@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="62" height="59" viewBox="0 0 62 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="OliveYoung/Cosmetic-Jar">
+<path id="Cosmetic-Jar/Shape-01" d="M46 10H16C8.8203 10 3 15.8203 3 23V41C3 48.1797 8.8203 54 16 54H46C53.1797 54 59 48.1797 59 41V23C59 15.8203 53.1797 10 46 10Z" fill="url(#paint0_linear_0_10)" stroke="#D7DFEA"/>
+<path id="Cosmetic-Jar/Shape-02" d="M55 0H7C3.68629 0 1 2.68629 1 6V10C1 13.3137 3.68629 16 7 16H55C58.3137 16 61 13.3137 61 10V6C61 2.68629 58.3137 0 55 0Z" fill="#DCE4F1"/>
+<path id="Cosmetic-Jar/Shape-03" d="M17 34H45" stroke="#285CCC" stroke-width="4" stroke-linecap="round"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_10" x1="3" y1="10" x2="45.7508" y2="64.4101" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#E9EDF4"/>
+</linearGradient>
+</defs>
+</svg>

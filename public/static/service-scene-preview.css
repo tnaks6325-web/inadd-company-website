@@ -1,0 +1,67 @@
+/* DEV-only whole-service scene. Review is the editorial composition trial;
+   all selections share the copy/graphic choreography without changing content. */
+#services .hsvc-panel--presentation .hsvc-copy-mask {
+  display: inline-block;
+  max-width: 100%;
+  overflow: clip;
+  vertical-align: bottom;
+  padding-block: .12em;
+  margin-block: -.12em;
+}
+#services .hsvc-panel--presentation .hsvc-copy-part {
+  display: block;
+  transform-origin: 0 100%;
+}
+#services .hsvc-panel--presentation .hsvc-panel-name {
+  line-height: 1.22;
+  white-space: normal;
+}
+#services .hsvc-panel--presentation .hsvc-copy-mask--title-0 {
+  white-space: pre-wrap;
+}
+#services .hsvc-panel--presentation .hsvc-panel-text {
+  position: relative;
+  justify-content: center;
+}
+#services .hsvc-panel--presentation[data-presented-service="review"] .hsvc-panel-name {
+  font-size: clamp(42px, 4.2vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  margin-bottom: 22px;
+}
+#services .hsvc-panel--presentation[data-presented-service="review"] .hsvc-panel-name .hsvc-copy-mask {
+  display: block;
+  width: fit-content;
+}
+#services .hsvc-panel--presentation[data-presented-service="review"] .hsvc-panel-desc {
+  max-width: 310px;
+  margin-bottom: 28px;
+}
+/* The action is a short sequence, not a permanently moving sales button. */
+#services .hsvc-panel--presentation .hsvc-panel-link { transform-origin: 0 50%; }
+@media (max-width: 900px) {
+  #services .hsvc-panel--presentation .hsvc-panel-text { min-height: 340px; }
+  #services .hsvc-panel--presentation[data-presented-service="review"] .hsvc-panel-name {
+    font-size: 42px;
+    line-height: 1.1;
+    letter-spacing: -1.6px;
+  }
+}
+@media (max-width: 480px) {
+  /* Reserve the copy block across tabs so variable copy length does not push
+     the graphic and following section around on narrow screens. */
+  #services .hsvc-panel--presentation .hsvc-panel-text { min-height: 332px; }
+  #services .hsvc-panel--presentation[data-presented-service="review"] .hsvc-panel-name {
+    font-size: 36px;
+    margin-bottom: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #services .hsvc-panel--presentation .hsvc-copy-part,
+  #services .hsvc-panel--presentation .hsvc-panel-link {
+    opacity: 1 !important;
+    translate: none !important;
+    rotate: none !important;
+    scale: none !important;
+  }
+}

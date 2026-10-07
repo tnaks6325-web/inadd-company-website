@@ -10,7 +10,8 @@
 ───────────────────────────────────────────── */
 (function(){
   var statSection = document.querySelector('.stats-section');
-  if(!statSection) return;
+  // DEV's growth scene owns its counter and keeps late API updates on one timeline.
+  if(!statSection || statSection.hasAttribute('data-stats-motion')) return;
   var triggered = false;
 
   // 각 stat-block에 fade-up 클래스 추가
@@ -43,11 +44,11 @@
         if(!start) start = ts;
         var prog = Math.min((ts - start) / duration, 1);
         var ease = 1 - Math.pow(1 - prog, 4); // easeOutQuart
-        el.textContent = Math.floor(ease * target);
+        el.textContent = Math.floor(ease * target).toLocaleString();
         if(prog < 1){
           requestAnimationFrame(step);
         } else {
-          el.textContent = target;
+          el.textContent = target.toLocaleString();
         }
       }
       requestAnimationFrame(step);
@@ -56,6 +57,8 @@
 
   window.addEventListener('scroll', countUp, { passive: true });
   countUp();
+  // 관리자 수치 fetch가 늦게 도착해 data-count를 갱신하면 다시 카운트업 (경쟁상태 방지)
+  window.__reCountStats = function(){ triggered = false; countUp(); };
 })();
 
 /* ─────────────────────────────────────────────
@@ -256,10 +259,16 @@
         var map = [s.projects, s.contracts, s.experience, s.partners];
         nums.forEach(function(el, i){
           if(map[i] !== undefined){
+            var motionRoot = el.closest('[data-stats-motion]');
+            if(motionRoot && (map[i] === null || map[i] === '' || !Number.isFinite(Number(map[i])) || Number(map[i]) < 0)) return;
             el.setAttribute('data-count', map[i]);
-            el.textContent = '0';
+            if(!motionRoot) el.textContent = '0';
           }
         });
+        var growthScene = document.querySelector('#homeStats[data-stats-motion]');
+        if(growthScene) growthScene.dispatchEvent(new Event('stats:data'));
+        // 갱신된 수치로 카운트업 재실행 (초기 애니메이션이 옛 값에 고정되는 문제 해결)
+        if(window.__reCountStats) window.__reCountStats();
       }
     })
     .catch(function(){});

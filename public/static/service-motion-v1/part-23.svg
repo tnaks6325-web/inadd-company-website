@@ -1,0 +1,21 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="69" height="56" viewBox="0 0 69 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Influencer/Reaction-01">
+<path id="Reaction-01/Shape-01" d="M52 7H20C11.7157 7 5 13.7157 5 22V38C5 46.2843 11.7157 53 20 53H52C60.2843 53 67 46.2843 67 38V22C67 13.7157 60.2843 7 52 7Z" fill="url(#paint0_linear_0_4)"/>
+<path id="Reaction-01/Shape-02" d="M48 1H16C7.71573 1 1 7.71573 1 16V32C1 40.2843 7.71573 47 16 47H48C56.2843 47 63 40.2843 63 32V16C63 7.71573 56.2843 1 48 1Z" fill="url(#paint1_linear_0_4)" stroke="#D7DFEA"/>
+<path id="Reaction-01/Shape-03" d="M32 36C32 36 12 25 17 16C20.3333 11.3333 25.3333 11.3333 32 16C38.6667 11.3333 43.6667 11.3333 47 16C50.3333 22 45.3333 28.6667 32 36Z" fill="url(#paint2_linear_0_4)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_4" x1="5" y1="7" x2="5" y2="53" gradientUnits="userSpaceOnUse">
+<stop stop-color="#285CCC"/>
+<stop offset="1" stop-color="#214CA8"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_4" x1="1" y1="1" x2="45.0242" y2="60.3369" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#E9EDF4"/>
+</linearGradient>
+<linearGradient id="paint2_linear_0_4" x1="16.1975" y1="12.5" x2="38.6616" y2="42.9005" gradientUnits="userSpaceOnUse">
+<stop stop-color="#6F97ED"/>
+<stop offset="1" stop-color="#285CCC"/>
+</linearGradient>
+</defs>
+</svg>

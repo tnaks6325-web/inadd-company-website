@@ -47,15 +47,22 @@ if (header) {
 const menuToggle = document.getElementById('menuToggle');
 const mainNav    = document.getElementById('mainNav');
 if (menuToggle && mainNav) {
+  const siteHeader = document.getElementById('site-header');
   menuToggle.addEventListener('click', () => {
     const o = menuToggle.classList.toggle('open');
     mainNav.classList.toggle('open', o);
+    /* 헤더의 backdrop-filter가 fixed 메뉴의 기준 박스를 헤더로 바꿔
+       메뉴가 헤더 높이에 갇히는 문제 → 메뉴 열린 동안만 블러 해제 */
+    if (siteHeader) siteHeader.classList.toggle('nav-open', o);
     document.body.style.overflow = o ? 'hidden' : '';
   });
   mainNav.querySelectorAll('.nav-link').forEach(a =>
     a.addEventListener('click', () => {
+      /* 모바일에서 드롭다운 트리거(홈·서비스)는 아코디언만 여닫음 — 메뉴 유지 */
+      if (window.innerWidth <= 768 && a.classList.contains('nav-dropdown-trigger')) return;
       menuToggle.classList.remove('open');
       mainNav.classList.remove('open');
+      if (siteHeader) siteHeader.classList.remove('nav-open');
       document.body.style.overflow = '';
     })
   );
@@ -97,20 +104,11 @@ if (menuToggle && mainNav) {
 
   /* ─── 카피 ─── */
   const COPY = {
-    l1:  '크리에이티브가',
-    l2:  '성과를',
-    l3:  '만듭니다',
-    sub: '데이터가 말하고, 크리에이티브가 설득하고,\n전략이 전환을 만듭니다.'
+    l1:  'The Creative Marketing Agency',
+    l2:  '',
+    l3:  '',
+    sub: '마케팅 퍼널을 설계하는 인애드컴퍼니입니다'
   };
-
-  function syncEditorCopy(config) {
-    if (!config || !config.fields) return;
-    COPY.l1 = config.fields.heroLine1?.text || COPY.l1;
-    COPY.l2 = config.fields.heroLine2?.text || COPY.l2;
-    COPY.l3 = config.fields.heroLine3?.text || COPY.l3;
-    COPY.sub = config.fields.heroSub?.text || COPY.sub;
-  }
-  window.addEventListener('inad:home-editor-config', (event) => syncEditorCopy(event.detail));
 
   /* ─── 상태 ─── */
   const STATE_HERO = 'hero';
@@ -227,6 +225,8 @@ if (menuToggle && mainNav) {
   function heroHeight() { return heroSlider.offsetHeight; }
 
   function onWheel(e) {
+    // 커튼/로고 전환 비활성화 — 히어로에서 자연 스크롤 허용
+    return;
     if (mainNav && mainNav.classList.contains('open')) return;
 
     const delta    = e.deltaY;
@@ -275,14 +275,8 @@ if (menuToggle && mainNav) {
     const dy     = touchStartY - e.changedTouches[0].clientY;
     const heroH  = heroHeight();
     const scrollY = window.scrollY;
-    if (Math.abs(dy) < 40) return;
-    // 히어로 영역 안에서만 가로채기
-    if (scrollY >= heroH * 0.5) return;
-    if (dy > 0 && state === STATE_HERO && seqReady && !transitioning) {
-      toLogoState();
-    } else if (dy < 0 && state === STATE_LOGO && !transitioning) {
-      toHeroState();
-    }
+    // 커튼/로고 전환 비활성화 — 자연 스크롤 허용
+    return;
   }, { passive: true });
 
   /* 새로고침 시 맨 위 */
@@ -311,6 +305,7 @@ if (menuToggle && mainNav) {
   }
 
   function scheduleNext() {
+    if (TOTAL < 2) return;
     clearTimeout(slideTimer);
     slideTimer = setTimeout(() => {
       goTo((current + 1) % TOTAL);
@@ -321,16 +316,8 @@ if (menuToggle && mainNav) {
   /* ─── 초기화 ─── */
   slides.forEach(s => s.classList.remove('active', 'leaving'));
   if (slides[0]) slides[0].classList.add('active');
-  scheduleNext();
-  const editorReady = window.__INAD_HOME_EDITOR__?.ready;
-  if (editorReady) {
-    editorReady.then((config) => {
-      syncEditorCopy(config);
-      runTextSequence();
-    }).catch(runTextSequence);
-  } else {
-    runTextSequence();
-  }
+  if (TOTAL > 1) scheduleNext();
+  runTextSequence();
 
 })();
 
@@ -458,31 +445,6 @@ if (menuToggle && mainNav) {
 })();
 
 /* ============================================
-   WORKS GALLERY — 필터링
-   ============================================ */
-(function() {
-  const filterBtns = document.querySelectorAll('.wf-btn');
-  const cards = document.querySelectorAll('.wg-card');
-  if (!filterBtns.length) return;
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      cards.forEach(card => {
-        const cats = (card.dataset.cat || '').split(' ');
-        if (filter === 'all' || cats.includes(filter)) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-    });
-  });
-})();
-
-/* ============================================
    CONTACT FORM 핸들러
    ============================================ */
 function handleContact(e) {
@@ -555,44 +517,52 @@ function handleContact(e) {
   return false;
 }
 
-// ===== NAV DROPDOWN =====
+// ===== NAV DROPDOWN (다중 인스턴스: 홈/서비스) =====
 (function() {
-  var dropdown = document.getElementById('navDropdown');
-  var trigger = document.getElementById('navDropdownTrigger');
-  var menu = document.getElementById('navDropdownMenu');
-  if (!dropdown || !trigger || !menu) return;
+  var dropdowns = document.querySelectorAll('.nav-dropdown');
+  if (!dropdowns.length) return;
+  var path = location.pathname.replace(/\/+$/, '');
+  dropdowns.forEach(function(dropdown) {
+    var trigger = dropdown.querySelector('.nav-dropdown-trigger');
+    var menu = dropdown.querySelector('.nav-dropdown-menu');
+    if (!trigger || !menu) return;
 
-  var closeTimer;
-
-  function openDropdown() {
-    clearTimeout(closeTimer);
-    dropdown.classList.add('open');
-  }
-  function closeDropdown() {
-    closeTimer = setTimeout(function() {
-      dropdown.classList.remove('open');
-    }, 120);
-  }
-
-  // 마우스 호버
-  dropdown.addEventListener('mouseenter', openDropdown);
-  dropdown.addEventListener('mouseleave', closeDropdown);
-  menu.addEventListener('mouseenter', openDropdown);
-  menu.addEventListener('mouseleave', closeDropdown);
-
-  // 클릭 토글 (모바일)
-  trigger.addEventListener('click', function(e) {
-    if (window.innerWidth <= 768) {
-      e.preventDefault();
-      dropdown.classList.toggle('open');
+    // 현재 페이지 강조
+    var matched = false;
+    menu.querySelectorAll('.ndm-item').forEach(function(item) {
+      var href = (item.getAttribute('href') || '').replace(/\/+$/, '');
+      if (href && path === href) {
+        item.classList.add('is-active');
+        item.setAttribute('aria-current', 'page');
+        matched = true;
+      }
+    });
+    var trigHref = (trigger.getAttribute('href') || '').replace(/\/+$/, '');
+    if (matched || (trigHref && trigHref !== '' && path.indexOf(trigHref) === 0 && trigHref !== '/')) {
+      trigger.classList.add('is-active');
     }
-  });
 
-  // 외부 클릭 시 닫기
-  document.addEventListener('click', function(e) {
-    if (!dropdown.contains(e.target)) {
-      dropdown.classList.remove('open');
-    }
+    var closeTimer;
+    /* 모바일(터치)에서는 hover로 열지 않음 — 탭 좌표에 hover가 남아 저절로 열리는 문제 방지 */
+    function isMobile() { return window.innerWidth <= 768; }
+    function openDropdown() { if (isMobile()) return; clearTimeout(closeTimer); dropdown.classList.add('open'); }
+    function closeDropdown() { if (isMobile()) return; closeTimer = setTimeout(function() { dropdown.classList.remove('open'); }, 120); }
+
+    dropdown.addEventListener('mouseenter', openDropdown);
+    dropdown.addEventListener('mouseleave', closeDropdown);
+    menu.addEventListener('mouseenter', openDropdown);
+    menu.addEventListener('mouseleave', closeDropdown);
+
+    trigger.addEventListener('click', function(e) {
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        dropdown.classList.toggle('open');
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!dropdown.contains(e.target)) dropdown.classList.remove('open');
+    });
   });
 })();
 
@@ -649,7 +619,7 @@ function closeCallModal() {
     requestAnimationFrame(step);
   }
 
-  var counters = document.querySelectorAll('.ifl-data-counter-num[data-target]');
+  var counters = document.querySelectorAll('.ifl-data-counter-num[data-target]:not([data-influencer-counter="1"])');
   if (!counters.length) return;
 
   var triggered = false;
@@ -668,4 +638,250 @@ function closeCallModal() {
 
   var section = document.querySelector('.ifl-data-section');
   if (section) observer.observe(section);
+})();
+
+/* ─────────────────────────────────────────────
+   전역 간편 문의 팝업 — /contact 링크를 팝업으로 대체
+───────────────────────────────────────────── */
+(function() {
+  var modal = document.getElementById('cmodal');
+  if (!modal) return;
+  var form = document.getElementById('cmForm');
+  var success = document.getElementById('cmSuccess');
+
+  function openModal() {
+    // 재오픈 시 폼 초기화
+    if (form) { form.reset(); form.style.display = 'flex'; }
+    // 추가 정보 아코디언도 접힌 상태로 복귀
+    var opt = document.getElementById('cmOptional');
+    if (opt) {
+      opt.classList.remove('open');
+      var tg = opt.querySelector('.cf-optional-toggle');
+      if (tg) tg.setAttribute('aria-expanded', 'false');
+    }
+    if (success) success.style.display = 'none';
+    var doneBox = modal.querySelector('.cmodal-box');
+    if (doneBox) doneBox.classList.remove('cmodal-box--done');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function() { modal.classList.add('cmodal--open'); });
+  }
+  function closeModal() {
+    modal.classList.remove('cmodal--open');
+    setTimeout(function() {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }, 250);
+  }
+  window.openContactModal = openModal;
+  window.closeContactModal = closeModal;
+
+  // #contact 해시 딥링크로 팝업 바로 열기
+  if (location.hash === '#contact') openModal();
+
+  modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.style.display !== 'none') closeModal();
+  });
+
+  // /contact 링크 인터셉트 → 팝업 (컨택트 페이지 자체에서는 기본 동작 유지)
+  if (location.pathname.replace(/\/+$/, '') !== '/contact') {
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest ? e.target.closest('a[href="/contact"]') : null;
+      if (!a) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
+      e.preventDefault();
+      openModal();
+    });
+  }
+
+  if (form) {
+    var cmSubmitting = false;
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      /* 연타 시 같은 문의가 여러 번 발송되던 문제 방지 */
+      if (cmSubmitting) return;
+      cmSubmitting = true;
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var submitLabel = submitBtn ? submitBtn.querySelector('span') : null;
+      var submitPrev = submitLabel ? submitLabel.textContent : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.setAttribute('aria-busy', 'true');
+      }
+      if (submitLabel) submitLabel.textContent = '접수 중...';
+      function releaseSubmit() {
+        cmSubmitting = false;
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.removeAttribute('aria-busy');
+        }
+        if (submitLabel) submitLabel.textContent = submitPrev;
+      }
+      var fd = new FormData(form);
+      var payload = {};
+      var services = [];
+      fd.forEach(function(val, key) {
+        if (key === 'service') { services.push(val); return; }
+        if (key === 'privacy') return;
+        if (val) payload[key] = val;
+      });
+      if (services.length) payload.services = services.join(', ');
+      /* 회사소개서는 선택이 아니라 문의 접수 시 항상 함께 발송 */
+      var wantsBrochure = !!payload.email;
+      try {
+        var responses = await Promise.all([
+          fetch('/api/mail/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          }),
+          fetch('/api/mail/brochure', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: payload.email, emailAgree: 'on' })
+          })
+        ]);
+        /* 소개서 발송 실패로 문의 접수까지 실패 처리하지 않는다 */
+        if (!responses[0].ok) throw new Error('mail failed');
+      } catch (err) {
+        releaseSubmit();
+        alert('접수 중 오류가 발생했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.');
+        return;
+      }
+      form.style.display = 'none';
+      if (success) success.style.display = 'block';
+      var note = document.getElementById('cmBroNote');
+      if (note) note.style.display = wantsBrochure ? 'block' : 'none';
+      var box = modal.querySelector('.cmodal-box');
+      if (box) { box.scrollTop = 0; box.classList.add('cmodal-box--done'); }
+    });
+  }
+})();
+
+/* ─────────────────────────────────────────────
+   이메일 도메인 추천 칩 + 오타 감지
+   입력칸은 1개 그대로 유지(모바일 자동완성 보존).
+   '@' 입력 시 아래에 도메인 칩 노출 → 탭 한 번으로 완성.
+   흔한 도메인과 1~2글자 차이면 오타 안내.
+───────────────────────────────────────────── */
+(function() {
+  var DOMAINS = ['naver.com', 'gmail.com', 'daum.net', 'hanmail.net', 'nate.com', 'kakao.com'];
+
+  function distance(a, b) {
+    var m = a.length, n = b.length;
+    var prev = [], cur = [], i, j;
+    for (j = 0; j <= n; j++) prev[j] = j;
+    for (i = 1; i <= m; i++) {
+      cur[0] = i;
+      for (j = 1; j <= n; j++) {
+        cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      }
+      prev = cur.slice();
+    }
+    return prev[n];
+  }
+
+  /* 모바일 키보드가 끼워 넣는 '보이지 않는 문자' 정리.
+     NBSP·제로폭공백·전각(＠．)은 화면상 정상으로 보이지만 type=email 검증에서 거부되어,
+     사용자가 원인을 모른 채 같은 주소를 반복 입력하다 이탈하는 원인이 된다. */
+  function sanitizeEmail(v) {
+    if (!v) return v;
+    return v
+      .replace(/[​-‍﻿]/g, '')                                     // 제로폭 문자
+      .replace(/[！-～]/g, function(ch) {                                // 전각 영숫자·기호 → 반각(＠ ．포함)
+        return String.fromCharCode(ch.charCodeAt(0) - 0xFEE0);
+      })
+      .replace(/。/g, '.')                                                   // 한글 마침표(。)
+      .replace(/[‘’“”]/g, '')                                // 스마트 따옴표
+      .replace(/[\s ]/g, '');                                               // 공백·NBSP (이메일엔 공백이 올 수 없음)
+  }
+
+  function attach(input) {
+    if (!input || input.dataset.emailHelper) return;
+    input.dataset.emailHelper = '1';
+
+    /* 입력 즉시 정리 — 커서 위치는 보정해서 타이핑을 방해하지 않는다 */
+    input.addEventListener('input', function() {
+      var raw = input.value;
+      var clean = sanitizeEmail(raw);
+      if (clean !== raw) {
+        var pos = (input.selectionStart || raw.length) - (raw.length - clean.length);
+        input.value = clean;
+        try { input.setSelectionRange(pos, pos); } catch (e) {}
+      }
+      /* 한글은 자동 교정이 불가능하므로 원인을 명확히 알려준다 */
+      input.setCustomValidity(
+        /[ㄱ-ㆎ가-힣]/.test(input.value)
+          ? '이메일 주소는 영문으로 입력해 주세요. (한글이 포함되어 있습니다)'
+          : ''
+      );
+    });
+    input.addEventListener('blur', function() { input.value = sanitizeEmail(input.value); });
+
+    var box = document.createElement('div');
+    box.className = 'email-suggest';
+    input.parentNode.insertBefore(box, input.nextSibling);
+
+    function setValue(v) {
+      input.value = v;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.focus();
+      render();
+    }
+
+    function render() {
+      var val = input.value.trim();
+      var at = val.indexOf('@');
+      box.innerHTML = '';
+      if (at < 1) return;                                   // 로컬파트 없으면 표시 안 함
+      var local = val.slice(0, at);
+      var typed = val.slice(at + 1).toLowerCase();
+
+      /* 이미 정확한 도메인이면 안내 불필요 */
+      if (DOMAINS.indexOf(typed) > -1) return;
+
+      /* 오타 후보: 1~2글자 차이 */
+      if (typed.length >= 4) {
+        for (var k = 0; k < DOMAINS.length; k++) {
+          var d = distance(typed, DOMAINS[k]);
+          if (d > 0 && d <= 2) {
+            var fix = document.createElement('button');
+            fix.type = 'button';
+            fix.className = 'email-suggest-fix';
+            fix.innerHTML = '혹시 <strong>' + local + '@' + DOMAINS[k] + '</strong> 인가요?';
+            (function(dom) {
+              fix.addEventListener('click', function() { setValue(local + '@' + dom); });
+            })(DOMAINS[k]);
+            box.appendChild(fix);
+            return;
+          }
+        }
+      }
+
+      /* 도메인 추천 칩 (입력한 앞글자로 필터) */
+      var list = DOMAINS.filter(function(d) { return !typed || d.indexOf(typed) === 0; });
+      if (!list.length) return;
+      list.slice(0, 4).forEach(function(d) {
+        var chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'email-suggest-chip';
+        chip.textContent = '@' + d;
+        chip.addEventListener('click', function() { setValue(local + '@' + d); });
+        box.appendChild(chip);
+      });
+    }
+
+    input.addEventListener('input', render);
+    input.addEventListener('focus', render);
+    /* 칩 클릭이 blur보다 먼저 처리되도록 지연 후 정리 */
+    input.addEventListener('blur', function() {
+      setTimeout(function() {
+        if (!box.contains(document.activeElement)) box.innerHTML = '';
+      }, 150);
+    });
+  }
+
+  /* 문의 창구는 팝업 단일화 — 팝업 이메일 입력칸에만 적용 */
+  attach(document.getElementById('cm-email'));
 })();

@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="191" height="90" viewBox="0 0 191 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Experience/Box-Back">
+<path id="Box-Back/Shape-01" d="M1 29L140 1L190 31L61 63L1 29Z" fill="#E3EAF6"/>
+<path id="Box-Back/Shape-02" d="M1 29L61 63V89L1 61V29Z" fill="#BFD0EF"/>
+<path id="Box-Back/Shape-03" d="M61 63L190 31V62L61 89V63Z" fill="url(#paint0_linear_0_49)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_49" x1="61" y1="31" x2="61" y2="89" gradientUnits="userSpaceOnUse">
+<stop stop-color="#285CCC"/>
+<stop offset="1" stop-color="#214CA8"/>
+</linearGradient>
+</defs>
+</svg>

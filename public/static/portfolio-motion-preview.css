@@ -1,0 +1,258 @@
+/* DEV-only interactive portfolio rail. Keep the original photo-led white
+   chapter; the controller takes over only after its measurements are ready. */
+#homeRefs[data-portfolio-motion] {
+  --pf-accent: #285ccc;
+  --pf-ink: #20242c;
+  --pf-muted: #626973;
+  background: #fff !important;
+}
+#homeRefs[data-portfolio-motion] .section-head { position: relative; }
+#homeRefs[data-portfolio-motion] .pf-controls {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-height: 44px;
+  max-width: 100%;
+}
+#homeRefs[data-portfolio-motion] .pf-hint {
+  margin: 0 14px 0 0;
+  color: var(--pf-muted) !important;
+  -webkit-text-fill-color: var(--pf-muted) !important;
+  font-size: 12px;
+  font-weight: 450;
+  line-height: 1.6;
+  letter-spacing: -.015em;
+  white-space: nowrap;
+}
+#homeRefs[data-portfolio-motion] :is(.pf-prev, .pf-next, .pf-toggle) {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 44px;
+  min-height: 44px;
+  height: 44px;
+  padding: 10px;
+  border: 1px solid #dce1e8;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--pf-ink) !important;
+  -webkit-text-fill-color: var(--pf-ink) !important;
+  font: inherit;
+  cursor: pointer;
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+#homeRefs[data-portfolio-motion] .pf-toggle {
+  gap: 7px;
+  min-width: 74px;
+  margin-left: 4px;
+  padding-inline: 14px;
+  border-radius: 999px;
+}
+#homeRefs[data-portfolio-motion] :is(.pf-prev, .pf-next, .pf-toggle) svg {
+  display: block;
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+}
+#homeRefs[data-portfolio-motion] .pf-toggle span:not([hidden]) {
+  display: inline-flex;
+  align-items: center;
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+#homeRefs[data-portfolio-motion] :is(.pf-prev, .pf-next, .pf-toggle):hover {
+  border-color: var(--pf-accent);
+  color: var(--pf-accent) !important;
+  -webkit-text-fill-color: var(--pf-accent) !important;
+  background: #fff;
+}
+#homeRefs[data-portfolio-motion] :is(.pf-prev, .pf-next, .pf-toggle):focus-visible {
+  outline: 2px solid var(--pf-accent);
+  outline-offset: 4px;
+}
+#homeRefs[data-portfolio-motion] :is(.pf-prev, .pf-next, .pf-toggle):disabled {
+  cursor: default;
+  opacity: .5;
+  color: var(--pf-muted) !important;
+  -webkit-text-fill-color: var(--pf-muted) !important;
+  border-color: #dce1e8;
+}
+#homeRefs[data-portfolio-motion] .pf-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+#homeRefs[data-portfolio-ready="true"] .refs-flow {
+  overflow: clip;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+#homeRefs[data-portfolio-ready="true"] .refs-flow:is(.is-portfolio-dragging, [data-portfolio-dragging="true"]),
+#homeRefs[data-portfolio-ready="true"][data-portfolio-dragging="true"] .refs-flow {
+  cursor: grabbing;
+}
+#homeRefs[data-portfolio-ready="true"] .refs-flow-track {
+  animation: none !important;
+  will-change: transform;
+}
+#homeRefs[data-portfolio-single="true"] .pf-controls,
+#homeRefs[data-portfolio-single="true"] [data-portfolio-duplicate] { display: none !important; }
+#homeRefs[data-portfolio-single="true"] .refs-flow-track { margin-inline: auto; }
+#homeRefs[data-portfolio-ready="true"] .refs-flow:focus-visible {
+  outline: 2px solid var(--pf-accent);
+  outline-offset: -3px;
+}
+#homeRefs[data-portfolio-ready="true"] .refs-flow-card {
+  outline: none;
+  transform: none;
+}
+#homeRefs[data-portfolio-ready="true"] .pf-card-body {
+  position: relative;
+  opacity: 1;
+  transform-origin: 50% 100%;
+}
+#homeRefs[data-portfolio-ready="true"] .refs-card-hover { display: none !important; }
+#homeRefs[data-portfolio-ready="true"] .refs-card-img {
+  aspect-ratio: 4 / 3;
+  background: #fff;
+}
+#homeRefs[data-portfolio-ready="true"] .refs-card-cover {
+  object-fit: cover;
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 260ms cubic-bezier(.22, 1, .36, 1);
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+#homeRefs[data-portfolio-ready="true"] .refs-flow-card.is-portfolio-active .refs-card-cover {
+  transform: scale(1.04);
+}
+#homeRefs[data-portfolio-ready="true"] .refs-flow-card .wg-meta {
+  position: relative;
+  background: transparent !important;
+}
+#homeRefs[data-portfolio-ready="true"] .refs-flow-card .wg-meta::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 2px;
+  width: 30px;
+  height: 1px;
+  background: var(--pf-accent);
+  opacity: 0;
+  transform: scaleX(.45);
+  transform-origin: 0 50%;
+  transition: opacity 200ms ease, transform 240ms cubic-bezier(.22, 1, .36, 1);
+  pointer-events: none;
+}
+#homeRefs[data-portfolio-ready="true"] .refs-flow-card .wg-brand {
+  transition: color 220ms ease, -webkit-text-fill-color 220ms ease;
+}
+#homeRefs[data-portfolio-ready="true"] .refs-flow-card.is-portfolio-active .wg-brand {
+  color: var(--pf-accent) !important;
+  -webkit-text-fill-color: var(--pf-accent) !important;
+}
+#homeRefs[data-portfolio-ready="true"] .refs-flow-card.is-portfolio-active .wg-meta::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+#homeRefs[data-portfolio-ready="true"] .refs-flow-card:focus-visible .refs-card-img,
+#homeRefs[data-portfolio-ready="true"] .pf-card-body:focus-visible .refs-card-img {
+  outline: 2px solid var(--pf-accent);
+  outline-offset: -3px;
+}
+/* Reduced motion uses a finite native rail, not a frozen offscreen loop. */
+#homeRefs[data-portfolio-motion="reduced"] .refs-flow {
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x pan-y pinch-zoom;
+  cursor: auto;
+  -webkit-mask-image: none;
+  mask-image: none;
+  scrollbar-width: thin;
+  scrollbar-color: #bcc6d5 transparent;
+}
+#homeRefs[data-portfolio-motion="reduced"] .refs-flow-track {
+  animation: none !important;
+  transform: none !important;
+  will-change: auto;
+  padding-bottom: 8px;
+}
+#homeRefs[data-portfolio-motion="reduced"] [data-portfolio-duplicate] { display: none !important; }
+#homeRefs[data-portfolio-motion="reduced"] .refs-card-cover {
+  transform: none !important;
+  transition: none;
+}
+#homeRefs[data-portfolio-motion="reduced"] :is(.pf-card-body, [data-pf-reveal]) {
+  opacity: 1 !important;
+  transform: none !important;
+  translate: none !important;
+  rotate: none !important;
+  scale: none !important;
+}
+@media (max-width: 900px) {
+  #homeRefs[data-portfolio-motion] .pf-controls {
+    position: static;
+    margin-top: 24px;
+    justify-content: flex-start;
+  }
+  #homeRefs[data-portfolio-motion] .section-head { margin-bottom: 42px; }
+}
+@media (max-width: 560px) {
+  #homeRefs[data-portfolio-motion] .section-head { margin-bottom: 30px; }
+  #homeRefs[data-portfolio-motion] .pf-controls { width: 100%; margin-top: 20px; gap: 7px; }
+  #homeRefs[data-portfolio-motion] .pf-hint { margin-right: auto; font-size: 11px; }
+  #homeRefs[data-portfolio-motion] .pf-toggle { margin-left: 0; }
+  #homeRefs[data-portfolio-motion] .refs-flow-card { width: 300px; }
+  #homeRefs[data-portfolio-ready="true"] .refs-flow-card .wg-meta::before { top: 6px; }
+}
+@media (max-width: 359px) {
+  #homeRefs[data-portfolio-motion] .pf-controls { flex-wrap: wrap; }
+  #homeRefs[data-portfolio-motion] .pf-hint { flex-basis: 100%; margin: 0 0 3px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #homeRefs[data-portfolio-motion] .refs-flow {
+    overflow-x: auto;
+    overflow-y: hidden;
+    touch-action: pan-x pan-y pinch-zoom;
+    cursor: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+    scrollbar-width: thin;
+    scrollbar-color: #bcc6d5 transparent;
+  }
+  #homeRefs[data-portfolio-motion] .refs-flow-track {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+    padding-bottom: 8px;
+  }
+  #homeRefs[data-portfolio-motion] [data-portfolio-duplicate] { display: none !important; }
+  #homeRefs[data-portfolio-motion] .refs-card-cover { transform: none !important; transition: none; }
+  #homeRefs[data-portfolio-motion] :is(.pf-card-body, [data-pf-reveal]) {
+    opacity: 1 !important;
+    transform: none !important;
+    translate: none !important;
+    rotate: none !important;
+    scale: none !important;
+  }
+  #homeRefs[data-portfolio-motion] :is(.pf-prev, .pf-next, .pf-toggle, .wg-brand),
+  #homeRefs[data-portfolio-motion] .wg-meta::before { transition: none; }
+}

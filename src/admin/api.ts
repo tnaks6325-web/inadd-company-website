@@ -1,21 +1,22 @@
 import { Hono } from 'hono'
 import { kvGet, kvPut, kvDelete, signToken, verifyToken, type Bindings } from './store'
-import { DEFAULT_HOME_EDITOR_CONFIG, sanitizeHomeEditorConfig } from './editor-config'
-import {
-  MAIL_RECIPIENTS_KEY,
-  MAX_RECIPIENTS,
-  fallbackRecipients,
-  normalizeRecipients,
-  parseStoredRecipients,
-} from '../routes/mail-recipients'
 
 const admin = new Hono<{ Bindings: Bindings }>()
+
+function jwtSecret(c: any): string | null {
+  const configured = (c.env as any)?.ADMIN_JWT_SECRET
+  if (configured) return configured
+  const host = new URL(c.req.url).hostname
+  return host === '127.0.0.1' || host === 'localhost' ? 'local-development-secret-not-for-production' : null
+}
 
 // ── 인증 미들웨어 ──
 async function authMiddleware(c: any, next: any) {
   const token = c.req.header('Authorization')?.replace('Bearer ', '') ||
                 getCookie(c.req.raw, 'admin_token')
-  if (!token || !(await verifyToken(token))) {
+  const secret = jwtSecret(c)
+  if (!secret) return c.json({ error: 'ADMIN_JWT_SECRET is not configured' }, 503)
+  if (!token || !(await verifyToken(token, secret))) {
     return c.json({ error: 'Unauthorized' }, 401)
   }
   await next()
@@ -39,7 +40,9 @@ admin.post('/login', async (c) => {
   const validId = stored?.id || 'admin'
   const validPw = stored?.pw || 'admin'
   if (id === validId && pw === validPw) {
-    const token = await signToken({ role: 'admin', id })
+    const secret = jwtSecret(c)
+    if (!secret) return c.json({ error: 'ADMIN_JWT_SECRET is not configured' }, 503)
+    const token = await signToken({ role: 'admin', id }, secret)
     return c.json({ ok: true, token })
   }
   return c.json({ error: '아이디 또는 비밀번호가 올바르지 않습니다.' }, 401)
@@ -70,7 +73,8 @@ admin.put('/change-credentials', authMiddleware, async (c) => {
 admin.get('/verify', async (c) => {
   const token = c.req.header('Authorization')?.replace('Bearer ', '') ||
                 getCookie(c.req.raw, 'admin_token')
-  const ok = token ? await verifyToken(token) : false
+  const secret = jwtSecret(c)
+  const ok = token && secret ? await verifyToken(token, secret) : false
   return c.json({ ok })
 })
 
@@ -95,27 +99,6 @@ admin.put('/home', authMiddleware, async (c) => {
   if (body.stats !== undefined)     await kvPut(kv, 'home_stats', JSON.stringify(body.stats))
   if (body.interval !== undefined)  await kvPut(kv, 'home_slide_interval', String(Number(body.interval) || 7))
   return c.json({ ok: true })
-})
-
-admin.get('/editor/home', authMiddleware, async (c) => {
-  const kv = (c.env as any)?.ADMIN_KV
-  const raw = await kvGet(kv, 'home_editor_config')
-  let parsed: unknown = DEFAULT_HOME_EDITOR_CONFIG
-  try { parsed = raw ? JSON.parse(raw) : DEFAULT_HOME_EDITOR_CONFIG } catch {}
-  return c.json({ config: sanitizeHomeEditorConfig(parsed) })
-})
-
-admin.put('/editor/home', authMiddleware, async (c) => {
-  const kv = (c.env as any)?.ADMIN_KV
-  let body: unknown
-  try { body = await c.req.json() } catch {
-    return c.json({ error: '올바른 JSON 형식이 아닙니다.' }, 400)
-  }
-  const serialized = JSON.stringify(body)
-  if (serialized.length > 60_000) return c.json({ error: '편집 데이터가 너무 큽니다.' }, 413)
-  const config = sanitizeHomeEditorConfig(body)
-  await kvPut(kv, 'home_editor_config', JSON.stringify(config))
-  return c.json({ ok: true, config })
 })
 
 // ═══════════════════════ ABOUT ═══════════════════════
@@ -214,7 +197,8 @@ admin.get('/works-img/:key', async (c) => {
   const binary = atob(b64)
   const bytes = new Uint8Array(binary.length)
   for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
-  return new Response(bytes, { headers: { 'Content-Type': mime } })
+  // 공개 이미지 — 로컬 개발 등 다른 오리진에서 캔버스 처리(누끼) 가능하도록 CORS 허용
+  return new Response(bytes, { headers: { 'Content-Type': mime, 'Access-Control-Allow-Origin': '*' } })
 })
 
 // ═══════════════════════ INSIGHT ═══════════════════════
@@ -362,66 +346,40 @@ admin.get('/public/hero-kpi/:service', async (c) => {
 
 admin.get('/brochure-mail', authMiddleware, async (c) => {
   const kv = (c.env as any)?.ADMIN_KV
-  const [headline, body, tags] = await Promise.all([
+  const [subject, headline, body, tags] = await Promise.all([
+    kvGet(kv, 'brochure_mail_subject'),
     kvGet(kv, 'brochure_mail_headline'),
     kvGet(kv, 'brochure_mail_body'),
     kvGet(kv, 'brochure_mail_tags'),
   ])
+  let safeTags = ['인플루언서', '바이럴 마케팅', 'SEO · 리뷰', 'PPL']
+  if (tags) {
+    try {
+      const parsed = JSON.parse(tags)
+      if (Array.isArray(parsed) && parsed.every(v => typeof v === 'string')) safeTags = parsed
+    } catch {}
+  }
   return c.json({
+    subject,
     headline: headline ?? '회사소개서를\n보내드립니다.',
     body: body ?? '요청해 주셔서 감사합니다.\n인애드컴퍼니의 서비스와 레퍼런스를 담은 소개서입니다.',
-    tags: tags ? JSON.parse(tags) : ['인플루언서', '바이럴 마케팅', 'SEO · 리뷰', 'PPL'],
+    tags: safeTags,
   })
 })
 
 admin.put('/brochure-mail', authMiddleware, async (c) => {
   const kv   = (c.env as any)?.ADMIN_KV
   const body = await c.req.json() as any
+  if (body.subject  !== undefined) await kvPut(kv, 'brochure_mail_subject',  String(body.subject).slice(0, 150))
   if (body.headline !== undefined) await kvPut(kv, 'brochure_mail_headline', body.headline)
   if (body.body     !== undefined) await kvPut(kv, 'brochure_mail_body',     body.body)
-  if (body.tags     !== undefined) await kvPut(kv, 'brochure_mail_tags',     JSON.stringify(body.tags))
+  if (body.tags !== undefined) {
+    if (!Array.isArray(body.tags) || !body.tags.every((v: unknown) => typeof v === 'string')) {
+      return c.json({ error: 'tags는 문자열 배열이어야 합니다.' }, 400)
+    }
+    await kvPut(kv, 'brochure_mail_tags', JSON.stringify(body.tags))
+  }
   return c.json({ ok: true })
-})
-
-// ═══════════════════════ 문의 접수 메일 수신자 ═══════════════════════
-// 홈페이지 상담/소개서/킥오프 문의가 접수될 때 알림 메일을 받을 이메일 목록.
-// 비워두면 환경변수 RESEND_TO 로 폴백한다.
-
-admin.get('/mail-recipients', authMiddleware, async (c) => {
-  const kv = (c.env as any)?.ADMIN_KV
-  const raw = await kvGet(kv, MAIL_RECIPIENTS_KEY)
-  const fallback = fallbackRecipients((c.env as any)?.RESEND_TO)
-  const recipients = parseStoredRecipients(raw)
-  return c.json({
-    recipients,
-    fallback,          // 목록이 비었을 때 실제로 발송되는 주소
-    max: MAX_RECIPIENTS,
-  })
-})
-
-admin.put('/mail-recipients', authMiddleware, async (c) => {
-  const kv = (c.env as any)?.ADMIN_KV
-  let body: any
-  try { body = await c.req.json() } catch {
-    return c.json({ error: '올바른 JSON 형식이 아닙니다.' }, 400)
-  }
-
-  const input = body?.recipients ?? []
-  const rawList = (Array.isArray(input) ? input : String(input).split(/[,;\n\r\s]+/))
-    .map((v: unknown) => String(v ?? '').trim())
-    .filter(Boolean)
-
-  const recipients = normalizeRecipients(rawList)
-  const invalid = rawList.filter((v: string) => !recipients.includes(v.toLowerCase()))
-  if (invalid.length) {
-    return c.json({ error: `이메일 형식이 올바르지 않습니다: ${invalid.join(', ')}` }, 400)
-  }
-  if (rawList.length > MAX_RECIPIENTS) {
-    return c.json({ error: `수신자는 최대 ${MAX_RECIPIENTS}명까지 등록할 수 있습니다.` }, 400)
-  }
-
-  await kvPut(kv, MAIL_RECIPIENTS_KEY, JSON.stringify(recipients))
-  return c.json({ ok: true, recipients })
 })
 
 // ═══════════════════════ PUBLIC DATA API ═══════════════════════
@@ -436,14 +394,6 @@ admin.get('/public/home', async (c) => {
     kvGet(kv, 'home_slide_interval'),
   ])
   return c.json({ videos: JSON.parse(videos!), brochure, stats: JSON.parse(stats!), interval: Number(interval) || 7 })
-})
-
-admin.get('/public/editor/home', async (c) => {
-  const kv = (c.env as any)?.ADMIN_KV
-  const raw = await kvGet(kv, 'home_editor_config')
-  let parsed: unknown = DEFAULT_HOME_EDITOR_CONFIG
-  try { parsed = raw ? JSON.parse(raw) : DEFAULT_HOME_EDITOR_CONFIG } catch {}
-  return c.json({ config: sanitizeHomeEditorConfig(parsed) }, 200, { 'Cache-Control': 'no-store' })
 })
 
 admin.get('/public/about', async (c) => {
@@ -626,7 +576,7 @@ admin.get('/public/gallery', async (c) => {
 const SVC_FAQ_DEFAULTS: Record<string, Array<{q:string,a:string}>> = {
   viral: [
     { q:'바이럴 마케팅과 일반 광고는 어떻게 다른가요?', a:'일반 광고는 브랜드가 직접 메시지를 전달하지만, 바이럴 마케팅은 <strong>소비자가 자발적으로 콘텐츠를 공유</strong>하도록 설계합니다. 신뢰도가 높고 비용 대비 도달 범위가 훨씬 넓습니다.' },
-    { q:'어떤 채널에서 바이럴 마케팅이 가능한가요?', a:'인스타그램, 유튜브, 틱톡 등 SNS는 물론 <strong>네이버 카페·커뮤니티, 맘카페, 직장인 커뮤니티</strong> 등 타겟 고객이 모이는 채널 전반에 걸쳐 운영합니다.' },
+    { q:'어떤 채널에서 바이럴 마케팅이 가능한가요?', a:'인스타그램, 유튜브 등 SNS는 물론 <strong>네이버 카페·커뮤니티, 맘카페, 직장인 커뮤니티</strong> 등 타겟 고객이 모이는 채널 전반에 걸쳐 운영합니다.' },
     { q:'캠페인 효과는 얼마나 걸려야 나타나나요?', a:'채널과 콘텐츠 유형에 따라 다르지만, 통상 <strong>런칭 후 48~72시간 이내</strong>에 초기 반응을 확인할 수 있으며, 본격적인 검색량·매출 변화는 2~4주 내 나타납니다.' },
     { q:'중소기업·스타트업도 진행할 수 있나요?', a:'네, 가능합니다. 예산 규모에 맞게 <strong>핵심 채널 집중형 플랜</strong>을 설계해 드립니다. 대기업과 동일한 효과를 더 효율적인 비용으로 달성한 사례가 많습니다.' },
     { q:'콘텐츠는 누가 제작하나요?', a:'인애드컴퍼니 내부 크리에이티브팀이 브랜드 가이드라인에 맞춰 <strong>직접 기획·제작</strong>합니다. 브랜드 톤앤매너 분석부터 배포까지 원스톱으로 처리합니다.' },
@@ -641,7 +591,7 @@ const SVC_FAQ_DEFAULTS: Record<string, Array<{q:string,a:string}>> = {
     { q:'광고 표시 의무가 있나요?', a:'네, 공정거래위원회 지침에 따라 <strong>경제적 이해관계 표시(#광고, #협찬)</strong>가 의무입니다. 인애드컴퍼니는 모든 캠페인에서 법적 기준을 준수하며, 관련 가이드를 크리에이터에게 제공합니다.' },
   ],
   seeding: [
-    { q:'시딩 캠페인이란 정확히 무엇인가요?', a:'시딩은 브랜드 제품을 <strong>실제 소비자(블로거·인플루언서)</strong>에게 제공하고 진정성 있는 후기를 생성하는 마케팅입니다. 광고가 아닌 생생한 사용 경험이 전달되어 신뢰도가 높습니다.' },
+    { q:'체험단 캠페인이란 정확히 무엇인가요?', a:'체험단은 브랜드 제품을 <strong>실제 소비자(블로거·인플루언서)</strong>에게 제공하고 진정성 있는 후기를 생성하는 마케팅입니다. 광고가 아닌 생생한 사용 경험이 전달되어 신뢰도가 높습니다.' },
     { q:'체험단 규모는 어느 정도가 적당한가요?', a:'제품 카테고리와 예산에 따라 다르지만, 초기 런칭 기준 <strong>100~300명</strong>이 일반적입니다. 플랫폼별(네이버 블로그·인스타·유튜브) 분산 배치 시 더 넓은 커버리지를 확보할 수 있습니다.' },
     { q:'후기가 자연스럽지 않으면 역효과가 나지 않나요?', a:'그래서 인애드컴퍼니는 <strong>크리에이터 선별 기준</strong>을 매우 엄격하게 적용합니다. 활동 이력, 팔로워 품질, 카테고리 적합도를 데이터로 검증하고, 가이드라인은 제시하되 표현은 자유롭게 합니다.' },
     { q:'네이버 블로그와 인스타그램 중 어디가 더 효과적인가요?', a:'목적에 따라 다릅니다. <strong>네이버 블로그</strong>는 검색 노출·SEO 자산 축적에 강하고, <strong>인스타그램</strong>은 즉각적인 도달과 브랜드 인지도 확산에 유리합니다. 두 채널 병행이 가장 효과적입니다.' },
@@ -649,18 +599,18 @@ const SVC_FAQ_DEFAULTS: Record<string, Array<{q:string,a:string}>> = {
     { q:'캠페인 종료 후 리포트는 어떻게 제공되나요?', a:'<strong>채널별 게시 현황, 조회수·좋아요·댓글 수, 검색 유입 변화, 매출 연계 데이터</strong>를 종합한 성과 리포트를 엑셀·PDF 형식으로 제공합니다. 다음 캠페인 전략 제안도 포함됩니다.' },
   ],
   seo: [
-    { q:'SEO 마케팅은 광고와 어떻게 다른가요?', a:'광고는 예산이 끊기면 노출도 멈추지만, SEO는 <strong>한 번 상위 노출되면 지속적으로 유입</strong>이 발생합니다. 초기 투자 대비 장기적인 ROI가 매우 높은 마케팅 방식입니다.' },
-    { q:'네이버 플레이스 상위 노출은 어떻게 작동하나요?', a:'방문자 수, 리뷰 수·품질, 저장 수, 체류 시간 등 <strong>다양한 신호</strong>를 네이버 알고리즘이 종합 평가합니다. 인애드컴퍼니는 이 신호들을 체계적으로 강화하는 전략을 적용합니다.' },
-    { q:'효과가 나타나는 데 얼마나 걸리나요?', a:'초기 변화는 <strong>4~8주</strong> 내에 확인되며, 안정적인 상위 노출 유지는 3~6개월이 소요됩니다. 알고리즘 변화에 대응하는 지속 관리가 중요합니다.' },
-    { q:'유튜브 SEO도 따로 필요한가요?', a:'네, 유튜브는 <strong>구글 다음으로 큰 검색 엔진</strong>입니다. 제목·태그·설명·자막 최적화와 초기 조회수 확보를 통해 관련 키워드 검색 시 상위 노출되도록 설계합니다.' },
-    { q:'인스타그램 해시태그 SEO도 가능한가요?', a:'가능합니다. 브랜드·카테고리·트렌드 키워드를 분석해 <strong>최적 해시태그 세트</strong>를 구성하고, 해시태그 검색 상위 노출을 위한 초기 인게이지먼트 전략을 병행합니다.' },
-    { q:'SEO 작업 후 순위가 다시 떨어질 수 있나요?', a:'알고리즘 업데이트나 경쟁사 활동에 따라 변동이 있을 수 있습니다. 인애드컴퍼니는 <strong>월별 모니터링 및 대응 전략</strong>을 제공해 상위 순위를 안정적으로 유지합니다.' },
+    { q:'SEO 마케팅은 광고와 어떻게 다른가요?', a:'광고는 예산이 끊기면 노출도 멈추지만, SEO는 <strong>한 번 검색 노출되면 지속적으로 유입</strong>이 발생합니다. 초기 투자 대비 장기적인 ROI가 매우 높은 마케팅 방식입니다.' },
+    { q:'네이버 플레이스 검색 노출은 어떻게 작동하나요?', a:'방문자 수, 리뷰 수·품질, 저장 수, 체류 시간 등 <strong>다양한 신호</strong>를 네이버 알고리즘이 종합 평가합니다. 인애드컴퍼니는 이 신호들을 체계적으로 강화하는 전략을 적용합니다.' },
+    { q:'효과가 나타나는 데 얼마나 걸리나요?', a:'초기 변화는 <strong>4~8주</strong> 내에 확인되며, 안정적인 검색 노출 유지는 3~6개월이 소요됩니다. 알고리즘 변화에 대응하는 지속 관리가 중요합니다.' },
+    { q:'유튜브 SEO도 따로 필요한가요?', a:'네, 유튜브는 <strong>구글 다음으로 큰 검색 엔진</strong>입니다. 제목·태그·설명·자막 최적화와 초기 조회수 확보를 통해 관련 키워드 검색 시 노출되도록 설계합니다.' },
+    { q:'인스타그램 해시태그 SEO도 가능한가요?', a:'가능합니다. 브랜드·카테고리·트렌드 키워드를 분석해 <strong>최적 해시태그 세트</strong>를 구성하고, 해시태그 검색 노출을 위한 초기 인게이지먼트 전략을 병행합니다.' },
+    { q:'SEO 작업 후 순위가 다시 떨어질 수 있나요?', a:'알고리즘 업데이트나 경쟁사 활동에 따라 변동이 있을 수 있습니다. 인애드컴퍼니는 <strong>월별 모니터링 및 대응 전략</strong>을 제공해 검색 노출을 안정적으로 유지합니다.' },
   ],
   review: [
     { q:'리뷰 마케팅은 허위 리뷰 아닌가요?', a:'실제 제품을 사용한 소비자가 <strong>자신의 경험을 솔직하게 작성</strong>하는 방식입니다. 인애드컴퍼니는 허위·과장 리뷰를 엄격히 금지하며, 공정거래위원회 지침을 준수합니다.' },
     { q:'어떤 플랫폼에서 리뷰 관리가 가능한가요?', a:'<strong>네이버 스마트스토어, 쿠팡, 올리브영, 카카오선물하기</strong> 등 주요 이커머스 플랫폼과 네이버 블로그, 인스타그램까지 통합 관리합니다.' },
     { q:'부정적인 리뷰는 어떻게 대응하나요?', a:'부정 리뷰 모니터링 → 원인 분석 → <strong>신속한 브랜드 공식 답변 작성</strong> → 긍정 리뷰 비중 확대 전략을 순차적으로 적용해 브랜드 이미지를 회복합니다.' },
-    { q:'리뷰 수가 얼마나 있어야 효과가 있나요?', a:'카테고리마다 다르지만, 일반적으로 <strong>50건 이상</strong>이면 신뢰도 형성이 시작되고, 200건 이상이면 검색 알고리즘 상위 노출에도 긍정적인 영향을 줍니다.' },
+    { q:'리뷰 수가 얼마나 있어야 효과가 있나요?', a:'카테고리마다 다르지만, 일반적으로 <strong>50건 이상</strong>이면 신뢰도 형성이 시작되고, 200건 이상이면 검색 알고리즘 노출에도 긍정적인 영향을 줍니다.' },
     { q:'별점 관리도 함께 해주나요?', a:'네, 리뷰 수 확보와 함께 <strong>평균 별점 4.5 이상 유지</strong>를 목표로 운영합니다. 저품질 리뷰 관리 및 우수 리뷰 유도 전략을 병행합니다.' },
     { q:'리뷰 캠페인 완료 후에도 효과가 지속되나요?', a:'네, 블로그·이커머스 리뷰는 <strong>검색 자산으로 축적</strong>되어 캠페인 종료 후에도 지속적으로 신규 고객 유입과 구매 전환에 기여합니다.' },
   ],
@@ -673,7 +623,7 @@ const SVC_FAQ_DEFAULTS: Record<string, Array<{q:string,a:string}>> = {
     { q:'계약 후 방영이 취소될 수도 있나요?', a:'제작 일정 변경이나 편성 조정으로 방영이 지연·변경될 수 있습니다. 인애드컴퍼니는 계약서에 <strong>방영 보장 조항과 환불 정책</strong>을 명확히 포함해 리스크를 최소화합니다.' },
   ],
   oliveyoung: [
-    { q:'올리브영 입점이 안 된 상태에서도 마케팅이 가능한가요?', a:'입점 전 <strong>시딩·리뷰 생태계 구축</strong>부터 진행 가능합니다. 입점 심사 시 기존 리뷰·인지도가 긍정적으로 작용하며, 입점 후 바로 HOT 상품 진입을 노릴 수 있도록 준비합니다.' },
+    { q:'올리브영 입점이 안 된 상태에서도 마케팅이 가능한가요?', a:'입점 전 <strong>체험단·리뷰 생태계 구축</strong>부터 진행 가능합니다. 입점 심사 시 기존 리뷰·인지도가 긍정적으로 작용하며, 입점 후 바로 HOT 상품 진입을 노릴 수 있도록 준비합니다.' },
     { q:'올리브영 랭킹은 어떤 기준으로 결정되나요?', a:'판매량, 리뷰 수·품질, 위시리스트 저장, 클릭률, 재구매율 등 <strong>다양한 지표</strong>가 복합적으로 반영됩니다. 인애드컴퍼니는 이 지표들을 체계적으로 개선하는 전략을 적용합니다.' },
     { q:'탑리뷰어 섭외는 어떻게 이루어지나요?', a:'인애드컴퍼니가 보유한 <strong>올리브영 탑리뷰어 DB</strong>를 통해 브랜드 카테고리에 맞는 리뷰어를 직접 섭외합니다. 리뷰 품질과 활동 이력을 사전 검증합니다.' },
     { q:'HOT 상품 진입까지 기간이 얼마나 걸리나요?', a:'브랜드 현황과 카테고리 경쟁 강도에 따라 다르지만, 집중 운영 시 <strong>1~3개월</strong> 내 카테고리 TOP 10 진입 사례가 많습니다.' },

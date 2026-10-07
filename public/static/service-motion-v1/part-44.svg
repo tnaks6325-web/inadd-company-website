@@ -1,0 +1,25 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="87" height="178" viewBox="0 0 87 178" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="OliveYoung/Cosmetic-Bottle" filter="url(#filter0_d_0_60)">
+<path id="Cosmetic-Bottle/Shape-01" d="M58 5H36C33.2386 5 31 7.23858 31 10V15C31 17.7614 33.2386 20 36 20H58C60.7614 20 63 17.7614 63 15V10C63 7.23858 60.7614 5 58 5Z" fill="#CBD5E5"/>
+<path id="Cosmetic-Bottle/Shape-02" d="M45 13V30M45 10H71" stroke="#9BAECF" stroke-width="7" stroke-linecap="round"/>
+<path id="Cosmetic-Bottle/Shape-03" d="M57 30H30C18.9543 30 10 38.9543 10 50V144C10 155.046 18.9543 164 30 164H57C68.0457 164 77 155.046 77 144V50C77 38.9543 68.0457 30 57 30Z" fill="url(#paint0_linear_0_60)" stroke="#D7DFEA" stroke-width="2"/>
+<path id="Cosmetic-Bottle/Shape-04" d="M73 77H14C11.7909 77 10 78.7909 10 81V118C10 120.209 11.7909 122 14 122H73C75.2091 122 77 120.209 77 118V81C77 78.7909 75.2091 77 73 77Z" fill="#E7EEF9"/>
+<path id="Cosmetic-Bottle/Shape-05" d="M28 93H59M28 106H49" stroke="#285CCC" stroke-width="4" stroke-linecap="round"/>
+<path id="Cosmetic-Bottle/Shape-06" d="M32 135H56" stroke="#83A17A" stroke-width="4" stroke-linecap="round"/>
+</g>
+<defs>
+<filter id="filter0_d_0_60" x="-4" y="0" width="95" height="183" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="4.5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.14 0 0 0 0 0.2 0 0 0 0 0.3 0 0 0 0.09 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_60"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_60" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_0_60" x1="10" y1="30" x2="117.2" y2="83.6" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#E9EDF4"/>
+</linearGradient>
+</defs>
+</svg>
