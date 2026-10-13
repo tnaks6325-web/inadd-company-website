@@ -13,6 +13,7 @@ type Bindings = {
   RESEND_FROM: string        // noreply@inadcompany.co.kr
   RESEND_TO: string          // tnaks6325@inadcompany.com
   ADMIN_KV: KVNamespace      // home_brochure_url 등 KV 값 읽기용
+  MAIL_REDIRECT_TO?: string  // 테스트 서버 전용: 모든 메일을 이 주소로만 보낸다(wrangler.jsonc env.preview)
 }
 
 const mail = new Hono<{ Bindings: Bindings }>()
@@ -51,7 +52,13 @@ async function sendMailTo(
   subject: string,
   htmlBody: string
 ): Promise<void> {
-  const recipients = Array.isArray(to) ? to : [to]
+  let recipients = Array.isArray(to) ? to : [to]
+  // 테스트 서버에서는 실제 고객·직원에게 메일이 나가지 않도록 시험 주소로만 보낸다.
+  if (env.MAIL_REDIRECT_TO) {
+    htmlBody = `<p style="margin:0;padding:12px 16px;background:#fff3cd;color:#664d03;font-size:13px;font-family:sans-serif;">[테스트 서버] 원래 받는 사람: ${recipients.map(escapeHtml).join(', ')}</p>` + htmlBody
+    subject = `[테스트서버] ${subject}`
+    recipients = [env.MAIL_REDIRECT_TO]
+  }
   if (!env.RESEND_API_KEY || !env.RESEND_FROM || recipients.length === 0) {
     throw new Error('메일 환경변수가 설정되지 않았습니다.')
   }

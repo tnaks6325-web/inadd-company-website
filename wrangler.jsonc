@@ -12,5 +12,21 @@
       "id": "1f904f24e9cb4942b204b9259fd10267",
       "preview_id": "1f904f24e9cb4942b204b9259fd10267"
     }
-  ]
+  ],
+  // 테스트 서버(main 이외 브랜치의 미리보기 배포) 전용 설정.
+  // 실제 사이트 데이터와 분리된 저장소를 쓰고, 모든 메일은 시험 주소로만 보낸다.
+  "env": {
+    "preview": {
+      "kv_namespaces": [
+        {
+          "binding": "ADMIN_KV",
+          "id": "569ad62293524fff8d8db38a7cb99b8c"
+        }
+      ],
+      "vars": {
+        "SITE_ENV": "preview",
+        "MAIL_REDIRECT_TO": "tnaks6325@inadcompany.com"
+      }
+    }
+  }
 }
