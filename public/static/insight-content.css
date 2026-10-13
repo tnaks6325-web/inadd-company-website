@@ -1,0 +1,50 @@
+
+/* ── 인사이트 본문: 자동 발행 글에서 쓰는 추가 요소 ── */
+.ins-detail-content blockquote {
+  margin: 0 0 24px;
+  padding: 16px 20px;
+  border-left: 3px solid rgba(26,107,255,0.8);
+  background: rgba(255,255,255,0.03);
+  color: var(--gray-2);
+}
+.ins-detail-content blockquote p:last-child { margin-bottom: 0; }
+.ins-detail-content hr {
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin: 40px 0;
+}
+.ins-detail-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin: 8px 0 24px;
+}
+.ins-detail-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 24px;
+  font-size: 15px;
+  display: block;
+  overflow-x: auto;
+}
+.ins-detail-content th,
+.ins-detail-content td {
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+.ins-detail-content th {
+  color: var(--white);
+  background: rgba(255,255,255,0.04);
+  font-weight: 600;
+}
+/* 회사 서비스 연결 박스 (글 하단) */
+.ins-detail-content .ins-callout {
+  margin: 40px 0 0;
+  padding: 22px 24px;
+  border: 1px solid rgba(26,107,255,0.35);
+  border-radius: 12px;
+  background: rgba(26,107,255,0.06);
+}
+.ins-detail-content .ins-callout p:last-child { margin-bottom: 0; }

@@ -54,7 +54,7 @@ app.get('/admin/*', (c) => {
 // ─────────────────────────────────────────────
 app.get('/sitemap.xml', (c) => {
   const base = 'https://www.inadcompany.co.kr'
-  const today = new Date().toISOString().split('T')[0]
+  // lastmod 는 넣지 않는다 — 요청 날짜를 넣으면 매일 바뀐 것처럼 보여 구글이 값을 무시하게 된다(글 주소는 main.tsx 에서 실제 수정일로 추가)
   const urls = [
     { loc: base, priority: '1.0', changefreq: 'weekly' },
     { loc: `${base}/about`, priority: '0.8', changefreq: 'monthly' },
@@ -73,7 +73,6 @@ app.get('/sitemap.xml', (c) => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url>
     <loc>${u.loc}</loc>
-    <lastmod>${today}</lastmod>
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
   </url>`).join('\n')}
