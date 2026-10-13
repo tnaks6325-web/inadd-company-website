@@ -21167,6 +21167,8 @@ body.cursor-ready * { cursor: none !important; }
 .svc-light :is(a,button)[class*="-cta-btn"] span,
 .svc-light [class*="-goto-btn"],
 .svc-light [class*="-goto-btn"] span { color: #fff !important; }
+/* 인사이트 카드·글 상단의 파란 배지(.ins2-tag)는 (c)에 걸려 파란 바탕에 파란 글씨가 됨 → 흰색 유지. 회색 ghost 배지는 제외 */
+.svc-light .ins2-tag:not(.ins2-tag--ghost) { color: #fff !important; }
 
 /* (e) confidential 다크 유지 → 흰 글씨 복원 (맨 마지막 우선) */
 .svc-light .ifl2-section--confidential :is(h1,h2,h3,h4,p,li,span,strong,em,b,small),
