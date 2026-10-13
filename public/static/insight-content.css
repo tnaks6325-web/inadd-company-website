@@ -52,3 +52,5 @@
 .ins-detail-content figure { margin: 0 0 24px; }
 .ins-detail-content figure img { margin-bottom: 8px; }
 .ins-detail-content figcaption { font-size: 13px; color: var(--gray-2); }
+/* 노션 체크리스트: 글머리 점 대신 ☐ */
+.ins-detail-content ul.ins-checklist { list-style: none; padding-left: 0; }

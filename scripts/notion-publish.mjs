@@ -123,16 +123,18 @@ async function blocksToHtml(blocks, ctx) {
     const b = blocks[i]
     const t = b.type
     // 같은 종류의 목록 항목은 하나의 목록으로 묶는다
-    if (t === 'bulleted_list_item' || t === 'numbered_list_item') {
-      const tag = t === 'bulleted_list_item' ? 'ul' : 'ol'
+    if (t === 'bulleted_list_item' || t === 'numbered_list_item' || t === 'to_do') {
+      const tag = t === 'numbered_list_item' ? 'ol' : 'ul'
       let items = ''
       while (i < blocks.length && blocks[i].type === t) {
         const it = blocks[i]
-        items += `<li>${richText(it[t].rich_text)}${it._children ? await blocksToHtml(it._children, ctx) : ''}</li>`
+        // 체크리스트는 빈 네모 칸을 앞에 붙인 목록으로
+        const box = t === 'to_do' ? (it.to_do.checked ? '☑ ' : '☐ ') : ''
+        items += `<li>${box}${richText(it[t].rich_text)}${it._children ? await blocksToHtml(it._children, ctx) : ''}</li>`
         i++
       }
       i--
-      html += `<${tag}>${items}</${tag}>`
+      html += t === 'to_do' ? `<ul class="ins-checklist">${items}</ul>` : `<${tag}>${items}</${tag}>`
       continue
     }
     const v = b[t] || {}
