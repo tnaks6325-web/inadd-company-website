@@ -1,6 +1,3 @@
-import { DEFAULT_HOME_EDITOR_CONFIG } from './editor-config'
-import { DEFAULT_RECIPIENTS } from '../routes/mail-recipients'
-
 // ═══════════════════════════════════════════════════════
 //  Admin Store — KV 폴백 메모리 스토어
 //  KV 바인딩이 없을 때 인메모리로 동작 (개발 환경)
@@ -8,6 +5,7 @@ import { DEFAULT_RECIPIENTS } from '../routes/mail-recipients'
 
 export type Bindings = {
   ADMIN_KV?: KVNamespace
+  ADMIN_JWT_SECRET?: string
 }
 
 // 기본 데이터
@@ -19,10 +17,9 @@ export const DEFAULT_DATA = {
   ]),
   home_brochure_url: 'https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view',
   home_stats: JSON.stringify({
-    projects: 320, contracts: 98, experience: 6, partners: 50
+    projects: 320, contracts: 98, experience: 7, partners: 50
   }),
   home_slide_interval: '7',
-  home_editor_config: JSON.stringify(DEFAULT_HOME_EDITOR_CONFIG),
 
   // ── About ──
   about_address: '경기도 안산시 단원구 고잔로 51',
@@ -43,20 +40,18 @@ export const DEFAULT_DATA = {
   // ── Gallery (인애드 일상) ──
   gallery_items: JSON.stringify([]),
 
-  // ── 문의 접수 메일 수신자 (비어 있으면 RESEND_TO 로 폴백) ──
-  mail_recipients: JSON.stringify(DEFAULT_RECIPIENTS),
-
   // ── 소개서 메일 템플릿 ──
   brochure_mail_headline: '회사소개서를\n보내드립니다.',
+  brochure_mail_subject: '[인애드컴퍼니] 요청하신 회사소개서를 보내드립니다.',
   brochure_mail_body: '요청해 주셔서 감사합니다.\n인애드컴퍼니의 서비스와 레퍼런스를 담은 소개서입니다.',
-  brochure_mail_tags: JSON.stringify(['인플루언서', '바이럴 마케팅', 'SEO · 리뷰', 'PPL']),
+  brochure_mail_tags: JSON.stringify(['인플루언서', '바이럴 마케팅', '리뷰', 'PPL']),
 
   // ── Contact ──
   contact_privacy_officer: JSON.stringify({
-    manager: '김주희',
-    officer: '이승노',
-    website: 'www.majestade.co.kr',
-    email: 'maze_official@majestade.co.kr'
+    manager: '김수만',
+    officer: '김수만',
+    website: 'www.inadcompany.co.kr',
+    email: 'tnaks6325@inadcompany.com'
   }),
   contact_faq: JSON.stringify([
     { q: '프로젝트 기간은 얼마나 걸리나요?', a: '프로젝트 규모에 따라 다르지만, 일반적으로 전략 수립 1~2주, 실행 및 운영 1~3개월입니다. 초기 상담에서 상세 일정을 협의합니다.' },
@@ -78,9 +73,9 @@ export const DEFAULT_DATA = {
       case3: { tag:'헬스케어 유튜브 협업', m1:'+520%', l1:'트래픽', m2:'4.1×', l2:'전환율', desc:'전문가 채널 신뢰도 활용' }
     },
     seeding: {
-      case1: { tag:'식품 시딩 캠페인', m1:'68%', l1:'후기 전환율', m2:'+230%', l2:'리뷰 전환 효과', m3:'3배', l3:'신뢰도 향상', desc:'300명 체험단 네이버·인스타 동시 진행' },
-      case2: { tag:'뷰티 시딩 캠페인', m1:'500+', l1:'후기 콘텐츠', m2:'+180%', l2:'매출 증가', desc:'올리브영 입점 전 시딩' },
-      case3: { tag:'헬스케어 시딩', m1:'TOP3', l1:'검색 순위', m2:'+250%', l2:'전환율 상승', desc:'SEO 연계 전략' }
+      case1: { tag:'식품 체험단 캠페인', m1:'68%', l1:'후기 전환율', m2:'+230%', l2:'리뷰 전환 효과', m3:'3배', l3:'신뢰도 향상', desc:'300명 체험단 네이버·인스타 동시 진행' },
+      case2: { tag:'뷰티 체험단 캠페인', m1:'500+', l1:'후기 콘텐츠', m2:'+180%', l2:'매출 증가', desc:'올리브영 입점 전 체험단' },
+      case3: { tag:'헬스케어 체험단', m1:'TOP3', l1:'검색 순위', m2:'+250%', l2:'전환율 상승', desc:'SEO 연계 전략' }
     },
     seo: {
       case1: { tag:'헬스케어 플레이스 SEO', m1:'TOP1', l1:'플레이스 순위 달성', m2:'+1,200%', l2:'검색 트래픽 증가', m3:'3개월', l3:'달성 기간', desc:'구글·네이버 플레이스 통합 최적화' },
@@ -88,13 +83,13 @@ export const DEFAULT_DATA = {
       case3: { tag:'이커머스 인스타 검색', m1:'+520%', l1:'해시태그 노출', m2:'2×', l2:'전환율', desc:'인스타 해시태그 캠페인' }
     },
     review: {
-      case1: { tag:'스킨케어 리뷰 캠페인', m1:'+230%', l1:'구매 전환율', m2:'4.9', l2:'별점 달성', m3:'68%', l3:'시딩 전환율', desc:'네이버쇼핑+쿠팡 통합 리뷰' },
+      case1: { tag:'스킨케어 리뷰 캠페인', m1:'+230%', l1:'구매 전환율', m2:'4.9', l2:'별점 달성', m3:'68%', l3:'체험단 전환율', desc:'네이버쇼핑+쿠팡 통합 리뷰' },
       case2: { tag:'뷰티 블로그 체험단', m1:'850개', l1:'블로그 리뷰', m2:'+420%', l2:'트래픽', desc:'TOP 블로거 집중 운영' },
       case3: { tag:'건강식품 별점 관리', m1:'★4.8', l1:'평균 별점 유지', m2:'+185%', l2:'매출 상승', desc:'부정리뷰 관리+긍정리뷰 확대' }
     },
     oliveyoung: {
       case1: { tag:'스킨케어 브랜드 통합', m1:'+340%', l1:'3개월 채널 매출', m2:'TOP 5', l2:'카테고리 순위', m3:'별점 4.9', l3:'달성', desc:'리뷰+랭킹+노출 통합 운영' },
-      case2: { tag:'헬스케어 랭킹 1위', m1:'카테고리 1위', l1:'랭킹 달성', m2:'2.4×', l2:'3개월 매출', desc:'카테고리 1위 보장 패키지' },
+      case2: { tag:'헬스케어 랭킹 1위', m1:'카테고리 1위', l1:'랭킹 달성', m2:'2.4×', l2:'3개월 매출', desc:'카테고리 1위 목표 패키지' },
       case3: { tag:'뷰티 신규 브랜드', m1:'1개월', l1:'TOP 10 진입', m2:'+215%', l2:'첫달 목표 초과', desc:'탑리뷰어 조기 확보' }
     },
     ppl: {
@@ -126,15 +121,13 @@ export async function kvDelete(kv: KVNamespace|undefined, key: string): Promise<
   else { delete memStore[key] }
 }
 
-// JWT 서명 (HMAC-SHA256, Web Crypto API)
-const SECRET = 'inadcompany-admin-secret-2024'
-
-export async function signToken(payload: object): Promise<string> {
+// JWT 서명 (HMAC-SHA256, Web Crypto API) — 운영에서는 반드시 환경변수로 주입
+export async function signToken(payload: object, secret: string): Promise<string> {
   const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
   const body   = btoa(JSON.stringify({ ...payload, exp: Date.now() + 24*60*60*1000 }))
   const data   = `${header}.${body}`
   const key    = await crypto.subtle.importKey(
-    'raw', new TextEncoder().encode(SECRET),
+    'raw', new TextEncoder().encode(secret),
     { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
   )
   const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data))
@@ -142,14 +135,14 @@ export async function signToken(payload: object): Promise<string> {
   return `${data}.${sigB64}`
 }
 
-export async function verifyToken(token: string): Promise<boolean> {
+export async function verifyToken(token: string, secret: string): Promise<boolean> {
   try {
     const parts = token.split('.')
     if (parts.length !== 3) return false
     const [header, body, sig] = parts
     const data = `${header}.${body}`
     const key  = await crypto.subtle.importKey(
-      'raw', new TextEncoder().encode(SECRET),
+      'raw', new TextEncoder().encode(secret),
       { name: 'HMAC', hash: 'SHA-256' }, false, ['verify']
     )
     const sigBytes = Uint8Array.from(atob(sig), c => c.charCodeAt(0))

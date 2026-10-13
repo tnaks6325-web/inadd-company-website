@@ -1,7 +1,9 @@
+import { icon } from '../icons'
 export const SvcReviewPage = () => (
   <>
     {/* ══ HERO ══ */}
-    <section class="vh-hero">
+    <section class="vh-hero vh-hero--photo">
+      <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/mkt-images/hero-review.png')"></div>
       <canvas id="vhCanvas5" class="vh-canvas"></canvas>
       <div class="vh-bg">
         <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(234,179,8,0.22) 0%,transparent 70%)"></div>
@@ -11,19 +13,19 @@ export const SvcReviewPage = () => (
         <div class="vh-noise"></div>
       </div>
       <div class="container vh-inner">
-        <a href="/marketing" class="svc-back-link vh-back">← Marketing 전체보기</a>
+        <a href="/#services" class="svc-back-link vh-back">← 서비스 전체보기</a>
         <div class="vh-badge" style="color:rgba(234,179,8,0.95);border-color:rgba(234,179,8,0.35);background:rgba(234,179,8,0.08)">
           <span class="vh-badge-dot" style="background:rgba(234,179,8,1);box-shadow:0 0 8px rgba(234,179,8,0.9)"></span>
           <span>CUSTOMER REVIEW MARKETING</span>
         </div>
         <h1 class="vh-title">
-          <span class="vh-tline" id="rvL1">리뷰 하나가</span>
-          <span class="vh-tline" id="rvL2" style="background:linear-gradient(135deg,#fff 20%,rgba(234,179,8,0.95) 55%,rgba(249,115,22,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">구매를 결정합니다.</span>
+          <span class="vh-tline" id="rvL1">하나의 리뷰</span>
+          <span class="vh-tline" id="rvL2" style="background:linear-gradient(135deg,#fff 20%,rgba(234,179,8,0.95) 55%,rgba(249,115,22,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"><span class="vh-hl">하나의 선택</span></span>
         </h1>
         <div class="vh-sub-wrap" id="rvSub">
           <p class="vh-sub">소비자의 <strong style="color:rgba(255,255,255,0.9)">92%는 구매 전 리뷰를 확인</strong>합니다.</p>
-          <p class="vh-sub"><strong style="color:rgba(255,255,255,0.9)">네이버 × 쿠팡</strong> — 구매가 일어나는 모든 채널에서</p>
-          <p class="vh-sub" style="margin-top:8px"><span style="color:rgba(234,179,8,0.9);font-weight:600">전략적 리뷰 설계로 브랜드 신뢰를 쌓고 전환율을 극대화합니다.</span></p>
+          <p class="vh-sub">구매가 일어나는 모든 채널에서,</p>
+          <p class="vh-sub" style="margin-top:8px"><span style="color:rgba(234,179,8,0.9);font-weight:600">잘 쌓인 리뷰는 구매 직전의 망설임을 줄입니다.</span></p>
         </div>
         <div class="vh-kpi-strip" id="rvKpi"></div>
         <script dangerouslySetInnerHTML={{__html:`(function(){
@@ -41,9 +43,9 @@ export const SvcReviewPage = () => (
             }).catch(function(){});
         })();`}} />
         <div class="vh-btns" id="rvBtns">
-          <a href="/contact" class="hero-cta-btn primary">
-            <span>무료 전략 상담받기</span>
-            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="/contact" class="vh-cta-btn">
+            <span>문의하기</span>
+            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a href="#rv-types" class="vh-scroll-btn">
             <span>상품 보기</span>
@@ -54,10 +56,6 @@ export const SvcReviewPage = () => (
       <div class="vh-scroll-hint"><div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div></div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
-  var s=document.createElement('script');
-  s.src='/static/svc-three-bg.js';
-  s.onload=function(){ initSvcThreeBg(0xeab308, 0xf97316, 0x1a6bff); };
-  document.head.appendChild(s);
   function anim(el,delay,dir){if(!el)return;el.style.opacity='0';el.style.transform=dir==='up'?'translateY(32px)':'translateX(-32px)';el.style.transition='opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)';setTimeout(function(){el.style.opacity='1';el.style.transform='none';},delay);}
   anim(document.getElementById('rvL1'),200,'left');
   anim(document.getElementById('rvL2'),440,'left');
@@ -68,23 +66,28 @@ export const SvcReviewPage = () => (
       `}} />
     </section>
 
+    {/* ══ 라이트 테마 콘텐츠 래퍼 (히어로 제외) ══ */}
+    <div class="svc-light">
+
     {/* ══ REVIEW TYPE COMPARISON ══ */}
     <section class="section rvt-section" id="rv-types">
       <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
-        <div class="section-head">
-          <span class="sec-label">Review Type Comparison</span>
-          <h2 class="sec-title">리뷰 타입 비교<br /><em>브랜드 상황에 맞게 선택하세요</em></h2>
-          <p class="sec-sub">브랜드 상황과 목표에 따라 차별화된 리뷰 서비스를 제공합니다.</p>
+        <div class="section-head rvt-intro">
+          <p class="rvt-q">"무작정 리뷰가 쌓인다고 고객이 반응할까요?"</p>
+          <p class="rvt-q">"공감이 가지 않는 리뷰라면 아무런 의미 자체가 없습니다."</p>
+          <p class="rvt-q rvt-q--strong">"상품의 가치를 보고 소비자에게 공감을 줄 수 있는 리뷰"</p>
+          <p class="rvt-concl">인애드컴퍼니가 브랜드 <em class="rvt-underline">상황에 맞는 전략<svg class="rvt-underline-svg" viewBox="0 0 320 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M6 12 C 74 4, 150 17, 212 10 C 262 4, 298 14, 314 9" fill="none" stroke="var(--blue)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg></em>을 제시합니다.</p>
         </div>
 
-        <div class="rvt-compare">
+        <div class="rvt-compare" id="rvtCompare">
 
           {/* 기획형 리뷰 */}
           <div class="rvt-card rvt-card--premium">
             <div class="rvt-card-top">
               <div class="rvt-tier-badge" style="background:rgba(234,179,8,0.15);border-color:rgba(234,179,8,0.4);color:#eab308">PREMIUM SERVICE</div>
               <div class="rvt-mock-preview rvt-mock--blog">
+                <div class="rvt-mock-header-bar"><div class="rvt-mock-dots"><span></span><span></span><span></span></div></div>
                 <img src="/static/seo-images/review-planned.jpg" alt="기획형 리뷰 예시" class="rvt-mock-real-img" />
               </div>
             </div>
@@ -95,21 +98,21 @@ export const SvcReviewPage = () => (
               </h3>
               <ul class="rvt-feature-list">
                 <li>
-                  <div class="rvt-feat-icon" style="--fi:#eab308">⭐</div>
+                  <div class="rvt-feat-icon" style="--fi:#285CCC">{icon('star')}</div>
                   <div>
-                    <strong>별점 5점 필수</strong>
-                    <p>브랜드 신뢰도를 위한 만점 리뷰 작성</p>
+                    <strong>평판 관리</strong>
+                    <p>브랜드 신뢰도를 높이는 고품질 경험 콘텐츠 제작</p>
                   </div>
                 </li>
                 <li>
-                  <div class="rvt-feat-icon" style="--fi:#3b82f6">📷</div>
+                  <div class="rvt-feat-icon" style="--fi:#285CCC">{icon('camera')}</div>
                   <div>
                     <strong>사진 및 영상 첨부</strong>
                     <p>고퀄리티 시각 자료 필수 포함으로 신뢰도 상승</p>
                   </div>
                 </li>
                 <li>
-                  <div class="rvt-feat-icon" style="--fi:#8b5cf6">✍️</div>
+                  <div class="rvt-feat-icon" style="--fi:#285CCC">{icon('pen')}</div>
                   <div>
                     <strong>스토리라인 리뷰</strong>
                     <p>체계적인 기획 기반의 스토리텔링으로 구매 전환 유도</p>
@@ -129,6 +132,7 @@ export const SvcReviewPage = () => (
             <div class="rvt-card-top">
               <div class="rvt-tier-badge" style="background:rgba(100,116,139,0.15);border-color:rgba(100,116,139,0.4);color:rgba(255,255,255,0.5)">BASIC SERVICE</div>
               <div class="rvt-mock-preview rvt-mock--simple">
+                <div class="rvt-mock-header-bar"><div class="rvt-mock-dots"><span></span><span></span><span></span></div></div>
                 <img src="/static/seo-images/review-simple.jpg" alt="단순 리뷰 예시" class="rvt-mock-real-img" />
               </div>
             </div>
@@ -139,21 +143,21 @@ export const SvcReviewPage = () => (
               </h3>
               <ul class="rvt-feature-list rvt-feature-list--basic">
                 <li>
-                  <div class="rvt-feat-icon rvt-feat-icon--dim" style="--fi:#64748b">⭐</div>
+                  <div class="rvt-feat-icon rvt-feat-icon--dim" style="--fi:#64748b">{icon('star')}</div>
                   <div>
-                    <strong>별점 5점 필수</strong>
-                    <p>기본적인 긍정 평가 보장</p>
+                    <strong>평판 관리</strong>
+                    <p>기본적인 긍정 리뷰 유도</p>
                   </div>
                 </li>
                 <li>
-                  <div class="rvt-feat-icon rvt-feat-icon--dim" style="--fi:#64748b">📷</div>
+                  <div class="rvt-feat-icon rvt-feat-icon--dim" style="--fi:#64748b">{icon('camera')}</div>
                   <div>
                     <strong>사진 및 영상 첨부 불필요</strong>
-                    <p>자유로운 형식의 텍스트 리뷰 작성</p>
+                    <p>자유로운 형식의 텍스트 경험 콘텐츠 제작</p>
                   </div>
                 </li>
                 <li>
-                  <div class="rvt-feat-icon rvt-feat-icon--dim" style="--fi:#64748b">💬</div>
+                  <div class="rvt-feat-icon rvt-feat-icon--dim" style="--fi:#64748b">{icon('message')}</div>
                   <div>
                     <strong>스토리라인 없는 리뷰</strong>
                     <p>간결하고 진솔한 후기 위주</p>
@@ -185,75 +189,72 @@ export const SvcReviewPage = () => (
           <p class="rvp-hero-desc">
             기획형 리뷰를 기반으로 네이버 블로그와 커머스 구매평을 동시에 공략합니다.<br />
             단순 리뷰와 달리 <strong>스토리 구조·핵심 키워드·설득 포인트</strong>를 설계하여<br />
-            검색 상위노출과 실구매 전환율을 함께 끌어올립니다.
+            검색 노출과 실구매 전환율을 함께 끌어올립니다.
           </p>
         </div>
 
-        {/* 3-카드 그리드 (이미지 포함) */}
+        {/* 3-카드 그리드 (텍스트 전용) */}
         <div class="rvp-premium-grid">
 
-          {/* 카드 01 — 상위노출 & 블로그 */}
+          {/* 카드 01 — 검색 노출 & 블로그 */}
           <div class="rvp-premium-card rvp-premium-card--blue">
-            <div class="rvp-premium-img-wrap">
-              <img src="/static/seo-images/review-premium-blog.jpg" alt="블로그 리뷰 상위노출" class="rvp-premium-img" />
-              <div class="rvp-premium-img-overlay"></div>
-              <span class="rvp-premium-num">01</span>
-            </div>
             <div class="rvp-premium-body">
+              <div class="rvp-premium-head">
+                <span class="rvp-premium-ico">{icon('search')}</span>
+                <span class="rvp-premium-num">01</span>
+              </div>
               <div class="rvp-premium-tags">
-                <span class="rvp-premium-tag">#블로그_상위노출</span>
-                <span class="rvp-premium-tag">#키워드_1페이지</span>
+                <span class="rvp-premium-tag">#블로그_검색노출</span>
+                <span class="rvp-premium-tag">#전환유도_이탈방지</span>
                 <span class="rvp-premium-tag">#기획형_스토리</span>
               </div>
-              <h4 class="rvp-premium-title">상위노출 &amp; 블로그 리뷰</h4>
+              <h4 class="rvp-premium-title">검색 노출 &amp; 블로그 리뷰</h4>
               <p class="rvp-premium-desc">
-                기획형 스토리 구조로 블로그에 게시해 <strong>메인 키워드 1페이지 노출</strong>을 달성합니다.
+                기획형 스토리 구조로 블로그에 게시해 <strong>전환 유도와 이탈 방지, 상품 경쟁력 강화까지</strong> 이어갑니다.
                 커머스 유입 고객과 검색 고객을 동시에 확보하며,
                 신제품·신규 브랜드 런칭 시 특히 높은 성과를 냅니다.
               </p>
               <ul class="rvp-premium-list">
                 <li>네이버 블로그 검색 노출 최적화</li>
                 <li>상품별 최적화 블로거 매칭 <em>(품질 관리)</em></li>
-                <li>비용 대비 최고 효율의 유입 채널</li>
+                <li>비용 대비 높은 효율의 유입 채널</li>
               </ul>
             </div>
           </div>
 
-          {/* 카드 02 — 별점 관리 */}
+          {/* 카드 02 — 평판 관리 */}
           <div class="rvp-premium-card rvp-premium-card--gold">
-            <div class="rvp-premium-img-wrap">
-              <img src="/static/seo-images/review-premium-star.jpg" alt="별점 5점 관리" class="rvp-premium-img" />
-              <div class="rvp-premium-img-overlay"></div>
-              <span class="rvp-premium-num">02</span>
-            </div>
             <div class="rvp-premium-body">
-              <div class="rvp-premium-tags">
-                <span class="rvp-premium-tag">#별점5점_확보</span>
-                <span class="rvp-premium-tag">#부정여론_완화</span>
-                <span class="rvp-premium-tag">#평점_관리</span>
+              <div class="rvp-premium-head">
+                <span class="rvp-premium-ico">{icon('message')}</span>
+                <span class="rvp-premium-num">02</span>
               </div>
-              <h4 class="rvp-premium-title">별점 관리 &amp; 여론 개선</h4>
+              <div class="rvp-premium-tags">
+                <span class="rvp-premium-tag">#생생리뷰_확보</span>
+                <span class="rvp-premium-tag">#부정여론_완화</span>
+                <span class="rvp-premium-tag">#평판_관리</span>
+              </div>
+              <h4 class="rvp-premium-title">평판 관리 &amp; 여론 개선</h4>
               <p class="rvp-premium-desc">
-                <strong>별점 5점 리뷰를 지속적으로 축적</strong>하여 기존 부정 여론을 효과적으로 희석시킵니다.
+                <strong>브랜드 평판을 지속 관리</strong>하여 기존 부정 여론에 빠르게 대응합니다.
                 긍정적 리뷰 콘텐츠가 소비자의 구매 심리를 자극하고
-                평균 별점을 끌어올려 전환율을 높입니다.
+                고객 만족도를 개선해 전환율을 높입니다.
               </p>
               <ul class="rvp-premium-list">
-                <li>네이버·쿠팡 별점 집중 관리</li>
-                <li>부정 리뷰 비율 희석 전략</li>
-                <li>긍정 여론 형성으로 재구매 유도</li>
+                <li>네이버·쿠팡 평판 집중 케어</li>
+                <li>부정 리뷰 신속 대응으로 전환 흐름 유지</li>
+                <li>실구매 여론으로 재구매 유도</li>
               </ul>
             </div>
           </div>
 
           {/* 카드 03 — 구매 유도 */}
           <div class="rvp-premium-card rvp-premium-card--green">
-            <div class="rvp-premium-img-wrap">
-              <img src="/static/seo-images/review-premium-convert.jpg" alt="구매 유도 리뷰" class="rvp-premium-img" />
-              <div class="rvp-premium-img-overlay"></div>
-              <span class="rvp-premium-num">03</span>
-            </div>
             <div class="rvp-premium-body">
+              <div class="rvp-premium-head">
+                <span class="rvp-premium-ico">{icon('shoppingBag')}</span>
+                <span class="rvp-premium-num">03</span>
+              </div>
               <div class="rvp-premium-tags">
                 <span class="rvp-premium-tag">#구매전환_유도</span>
                 <span class="rvp-premium-tag">#설득_포인트</span>
@@ -262,14 +263,14 @@ export const SvcReviewPage = () => (
               <h4 class="rvp-premium-title">구매 전환 리뷰</h4>
               <p class="rvp-premium-desc">
                 상품의 소구 포인트를 정확히 짚는 <strong>의미 있는 리뷰</strong>로
-                소비자의 구매 결정을 자연스럽게 유도합니다.
+                소비자의 구매 결정을 효과적으로 돕습니다.
                 실제 체험 기반의 진정성 있는 콘텐츠로
                 장바구니 담기에서 결제까지 이어지는 전환을 만듭니다.
               </p>
               <ul class="rvp-premium-list">
                 <li>핵심 소구 포인트 중심 스토리텔링</li>
-                <li>구매 망설임 해소 댓글 작성</li>
-                <li>실질적인 구매 전환율 향상</li>
+                <li>구매 전 궁금증 해소 리뷰 작성</li>
+                <li>구매 전환율 상승</li>
               </ul>
             </div>
           </div>
@@ -285,17 +286,16 @@ export const SvcReviewPage = () => (
             <strong>기획형 리뷰</strong>를 기본으로, 블로그·구매평을 동시에 공략하는
             <em> 인애드만의 통합 프리미엄 리뷰 전략</em>
           </div>
-          <div class="rvp-premium-banner-kpi">
-            <span><b>검색 유입</b> ↑</span>
-            <span><b>별점 관리</b> ↑</span>
-            <span><b>구매 전환</b> ↑</span>
-          </div>
+          <a href="/contact" class="rvp-premium-banner-cta">
+            <span>리뷰 전략 문의하기</span>
+            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
 
       </div>
     </section>
 
-    {/* ══ PROCESS TIMELINE (시딩과 동일 방식) ══ */}
+    {/* ══ PROCESS TIMELINE (체험단과 동일 방식) ══ */}
     <section class="section sdtl-section">
       <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-left"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
@@ -305,7 +305,7 @@ export const SvcReviewPage = () => (
           <p class="sec-sub">상담부터 최종 리포트까지, 전담 PM이 모든 단계를 함께합니다.</p>
         </div>
 
-        <div class="sdtl-wrap">
+        <div class="sdtl-wrap" id="sdtlWrap">
           <div class="sdtl-axis"><div class="sdtl-axis-line"></div></div>
 
           {/* STEP 01 */}
@@ -317,7 +317,7 @@ export const SvcReviewPage = () => (
               <div class="sdtl-card-body">
                 <span class="sdtl-card-en">Consultation</span>
                 <h4 class="sdtl-card-title">상담 진행</h4>
-                <p class="sdtl-card-desc">브랜드 목표, 현재 리뷰 현황, 타겟 채널을 파악합니다. 기획형·단순 리뷰 최적 믹스 전략을 수립합니다.</p>
+                <p class="sdtl-card-desc">브랜드 목표·현재 리뷰 현황·타겟 채널을 살핍니다. 기획형과 단순 리뷰를 어떤 비율로 섞을지 짜 드립니다.</p>
               </div>
             </div>
             <div class="sdtl-dot" style="--tc:#1a6bff"><span class="sdtl-num">01</span></div>
@@ -335,7 +335,7 @@ export const SvcReviewPage = () => (
               <div class="sdtl-card-body">
                 <span class="sdtl-card-en">Contract &amp; Scope</span>
                 <h4 class="sdtl-card-title">계약 진행</h4>
-                <p class="sdtl-card-desc">진행 범위, 리뷰 수량, 목표 별점, 기간을 명확히 문서화합니다. 투명한 비용 구조로 신뢰 관계를 구축합니다.</p>
+                <p class="sdtl-card-desc">진행 범위, 콘텐츠 수량, 목표 지표, 기간을 명확히 문서화합니다. 투명한 비용 구조로 신뢰 관계를 구축합니다.</p>
               </div>
             </div>
           </div>
@@ -381,7 +381,7 @@ export const SvcReviewPage = () => (
               <div class="sdtl-card-body">
                 <span class="sdtl-card-en">Reviewer Selection</span>
                 <h4 class="sdtl-card-title">크리에이터 선정</h4>
-                <p class="sdtl-card-desc">진정성, 팔로워 품질, 카테고리 적합도를 기준으로 최적의 리뷰어를 선정합니다. 데이터 기반 매칭으로 성과를 극대화합니다.</p>
+                <p class="sdtl-card-desc">진정성·팔로워 품질·카테고리 적합도를 보고 리뷰어를 고릅니다. 감이 아니라 지표로 맞춥니다.</p>
               </div>
             </div>
             <div class="sdtl-dot" style="--tc:#d97706"><span class="sdtl-num">05</span></div>
@@ -399,7 +399,7 @@ export const SvcReviewPage = () => (
               <div class="sdtl-card-body">
                 <span class="sdtl-card-en">Product Experience</span>
                 <h4 class="sdtl-card-title">체험 진행</h4>
-                <p class="sdtl-card-desc">선정된 리뷰어에게 제품을 발송하고 실제 사용 체험을 진행합니다. 가이드라인을 기반으로 자연스러운 리뷰 콘텐츠가 준비됩니다.</p>
+                <p class="sdtl-card-desc">선정된 참여자에게 제품을 발송하고 실제 사용 체험을 진행합니다. 가이드라인을 기반으로 경험 콘텐츠가 준비됩니다.</p>
               </div>
             </div>
           </div>
@@ -412,7 +412,7 @@ export const SvcReviewPage = () => (
               </div>
               <div class="sdtl-card-body">
                 <span class="sdtl-card-en">Review Writing</span>
-                <h4 class="sdtl-card-title">리뷰 작성</h4>
+                <h4 class="sdtl-card-title">콘텐츠 제작</h4>
                 <p class="sdtl-card-desc">리뷰어가 가이드라인에 맞춰 기획형 또는 단순 리뷰를 작성합니다. 브랜드 검수 후 각 플랫폼에 최적화된 형태로 게시됩니다.</p>
               </div>
             </div>
@@ -431,7 +431,7 @@ export const SvcReviewPage = () => (
               <div class="sdtl-card-body">
                 <span class="sdtl-card-en">Performance Report</span>
                 <h4 class="sdtl-card-title">리포트</h4>
-                <p class="sdtl-card-desc">캠페인 전 기간의 리뷰 수, 별점 변화, 전환율, 검색 유입을 수치로 정리한 종합 리포트를 제공합니다. 다음 캠페인 전략까지 제안합니다.</p>
+                <p class="sdtl-card-desc">캠페인 전 기간의 콘텐츠 수, 만족도 변화, 전환율, 검색 유입을 수치로 정리한 종합 리포트를 제공합니다. 다음 캠페인 전략까지 제안합니다.</p>
               </div>
             </div>
           </div>
@@ -439,7 +439,7 @@ export const SvcReviewPage = () => (
         </div>{/* /sdtl-wrap */}
 
         <div class="sdtl-footer">
-          <span class="sdtl-footer-icon">📋</span>
+          <span class="sdtl-footer-icon">{icon('clipboard')}</span>
           <span>모든 단계에서 <strong>전담 PM</strong>이 함께합니다 &nbsp;·&nbsp; 평균 캠페인 기간 <strong>3–5주</strong></span>
         </div>
 
@@ -479,15 +479,12 @@ export const SvcReviewPage = () => (
 
     {/* ══ CTA ══ */}
     <section class="svc-cta-section">
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-review.png')"></div>
       <div class="container">
         <div class="svc-cta-inner">
           <div class="svc-cta-text">
             <h2>리뷰 마케팅으로<br /><em>브랜드 신뢰를 쌓으세요</em></h2>
             <p>인애드컴퍼니 전문가가 브랜드에 맞는 리뷰 전략을 무료로 진단해드립니다.</p>
-          </div>
-          <div class="svc-cta-btns">
-            <a href="/contact" class="hero-cta-btn primary"><span>무료 상담 신청하기</span><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-            <button type="button" class="hero-cta-btn ghost" onclick="openCallModal()"><span>📞 바로 전화하기</span></button>
           </div>
         </div>
       </div>
@@ -498,8 +495,16 @@ export const SvcReviewPage = () => (
     <script dangerouslySetInnerHTML={{__html: `
 (function(){
   var s = document.createElement('script');
-  s.src = '/static/scroll-reveal.js';
+  s.src = '/static/scroll-reveal.js?v=20260722b';
   document.head.appendChild(s);
+  // 리뷰 타입 비교 인트로 — 밑줄 이펙트 스크롤 진입 시 그리기
+  var intro = document.querySelector('.rvt-intro');
+  if (intro && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(ents){
+      ents.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { threshold: 0.5 });
+    io.observe(intro);
+  } else if (intro) { intro.classList.add('is-in'); }
 })();
     `}} />
 
@@ -538,5 +543,6 @@ export const SvcReviewPage = () => (
     }).catch(function(){});
 })();
     `}} />
+    </div>{/* /svc-light */}
   </>
 )

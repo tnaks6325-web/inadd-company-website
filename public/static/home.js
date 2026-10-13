@@ -43,11 +43,11 @@
         if(!start) start = ts;
         var prog = Math.min((ts - start) / duration, 1);
         var ease = 1 - Math.pow(1 - prog, 4); // easeOutQuart
-        el.textContent = Math.floor(ease * target);
+        el.textContent = Math.floor(ease * target).toLocaleString();
         if(prog < 1){
           requestAnimationFrame(step);
         } else {
-          el.textContent = target;
+          el.textContent = target.toLocaleString();
         }
       }
       requestAnimationFrame(step);
@@ -56,6 +56,8 @@
 
   window.addEventListener('scroll', countUp, { passive: true });
   countUp();
+  // 관리자 수치 fetch가 늦게 도착해 data-count를 갱신하면 다시 카운트업 (경쟁상태 방지)
+  window.__reCountStats = function(){ triggered = false; countUp(); };
 })();
 
 /* ─────────────────────────────────────────────
@@ -260,6 +262,8 @@
             el.textContent = '0';
           }
         });
+        // 갱신된 수치로 카운트업 재실행 (초기 애니메이션이 옛 값에 고정되는 문제 해결)
+        if(window.__reCountStats) window.__reCountStats();
       }
     })
     .catch(function(){});

@@ -1,883 +1,715 @@
+/* ── 마퀴/서비스 공용 SVG 아이콘 (Lucide 기반, 단색 currentColor) ──
+   이모지 대신 단색 SVG를 써서 OS별 렌더 편차를 없애고 톤을 통일한다. */
+const svgIcon = (paths: any, extra?: any) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{paths}{extra}</svg>
+)
+
+const ICONS: Record<string, any> = {
+  viral: svgIcon(<><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></>),
+  influencer: svgIcon(<><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>),
+  seeding: svgIcon(<><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></>),
+  seo: svgIcon(<><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></>),
+  review: svgIcon(<><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></>),
+  oliveyoung: svgIcon(<><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></>),
+  ppl: svgIcon(<><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></>),
+  reviewPlan: svgIcon(<><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></>),
+  reviewSimple: svgIcon(<><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></>),
+  reviewPremium: svgIcon(<><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></>),
+  pointer: svgIcon(<><path d="M22 14a8 8 0 0 1-8 8"/><path d="M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1"/><path d="M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></>),
+  phone: svgIcon(<><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></>),
+  // ── 서비스 키워드 칩용 아이콘 ──
+  kwCoffee: svgIcon(<><path d="M10 2v2"/><path d="M14 2v2"/><path d="M6 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/></>),
+  kwUsers: svgIcon(<><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>),
+  kwShare: svgIcon(<><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></>),
+  kwNews: svgIcon(<><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></>),
+  kwChart: svgIcon(<><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></>),
+  kwFilter: svgIcon(<><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></>),
+  kwUserCheck: svgIcon(<><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></>),
+  kwBadge: svgIcon(<><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></>),
+  kwInsta: svgIcon(<><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></>),
+  kwPin: svgIcon(<><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></>),
+  kwSearch: svgIcon(<><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></>),
+  kwPlay: svgIcon(<><polygon points="6 3 20 12 6 21 6 3"/></>),
+  kwSparkle: svgIcon(<><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></>),
+  kwTrend: svgIcon(<><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></>),
+  kwStar: svgIcon(<><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></>),
+  kwGift: svgIcon(<><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></>),
+  kwTv: svgIcon(<><rect width="20" height="15" x="2" y="7" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></>),
+  kwFilm: svgIcon(<><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></>),
+  kwEye: svgIcon(<><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></>),
+  kwShield: svgIcon(<><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></>),
+}
+
+/* ── 후기 데이터 (기존 카드 내용 그대로) — 세로 컬럼 스크롤용 ── */
+const TESTI = [
+  { tag: 'Viral Marketing', body: '억지로 밀어붙이지 않았는데 사람들이 먼저 이야기하기 시작했어요. **브랜드 화제성이 이렇게 만들어지는구나** 처음 체감했습니다.', av: '김', name: '김○○ 대표', role: '셀비○' },
+  { tag: 'Influencer Marketing', body: '브랜드에 딱 맞는 인플루언서를 골라주셔서 **협업 콘텐츠의 반응이 확실히 달랐습니다**.', av: '이', name: '이○○ CMO', role: '너즐○' },
+  { tag: 'Data Insight', body: '인사이트 리포트를 받고 **마케팅 방향이 완전히 바뀌었습니다**. 데이터를 이렇게 해석해주는 파트너는 처음이에요.', av: '박', name: '박○○ 마케팅팀장', role: '핏펫○어' },
+  { tag: 'Olive Young Marketing', body: '올리브영 입점 후 첫 달부터 리뷰가 쌓이기 시작했고, **몇 달 만에 채널 매출이 눈에 띄게 늘었습니다**.', av: '최', name: '최○○ 대표', role: '블라이○' },
+  { tag: 'YouTube Marketing', body: '유튜브 영상 이후 **브랜드 검색량이 확연히 늘었어요**. 막연하던 인지도가 실제 검색으로 이어진 게 인상적이었습니다.', av: '정', name: '정○○ 마케터', role: '루시○이' },
+  { tag: 'Seeding Campaign', body: '체험단으로 실사용 경험 콘텐츠를 확보했고, **전환율도 눈에 띄게 좋아졌어요**. 콘텐츠 퀄리티가 달랐습니다.', av: '윤', name: '윤○○ 팀장', role: '메디○라피' },
+  { tag: 'Brand Strategy', body: '브랜드 포지셔닝 전략을 새로 수립하고 나서 **경쟁사 대비 인지도가 확연히 달라졌습니다**. 전략적 사고가 다릅니다.', av: '오', name: '오○○ 브랜드팀장', role: '좋은생○' },
+  { tag: 'Community Viral', body: '커뮤니티 마케팅 이후 **브랜드 언급이 눈에 띄게 늘었습니다**. 콘텐츠의 힘을 체감했어요.', av: '서', name: '서○○ 마케터', role: '베베○' },
+  { tag: 'PPL Campaign', body: 'PPL 콘텐츠가 프로그램에 잘 어울려 거부감이 없었습니다. **노출 대비 반응이 확실히 좋았어요**.', av: '문', name: '문○○ 콘텐츠팀장', role: '메가스○어' },
+  { tag: 'Review Marketing', body: '리뷰 마케팅으로 브랜드 신뢰도가 올라갔습니다. **소비자들이 먼저 브랜드를 찾기 시작했어요**.', av: '임', name: '임○○ 대표', role: '탐정○' },
+  { tag: 'IMC Strategy', body: '통합 마케팅 커뮤니케이션으로 모든 채널이 일관된 메시지를 전달했습니다. **브랜드 신뢰도가 눈에 띄게 올라갔어요**.', av: '조', name: '조○○ CMO', role: '제트○' },
+  { tag: 'Viral Content', body: '콘텐츠 하나가 **예상보다 훨씬 멀리 퍼졌어요**. 기획부터 실행까지 믿고 맡길 수 있는 파트너였습니다.', av: '류', name: '류○○ 대표', role: '에스○피' },
+]
+/* **강조** 구간만 하이라이트로 렌더 */
+const hlBody = (s: string) => s.split('**').map((seg, i) => (i % 2 ? <em class="testi-hl">{seg}</em> : seg))
+const TCard = ({ t, dup }: { t: any; dup?: boolean }) => (
+  <blockquote class="testi-card" aria-hidden={dup ? 'true' : undefined}>
+    <span class="testi-tag">{t.tag}</span>
+    <p class="testi-body">{hlBody(t.body)}</p>
+    <footer class="testi-footer">
+      <span class="testi-avatar" aria-hidden="true">{t.av}</span>
+      <div class="testi-info"><strong>{t.name}</strong><span>{t.role}</span></div>
+    </footer>
+  </blockquote>
+)
+/* ── 홈 서비스 간략 데이터 (WHAT WE DO 간소화 — 텍스트 탭 선택형) ── */
+const HSVC = [
+  { key: 'viral', en: 'Viral Marketing', ko: '바이럴 마케팅', desc: '검색해도 우리 브랜드 이야기가 없을 때', href: '/marketing/viral' },
+  /* [비공개] 퍼포먼스 마케팅 — 작업 중이라 라이브 노출 금지. 공개 시 아래 주석 해제 */
+  // { key: 'performance', en: 'Performance Marketing', ko: '퍼포먼스 마케팅', desc: '네이버·구글·메타·카카오 광고 운영과 전환 분석', href: '/marketing/performance' },
+  { key: 'influencer', en: 'Influencer & YouTube', ko: '인플루언서 · 유튜브 마케팅', desc: '어떤 크리에이터와 해야 할지 모르겠을 때', href: '/marketing/influencer' },
+  { key: 'seeding', en: 'Seeding Campaign', ko: '체험단 마케팅', desc: '신제품인데 써본 사람이 없을 때', href: '/marketing/seeding' },
+  { key: 'review', en: 'Customer Review', ko: '리뷰 마케팅', desc: '장바구니까지 왔다가 그냥 나갈 때', href: '/marketing/review' },
+  { key: 'oliveyoung', en: 'Olive Young', ko: '올리브영 마케팅', desc: '입점은 했는데 그 다음이 막막할 때', href: '/marketing/oliveyoung' },
+  { key: 'ppl', en: 'PPL', ko: 'PPL 마케팅', desc: '광고 티 내지 않고 각인시키고 싶을 때', href: '/marketing/ppl' },
+]
+
 export const HomePage = () => (
   <>
     {/* ============================================================
-        HERO SLIDER — 100vh 풀스크린
-        안에 영상, 텍스트, 검은 커튼, 로고 레이어를 모두 absolute로 포개어 놓음.
-        스크롤 다운 시: 커튼 fade-in → 로고 등장 (히어로 섹션 내부에서 전환)
-        스크롤 업 / 새로고침: 커튼 fade-out → 텍스트 재시작
+        HERO SLIDER — 100vh 풀스크린, 2슬라이드 가로 전환 + 휠 하이재킹
+        슬라이드1: 카피 + 회사 이미지 + CTA / 슬라이드2: 결핍 질문 카피
         ============================================================ */}
     <section class="hero-slider" id="heroSlider">
+    <div class="hero2-track" id="hero2Track">
+    {/* 사진 히어로 슬라이드 제거(2026-08) — 다크 공감 카피가 첫 화면 */}
 
-      {/* ── 썸네일 가로 플로우 배경 ── */}
-      {/* JS가 API에서 읽어서 동적으로 채움 — 하드코딩 없음 */}
-      <div class="thumb-flow" id="thumbFlow">
-        <div class="thumb-row thumb-row--ltr" id="thumbRow0"></div>
-        <div class="thumb-row thumb-row--rtl" id="thumbRow1"></div>
-        <div class="thumb-row thumb-row--ltr" id="thumbRow2"></div>
+
+    {/* ── 다크 시퀀스: 공감대 형성 (완전 검은 배경 + 순차 카피 크로스페이드)
+           카피는 초안 — 대표님이 최종 문구로 교체 예정 ── */}
+    <div class="hero2-slide hero2-slide--two">
+      {/* copy 0 */}
+      <div class="hero2-copy hero2-copy--active" data-copy="0">
+        <div class="hero2-dark-inner">
+          <h2 class="hero2-q">보고서 속 숫자는 화려한데,<br />매출은 <em>그대로</em></h2>
+        </div>
       </div>
-      <div class="yt-overlay"></div>
-
-      {/* ── 메인 텍스트 레이어 ── */}
-      <div class="hero-text-layer" id="heroTextLayer">
-        <div class="hero-text-inner">
-          <div class="hero-eyebrow">
-            <span class="eyebrow-line"></span>
-            <span class="eyebrow-text" id="editorHeroEyebrow">THE CREATIVE MARKETING AGENCY</span>
+      {/* copy 1 */}
+      <div class="hero2-copy" data-copy="1">
+        <div class="hero2-dark-inner">
+          <h2 class="hero2-q">계약 전엔 매일 연락,<br />계약 후엔 <em>읽씹</em>.</h2>
+        </div>
+      </div>
+      {/* copy 2 */}
+      <div class="hero2-copy" data-copy="2">
+        <div class="hero2-dark-inner">
+          <div class="hero2-quotes">
+            <p class="hero2-quote">"일단 두 달만 더 지켜보시죠."</p>
+            <p class="hero2-quote">"예산 조금만 더 태워보실까요?"</p>
+            <p class="hero2-quote">"그건 저희 담당이 아니라서요."</p>
+            <p class="hero2-quote">"담당자가 퇴사해서 인수인계 중이에요."</p>
           </div>
-          <div class="hero-headline-wrap">
-            <h1 class="hero-headline">
-              <span class="hl-line" id="hlLine1"></span>
-              <span class="hl-line hl-accent" id="hlLine2"></span>
-              <span class="hl-line" id="hlLine3"></span>
-            </h1>
-          </div>
-          <p class="hero-sub" id="heroSub"></p>
-          <div class="hero-cta-group" id="heroCta">
-            <a href="/contact" class="hero-cta-btn primary">
-              <span id="editorHeroCta">상담 신청하기</span>
-              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
+          <h2 class="hero2-q">이런 이야기, <em>익숙한 패턴</em>이죠?</h2>
         </div>
       </div>
+    </div>
 
-      {/* ── 검은 커튼 (스크롤 다운 시 fade-in) ── */}
-      <div id="blackCurtain" class="black-curtain"></div>
+    </div>{/* /hero2-track */}
 
-      {/* ── 로고 레이어 (커튼 위에, 스크롤 다운 시 등장) ── */}
-      <div id="logoLayer" class="logo-layer">
-        <div class="ll-mark">
-          <img src="/static/logo.png" alt="인애드컴퍼니 로고" />
-        </div>
-        <div class="ll-name-wrap">
-          <span class="ll-name">인애드컴퍼니</span>
-          <span class="ll-sub">IN AD COMPANY · THE CREATIVE MARKETING AGENCY</span>
-        </div>
-        <div class="ll-cta">
-          <a href="/contact" class="hero-cta-btn primary">
-            <span>상담 신청하기</span>
-            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </div>
+    {/* ── 슬라이드 컨트롤 ── */}
+    <button type="button" class="hero2-arrow hero2-arrow--prev" aria-label="이전 슬라이드">‹</button>
+    <button type="button" class="hero2-arrow hero2-arrow--next" aria-label="다음 슬라이드">›</button>
+    <div class="hero2-dots" aria-hidden="true"><span class="active"></span><span></span><span></span></div>
 
-      {/* 스크롤 힌트 */}
-      <div class="hero-scroll-cue" id="scrollCue">
-        <div class="scroll-cue-line"></div>
-        <span>SCROLL</span>
-      </div>
-
+    {/* ── 휠 하이재킹: 최상단에서 휠↓ = 다음 카피, 마지막 카피에서 휠↓ = 실제 스크롤 ── */}
+    <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  function esc(value){
+    return String(value == null ? '' : value).replace(/[&<>"']/g, function(ch){
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[ch];
+    });
+  }
+  var hero = document.getElementById('heroSlider');
+  if (!hero || !document.getElementById('hero2Track')) return;
+  var copies = [].slice.call(hero.querySelectorAll('.hero2-copy'));
+  var MAX = copies.length - 1;          // 사진 슬라이드 제거 → 상태 0..MAX 가 곧 카피 인덱스
+  var idx = 0, animating = false;
+  var dots = [].slice.call(hero.querySelectorAll('.hero2-dots span'));
+  function render(){
+    hero.classList.add('hero2--s2');      /* 히어로가 항상 다크 — 헤더/화살표/도트 대비 유지 */
+    hero.classList.toggle('hero2--first', idx === 0);
+    hero.classList.toggle('hero2--last', idx === MAX);
+    copies.forEach(function(c,k){ c.classList.toggle('hero2-copy--active', k === idx); });
+    dots.forEach(function(d,k){ d.classList.toggle('active', k === idx); });
+  }
+  function go(i){
+    i = Math.max(0, Math.min(MAX, i));
+    if (i === idx) return;
+    idx = i; animating = true;
+    render();
+    setTimeout(function(){ animating = false; }, 700);
+  }
+  /* 첫 진입 인트로 — 활성 클래스를 첫 페인트 이후에 붙여야 CSS 트랜지션이 실행된다.
+     (파싱 중 바로 붙이면 브라우저가 '처음부터 보이는 상태'로 그려서 페이드가 없음) */
+  function playIntro(){
+    var shown = false;
+    function show(){ if (shown) return; shown = true; render(); }
+    function schedule(){ requestAnimationFrame(function(){ requestAnimationFrame(show); }); }
+    copies.forEach(function(c){ c.classList.remove('hero2-copy--active'); });
+    void hero.offsetWidth;                       /* 리플로우 강제 → 시작 상태 확정 */
+    schedule();
+    /* 백그라운드 탭은 rAF가 멈춘다 → 화면에 보이는 순간 재생 */
+    document.addEventListener('visibilitychange', function onVis(){
+      if (document.hidden) return;
+      document.removeEventListener('visibilitychange', onVis);
+      schedule();
+    });
+    /* 안전망: 보이는 상태인데 rAF가 안 돌면 그냥 노출(카피가 숨겨진 채 남지 않도록) */
+    setTimeout(function(){ if (!document.hidden) show(); }, 800);
+  }
+  render();
+  playIntro();
+  /* 뒤로가기 복원(bfcache)으로 돌아온 경우에도 다시 재생 */
+  window.addEventListener('pageshow', function(e){ if (e.persisted) playIntro(); });
+  if (location.hash === '#s2') go(1);
+  hero.querySelector('.hero2-arrow--prev').addEventListener('click', function(){ go(idx - 1); });
+  hero.querySelector('.hero2-arrow--next').addEventListener('click', function(){ go(idx + 1); });
+  dots.forEach(function(d,k){ d.addEventListener('click', function(){ go(k); }); });
+  window.addEventListener('wheel', function(e){
+    if (window.innerWidth <= 768) return;   /* 모바일: 세로 스토리 레이아웃 — 하이재킹 없음 */
+    if (window.scrollY > 2) return;
+    if (animating) { e.preventDefault(); return; }
+    if (e.deltaY > 8 && idx < MAX) { e.preventDefault(); go(idx + 1); }
+    else if (e.deltaY < -8 && idx > 0) { e.preventDefault(); go(idx - 1); }
+  }, { passive: false });
+  // 스크롤 다운 시엔 아무 것도 건드리지 않는다 — 히어로(100vh)는 마지막
+  // 프레임 그대로 정상 흐름대로 위로 밀려 사라진다(페이드/리셋 없음).
+  var tx = null;
+  hero.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, { passive: true });
+  hero.addEventListener('touchend', function(e){
+    if (tx === null) return;
+    var dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 60) go(idx + (dx < 0 ? 1 : -1));
+    tx = null;
+  }, { passive: true });
+})();
+    `}} />
     </section>
 
     {/* ============ MARQUEE ============ */}
-    <div class="marquee-band">
+    <div class="marquee-band marquee-band--labeled">
+      <div class="marquee-clients"><span>Clients</span></div>
       <div class="marquee-track marquee-track--fwd">
         {[
-          { text: '바이럴 마케팅', en: 'Viral Marketing', accent: false },
-          { text: '인플루언서 · 유튜브 마케팅', en: 'Influencer & YouTube', accent: true },
-          { text: '시딩 캠페인', en: 'Seeding Campaign', accent: false },
-          { text: 'SEO 마케팅', en: 'SEO Marketing', accent: true },
-          { text: '고객 리뷰 마케팅', en: 'Customer Review', accent: false },
-          { text: '올리브영 마케팅', en: 'Olive Young', accent: true },
-          { text: 'PPL 마케팅', en: 'PPL', accent: false },
-          { text: '바이럴 마케팅', en: 'Viral Marketing', accent: false },
-          { text: '인플루언서 · 유튜브 마케팅', en: 'Influencer & YouTube', accent: true },
-          { text: '시딩 캠페인', en: 'Seeding Campaign', accent: false },
-          { text: 'SEO 마케팅', en: 'SEO Marketing', accent: true },
-          { text: '고객 리뷰 마케팅', en: 'Customer Review', accent: false },
-          { text: '올리브영 마케팅', en: 'Olive Young', accent: true },
-          { text: 'PPL 마케팅', en: 'PPL', accent: false },
+          { key: 'viral', text: '바이럴 마케팅', en: 'Viral Marketing', accent: false },
+          { key: 'influencer', text: '인플루언서 · 유튜브 마케팅', en: 'Influencer & YouTube', accent: true },
+          { key: 'seeding', text: '체험단 마케팅', en: 'Seeding Campaign', accent: false },
+          { key: 'review', text: '고객 리뷰 마케팅', en: 'Customer Review', accent: true },
+          { key: 'oliveyoung', text: '올리브영 마케팅', en: 'Olive Young', accent: false },
+          { key: 'ppl', text: 'PPL 마케팅', en: 'PPL', accent: true },
+          { key: 'viral', text: '바이럴 마케팅', en: 'Viral Marketing', accent: false },
+          { key: 'influencer', text: '인플루언서 · 유튜브 마케팅', en: 'Influencer & YouTube', accent: true },
+          { key: 'seeding', text: '체험단 마케팅', en: 'Seeding Campaign', accent: false },
+          { key: 'review', text: '고객 리뷰 마케팅', en: 'Customer Review', accent: true },
+          { key: 'oliveyoung', text: '올리브영 마케팅', en: 'Olive Young', accent: false },
+          { key: 'ppl', text: 'PPL 마케팅', en: 'PPL', accent: true },
         ].map((item) => (
           <span class={`marquee-item${item.accent ? ' marquee-item--accent' : ''}`}>
+            <span class="marquee-icon">{ICONS[item.key]}</span>
             <span class="marquee-ko">{item.text}</span>
             <span class="marquee-en">{item.en}</span>
-            <span class="marquee-sep">✦</span>
+            <span class="marquee-sep" aria-hidden="true"></span>
           </span>
         ))}
       </div>
     </div>
 
-    {/* ============ SERVICES — 인터랙티브 리스트 + 비주얼 패널 ============ */}
-    <section class="section services-section" id="services">
-      <div class="container">
-
-        {/* ── 헤드 ── */}
-        <div class="section-head">
-          <span class="sec-label" id="editorServicesLabel">What We Do</span>
-          <h2 class="sec-title"><span id="editorServicesTitleLead">당신은 아직 </span><em id="editorServicesTitleAccent">진짜 마케팅의 힘</em><br /><span id="editorServicesTitleTail">만나지 못했습니다</span></h2>
-          <p class="sec-sub" id="editorServicesSub">단순한 노출을 넘어 브랜드의 가치를 전달하고{`\n`}실질적인 성과로 이어지는 인애드만의 솔루션을 경험해보세요</p>
-        </div>
-
-        {/* ── 서비스 인터랙티브 ── */}
-        <div class="svc-interactive" id="svcInteractive">
-
-          {/* 왼쪽: 키워드 리스트 */}
-          <ul class="svc-list" id="homeSvcList">
-            <li class="svc-list-item" data-svc="0">
-              <div class="svc-list-row">
-                <button class="svc-list-btn" type="button">
-                  <span class="svc-list-num">01</span>
-                  <span class="svc-list-name">VIRAL</span>
-                </button>
-                <a href="/marketing/viral" class="svc-goto-btn" style="display:none">보러가기 →</a>
-              </div>
-            </li>
-            <li class="svc-list-item" data-svc="1">
-              <div class="svc-list-row">
-                <button class="svc-list-btn" type="button">
-                  <span class="svc-list-num">02</span>
-                  <span class="svc-list-name">INFLUENCER</span>
-                </button>
-                <a href="/marketing/influencer" class="svc-goto-btn" style="display:none">보러가기 →</a>
-              </div>
-            </li>
-            <li class="svc-list-item" data-svc="2">
-              <div class="svc-list-row">
-                <button class="svc-list-btn" type="button">
-                  <span class="svc-list-num">03</span>
-                  <span class="svc-list-name">SEEDING</span>
-                </button>
-                <a href="/marketing/seeding" class="svc-goto-btn" style="display:none">보러가기 →</a>
-              </div>
-            </li>
-            <li class="svc-list-item" data-svc="3">
-              <div class="svc-list-row">
-                <button class="svc-list-btn" type="button">
-                  <span class="svc-list-num">04</span>
-                  <span class="svc-list-name">SEO</span>
-                </button>
-                <a href="/marketing/seo" class="svc-goto-btn" style="display:none">보러가기 →</a>
-              </div>
-            </li>
-            <li class="svc-list-item" data-svc="4">
-              <div class="svc-list-row">
-                <button class="svc-list-btn" type="button">
-                  <span class="svc-list-num">05</span>
-                  <span class="svc-list-name">REVIEW</span>
-                </button>
-                <a href="/marketing/review" class="svc-goto-btn" style="display:none">보러가기 →</a>
-              </div>
-            </li>
-            <li class="svc-list-item" data-svc="5">
-              <div class="svc-list-row">
-                <button class="svc-list-btn" type="button">
-                  <span class="svc-list-num">06</span>
-                  <span class="svc-list-name">OLIVE YOUNG</span>
-                </button>
-                <a href="/marketing/oliveyoung" class="svc-goto-btn" style="display:none">보러가기 →</a>
-              </div>
-            </li>
-            <li class="svc-list-item" data-svc="6">
-              <div class="svc-list-row">
-                <button class="svc-list-btn" type="button">
-                  <span class="svc-list-num">07</span>
-                  <span class="svc-list-name">PPL</span>
-                </button>
-                <a href="/marketing/ppl" class="svc-goto-btn" style="display:none">보러가기 →</a>
-              </div>
-            </li>
-          </ul>
-
-          {/* 오른쪽: 비주얼 패널 */}
-          <div class="svc-visual">
-            {/* 클릭 유도 힌트 — 첫 클릭 시 사라짐 */}
-            <div class="svc-click-hint" id="svcClickHint">
-              <div class="svc-hint-inner">
-                <div class="svc-hint-cursor">👆</div>
-                <p class="svc-hint-text">
-                  왼쪽 상품명을<br />
-                  <strong>클릭해주세요</strong>
-                </p>
-                <div class="svc-hint-arrow">
-                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-                    <path d="M28 18H8M16 8L6 18L16 28" stroke="rgba(100,160,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            {/* 패널 0 — VIRAL */}
-            <div class="svc-panel" data-panel="0" style="display:none">
-              <div class="svc-panel-img" style="background-image:url('/static/svc-images/viral.png'); background-size:cover; background-position:center; position:relative;">
-                <div class="svc-real-img-overlay"></div>
-              </div>
-              <div class="svc-panel-info">
-                <span class="svc-panel-tag">Viral Marketing</span>
-                <p class="svc-panel-desc">단순한 광고를 넘어, 브랜드와 소비자의 진짜 연결을 만듭니다.<br />콘텐츠의 시작부터 기억에 남는 순간까지—고객 여정 전체를 따라가서<br />채널 안쪽의 데이터를 읽고, 크리에이티브로 설득을 더합니다.</p>
-                <div class="svc-panel-tags">
-                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
-                  <div class="svc-ptag-grid">
-                    <span class="svc-ptag">☕ 카페 침투 마케팅</span>
-                    <span class="svc-ptag">💬 커뮤니티 바이럴</span>
-                    <span class="svc-ptag">📱 SNS 바이럴</span>
-                    <span class="svc-ptag">📰 언론 바이럴</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 패널 1 — INFLUENCER */}
-            <div class="svc-panel" data-panel="1">
-              <div class="svc-panel-img svc-panel-img--thumb"
-                onmousemove="(function(el,e){var r=el.getBoundingClientRect();var x=(e.clientX-r.left)/r.width-0.5;var y=(e.clientY-r.top)/r.height-0.5;el.querySelector('.svc-thumb-bg').style.transform='scale(1.08) translate('+(x*-18)+'px,'+(y*-18)+'px)'})(this,event)"
-                onmouseleave="(function(el){el.querySelector('.svc-thumb-bg').style.transform='scale(1) translate(0,0)'})(this)">
-                <div class="svc-thumb-bg" style="background-image:url('/static/svc-images/influencer.png');"></div>
-                <div class="svc-real-img-overlay"></div>
-              </div>
-              <div class="svc-panel-info">
-                <span class="svc-panel-tag">Influencer &amp; YouTube</span>
-                <p class="svc-panel-desc">'좋은것 같다'는 추측이 아닌 <strong>'이겁니다'</strong>를 말해드립니다.<br />인애드만의 <strong>인플루언서 분석 프로그램</strong>을 통해 필터링 후 브랜드 메시지와 크리에이터 핏을 비교 및 제안합니다.<br /><br />데이터 기반의 정교한 매칭으로 최고의 퍼포먼스를 창출합니다.</p>
-                <div class="svc-panel-tags">
-                  <p class="svc-ptag-label">KEY STRATEGY</p>
-                  <div class="svc-ptag-grid">
-                    <span class="svc-ptag">📊 데이터 기반 분석</span>
-                    <span class="svc-ptag">🔽 정교한 필터링</span>
-                    <span class="svc-ptag">🤝 크리에이터 매칭</span>
-                    <span class="svc-ptag">📈 최고의 퍼포먼스</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 패널 2 — SEEDING */}
-            <div class="svc-panel" data-panel="2">
-              <div class="svc-panel-img" style="background-image:url('/static/svc-images/seeding.png'); background-size:cover; background-position:center; position:relative;">
-                <div class="svc-real-img-overlay"></div>
-              </div>
-              <div class="svc-panel-info">
-                <span class="svc-panel-tag">Seeding Campaign</span>
-                <p class="svc-panel-desc">브랜드의 씨앗을 심어 자연스러운 성장을 유도합니다.<br /><strong>검색 최적화와 브랜드 신뢰도 구축</strong>을 위한 전략적 콘텐츠 배포로, 소비자가 브랜드를 스스로 발견하고 경험하도록 만듭니다.<br /><br />다양한 플랫폼에 최적화된 시딩 전략으로 강력한 바이럴 효과를 창출합니다.</p>
-                <div class="svc-panel-tags">
-                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
-                  <div class="svc-ptag-grid">
-                    <span class="svc-ptag">📝 네이버 블로그 시딩</span>
-                    <span class="svc-ptag">📸 인스타그램 시딩</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 패널 3 — SEO */}
-            <div class="svc-panel" data-panel="3">
-              <div class="svc-panel-img" style="background-image:url('/static/svc-images/seo.png'); background-size:cover; background-position:center; position:relative;">
-                <div class="svc-real-img-overlay"></div>
-              </div>
-              <div class="svc-panel-info">
-                <span class="svc-panel-tag">SEO Marketing</span>
-                <p class="svc-panel-desc">검색 엔진 최적화로 <strong>브랜드의 온라인 가시성</strong>을 극대화하고 타겟 고객과의 접점을 확대합니다.<br /><br />네이버 플레이스부터 자동완성까지, 소비자의 검색 여정 전반을 장악하여 실질적인 유입과 전환을 이끌어내는 정교한 SEO 전략을 제안합니다.</p>
-                <div class="svc-panel-tags">
-                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
-                  <div class="svc-ptag-grid">
-                    <span class="svc-ptag">📍 네이버 플레이스</span>
-                    <span class="svc-ptag">⌨️ 검색어 자동완성</span>
-                    <span class="svc-ptag">▶️ 유튜브 SEO</span>
-                    <span class="svc-ptag">📸 인스타 검색</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 패널 4 — REVIEW */}
-            <div class="svc-panel" data-panel="4">
-              <div class="svc-panel-img" style="background-image:url('/static/svc-images/review.png'); background-size:cover; background-position:center; position:relative;">
-                <div class="svc-real-img-overlay"></div>
-              </div>
-              <div class="svc-panel-info">
-                <span class="svc-panel-tag">Customer Review</span>
-                <p class="svc-panel-desc">소비자의 직접 경험을 콘텐츠화하여 <strong>신뢰 기반 구매 전환</strong>을 만들어냅니다.<br /><br />단순 리뷰 수집을 넘어 플랫폼별 최적화 전략으로 브랜드 평판을 설계하고, 구매 결정에 직접 영향을 주는 리뷰 자산을 구축합니다.</p>
-                <div class="svc-panel-tags">
-                  <p class="svc-ptag-label">SERVICE TYPES</p>
-                  <div class="svc-ptag-grid svc-ptag-grid--3">
-                    <span class="svc-ptag svc-ptag--card">
-                      <span class="svc-ptag-icon">✍️</span>
-                      <span class="svc-ptag-text">
-                        <strong>기획형 리뷰</strong>
-                        <em>Planning Review</em>
-                      </span>
-                    </span>
-                    <span class="svc-ptag svc-ptag--card">
-                      <span class="svc-ptag-icon">💬</span>
-                      <span class="svc-ptag-text">
-                        <strong>단순 리뷰</strong>
-                        <em>Simple Review</em>
-                      </span>
-                    </span>
-                    <span class="svc-ptag svc-ptag--card">
-                      <span class="svc-ptag-icon">👑</span>
-                      <span class="svc-ptag-text">
-                        <strong>프리미엄 리뷰</strong>
-                        <em>Premium Review</em>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 패널 5 — OLIVE YOUNG */}
-            <div class="svc-panel" data-panel="5">
-              <div class="svc-panel-img" style="background-image:url('/static/svc-images/oliveyoung.png'); background-size:cover; background-position:center; position:relative;">
-                <div class="svc-real-img-overlay"></div>
-              </div>
-              <div class="svc-panel-info">
-                <span class="svc-panel-tag">Olive Young Marketing</span>
-                <p class="svc-panel-desc">올리브영 채널을 전략적으로 공략하여 <strong>브랜드 매출과 인지도를 동시에</strong> 끌어올립니다.<br /><br />브랜딩 전략 수립부터 상위 노출, 리뷰 관리, 기획전 참여 유도까지 올리브영 내 모든 접점을 통합 관리하여 K-뷰티 브랜드의 채널 성과를 극대화합니다.</p>
-                <div class="svc-panel-tags">
-                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
-                  <div class="svc-ptag-grid">
-                    <span class="svc-ptag">✨ 브랜딩</span>
-                    <span class="svc-ptag">📊 상위 노출 최적화</span>
-                    <span class="svc-ptag">💬 리뷰 관리</span>
-                    <span class="svc-ptag">🎪 기획전 참여 유도</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 패널 6 — PPL */}
-            <div class="svc-panel" data-panel="6">
-              <div class="svc-panel-img" style="background-image:url('/static/svc-images/ppl.png'); background-size:cover; background-position:center; position:relative;">
-                <div class="svc-real-img-overlay"></div>
-              </div>
-              <div class="svc-panel-info">
-                <span class="svc-panel-tag">PPL</span>
-                <p class="svc-panel-desc">방송 콘텐츠 속 <strong>자연스러운 브랜드 노출</strong>로 대중의 신뢰와 관심을 확보하는 프리미엄 광고 전략입니다.<br /><br />단순한 노출을 넘어 스토리텔링과 결합하여 브랜드 인지도를 높이고 시청자의 마음속에 깊이 각인됩니다.</p>
-                <div class="svc-panel-tags">
-                  <p class="svc-ptag-label">SERVICE KEYWORDS</p>
-                  <div class="svc-ptag-grid">
-                    <span class="svc-ptag">📡 방송사 협찬</span>
-                    <span class="svc-ptag">🎬 에피소드 기획</span>
-                    <span class="svc-ptag">👁 자연스러운 노출</span>
-                    <span class="svc-ptag">🎯 브랜드 신뢰도</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>{/* /svc-visual */}
-        </div>{/* /svc-interactive */}
-
-      <script dangerouslySetInnerHTML={{ __html: `
+    {/* 마퀴를 '함께한 브랜드' 로고 흐름으로 교체 (로드 실패 시 서비스 키워드 유지) */}
+    <script dangerouslySetInnerHTML={{__html: `
 (function(){
-  function initHomeTab() {
-    var list = document.getElementById('homeSvcList');
-    if (!list) return;
-    var items = list.querySelectorAll('.svc-list-item');
-    var visual = list.closest('.svc-interactive').querySelector('.svc-visual');
-    if (!visual) return;
-    var panels = visual.querySelectorAll('.svc-panel');
-    var currentIdx = -1;
-    var hint = document.getElementById('svcClickHint');
-
-    /* 초기화: 모든 패널 숨김 */
-    panels.forEach(function(p) { p.style.display = 'none'; p.classList.remove('active'); });
-
-    function activate(idx) {
-      /* 첫 클릭 시 힌트 숨김 */
-      if (hint) {
-        hint.classList.add('svc-hint--hidden');
-      }
-      /* 같은 항목 다시 클릭하면 닫기 */
-      if (currentIdx === idx) {
-        panels[idx].style.display = 'none';
-        panels[idx].classList.remove('active');
-        items[idx].classList.remove('active');
-        var gotoBtn = items[idx].querySelector('.svc-goto-btn');
-        if (gotoBtn) gotoBtn.style.display = 'none';
-        currentIdx = -1;
-        return;
-      }
-      currentIdx = idx;
-      /* 전체 리셋 */
-      items.forEach(function(el) {
-        el.classList.remove('active');
-        var btn = el.querySelector('.svc-goto-btn');
-        if (btn) btn.style.display = 'none';
+  fetch('/api/admin/public/about')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var keys = (data.logos || []).filter(function(k){ return k.indexOf('logo_') === 0; }).slice(0, 24);
+      if (!keys.length) return;
+      return Promise.all(keys.map(function(key){
+        return fetch('/api/admin/logo/' + encodeURIComponent(key))
+          .then(function(r){ return r.json(); })
+          .then(function(res){ return res.dataUrl || null; })
+          .catch(function(){ return null; });
+      })).then(function(urls){
+        var valid = urls.filter(Boolean);
+        if (valid.length < 6) return;   // 너무 적으면 기존 키워드 유지
+        var track = document.querySelector('.marquee-track--fwd');
+        if (!track) return;
+        var html = '';
+        // 무한 루프용 2세트
+        for (var s = 0; s < 2; s++) {
+          valid.forEach(function(src){
+            html += '<span class="marquee-item marquee-item--logo"><img src="' + src + '" alt="파트너 브랜드" class="marquee-logo-img" decoding="async"></span>';
+          });
+        }
+        track.innerHTML = html;
       });
-      panels.forEach(function(p) { p.style.display = 'none'; p.classList.remove('active'); });
-      /* 선택 활성화 */
-      items[idx].classList.add('active');
-      var gotoBtn = items[idx].querySelector('.svc-goto-btn');
-      if (gotoBtn) {
-        gotoBtn.style.display = 'inline-flex';
-        /* 깜빡임 강조 — 클래스를 재실행하려면 먼저 제거 후 추가 */
-        gotoBtn.classList.remove('blink');
-        void gotoBtn.offsetWidth; /* reflow 강제 */
-        gotoBtn.classList.add('blink');
-      }
-      if (panels[idx]) {
-        panels[idx].style.display = 'flex';
-        requestAnimationFrame(function(){ panels[idx].classList.add('active'); });
-      }
-    }
+    })
+    .catch(function(){});
+})();
+    `}} />
 
-    items.forEach(function(item, i) {
-      var btn = item.querySelector('.svc-list-btn');
-      if (btn) {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          activate(i);
-        });
-      }
+    {/* ══ 라이트 테마 콘텐츠 래퍼 (히어로/마퀴 제외) ══ */}
+    <div class="svc-light">
+
+    {/* ============ ① 해결 제시 — 답 (라이트) ============ */}
+    <section class="section home-answer" id="homeAnswer">
+      <div class="container">
+        <div class="ans-editorial">
+          <p class="ans-answer">고민의 답은, 이겁니다.</p>
+
+          <p class="ans-punch">단순한 광고 상품 판매가 아니라,<br /><em class="ans-hl">마케팅의 본질<svg class="ans-scribble" viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M 200 14 C 150 6, 80 8, 45 22 C 8 36, 6 66, 42 82 C 95 100, 210 100, 262 82 C 300 68, 298 34, 258 20 C 225 12, 170 12, 148 18" fill="none" stroke="var(--blue)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg></em>부터 파악하고 접근하는 것.</p>
+
+          <p class="ans-bridge">인애드는 최소한, 아래 3가지 규칙을 우선시합니다.</p>
+
+          <span class="ans-down" aria-hidden="true"></span>
+        </div>
+      </div>
+      {/* 스크롤 진입 시 스태거 등장 + 마커 채움 + 연결선 (is-in 토글) */}
+      <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  var sec = document.getElementById('homeAnswer');
+  if (!sec) return;
+  if (!('IntersectionObserver' in window)) { sec.classList.add('is-in'); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (e.isIntersecting){ sec.classList.add('is-in'); io.disconnect(); }
     });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHomeTab);
-  } else {
-    initHomeTab();
-  }
+  }, { threshold: 0.4 });
+  io.observe(sec);
 })();
       `}} />
-
-      </div>
     </section>
 
-    {/* ============ STATS ============ */}
-    <section class="stats-section" id="homeStats">
+    {/* ============ ①-b WHY IN AD — 차별점 (중앙 헤딩 + 좌우 교차 로우) ============ */}
+    <section class="section home-why" id="homeWhy">
       <div class="container">
-        <div class="stats-grid">
-          <div class="stat-block">
-            <div class="stat-num-wrap"><span class="stat-num-big" data-count="320">0</span><span class="stat-unit-big">+</span></div>
-            <div class="stat-desc">완료 프로젝트</div>
-          </div>
-          <div class="stat-divider-v"></div>
-          <div class="stat-block">
-            <div class="stat-num-wrap"><span class="stat-num-big" data-count="98">0</span><span class="stat-unit-big">%</span></div>
-            <div class="stat-desc">클라이언트 재계약률</div>
-          </div>
-          <div class="stat-divider-v"></div>
-          <div class="stat-block">
-            <div class="stat-num-wrap"><span class="stat-num-big" data-count="6">0</span><span class="stat-unit-big">년+</span></div>
-            <div class="stat-desc">업계 경험 (2019~)</div>
-          </div>
-          <div class="stat-divider-v"></div>
-          <div class="stat-block">
-            <div class="stat-num-wrap"><span class="stat-num-big" data-count="50">0</span><span class="stat-unit-big">+</span></div>
-            <div class="stat-desc">파트너 브랜드</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* ============ HISTORY ============ */}
-    <section class="section history-section" id="history">
-      <div class="container">
-
-        {/* 헤더 */}
-        <div class="hist-head">
-          <div>
-            <span class="sec-label" id="editorHistoryLabel">Company Growth</span>
-            <h2 class="sec-title hist-title"><span id="editorHistoryTitleLead">IN AD </span><em id="editorHistoryTitleAccent">HISTORY</em></h2>
-            <p class="hist-subtitle" id="editorHistorySub">2019 — 2026 Continuous Growth</p>
-          </div>
-        </div>
-
-        {/* SVG 성장 곡선 + 노드 컨테이너 */}
-        <div class="hist-track-wrap" id="histTrackWrap">
-
-          {/* 배경 SVG 곡선 */}
-          <svg class="hist-curve-svg" viewBox="0 0 1200 260" preserveAspectRatio="none" aria-hidden="true">
-            {/* 글로우 선 */}
-            <path class="hist-curve-glow"
-              d="M 0,220 C 100,210 180,200 250,185 C 330,168 390,148 470,128 C 550,108 610,92 690,75 C 770,58 840,44 920,32 C 980,22 1050,16 1200,12"
-              fill="none" />
-            {/* 메인 선 */}
-            <path class="hist-curve-line"
-              d="M 0,220 C 100,210 180,200 250,185 C 330,168 390,148 470,128 C 550,108 610,92 690,75 C 770,58 840,44 920,32 C 980,22 1050,16 1200,12"
-              fill="none" />
-          </svg>
-
-          {/* 노드 8개 — 각 연도 */}
+        <div class="why-rows">
           {[
             {
-              year: '2019', label: '설립 및 런칭', pos: 12,
-              items: ['인아드컴퍼니 설립', '카페침투 마케팅 런칭'],
-              now: false
+              title: '쌓인 데이터가, 다음 성과를 만듭니다',
+              desc: '수많은 캠페인 데이터가 시스템에 축적됩니다. 매번 감으로 다시 시작하지 않고, 검증된 방식을 골라 노출이 아닌 매출로 이어지는 성과를 냅니다.',
+              media: (
+                <img src="/static/images/why-01.png?v=1" alt="" class="why-media-img" loading="lazy" />
+              )
             },
             {
-              year: '2020', label: '서비스 확장', pos: 24,
-              items: ['확장 이전', 'SNS 채널 런칭', '커뮤니티 바이럴 런칭'],
-              now: false
+              title: '필요할 때, 늘 곁에',
+              desc: '6시에 닫고 사라지는 대행사가 아닌, 자정까지 필요한 순간에 곁에 있습니다.',
+              hours: '09:00 – 24:00',
+              media: (
+                <img src="/static/images/why-02.png?v=1" alt="" class="why-media-img" loading="lazy" />
+              )
             },
             {
-              year: '2021', label: '브랜드 재정립', pos: 36,
-              items: ['"인애드컴퍼니" 사명 변경'],
-              now: false
+              title: '모든 브랜드를 시스템화',
+              desc: '담당자가 자주 바뀌고 실무가 인수인계되지 않으면서, 했던 말을 또 하고 또 해야 했던 적 있으신가요? 인애드컴퍼니는 모든 브랜드를 시스템에 넣어 과거부터 현재까지를 연결하고, 모든 업무가 끊기지 않고 이어지게 합니다.',
+              media: (
+                <img src="/static/images/why-03.png?v=1" alt="" class="why-media-img" loading="lazy" />
+              )
             },
-            {
-              year: '2022', label: '법인 전환 & 도약', pos: 48,
-              items: ['주식회사 전환', '유튜브 마케팅 런칭', '2차 가공 콘텐츠 런칭'],
-              now: false
-            },
-            {
-              year: '2023', label: '조직 전문화', pos: 60,
-              items: ['확장 이전', '유튜브 에이전시 팀'],
-              now: false
-            },
-            {
-              year: '2024', label: '시스템 고도화', pos: 72,
-              items: ['퍼스널 마케팅 구축', '브랜딩 TF팀 구축', '유튜브 릴리즈 개발'],
-              now: false
-            },
-            {
-              year: '2025', label: '업무 시스템 자동화', pos: 84,
-              items: ['사내 인트라넷 구축', '카피하우스 자동화 개발'],
-              now: false
-            },
-            {
-              year: '2026', label: '글로벌 & 퍼포먼스', pos: 96,
-              items: ['콘텐츠 마케팅 정립', '글로벌 마케팅 런칭', '퍼포먼스 마케팅 런칭'],
-              now: true
-            }
-          ].map((node) => (
-            <div
-              class={`hn-node${node.now ? ' hn-node--future' : ''}`}
-              style={`left:${node.pos}%`}
-              data-year={node.year}
-            >
-              {/* 동그라미 */}
-              <div class="hn-circle">
-                <span class="hn-circle-inner"></span>
-                <span class="hn-pulse"></span>
+          ].map((f, i) => (
+            <div class="why-row">
+              <div class="why-media why-media--photo">{f.media}</div>
+              <div class="why-body">
+                <span class="why-index">{`0${i + 1}`}</span>
+                <h3 class="why-title">{f.title}</h3>
+                <p class="why-desc">{f.desc}</p>
+                {f.hours && (
+                  <div class="why-hours">
+                    <span class="why-hours-badge">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      응대 가능 {f.hours}
+                    </span>
+                  </div>
+                )}
               </div>
-
-              {/* 툴팁 카드 */}
-              <div class="hn-card">
-                <div class="hn-card-year">{node.year}{node.now && <span class="hn-future-badge">예정</span>}</div>
-                <div class="hn-card-title">{node.label}</div>
-                <ul class="hn-card-list">
-                  {node.items.map(item => <li>{item}</li>)}
-                </ul>
-              </div>
-
-              {/* 연도 라벨 (평소에 보임) */}
-              <span class="hn-year-label">{node.year}</span>
             </div>
           ))}
-
-        </div>{/* /hist-track-wrap */}
+        </div>
+        {/* 각 블록: 스크롤로 도착할 때 하나씩 떠오르며 등장 */}
+        <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  var rows = [].slice.call(document.querySelectorAll('#homeWhy .why-row'));
+  if (!rows.length) return;
+  if (!('IntersectionObserver' in window)) { rows.forEach(function(r){ r.classList.add('is-in'); }); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -30% 0px' });
+  rows.forEach(function(r){ io.observe(r); });
+})();
+        `}} />
+        <div class="why-cta-wrap">
+          <a href="/contact" class="why-cta">
+            <span>경험해보기</span>
+            <svg class="why-cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
+        </div>
       </div>
     </section>
 
-    {/* ============ TESTIMONIALS — 두 줄 무한 슬라이드 ============ */}
-    <section class="testimonials-section" id="homeTestimonials">
+    {/* ============ ② 서비스 간략 (WHAT WE DO 간소화) ============ */}
+    <section class="section hsvc-section" id="services">
       <div class="container">
-        <div class="section-head testi-head">
-          <span class="sec-label" id="editorTestimonialsLabel">Client Voice</span>
-          <h2 class="sec-title"><span id="editorTestimonialsTitleLead">광고주가</span><br /><em id="editorTestimonialsTitleAccent">직접 전하는 리얼 후기</em></h2>
+        <div class="section-head hsvc-head">
+          <h2 class="sec-title"><em>마케팅</em>, 파는 게 전부일까요?</h2>
+          <p class="sec-sub">스스로 말하게 하고 · 검색하게 하고 · 다시 찾게 하는,<br />브랜드가 <em class="hsvc-wave">회자되는 구조<svg class="hsvc-wave-line" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 9 Q 20 2, 38 9 T 74 9 T 110 9 T 146 9 T 182 9 T 218 9 T 254 9 T 290 9" fill="none" stroke="var(--blue)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg></em>를 인애드가 설계합니다.</p>
+        </div>
+        {/* 물결 밑줄: 헤더 진입 시 그려짐 */}
+        <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  var head = document.querySelector('.hsvc-head');
+  if (!head) return;
+  if (!('IntersectionObserver' in window)) { head.classList.add('is-in'); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting){ head.classList.add('is-in'); io.disconnect(); } });
+  }, { threshold: 0.6 });
+  io.observe(head);
+})();
+        `}} />
+
+        {/* 왼쪽 큰 SERVICE 라벨 */}
+        <div class="hsvc-eyebrow"><span>SERVICE</span></div>
+
+        {/* 텍스트 탭 — 서비스 선택 */}
+        <div class="hsvc-tabs" id="hsvcTabs" role="tablist">
+          {HSVC.map((c, i) => (
+            <button
+              type="button"
+              class={`hsvc-tab${i === 0 ? ' active' : ''}`}
+              role="tab"
+              data-en={c.en}
+              data-ko={c.ko}
+              data-desc={c.desc}
+              data-href={c.href}
+              data-img={`/static/svc-images/${c.key}.png`}
+              data-image-size={c.key === 'performance' ? '90% auto' : 'contain'}
+            >{c.ko}</button>
+          ))}
+        </div>
+
+        {/* 선택된 서비스 설명 패널 */}
+        <div class="hsvc-panel" id="hsvcPanel">
+          <div class="hsvc-panel-slide" id="hsvcPanelSlide">
+            <div class="hsvc-panel-text">
+              <span class="hsvc-panel-en" id="hsvcPanelEn">{HSVC[0].en}</span>
+              <h3 class="hsvc-panel-name" id="hsvcPanelName">{HSVC[0].ko}</h3>
+              <p class="hsvc-panel-desc" id="hsvcPanelDesc">{HSVC[0].desc}</p>
+              <a class="hsvc-panel-link" id="hsvcPanelLink" href={HSVC[0].href}>자세히 보기 →</a>
+            </div>
+            <div class="hsvc-panel-img" id="hsvcPanelImg" style={`background-image:url('/static/svc-images/${HSVC[0].key}.png')`}></div>
+          </div>
+        </div>
+
+        <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  var tabs = [].slice.call(document.querySelectorAll('#hsvcTabs .hsvc-tab'));
+  var slide = document.getElementById('hsvcPanelSlide');
+  if (!tabs.length || !slide) return;
+  var en = document.getElementById('hsvcPanelEn');
+  var name = document.getElementById('hsvcPanelName');
+  var desc = document.getElementById('hsvcPanelDesc');
+  var link = document.getElementById('hsvcPanelLink');
+  var img = document.getElementById('hsvcPanelImg');
+  var curIdx = 0, animating = false;
+  function swap(tab){
+    en.textContent = tab.getAttribute('data-en');
+    name.textContent = tab.getAttribute('data-ko');
+    desc.textContent = tab.getAttribute('data-desc');
+    link.href = tab.getAttribute('data-href');
+    img.style.backgroundImage = "url('" + tab.getAttribute('data-img') + "')";
+    img.style.backgroundSize = tab.getAttribute('data-image-size');
+  }
+  tabs.forEach(function(tab, i){
+    tab.addEventListener('click', function(){
+      if (animating || i === curIdx) return;
+      animating = true;
+      var forward = i > curIdx;            // 오른쪽 탭 = 앞으로
+      curIdx = i;
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      tab.classList.add('active');
+      // 나가기: 앞으로면 왼쪽으로, 뒤로면 오른쪽으로 밀려남
+      slide.style.transition = 'transform .26s ease, opacity .26s ease';
+      slide.style.transform = 'translateX(' + (forward ? '-42px' : '42px') + ')';
+      slide.style.opacity = '0';
+      setTimeout(function(){
+        swap(tab);
+        // 들어오기: 반대편에서 시작해 제자리로
+        slide.style.transition = 'none';
+        slide.style.transform = 'translateX(' + (forward ? '42px' : '-42px') + ')';
+        void slide.offsetWidth;            // reflow
+        slide.style.transition = 'transform .4s cubic-bezier(.16,1,.3,1), opacity .38s ease';
+        slide.style.transform = 'translateX(0)';
+        slide.style.opacity = '1';
+        setTimeout(function(){ animating = false; }, 400);
+      }, 260);
+    });
+  });
+})();
+        `}} />
+      </div>
+    </section>
+
+    {/* ============ ③ 레퍼런스 — 대표 캠페인 ============ */}
+    <section class="section home-refs-section" id="homeRefs">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="sec-title">Portfolio</h2>
+          <p class="sec-sub">다양한 브랜드들과 함께 성공하고 있습니다</p>
         </div>
       </div>
 
-      {/* ── 1행: 왼쪽으로 흐름 ── */}
-      <div class="testi-row-wrap">
-        <div class="testi-row testi-row--ltr">
-          {/* Row 1 원본 */}
-          <blockquote class="testi-card">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Viral Marketing</span>
-            </div>
-            <p class="testi-body">단순히 예쁜 디자인이 아니라 실제 매출로 이어지는 마케팅을 처음 경험했습니다. 캠페인 후 첫 달 매출이 3배 뛰었어요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">김</div>
-              <div class="testi-info"><strong>김○○ 대표</strong><span>라이프스타일 브랜드</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Influencer Marketing</span>
-            </div>
-            <p class="testi-body">바이럴 마케팅이 이렇게 정교하게 설계될 수 있다는 걸 몰랐습니다. 우연처럼 보이지만 모두 전략이었더라고요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">이</div>
-              <div class="testi-info"><strong>이○○ CMO</strong><span>테크 스타트업</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Data Insight</span>
-            </div>
-            <p class="testi-body">인사이트 리포트를 받고 마케팅 방향이 완전히 바뀌었습니다. 데이터를 이렇게 해석해주는 파트너는 처음이에요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">박</div>
-              <div class="testi-info"><strong>박○○ 마케팅팀장</strong><span>유통 기업</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Olive Young Marketing</span>
-            </div>
-            <p class="testi-body">올리브영 입점 후 첫 달부터 리뷰가 쌓이기 시작했고, 3개월 만에 채널 매출이 2.4배 성장했습니다.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">최</div>
-              <div class="testi-info"><strong>최○○ 대표</strong><span>K-뷰티 브랜드</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">YouTube Marketing</span>
-            </div>
-            <p class="testi-body">유튜브 영상 하나로 브랜드 검색량이 1,200% 폭발했습니다. 인애드 없이는 불가능했을 결과예요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">정</div>
-              <div class="testi-info"><strong>정○○ 마케터</strong><span>뷰티 스타트업</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">SEO Marketing</span>
-            </div>
-            <p class="testi-body">SEO 작업 후 주요 키워드 TOP3 진입. 광고비 없이도 매달 유기적 유입이 꾸준히 늘고 있습니다.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">강</div>
-              <div class="testi-info"><strong>강○○ 이사</strong><span>IT 서비스</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Seeding Campaign</span>
-            </div>
-            <p class="testi-body">시딩 캠페인으로 진짜 소비자 후기를 확보했고, 전환율이 68% 향상됐습니다. 퀄리티가 달랐어요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">윤</div>
-              <div class="testi-info"><strong>윤○○ 팀장</strong><span>생활용품 브랜드</span></div>
-            </footer>
-          </blockquote>
-          {/* Row 1 복제 (무한루프) */}
-          <blockquote class="testi-card" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Viral Marketing</span>
-            </div>
-            <p class="testi-body">단순히 예쁜 디자인이 아니라 실제 매출로 이어지는 마케팅을 처음 경험했습니다. 캠페인 후 첫 달 매출이 3배 뛰었어요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">김</div>
-              <div class="testi-info"><strong>김○○ 대표</strong><span>라이프스타일 브랜드</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Influencer Marketing</span>
-            </div>
-            <p class="testi-body">바이럴 마케팅이 이렇게 정교하게 설계될 수 있다는 걸 몰랐습니다. 우연처럼 보이지만 모두 전략이었더라고요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">이</div>
-              <div class="testi-info"><strong>이○○ CMO</strong><span>테크 스타트업</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Data Insight</span>
-            </div>
-            <p class="testi-body">인사이트 리포트를 받고 마케팅 방향이 완전히 바뀌었습니다. 데이터를 이렇게 해석해주는 파트너는 처음이에요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">박</div>
-              <div class="testi-info"><strong>박○○ 마케팅팀장</strong><span>유통 기업</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Olive Young Marketing</span>
-            </div>
-            <p class="testi-body">올리브영 입점 후 첫 달부터 리뷰가 쌓이기 시작했고, 3개월 만에 채널 매출이 2.4배 성장했습니다.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">최</div>
-              <div class="testi-info"><strong>최○○ 대표</strong><span>K-뷰티 브랜드</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">YouTube Marketing</span>
-            </div>
-            <p class="testi-body">유튜브 영상 하나로 브랜드 검색량이 1,200% 폭발했습니다. 인애드 없이는 불가능했을 결과예요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">정</div>
-              <div class="testi-info"><strong>정○○ 마케터</strong><span>뷰티 스타트업</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">SEO Marketing</span>
-            </div>
-            <p class="testi-body">SEO 작업 후 주요 키워드 TOP3 진입. 광고비 없이도 매달 유기적 유입이 꾸준히 늘고 있습니다.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">강</div>
-              <div class="testi-info"><strong>강○○ 이사</strong><span>IT 서비스</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Seeding Campaign</span>
-            </div>
-            <p class="testi-body">시딩 캠페인으로 진짜 소비자 후기를 확보했고, 전환율이 68% 향상됐습니다. 퀄리티가 달랐어요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">윤</div>
-              <div class="testi-info"><strong>윤○○ 팀장</strong><span>생활용품 브랜드</span></div>
-            </footer>
-          </blockquote>
-        </div>
+      {/* 한 줄 좌측 흐름 — 컨테이너 밖 풀폭 */}
+      <div class="refs-flow" id="refsFlow">
+        <div class="refs-flow-track" id="refsFlowTrack"></div>
       </div>
 
-      {/* ── 2행: 오른쪽으로 흐름 (반대 방향) ── */}
-      <div class="testi-row-wrap">
-        <div class="testi-row testi-row--rtl">
-          {/* Row 2 원본 — 퍼포먼스 마케팅 제거됨 */}
-          <blockquote class="testi-card testi-card--alt">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Brand Strategy</span>
+      <div class="container">
+        <div class="home-refs-more">
+          <a href="/works" class="why-cta">
+            <span>포트폴리오 전체 보기</span>
+            <svg class="why-cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  function esc(value){
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  /*
+   * 업로드된 로고 파일의 캔버스 여백은 브랜드마다 제각각이다.
+   * 네 모서리의 배경색과 다른 실제 로고 픽셀만 찾아 잘라낸 뒤 표시하면
+   * 이미지 파일의 중심이 아니라 '보이는 로고'의 중심이 카드 중앙에 온다.
+   */
+  window.fitPortfolioLogo = function(img){
+    if (!img || img.dataset.logoFitted) return;
+    img.dataset.logoFitted = '1';
+    try {
+      var nw = img.naturalWidth, nh = img.naturalHeight;
+      if (!nw || !nh) return;
+      var maxSide = 600;
+      var scale = Math.min(1, maxSide / Math.max(nw, nh));
+      var w = Math.max(1, Math.round(nw * scale));
+      var h = Math.max(1, Math.round(nh * scale));
+      var scan = document.createElement('canvas');
+      scan.width = w; scan.height = h;
+      var ctx = scan.getContext('2d', { willReadFrequently: true });
+      if (!ctx) return;
+      ctx.drawImage(img, 0, 0, w, h);
+      var pixels = ctx.getImageData(0, 0, w, h).data;
+      var corners = [[0,0],[w-1,0],[0,h-1],[w-1,h-1]];
+      var br = 0, bg = 0, bb = 0;
+      corners.forEach(function(p){
+        var i = (p[1] * w + p[0]) * 4;
+        br += pixels[i]; bg += pixels[i+1]; bb += pixels[i+2];
+      });
+      br /= 4; bg /= 4; bb /= 4;
+      var minX = w, minY = h, maxX = -1, maxY = -1;
+      for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) {
+        var i = (y * w + x) * 4;
+        var alpha = pixels[i+3];
+        var distance = Math.abs(pixels[i]-br) + Math.abs(pixels[i+1]-bg) + Math.abs(pixels[i+2]-bb);
+        if (alpha > 24 && distance > 48) {
+          if (x < minX) minX = x; if (x > maxX) maxX = x;
+          if (y < minY) minY = y; if (y > maxY) maxY = y;
+        }
+      }
+      if (maxX < minX || maxY < minY) return;
+      var pad = Math.max(4, Math.round(Math.max(maxX-minX, maxY-minY) * 0.06));
+      minX = Math.max(0, minX-pad); minY = Math.max(0, minY-pad);
+      maxX = Math.min(w-1, maxX+pad); maxY = Math.min(h-1, maxY+pad);
+      var cropW = maxX-minX+1, cropH = maxY-minY+1;
+      var out = document.createElement('canvas');
+      out.width = cropW; out.height = cropH;
+      var outCtx = out.getContext('2d');
+      if (!outCtx) return;
+      outCtx.drawImage(scan, minX, minY, cropW, cropH, 0, 0, cropW, cropH);
+      /* 누끼: 배경색(모서리색)과 가까운 픽셀만 투명 처리 — 로고 원색 그대로 유지 */
+      var od = outCtx.getImageData(0, 0, cropW, cropH);
+      var op = od.data;
+      for (var k = 0; k < op.length; k += 4) {
+        var dd = Math.abs(op[k]-br) + Math.abs(op[k+1]-bg) + Math.abs(op[k+2]-bb);
+        var a = (dd - 40) / 70;
+        if (a < 0) a = 0; if (a > 1) a = 1;
+        op[k+3] = Math.round(op[k+3] * a);
+      }
+      outCtx.putImageData(od, 0, 0);
+      /* 규격 정규화: 600x300 캔버스에 면적 기준으로 스케일 — 로고마다 제각각인 비율 통일 */
+      var NW = 600, NH = 300;
+      var s = 262 / Math.sqrt(cropW * cropH);
+      if (s * cropW > NW * 0.94) s = NW * 0.94 / cropW;
+      if (s * cropH > NH * 0.82) s = NH * 0.82 / cropH;
+      var norm = document.createElement('canvas');
+      norm.width = NW; norm.height = NH;
+      var nctx = norm.getContext('2d');
+      if (!nctx) { img.src = out.toDataURL('image/png'); return; }
+      nctx.imageSmoothingQuality = 'high';
+      var dw = cropW * s, dh = cropH * s;
+      var dx = (NW - dw) / 2, dy = (NH - dh) / 2;
+      /* 가독성: 로고 실루엣을 흰색으로 만들어 12방향으로 찍어 화이트 아웃라인 형성 */
+      var sil = document.createElement('canvas');
+      sil.width = NW; sil.height = NH;
+      var sctx = sil.getContext('2d');
+      if (sctx) {
+        sctx.drawImage(out, dx, dy, dw, dh);
+        sctx.globalCompositeOperation = 'source-in';
+        sctx.fillStyle = '#fff';
+        sctx.fillRect(0, 0, NW, NH);
+        var R = 6;
+        for (var q = 0; q < 12; q++) {
+          nctx.drawImage(sil, Math.cos(q * Math.PI / 6) * R, Math.sin(q * Math.PI / 6) * R);
+        }
+      }
+      nctx.drawImage(out, dx, dy, dw, dh);
+      img.src = norm.toDataURL('image/png');
+    } catch(e) {
+      /* CORS 등으로 픽셀을 읽을 수 없는 외부 이미지는 기존 contain 정렬 유지 */
+    }
+  };
+  fetch('/api/admin/public/works')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      /* 대표이미지(cover) 있는 브랜드만 회전 — 플레이스홀더 카드 제거 */
+      var eligible = (data.items || []).filter(function(it){ return it.cover && it.thumb; });
+      var featured = eligible.filter(function(it){
+        var rank = Number(it.featuredRank);
+        return rank >= 1 && rank <= 8;
+      }).sort(function(a,b){ return Number(a.featuredRank) - Number(b.featuredRank); });
+      var items = (featured.length ? featured : eligible.slice(0, 8)).slice(0, 8);
+      var track = document.getElementById('refsFlowTrack');
+      if (!track || !items.length) return;
+      function cardHtml(item){
+        // 기본 이미지 = 프로젝트 대표이미지(cover). 아직 없으면 브랜드명 플레이스홀더.
+        // 호버 = 흰 배경 + 브랜드 로고(thumb).
+        var imgArea = item.cover
+          ? '<div class="refs-card-img">'
+            +'<img class="refs-card-cover" src="'+esc(item.cover)+'" alt="'+esc(item.brand)+' 캠페인 이미지" loading="lazy" decoding="async">'
+          : '<div class="refs-card-img refs-card-img--ph"><span class="refs-card-ph">'+esc(item.brand)+'</span>';
+        return '<article class="refs-flow-card">'
+          + imgArea
+          +'<div class="refs-card-hover"><img src="'+esc(item.thumb)+'" alt="'+esc(item.brand)+'" crossorigin="anonymous" loading="lazy" decoding="async" onload="fitPortfolioLogo(this)" onerror="if(this.crossOrigin!=null){this.crossOrigin=null;var s=this.src;this.src=s;}"></div>'
+          +'</div>'
+          +'<div class="wg-meta">'
+          +'<span class="wg-brand">'+esc(item.brand)+'</span>'
+          +'<p class="wg-tags-text">'+esc(item.services)+'</p>'
+          +'</div></article>';
+      }
+      var html = '';
+      // 선택 항목이 적어도 흐름이 끊기지 않도록 최소 4장으로 반복한 뒤 2세트 구성
+      var flowItems = items.slice();
+      while (flowItems.length < 4) flowItems = flowItems.concat(items);
+      flowItems = flowItems.slice(0, Math.max(4, items.length));
+      for (var s = 0; s < 2; s++) flowItems.forEach(function(item){ html += cardHtml(item); });
+      track.innerHTML = html;
+      track.style.setProperty('--dur', (flowItems.length * 6) + 's');
+    })
+    .catch(function(error){
+      console.error('홈 포트폴리오를 불러오지 못했습니다.', error);
+    });
+})();
+      `}} />
+    </section>
+
+    {/* ============ ④ 수치 — 신뢰 지표 ============ */}
+    <section class="stats-section" id="homeStats">
+      <div class="container">
+
+        {/* 섹션 헤드 */}
+        <div class="stats-head">
+          <h2 class="stats-title">매년 더 많은 브랜드와 함께,<br />누적 성과를 쌓아가고 있습니다</h2>
+        </div>
+
+        {/* 누적 캠페인 성장 — 대표 수치 + 우상향 막대그래프 + 콜아웃 배지 (흰 카드) */}
+        <div class="stats-growth">
+          <div class="sg-headline">
+            <span class="sg-eyebrow">누적 완료 캠페인</span>
+            <div class="sg-num-wrap">
+              <span class="stat-num-big sg-num" data-count="37000">0</span>
+              <span class="stat-unit-big sg-unit">+</span>
             </div>
-            <p class="testi-body">브랜드 포지셔닝 전략을 새로 수립하고 나서 경쟁사 대비 인지도가 확연히 달라졌습니다. 전략적 사고가 다릅니다.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">오</div>
-              <div class="testi-info"><strong>오○○ 브랜드팀장</strong><span>패션 기업</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card testi-card--alt">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Community Viral</span>
+            <div class="sg-mini">
+              <div class="sg-mini-item"><span class="sg-mini-num">98<i>%</i></span><span class="sg-mini-label">재계약률</span></div>
+              <span class="sg-mini-div"></span>
+              <div class="sg-mini-item"><span class="sg-mini-num">7<i>년+</i></span><span class="sg-mini-label">업계 경험</span></div>
+              <span class="sg-mini-div"></span>
+              <div class="sg-mini-item"><span class="sg-mini-num">50<i>+</i></span><span class="sg-mini-label">파트너 브랜드</span></div>
             </div>
-            <p class="testi-body">맘카페 바이럴 이후 자연 구전이 폭발적으로 늘었습니다. 진짜 후기가 광고보다 훨씬 강력하다는 걸 체감했어요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">서</div>
-              <div class="testi-info"><strong>서○○ 마케터</strong><span>육아용품 브랜드</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card testi-card--alt">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">PPL Campaign</span>
+          </div>
+          <div class="sg-chart" aria-hidden="true">
+            <div class="sg-callout">
+              <span class="sg-callout-num"><span class="sg-callout-ico">▲</span> 2,400<i>%</i></span>
+              <span class="sg-callout-txt">7년 누적 성장</span>
             </div>
-            <p class="testi-body">PPL 콘텐츠가 자연스럽게 녹아들어 거부감이 없었습니다. 노출 대비 전환율이 기존 광고의 3배였어요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">문</div>
-              <div class="testi-info"><strong>문○○ 콘텐츠팀장</strong><span>F&amp;B 브랜드</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card testi-card--alt">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Review Marketing</span>
-            </div>
-            <p class="testi-body">리뷰 마케팅으로 신뢰도가 급격히 올라갔습니다. 소비자들이 먼저 브랜드를 찾기 시작했어요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">임</div>
-              <div class="testi-info"><strong>임○○ 대표</strong><span>헬스케어 브랜드</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card testi-card--alt">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">IMC Strategy</span>
-            </div>
-            <p class="testi-body">통합 마케팅 커뮤니케이션으로 모든 채널이 일관된 메시지를 전달했습니다. 브랜드 신뢰도가 눈에 띄게 올라갔어요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">조</div>
-              <div class="testi-info"><strong>조○○ CMO</strong><span>대형 유통사</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card testi-card--alt">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Viral Content</span>
-            </div>
-            <p class="testi-body">콘텐츠 하나가 일주일 만에 2,800만 뷰를 달성했습니다. 기획부터 실행까지 완벽한 파트너입니다.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">류</div>
-              <div class="testi-info"><strong>류○○ 대표</strong><span>뷰티 스타트업</span></div>
-            </footer>
-          </blockquote>
-          {/* Row 2 복제 — 퍼포먼스 마케팅 제거됨 */}
-          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Brand Strategy</span>
-            </div>
-            <p class="testi-body">브랜드 포지셔닝 전략을 새로 수립하고 나서 경쟁사 대비 인지도가 확연히 달라졌습니다. 전략적 사고가 다릅니다.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">오</div>
-              <div class="testi-info"><strong>오○○ 브랜드팀장</strong><span>패션 기업</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Community Viral</span>
-            </div>
-            <p class="testi-body">맘카페 바이럴 이후 자연 구전이 폭발적으로 늘었습니다. 진짜 후기가 광고보다 훨씬 강력하다는 걸 체감했어요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">서</div>
-              <div class="testi-info"><strong>서○○ 마케터</strong><span>육아용품 브랜드</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">PPL Campaign</span>
-            </div>
-            <p class="testi-body">PPL 콘텐츠가 자연스럽게 녹아들어 거부감이 없었습니다. 노출 대비 전환율이 기존 광고의 3배였어요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">문</div>
-              <div class="testi-info"><strong>문○○ 콘텐츠팀장</strong><span>F&amp;B 브랜드</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Review Marketing</span>
-            </div>
-            <p class="testi-body">리뷰 마케팅으로 신뢰도가 급격히 올라갔습니다. 소비자들이 먼저 브랜드를 찾기 시작했어요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">임</div>
-              <div class="testi-info"><strong>임○○ 대표</strong><span>헬스케어 브랜드</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">IMC Strategy</span>
-            </div>
-            <p class="testi-body">통합 마케팅 커뮤니케이션으로 모든 채널이 일관된 메시지를 전달했습니다. 브랜드 신뢰도가 눈에 띄게 올라갔어요.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">조</div>
-              <div class="testi-info"><strong>조○○ CMO</strong><span>대형 유통사</span></div>
-            </footer>
-          </blockquote>
-          <blockquote class="testi-card testi-card--alt" aria-hidden="true">
-            <div class="testi-card-top">
-              <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-              <span class="testi-tag">Viral Content</span>
-            </div>
-            <p class="testi-body">콘텐츠 하나가 일주일 만에 2,800만 뷰를 달성했습니다. 기획부터 실행까지 완벽한 파트너입니다.</p>
-            <footer class="testi-footer">
-              <div class="testi-avatar">류</div>
-              <div class="testi-info"><strong>류○○ 대표</strong><span>뷰티 스타트업</span></div>
-            </footer>
-          </blockquote>
+            {[
+              { y: '2019', h: 4 }, { y: '2020', h: 7 }, { y: '2021', h: 12 }, { y: '2022', h: 19 },
+              { y: '2023', h: 31 }, { y: '2024', h: 49 }, { y: '2025', h: 73 }, { y: '2026', h: 100 },
+            ].map((b, i, arr) => (
+              <div class="sg-col">
+                <div class={`sg-bar${i === arr.length - 1 ? ' sg-bar--active' : ''}`} style={`height:${b.h}%`}></div>
+                <span class="sg-year">{b.y}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    {/* ============ ⑤ 감성 영역 — 브랜드 신념 ============ */}
+    <section class="section home-emotion" id="homeEmotion">
+      <div class="container">
+        <h2 class="hemo-line">우리는 광고를 만드는 회사가 아니라<br /><em class="hemo-hl">팔리는 이유<svg class="hemo-underline" viewBox="0 0 320 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M6 12 C 74 4, 150 17, 212 10 C 262 4, 298 14, 314 9" fill="none" stroke="var(--blue)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg></em>를 만드는 회사입니다</h2>
+        <p class="hemo-sub">숫자 뒤에 있는 사람의 마음까지 설계할 때,<br class="hemo-br-m" /> 마케팅은 비용이 아니라 자산이 됩니다.</p>
+      </div>
+      {/* 밑줄 그려지기 (섹션 진입 시) */}
+      <script dangerouslySetInnerHTML={{__html: `
+(function(){
+  var sec = document.getElementById('homeEmotion');
+  if (!sec) return;
+  if (!('IntersectionObserver' in window)) { sec.classList.add('is-in'); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting){ sec.classList.add('is-in'); io.disconnect(); } });
+  }, { threshold: 0.55 });
+  io.observe(sec);
+})();
+      `}} />
+    </section>
+
+    {/* ============ ⑥ TESTIMONIALS — 한 줄 무한 흐름 ============ */}
+    <section class="testimonials-section">
+
+      {/* ── 한 줄 좌측 무한 흐름 ── */}
+      <div class="testi-flow">
+        <div class="testi-flow-track" style="--dur:75s">
+          {[...TESTI, ...TESTI].map((t, i) => <TCard t={t} dup={i >= TESTI.length} />)}
         </div>
       </div>
     </section>
 
-    {/* ============ HOME PAGE — 인터랙티브 JS (외부 파일로 분리, JSX < > 파싱 에러 방지) ============ */}
-    <script src="/static/home.js" />
-
-
-    {/* ============ CTA ============ */}
+    {/* ============ ⑦ 클로징 + 문의 CTA ============ */}
     <section class="home-cta" id="homeCta">
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-home.png')"></div>
       <div class="home-cta-bg">
         <div class="hcta-glow"></div>
         {/* 파티클 캔버스 */}
@@ -888,46 +720,25 @@ export const HomePage = () => (
       </div>
       <div class="container">
         <div class="home-cta-inner">
-          {/* 상단 뱃지 */}
-          <div class="hcta-badge" id="editorCtaBadge">
-            <span class="hcta-badge-dot"></span>
-            FREE CONSULTATION
-          </div>
           <h2 class="hcta-title">
-            <span class="hcta-line hcta-line--1" id="editorCtaTitleLead">지금 당신의 브랜드에</span>
-            <em class="hcta-line hcta-line--2" id="editorCtaTitleAccent">필요한 것은 무엇인가요?</em>
+            <span class="hcta-line hcta-line--1">지금 당신의 브랜드에</span>
+            <em class="hcta-line hcta-line--2 shiny-text">필요한 것은 무엇인가요?</em>
           </h2>
           <p class="hcta-desc">
-            인애드컴퍼니와 함께라면 시작이 달라집니다.<br />
-            <span class="hcta-desc-sub" id="editorCtaSub">검색 → 발견 → 신뢰 → 구매 → 재방문, 퍼널 전 단계를 책임집니다.</span>
+            어떤 채널부터 손대야 할지 모르겠다면, 그것부터 같이 정리합니다.<br />
+            <span class="hcta-desc-sub">검색 → 발견 → 신뢰 → 구매 → 재방문, 퍼널 전 단계를 함께 봅니다.</span>
           </p>
-          {/* KPI 수치 */}
-          <div class="hcta-kpi">
-            <div class="hcta-kpi-item">
-              <strong>320+</strong><span>완료 프로젝트</span>
-            </div>
-            <div class="hcta-kpi-divider"></div>
-            <div class="hcta-kpi-item">
-              <strong>98%</strong><span>재계약률</span>
-            </div>
-            <div class="hcta-kpi-divider"></div>
-            <div class="hcta-kpi-item">
-              <strong>6년+</strong><span>업계 경험</span>
-            </div>
-          </div>
           {/* 버튼 그룹 */}
           <div class="hcta-btns">
-            <a href="/contact" class="hero-cta-btn primary hcta-btn-main">
-              <span id="editorCtaButton">무료 상담 신청하기</span>
-              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <button type="button" class="hero-cta-btn ghost hcta-btn-call" onclick="openCallModal()">
-              <span>📞 바로 전화하기</span>
-            </button>
+            <a href="/contact" class="hero2-cta">문의하기</a>
           </div>
         </div>
       </div>
     </section>
-    <script src="/static/home-editor.js" />
+
+    {/* ============ HOME PAGE — 인터랙티브 JS (외부 파일로 분리, JSX < > 파싱 에러 방지) ============ */}
+    <script src="/static/home.js?v=20260715" />
+
+    </div>{/* /svc-light */}
   </>
 )

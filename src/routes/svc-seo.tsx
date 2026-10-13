@@ -1,28 +1,30 @@
+import { icon } from '../icons'
 export const SvcSeoPage = () => (
   <>
-    <section class="vh-hero">
+    <section class="vh-hero vh-hero--photo">
+      <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/seo-images/hero.png')"></div>
       <canvas id="vhCanvas4" class="vh-canvas"></canvas>
       <div class="vh-bg">
-        <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(234,179,8,0.22) 0%,transparent 70%)"></div>
-        <div class="vh-orb vh-orb--2" style="background:radial-gradient(circle,rgba(249,115,22,0.18) 0%,transparent 70%)"></div>
-        <div class="vh-orb vh-orb--3" style="background:radial-gradient(circle,rgba(26,107,255,0.18) 0%,transparent 70%)"></div>
+        <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(99,102,241,0.24) 0%,transparent 70%)"></div>
+        <div class="vh-orb vh-orb--2" style="background:radial-gradient(circle,rgba(34,211,238,0.18) 0%,transparent 70%)"></div>
+        <div class="vh-orb vh-orb--3" style="background:radial-gradient(circle,rgba(14,165,233,0.18) 0%,transparent 70%)"></div>
         <div class="vh-grid"></div>
         <div class="vh-noise"></div>
       </div>
       <div class="container vh-inner">
-        <a href="/marketing" class="svc-back-link vh-back">← Marketing 전체보기</a>
-        <div class="vh-badge" style="color:rgba(234,179,8,0.95);border-color:rgba(234,179,8,0.35);background:rgba(234,179,8,0.08)">
-          <span class="vh-badge-dot" style="background:rgba(234,179,8,1);box-shadow:0 0 8px rgba(234,179,8,0.9)"></span>
+        <a href="/#services" class="svc-back-link vh-back">← 서비스 전체보기</a>
+        <div class="vh-badge" style="color:rgba(99,102,241,0.95);border-color:rgba(99,102,241,0.35);background:rgba(99,102,241,0.08)">
+          <span class="vh-badge-dot" style="background:rgba(99,102,241,1);box-shadow:0 0 8px rgba(99,102,241,0.9)"></span>
           <span>SEO MARKETING</span>
         </div>
         <h1 class="vh-title">
           <span class="vh-tline" id="seL1">검색 결과의 가장 위,</span>
-          <span class="vh-tline" id="seL2" style="background:linear-gradient(135deg,#fff 20%,rgba(234,179,8,0.95) 55%,rgba(249,115,22,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">브랜드가 먼저 보여야 합니다.</span>
+          <span class="vh-tline" id="seL2" style="background:linear-gradient(135deg,#fff 20%,rgba(99,102,241,0.95) 55%,rgba(34,211,238,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"><span class="vh-hl">브랜드가 먼저</span> 보여야 합니다.</span>
         </h1>
         <div class="vh-sub-wrap" id="seSub">
           <p class="vh-sub">소비자는 구매 직전 반드시 검색합니다.</p>
-          <p class="vh-sub"><strong style="color:rgba(255,255,255,0.9)">네이버 플레이스, 자동완성, 유튜브, 인스타그램</strong> — 검색이 일어나는 모든 채널에서</p>
-          <p class="vh-sub" style="margin-top:8px"><span style="color:rgba(234,179,8,0.9);font-weight:600">브랜드를 먼저 발견하게 만드는 정교한 SEO 전략.</span></p>
+          <p class="vh-sub"><strong style="color:rgba(255,255,255,0.9)">네이버 플레이스, 검색어 관리, 유튜브, 인스타그램</strong> — 검색이 일어나는 모든 채널에서</p>
+          <p class="vh-sub" style="margin-top:8px"><span style="color:rgba(99,102,241,0.9);font-weight:600">검색했을 때 가장 먼저 보이게 만드는 SEO.</span></p>
         </div>
         <div class="vh-kpi-strip" id="seKpi"></div>
         <script dangerouslySetInnerHTML={{__html:`(function(){
@@ -40,10 +42,6 @@ export const SvcSeoPage = () => (
             }).catch(function(){});
         })();`}} />
         <div class="vh-btns" id="seBtns">
-          <a href="/contact" class="hero-cta-btn primary">
-            <span>무료 전략 상담받기</span>
-            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
           <a href="#seo-products" class="vh-scroll-btn">
             <span>상품 보기</span>
             <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -55,10 +53,6 @@ export const SvcSeoPage = () => (
       </div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
-  var s=document.createElement('script');
-  s.src='/static/svc-three-bg.js';
-  s.onload=function(){ initSvcThreeBg(0xeab308, 0xf97316, 0x1a6bff); };
-  document.head.appendChild(s);
   function anim(el,delay,dir){if(!el)return;el.style.opacity='0';el.style.transform=dir==='up'?'translateY(32px)':'translateX(-32px)';el.style.transition='opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)';setTimeout(function(){el.style.opacity='1';el.style.transform='none';},delay);}
   anim(document.getElementById('seL1'),200,'left');
   anim(document.getElementById('seL2'),440,'left');
@@ -69,32 +63,35 @@ export const SvcSeoPage = () => (
       `}} />
     </section>
 
+    {/* ══ 라이트 테마 콘텐츠 래퍼 (히어로 제외) ══ */}
+    <div class="svc-light">
+
     {/* ══ 4대 SEO 상품군 탭 ══ */}
     <section class="section seo-products-section" id="seo-products">
       <div class="svc-bg-deco"><div class="svc-grid-lines"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
       <div class="container">
         <div class="section-head">
           <span class="sec-label">SEO Products</span>
-          <h2 class="sec-title">4대 SEO 상품군</h2>
+          <h2 class="sec-title">인애드컴퍼니 <em>SEO 서비스 목록</em></h2>
           <p class="sec-sub">검색이 일어나는 모든 채널을 커버합니다.</p>
         </div>
 
         {/* 탭 버튼 */}
         <div class="seop-tabs" id="seopTabs">
           <button class="seop-tab active" data-tab="0">
-            <span class="seop-tab-icon">📍</span>
+            <span class="seop-tab-icon">{icon('mapPin')}</span>
             <span class="seop-tab-label">네이버 플레이스</span>
           </button>
           <button class="seop-tab" data-tab="1">
             <span class="seop-tab-icon">⌨️</span>
-            <span class="seop-tab-label">검색어 자동완성</span>
+            <span class="seop-tab-label">검색어 관리</span>
           </button>
           <button class="seop-tab" data-tab="2">
             <span class="seop-tab-icon">▶️</span>
             <span class="seop-tab-label">유튜브 SEO</span>
           </button>
           <button class="seop-tab" data-tab="3">
-            <span class="seop-tab-icon">📸</span>
+            <span class="seop-tab-icon">{icon('camera')}</span>
             <span class="seop-tab-label">인스타 검색</span>
           </button>
         </div>
@@ -111,9 +108,9 @@ export const SvcSeoPage = () => (
                   <span class="seop-chip" style="--cc:#f59e0b">Naver Place</span>
                   <span class="seop-purpose">플레이스 순위 상승</span>
                 </div>
-                <h3 class="seop-title">네이버 지도·플레이스<br />상위 노출 전략</h3>
+                <h3 class="seop-title">네이버 지도·플레이스<br />검색 노출 전략</h3>
                 <p class="seop-desc">
-                  네이버 지도와 플레이스 검색에서 <strong>상위 순위를 차지</strong>하는 것은 오프라인 매장의 필수 과제입니다.<br /><br />
+                  네이버 지도와 플레이스 검색에서 <strong>검색 노출을 확보</strong>하는 것은 오프라인 매장의 필수 과제입니다.<br /><br />
                   인애드컴퍼니는 블로그 배포, 유입 작업, 방문자 리뷰, 저장 작업을 유기적으로 결합해 플레이스 알고리즘을 공략합니다.
                 </p>
 
@@ -157,7 +154,7 @@ export const SvcSeoPage = () => (
                   </div>
                 </div>
                 {/* 플레이스 카드 클릭 유도 힌트 */}
-                <div class="seop-place-hint" id="seopPlaceHint">👆 플레이스 상품을 눌러주세요</div>
+                <div class="seop-place-hint" id="seopPlaceHint">플레이스 상품을 눌러주세요</div>
               </div>
               <div class="seop-visual" id="seopPlaceVisual">
                 {/* 블로그 배포 모핑 컨테이너 */}
@@ -221,7 +218,7 @@ export const SvcSeoPage = () => (
                         <div class="sbm-click-label sbm-click-label--inflow" id="sbmClickLabel">click !</div>
                         {/* 유입 카운트 배지 */}
                         <div class="sbm-inflow-badge" id="sbmInflowBadge">
-                          <span class="sbm-inflow-badge-icon">👆</span>
+                          <span class="sbm-inflow-badge-icon">{icon('pointer')}</span>
                           <span class="sbm-inflow-badge-text">유입 <strong id="sbmInflowCount">0</strong></span>
                         </div>
                       </div>
@@ -287,25 +284,25 @@ export const SvcSeoPage = () => (
             </div>
           </div>
 
-          {/* ── 패널 1 : 자동완성 ── */}
+          {/* ── 패널 1 : 검색어 관리 ── */}
           <div class="seop-panel" data-panel="1">
             <div class="seop-panel-inner">
               <div class="seop-info">
                 <div class="seop-tag-row">
-                  <span class="seop-chip" style="--cc:#6d28d9">Autocomplete</span>
+                  <span class="seop-chip" style="--cc:#6d28d9">Search Terms</span>
                   <span class="seop-purpose">자체 개발 프로그램 운영</span>
                 </div>
                 <h3 class="seop-title">검색창에 브랜드명이<br />자동으로 뜨게 만듭니다</h3>
                 <p class="seop-desc">
-                  소비자가 특정 키워드를 입력하는 순간, <strong>브랜드명이 연관 검색어로 자동 노출</strong>됩니다.<br /><br />
-                  인애드컴퍼니가 <strong>자체 개발한 전용 프로그램</strong>으로 자동완성 노출을 완벽하게 핸들링합니다. 경쟁사보다 먼저 소비자의 눈에 들어오는 브랜드를 만듭니다.
+                  소비자가 특정 키워드를 입력하는 순간, <strong>브랜드명이 검색 결과에 함께 노출</strong>됩니다.<br /><br />
+                  인애드컴퍼니가 <strong>자체 개발한 전용 프로그램</strong>으로 검색어 관리 노출을 완벽하게 핸들링합니다. 경쟁사보다 먼저 소비자의 눈에 들어오는 브랜드를 만듭니다.
                 </p>
                 <div class="seop-badge-row">
                   <div class="seop-highlight-card" style="--hc:#6d28d9">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
                     <div>
                       <strong>자체 개발 프로그램</strong>
-                      <p>인애드 독자 기술로 자동완성을 정밀 제어</p>
+                      <p>인애드 독자 기술로 검색어 관리를 정밀 제어</p>
                     </div>
                   </div>
                   <div class="seop-highlight-card" style="--hc:#8b5cf6">
@@ -334,7 +331,7 @@ export const SvcSeoPage = () => (
                   </div>
                   <div class="seop-mock-body">
                     <div class="seop-auto-searchbox">
-                      <span class="seop-auto-icon">🔍</span>
+                      <span class="seop-auto-icon">{icon('search')}</span>
                       <span class="seop-auto-typing">강남 헬스장</span>
                     </div>
                     <div class="seop-auto-list">
@@ -363,7 +360,7 @@ export const SvcSeoPage = () => (
                       </div>
                     </div>
                     <div class="seop-auto-legend">
-                      <span class="seop-auto-hit">✦</span> 인애드 자동완성 노출 키워드
+                      <span class="seop-auto-hit">✦</span> 인애드 검색어 관리 노출 키워드
                     </div>
                   </div>
                 </div>
@@ -377,12 +374,12 @@ export const SvcSeoPage = () => (
               <div class="seop-info">
                 <div class="seop-tag-row">
                   <span class="seop-chip" style="--cc:#e11d48">YouTube SEO</span>
-                  <span class="seop-purpose">콘텐츠 키워드 상위 노출</span>
+                  <span class="seop-purpose">콘텐츠 키워드 검색 노출</span>
                 </div>
-                <h3 class="seop-title">유튜브 검색에서<br />브랜드 콘텐츠를 상위 노출</h3>
+                <h3 class="seop-title">유튜브 검색에서<br />브랜드 콘텐츠를 검색 노출</h3>
                 <p class="seop-desc">
-                  유튜브는 세계 2위 검색 엔진입니다. <strong>브랜드 관련 키워드로 콘텐츠를 제작</strong>하고, 해당 키워드 검색 결과 상위에 노출시킵니다.<br /><br />
-                  콘텐츠 기획부터 SEO 최적화, 상위 노출 작업까지 전 과정을 원스톱으로 진행합니다.
+                  유튜브는 세계 2위 검색 엔진입니다. <strong>브랜드 관련 키워드로 콘텐츠를 제작</strong>하고, 해당 키워드 검색 결과에 노출시킵니다.<br /><br />
+                  콘텐츠 기획부터 SEO 최적화, 검색 노출 작업까지 전 과정을 원스톱으로 진행합니다.
                 </p>
                 <div class="seop-steps-row">
                   <div class="seop-step-item" style="--sc:#e11d48">
@@ -399,7 +396,7 @@ export const SvcSeoPage = () => (
                   <div class="seop-step-arrow">→</div>
                   <div class="seop-step-item" style="--sc:#eab308">
                     <span class="seop-step-num">03</span>
-                    <strong>상위 노출</strong>
+                    <strong>검색 노출</strong>
                     <p>타겟 키워드 검색 TOP 노출</p>
                   </div>
                 </div>
@@ -414,7 +411,7 @@ export const SvcSeoPage = () => (
                   </div>
                   <div class="seop-mock-body">
                     <div class="seop-yt-searchbar">
-                      <span>🔍</span>
+                      <span>{icon('search')}</span>
                       <span class="seop-yt-kw">강남 헬스장 추천</span>
                     </div>
                     <div class="seop-yt-list">
@@ -426,7 +423,7 @@ export const SvcSeoPage = () => (
                         <div class="seop-yt-meta">
                           <strong>강남 헬스장 추천 TOP5 | 광고주 브랜드 직접 체험</strong>
                           <span>광고주채널 · 조회수 4.2만</span>
-                          <div class="seop-yt-topbadge">검색 상위 노출</div>
+                          <div class="seop-yt-topbadge">검색 노출</div>
                         </div>
                       </div>
                       <div class="seop-yt-item">
@@ -460,31 +457,31 @@ export const SvcSeoPage = () => (
               <div class="seop-info">
                 <div class="seop-tag-row">
                   <span class="seop-chip" style="--cc:#ec4899">Instagram SEO</span>
-                  <span class="seop-purpose">해시태그 상위 노출</span>
+                  <span class="seop-purpose">해시태그 검색 노출</span>
                 </div>
-                <h3 class="seop-title">인스타 해시태그에<br />콘텐츠를 상위 노출</h3>
+                <h3 class="seop-title">인스타 해시태그에<br />콘텐츠를 검색 노출</h3>
                 <p class="seop-desc">
-                  인스타그램 해시태그 검색에서 <strong>브랜드 콘텐츠를 상위에 노출</strong>시킵니다.<br /><br />
+                  인스타그램 해시태그 검색에서 <strong>브랜드 콘텐츠를 검색 결과에 노출</strong>시킵니다.<br /><br />
                   신제품 출시, 할인 이벤트, 시즌 프로모션 등 <strong>특정 이벤트 시점</strong>에 집중 노출하면 최대 효과를 얻을 수 있습니다. 인스타를 활발히 사용하는 MZ 세대에게 자연스럽게 도달합니다.
                 </p>
                 <div class="seop-usecase-grid">
                   <div class="seop-usecase" style="--uc:#ec4899">
-                    <span class="seop-usecase-icon">🛍️</span>
+                    <span class="seop-usecase-icon">{icon('shoppingBag')}</span>
                     <strong>신제품 출시</strong>
                     <p>출시 직후 집중 노출로 초기 인지도 확산</p>
                   </div>
                   <div class="seop-usecase" style="--uc:#a855f7">
-                    <span class="seop-usecase-icon">🎁</span>
+                    <span class="seop-usecase-icon">{icon('gift')}</span>
                     <strong>할인 이벤트</strong>
-                    <p>이벤트 해시태그 검색 시 브랜드 콘텐츠 상단 노출</p>
+                    <p>이벤트 해시태그 검색 시 브랜드 콘텐츠 노출</p>
                   </div>
                   <div class="seop-usecase" style="--uc:#f97316">
-                    <span class="seop-usecase-icon">📅</span>
+                    <span class="seop-usecase-icon">{icon('calendar')}</span>
                     <strong>시즌 프로모션</strong>
                     <p>시즌 키워드에 브랜드를 선제적으로 연결</p>
                   </div>
                   <div class="seop-usecase" style="--uc:#06b6d4">
-                    <span class="seop-usecase-icon">✨</span>
+                    <span class="seop-usecase-icon">{icon('sparkles')}</span>
                     <strong>브랜드 인지도</strong>
                     <p>카테고리 해시태그 지속 노출로 브랜드 각인</p>
                   </div>
@@ -499,12 +496,12 @@ export const SvcSeoPage = () => (
                     <div class="seop-mock-url">instagram.com/explore</div>
                   </div>
                   <div class="seop-mock-body">
-                    {/* 검색바 — #올영 타이핑 후 자동완성 3개 등장 */}
+                    {/* 검색바 — #올영 타이핑 후 검색어 관리 3개 등장 */}
                     <div class="seop-insta-searchbar">
                       <span class="seop-insta-hash">#</span>
                       <span class="seop-insta-kw" id="instaTypingText"></span><span class="seop-cursor seop-cursor--insta" id="instaCursor">|</span>
                     </div>
-                    {/* 자동완성 드롭다운 — 타이핑 완료 후 순차 등장 */}
+                    {/* 검색어 관리 드롭다운 — 타이핑 완료 후 순차 등장 */}
                     <div class="seop-insta-suggest" id="instaSuggest">
                       <div class="seop-insta-sug-item" id="instaSug0" data-tag="올영추천템">
                         <span class="seop-insta-sug-hash">#</span>
@@ -523,8 +520,8 @@ export const SvcSeoPage = () => (
                       </div>
                     </div>
                     {/* 클릭 유도 안내 문구 */}
-                    <div class="seop-insta-hint" id="instaHint">👆 해시태그를 클릭해보세요</div>
-                    {/* 이미지 결과 영역 — 자동완성 클릭 시 해당 이미지 표시 */}
+                    <div class="seop-insta-hint" id="instaHint">해시태그를 클릭해보세요</div>
+                    {/* 이미지 결과 영역 — 검색어 관리 클릭 시 해당 이미지 표시 */}
                     <div class="seop-insta-result" id="instaResult">
                       <div class="seop-insta-result-topbar">
                         <button class="seop-insta-back" id="instaBackBtn">
@@ -536,7 +533,7 @@ export const SvcSeoPage = () => (
                       </div>
                       <img class="seop-insta-result-img" id="instaResultImg" src="" alt="" />
                     </div>
-                    <div class="seop-insta-legend" id="instaLegend">상위 노출된 브랜드 콘텐츠</div>
+                    <div class="seop-insta-legend" id="instaLegend">검색 노출된 브랜드 콘텐츠</div>
                   </div>
                 </div>
               </div>
@@ -553,7 +550,7 @@ export const SvcSeoPage = () => (
      변수·함수 먼저 선언 — 탭 이벤트 등록보다 앞에 위치
   ══════════════════════════════════════════════ */
 
-  /* ── 패널 3 — 인스타: #올영 타이핑 → 자동완성 3개 → 클릭 시 이미지 전환 ── */
+  /* ── 패널 3 — 인스타: #올영 타이핑 → 검색어 관리 3개 → 클릭 시 이미지 전환 ── */
   var INSTA_KEYWORD = '올영';
   var instaTimers   = [];
   var instaPlayed   = false;
@@ -633,7 +630,7 @@ export const SvcSeoPage = () => (
       }, 90 * idx));
     });
 
-    /* 2. 타이핑 완료 → 커서 깜빡임 유지 → 자동완성 순차 등장 */
+    /* 2. 타이핑 완료 → 커서 깜빡임 유지 → 검색어 관리 순차 등장 */
     var typingDone = 90 * chars.length + 400;
     if(suggestEl){
       instaTimers.push(setTimeout(function(){
@@ -646,7 +643,7 @@ export const SvcSeoPage = () => (
       }, typingDone + 80 + idx * 120));
     });
 
-    /* 3. 자동완성 등장 완료 → 유저 클릭 대기 (자동 선택 없음) */
+    /* 3. 검색어 관리 등장 완료 → 유저 클릭 대기 (자동 선택 없음) */
   }
 
   /* ── 탭 전환 ── */
@@ -671,7 +668,7 @@ export const SvcSeoPage = () => (
     });
   }
 
-  /* ── 인스타 자동완성 항목 클릭 ── */
+  /* ── 인스타 검색어 관리 항목 클릭 ── */
   var suggestContainer = document.getElementById('instaSuggest');
   if(suggestContainer){
     suggestContainer.addEventListener('click', function(e){
@@ -934,7 +931,7 @@ export const SvcSeoPage = () => (
               <div class="seop-proc-text">
                 <span class="seop-proc-en">Brand Analysis</span>
                 <h4 class="seop-proc-title">브랜드 분석</h4>
-                <p class="seop-proc-desc">경쟁사 분석, 키워드 검색량·경쟁도 조사, 현재 검색 노출 현황을 진단합니다. 데이터 기반으로 최적의 SEO 전략을 도출합니다.</p>
+                <p class="seop-proc-desc">경쟁사·키워드 검색량·경쟁도, 지금 우리 노출 현황까지 진단합니다. 어디부터 손대야 노출이 오를지를 데이터로 가려냅니다.</p>
               </div>
             </div>
           </div>
@@ -974,12 +971,12 @@ export const SvcSeoPage = () => (
               <div class="seop-proc-text">
                 <span class="seop-proc-en">Product-Specific Process</span>
                 <h4 class="seop-proc-title">각 상품 프로세스 진행</h4>
-                <p class="seop-proc-desc">선택한 상품에 맞게 최적화된 방식으로 실행됩니다. 네이버 플레이스, 자동완성, 유튜브 SEO, 인스타 검색 각각의 특성에 맞는 전략을 적용합니다.</p>
+                <p class="seop-proc-desc">선택한 상품에 맞게 최적화된 방식으로 실행됩니다. 네이버 플레이스, 검색어 관리, 유튜브 SEO, 인스타 검색 각각의 특성에 맞는 전략을 적용합니다.</p>
                 <div class="seop-proc-chips">
-                  <span class="seop-proc-chip" style="--cc:#f59e0b">📍 네이버 플레이스</span>
-                  <span class="seop-proc-chip" style="--cc:#6d28d9">⌨️ 검색어 자동완성</span>
+                  <span class="seop-proc-chip" style="--cc:#f59e0b">네이버 플레이스</span>
+                  <span class="seop-proc-chip" style="--cc:#6d28d9">⌨️ 검색어 관리</span>
                   <span class="seop-proc-chip" style="--cc:#e11d48">▶️ 유튜브 SEO</span>
-                  <span class="seop-proc-chip" style="--cc:#ec4899">📸 인스타 검색</span>
+                  <span class="seop-proc-chip" style="--cc:#ec4899">인스타 검색</span>
                 </div>
               </div>
             </div>
@@ -1045,15 +1042,12 @@ export const SvcSeoPage = () => (
     </section>
 
     <section class="svc-cta-section">
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/검색에서 먼저 발견되는 브랜드를 만드세요.png')"></div>
       <div class="container">
         <div class="svc-cta-inner">
           <div class="svc-cta-text">
             <h2>검색에서 먼저<br /><em>발견되는 브랜드를 만드세요</em></h2>
             <p>브랜드 키워드 분석부터 SEO 전략까지 무료로 진단해드립니다.</p>
-          </div>
-          <div class="svc-cta-btns">
-            <a href="/contact" class="hero-cta-btn primary"><span>무료 상담 신청하기</span><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-            <button type="button" class="hero-cta-btn ghost" onclick="openCallModal()"><span>📞 바로 전화하기</span></button>
           </div>
         </div>
       </div>
@@ -1064,7 +1058,7 @@ export const SvcSeoPage = () => (
     <script dangerouslySetInnerHTML={{__html: `
 (function(){
   var s = document.createElement('script');
-  s.src = '/static/scroll-reveal.js';
+  s.src = '/static/scroll-reveal.js?v=20260722b';
   document.head.appendChild(s);
 })();
     `}} />
@@ -1104,5 +1098,6 @@ export const SvcSeoPage = () => (
     }).catch(function(){});
 })();
     `}} />
+    </div>{/* /svc-light */}
   </>
 )

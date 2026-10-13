@@ -9,7 +9,7 @@ export const InsightDetailPage = ({ id }: Props) => {
     'content-strategy': '콘텐츠 별 전략',
   }
   const SUB_LABEL: Record<string, string> = {
-    viral: '바이럴 마케팅', influencer: '인플루언서', seeding: '시딩',
+    viral: '바이럴 마케팅', influencer: '인플루언서', seeding: '체험단',
     seo: 'SEO', review: '리뷰', oliveyoung: '올리브영', ppl: 'PPL',
   }
 
@@ -71,15 +71,12 @@ export const InsightDetailPage = ({ id }: Props) => {
         </section>
 
         <section class="home-cta">
+          <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/우리 브랜드에 맞는 마케팅 전략이 궁금하신가요.png')"></div>
           <div class="home-cta-bg"><div class="hcta-glow"></div></div>
           <div class="container">
             <div class="home-cta-inner">
               <h2>우리 브랜드에 맞는<br /><em>마케팅 전략이 궁금하신가요?</em></h2>
               <p>인애드컴퍼니 전문가가 무료로 진단해드립니다.</p>
-              <a href="/contact" class="hero-cta-btn primary">
-                <span>무료 마케팅 상담 받기</span>
-                <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
             </div>
           </div>
         </section>
@@ -93,7 +90,7 @@ export const InsightDetailPage = ({ id }: Props) => {
   var realId = postId.replace(/^admin_/, '');
 
   var CAT_LABEL = {'case-study':'실전 사례','content-strategy':'콘텐츠 별 전략'};
-  var SUB_LABEL = {viral:'바이럴 마케팅',influencer:'인플루언서',seeding:'시딩',seo:'SEO',review:'리뷰',oliveyoung:'올리브영',ppl:'PPL'};
+  var SUB_LABEL = {viral:'바이럴 마케팅',influencer:'인플루언서',seeding:'체험단',seo:'SEO',review:'리뷰',oliveyoung:'올리브영',ppl:'PPL'};
 
   function show404(){
     document.getElementById('detailLoading').style.display='none';

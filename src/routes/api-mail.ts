@@ -2,25 +2,48 @@
  * Resend Mail API — 상담 폼 이메일 발송
  *
  * POST /api/mail/contact   (일반 상담 - 에이전시/브랜드)
- * POST /api/mail/brochure  (회사소개서 요청 — 광고주에게만 발송, 내부 알림 없음)
- * POST /api/mail/kickoff   (킥오프 미팅 신청)
+ * POST /api/mail/brochure  (회사소개서 요청)
  */
 
 import { Hono } from 'hono'
-import { resolveRecipients } from './mail-recipients'
+import { kvGet } from '../admin/store'
 
 type Bindings = {
   RESEND_API_KEY: string     // re_xxxx
   RESEND_FROM: string        // noreply@inadcompany.co.kr
-  RESEND_TO: string          // 기본 수신자 (쉼표로 여러 명 지정 가능)
-  ADMIN_KV?: KVNamespace     // home_brochure_url / mail_recipients 등 KV 값 읽기용
+  RESEND_TO: string          // tnaks6325@inadcompany.com
+  ADMIN_KV: KVNamespace      // home_brochure_url 등 KV 값 읽기용
 }
 
 const mail = new Hono<{ Bindings: Bindings }>()
 
+const INTERNAL_RECIPIENTS = [
+  'tnaks6325@inadcompany.com',
+  'inadkwj@inadcompany.com',
+  'dndvkr41@inadcompany.com',
+]
+
+mail.use('*', async (c, next) => {
+  const origin = c.req.header('Origin')
+  if (origin && new URL(origin).host !== new URL(c.req.url).host) {
+    return c.json({ ok: false, error: '허용되지 않은 요청입니다.' }, 403)
+  }
+  const ip = c.req.header('CF-Connecting-IP') || c.req.header('X-Forwarded-For')?.split(',')[0]?.trim() || 'unknown'
+  const bucket = Math.floor(Date.now() / 3600000)
+  const key = 'mail_rate_' + ip + '_' + bucket
+  const count = Number(await c.env.ADMIN_KV?.get(key) || 0)
+  if (count >= 10) return c.json({ ok: false, error: '요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.' }, 429)
+  await c.env.ADMIN_KV?.put(key, String(count + 1), { expirationTtl: 7200 })
+  await next()
+})
+
+async function backupLead(env: Bindings, type: string, data: Record<string, string>) {
+  const key = 'lead_' + type + '_' + Date.now() + '_' + crypto.randomUUID().slice(0, 8)
+  await env.ADMIN_KV.put(key, JSON.stringify({ type, data, receivedAt: new Date().toISOString() }))
+}
+
 /* ─────────────────────────────────────────────
    공통: 지정 수신자에게 메일 발송
-   to 는 문자열 또는 이메일 배열 (Resend 최대 50명)
 ───────────────────────────────────────────── */
 async function sendMailTo(
   env: Bindings,
@@ -28,9 +51,9 @@ async function sendMailTo(
   subject: string,
   htmlBody: string
 ): Promise<void> {
-  const toList = (Array.isArray(to) ? to : [to]).filter(Boolean)
-  if (!toList.length) {
-    throw new Error('메일 수신자가 설정되지 않았습니다.')
+  const recipients = Array.isArray(to) ? to : [to]
+  if (!env.RESEND_API_KEY || !env.RESEND_FROM || recipients.length === 0) {
+    throw new Error('메일 환경변수가 설정되지 않았습니다.')
   }
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -40,7 +63,7 @@ async function sendMailTo(
     },
     body: JSON.stringify({
       from: env.RESEND_FROM,
-      to: toList,
+      to: recipients,
       subject,
       html: htmlBody,
     }),
@@ -53,16 +76,13 @@ async function sendMailTo(
 
 /* ─────────────────────────────────────────────
    편의 래퍼: 내부(관리자) 알림용
-   관리자 페이지에 등록된 수신자 전원에게 발송하고,
-   등록된 목록이 없으면 RESEND_TO 로 폴백
 ───────────────────────────────────────────── */
 async function sendMail(
   env: Bindings,
   subject: string,
   htmlBody: string
 ): Promise<void> {
-  const recipients = await resolveRecipients(env.ADMIN_KV, env.RESEND_TO)
-  return sendMailTo(env, recipients, subject, htmlBody)
+  return sendMailTo(env, INTERNAL_RECIPIENTS, subject, htmlBody)
 }
 
 /* ─────────────────────────────────────────────
@@ -71,23 +91,36 @@ async function sendMail(
    (Google Docs /export?format=pdf 는 Docs 전용 — 일반 PDF에 사용 불가)
 ───────────────────────────────────────────── */
 function toDriveDownloadUrl(driveUrl: string): string {
-  const match = driveUrl.match(/\/file\/d\/([^/]+)/)
+  const match = driveUrl.match(/\/file\/d\/([^/?]+)/)
   if (match) {
     return `https://drive.google.com/uc?export=download&id=${match[1]}`
   }
+  try {
+    const url = new URL(driveUrl)
+    const id = url.searchParams.get('id')
+    if (id && /drive\.google\.com$/.test(url.hostname)) {
+      return 'https://drive.google.com/uc?export=download&id=' + encodeURIComponent(id)
+    }
+  } catch {}
   return driveUrl
 }
 
 /* ─────────────────────────────────────────────
    내부 알림용 HTML 이메일 템플릿
 ───────────────────────────────────────────── */
+function escapeHtml(value: unknown): string {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[ch]!))
+}
+
 function internalTemplate(title: string, rows: { label: string; value: string }[]): string {
   const rowsHtml = rows
     .filter(r => r.value && r.value.trim())
     .map(r => `
       <tr>
-        <td style="padding:10px 16px;background:#f8f9fa;font-size:13px;color:#555;white-space:nowrap;width:120px;border-bottom:1px solid #e9ecef;">${r.label}</td>
-        <td style="padding:10px 16px;font-size:14px;color:#212529;border-bottom:1px solid #e9ecef;">${r.value}</td>
+        <td style="padding:10px 16px;background:#f8f9fa;font-size:13px;color:#555;white-space:nowrap;width:120px;border-bottom:1px solid #e9ecef;">${escapeHtml(r.label)}</td>
+        <td style="padding:10px 16px;font-size:14px;color:#212529;border-bottom:1px solid #e9ecef;">${escapeHtml(r.value).replace(/\n/g, '<br>')}</td>
       </tr>`).join('')
 
   return `<!DOCTYPE html>
@@ -100,7 +133,7 @@ function internalTemplate(title: string, rows: { label: string; value: string }[
         <tr>
           <td style="background:linear-gradient(135deg,#1a6bff,#0d47d6);padding:28px 32px;">
             <p style="margin:0 0 4px;font-size:12px;color:rgba(255,255,255,0.7);letter-spacing:0.1em;text-transform:uppercase;">IN AD COMPANY</p>
-            <h1 style="margin:0;font-size:20px;font-weight:700;color:#fff;">${title}</h1>
+            <h1 style="margin:0;font-size:20px;font-weight:700;color:#fff;">${escapeHtml(title)}</h1>
           </td>
         </tr>
         <tr>
@@ -131,14 +164,23 @@ function internalTemplate(title: string, rows: { label: string; value: string }[
    bodyText : 헤더 서브 문구 (줄바꿈 \n → <br>)
    tags     : 서비스 태그 배열
 ───────────────────────────────────────────── */
+/* 소개서는 자체 호스팅 페이지 사용 — 드라이브 권한/HTML 소스 노출 문제 회피 */
+const PROFILE_URL = 'https://www.inadcompany.co.kr/company-profile'
+
 function brochureReplyTemplate(
   pdfUrl: string,
   downloadUrl: string,
   headline: string,
   bodyText: string,
-  tags: string[]
+  tags: string[],
+  footerAddress: string,
+  contactEmail: string
 ): string {
-  const year = new Date().getFullYear()
+  const safePdfUrl = /^https?:\/\//i.test(pdfUrl) ? escapeHtml(pdfUrl) : '#'
+  const safeDownloadUrl = /^https?:\/\//i.test(downloadUrl) ? escapeHtml(downloadUrl) : '#'
+  const safeFooterAddress = escapeHtml(footerAddress)
+  const safeContactEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail) ? escapeHtml(contactEmail) : ''
+  tags = tags.map(escapeHtml)
   return `<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -146,188 +188,99 @@ function brochureReplyTemplate(
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>인애드컴퍼니 회사소개서</title>
 </head>
-<body style="margin:0;padding:0;background:#0d0f14;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;">
+<body style="margin:0;padding:0;background:#F1F1F1;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;">
 
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0d0f14;padding:40px 16px;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F1F1F1;padding:40px 16px;">
   <tr><td align="center">
   <table width="600" cellpadding="0" cellspacing="0"
-         style="max-width:600px;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.5);">
+         style="max-width:600px;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(26,31,46,0.08);">
+
+    <!-- 상단 블루 액센트 -->
+    <tr><td style="height:4px;background:linear-gradient(90deg,#285CCC 0%,rgba(40,92,204,0.35) 100%);font-size:0;line-height:0;">&nbsp;</td></tr>
 
     <!-- ── 헤더 ── -->
     <tr>
-      <td style="background:linear-gradient(135deg,#0f1729 0%,#0d1a3a 50%,#0a1628 100%);padding:40px 40px 32px;text-align:center;border-bottom:1px solid rgba(26,107,255,0.25);">
-        <!-- 로고 텍스트 -->
-        <p style="margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:0.25em;color:rgba(26,107,255,0.8);text-transform:uppercase;">IN AD COMPANY</p>
-        <h1 style="margin:0;font-size:28px;font-weight:800;color:#ffffff;letter-spacing:-0.02em;line-height:1.3;">
-          ${headline.replace(/\n/g, '<br>')}
+      <td style="background:#FFFFFF;padding:44px 40px 24px;text-align:center;border-bottom:0;">
+        <p style="margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:0.25em;color:#285CCC;text-transform:uppercase;">IN AD COMPANY</p>
+        <h1 style="margin:0;font-size:31px;font-weight:800;color:#1A1F2E;letter-spacing:-0.03em;line-height:1.32;">
+          ${escapeHtml(headline).replace(/\n/g, '<br>')}
         </h1>
-        <p style="margin:16px 0 0;font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;">
-          ${bodyText.replace(/\n/g, '<br>')}
+        <p style="margin:16px 0 0;font-size:14px;color:#6E6E6E;line-height:1.7;">
+          ${escapeHtml(bodyText).replace(/\n/g, '<br>')}
         </p>
       </td>
     </tr>
 
-    <!-- ── 소개서 카드 + 다운로드 버튼 ── -->
+    <!-- ── 로고 마크 (헤더와 액션 사이 여백을 채우는 시각 앵커) ── -->
     <tr>
-      <td style="background:#111827;padding:36px 40px;">
+      <td style="background:#FFFFFF;padding:26px 40px 24px;text-align:center;">
+        <img src="https://www.inadcompany.co.kr/static/logo.png" alt="인애드컴퍼니"
+             width="64" height="64"
+             style="display:inline-block;width:64px;height:64px;border:0;outline:none;text-decoration:none;">
+      </td>
+    </tr>
 
-        <!-- 소개서 미리보기 카드 -->
-        <table width="100%" cellpadding="0" cellspacing="0"
-               style="background:linear-gradient(135deg,#1a2744,#0f1a35);border:1px solid rgba(26,107,255,0.3);border-radius:12px;overflow:hidden;margin-bottom:28px;">
+    <!-- ── 액션 버튼 2종 (소개서 다운로드 / 포트폴리오) ── -->
+    <tr>
+      <td style="background:#FFFFFF;padding:0 40px 36px;text-align:center;">
+        <p style="margin:0 0 22px;font-size:13px;color:#6E6E6E;line-height:1.7;">담당자가 확인 후 회신드릴 예정입니다.<br>그동안 소개서와 캠페인 사례를 살펴보세요.</p>
+
+        <table cellpadding="0" cellspacing="0" align="center">
           <tr>
-            <td style="padding:28px 28px 24px;">
-              <p style="margin:0 0 12px;font-size:10px;font-weight:700;letter-spacing:0.2em;color:rgba(26,107,255,0.7);text-transform:uppercase;">COMPANY BROCHURE</p>
-              <p style="margin:0 0 8px;font-size:20px;font-weight:700;color:#ffffff;">인애드컴퍼니 소개서</p>
-              <p style="margin:0 0 20px;font-size:13px;color:rgba(255,255,255,0.45);line-height:1.6;">
-                서비스 소개 · 캠페인 사례 · 성과 레퍼런스 · 파트너사 현황
-              </p>
-              <!-- 태그 칩 -->
-              <table cellpadding="0" cellspacing="0">
-                <tr>
-                  ${tags.map((tag, i) => {
-                    const colors = [
-                      { bg: 'rgba(26,107,255,0.15)',  border: 'rgba(26,107,255,0.3)',  text: 'rgba(26,107,255,0.9)'  },
-                      { bg: 'rgba(168,85,247,0.12)',  border: 'rgba(168,85,247,0.3)',  text: 'rgba(168,85,247,0.9)'  },
-                      { bg: 'rgba(20,184,166,0.1)',   border: 'rgba(20,184,166,0.3)',  text: 'rgba(20,184,166,0.9)'  },
-                      { bg: 'rgba(249,115,22,0.1)',   border: 'rgba(249,115,22,0.3)',  text: 'rgba(249,115,22,0.9)'  },
-                      { bg: 'rgba(236,72,153,0.1)',   border: 'rgba(236,72,153,0.3)',  text: 'rgba(236,72,153,0.9)'  },
-                      { bg: 'rgba(234,179,8,0.1)',    border: 'rgba(234,179,8,0.3)',   text: 'rgba(234,179,8,0.9)'   },
-                    ]
-                    const c = colors[i % colors.length]
-                    return `${i > 0 ? '<td width="6"></td>' : ''}<td style="padding:5px 10px;background:${c.bg};border:1px solid ${c.border};border-radius:20px;font-size:11px;color:${c.text};white-space:nowrap;">${tag}</td>`
-                  }).join('')}
-                </tr>
-              </table>
+            <td style="padding-right:10px;">
+              <a href="${PROFILE_URL}/download"
+                 style="display:inline-block;padding:14px 26px;background:linear-gradient(180deg,#33343A 0%,#1D1E22 100%);color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;border-radius:10px;white-space:nowrap;">
+                소개서 다운로드
+              </a>
             </td>
-          </tr>
-        </table>
-
-        <!-- PDF 다운로드 버튼 -->
-        <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
-          <tr>
-            <td align="center">
-              <a href="${downloadUrl}"
-                 style="display:inline-block;padding:16px 48px;background:linear-gradient(135deg,#1a6bff,#0d47d6);color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;border-radius:10px;letter-spacing:0.02em;">
-                📄&nbsp;&nbsp;소개서 다운로드 (PDF)
+            <td style="padding-left:10px;">
+              <a href="https://www.inadcompany.co.kr/works"
+                 style="display:inline-block;padding:13px 26px;background:#FFFFFF;border:1px solid rgba(26,31,46,0.18);color:#33343A;font-size:14px;font-weight:600;text-decoration:none;border-radius:10px;white-space:nowrap;">
+                포트폴리오 보기
               </a>
             </td>
           </tr>
         </table>
 
-        <!-- 미리보기 링크 -->
-        <p style="margin:0;text-align:center;font-size:12px;color:rgba(255,255,255,0.3);">
-          다운로드가 안 되시면
-          <a href="${pdfUrl}" style="color:rgba(26,107,255,0.7);text-decoration:underline;">여기서 미리보기</a>를 클릭해 주세요.
+        <p style="margin:20px 0 0;font-size:12px;color:#9A9AA0;">
+          받기 전에 살펴보고 싶으시면
+          <a href="${PROFILE_URL}" style="color:#285CCC;text-decoration:underline;">여기서 미리보기</a>를 클릭해 주세요.
         </p>
-
       </td>
     </tr>
 
-    <!-- ── 소개서에 담긴 내용 ── -->
-    <tr>
-      <td style="background:#0f1520;padding:32px 40px;border-top:1px solid rgba(255,255,255,0.06);">
-        <p style="margin:0 0 18px;font-size:12px;font-weight:700;letter-spacing:0.15em;color:rgba(255,255,255,0.3);text-transform:uppercase;">소개서에 담긴 내용</p>
-        <table width="100%" cellpadding="0" cellspacing="0">
-          <tr>
-            <td width="50%" style="padding-bottom:12px;vertical-align:top;">
-              <table cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="width:6px;height:6px;background:#1a6bff;border-radius:50%;vertical-align:middle;padding-right:10px;"></td>
-                  <td style="font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5;">인플루언서·유튜브 마케팅</td>
-                </tr>
-              </table>
-            </td>
-            <td width="50%" style="padding-bottom:12px;vertical-align:top;">
-              <table cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="width:6px;height:6px;background:#a855f7;border-radius:50%;vertical-align:middle;padding-right:10px;"></td>
-                  <td style="font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5;">바이럴·커뮤니티 마케팅</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td width="50%" style="padding-bottom:12px;vertical-align:top;">
-              <table cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="width:6px;height:6px;background:#14b8a6;border-radius:50%;vertical-align:middle;padding-right:10px;"></td>
-                  <td style="font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5;">SEO·블로그·리뷰 마케팅</td>
-                </tr>
-              </table>
-            </td>
-            <td width="50%" style="padding-bottom:12px;vertical-align:top;">
-              <table cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="width:6px;height:6px;background:#f97316;border-radius:50%;vertical-align:middle;padding-right:10px;"></td>
-                  <td style="font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5;">PPL·협찬 콘텐츠</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td width="50%" style="vertical-align:top;">
-              <table cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="width:6px;height:6px;background:#eab308;border-radius:50%;vertical-align:middle;padding-right:10px;"></td>
-                  <td style="font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5;">주요 캠페인 성과·레퍼런스</td>
-                </tr>
-              </table>
-            </td>
-            <td width="50%" style="vertical-align:top;">
-              <table cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="width:6px;height:6px;background:#ec4899;border-radius:50%;vertical-align:middle;padding-right:10px;"></td>
-                  <td style="font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5;">파트너사 현황</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-
-    <!-- ── 문의하기 CTA ── -->
-    <tr>
-      <td style="background:#111827;padding:28px 40px;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">
-        <p style="margin:0 0 16px;font-size:13px;color:rgba(255,255,255,0.45);">소개서를 보신 후 궁금한 점이 있으시면 언제든지 문의해 주세요.</p>
-        <a href="https://www.inadcompany.co.kr/contact"
-           style="display:inline-block;padding:12px 32px;background:transparent;border:1px solid rgba(26,107,255,0.5);color:rgba(26,107,255,0.9);font-size:13px;font-weight:600;text-decoration:none;border-radius:8px;">
-          상담 문의하기 →
-        </a>
-      </td>
-    </tr>
 
     <!-- ── 연락처 / 푸터 ── -->
     <tr>
-      <td style="background:#0a0d14;padding:28px 40px;border-top:1px solid rgba(255,255,255,0.05);">
+      <td style="background:#EDEDED;padding:28px 40px;border-top:1px solid rgba(26,31,46,0.08);">
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr>
             <td style="vertical-align:top;padding-right:20px;">
-              <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:0.15em;color:rgba(255,255,255,0.25);text-transform:uppercase;">IN AD COMPANY</p>
-              <p style="margin:0 0 12px;font-size:12px;color:rgba(255,255,255,0.35);line-height:1.7;">
+              <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:0.15em;color:#A5A5AB;text-transform:uppercase;">IN AD COMPANY</p>
+              <p style="margin:0 0 12px;font-size:12px;color:#8A8A90;line-height:1.7;">
                 대표 : 김수만<br>
-                경기도 안산시 단원구 고잔로 51, 타워아이즈빌 2F, 204호
+                ${safeFooterAddress}
               </p>
               <table cellpadding="0" cellspacing="0">
                 <tr>
                   <td style="padding-right:16px;">
-                    <a href="tel:010-9186-9944" style="font-size:12px;color:rgba(26,107,255,0.7);text-decoration:none;">📞 010-9186-9944</a>
+                    <a href="tel:010-9186-9944" style="font-size:12px;color:#285CCC;text-decoration:none;">📞 010-9186-9944</a>
                   </td>
                   <td style="padding-right:16px;">
-                    <a href="mailto:tnaks6325@inadcompany.com" style="font-size:12px;color:rgba(26,107,255,0.7);text-decoration:none;">✉ tnaks6325@inadcompany.com</a>
+                    <a href="mailto:${safeContactEmail}" style="font-size:12px;color:#285CCC;text-decoration:none;">✉ ${safeContactEmail}</a>
                   </td>
                   <td>
-                    <a href="https://www.inadcompany.co.kr" style="font-size:12px;color:rgba(26,107,255,0.7);text-decoration:none;">🌐 inadcompany.co.kr</a>
+                    <a href="https://www.inadcompany.co.kr" style="font-size:12px;color:#285CCC;text-decoration:none;">🌐 inadcompany.co.kr</a>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
         </table>
-        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:20px 0 16px;">
-        <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.2);line-height:1.7;text-align:center;">
-          본 메일은 inadcompany.co.kr 소개서 신청 폼을 통해 자동 발송되었습니다.<br>
-          수신을 원하지 않으시면 <a href="mailto:tnaks6325@inadcompany.com?subject=수신거부" style="color:rgba(255,255,255,0.3);text-decoration:underline;">수신 거부</a>를 요청해 주세요.
+        <hr style="border:none;border-top:1px solid rgba(26,31,46,0.09);margin:20px 0 16px;">
+        <p style="margin:0;font-size:11px;color:#A5A5AB;line-height:1.7;text-align:center;">
+          본 메일은 inadcompany.co.kr 문의 폼을 통해 자동 발송되었습니다.<br>
+          수신을 원하지 않으시면 <a href="mailto:${safeContactEmail}?subject=수신거부" style="color:#9A9AA0;text-decoration:underline;">수신 거부</a>를 요청해 주세요.
         </p>
       </td>
     </tr>
@@ -346,7 +299,8 @@ function brochureReplyTemplate(
 mail.post('/contact', async (c) => {
   try {
     const data = await c.req.json() as Record<string, string>
-    const formType = data.formType === 'agency' ? '에이전시' : '브랜드'
+    await backupLead(c.env, 'contact', data)
+    const formType = data.formType === 'agency' ? '에이전시' : data.formType === 'brand' ? '브랜드' : ''
 
     const rows = [
       { label: '폼 유형',      value: formType },
@@ -359,13 +313,14 @@ mail.post('/contact', async (c) => {
       { label: '담당 브랜드',  value: data.brand },
       { label: '브랜드 URL',   value: data.brandUrl },
       { label: '관심 서비스',  value: data.services },
-      { label: '예상 예산',    value: data.budget },
-      { label: '문의 내용',    value: data.message?.replace(/\n/g, '<br>') },
+      { label: '예상 예산',    value: data.budget === 'custom' ? (data.budgetCustom || '직접 입력') : data.budget },
+      { label: '직접 입력 예산', value: data.budgetCustom },
+      { label: '문의 내용',    value: data.message },
     ]
 
     await sendMail(
       c.env,
-      `[상담 신청] ${data.name || ''} — ${data.company || ''}`,
+      `[상담 신청] ${data.name || data.company || data.email || '간편 문의'}`,
       internalTemplate('📋 새 상담 신청이 접수됐습니다', rows)
     )
     return c.json({ ok: true })
@@ -377,13 +332,12 @@ mail.post('/contact', async (c) => {
 
 /* ─────────────────────────────────────────────
    API 라우트 — 회사소개서 요청
-   광고주에게 소개서만 발송하고, 내부 알림 메일은 보내지 않는다.
-   (상담 신청이 들어오면 어차피 소개서도 받아간 것이므로
-    소개서 요청 건마다 내부 알림을 받을 필요가 없음)
+   광고주 이메일로 소개서를 발송한다. 내부 관리자 알림은 보내지 않는다.
 ───────────────────────────────────────────── */
 mail.post('/brochure', async (c) => {
   try {
     const data = await c.req.json() as Record<string, string>
+    await backupLead(c.env, 'brochure', data)
     const toEmail = (data.email || '').trim()
 
     if (!toEmail) {
@@ -391,63 +345,37 @@ mail.post('/brochure', async (c) => {
     }
 
     // KV에서 PDF URL + 메일 템플릿 내용 읽기
-    const kv = c.env.ADMIN_KV
-    const [rawPdfUrl, rawHeadline, rawBodyText, rawTags] = await Promise.all([
-      kv?.get('home_brochure_url') ?? null,
-      kv?.get('brochure_mail_headline') ?? null,
-      kv?.get('brochure_mail_body') ?? null,
-      kv?.get('brochure_mail_tags') ?? null,
+    const [rawPdfUrl, rawSubject, rawHeadline, rawBodyText, rawTags, rawAddress, rawAddressDetail] = await Promise.all([
+      kvGet(c.env.ADMIN_KV, 'home_brochure_url'),
+      kvGet(c.env.ADMIN_KV, 'brochure_mail_subject'),
+      kvGet(c.env.ADMIN_KV, 'brochure_mail_headline'),
+      kvGet(c.env.ADMIN_KV, 'brochure_mail_body'),
+      kvGet(c.env.ADMIN_KV, 'brochure_mail_tags'),
+      kvGet(c.env.ADMIN_KV, 'about_address'),
+      kvGet(c.env.ADMIN_KV, 'about_address_detail'),
     ])
-    const pdfUrl     = rawPdfUrl     ?? 'https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view'
-    const headline   = rawHeadline   ?? '회사소개서를\n보내드립니다.'
-    const bodyText   = rawBodyText   ?? '요청해 주셔서 감사합니다.\n인애드컴퍼니의 서비스와 레퍼런스를 담은 소개서입니다.'
-    const tags: string[] = rawTags   ? JSON.parse(rawTags) : ['인플루언서', '바이럴 마케팅', 'SEO · 리뷰', 'PPL']
+    const pdfUrl = rawPdfUrl!
+    const mailSubject = rawSubject!
+    const headline = rawHeadline!
+    const bodyText = rawBodyText!
+    let tags: string[] = ['인플루언서', '바이럴 마케팅', '리뷰', 'PPL']
+    if (rawTags) {
+      try {
+        const parsed = JSON.parse(rawTags)
+        if (Array.isArray(parsed) && parsed.every(v => typeof v === 'string')) tags = parsed
+      } catch {}
+    }
     const downloadUrl = toDriveDownloadUrl(pdfUrl)
 
-    // 광고주 회신 메일 (소개서 PDF 링크 + KV 템플릿 내용 포함)
     await sendMailTo(
       c.env,
       toEmail,
-      '[인애드컴퍼니] 요청하신 회사소개서를 보내드립니다.',
-      brochureReplyTemplate(pdfUrl, downloadUrl, headline, bodyText, tags)
+      mailSubject,
+      brochureReplyTemplate(pdfUrl, downloadUrl, headline, bodyText, tags, [rawAddress, rawAddressDetail].filter(Boolean).join(' '), c.env.RESEND_TO)
     )
-
     return c.json({ ok: true })
   } catch (e: any) {
     console.error('[mail/brochure]', e.message)
-    return c.json({ ok: false, error: e.message }, 500)
-  }
-})
-
-/* ─────────────────────────────────────────────
-   API 라우트 — 킥오프 미팅 신청
-───────────────────────────────────────────── */
-mail.post('/kickoff', async (c) => {
-  try {
-    const data = await c.req.json() as Record<string, string>
-
-    const rows = [
-      { label: '담당자 이름', value: data.kf_name },
-      { label: '직급',        value: data.kf_position },
-      { label: '연락처',      value: data.kf_phone },
-      { label: '이메일',      value: data.kf_email },
-      { label: '회사명',      value: data.kf_company },
-      { label: '미팅 방식',   value: data.meetingType },
-      { label: '1순위 일정',  value: `${data.date1 || ''} ${data.time1 || ''}`.trim() },
-      { label: '2순위 일정',  value: `${data.date2 || ''} ${data.time2 || ''}`.trim() },
-      { label: '주소',        value: [data.address, data.addressDetail].filter(Boolean).join(' ') },
-      { label: '참여 인원',   value: data.memberCount },
-      { label: '사전 질문',   value: data.note?.replace(/\n/g, '<br>') },
-    ]
-
-    await sendMail(
-      c.env,
-      `[킥오프 신청] ${data.kf_name || ''} — ${data.kf_company || ''}`,
-      internalTemplate('🚀 킥오프 미팅 신청이 접수됐습니다', rows)
-    )
-    return c.json({ ok: true })
-  } catch (e: any) {
-    console.error('[mail/kickoff]', e.message)
     return c.json({ ok: false, error: e.message }, 500)
   }
 })

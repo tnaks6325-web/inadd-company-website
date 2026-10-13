@@ -75,6 +75,11 @@
     { sel: '.ifl-data-text',          anim: 'fade-up',    delay: 60,  dur: 640 },
     { sel: '.ifl-data-points',        anim: 'fade-up',    delay: 0,   stagger: 70,  dur: 640 },
     { sel: '.ifl-data-subhead',       anim: 'fade-up',    delay: 0,   dur: 660 },
+    { sel: '.ifl-story-line',         anim: 'fade-up',    delay: 80,  stagger: 180, dur: 760, threshold: 0.08 },
+    { sel: '.ifl-story-turn',         anim: 'fade-up',    delay: 120, dur: 760, threshold: 0.12 },
+    { sel: '.ifl-story-question',     anim: 'fade-up',    delay: 100, dur: 720, threshold: 0.12 },
+    { sel: '.ifl-story-proof',        anim: 'fade-up',    delay: 100, dur: 760, threshold: 0.12 },
+    { sel: '.ifl-story-criterion',    anim: 'fade-up',    delay: 60,  stagger: 130, dur: 680, threshold: 0.12 },
 
     /* ════════════════════════════
        SEEDING 전용
@@ -129,14 +134,19 @@
   function applyHide(el, rule) {
     var a = ANIMS[rule.anim] || ANIMS['fade-up'];
     var dur = rule.dur || 720;
+    /* 초기 숨김 자체가 애니메이션으로 보이지 않도록 전환을 먼저 끈다. */
+    el.style.transition = 'none';
     el.style.opacity    = a.op;
     el.style.transform  = a.tr;
     el.style.willChange = 'opacity, transform';
+    el.dataset.srHidden = '1';
+
+    /* 숨김 상태를 즉시 확정한 뒤, 실제 뷰포트 진입용 전환만 등록한다. */
+    void el.offsetWidth;
     el.style.transition = [
       'opacity ' + dur + 'ms cubic-bezier(0.22, 1, 0.36, 1)',
       'transform ' + dur + 'ms cubic-bezier(0.22, 1, 0.36, 1)',
     ].join(', ');
-    el.dataset.srHidden = '1';
   }
 
   /* ─────────────────────────────────────────────
@@ -146,6 +156,7 @@
     setTimeout(function () {
       el.style.opacity   = '1';
       el.style.transform = 'translateY(0) translateX(0) scale(1)';
+      el.classList.add('sr-shown');
       delete el.dataset.srHidden;
     }, delay || 0);
   }
