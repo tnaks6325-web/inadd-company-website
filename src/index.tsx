@@ -97,7 +97,7 @@ Sitemap: https://www.inadcompany.co.kr/sitemap.xml`
 // Routes
 app.get('/', (c) => {
   return c.render(<HomePage />, {
-    title: '브랜드를 움직이는 힘',
+    title: '풀퍼널 마케팅 에이전시',
     description: '채팅·커뮤니티·SNS 중심의 실전형 바이럴 마케팅 에이전시 인애드컴퍼니. 바이럴·인플루언서·체험단·리뷰·올리브영·PPL 마케팅 전문.',
     canonical: 'https://www.inadcompany.co.kr',
     schema: JSON.stringify({
@@ -239,7 +239,7 @@ app.get('/marketing/influencer', (c) => {
 
 app.get('/marketing/seeding', (c) => {
   return c.render(<SvcSeedingPage />, {
-    title: '체험단',
+    title: '체험단 마케팅',
     description: '샘플 배포와 체험단 운영으로 진짜 후기를 만드는 체험단 캠페인. 소비자 신뢰를 높이는 인애드컴퍼니의 체험단 마케팅 전략.',
     canonical: 'https://www.inadcompany.co.kr/marketing/seeding'
   })

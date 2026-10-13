@@ -16,14 +16,17 @@ export const SvcInfluencerPage = () => (
       <div class="container vh-inner">
         <a href="/#services" class="svc-back-link vh-back">← 서비스 전체보기</a>
 
-        <div class="vh-badge" style="color:rgba(168,85,247,0.95);border-color:rgba(168,85,247,0.35);background:rgba(168,85,247,0.08)">
-          <span class="vh-badge-dot" style="background:rgba(168,85,247,1);box-shadow:0 0 8px rgba(168,85,247,0.9)"></span>
-          <span>INFLUENCER &amp; YOUTUBE MARKETING</span>
-        </div>
+        {/* 서비스명(검색엔진이 읽는 큰 제목의 일부) + 슬로건 */}
+        <h1 class="vh-h1">
+          <span class="vh-badge" style="color:rgba(168,85,247,0.95);border-color:rgba(168,85,247,0.35);background:rgba(168,85,247,0.08)">
+            <span class="vh-badge-dot" style="background:rgba(168,85,247,1);box-shadow:0 0 8px rgba(168,85,247,0.9)"></span>
+            <span>인플루언서 · 유튜브 마케팅</span>
+          </span>
 
-        <h1 class="vh-title">
+          <span class="vh-title">
           <span class="vh-tline" id="ifL1">'좋은 것 같다'는 <span class="vh-hl">추측이 아닌,</span></span>
           <span class="vh-tline" id="ifL2" style="background:linear-gradient(135deg,#fff 20%,rgba(168,85,247,0.95) 60%,rgba(236,72,153,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">'이겁니다'를 <span class="vh-hl">근거</span>로</span>
+        </span>
         </h1>
 
         <div class="vh-sub-wrap" id="ifSub">
