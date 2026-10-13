@@ -23,6 +23,16 @@ Cloudflare Pages 가 이 GitHub 저장소에 연결되어 있다.
 - 검색엔진에 잡히지 않도록 `X-Robots-Tag: noindex` 를 보낸다.
 - 관리자 로그인 비밀값(`ADMIN_JWT_SECRET`)과 메일 발송 키(`RESEND_*`)는 Cloudflare 화면의 Preview 환경 변수에 따로 넣는다(실제 사이트 값과 별개).
 
+## 인사이트(블로그)
+
+- `src/main.tsx` 가 빌드 진입점이다. 인사이트 경로만 직접 처리하고 나머지는 `src/index.tsx` 앱에 넘긴다.
+  - `/insight` 목록 카드와 `/insight/admin_<id>` 상세 본문을 서버에서 그려, 검색로봇이 JS 없이 읽을 수 있다.
+  - 상세에는 글별 제목·설명·canonical·BlogPosting 구조화 데이터·og:image 가 들어간다.
+  - `/sitemap.xml` 에 글 주소(실제 수정일), `/insight/rss.xml` RSS, `robots.txt` 에 썸네일 경로 허용을 더한다.
+- 자동 발행 API `/api/blog/insight` (GET 목록, POST 등록 — 같은 `notionId` 면 수정, PUT `/:id` 수정, POST `/thumb` 썸네일)
+  - 헤더 `X-Blog-Key` 필요. 코드에는 키의 SHA-256 만 있다. 원문 키는 대표 맥 `~/.config/inadd/blog-api-key` 에 보관(저장소에 넣지 말 것).
+  - 테스트 서버는 데이터 저장소가 분리되어 있어, 미리보기 주소로 발행하면 실제 사이트에는 올라가지 않는다.
+
 ## 로컬 개발
 
 ```txt

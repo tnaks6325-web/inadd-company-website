@@ -8,7 +8,7 @@ import { getPosts, savePosts, postPath, SITE_URL, type InsightPost } from '../li
 //  키 원문은 코드에 없고, SHA-256 해시만 둔다 (저장소가 공개여도 역산 불가).
 // ─────────────────────────────────────────────
 
-const BLOG_KEY_SHA256 = '22a5a83b7ca627ce5f4cc03f7e185bc858d9be48cc4c16ae2ed6674fe38430a7'
+const BLOG_KEY_SHA256 = '3547d6e28d195e2fecad35d19ef4871bbb01b1c13a2cb5cade0e5c5d4c548130'
 
 async function sha256Hex(text: string): Promise<string> {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text))

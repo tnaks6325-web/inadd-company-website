@@ -1,7 +1,6 @@
 import { Hono } from 'hono'
 import app from './index'
 import { renderer } from './renderer'
-import { setTokenKv } from './admin/store'
 import { BlogRouter } from './routes/api-blog'
 import { InsightDetailPage } from './routes/insight-detail'
 import {
@@ -22,10 +21,10 @@ const root = new Hono()
 
 const kvOf = (c: any): KVNamespace | undefined => c.env?.ADMIN_KV
 
-// 관리자 토큰 서명키를 KV 에서 읽도록 매 요청 바인딩 전달
+// 테스트 서버(미리보기)는 검색엔진에 잡히지 않게 한다 — index.tsx 와 같은 규칙을 이 진입점 경로에도 적용
 root.use('*', async (c, next) => {
-  setTokenKv(kvOf(c))
   await next()
+  if ((c.env as any)?.SITE_ENV === 'preview') c.res.headers.set('X-Robots-Tag', 'noindex, nofollow')
 })
 
 root.route('/api/blog', BlogRouter)
