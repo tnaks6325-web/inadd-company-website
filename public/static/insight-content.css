@@ -1,16 +1,16 @@
 
-/* ── 인사이트 본문: 자동 발행 글에서 쓰는 추가 요소 ── */
+/* ── 인사이트 본문: 자동 발행 글에서 쓰는 추가 요소 (밝은 배경 기준) ── */
 .ins-detail-content blockquote {
   margin: 0 0 24px;
   padding: 16px 20px;
   border-left: 3px solid rgba(26,107,255,0.8);
-  background: rgba(255,255,255,0.03);
+  background: rgba(0,0,0,0.03);
   color: var(--gray-2);
 }
 .ins-detail-content blockquote p:last-child { margin-bottom: 0; }
 .ins-detail-content hr {
   border: 0;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid rgba(0,0,0,0.1);
   margin: 40px 0;
 }
 .ins-detail-content img {
@@ -29,14 +29,14 @@
 }
 .ins-detail-content th,
 .ins-detail-content td {
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(0,0,0,0.12);
   padding: 10px 12px;
   text-align: left;
   vertical-align: top;
 }
 .ins-detail-content th {
   color: var(--white);
-  background: rgba(255,255,255,0.04);
+  background: rgba(0,0,0,0.04);
   font-weight: 600;
 }
 /* 회사 서비스 연결 박스 (글 하단) */
@@ -48,3 +48,7 @@
   background: rgba(26,107,255,0.06);
 }
 .ins-detail-content .ins-callout p:last-child { margin-bottom: 0; }
+/* 노션 이미지 캡션 */
+.ins-detail-content figure { margin: 0 0 24px; }
+.ins-detail-content figure img { margin-bottom: 8px; }
+.ins-detail-content figcaption { font-size: 13px; color: var(--gray-2); }
