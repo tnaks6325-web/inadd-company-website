@@ -1,5 +1,7 @@
 import { Hono } from 'hono'
 import { kvGet, kvPut, kvDelete, signToken, verifyToken, type Bindings } from './store'
+import { MAIL_RECIPIENTS_KEY, MAX_RECIPIENTS, DEFAULT_RECIPIENTS, checkRecipients, parseStoredRecipients, resolveRecipients } from '../routes/mail-recipients'
+import { sendMailTo, internalTemplate } from '../routes/api-mail'
 
 const admin = new Hono<{ Bindings: Bindings }>()
 
@@ -380,6 +382,50 @@ admin.put('/brochure-mail', authMiddleware, async (c) => {
     await kvPut(kv, 'brochure_mail_tags', JSON.stringify(body.tags))
   }
   return c.json({ ok: true })
+})
+
+// ═══════════════════════ 문의 알림 받는 사람 ═══════════════════════
+// 홈페이지 상담 신청이 접수되면 알림 메일을 받을 이메일 목록.
+// 저장 전에는 기본 수신자(DEFAULT_RECIPIENTS)로 발송된다. 빈 목록은 저장할 수 없다.
+
+admin.get('/mail-recipients', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  const stored = parseStoredRecipients(await kvGet(kv, MAIL_RECIPIENTS_KEY))
+  return c.json({
+    recipients: stored.length ? stored : [...DEFAULT_RECIPIENTS],
+    isDefault: stored.length === 0,
+    max: MAX_RECIPIENTS,
+  })
+})
+
+admin.put('/mail-recipients', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV
+  let body: any
+  try { body = await c.req.json() } catch {
+    return c.json({ error: '올바른 JSON 형식이 아닙니다.' }, 400)
+  }
+  const { recipients, invalid } = checkRecipients(body?.recipients ?? [])
+  if (invalid.length) return c.json({ error: `이메일 형식이 올바르지 않습니다: ${invalid.join(', ')}` }, 400)
+  if (!recipients.length) return c.json({ error: '받는 사람은 최소 1명 이상이어야 합니다.' }, 400)
+  if (recipients.length > MAX_RECIPIENTS) return c.json({ error: `받는 사람은 최대 ${MAX_RECIPIENTS}명까지 등록할 수 있습니다.` }, 400)
+  await kvPut(kv, MAIL_RECIPIENTS_KEY, JSON.stringify(recipients))
+  return c.json({ ok: true, recipients })
+})
+
+// 저장된 목록(없으면 기본 수신자)으로 시험 메일을 실제 발송한다.
+admin.post('/mail-recipients/test', authMiddleware, async (c) => {
+  const env = c.env as any
+  const recipients = await resolveRecipients(env?.ADMIN_KV)
+  try {
+    await sendMailTo(env, recipients, '[시험 발송] 문의 알림 메일 수신 확인', internalTemplate('✅ 문의 알림 메일 수신 확인', [
+      { label: '안내', value: '관리자 페이지에서 보낸 시험 메일입니다. 이 메일을 받았다면 홈페이지 문의 알림도 정상으로 받습니다.' },
+      { label: '받는 사람', value: recipients.join(', ') },
+    ]))
+  } catch (e: any) {
+    console.error('[mail-recipients/test]', e.message)
+    return c.json({ error: '시험 메일 발송에 실패했습니다: ' + e.message }, 502)
+  }
+  return c.json({ ok: true, recipients })
 })
 
 // ═══════════════════════ PUBLIC DATA API ═══════════════════════

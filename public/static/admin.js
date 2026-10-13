@@ -85,6 +85,7 @@ async function loadHome() {
   document.getElementById('statPartners').value = s.partners || '';
   renderVideoList();
   loadBrochureMail();
+  loadMailRecipients();
 }
 
 // YouTube 링크에서 ID 추출
@@ -225,6 +226,98 @@ document.getElementById('btnSaveBrochureMail').addEventListener('click', async (
   if (!subject) { showToast('메일 제목을 입력해 주세요.', 'error'); return; }
   await api('PUT', '/brochure-mail', { subject, headline, body, tags });
   showToast('소개서 메일 템플릿이 저장되었습니다.');
+});
+
+// ── 문의 알림 받는 사람 ──
+let mailRecipients = [];
+let mailRecipientsIsDefault = false;
+let mailRecipientsDirty = false;
+const MAX_MAIL_RECIPIENTS = 50;
+const MAIL_EMAIL_RE = /^[^\s@,;<>]+@[^\s@,;<>]+\.[^\s@,;<>]{2,}$/;
+
+async function loadMailRecipients() {
+  const data = await api('GET', '/mail-recipients');
+  mailRecipients = data.recipients || [];
+  mailRecipientsIsDefault = !!data.isDefault;
+  mailRecipientsDirty = false;
+  renderMailRecipients();
+}
+
+function renderMailRecipients() {
+  const wrap = document.getElementById('mailRecipientList');
+  if (!wrap) return;
+  document.getElementById('btnAddMailRecipient').disabled = mailRecipients.length >= MAX_MAIL_RECIPIENTS;
+  wrap.innerHTML = mailRecipients.map(function(email, i) {
+    return '<div style="display:flex;gap:10px;align-items:center">' +
+      '<input type="email" value="' + escHtml(email) + '" data-idx="' + i + '" class="mail-recipient-input" placeholder="예: name@inadcompany.com" ' +
+      'style="flex:1;background:#FFFFFF;border:1px solid #E6E7EA;border-radius:8px;color:#393939;font-size:14px;padding:10px 14px;">' +
+      '<button type="button" class="mail-recipient-del" data-idx="' + i + '" title="삭제" ' +
+      'style="background:none;border:none;color:#8A8A90;cursor:pointer;font-size:14px;padding:4px 8px"><i class="fas fa-trash"></i></button>' +
+    '</div>';
+  }).join('');
+  wrap.querySelectorAll('.mail-recipient-input').forEach(function(input) {
+    input.addEventListener('input', function() {
+      mailRecipients[+this.dataset.idx] = this.value;
+      mailRecipientsDirty = true;
+      renderMailRecipientNote();
+    });
+  });
+  wrap.querySelectorAll('.mail-recipient-del').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      if (mailRecipients.length <= 1) { showToast('받는 사람은 최소 1명 이상이어야 합니다.', 'error'); return; }
+      mailRecipients.splice(+this.dataset.idx, 1);
+      mailRecipientsDirty = true;
+      renderMailRecipients();
+    });
+  });
+  renderMailRecipientNote();
+}
+
+function renderMailRecipientNote() {
+  const note = document.getElementById('mailRecipientNote');
+  if (!note) return;
+  const count = mailRecipients.filter(function(e){ return String(e || '').trim(); }).length;
+  note.innerHTML = mailRecipientsDirty
+    ? '<span style="color:#C2410C">저장하지 않은 변경이 있습니다.</span> 저장해야 다음 문의부터 적용됩니다.'
+    : '현재 <strong style="color:#285CCC">' + count + '명</strong>이 문의 알림 메일을 받습니다.' +
+      (mailRecipientsIsDefault ? ' <small>(기본 목록 — 아직 저장한 적 없음)</small>' : '');
+}
+
+document.getElementById('btnAddMailRecipient').addEventListener('click', () => {
+  if (mailRecipients.length >= MAX_MAIL_RECIPIENTS) {
+    showToast('받는 사람은 최대 ' + MAX_MAIL_RECIPIENTS + '명까지 등록할 수 있습니다.', 'error');
+    return;
+  }
+  mailRecipients.push('');
+  mailRecipientsDirty = true;
+  renderMailRecipients();
+  const inputs = document.querySelectorAll('#mailRecipientList input');
+  if (inputs.length) inputs[inputs.length - 1].focus();
+});
+
+document.getElementById('btnSaveMailRecipients').addEventListener('click', async () => {
+  const cleaned = mailRecipients.map(function(e){ return String(e || '').trim(); }).filter(Boolean);
+  const invalid = cleaned.filter(function(e){ return !MAIL_EMAIL_RE.test(e); });
+  if (invalid.length) { showToast('이메일 형식이 올바르지 않습니다: ' + invalid.join(', '), 'error'); return; }
+  if (!cleaned.length) { showToast('받는 사람은 최소 1명 이상이어야 합니다.', 'error'); return; }
+  const result = await api('PUT', '/mail-recipients', { recipients: cleaned });
+  mailRecipients = result.recipients || cleaned;
+  mailRecipientsIsDefault = false;
+  mailRecipientsDirty = false;
+  renderMailRecipients();
+  showToast('✅ 문의 알림 받는 사람 ' + mailRecipients.length + '명이 저장되었습니다.');
+});
+
+document.getElementById('btnTestMailRecipients').addEventListener('click', async function() {
+  if (mailRecipientsDirty) { showToast('먼저 받는 사람을 저장해 주세요. 시험 메일은 저장된 목록으로 보냅니다.', 'error'); return; }
+  if (!confirm('저장된 ' + mailRecipients.length + '명에게 시험 메일을 실제로 보냅니다. 보낼까요?')) return;
+  this.disabled = true;
+  try {
+    const result = await api('POST', '/mail-recipients/test');
+    showToast('📨 시험 메일을 보냈습니다: ' + (result.recipients || []).join(', '), 'info');
+  } finally {
+    this.disabled = false;
+  }
 });
 
 document.getElementById('btnSaveStats').addEventListener('click', async () => {

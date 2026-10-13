@@ -7,6 +7,7 @@
 
 import { Hono } from 'hono'
 import { kvGet } from '../admin/store'
+import { resolveRecipients } from './mail-recipients'
 
 type Bindings = {
   RESEND_API_KEY: string     // re_xxxx
@@ -17,12 +18,6 @@ type Bindings = {
 }
 
 const mail = new Hono<{ Bindings: Bindings }>()
-
-const INTERNAL_RECIPIENTS = [
-  'tnaks6325@inadcompany.com',
-  'inadkwj@inadcompany.com',
-  'dndvkr41@inadcompany.com',
-]
 
 mail.use('*', async (c, next) => {
   const origin = c.req.header('Origin')
@@ -46,7 +41,7 @@ async function backupLead(env: Bindings, type: string, data: Record<string, stri
 /* ─────────────────────────────────────────────
    공통: 지정 수신자에게 메일 발송
 ───────────────────────────────────────────── */
-async function sendMailTo(
+export async function sendMailTo(
   env: Bindings,
   to: string | string[],
   subject: string,
@@ -82,14 +77,14 @@ async function sendMailTo(
 }
 
 /* ─────────────────────────────────────────────
-   편의 래퍼: 내부(관리자) 알림용
+   편의 래퍼: 내부(관리자) 알림용 — 수신자는 관리자 페이지에서 관리
 ───────────────────────────────────────────── */
 async function sendMail(
   env: Bindings,
   subject: string,
   htmlBody: string
 ): Promise<void> {
-  return sendMailTo(env, INTERNAL_RECIPIENTS, subject, htmlBody)
+  return sendMailTo(env, await resolveRecipients(env.ADMIN_KV), subject, htmlBody)
 }
 
 /* ─────────────────────────────────────────────
@@ -121,7 +116,7 @@ function escapeHtml(value: unknown): string {
   }[ch]!))
 }
 
-function internalTemplate(title: string, rows: { label: string; value: string }[]): string {
+export function internalTemplate(title: string, rows: { label: string; value: string }[]): string {
   const rowsHtml = rows
     .filter(r => r.value && r.value.trim())
     .map(r => `

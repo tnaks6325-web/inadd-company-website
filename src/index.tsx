@@ -850,6 +850,24 @@ function adminDashboardHTML(): string {
         <button class="btn btn-primary" id="btnSaveBrochureMail"><i class="fas fa-save"></i> 템플릿 저장</button>
       </div>
 
+      <!-- 문의 알림 받는 사람 -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fas fa-inbox"></i> 문의 알림 받는 사람</div>
+          <button class="btn btn-secondary btn-sm" id="btnAddMailRecipient" style="font-size:12px;padding:6px 14px"><i class="fas fa-plus"></i> 추가</button>
+        </div>
+        <p style="color:#7A7A80;font-size:13px;margin-bottom:16px;">
+          홈페이지에서 상담 신청이 접수되면 아래 이메일 모두에게 알림 메일이 동시에 갑니다.<br>
+          <small style="color:#8A8A90">저장하면 다음 문의부터 바로 적용됩니다. 최소 1명, 최대 50명까지 등록할 수 있습니다. 회사소개서 요청은 광고주에게만 메일이 가고 내부 알림은 없습니다.</small>
+        </p>
+        <div id="mailRecipientList" style="display:flex;flex-direction:column;gap:10px;margin-bottom:12px;"></div>
+        <p id="mailRecipientNote" style="color:#8A8A90;font-size:12px;margin-bottom:16px;"></p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-primary" id="btnSaveMailRecipients"><i class="fas fa-save"></i> 받는 사람 저장</button>
+          <button class="btn btn-secondary" id="btnTestMailRecipients"><i class="fas fa-paper-plane"></i> 테스트 메일 보내기</button>
+        </div>
+      </div>
+
       <!-- KPI 수치 -->
       <div class="panel">
         <div class="panel-header">
