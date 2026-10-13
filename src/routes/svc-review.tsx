@@ -14,13 +14,17 @@ export const SvcReviewPage = () => (
       </div>
       <div class="container vh-inner">
         <a href="/#services" class="svc-back-link vh-back">← 서비스 전체보기</a>
-        <div class="vh-badge" style="color:rgba(234,179,8,0.95);border-color:rgba(234,179,8,0.35);background:rgba(234,179,8,0.08)">
-          <span class="vh-badge-dot" style="background:rgba(234,179,8,1);box-shadow:0 0 8px rgba(234,179,8,0.9)"></span>
-          <span>CUSTOMER REVIEW MARKETING</span>
-        </div>
-        <h1 class="vh-title">
+        {/* 서비스명(검색엔진이 읽는 큰 제목의 일부) + 슬로건 */}
+        <h1 class="vh-h1">
+          <span class="vh-badge" style="color:rgba(234,179,8,0.95);border-color:rgba(234,179,8,0.35);background:rgba(234,179,8,0.08)">
+            <span class="vh-badge-dot" style="background:rgba(234,179,8,1);box-shadow:0 0 8px rgba(234,179,8,0.9)"></span>
+            <span>리뷰 마케팅</span>
+          </span>
+
+          <span class="vh-title">
           <span class="vh-tline" id="rvL1">하나의 리뷰</span>
           <span class="vh-tline" id="rvL2" style="background:linear-gradient(135deg,#fff 20%,rgba(234,179,8,0.95) 55%,rgba(249,115,22,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"><span class="vh-hl">하나의 선택</span></span>
+        </span>
         </h1>
         <div class="vh-sub-wrap" id="rvSub">
           <p class="vh-sub">소비자의 <strong style="color:rgba(255,255,255,0.9)">92%는 구매 전 리뷰를 확인</strong>합니다.</p>

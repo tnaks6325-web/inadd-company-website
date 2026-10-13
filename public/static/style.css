@@ -11392,6 +11392,25 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 /* 배지 — 인라인 네온 색 무력화 → 미드블루 통일 */
 /* 서비스 히어로 영어 배지 제거 (요청) */
 .vh-badge { display: none !important; }
+/* 서비스 히어로: 한글 서비스명 라벨을 큰 제목(h1) 안에 다시 노출 — 검색엔진이 서비스명을 제목으로 읽도록.
+   h1 은 레이아웃에 영향 없게 display:contents, 라벨은 미드블루 통일(인라인 네온 색 무력화) */
+.vh-h1 { display: contents; }
+.vh-h1 > .vh-badge {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  color: var(--blue) !important;
+  padding: 6px 14px;
+  border: 1px solid rgba(40, 92, 204, 0.3) !important;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.72) !important;
+  margin: -14px 0 18px;
+}
 /* 체험단 상품 패널 배지 제거 (영어 라벨 + 베스트 추천 상품) — 요청 */
 .svc-panel-tag,
 .sdng-panel-badge,

@@ -14,13 +14,17 @@ export const SvcPplPage = () => (
       </div>
       <div class="container vh-inner">
         <a href="/#services" class="svc-back-link vh-back">← 서비스 전체보기</a>
-        <div class="vh-badge" style="color:rgba(239,68,68,0.95);border-color:rgba(239,68,68,0.35);background:rgba(239,68,68,0.08)">
-          <span class="vh-badge-dot" style="background:rgba(239,68,68,1);box-shadow:0 0 8px rgba(239,68,68,0.9)"></span>
-          <span>PPL MARKETING · PRODUCT PLACEMENT</span>
-        </div>
-        <h1 class="vh-title">
+        {/* 서비스명(검색엔진이 읽는 큰 제목의 일부) + 슬로건 */}
+        <h1 class="vh-h1">
+          <span class="vh-badge" style="color:rgba(239,68,68,0.95);border-color:rgba(239,68,68,0.35);background:rgba(239,68,68,0.08)">
+            <span class="vh-badge-dot" style="background:rgba(239,68,68,1);box-shadow:0 0 8px rgba(239,68,68,0.9)"></span>
+            <span>PPL 마케팅</span>
+          </span>
+
+          <span class="vh-title">
           <span class="vh-tline" id="ppL1">방송 콘텐츠 속,</span>
           <span class="vh-tline" id="ppL2" style="background:linear-gradient(135deg,#fff 20%,rgba(239,68,68,0.95) 55%,rgba(251,146,60,0.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">브랜드를 <span class="vh-hl">자연스럽게 각인</span></span>
+        </span>
         </h1>
         <div class="vh-sub-wrap" id="ppSub">
           <p class="vh-sub">광고인 걸 아는 순간 마음을 닫습니다. <strong style="color:rgba(255,255,255,0.9)">드라마·예능의 흐름</strong>에 브랜드를 얹어</p>

@@ -23,15 +23,19 @@ export const SvcViralPage = () => (
         <a href="/#services" class="svc-back-link vh-back">← 서비스 전체보기</a>
 
         {/* 상단 배지 */}
-        <div class="vh-badge">
-          <span class="vh-badge-dot"></span>
-          <span>VIRAL MARKETING</span>
-        </div>
+        {/* 서비스명(검색엔진이 읽는 큰 제목의 일부) + 슬로건 */}
+        <h1 class="vh-h1">
+          <span class="vh-badge">
+            <span class="vh-badge-dot"></span>
+            <span>바이럴 마케팅</span>
+          </span>
+
 
         {/* 메인 카피 — 줄별 슬라이드 인 + 글리치 효과 */}
-        <h1 class="vh-title">
+          <span class="vh-title">
           <span class="vh-tline" id="vhL1">광고가 아니라,</span>
           <span class="vh-tline vh-tline--accent" id="vhL2"><span class="vh-hl">이야기로 퍼집니다</span></span>
+        </span>
         </h1>
 
         {/* 서브 카피 — 단어 단위 페이드 인 */}
