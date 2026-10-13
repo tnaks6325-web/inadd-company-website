@@ -32,6 +32,14 @@ Cloudflare Pages 가 이 GitHub 저장소에 연결되어 있다.
 - 자동 발행 API `/api/blog/insight` (GET 목록, POST 등록 — 같은 `notionId` 면 수정, PUT `/:id` 수정, POST `/thumb` 썸네일)
   - 헤더 `X-Blog-Key` 필요. 코드에는 키의 SHA-256 만 있다. 원문 키는 대표 맥 `~/.config/inadd/blog-api-key` 에 보관(저장소에 넣지 말 것).
   - 테스트 서버는 데이터 저장소가 분리되어 있어, 미리보기 주소로 발행하면 실제 사이트에는 올라가지 않는다.
+- 노션 연결: 노션 '블로그 자동화 (마케팅 인사이트) / 📝 블로그 글'에서 상태를 **승인**으로 바꾸면,
+  대표 맥의 예약 작업(launchd `com.sooman.inadd-notion-publish`, 30분마다 → `~/dev/.devtools/inadd-notion-publish.sh`)이
+  `scripts/notion-publish.mjs` 로 올리고 노션에 발행됨·홈페이지 URL·글 ID·발행일을 적는다.
+  - 본문은 `## 📋 네이버 블로그용 원고` 앞까지만 올라간다. 네이버 원고의 '전체 글 보기' 자리에는 홈페이지 주소가 채워진다.
+  - 실패하면 상태가 수정요청으로 바뀌고 검토 메모 맨 앞에 `[발행 오류 날짜] 이유`가 적힌다.
+  - 미리보기: `node scripts/notion-publish.mjs --dry-run --page <노션 페이지 ID>` (홈페이지·노션 변경 없음)
+  - 로컬 시험: `--no-notion-write --site http://localhost:<포트>` (로컬 홈페이지에만 올림)
+  - 열쇠: `~/.config/inadd/notion-token`(노션 내부 연결 '인애드 홈페이지 발행'), `~/.config/inadd/blog-api-key`
 
 ## 로컬 개발
 

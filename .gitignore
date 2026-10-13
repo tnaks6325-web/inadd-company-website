@@ -35,3 +35,4 @@ lerna-debug.log*
 # 서드파티 스킬 데이터 (uipro) — 디스크에만 보관, 추적 안 함
 .claude/skills/
 backups/
+scripts/.notion-publish-out/
