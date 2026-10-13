@@ -18,7 +18,13 @@ import { SvcPplPage } from './routes/svc-ppl'
 import { admin } from './admin/api'
 import { MailRouter } from './routes/api-mail'
 
-const app = new Hono()
+const app = new Hono<{ Bindings: { SITE_ENV?: string } }>()
+
+// 테스트 서버(Cloudflare Pages 미리보기)는 검색엔진에 잡히지 않게 한다. SITE_ENV 는 wrangler.jsonc env.preview 에서만 설정.
+app.use('*', async (c, next) => {
+  await next()
+  if (c.env?.SITE_ENV === 'preview') c.res.headers.set('X-Robots-Tag', 'noindex, nofollow')
+})
 
 // Static files
 app.use('/static/*', serveStatic({ root: './' }))
