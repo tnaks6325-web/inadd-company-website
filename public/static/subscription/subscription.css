@@ -1,0 +1,27 @@
+/* 마케팅팀 구독 상세페이지 (/marketing/subscription)
+   시안은 860px 고정 폭 + 흰 배경. 사이트 기본(검정 배경·흰 글씨) 위에 흰 판을 깔고,
+   좁은 화면에서는 --mts-zoom(화면 폭 / 860)으로 통째로 축소한다. */
+.mts-wrap {
+  background: #FFFFFF;
+  color: #111318;
+  padding-top: 84px; /* 고정 머리말 높이만큼 */
+  overflow-x: clip;
+}
+.mts-page {
+  zoom: var(--mts-zoom, 1);
+  font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  line-height: normal;
+  -webkit-font-smoothing: antialiased;
+}
+.mts-page *, .mts-page *::before, .mts-page *::after { box-sizing: border-box; }
+.mts-page a { color: #21306F; }
+.mts-page a:hover { color: #111318; }
+.mts-page a[data-mts-cta]:hover { opacity: 0.92; }
+.mts-page img { max-width: none; }
+
+/* 흰 판 위라서 머리말이 투명할 때 메뉴 글씨를 어둡게 (다른 밝은 서비스 페이지와 같은 규칙) */
+body:has(.mts-wrap) .site-header:not(.scrolled) .nav-link { color: var(--gray-1); }
+body:has(.mts-wrap) .site-header:not(.scrolled) .nav-link:hover {
+  color: var(--blue);
+  background: rgba(40,92,204,0.08);
+}
