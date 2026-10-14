@@ -102,8 +102,8 @@ export const RefDetail = ({ c }: { c: RefCase }) => (
   </article>
 )
 
-// 시안 A — 매체 탭 + 사례 한 장씩 넘기기
-export const RefSectionA = () => (
+// 매체 탭 + 사례 한 장씩 넘기기 (휴대폰은 밀어서 넘김)
+export const RefSection = () => (
   <section class="pm-section pr-section" id="pm-reference">
     <div class="container">
       <div class="section-head"><span class="sec-label">Reference</span><h2 class="sec-title">매체별 광고<br /><em>성과 레퍼런스</em></h2><p class="sec-sub">실제 운영 계정 데이터입니다. 광고주명은 업종과 이니셜로 표기했습니다.</p></div>
@@ -129,48 +129,5 @@ export const RefSectionA = () => (
   var x0=null; sec.querySelector('.pr-track').addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
   sec.querySelector('.pr-track').addEventListener('touchend',function(e){ if(x0===null)return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>50) show(cur+(dx<0?1:-1)); x0=null; });
 })();` }} />
-  </section>
-)
-
-// 시안 B — 요약 카드 7장 + 누르면 상세 팝업
-const SUMMARY: Record<string, [string, string]> = {
-  b2b: ['5.3배', '월 문의 14건 → 74건'], powerlink: ['+1억 410만 원', '월 광고 매출 증가'], shopping: ['+57%', '한 달 만에 매출 상승'],
-  demandgen: ['-92%', '영상 1회 시청 비용'], da: ['+6,560만 원', '웹 DA 월 매출 증가'], sns: ['2.2배', '구매 전환 증가'], meta: ['179건', '한 달 만에 신청 전환'],
-}
-export const RefSectionB = () => (
-  <section class="pm-section pr-section pr-b" id="pm-reference-b">
-    <div class="container">
-      <div class="section-head"><span class="sec-label">Reference</span><h2 class="sec-title">매체별 광고<br /><em>성과 레퍼런스</em></h2><p class="sec-sub">실제 운영 계정 데이터입니다. 광고주명은 업종과 이니셜로 표기했습니다.</p></div>
-      <div class="pr-grid">
-        {REF_CASES.map(c => (
-          <button type="button" class="pr-tile" data-case={c.id} key={c.id}>
-            <span class="pr-tile-media">{c.media.join(' + ')}</span>
-            <strong class="pr-tile-big">{SUMMARY[c.id][0]}</strong>
-            <span class="pr-tile-what">{SUMMARY[c.id][1]}</span>
-            <span class="pr-tile-client">{c.client.replace(' · 인애드컴퍼니 자사 사례', ' · 자사')}</span>
-            <span class="pr-tile-more">자세히 보기 →</span>
-          </button>
-        ))}
-      </div>
-    </div>
-    <div class="pr-modal" hidden><div class="pr-modal-box"><button type="button" class="pr-modal-x" aria-label="닫기">×</button>{REF_CASES.map(c => <div class="pr-modal-case" data-case={c.id} hidden key={c.id}><RefDetail c={c} /></div>)}</div></div>
-    <script dangerouslySetInnerHTML={{ __html: `
-(function(){
-  var sec=document.currentScript.closest('section'); var m=sec.querySelector('.pr-modal');
-  sec.querySelectorAll('.pr-tile').forEach(function(b){ b.addEventListener('click',function(){ m.querySelectorAll('.pr-modal-case').forEach(function(c){ c.hidden=c.dataset.case!==b.dataset.case; }); m.hidden=false; document.body.style.overflow='hidden'; }); });
-  function close(){ m.hidden=true; document.body.style.overflow=''; }
-  sec.querySelector('.pr-modal-x').addEventListener('click',close); m.addEventListener('click',function(e){ if(e.target===m) close(); });
-})();` }} />
-  </section>
-)
-
-// 시안 C — PDF 장 그림 그대로 넘기기 + PDF 내려받기
-export const RefSectionC = () => (
-  <section class="pm-section pr-section pr-c" id="pm-reference-c">
-    <div class="container">
-      <div class="section-head"><span class="sec-label">Reference</span><h2 class="sec-title">매체별 광고<br /><em>성과 레퍼런스</em></h2><p class="sec-sub">실제 운영 계정 데이터입니다. 광고주명은 업종과 이니셜로 표기했습니다.</p></div>
-      <div class="pr-c-frame"><img src="/static/perf-ref/p3.png" alt="네이버 파워링크 성과 사례" /><button type="button" class="pr-nav pr-prev" aria-label="이전">‹</button><button type="button" class="pr-nav pr-next" aria-label="다음">›</button><span class="pr-c-count">2 / 7</span></div>
-      <div class="pr-c-btns"><a class="pr-c-dl" href="#">레퍼런스 PDF 내려받기 ↓</a></div>
-    </div>
   </section>
 )

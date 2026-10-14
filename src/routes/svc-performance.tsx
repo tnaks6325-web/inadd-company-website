@@ -1,4 +1,4 @@
-import { RefSectionA, RefSectionB, RefSectionC } from './svc-performance-ref'
+import { RefSection } from './svc-performance-ref'
 const media = [
   { id: 'naver', name: '네이버', en: 'NAVER', title: '검색·쇼핑 광고', desc: '상품과 서비스를 찾는 검색어를 선별하고, 키워드·상품별 전환 실적에 맞춰 입찰과 예산을 조정합니다.', products: ['파워링크', '쇼핑검색', '브랜드검색', '플레이스', 'GFA'], work: ['검색어 분석 및 비효율 키워드 제외', '상품·카테고리별 입찰 관리', '캠페인별 예산 배분'] },
   { id: 'google', name: '구글', en: 'Google', title: '검색·디스플레이 광고', desc: '검색 광고와 디스플레이 캠페인을 운영하고, 전환 데이터를 기준으로 타겟과 소재 조합을 테스트합니다.', products: ['검색', '디스플레이', '디맨드젠', 'Performance Max'], work: ['전환 목표에 맞는 캠페인 구성', '잠재고객·소재별 성과 분석', '전환 실적에 따른 예산 조정'] },
@@ -44,9 +44,7 @@ export const SvcPerformancePage = () => (
         </div>
       </section>
 
-      <RefSectionA />
-      <RefSectionB />
-      <RefSectionC />
+      <RefSection />
 
       <section class="pm-section pm-soft" id="pm-scope">
         <div class="container">
