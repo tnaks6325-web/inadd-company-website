@@ -103,7 +103,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
         {/* Pretendard — 전체 폰트 (한국어/영문 통일) */}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-        <link href="/static/style.css?v=20261014a" rel="stylesheet" />
+        <link href="/static/style.css?v=20261014b" rel="stylesheet" />
         {/* ── Meta Pixel Code ── */}
         <script dangerouslySetInnerHTML={{ __html: `
 !function(f,b,e,v,n,t,s)
@@ -165,14 +165,16 @@ fbq('track', 'PageView');
                 </a>
                 <div class="nav-dropdown-menu" id="navDropdownMenu">
                   <div class="ndm-inner">
-                    {/* [비공개] 퍼포먼스 마케팅 — 작업 중이라 라이브 노출 금지. 공개 시 복구
-                    <a href="/marketing/performance" class="ndm-item">
-                      <span class="ndm-text"><strong>퍼포먼스 마케팅</strong><em>광고 운영부터 전환 데이터 분석까지</em></span>
-                    </a> */}
                     <a href="/marketing/subscription" class="ndm-item">
                       <span class="ndm-text">
                         <strong>마케팅팀 구독</strong>
                         <em>신입 1명 비용으로 전담 TF팀</em>
+                      </span>
+                    </a>
+                    <a href="/marketing/performance" class="ndm-item">
+                      <span class="ndm-text">
+                        <strong>퍼포먼스 마케팅</strong>
+                        <em>광고 운영부터 전환 데이터 분석까지</em>
                       </span>
                     </a>
                     <a href="/marketing/viral" class="ndm-item">
@@ -232,9 +234,8 @@ fbq('track', 'PageView');
             <div class="footer-links">
               <div class="footer-col">
                 <h4>Marketing</h4>
-                {/* [비공개] 퍼포먼스 마케팅 — 라이브 노출 금지. 공개 시 복구
-                <a href="/marketing/performance">퍼포먼스 마케팅</a> */}
                 <a href="/marketing/subscription">마케팅팀 구독</a>
+                <a href="/marketing/performance">퍼포먼스 마케팅</a>
                 <a href="/marketing/viral">바이럴 마케팅</a>
                 <a href="/marketing/influencer">인플루언서 마케팅</a>
                 <a href="/marketing/seeding">체험단</a>
