@@ -1,3 +1,4 @@
+import { RefSection } from './svc-performance-ref'
 const media = [
   { id: 'naver', name: '네이버', en: 'NAVER', title: '검색·쇼핑 광고', desc: '상품과 서비스를 찾는 검색어를 선별하고, 키워드·상품별 전환 실적에 맞춰 입찰과 예산을 조정합니다.', products: ['파워링크', '쇼핑검색', '브랜드검색', '플레이스', 'GFA'], work: ['검색어 분석 및 비효율 키워드 제외', '상품·카테고리별 입찰 관리', '캠페인별 예산 배분'] },
   { id: 'google', name: '구글', en: 'Google', title: '검색·디스플레이 광고', desc: '검색 광고와 디스플레이 캠페인을 운영하고, 전환 데이터를 기준으로 타겟과 소재 조합을 테스트합니다.', products: ['검색', '디스플레이', '디맨드젠', 'Performance Max'], work: ['전환 목표에 맞는 캠페인 구성', '잠재고객·소재별 성과 분석', '전환 실적에 따른 예산 조정'] },
@@ -10,6 +11,7 @@ const Check = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" 
 export const SvcPerformancePage = () => (
   <div class="pm-page">
     <link rel="stylesheet" href="/static/performance.css" />
+    <link rel="stylesheet" href="/static/performance-ref.css?v=20261014a" />
     <section class="vh-hero vh-hero--photo pm-hero">
       <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/mkt-images/hero_im.png')"></div>
       <div class="container vh-inner">
@@ -27,7 +29,7 @@ export const SvcPerformancePage = () => (
     </section>
     <div class="svc-light">
       <nav class="pm-section-nav" aria-label="퍼포먼스 마케팅 안내"><div class="container">
-        <a href="#pm-media">운영 매체</a><a href="#pm-scope">제공 서비스</a><a href="#pm-terms">운영 조건</a><a href="#pm-process">진행 절차</a><a href="#pm-faq">자주 하는 질문</a>
+        <a href="#pm-media">운영 매체</a><a href="#pm-reference">성과 사례</a><a href="#pm-scope">제공 서비스</a><a href="#pm-terms">운영 조건</a><a href="#pm-process">진행 절차</a><a href="#pm-faq">자주 하는 질문</a>
       </div></nav>
 
       <section class="pm-section" id="pm-media">
@@ -41,6 +43,8 @@ export const SvcPerformancePage = () => (
           </div>
         </div>
       </section>
+
+      <RefSection />
 
       <section class="pm-section pm-soft" id="pm-scope">
         <div class="container">
