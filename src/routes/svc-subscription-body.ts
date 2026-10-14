@@ -15,7 +15,7 @@ export const SUBSCRIPTION_BODY = `
   <div style="text-align:center;font-size:24px;font-weight:700;">같은 비용</div>
   <div style="display:flex;align-items:baseline;justify-content:center;gap:8px;margin-top:8px;color:#21306F;">
     <span style="font-size:40px;font-weight:700;">월</span>
-    <span style="font-size:112px;font-weight:800;line-height:1;letter-spacing:-0.05em;" data-count="300">300</span>
+    <span style="font-size:112px;font-weight:800;line-height:1;letter-spacing:-0.05em;" data-mts-count="300">300</span>
     <span style="font-size:40px;font-weight:700;">만 원</span>
   </div>
   <div style="text-align:center;font-size:20px;margin-top:12px;">부가세 별도</div>
@@ -47,11 +47,11 @@ export const SUBSCRIPTION_BODY = `
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;">
     <div style="background:#F8F7F4;border-radius:16px;padding:32px;">
-      <div style="color:#21306F;font-size:64px;font-weight:800;letter-spacing:-0.04em;line-height:1;"><span data-count="28.87">28.87</span><span style="font-size:32px;">%</span></div>
+      <div style="color:#21306F;font-size:64px;font-weight:800;letter-spacing:-0.04em;line-height:1;"><span data-mts-count="28.87">28.87</span><span style="font-size:32px;">%</span></div>
       <div style="font-size:21px;line-height:1.5;margin-top:14px;">국내 기업 신입직 중<br>1년 안에 퇴사한 비율</div>
     </div>
     <div style="background:#F8F7F4;border-radius:16px;padding:32px;">
-      <div style="color:#21306F;font-size:64px;font-weight:800;letter-spacing:-0.04em;line-height:1;"><span data-count="56.4">56.4</span><span style="font-size:32px;">%</span></div>
+      <div style="color:#21306F;font-size:64px;font-weight:800;letter-spacing:-0.04em;line-height:1;"><span data-mts-count="56.4">56.4</span><span style="font-size:32px;">%</span></div>
       <div style="font-size:21px;line-height:1.5;margin-top:14px;">중소기업 신입 조기 퇴사자 중<br>3개월 안에 나간 비율</div>
     </div>
   </div>
@@ -223,7 +223,7 @@ export const SUBSCRIPTION_BODY = `
     <div style="display:flex;align-items:center;gap:16px;padding:48px 0 8px;"><div style="flex:none;background:#21306F;color:#FFFFFF;font-size:20px;font-weight:700;padding:8px 18px;border-radius:999px;">광고</div><div style="flex:1;height:2px;background:#21306F;"></div><div style="flex:none;font-size:20px;font-weight:700;">3가지</div></div>
     <div style="display:grid;grid-template-columns:1fr 210px;gap:24px;align-items:center;padding:24px 0;border-bottom:2px solid #F4EDDC;">
       <div><div style="font-size:28px;font-weight:800;">퍼포먼스 마케팅</div></div>
-      <div style="text-align:right;color:#21306F;"><div style="font-size:20px;font-weight:700;">월</div><div style="font-size:44px;font-weight:800;letter-spacing:-0.04em;line-height:1.1;"><span data-count="1000">1,000</span><span style="font-size:22px;font-weight:700;">만 원 한도</span></div></div>
+      <div style="text-align:right;color:#21306F;"><div style="font-size:20px;font-weight:700;">월</div><div style="font-size:44px;font-weight:800;letter-spacing:-0.04em;line-height:1.1;"><span data-mts-count="1000">1,000</span><span style="font-size:22px;font-weight:700;">만 원 한도</span></div></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 210px;gap:24px;align-items:center;padding:24px 0;border-bottom:2px solid #F4EDDC;">
       <div><div style="font-size:28px;font-weight:800;">광고 소재 제작</div></div>
@@ -243,15 +243,15 @@ export const SUBSCRIPTION_BODY = `
     <div style="display:flex;align-items:center;gap:16px;padding:48px 0 8px;"><div style="flex:none;background:#21306F;color:#FFFFFF;font-size:20px;font-weight:700;padding:8px 18px;border-radius:999px;">바이럴·체험단·언론</div><div style="flex:1;height:2px;background:#21306F;"></div><div style="flex:none;font-size:20px;font-weight:700;">4가지</div></div>
     <div style="display:grid;grid-template-columns:1fr 210px;gap:24px;align-items:center;padding:24px 0;border-bottom:2px solid #F4EDDC;">
       <div><div style="font-size:28px;font-weight:800;">카페 바이럴</div></div>
-      <div style="text-align:right;color:#21306F;"><span style="font-size:22px;font-weight:700;">월 </span><span style="font-size:44px;font-weight:800;letter-spacing:-0.04em;" data-count="15">15</span><span style="font-size:22px;font-weight:700;">회</span></div>
+      <div style="text-align:right;color:#21306F;"><span style="font-size:22px;font-weight:700;">월 </span><span style="font-size:44px;font-weight:800;letter-spacing:-0.04em;" data-mts-count="15">15</span><span style="font-size:22px;font-weight:700;">회</span></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 210px;gap:24px;align-items:center;padding:24px 0;border-bottom:2px solid #F4EDDC;">
       <div><div style="font-size:28px;font-weight:800;">블로그 체험단</div></div>
-      <div style="text-align:right;color:#21306F;"><span style="font-size:22px;font-weight:700;">월 </span><span style="font-size:44px;font-weight:800;letter-spacing:-0.04em;" data-count="15">15</span><span style="font-size:22px;font-weight:700;">회</span></div>
+      <div style="text-align:right;color:#21306F;"><span style="font-size:22px;font-weight:700;">월 </span><span style="font-size:44px;font-weight:800;letter-spacing:-0.04em;" data-mts-count="15">15</span><span style="font-size:22px;font-weight:700;">회</span></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 210px;gap:24px;align-items:center;padding:24px 0;border-bottom:2px solid #F4EDDC;">
       <div><div style="font-size:28px;font-weight:800;">구매후기 체험단</div></div>
-      <div style="text-align:right;color:#21306F;"><span style="font-size:22px;font-weight:700;">월 </span><span style="font-size:44px;font-weight:800;letter-spacing:-0.04em;" data-count="50">50</span><span style="font-size:22px;font-weight:700;">회</span></div>
+      <div style="text-align:right;color:#21306F;"><span style="font-size:22px;font-weight:700;">월 </span><span style="font-size:44px;font-weight:800;letter-spacing:-0.04em;" data-mts-count="50">50</span><span style="font-size:22px;font-weight:700;">회</span></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 210px;gap:24px;align-items:center;padding:24px 0;">
       <div><div style="font-size:28px;font-weight:800;">언론기사 작성·송출</div></div>
