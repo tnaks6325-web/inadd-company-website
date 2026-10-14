@@ -115,17 +115,15 @@ export const RefSection = () => (
         <div class="pr-track">{REF_CASES.map((c, i) => <div class={'pr-slide' + (i === 0 ? ' is-on' : '')} data-group={c.group} key={c.id}><RefDetail c={c} /></div>)}</div>
         <button type="button" class="pr-nav pr-next" aria-label="다음 사례">›</button>
       </div>
-      <div class="pr-dots">{REF_CASES.map((c, i) => <span class={i === 0 ? 'is-on' : ''} key={c.id}></span>)}</div>
     </div>
     <script dangerouslySetInnerHTML={{ __html: `
 (function(){
-  var sec=document.currentScript.closest('section'); var slides=[].slice.call(sec.querySelectorAll('.pr-slide')); var dots=[].slice.call(sec.querySelectorAll('.pr-dots span')); var tabs=[].slice.call(sec.querySelectorAll('.pr-tab'));
+  var sec=document.currentScript.closest('section'); var slides=[].slice.call(sec.querySelectorAll('.pr-slide')); var tabs=[].slice.call(sec.querySelectorAll('.pr-tab'));
   var g='all', cur=0;
   function vis(){ return slides.filter(function(s){ return g==='all'||s.dataset.group===g; }); }
-  function show(i){ var v=vis(); cur=(i+v.length)%v.length; slides.forEach(function(s){ s.classList.toggle('is-on', s===v[cur]); }); dots.forEach(function(d,k){ d.style.display=k<v.length?'':'none'; d.classList.toggle('is-on',k===cur); }); }
+  function show(i){ var v=vis(); cur=(i+v.length)%v.length; slides.forEach(function(s){ s.classList.toggle('is-on', s===v[cur]); }); }
   tabs.forEach(function(t){ t.addEventListener('click',function(){ tabs.forEach(function(x){x.classList.toggle('is-on',x===t);}); g=t.dataset.g; show(0); }); });
   sec.querySelector('.pr-prev').addEventListener('click',function(){show(cur-1);}); sec.querySelector('.pr-next').addEventListener('click',function(){show(cur+1);});
-  dots.forEach(function(d,k){ d.addEventListener('click',function(){show(k);}); });
   var x0=null; sec.querySelector('.pr-track').addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
   sec.querySelector('.pr-track').addEventListener('touchend',function(e){ if(x0===null)return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>50) show(cur+(dx<0?1:-1)); x0=null; });
 })();` }} />
