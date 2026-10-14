@@ -69,8 +69,9 @@
     }, 500);
   }
 
-  page.querySelectorAll('[data-count]').forEach(function (el) {
-    var raw = el.dataset.count, target = parseFloat(raw), dec = (raw.split('.')[1] || '').length;
+  // 사이트 공통 스크립트(main.js)도 [data-count] 를 정수로 세므로 겹치지 않게 data-mts-count 를 쓴다(소수점 유지)
+  page.querySelectorAll('[data-mts-count]').forEach(function (el) {
+    var raw = el.dataset.mtsCount, target = parseFloat(raw), dec = (raw.split('.')[1] || '').length;
     var fmt = function (v) { return dec ? v.toFixed(dec) : Math.round(v).toLocaleString('ko-KR'); };
     el.textContent = fmt(0);
     once(el, function () {
