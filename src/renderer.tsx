@@ -169,6 +169,12 @@ fbq('track', 'PageView');
                     <a href="/marketing/performance" class="ndm-item">
                       <span class="ndm-text"><strong>퍼포먼스 마케팅</strong><em>광고 운영부터 전환 데이터 분석까지</em></span>
                     </a> */}
+                    <a href="/marketing/subscription" class="ndm-item">
+                      <span class="ndm-text">
+                        <strong>마케팅팀 구독</strong>
+                        <em>신입 1명 비용으로 전담 TF팀</em>
+                      </span>
+                    </a>
                     <a href="/marketing/viral" class="ndm-item">
                       <span class="ndm-text">
                         <strong>바이럴 마케팅</strong>
@@ -228,6 +234,7 @@ fbq('track', 'PageView');
                 <h4>Marketing</h4>
                 {/* [비공개] 퍼포먼스 마케팅 — 라이브 노출 금지. 공개 시 복구
                 <a href="/marketing/performance">퍼포먼스 마케팅</a> */}
+                <a href="/marketing/subscription">마케팅팀 구독</a>
                 <a href="/marketing/viral">바이럴 마케팅</a>
                 <a href="/marketing/influencer">인플루언서 마케팅</a>
                 <a href="/marketing/seeding">체험단</a>
@@ -315,6 +322,7 @@ fbq('track', 'PageView');
                 <div class="cf-group">
                   <label>관심 서비스 <span class="cf-opt">(복수 선택 가능)</span></label>
                   <div class="cf-chips">
+                    <label class="cf-chip"><input type="checkbox" name="service" value="마케팅팀 구독" /><span>마케팅팀 구독</span></label>
                     <label class="cf-chip"><input type="checkbox" name="service" value="퍼포먼스 마케팅" /><span>퍼포먼스 마케팅</span></label>
                     <label class="cf-chip"><input type="checkbox" name="service" value="바이럴 마케팅" /><span>바이럴 마케팅</span></label>
                     <label class="cf-chip"><input type="checkbox" name="service" value="인플루언서·유튜브" /><span>인플루언서·유튜브</span></label>

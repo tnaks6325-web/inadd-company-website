@@ -14,6 +14,7 @@ import { SvcSeedingPage } from './routes/svc-seeding'
 import { SvcReviewPage } from './routes/svc-review'
 import { SvcOliveYoungPage } from './routes/svc-oliveyoung'
 import { SvcPplPage } from './routes/svc-ppl'
+import { SvcSubscriptionPage } from './routes/svc-subscription'
 // import { SvcPerformancePage } from './routes/svc-performance'  // [비공개] 라이브 노출 금지
 import { admin } from './admin/api'
 import { MailRouter } from './routes/api-mail'
@@ -60,6 +61,7 @@ app.get('/sitemap.xml', (c) => {
     { loc: `${base}/about`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/works`, priority: '0.8', changefreq: 'weekly' },
     { loc: `${base}/insight`, priority: '0.8', changefreq: 'weekly' },
+    { loc: `${base}/marketing/subscription`, priority: '0.9', changefreq: 'monthly' },
     { loc: `${base}/marketing/viral`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/marketing/influencer`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/marketing/seeding`, priority: '0.8', changefreq: 'monthly' },
@@ -219,6 +221,14 @@ app.get('/viral', (c) => c.redirect('/#services', 301))
 //   description: '네이버·구글·메타·카카오 광고 운영부터 GA4·GTM 전환 측정, 소재 제작과 성과 분석까지. 인애드컴퍼니의 퍼포먼스 마케팅.',
 //   canonical: 'https://www.inadcompany.co.kr/marketing/performance'
 // }))
+
+app.get('/marketing/subscription', (c) => {
+  return c.render(<SvcSubscriptionPage />, {
+    title: '마케팅팀 구독',
+    description: '신입 마케터 1명 비용(월 300만 원, 부가세 별도)으로 광고·기획·디자인·영상·바이럴·체험단 전담 TF팀을 구독하세요. 초기진단·세팅 무료, 매주 브랜드 주간보고서.',
+    canonical: 'https://www.inadcompany.co.kr/marketing/subscription'
+  })
+})
 
 app.get('/marketing/viral', (c) => {
   return c.render(<SvcViralPage />, {
