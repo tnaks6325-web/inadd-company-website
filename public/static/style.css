@@ -25242,6 +25242,9 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
    (데스크톱용 흰색 플로팅 패널이 화면 밖으로 나가던 문제)
    ============================================================ */
 @media (max-width: 768px) {
+  /* 서비스 목록을 펼치면 작은 휴대폰(높이 667px 등)에서 메뉴가 화면보다 길어져
+     가운데 정렬 때문에 위(홈)·아래(문의하기)가 잘림 → 넘치면 위부터 놓고 스크롤 */
+  .main-nav { justify-content: safe center; overflow-y: auto; overscroll-behavior: contain; padding: 56px 0 16px; }
   .main-nav .nav-dropdown {
     position: static;
     display: flex;
@@ -25271,7 +25274,7 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
                 padding .3s ease, margin .3s ease;
   }
   .main-nav .nav-dropdown.open .nav-dropdown-menu {
-    max-height: 430px;
+    max-height: 560px; /* 서비스 8개(약 480px) + 여유. 항목을 더 늘리면 같이 올릴 것 */
     opacity: 1;
     pointer-events: auto;
     margin: 2px auto 6px;
@@ -25291,6 +25294,8 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
   .main-nav .nav-dropdown.open .ndm-inner > .ndm-item:nth-child(4) { transition-delay: .2s; }
   .main-nav .nav-dropdown.open .ndm-inner > .ndm-item:nth-child(5) { transition-delay: .25s; }
   .main-nav .nav-dropdown.open .ndm-inner > .ndm-item:nth-child(6) { transition-delay: .3s; }
+  .main-nav .nav-dropdown.open .ndm-inner > .ndm-item:nth-child(7) { transition-delay: .35s; }
+  .main-nav .nav-dropdown.open .ndm-inner > .ndm-item:nth-child(8) { transition-delay: .4s; }
   .main-nav .nav-dropdown-menu::before { display: none; }
   .main-nav .ndm-item {
     justify-content: center;

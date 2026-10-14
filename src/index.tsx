@@ -15,7 +15,7 @@ import { SvcReviewPage } from './routes/svc-review'
 import { SvcOliveYoungPage } from './routes/svc-oliveyoung'
 import { SvcPplPage } from './routes/svc-ppl'
 import { SvcSubscriptionPage } from './routes/svc-subscription'
-// import { SvcPerformancePage } from './routes/svc-performance'  // [비공개] 라이브 노출 금지
+import { SvcPerformancePage } from './routes/svc-performance'
 import { admin } from './admin/api'
 import { MailRouter } from './routes/api-mail'
 
@@ -62,6 +62,7 @@ app.get('/sitemap.xml', (c) => {
     { loc: `${base}/works`, priority: '0.8', changefreq: 'weekly' },
     { loc: `${base}/insight`, priority: '0.8', changefreq: 'weekly' },
     { loc: `${base}/marketing/subscription`, priority: '0.9', changefreq: 'monthly' },
+    { loc: `${base}/marketing/performance`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/marketing/viral`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/marketing/influencer`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/marketing/seeding`, priority: '0.8', changefreq: 'monthly' },
@@ -214,13 +215,11 @@ app.get('/marketing', (c) => c.redirect('/#services', 301))
 app.get('/viral', (c) => c.redirect('/#services', 301))
 
 // 개별 서비스 페이지
-/* [비공개] 퍼포먼스 마케팅 — 작업 중이라 라이브 노출 금지.
-   공개할 때 아래 주석을 해제하고, home.tsx의 HSVC 항목과 renderer.tsx의 헤더/푸터 링크도 함께 되살릴 것. */
-// app.get('/marketing/performance', (c) => c.render(<SvcPerformancePage />, {
-//   title: '퍼포먼스 마케팅',
-//   description: '네이버·구글·메타·카카오 광고 운영부터 GA4·GTM 전환 측정, 소재 제작과 성과 분석까지. 인애드컴퍼니의 퍼포먼스 마케팅.',
-//   canonical: 'https://www.inadcompany.co.kr/marketing/performance'
-// }))
+app.get('/marketing/performance', (c) => c.render(<SvcPerformancePage />, {
+  title: '퍼포먼스 마케팅',
+  description: '네이버·구글·메타·카카오 광고 운영부터 GA4·GTM 전환 측정, 소재 제작과 성과 분석까지. 인애드컴퍼니의 퍼포먼스 마케팅.',
+  canonical: 'https://www.inadcompany.co.kr/marketing/performance'
+}))
 
 app.get('/marketing/subscription', (c) => {
   return c.render(<SvcSubscriptionPage />, {

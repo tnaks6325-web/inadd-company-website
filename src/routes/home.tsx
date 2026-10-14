@@ -71,8 +71,7 @@ const TCard = ({ t, dup }: { t: any; dup?: boolean }) => (
 /* ── 홈 서비스 간략 데이터 (WHAT WE DO 간소화 — 텍스트 탭 선택형) ── */
 const HSVC = [
   { key: 'viral', en: 'Viral Marketing', ko: '바이럴 마케팅', desc: '검색해도 우리 브랜드 이야기가 없을 때', href: '/marketing/viral' },
-  /* [비공개] 퍼포먼스 마케팅 — 작업 중이라 라이브 노출 금지. 공개 시 아래 주석 해제 */
-  // { key: 'performance', en: 'Performance Marketing', ko: '퍼포먼스 마케팅', desc: '네이버·구글·메타·카카오 광고 운영과 전환 분석', href: '/marketing/performance' },
+  { key: 'performance', en: 'Performance Marketing', ko: '퍼포먼스 마케팅', desc: '네이버·구글·메타·카카오 광고 운영과 전환 분석', href: '/marketing/performance' },
   { key: 'influencer', en: 'Influencer & YouTube', ko: '인플루언서 · 유튜브 마케팅', desc: '어떤 크리에이터와 해야 할지 모르겠을 때', href: '/marketing/influencer' },
   { key: 'seeding', en: 'Seeding Campaign', ko: '체험단 마케팅', desc: '신제품인데 써본 사람이 없을 때', href: '/marketing/seeding' },
   { key: 'review', en: 'Customer Review', ko: '리뷰 마케팅', desc: '장바구니까지 왔다가 그냥 나갈 때', href: '/marketing/review' },
