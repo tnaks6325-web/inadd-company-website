@@ -11,7 +11,7 @@ const Check = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" 
 export const SvcPerformancePage = () => (
   <div class="pm-page">
     <link rel="stylesheet" href="/static/performance.css" />
-    <link rel="stylesheet" href="/static/performance-ref.css" />
+    <link rel="stylesheet" href="/static/performance-ref.css?v=20261014a" />
     <section class="vh-hero vh-hero--photo pm-hero">
       <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/mkt-images/hero_im.png')"></div>
       <div class="container vh-inner">
