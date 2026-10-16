@@ -943,7 +943,7 @@ function adminDashboardHTML(): string {
             <span style="color:#285CCC;font-size:13px;font-weight:600"><i class="fas fa-crosshairs"></i> 지도 좌표 (필수)</span>
             <a id="btnOpenKakaoMap" href="#" target="_blank"
               style="font-size:12px;color:#A16207;text-decoration:none;background:#FFFBEB;border:1px solid #FBF3D6;border-radius:6px;padding:4px 10px">
-              <i class="fas fa-external-link-alt"></i> 카카오맵에서 좌표 확인
+              <i class="fas fa-link"></i> 카카오맵에서 좌표 확인
             </a>
           </div>
           <p style="color:#8A8A90;font-size:12px;margin-bottom:10px;line-height:1.6">
