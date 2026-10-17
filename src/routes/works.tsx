@@ -33,7 +33,7 @@ export const WorkCards = ({ items }: { items: WorkItem[] }) => (
   </>
 )
 
-// 광고 성과 카드 — 퍼포먼스 마케팅 페이지의 매체별 성과 레퍼런스(인애드컴퍼니_광고성과_레퍼런스.pdf)와 같은 데이터
+// 그로스(광고 성과) 카드 — 퍼포먼스 마케팅 페이지의 매체별 성과 레퍼런스(인애드컴퍼니_광고성과_레퍼런스.pdf)와 같은 데이터
 const AdCards = () => (
   <>
     {REF_CASES.map(c => (
@@ -45,7 +45,7 @@ const AdCards = () => (
         </div>
         <div class="wg-meta">
           <span class="wg-brand">{c.client}</span>
-          <p class="wg-tags-text">광고 성과 · {c.media.join(' + ')}</p>
+          <p class="wg-tags-text">그로스 · {c.media.join(' + ')}</p>
         </div>
       </a>
     ))}
@@ -75,16 +75,16 @@ export const WorksPage = () => (
         {/* Filter */}
         <div class="works-filter" id="worksFilter">
           <button class="wf-btn active" data-filter="all">전체</button>
+          <button class="wf-btn" data-filter="performance">그로스</button>
           <button class="wf-btn" data-filter="viral">바이럴</button>
           <button class="wf-btn" data-filter="influencer">인플루언서</button>
           <button class="wf-btn" data-filter="seeding">체험단</button>
           <button class="wf-btn" data-filter="review">리뷰</button>
           <button class="wf-btn" data-filter="oliveyoung">올리브영</button>
           <button class="wf-btn" data-filter="ppl">PPL</button>
-          <button class="wf-btn" data-filter="performance">광고 성과</button>
         </div>
 
-        {/* Grid — 관리자 등록 사례는 서버(main.tsx)가 앞에 채우고, 없으면 스크립트가 불러와 그린다. 광고 성과 카드는 맨 뒤 고정 */}
+        {/* Grid — 관리자 등록 사례는 서버(main.tsx)가 앞에 채우고, 없으면 스크립트가 불러와 그린다. 그로스(광고 성과) 카드는 맨 뒤 고정 */}
         <div class="wg-grid" id="worksGrid">
           <AdCards />
         </div>{/* /wg-grid */}
