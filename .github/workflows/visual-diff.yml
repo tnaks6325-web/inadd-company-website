@@ -100,7 +100,12 @@ jobs:
           {
             echo "@${{ github.repository_owner }} 수정본 화면 비교가 준비됐습니다. (커밋 \`${HEAD_SHA:0:7}\`)"
             echo
+            echo "**이 메일에 '승인' 두 글자만 답장하면 실제 사이트에 반영됩니다.** 고칠 점은 답장에 적으면 수정한 분께 그대로 전달됩니다."
+            echo
             sed "s#{{IMG_BASE}}#${IMG_BASE}#g" "$RUNNER_TEMP/out/comment.md"
+            echo
+            # 답장 승인이 이 메일이 어느 수정본인지 확인하는 값(커밋 전체). 지우지 말 것 — reply-approval.yml 이 읽는다.
+            echo "<sub>확인 번호: \`${HEAD_SHA}\`</sub>"
           } > "$RUNNER_TEMP/comment.md"
           gh pr comment "$PR" --repo "${{ github.repository }}" --body-file "$RUNNER_TEMP/comment.md"
 
@@ -110,4 +115,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh pr comment "$PR" --repo "${{ github.repository }}" --body \
-            "@${{ github.repository_owner }} 화면 비교 캡처를 만들지 못했습니다. (커밋 \`${HEAD_SHA:0:7}\`) 테스트 서버 주소에서 직접 확인해 주세요. 기록: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            "@${{ github.repository_owner }} 화면 비교 캡처를 만들지 못했습니다. (커밋 \`${HEAD_SHA:0:7}\`) 이 수정본은 메일 답장으로 승인할 수 없습니다. 테스트 서버 주소에서 직접 확인한 뒤 GitHub 화면에서 승인해 주세요. 기록: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
