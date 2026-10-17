@@ -27053,3 +27053,19 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
   cursor: not-allowed;
   pointer-events: none;
 }
+
+/* ── 포트폴리오: 광고 성과 카드 (퍼포먼스 성과 레퍼런스와 같은 색) ── */
+.wg-card--ad { display: block; text-decoration: none; }
+.wg-thumb.wg-ad { display: flex; flex-direction: column; justify-content: space-between; gap: 10px; padding: 22px 22px 20px; background: #fff !important; box-shadow: inset 0 0 0 1px #e6e8ee; text-align: left; }
+.wg-ad-media { display: flex; flex-wrap: wrap; gap: 6px; }
+.wg-ad-media span { display: inline-flex; align-items: center; height: 26px; padding: 0 9px; border-radius: 4px; background: #151b28; color: #fff !important; font-size: 12.5px; font-weight: 700; }
+.wg-ad-media span:first-child { background: #285ccc; }
+.wg-ad-kpi { display: flex; flex-direction: column; }
+.wg-ad-kpi strong { color: #285ccc !important; font-size: 40px; line-height: 1.05; font-weight: 800; letter-spacing: -.04em; }
+.wg-ad-kpi strong small { font-size: 18px; margin-left: 2px; }
+.wg-ad-kpi b { margin-top: 8px; font-size: 15px; color: #151b28 !important; }
+.wg-ad-kpi span { margin-top: 3px; font-size: 13px; color: #4b4f59 !important; }
+.wg-ad-title { margin: 0; font-size: 15px; line-height: 1.45; font-weight: 700; color: #151b28 !important; letter-spacing: -.02em; }
+.wg-card--ad:hover .wg-thumb.wg-ad { box-shadow: inset 0 0 0 2px #285ccc; }
+@media (max-width: 1100px) { .wg-ad-kpi strong { font-size: 34px; } }
+@media (max-width: 640px) { .wg-thumb.wg-ad { aspect-ratio: auto; min-height: 260px; } }

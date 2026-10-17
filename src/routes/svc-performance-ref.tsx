@@ -112,7 +112,7 @@ export const RefSection = () => (
       </div>
       <div class="pr-viewport">
         <button type="button" class="pr-nav pr-prev" aria-label="이전 사례">‹</button>
-        <div class="pr-track">{REF_CASES.map((c, i) => <div class={'pr-slide' + (i === 0 ? ' is-on' : '')} data-group={c.group} key={c.id}><RefDetail c={c} /></div>)}</div>
+        <div class="pr-track">{REF_CASES.map((c, i) => <div class={'pr-slide' + (i === 0 ? ' is-on' : '')} data-ref={`ref-${c.id}`} data-group={c.group} key={c.id}><RefDetail c={c} /></div>)}</div>
         <button type="button" class="pr-nav pr-next" aria-label="다음 사례">›</button>
       </div>
     </div>
@@ -123,6 +123,10 @@ export const RefSection = () => (
   function vis(){ return slides.filter(function(s){ return g==='all'||s.dataset.group===g; }); }
   function show(i){ var v=vis(); cur=(i+v.length)%v.length; slides.forEach(function(s){ s.classList.toggle('is-on', s===v[cur]); }); }
   tabs.forEach(function(t){ t.addEventListener('click',function(){ tabs.forEach(function(x){x.classList.toggle('is-on',x===t);}); g=t.dataset.g; show(0); }); });
+  // 포트폴리오의 광고 성과 카드에서 #ref-<id> 로 들어오면 그 사례를 펼치고 구간 머리부터 보이게 한다
+  function fromHash(){ var i=slides.findIndex(function(s){ return '#'+s.dataset.ref===location.hash; }); if(i<0)return; tabs.forEach(function(x){x.classList.toggle('is-on',x.dataset.g==='all');}); g='all'; show(i);
+    var go=function(){ window.scrollTo(0, sec.getBoundingClientRect().top + window.scrollY - 70); }; go(); window.addEventListener('load', go, { once:true }); }
+  window.addEventListener('hashchange',fromHash); fromHash();
   sec.querySelector('.pr-prev').addEventListener('click',function(){show(cur-1);}); sec.querySelector('.pr-next').addEventListener('click',function(){show(cur+1);});
   var x0=null; sec.querySelector('.pr-track').addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
   sec.querySelector('.pr-track').addEventListener('touchend',function(e){ if(x0===null)return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>50) show(cur+(dx<0?1:-1)); x0=null; });

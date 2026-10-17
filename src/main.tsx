@@ -3,6 +3,8 @@ import app from './index'
 import { renderer } from './renderer'
 import { BlogRouter } from './routes/api-blog'
 import { InsightDetailPage } from './routes/insight-detail'
+import { WorkCards, visibleWorks, type WorkItem } from './routes/works'
+import { kvGet } from './admin/store'
 import {
   getPosts, realId, postPath, absoluteUrl, plainText, xmlEscape,
   SITE_URL, CAT_LABEL, SUB_LABEL, type InsightPost,
@@ -12,8 +14,10 @@ import {
 //  진입점. 인사이트(블로그) 관련 경로만 여기서 처리하고
 //  나머지는 기존 src/index.tsx 앱에 그대로 넘긴다.
 //   - /insight, /insight/:id : 서버에서 글을 그려 검색로봇이 읽을 수 있게
-//   - /sitemap.xml, /robots.txt : 글 주소 추가 / 썸네일 크롤링 허용
+//   - /sitemap.xml, /robots.txt : 글 주소 추가 / 썸네일·공개 데이터 크롤링 허용
 //   - /insight/rss.xml : 새 글 알림용 RSS
+//   - /works : 포트폴리오 카드를 서버에서 미리 채워 검색로봇이 읽을 수 있게
+//   - /api/admin/public/* : 화면이 불러가는 공개 데이터 — 로봇이 읽게 열되 검색결과에는 안 나오게
 //   - /api/blog/* : 노션 자동 발행 API
 // ─────────────────────────────────────────────
 
@@ -28,6 +32,12 @@ root.use('*', async (c, next) => {
 })
 
 root.route('/api/blog', BlogRouter)
+
+// 공개 데이터(포트폴리오·FAQ·상단 숫자 등)는 robots 에서 열어 두므로, 데이터 주소 자체는 검색결과에 안 나오게 한다
+root.use('/api/admin/public/*', async (c, next) => {
+  await next()
+  c.res.headers.set('X-Robots-Tag', 'noindex')
+})
 
 function passThrough(c: any): Response | Promise<Response> {
   let ctx: any
@@ -67,6 +77,18 @@ root.get('/insight', async (c) => {
   html = html
     .replace('id="ins2Loading"', 'id="ins2Loading" style="display:none"')
     .replace('<div class="ins2-grid" id="ins2Grid">', `<div class="ins2-grid" id="ins2Grid">${await cards}`)
+  return c.html(html, 200)
+})
+
+// ── 포트폴리오: 관리자 등록 사례를 서버에서 미리 채운다(페이지 스크립트는 data-ssr 이 있으면 다시 불러오지 않음) ──
+root.get('/works', async (c) => {
+  const [res, raw] = await Promise.all([passThrough(c), kvGet(kvOf(c), 'works_items').catch(() => null)])
+  if (!res.ok || !raw) return res
+  let items: WorkItem[]
+  try { items = visibleWorks(JSON.parse(raw)) } catch { return res }
+  if (!items.length) return res
+  const html = (await res.text())
+    .replace('<div class="wg-grid" id="worksGrid">', `<div class="wg-grid" id="worksGrid" data-ssr="1">${await (<WorkCards items={items} />).toString()}`)
   return c.html(html, 200)
 })
 
@@ -148,11 +170,13 @@ root.get('/sitemap.xml', async (c) => {
   return c.body(xml.replace('</urlset>', `${extra}\n</urlset>`), 200, { 'Content-Type': 'application/xml' })
 })
 
-// ── robots: 썸네일 이미지 크롤링 허용 ──
+// ── robots: 썸네일 이미지·공개 데이터 크롤링 허용 ──
 root.get('/robots.txt', async (c) => {
   const res = await passThrough(c)
   if (!res.ok) return res
-  const txt = (await res.text()).replace('Disallow: /api/', 'Allow: /api/admin/insight-img/\nDisallow: /api/')
+  // 화면이 불러가는 공개 데이터·이미지만 열고 나머지 /api/ 는 그대로 막는다
+  const allow = ['/api/admin/insight-img/', '/api/admin/works-img/', '/api/admin/logo/', '/api/admin/public/'].map(p => `Allow: ${p}`).join('\n')
+  const txt = (await res.text()).replace('Disallow: /api/', `${allow}\nDisallow: /api/`)
   return c.body(txt, 200, { 'Content-Type': 'text/plain' })
 })
 

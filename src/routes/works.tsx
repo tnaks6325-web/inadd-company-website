@@ -1,3 +1,57 @@
+import { REF_CASES } from './svc-performance-ref'
+
+// ── 포트폴리오 카드 ──
+// 관리자에 등록된 사례(works_items)를 서버에서 미리 그려 검색로봇도 읽게 한다(main.tsx 가 채움).
+// 아래 페이지 스크립트의 동적 렌더와 같은 모양이어야 한다 — 한쪽을 바꾸면 다른 쪽도 바꾼다.
+export type WorkItem = { brand?: string; services?: string; tags?: string[]; thumb?: string; cover?: string; featuredRank?: number | string }
+
+// 대표이미지(cover) 있는 항목만, featuredRank 순(없으면 등록 순)
+export const visibleWorks = (items: WorkItem[]) =>
+  items.map((item, index) => ({ item, index }))
+    .filter(e => e.item.cover)
+    .sort((a, b) => ((Number(a.item.featuredRank) || 999) - (Number(b.item.featuredRank) || 999)) || a.index - b.index)
+    .map(e => e.item)
+
+export const WorkCards = ({ items }: { items: WorkItem[] }) => (
+  <>
+    {items.map(item => (
+      <article class="wg-card wg-card--cover" data-cat={(item.tags || []).join(' ')}>
+        <div class="wg-thumb wg-thumb--cover">
+          <img class="wg-cover-img" src={item.cover} alt={item.brand || ''} loading="lazy" onerror="this.style.opacity=0" />
+          {item.thumb && (
+            <div class="wg-overlay" aria-hidden="true">
+              <img class="wg-overlay-logo-img" src={item.thumb} alt="" crossorigin="anonymous" loading="lazy" decoding="async" onload="window.fitWorksLogo&&fitWorksLogo(this)" onerror="if(this.crossOrigin!=null){this.crossOrigin=null;var s=this.src;this.src=s;}" />
+            </div>
+          )}
+        </div>
+        <div class="wg-meta">
+          <span class="wg-brand">{item.brand || ''}</span>
+          <p class="wg-tags-text">{item.services || ''}</p>
+        </div>
+      </article>
+    ))}
+  </>
+)
+
+// 광고 성과 카드 — 퍼포먼스 마케팅 페이지의 매체별 성과 레퍼런스(인애드컴퍼니_광고성과_레퍼런스.pdf)와 같은 데이터
+const AdCards = () => (
+  <>
+    {REF_CASES.map(c => (
+      <a class="wg-card wg-card--ad" data-cat="performance" href={`/marketing/performance#ref-${c.id}`}>
+        <div class="wg-thumb wg-ad">
+          <div class="wg-ad-media">{c.media.map(m => <span>{m}</span>)}</div>
+          <div class="wg-ad-kpi"><strong>{c.kpis[0].num}<small>{c.kpis[0].unit}</small></strong><b>{c.kpis[0].label}</b><span>{c.kpis[0].detail}</span></div>
+          <p class="wg-ad-title">{c.title[0]}<br />{c.title2}</p>
+        </div>
+        <div class="wg-meta">
+          <span class="wg-brand">{c.client}</span>
+          <p class="wg-tags-text">광고 성과 · {c.media.join(' + ')}</p>
+        </div>
+      </a>
+    ))}
+  </>
+)
+
 export const WorksPage = () => (
   <>
     {/* ── Page Hero ── */}
@@ -27,10 +81,12 @@ export const WorksPage = () => (
           <button class="wf-btn" data-filter="review">리뷰</button>
           <button class="wf-btn" data-filter="oliveyoung">올리브영</button>
           <button class="wf-btn" data-filter="ppl">PPL</button>
+          <button class="wf-btn" data-filter="performance">광고 성과</button>
         </div>
 
-        {/* Grid — 관리자 등록 데이터로 동적 렌더 */}
+        {/* Grid — 관리자 등록 사례는 서버(main.tsx)가 앞에 채우고, 없으면 스크립트가 불러와 그린다. 광고 성과 카드는 맨 뒤 고정 */}
         <div class="wg-grid" id="worksGrid">
+          <AdCards />
         </div>{/* /wg-grid */}
       </div>
     </section>
@@ -140,9 +196,18 @@ export const WorksPage = () => (
       img.src=norm.toDataURL('image/png');
     } catch(e) {}
   };
-  fetch('/api/admin/public/works')
-    .then(function(r){ return r.json(); })
+  var ssrGrid = document.getElementById('worksGrid');
+  var ssr = ssrGrid && ssrGrid.hasAttribute('data-ssr');
+  (ssr ? Promise.resolve(null) : fetch('/api/admin/public/works').then(function(r){ return r.json(); }))
     .then(function(data){
+      var grid = document.getElementById('worksGrid');
+      if(!grid) return;
+      if(ssr){
+        grid.removeAttribute('data-ssr');
+        // 페이지 스크립트보다 먼저 로드된 로고는 여기서 맞춘다
+        grid.querySelectorAll('.wg-overlay-logo-img').forEach(function(img){ if(img.complete && img.naturalWidth) fitWorksLogo(img); });
+        return grid;
+      }
       // 대표이미지(cover) 있는 항목만 노출 — 데이터는 유지, 표시만 필터
       var items = (data.items || []).filter(function(it){ return it.cover; });
       items = items.map(function(item, index){ return { item:item, index:index }; })
@@ -152,14 +217,8 @@ export const WorksPage = () => (
           return ar === br ? a.index - b.index : ar - br;
         })
         .map(function(entry){ return entry.item; });
-      var grid = document.getElementById('worksGrid');
-      if(!grid) return;
-      if(!items.length) {
-        grid.innerHTML = '<p class="wg-empty">등록된 포트폴리오가 없습니다.</p>';
-        return;
-      }
-      // 기존 정적 카드 제거 후 동적 렌더
-      grid.innerHTML = '';
+      var firstAd = grid.querySelector('.wg-card--ad');
+      grid.querySelectorAll('.wg-card:not(.wg-card--ad), .wg-empty').forEach(function(el){ el.remove(); });
       items.forEach(function(item){
         var tags = (item.tags||[]).join(' ');
         var article = document.createElement('article');
@@ -193,8 +252,12 @@ export const WorksPage = () => (
             +'</div>'
             +metaHtml;
         }
-        grid.appendChild(article);
+        grid.insertBefore(article, firstAd);
       });
+      return grid;
+    })
+    .then(function(grid){
+      if(!grid) return;
       // 이미지 가장자리 색을 읽어 카드 배경을 자동 매칭 — 배경색 다른 이미지의 흰 테두리 띠 제거
       function tintThumb(img){
         try{
