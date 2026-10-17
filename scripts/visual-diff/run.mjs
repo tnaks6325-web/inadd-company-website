@@ -30,6 +30,8 @@ const DEVICES = [
 // 항상 보는 페이지(사이트맵에 없어도). 인사이트 상세는 글 데이터가 로컬에 없어 제외.
 const ALWAYS = ['/', '/marketing/seo']
 const SKIP = [/^\/insight\/./, /^\/admin/, /^\/api\//]
+// 검사 중 실제 방문 통계에 가짜 방문이 쌓이지 않도록 막는 주소
+const BLOCK_HOSTS = /(^|\.)(googletagmanager\.com|google-analytics\.com|analytics\.google\.com|doubleclick\.net|facebook\.net|facebook\.com|wcs\.naver\.net|wcs\.naver\.com)$/
 const FIXED_TIME = new Date('2026-01-05T10:00:00+09:00')
 const PAD = 120          // 달라진 줄 위아래로 함께 보여줄 여백(px, CSS 기준)
 const MERGE_GAP = 240    // 이보다 가까운 변경 묶음은 한 그림으로
@@ -39,13 +41,13 @@ const MAX_PAGES_DIFF_ROWS = 3000 // 이보다 많이 달라지면 줄 맞춤 포
 
 // ─────────────── 페이지 목록 ───────────────
 async function sitemapPaths(origin) {
-  try {
-    const res = await fetch(origin + '/sitemap.xml')
-    const xml = await res.text()
-    return [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map(m => new URL(m[1]).pathname)
-  } catch {
-    return []
-  }
+  // 사이트맵을 못 읽으면 일부 페이지만 보고 "바뀐 곳 없음"이라 할 수 있으므로 멈춘다
+  const res = await fetch(origin + '/sitemap.xml')
+  if (!res.ok) throw new Error(`사이트맵을 읽지 못함 (${origin}, ${res.status})`)
+  const xml = await res.text()
+  const list = [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map(m => new URL(m[1]).pathname)
+  if (!list.length) throw new Error(`사이트맵에 페이지가 없음 (${origin})`)
+  return list
 }
 
 // ─────────────── 캡처 ───────────────
@@ -67,6 +69,11 @@ async function shoot(browser, device, url) {
   await context.addInitScript(() => {
     let s = 20260105
     Math.random = () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646
+  })
+  await context.route('**/*', route => {
+    let host = ''
+    try { host = new URL(route.request().url()).hostname } catch {}
+    return BLOCK_HOSTS.test(host) ? route.abort() : route.continue()
   })
   const page = await context.newPage()
   await page.clock.install({ time: FIXED_TIME })
@@ -93,14 +100,15 @@ async function shoot(browser, device, url) {
     await page.clock.runFor(3000)
     await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {})
     // 페이지 안 타이머는 멈춰 있으므로, 최대 대기 시간은 페이지 밖(여기)에서 잰다
+    let waitTimer
     await Promise.race([
       page.evaluate(async () => {
         await document.fonts.ready
-        const imgs = [...document.images].filter(i => !i.complete && i.loading !== 'lazy')
+        const imgs = [...document.images].filter(i => !i.complete)
         await Promise.all(imgs.map(i => new Promise(r => { i.onload = i.onerror = r })))
       }).catch(() => {}),
-      new Promise(r => setTimeout(r, 8000)),
-    ])
+      new Promise(r => { waitTimer = setTimeout(r, 8000) }),
+    ]).finally(() => clearTimeout(waitTimer))
     await page.evaluate(() => {
       for (const v of document.querySelectorAll('video')) {
         v.removeAttribute('autoplay')
@@ -115,7 +123,7 @@ async function shoot(browser, device, url) {
       fullPage: true,
       animations: 'disabled',
       caret: 'hide',
-      mask: [page.locator('iframe, .leaflet-container')],
+      mask: [page.locator('iframe, .leaflet-container, img[src*="ytimg.com"], img[src*="youtube.com"]')],
       maskColor: '#d9d9de',
     })
     return { ok: true, status, title, png: PNG.sync.read(buf) }
@@ -394,10 +402,13 @@ const report = { pages: [], images: [] }
 for (const p of paths) {
   for (const device of DEVICES) {
     // 한 장이 2분 넘게 걸리면 그 화면은 "열리지 않음"으로 처리하고 넘어간다
-    const timed = url => Promise.race([
-      shoot(browser, device, url),
-      new Promise(r => setTimeout(() => r({ ok: false, status: 0, title: '', error: '2분 안에 찍지 못함' }), 120000)),
-    ])
+    const timed = url => {
+      let timer
+      return Promise.race([
+        shoot(browser, device, url),
+        new Promise(r => { timer = setTimeout(() => r({ ok: false, status: 0, title: '', error: '2분 안에 찍지 못함' }), 120000) }),
+      ]).finally(() => clearTimeout(timer))
+    }
     const [a, b] = [await timed(BASE + p), await timed(HEAD + p)]
     const entry = { path: p, device: device.key, title: b.title || a.title || p }
     if (!a.ok || !b.ok || a.status >= 400 || b.status >= 400) {
@@ -462,7 +473,7 @@ for (const e of special) {
 }
 lines.push('')
 const same = report.pages.filter(e => e.state === 'same').length
-lines.push(`<sub>확인한 페이지 ${paths.length}개 × PC·휴대폰. 바뀌지 않은 화면 ${same}개는 생략했습니다. 움직이는 요소는 멈춘 상태로, 글·영상 같은 관리자 화면 데이터는 비운 상태로 찍습니다. 유튜브·지도 같은 외부 삽입물은 회색 상자로 가립니다.</sub>`)
+lines.push(`<sub>확인한 페이지 ${paths.length}개 × PC·휴대폰. 바뀌지 않은 화면 ${same}개는 생략했습니다. 움직이는 요소는 멈춘 상태로, 글·영상 같은 관리자 화면 데이터는 비운 상태로 찍습니다. 유튜브·지도 같은 외부 삽입물은 회색 상자로 가리고, 방문 통계는 보내지 않습니다.</sub>`)
 fs.writeFileSync(path.join(OUT, 'comment.md'), lines.join('\n'))
 fs.writeFileSync(path.join(OUT, 'report.json'), JSON.stringify({ paths, ...report }, null, 2))
 console.log(`완료: 달라진 화면 ${changed.length}개, 그림 ${report.images.length}장`)
