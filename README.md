@@ -36,7 +36,7 @@ PR 이 열리거나 커밋이 더 올라오면 GitHub Actions 가 자동으로:
 화면 비교 댓글 알림 메일에 대표가 **"승인"** 이라고만 답장하면(GitHub 이 답장을 PR 댓글로 올림) 자동으로 PR 을 승인·병합한다.
 
 - 대상: 저장소 주인이 단 댓글 중, 인용(`>`)·빈 줄을 뺀 첫 줄이 정확히 `승인`(끝의 `.` `!` 허용)인 것. 그 밖의 답장은 그냥 PR 댓글로 남아 수정한 사람에게 전달된다.
-- 병합 전 확인: PR 이 열려 있고 `main` 대상·같은 저장소 브랜치 / **지금 head 커밋의 비교 댓글이 승인 답장보다 먼저 올라왔는지**(새 커밋 뒤 옛 메일에 답장하면 거절) / 그 커밋의 `visual-diff.yml` 실행이 성공했는지 / `.github/`·`scripts/visual-diff/` 를 고치지 않았는지(고쳤으면 GitHub 화면에서 직접 승인).
+- 병합 전 확인: PR 이 열려 있고 `main` 대상·같은 저장소 브랜치 / **답장에 인용된 비교 메일의 커밋 = 지금 head 커밋**(옛 메일에 늦게 답장하면 거절. 인용이 없는 GitHub 화면 댓글은 아래 시각 비교만) / 지금 head 커밋의 비교 댓글이 승인 답장보다 먼저 올라왔는지 / 그 커밋의 `visual-diff.yml` 실행이 성공했는지 / `.github/`·`scripts/visual-diff/` 를 고치지 않았는지(고쳤으면 GitHub 화면에서 직접 승인).
 - 승인(작성자가 대표 본인이면 생략) → `sha` 고정 병합. 결과는 github-actions 가 `@주인` 댓글로 알린다(반영 완료 / 거절 이유).
 - 열쇠: 대표 계정 fine-grained 토큰(이 저장소 + 시험 저장소, Contents·Pull requests 쓰기). 환경 `reply-approval`(배포 브랜치 `main` 만)의 비밀값 `MERGE_TOKEN` — `main` 에서 도는 작업만 꺼낼 수 있어 협업자 브랜치의 작업은 읽지 못한다. 원본은 대표 맥 `~/.config/inadd/github-merge-token`.
   - **만료 2027-10-17.** 만료되면 "열쇠가 만료" 댓글이 오고, GitHub 화면 승인은 계속 된다. 새로 만들어 `gh secret set MERGE_TOKEN --env reply-approval < 파일` 로 교체.
