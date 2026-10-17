@@ -70,18 +70,19 @@ jobs:
           [ "$base" = "main" ] || stop "실제 사이트용 수정본이 아니라(대상 $base) 반영하지 않았습니다."
           [ "$head_repo" = "$REPO" ] || stop "다른 저장소에서 온 수정본이라 답장 승인이 안 됩니다. GitHub 화면에서 직접 확인해 주세요."
 
-          # 자동화 파일(이 규칙·비교 캡처)을 고친 수정본은 사람이 직접 봐야 한다.
-          # 파일 목록 API 는 3000개에서 잘리므로, 갈라진 지점과 지금 수정본의 폴더 트리 해시를 직접 비교한다(조회 실패 시 거절).
+          # 자동화 파일(이 규칙·비교 캡처)과 설치·빌드 설정(설치 훅으로 캡처를 바꿔치기할 수 있는 곳)을 고친 수정본은
+          # 사람이 직접 봐야 한다. 파일 목록 API 는 3000개에서 잘리므로, 갈라진 지점과 지금 수정본의
+          # 해시를 직접 비교한다(조회 실패 시 거절).
           mb=$(gh api "repos/$REPO/compare/main...$sha" --jq .merge_base_commit.sha) || stop "수정본 비교 정보를 읽지 못해 반영하지 않았습니다. GitHub 화면에서 직접 확인해 주세요."
-          tree_sha() { # $1=커밋 $2=상위 폴더(빈칸=맨 위) $3=폴더 이름. 상위 폴더가 없으면(404) "없음"
-            local o; o=$(gh api "repos/$REPO/contents${2:+/$2}?ref=$1" --jq "[.[] | select(.name==\"$3\" and .type==\"dir\") | .sha][0] // \"없음\"" 2>&1) \
+          tree_sha() { # $1=커밋 $2=상위 폴더(빈칸=맨 위) $3=파일·폴더 이름. 상위 폴더가 없으면(404) "없음"
+            local o; o=$(gh api "repos/$REPO/contents${2:+/$2}?ref=$1" --jq "[.[] | select(.name==\"$3\") | .sha][0] // \"없음\"" 2>&1) \
               && { echo "$o"; return 0; }
             case "$o" in *"HTTP 404"*) echo "없음" ;; *) return 1 ;; esac; }
-          for spot in ":.github" "scripts:visual-diff"; do
+          for spot in ":.github" "scripts:visual-diff" ":package.json" ":package-lock.json" ":.npmrc" ":vite.config.ts" ":wrangler.jsonc"; do
             parent=${spot%%:*}; name=${spot#*:}
             before=$(tree_sha "$mb" "$parent" "$name") && after=$(tree_sha "$sha" "$parent" "$name") \
               || stop "수정본 폴더 정보를 읽지 못해 반영하지 않았습니다. GitHub 화면에서 직접 확인해 주세요."
-            [ "$before" = "$after" ] || stop "자동화 파일을 고친 수정본은 답장 승인이 안 됩니다. GitHub 화면에서 직접 확인해 주세요. (고친 폴더: ${parent:+$parent/}$name)"
+            [ "$before" = "$after" ] || stop "자동화·설치 설정 파일을 고친 수정본은 답장 승인이 안 됩니다. GitHub 화면에서 직접 확인해 주세요. (고친 곳: ${parent:+$parent/}$name)"
           done
 
           # 메일 답장에는 원래 메일이 인용(>)되어 붙는다. 비교 메일 끝의 "확인 번호"(커밋 전체 40자리)가
