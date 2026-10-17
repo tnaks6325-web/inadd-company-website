@@ -34,7 +34,7 @@ export const WorkCards = ({ items }: { items: WorkItem[] }) => (
 )
 
 // 그로스(광고 성과) 카드 — 퍼포먼스 마케팅 페이지의 매체별 성과 레퍼런스(인애드컴퍼니_광고성과_레퍼런스.pdf)와 같은 데이터
-const AdCards = () => (
+export const AdCards = () => (
   <>
     {REF_CASES.map(c => (
       <a class="wg-card wg-card--ad" data-cat="performance" href={`/marketing/performance#ref-${c.id}`}>
@@ -84,7 +84,7 @@ export const WorksPage = () => (
           <button class="wf-btn" data-filter="ppl">PPL</button>
         </div>
 
-        {/* Grid — 관리자 등록 사례는 서버(main.tsx)가 앞에 채우고, 없으면 스크립트가 불러와 그린다. 그로스(광고 성과) 카드는 맨 뒤 고정 */}
+        {/* Grid — 그로스(광고 성과) 카드를 맨 앞에 두고, 관리자 등록 사례는 서버(main.tsx)가 그 뒤에 채운다. 서버가 못 채우면 스크립트가 불러와 뒤에 붙인다 */}
         <div class="wg-grid" id="worksGrid">
           <AdCards />
         </div>{/* /wg-grid */}
@@ -217,7 +217,6 @@ export const WorksPage = () => (
           return ar === br ? a.index - b.index : ar - br;
         })
         .map(function(entry){ return entry.item; });
-      var firstAd = grid.querySelector('.wg-card--ad');
       grid.querySelectorAll('.wg-card:not(.wg-card--ad), .wg-empty').forEach(function(el){ el.remove(); });
       items.forEach(function(item){
         var tags = (item.tags||[]).join(' ');
@@ -252,7 +251,7 @@ export const WorksPage = () => (
             +'</div>'
             +metaHtml;
         }
-        grid.insertBefore(article, firstAd);
+        grid.appendChild(article);
       });
       return grid;
     })

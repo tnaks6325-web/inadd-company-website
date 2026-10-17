@@ -3,7 +3,7 @@ import app from './index'
 import { renderer } from './renderer'
 import { BlogRouter } from './routes/api-blog'
 import { InsightDetailPage } from './routes/insight-detail'
-import { WorkCards, visibleWorks, type WorkItem } from './routes/works'
+import { AdCards, WorkCards, visibleWorks, type WorkItem } from './routes/works'
 import { kvGet } from './admin/store'
 import {
   getPosts, realId, postPath, absoluteUrl, plainText, xmlEscape,
@@ -87,8 +87,11 @@ root.get('/works', async (c) => {
   let items: WorkItem[]
   try { items = visibleWorks(JSON.parse(raw)) } catch { return res }
   if (!items.length) return res
+  // 그로스 카드(맨 앞) 바로 뒤에 사례 카드를 채운다. 못 찾으면 그대로 두고 스크립트가 불러온다
+  const open = '<div class="wg-grid" id="worksGrid">'
+  const ads = await (<AdCards />).toString()
   const html = (await res.text())
-    .replace('<div class="wg-grid" id="worksGrid">', `<div class="wg-grid" id="worksGrid" data-ssr="1">${await (<WorkCards items={items} />).toString()}`)
+    .replace(open + ads, `<div class="wg-grid" id="worksGrid" data-ssr="1">${ads}${await (<WorkCards items={items} />).toString()}`)
   return c.html(html, 200)
 })
 
