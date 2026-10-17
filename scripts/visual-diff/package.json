@@ -1,0 +1,11 @@
+{
+  "name": "visual-diff",
+  "private": true,
+  "type": "module",
+  "description": "PR 수정 전·후 화면 비교 캡처 (GitHub Actions 전용, 사이트 빌드와 무관)",
+  "dependencies": {
+    "pixelmatch": "^7.1.0",
+    "playwright": "^1.56.0",
+    "pngjs": "^7.0.0"
+  }
+}
