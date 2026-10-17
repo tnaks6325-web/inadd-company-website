@@ -135,7 +135,7 @@ export const AboutPage = () => (
           <div>
             <span class="sec-label">Company Growth</span>
             <h2 class="sec-title hist-title">IN AD <em>HISTORY</em></h2>
-            <p class="hist-subtitle">2019 – 2026 Continuous Growth</p>
+            <p class="hist-subtitle">2019 – 2026 Continuous Growth</p><p style="font-size:28px;color:#e11d48;margin:40px 0">[시험] 새로 끼워 넣은 문단입니다</p>
           </div>
         </div>
 
@@ -295,7 +295,7 @@ export const AboutPage = () => (
         {/* 섹션 헤더 */}
         <div class="aptn-header">
           <p class="aptn-eyebrow">OUR IDENTITY</p>
-          <h2 class="aptn-main-title">비즈니스 파트너</h2>
+          <h2 class="aptn-main-title">비즈니스 동반자</h2>
           <p class="aptn-main-sub">인애드컴퍼니는 일을 받아 처리하는 대행사가 아닙니다.<br />브랜드의 성장을 같이 고민하고, 끝까지 함께 가는 파트너입니다.</p>
         </div>
 
