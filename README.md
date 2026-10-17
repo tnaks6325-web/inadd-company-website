@@ -23,13 +23,26 @@ PR 이 열리거나 커밋이 더 올라오면 GitHub Actions 가 자동으로:
 1. `main`(수정 전)·PR(수정 후) 코드를 각각 로컬 서버(vite, 빈 데이터)로 띄우고
 2. 사이트맵의 모든 페이지 + `/`, `/marketing/seo` 를 PC(1440)·휴대폰(390) 크기로 전체 화면 캡처한 뒤
 3. 달라진 곳만 "왼쪽 수정 전 / 오른쪽 수정 후" + 빨간 테두리 그림으로 만들어
-4. PR 댓글로 올린다(저장소 주인 언급 → GitHub 알림 메일).
+4. PR 댓글로 올린다(저장소 주인 언급 → GitHub 알림 메일). 그 메일에 "승인"이라고 답장하면 반영된다(아래).
 
 - 스크립트: `scripts/visual-diff/run.mjs` (부품은 그 폴더의 `package.json` — 사이트 빌드와 무관)
 - 그림 보관: `visual-diff-images` 브랜치. Cloudflare Pages 미리보기 배포 대상에서 제외해 둠(`preview_branch_excludes`).
 - 같은 조건으로 찍기 위해 시계·난수 고정, 애니메이션 끔, 영상 첫 장면 정지, iframe·지도(Leaflet)는 회색으로 가림.
 - 위에 무언가 끼워 넣어 아래가 밀려도(반 픽셀 밀림 포함) 밀린 부분은 변경으로 잡지 않는다(줄 단위 짝 맞춤 + 밀림 허용 픽셀 비교).
 - 로컬 실행: 두 서버를 띄운 뒤 `node scripts/visual-diff/run.mjs --base http://127.0.0.1:5101 --head http://127.0.0.1:5102 --out out [--only /about,/works]` (`VD_DEBUG=1` 이면 잡힌 위치 출력)
+
+### 메일 답장 "승인" → 실제 사이트 반영 (`.github/workflows/reply-approval.yml`)
+
+화면 비교 댓글 알림 메일에 대표가 **"승인"** 이라고만 답장하면(GitHub 이 답장을 PR 댓글로 올림) 자동으로 PR 을 승인·병합한다.
+
+- 대상: 저장소 주인이 단 댓글 중, 인용(`>`)·빈 줄을 뺀 첫 줄이 정확히 `승인`(끝의 `.` `!` 허용)인 것. 그 밖의 답장은 그냥 PR 댓글로 남아 수정한 사람에게 전달된다.
+- 병합 전 확인: PR 이 열려 있고 `main` 대상·같은 저장소 브랜치 / **지금 head 커밋의 비교 댓글이 승인 답장보다 먼저 올라왔는지**(새 커밋 뒤 옛 메일에 답장하면 거절) / 그 커밋의 `visual-diff.yml` 실행이 성공했는지 / `.github/`·`scripts/visual-diff/` 를 고치지 않았는지(고쳤으면 GitHub 화면에서 직접 승인).
+- 승인(작성자가 대표 본인이면 생략) → `sha` 고정 병합. 결과는 github-actions 가 `@주인` 댓글로 알린다(반영 완료 / 거절 이유).
+- 열쇠: 대표 계정 fine-grained 토큰(이 저장소 + 시험 저장소, Contents·Pull requests 쓰기). 환경 `reply-approval`(배포 브랜치 `main` 만)의 비밀값 `MERGE_TOKEN` — `main` 에서 도는 작업만 꺼낼 수 있어 협업자 브랜치의 작업은 읽지 못한다. 원본은 대표 맥 `~/.config/inadd/github-merge-token`.
+  - **만료 2027-10-17.** 만료되면 "열쇠가 만료" 댓글이 오고, GitHub 화면 승인은 계속 된다. 새로 만들어 `gh secret set MERGE_TOKEN --env reply-approval < 파일` 로 교체.
+- `main` 보호 규칙: 승인 1명 + 새 커밋 시 승인 취소 + 필수 검사 `capture`(화면 비교) — 비교 캡처가 성공하지 않은 수정본은 합칠 수 없다(관리자 우회 제외).
+- 저장소 설정 "Allow GitHub Actions to create and approve pull requests" 는 **꺼 둔다**(켜면 협업자 워크플로가 스스로 승인 가능).
+- 시험 저장소: `tnaks6325-web/inadd-approval-sandbox`(공개, 사이트와 무관). 같은 파일 + 가짜 비교 댓글로 메일 답장 → 병합, 거절 경우들을 시험했다.
 
 ### 테스트 서버는 실제 사이트와 무엇이 다른가 (`wrangler.jsonc` 의 `env.preview`)
 

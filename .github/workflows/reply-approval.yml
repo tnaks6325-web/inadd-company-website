@@ -1,0 +1,107 @@
+# 대표가 화면 비교 메일(PR 댓글 알림)에 "승인"이라고 답장하면, 확인을 거쳐 PR 을 승인·병합한다.
+# - issue_comment 는 항상 main 의 이 파일로 돈다 → PR 쪽에서 이 규칙을 바꿀 수 없다.
+# - 병합용 열쇠(대표 계정 fine-grained 토큰)는 환경 reply-approval 의 비밀값으로, main 에서 도는 작업만 꺼낼 수 있다.
+# - 댓글·반응은 github-actions(GITHUB_TOKEN)로 남겨 대표에게 알림 메일이 가게 한다.
+name: 답장 승인 반영
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  actions: read
+  checks: read
+
+concurrency:
+  group: reply-approval-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  # 1단계: 승인 답장인지만 본다(환경·열쇠 없이). 아닌 댓글은 여기서 조용히 끝난다.
+  check:
+    if: github.event.issue.pull_request && github.event.comment.user.login == github.repository_owner
+    runs-on: ubuntu-latest
+    outputs:
+      approve: ${{ steps.parse.outputs.approve }}
+    steps:
+      - id: parse
+        env:
+          BODY: ${{ github.event.comment.body }}
+        run: |
+          # 인용(>)·빈 줄을 건너뛴 첫 줄이 정확히 "승인"(끝의 . ! 허용)일 때만
+          first=$(printf '%s\n' "$BODY" | tr -d '\r' | grep -v '^[[:space:]]*>' | grep -v '^[[:space:]]*$' | head -n1 | sed -E 's/^[[:space:]]+//; s/[[:space:].!]+$//')
+          if [ "$first" = "승인" ]; then echo "approve=true" >> "$GITHUB_OUTPUT"; else echo "approve=false" >> "$GITHUB_OUTPUT"; fi
+
+  # 2단계: 확인 후 승인·병합
+  merge:
+    needs: check
+    if: needs.check.outputs.approve == 'true'
+    runs-on: ubuntu-latest
+    environment: reply-approval
+    env:
+      GH_TOKEN: ${{ github.token }}
+      MERGE_TOKEN: ${{ secrets.MERGE_TOKEN }}
+      REPO: ${{ github.repository }}
+      OWNER: ${{ github.repository_owner }}
+      PR: ${{ github.event.issue.number }}
+      COMMENT_ID: ${{ github.event.comment.id }}
+      COMMENT_AT: ${{ github.event.comment.created_at }}
+    steps:
+      - name: 확인하고 반영
+        run: |
+          set -uo pipefail
+          say() { gh pr comment "$PR" --repo "$REPO" --body "@$OWNER $1" > /dev/null; }
+          stop() { say "$1"; echo "중단: $1"; exit 0; }
+
+          gh api -X POST "repos/$REPO/issues/comments/$COMMENT_ID/reactions" -f content='+1' > /dev/null || true
+
+          [ -n "$MERGE_TOKEN" ] || stop "답장 승인을 처리하지 못했습니다: 반영용 열쇠가 설정되어 있지 않습니다. GitHub 화면에서 직접 승인해 주세요."
+
+          pr=$(gh api "repos/$REPO/pulls/$PR")
+          state=$(jq -r .state <<<"$pr"); merged=$(jq -r .merged <<<"$pr")
+          base=$(jq -r .base.ref <<<"$pr"); head_repo=$(jq -r .head.repo.full_name <<<"$pr")
+          sha=$(jq -r .head.sha <<<"$pr"); sha7=${sha:0:7}; author=$(jq -r .user.login <<<"$pr")
+          [ "$merged" = "true" ] && stop "이미 실제 사이트에 반영된 수정본입니다."
+          [ "$state" = "open" ] || stop "닫힌 수정본이라 반영하지 않았습니다."
+          [ "$base" = "main" ] || stop "실제 사이트용 수정본이 아니라(대상 $base) 반영하지 않았습니다."
+          [ "$head_repo" = "$REPO" ] || stop "다른 저장소에서 온 수정본이라 답장 승인이 안 됩니다. GitHub 화면에서 직접 확인해 주세요."
+
+          # 자동화 파일(이 규칙·비교 캡처)을 고친 수정본은 사람이 직접 봐야 한다
+          touched=$(gh api --paginate "repos/$REPO/pulls/$PR/files" --jq '.[].filename' | grep -E '^(\.github/|scripts/visual-diff/)' | head -n5 || true)
+          [ -z "$touched" ] || stop "자동화 파일을 고친 수정본은 답장 승인이 안 됩니다. GitHub 화면에서 직접 확인해 주세요. (고친 파일: $(echo $touched))"
+
+          # 지금 수정본(sha)에 대한 비교 캡처가 성공했는지
+          run_ok=$(gh api "repos/$REPO/actions/workflows/visual-diff.yml/runs?head_sha=$sha&per_page=20" \
+            --jq '[.workflow_runs[] | select(.event=="pull_request")] | sort_by(.created_at) | last | .conclusion // ""')
+          # 지금 수정본에 대한 비교 그림 댓글이 승인 답장보다 먼저 올라왔는지
+          shown_at=$(gh api --paginate "repos/$REPO/issues/$PR/comments" \
+            --jq ".[] | select(.user.login==\"github-actions[bot]\" and (.body|contains(\"수정본 화면 비교가 준비됐습니다\")) and (.body|contains(\"$sha7\"))) | .created_at" | tail -n1)
+          if [ -z "$shown_at" ] || [[ "$shown_at" > "$COMMENT_AT" ]]; then
+            if [ "$run_ok" = "failure" ] || [ "$run_ok" = "cancelled" ] || [ "$run_ok" = "timed_out" ]; then
+              stop "지금 수정본은 비교 그림을 만들지 못해 답장 승인이 안 됩니다. 테스트 서버에서 확인한 뒤 GitHub 화면에서 직접 승인해 주세요."
+            fi
+            stop "새 수정이 올라와 있어 반영하지 않았습니다. 비교 그림을 다시 보내드리니, 새 그림 메일에 다시 '승인'이라고 답장해 주세요."
+          fi
+          [ "$run_ok" = "success" ] || stop "지금 수정본의 비교 캡처가 끝나지 않았거나 실패해 반영하지 않았습니다. (상태: ${run_ok:-없음})"
+
+          # 승인(작성자가 대표 본인이면 승인 단계는 건너뜀) → 병합. sha 를 고정해 그 사이 새 수정이 오면 병합이 거절된다.
+          if [ "$author" != "$OWNER" ]; then
+            out=$(GH_TOKEN="$MERGE_TOKEN" gh api -X POST "repos/$REPO/pulls/$PR/reviews" \
+              -f commit_id="$sha" -f event=APPROVE -f body="메일 답장으로 승인 (커밋 $sha7)" 2>&1) || {
+              case "$out" in *401*|*"Bad credentials"*) stop "답장 승인을 처리하지 못했습니다: 반영용 열쇠가 만료됐거나 잘못됐습니다. 열쇠를 새로 만들어야 합니다. 그 전까지는 GitHub 화면에서 직접 승인해 주세요." ;;
+              *) stop "승인 단계에서 막혔습니다: $out" ;; esac; }
+          fi
+          out=$(GH_TOKEN="$MERGE_TOKEN" gh api -X PUT "repos/$REPO/pulls/$PR/merge" \
+            -f sha="$sha" -f merge_method=merge 2>&1) || {
+            case "$out" in
+              *401*|*"Bad credentials"*) stop "답장 승인을 처리하지 못했습니다: 반영용 열쇠가 만료됐거나 잘못됐습니다. 열쇠를 새로 만들어야 합니다. 그 전까지는 GitHub 화면에서 직접 승인해 주세요." ;;
+              *"Head branch was modified"*|*409*) stop "방금 새 수정이 올라와 반영하지 않았습니다. 새 비교 그림 메일에 다시 '승인'이라고 답장해 주세요." ;;
+              *"approving review"*|*"review is required"*) stop "승인 기록이 반영되지 않아 합치지 못했습니다. GitHub 화면에서 직접 승인해 주세요." ;;
+              *"status check"*) stop "비교 캡처 확인이 끝나지 않아 합치지 못했습니다. 잠시 뒤 다시 '승인'이라고 답장해 주세요." ;;
+              *conflict*|*"not mergeable"*) stop "지금 사이트와 겹치는 수정이 있어 자동으로 합칠 수 없습니다. 수정한 분이 정리한 뒤 다시 올려야 합니다." ;;
+              *) stop "반영 단계에서 막혔습니다: $out" ;;
+            esac; }
+          say "✅ 반영 완료 (커밋 \`$sha7\`). 1~3분 뒤 실제 사이트(www.inadcompany.co.kr)에 보입니다."
