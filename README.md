@@ -16,6 +16,21 @@ Cloudflare Pages 가 이 GitHub 저장소에 연결되어 있다.
    직접 올리면 저장소와 실제 사이트가 어긋나고, 다음 머지 때 기능이 사라진다(2026-10 실제 발생).
    Cloudflare 화면은 문제가 생겼을 때 직전 배포로 되돌리는(Rollback) 용도로만 쓴다.
 
+### PR 화면 비교 캡처 (`.github/workflows/visual-diff.yml`)
+
+PR 이 열리거나 커밋이 더 올라오면 GitHub Actions 가 자동으로:
+
+1. `main`(수정 전)·PR(수정 후) 코드를 각각 로컬 서버(vite, 빈 데이터)로 띄우고
+2. 사이트맵의 모든 페이지 + `/`, `/marketing/seo` 를 PC(1440)·휴대폰(390) 크기로 전체 화면 캡처한 뒤
+3. 달라진 곳만 "왼쪽 수정 전 / 오른쪽 수정 후" + 빨간 테두리 그림으로 만들어
+4. PR 댓글로 올린다(저장소 주인 언급 → GitHub 알림 메일).
+
+- 스크립트: `scripts/visual-diff/run.mjs` (부품은 그 폴더의 `package.json` — 사이트 빌드와 무관)
+- 그림 보관: `visual-diff-images` 브랜치. Cloudflare Pages 미리보기 배포 대상에서 제외해 둠(`preview_branch_excludes`).
+- 같은 조건으로 찍기 위해 시계·난수 고정, 애니메이션 끔, 영상 첫 장면 정지, iframe·지도(Leaflet)는 회색으로 가림.
+- 위에 무언가 끼워 넣어 아래가 밀려도(반 픽셀 밀림 포함) 밀린 부분은 변경으로 잡지 않는다(줄 단위 짝 맞춤 + 밀림 허용 픽셀 비교).
+- 로컬 실행: 두 서버를 띄운 뒤 `node scripts/visual-diff/run.mjs --base http://127.0.0.1:5101 --head http://127.0.0.1:5102 --out out [--only /about,/works]` (`VD_DEBUG=1` 이면 잡힌 위치 출력)
+
 ### 테스트 서버는 실제 사이트와 무엇이 다른가 (`wrangler.jsonc` 의 `env.preview`)
 
 - 데이터 저장소(KV)가 분리되어 있다(`inadd-company-website-preview`). 테스트 서버의 관리자 화면에서 무엇을 저장해도 실제 사이트에는 영향이 없다.
