@@ -27069,3 +27069,57 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
 .wg-card--ad:hover .wg-thumb.wg-ad { box-shadow: inset 0 0 0 2px #285ccc; }
 @media (max-width: 1100px) { .wg-ad-kpi strong { font-size: 34px; } }
 @media (max-width: 640px) { .wg-thumb.wg-ad { aspect-ratio: auto; min-height: 260px; } }
+
+/* ============================================================
+   홈 히어로 — 키네틱 타이포 영상 (자동·반복 재생)
+   데스크톱: 화면 가득(cover). 모바일 세로 화면: 16:9 영상이 잘리지 않게
+   헤더 아래에 가로폭 그대로 배치.
+   ============================================================ */
+#heroSlider.hero-video-wrap { background: #000; }
+#heroSlider .hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+  display: block;
+}
+#heroSlider .hero-video-title {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+/* 세로로 긴 화면(태블릿 세로 등)에선 잘림 대신 영상 전체가 보이게 */
+@media (max-aspect-ratio: 4/3) {
+  #heroSlider .hero-video { object-fit: contain; }
+}
+@media (max-width: 768px) {
+  #heroSlider.hero-video-wrap {
+    height: auto;
+    min-height: 0;
+    padding-top: var(--hero-video-top, 64px);   /* 고정 헤더에 가리지 않게 */
+  }
+  #heroSlider .hero-video {
+    position: relative;
+    inset: auto;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+}
+/* 메뉴 글자가 밝은 장면 위에서도 읽히도록 위쪽만 살짝 어둡게 */
+#heroSlider.hero-video-wrap::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 140px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0));
+  pointer-events: none;
+}
+@media (max-width: 768px) {
+  #heroSlider.hero-video-wrap::after { display: none; }
+}
