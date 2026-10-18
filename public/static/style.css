@@ -27072,18 +27072,23 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
 
 /* ============================================================
    홈 히어로 — 키네틱 타이포 영상 (자동·반복 재생)
-   데스크톱: 화면 가득(cover). 모바일 세로 화면: 16:9 영상이 잘리지 않게
-   헤더 아래에 가로폭 그대로 배치.
+   히어로 높이 = 영상 높이(16:9, 잘림 없음). 데스크톱은 헤더가 영상 위에 겹치고,
+   모바일(768px 이하)은 헤더 아래에 놓인다. 아주 넓은 모니터에선 화면 높이를 넘지 않게.
    ============================================================ */
-#heroSlider.hero-video-wrap { background: #000; }
+#heroSlider.hero-video-wrap {
+  height: auto;
+  min-height: 0;
+  background: #000;
+}
 #heroSlider .hero-video {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  max-height: 100vh;
+  max-height: 100dvh;
   object-fit: cover;
   background: #000;
-  display: block;
 }
 #heroSlider .hero-video-title {
   position: absolute;
@@ -27093,23 +27098,11 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
-/* 세로로 긴 화면(태블릿 세로 등)에선 잘림 대신 영상 전체가 보이게 */
-@media (max-aspect-ratio: 4/3) {
-  #heroSlider .hero-video { object-fit: contain; }
-}
 @media (max-width: 768px) {
   #heroSlider.hero-video-wrap {
-    height: auto;
-    min-height: 0;
     padding-top: var(--hero-video-top, 64px);   /* 고정 헤더에 가리지 않게 */
   }
-  #heroSlider .hero-video {
-    position: relative;
-    inset: auto;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-  }
+  #heroSlider .hero-video { max-height: none; }
 }
 /* 메뉴 글자가 밝은 장면 위에서도 읽히도록 위쪽만 살짝 어둡게 */
 #heroSlider.hero-video-wrap::after {
