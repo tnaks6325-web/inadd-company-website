@@ -7,7 +7,7 @@
   var phones = Array.prototype.slice.call(root.querySelectorAll('.vp-phone'));
   var n = phones.length, cur = n - 1, prevRel = [];
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var STEP_MS = 3800, SCROLL_DELAY = 750;
+  var STEP_MS = 2000, SCROLL_DELAY = 550;
 
   function relOf(i) { var r = ((i - cur) % n + n) % n; return r > n / 2 ? r - n : r; }
   function scrollPhone(p, on) {
@@ -44,6 +44,9 @@
 
   var visible = true;
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }).observe(root);
-  setTimeout(advance, 350);
-  setInterval(function () { if (visible && !document.hidden) advance(); }, STEP_MS);
+  // 첫 화면도 다른 화면과 똑같이 2초 머물도록, 첫 등장 뒤부터 간격을 센다
+  setTimeout(function () {
+    advance();
+    setInterval(function () { if (visible && !document.hidden) advance(); }, STEP_MS);
+  }, 350);
 })();
