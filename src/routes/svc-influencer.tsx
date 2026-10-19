@@ -3,7 +3,7 @@ import { icon } from '../icons'
 import { InfluencerPhones } from './influencer-phones'
 export const SvcInfluencerPage = () => (
   <>
-    <link rel="stylesheet" href="/static/influencer-phones.css?v=20261019a" />
+    <link rel="stylesheet" href="/static/influencer-phones.css?v=20261019b" />
     {/* ══ HERO ══ */}
     <section class="vh-hero vh-hero--ip">
       <div class="vh-glow" aria-hidden="true"></div>
