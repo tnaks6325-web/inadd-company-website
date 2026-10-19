@@ -30,6 +30,37 @@ app.use('*', async (c, next) => {
 // Static files
 app.use('/static/*', serveStatic({ root: './' }))
 
+// 홈 히어로 영상 — 부분 전송(Range, 206) 지원.
+// Pages 정적 파일(/static/*)은 Range 요청에도 200 으로 통째로 보내는데,
+// 아이폰 사파리는 206 을 못 받으면 영상을 재생하지 않는다. 그래서 같은 파일을 여기서 잘라 보낸다.
+app.get('/hero-video/:name', async (c) => {
+  const name = c.req.param('name')
+  if (!/^hero-kinetic-[\w-]+\.mp4$/.test(name)) return c.notFound()
+  const res = await fetch(new URL(`/static/hero/${name}`, c.req.url).toString())
+  if (!res.ok) return c.notFound()
+  const buf = await res.arrayBuffer()
+  const size = buf.byteLength
+  const headers: Record<string, string> = {
+    'Content-Type': 'video/mp4',
+    'Accept-Ranges': 'bytes',
+    'Cache-Control': 'public, max-age=31536000, immutable',   // 파일명에 버전이 있어 바뀌면 이름도 바뀜
+  }
+  const m = /^bytes=(\d*)-(\d*)$/.exec(c.req.header('Range') || '')
+  if (!m || (m[1] === '' && m[2] === '')) {
+    return new Response(buf, { headers: { ...headers, 'Content-Length': String(size) } })
+  }
+  let start: number, end: number
+  if (m[1] === '') { start = Math.max(0, size - Number(m[2])); end = size - 1 }   // 끝에서 N바이트
+  else { start = Number(m[1]); end = m[2] === '' ? size - 1 : Math.min(Number(m[2]), size - 1) }
+  if (start >= size || start > end) {
+    return new Response(null, { status: 416, headers: { ...headers, 'Content-Range': `bytes */${size}` } })
+  }
+  return new Response(buf.slice(start, end + 1), {
+    status: 206,
+    headers: { ...headers, 'Content-Range': `bytes ${start}-${end}/${size}`, 'Content-Length': String(end - start + 1) },
+  })
+})
+
 // Admin API
 app.route('/api/admin', admin)
 app.route('/api/mail', MailRouter)
