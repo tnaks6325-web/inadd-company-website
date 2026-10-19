@@ -40,11 +40,9 @@ const PM_FAQ: [string, string][] = [
 
 export const SvcPerformancePage = () => (
   <div class="pm-page">
-    <link rel="stylesheet" href="/static/performance.css?v=20261019a" />
+    <link rel="stylesheet" href="/static/performance.css?v=20261019b" />
     <link rel="stylesheet" href="/static/performance-ref.css?v=20261014a" />
     <section class="vh-hero pm-hero">
-      {/* 시안 비교용: 주소 끝에 ?hero=full 이면 화면 전체 배경 배치 */}
-      <script dangerouslySetInnerHTML={{ __html: `if(/[?&]hero=full\\b/.test(location.search))document.currentScript.parentNode.classList.add('pm-hero--full')` }} />
       <VaultCards />
       <noscript><style>{'.pm-vault.is-intro .pm-vault-stage{--z:1}.pm-vault.is-intro .pm-vault-card{opacity:1;transform:none}'}</style></noscript>
       <div class="container vh-inner">
@@ -125,7 +123,7 @@ export const SvcPerformancePage = () => (
 
       <section class="pm-contact"><div class="container"><div><h2>광고 계정<br /><em>무료 진단</em></h2><p>운영 중인 매체와 광고 예산, 개선하고 싶은 점을 알려주세요.<br />담당자가 확인 후 연락드립니다.</p><a class="vh-cta-btn" href="/contact" data-pm-contact>문의하기 <Arrow /></a></div><img src="/static/svc-images/performance.png" width="1872" height="1248" loading="lazy" alt="" /></div></section>
     </div>
-    <script src="/static/pm-hero-vault.js?v=20261019a" defer></script>
+    <script src="/static/pm-hero-vault.js?v=20261019b" defer></script>
     <script dangerouslySetInnerHTML={{ __html: `
       (function () {
         var tabs = Array.from(document.querySelectorAll('.pm-media-tabs [role="tab"]'));

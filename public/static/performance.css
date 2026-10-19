@@ -110,13 +110,12 @@
 @media(max-width:767px) { .pm-media-grid { grid-template-columns:1fr; gap:14px; }.pm-media-card { min-height:390px; }.pm-media-card-image { height:190px; }.pm-media-card-copy { padding:22px; }.pm-media-card-copy h3 { font-size:23px; } }
 
 /* ── 히어로 카드 흐름(The Vault 스타일): 기울어진 소재 카드 줄이 서로 반대로 흐른다.
-   기본 = 문구 왼쪽·카드 오른쪽, .pm-hero--full = 화면 전체 배경. 움직임은 pm-hero-vault.js 가 붙인다. */
+   화면 전체 배경으로 흐르고 왼쪽 글자 뒤는 밝게 덮는다(2026-10-19 시안 B 확정). 움직임은 pm-hero-vault.js 가 붙인다. */
 .pm-page .pm-hero { background:#f3f4f7; }
 .pm-page .pm-hero::before { display:none; }
 .pm-page .pm-hero .vh-inner { position:relative; z-index:2; }
-.pm-vault { --cx:50%; --card-w:200px; --card-h:250px; --gap:22px; position:absolute; top:76px; bottom:0; left:56%; right:0; z-index:1; overflow:hidden; pointer-events:none;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 24%),linear-gradient(180deg,transparent 0,#000 12%,#000 88%,transparent 100%); -webkit-mask-composite:source-in;
-  mask-image:linear-gradient(90deg,transparent 0,#000 24%),linear-gradient(180deg,transparent 0,#000 12%,#000 88%,transparent 100%); mask-composite:intersect; }
+.pm-vault { --cx:70%; --card-w:200px; --card-h:250px; --gap:22px; position:absolute; inset:0; z-index:1; overflow:hidden; pointer-events:none; }
+.pm-vault::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgba(243,244,247,.97) 0%,rgba(243,244,247,.9) 36%,rgba(243,244,247,.35) 62%,rgba(243,244,247,0) 80%); }
 .pm-vault-stage { --z:1; position:absolute; left:var(--cx); top:50%; display:flex; flex-direction:column; gap:var(--gap); width:calc(var(--card-w) * 12); transform:translate(-50%,-50%) rotate(-22deg) scale(var(--z)); transition:transform 1.8s cubic-bezier(.22,1,.36,1); will-change:transform; }
 .pm-vault-row { overflow:visible; }
 .pm-vault-track { display:flex; gap:var(--gap); width:max-content; will-change:transform; }
@@ -133,21 +132,12 @@
 .pm-vault.is-brand .pm-vault-brand { opacity:1; transform:none; }
 .pm-vault .pm-vault-card { transition-delay:var(--d,0s); }
 
-/* 시안 B: 화면 전체 배경 + 왼쪽 글자 뒤를 밝게 덮음 */
-.pm-hero--full .pm-vault { top:0; left:0; --cx:70%; -webkit-mask-image:none; mask-image:none; }
-.pm-hero--full .pm-vault::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgba(243,244,247,.97) 0%,rgba(243,244,247,.9) 36%,rgba(243,244,247,.35) 62%,rgba(243,244,247,0) 80%); }
-
-@media(max-width:1024px) { .pm-vault { left:50%; --card-w:170px; --card-h:212px; --gap:18px; } .pm-hero--full .pm-vault { left:0; } }
+@media(max-width:1024px) { .pm-vault { --card-w:170px; --card-h:212px; --gap:18px; } }
 @media(max-width:767px) {
-  .pm-page .pm-hero { align-items:flex-start; min-height:auto; }
-  .pm-page .pm-hero:not(.pm-hero--full) .vh-inner { padding-bottom:330px; }
-  .pm-vault { top:auto; left:0; height:320px; --card-w:128px; --card-h:160px; --gap:14px;
-    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 22%,#000 100%); mask-image:linear-gradient(180deg,transparent 0,#000 22%,#000 100%); }
+  .pm-vault { --cx:50%; --card-w:128px; --card-h:160px; --gap:14px; }
+  .pm-vault::after { background:rgba(243,244,247,.84); }
   .pm-vault-brand { padding:13px 12px 12px; border-radius:11px; }
   .pm-vault-card { border-radius:11px; }
   .pm-vault-brand-label { font-size:7px; }
-  .pm-hero--full .pm-vault { top:0; height:auto; --cx:50%; }
-  .pm-hero--full .pm-vault::after { background:rgba(243,244,247,.84); }
-  .pm-page .pm-hero--full { min-height:610px; }
 }
 @media (prefers-reduced-motion:reduce) { .pm-vault-stage,.pm-vault-card { transition:none !important; } }
