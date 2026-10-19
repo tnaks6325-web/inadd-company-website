@@ -31,6 +31,7 @@
 .ip-video--wide { aspect-ratio:16/9; height:auto; flex:none; object-position:50% 35%; }
 .ip-shade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.35) 0,transparent 16%,transparent 58%,rgba(0,0,0,.6) 100%); }
 .ip-ava { flex:none; width:32px; height:32px; border-radius:50%; background:radial-gradient(circle at 50% 38%,rgba(255,255,255,.75) 0 6px,transparent 6.5px),var(--a,#ccc); }
+.ip-ava--img { background-size:cover; background-position:center; background-color:#ddd; }
 .ip-me { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#f6c3a5,#c98e7b); display:inline-block; }
 .ip-user { display:flex; align-items:center; gap:9px; font-size:15px; }
 .ip-cap { font-size:15px; margin-top:8px; }
@@ -41,7 +42,7 @@
 .ip-reels-top { position:relative; z-index:3; display:flex; justify-content:space-between; align-items:center; padding:8px 18px; font-size:22px; }
 .ip-side { position:absolute; z-index:3; right:12px; bottom:118px; display:flex; flex-direction:column; align-items:center; gap:18px; }
 .ip-side span { display:flex; flex-direction:column; align-items:center; gap:3px; }
-.ip-side em { font-style:normal; font-size:13px; font-weight:600; }
+.ip-side em { font-style:normal; font-size:13px; font-weight:600; color:inherit; }
 .ip-reels-info { position:absolute; z-index:3; left:14px; right:70px; bottom:96px; }
 .ip-follow { border:1.5px solid rgba(255,255,255,.8); border-radius:8px; padding:3px 10px; font-size:13px; font-weight:700; }
 .ip-music { font-size:13px; margin-top:8px; opacity:.9; }
@@ -62,6 +63,7 @@
 .ip-stories { display:flex; gap:12px; padding:4px 14px 12px; border-bottom:1px solid #efefef; }
 .ip-story { width:62px; height:62px; border-radius:50%; padding:3px; background:conic-gradient(#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5,#feda75); position:relative; }
 .ip-story::after { content:''; position:absolute; inset:3px; border-radius:50%; border:3px solid #fff; background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.7) 0 9px,transparent 9.5px),var(--a); }
+.ip-story--img::after { background:var(--a); }
 .ip-post-head { display:flex; align-items:center; gap:10px; padding:10px 12px; }
 .ip-post-head div { flex:1; display:flex; flex-direction:column; font-size:14px; }
 .ip-post-head small { font-size:12px; color:#555; }

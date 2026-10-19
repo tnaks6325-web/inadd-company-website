@@ -35,7 +35,8 @@ const Status = (p: { light?: boolean }) => (
 const Video = (p: { id: string; cls?: string }) => (
   <video class={'ip-video ' + (p.cls || '')} src={V + p.id + '.mp4'} poster={V + p.id + '.webp'} muted loop playsinline preload="none" />
 )
-const Ava = (p: { c: string }) => <span class="ip-ava" style={`--a:${p.c}`} />
+// img 가 있으면 그 인물 얼굴(public/static/influencer-phones/{id}-ava.webp), 없으면 색 원(댓글 단 사람 등)
+const Ava = (p: { c: string; img?: string }) => <span class={'ip-ava' + (p.img ? ' ip-ava--img' : '')} style={p.img ? `background-image:url(${V}${p.img}-ava.webp)` : `--a:${p.c}`} />
 
 type Clip = { id: string; handle: string; caption: string; likes: string; comments: string; color: string; title?: string; channel?: string; subs?: string; views?: string; cmt?: string; next?: string }
 
@@ -47,7 +48,7 @@ const Reels = (c: Clip) => (
     <Status light />
     <div class="ip-reels-top"><b>릴스</b><Svg d={I.camera} /></div>
     <div class="ip-side"><span><Svg d={I.heart} w={30} /><em>{c.likes}</em></span><span><Svg d={I.comment} w={29} /><em>{c.comments}</em></span><span><Svg d={I.send} w={27} /><em>공유</em></span><span><Svg d={I.more} sw={3} w={26} /></span></div>
-    <div class="ip-reels-info"><div class="ip-user"><Ava c={c.color} /><b>{c.handle}</b><span class="ip-follow">팔로우</span></div><div class="ip-cap">{c.caption}</div><div class="ip-music">♫ {c.handle} · 원본 오디오</div></div>
+    <div class="ip-reels-info"><div class="ip-user"><Ava c={c.color} img={c.id} /><b>{c.handle}</b><span class="ip-follow">팔로우</span></div><div class="ip-cap">{c.caption}</div><div class="ip-music">♫ {c.handle} · 원본 오디오</div></div>
     <div class="ip-nav ip-nav--dark"><Svg d={I.home} /><Svg d={I.search} /><Svg d={I.plus} /><Svg d={I.reels} /><span class="ip-me" /></div>
   </div>
 )
@@ -60,7 +61,7 @@ const Shorts = (c: Clip) => (
     <Status light />
     <div class="ip-shorts-top"><Svg d={I.search} /><Svg d={I.more} sw={3} /></div>
     <div class="ip-side ip-side--yt"><span><i class="ip-round"><Svg d={I.like} w={25} /></i><em>{c.likes}</em></span><span><i class="ip-round"><Svg d={I.dislike} w={25} /></i><em>싫어요</em></span><span><i class="ip-round"><Svg d={I.comment} w={24} /></i><em>{c.comments}</em></span><span><i class="ip-round"><Svg d={I.share} w={24} /></i><em>공유</em></span><span><i class="ip-round"><Svg d={I.remix} w={24} /></i><em>리믹스</em></span></div>
-    <div class="ip-shorts-info"><div class="ip-user"><Ava c={c.color} /><b>@{c.handle}</b><span class="ip-sub">구독</span></div><div class="ip-cap">{c.caption}</div></div>
+    <div class="ip-shorts-info"><div class="ip-user"><Ava c={c.color} img={c.id} /><b>@{c.handle}</b><span class="ip-sub">구독</span></div><div class="ip-cap">{c.caption}</div></div>
     <div class="ip-nav ip-nav--yt"><span><Svg d={I.home} w={22} />홈</span><span><Svg d={I.reels} w={22} />Shorts</span><span class="ip-yt-plus">+</span><span><Svg d={I.bell} w={22} />구독</span><span><span class="ip-me" />내 페이지</span></div>
   </div>
 )
@@ -70,8 +71,8 @@ const Feed = (c: Clip) => (
   <div class="ip-app">
     <Status />
     <div class="ip-feed-top"><span class="ip-ig-logo">Instagram</span><Svg d={I.heart} /><Svg d={I.send} /></div>
-    <div class="ip-stories">{['#f58529', '#dd2a7b', '#8134af', '#515bd4', '#feda75'].map((x, i) => <span class="ip-story" key={i} style={`--a:${x}`} />)}</div>
-    <div class="ip-post-head"><Ava c={c.color} /><div><b>{c.handle}</b><small>서울 성수동</small></div><Svg d={I.more} sw={3} w={22} /></div>
+    <div class="ip-stories">{SCREENS.flat().map(([, x]) => x.id).filter((id) => id !== c.id).slice(0, 5).map((id) => <span class="ip-story ip-story--img" key={id} style={`--a:url(${V}${id}-ava.webp) center/cover`} />)}</div>
+    <div class="ip-post-head"><Ava c={c.color} img={c.id} /><div><b>{c.handle}</b><small>서울 성수동</small></div><Svg d={I.more} sw={3} w={22} /></div>
     <Video id={c.id} cls="ip-video--feed" />
     <div class="ip-actions"><Svg d={I.heart} w={27} /><Svg d={I.comment} w={26} /><Svg d={I.send} w={25} /><i /><Svg d={I.bookmark} w={25} /></div>
     <div class="ip-feed-txt"><b>좋아요 {c.likes}개</b><div><b>{c.handle}</b> {c.caption}</div><span>댓글 {c.comments}개 모두 보기</span></div>
@@ -87,7 +88,7 @@ const Watch = (c: Clip) => (
     <div class="ip-yt-body">
       <div class="ip-yt-title">{c.title}</div>
       <div class="ip-yt-meta">조회수 {c.views} · 3일 전 · #{c.caption}</div>
-      <div class="ip-yt-ch"><Ava c={c.color} /><b>{c.channel}</b><small>{c.subs}</small><span class="ip-yt-subbtn">구독</span></div>
+      <div class="ip-yt-ch"><Ava c={c.color} img={c.id} /><b>{c.channel}</b><small>{c.subs}</small><span class="ip-yt-subbtn">구독</span></div>
       <div class="ip-yt-btns"><span><Svg d={I.like} w={19} /> {c.likes} <i /> <Svg d={I.dislike} w={19} /></span><span><Svg d={I.share} w={19} /> 공유</span><span><Svg d={I.bookmark} w={19} /> 저장</span></div>
       <div class="ip-yt-cmt"><b>댓글 {c.comments}</b><div><Ava c="#c9b6e4" /><span>{c.cmt}</span></div></div>
       <div class="ip-yt-next"><span class="ip-yt-thumb" /><div><b>다음 영상 · {c.next}</b><small>{c.channel} · 조회수 21만회</small></div></div>
