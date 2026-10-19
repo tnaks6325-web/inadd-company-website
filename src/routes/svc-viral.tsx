@@ -3,7 +3,7 @@ import { icon } from '../icons'
 import { ViralPhones } from './viral-phones'
 export const SvcViralPage = () => (
   <>
-    <link rel="stylesheet" href="/static/viral-phones.css?v=20261019b" />
+    <link rel="stylesheet" href="/static/viral-phones.css?v=20261019c" />
     {/* ════════════════════════════════════════
         VIRAL HERO — 시네마틱 풀스크린
     ════════════════════════════════════════ */}
@@ -78,7 +78,7 @@ export const SvcViralPage = () => (
 
       {/* 카페·블로그·뽐뿌·뉴스·에펨코리아 모바일 화면 롤링 */}
       <ViralPhones />
-      <script src="/static/viral-phones.js?v=20261019b" defer></script>
+      <script src="/static/viral-phones.js?v=20261019c" defer></script>
 
       {/* 하단 스크롤 힌트 */}
       <div class="vh-scroll-hint">
