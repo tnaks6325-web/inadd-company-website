@@ -261,7 +261,7 @@ app.get('/marketing/performance', (c) => c.render(<SvcPerformancePage />, {
 
 app.get('/marketing/subscription', (c) => {
   return c.render(<SvcSubscriptionPage />, {
-    title: '마케팅팀 구독 - 신입 1명 비용으로 전담 TF팀',
+    title: '마케팅팀 구독 - 월 300만 원 전담 TF팀',
     description: '신입 마케터 1명 비용(월 300만 원, 부가세 별도)으로 광고·기획·디자인·영상·바이럴·체험단 전담 TF팀을 구독하세요. 초기진단·세팅 무료, 매주 브랜드 주간보고서.',
     canonical: 'https://www.inadcompany.co.kr/marketing/subscription'
   })
@@ -298,7 +298,7 @@ app.get('/marketing/seo', (c) => {
 
 app.get('/marketing/review', (c) => {
   return c.render(<SvcReviewPage />, {
-    title: '리뷰 마케팅 - 블로그 리뷰 기획·평판 관리',
+    title: '리뷰 마케팅 - 블로그 리뷰·구매평 통합 운영',
     description: '브랜드 신뢰도와 구매 전환율을 높이는 리뷰 마케팅. 진성 리뷰 수집과 리뷰 관리로 온라인 평판을 관리하는 인애드컴퍼니.',
     canonical: 'https://www.inadcompany.co.kr/marketing/review'
   })
