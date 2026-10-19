@@ -82,123 +82,36 @@ const HSVC = [
 export const HomePage = () => (
   <>
     {/* ============================================================
-        HERO SLIDER — 100vh 풀스크린, 2슬라이드 가로 전환 + 휠 하이재킹
-        슬라이드1: 카피 + 회사 이미지 + CTA / 슬라이드2: 결핍 질문 카피
+        HERO — 키네틱 타이포 영상(ver2 애니매틱 v17) 자동·반복 재생, 소리 없음
+        큰 화면은 1280px 영상, 768px 이하는 가벼운 854px 영상.
+        이전의 다크 공감 카피 슬라이드(2026-08~10)는 git 기록에 있다.
         ============================================================ */}
-    <section class="hero-slider" id="heroSlider">
-    <div class="hero2-track" id="hero2Track">
-    {/* 사진 히어로 슬라이드 제거(2026-08) — 다크 공감 카피가 첫 화면 */}
-
-
-    {/* ── 다크 시퀀스: 공감대 형성 (완전 검은 배경 + 순차 카피 크로스페이드)
-           카피는 초안 — 대표님이 최종 문구로 교체 예정 ── */}
-    <div class="hero2-slide hero2-slide--two">
-      {/* copy 0 */}
-      <div class="hero2-copy hero2-copy--active" data-copy="0">
-        <div class="hero2-dark-inner">
-          <h2 class="hero2-q">보고서 속 숫자는 화려한데,<br />매출은 <em>그대로</em></h2>
-        </div>
-      </div>
-      {/* copy 1 */}
-      <div class="hero2-copy" data-copy="1">
-        <div class="hero2-dark-inner">
-          <h2 class="hero2-q">계약 전엔 매일 연락,<br />계약 후엔 <em>읽씹</em>.</h2>
-        </div>
-      </div>
-      {/* copy 2 */}
-      <div class="hero2-copy" data-copy="2">
-        <div class="hero2-dark-inner">
-          <div class="hero2-quotes">
-            <p class="hero2-quote">"일단 두 달만 더 지켜보시죠."</p>
-            <p class="hero2-quote">"예산 조금만 더 태워보실까요?"</p>
-            <p class="hero2-quote">"그건 저희 담당이 아니라서요."</p>
-            <p class="hero2-quote">"담당자가 퇴사해서 인수인계 중이에요."</p>
-          </div>
-          <h2 class="hero2-q">이런 이야기, <em>익숙한 패턴</em>이죠?</h2>
-        </div>
-      </div>
-    </div>
-
-    </div>{/* /hero2-track */}
-
-    {/* ── 슬라이드 컨트롤 ── */}
-    <button type="button" class="hero2-arrow hero2-arrow--prev" aria-label="이전 슬라이드">‹</button>
-    <button type="button" class="hero2-arrow hero2-arrow--next" aria-label="다음 슬라이드">›</button>
-    <div class="hero2-dots" aria-hidden="true"><span class="active"></span><span></span><span></span></div>
-
-    {/* ── 휠 하이재킹: 최상단에서 휠↓ = 다음 카피, 마지막 카피에서 휠↓ = 실제 스크롤 ── */}
-    <script dangerouslySetInnerHTML={{__html: `
+    <section class="hero-slider hero2--s2 hero-video-wrap" id="heroSlider">
+      <h2 class="hero-video-title">Full Funnel Marketing Agency — IN AD COMPANY</h2>
+      <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto"
+        poster="/static/hero/hero-kinetic-v17-poster.jpg" aria-label="인애드컴퍼니 소개 영상">
+        <source src="/static/hero/hero-kinetic-v17.mp4" type="video/mp4" media="(min-width: 769px)" />
+        <source src="/static/hero/hero-kinetic-v17-m.mp4" type="video/mp4" />
+      </video>
+      {/* 화면 밖으로 스크롤하면 멈추고, 돌아오면 이어서 재생(노트북 발열·배터리 절약).
+          움직임 줄이기 설정을 켠 방문자에게는 첫 장면만 보여준다. */}
+      <script dangerouslySetInnerHTML={{__html: `
 (function(){
-  function esc(value){
-    return String(value == null ? '' : value).replace(/[&<>"']/g, function(ch){
-      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[ch];
-    });
+  var v = document.getElementById('heroVideo');
+  if (!v) return;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    v.removeAttribute('autoplay'); v.pause(); return;
   }
-  var hero = document.getElementById('heroSlider');
-  if (!hero || !document.getElementById('hero2Track')) return;
-  var copies = [].slice.call(hero.querySelectorAll('.hero2-copy'));
-  var MAX = copies.length - 1;          // 사진 슬라이드 제거 → 상태 0..MAX 가 곧 카피 인덱스
-  var idx = 0, animating = false;
-  var dots = [].slice.call(hero.querySelectorAll('.hero2-dots span'));
-  function render(){
-    hero.classList.add('hero2--s2');      /* 히어로가 항상 다크 — 헤더/화살표/도트 대비 유지 */
-    hero.classList.toggle('hero2--first', idx === 0);
-    hero.classList.toggle('hero2--last', idx === MAX);
-    copies.forEach(function(c,k){ c.classList.toggle('hero2-copy--active', k === idx); });
-    dots.forEach(function(d,k){ d.classList.toggle('active', k === idx); });
-  }
-  function go(i){
-    i = Math.max(0, Math.min(MAX, i));
-    if (i === idx) return;
-    idx = i; animating = true;
-    render();
-    setTimeout(function(){ animating = false; }, 700);
-  }
-  /* 첫 진입 인트로 — 활성 클래스를 첫 페인트 이후에 붙여야 CSS 트랜지션이 실행된다.
-     (파싱 중 바로 붙이면 브라우저가 '처음부터 보이는 상태'로 그려서 페이드가 없음) */
-  function playIntro(){
-    var shown = false;
-    function show(){ if (shown) return; shown = true; render(); }
-    function schedule(){ requestAnimationFrame(function(){ requestAnimationFrame(show); }); }
-    copies.forEach(function(c){ c.classList.remove('hero2-copy--active'); });
-    void hero.offsetWidth;                       /* 리플로우 강제 → 시작 상태 확정 */
-    schedule();
-    /* 백그라운드 탭은 rAF가 멈춘다 → 화면에 보이는 순간 재생 */
-    document.addEventListener('visibilitychange', function onVis(){
-      if (document.hidden) return;
-      document.removeEventListener('visibilitychange', onVis);
-      schedule();
-    });
-    /* 안전망: 보이는 상태인데 rAF가 안 돌면 그냥 노출(카피가 숨겨진 채 남지 않도록) */
-    setTimeout(function(){ if (!document.hidden) show(); }, 800);
-  }
-  render();
-  playIntro();
-  /* 뒤로가기 복원(bfcache)으로 돌아온 경우에도 다시 재생 */
-  window.addEventListener('pageshow', function(e){ if (e.persisted) playIntro(); });
-  if (location.hash === '#s2') go(1);
-  hero.querySelector('.hero2-arrow--prev').addEventListener('click', function(){ go(idx - 1); });
-  hero.querySelector('.hero2-arrow--next').addEventListener('click', function(){ go(idx + 1); });
-  dots.forEach(function(d,k){ d.addEventListener('click', function(){ go(k); }); });
-  window.addEventListener('wheel', function(e){
-    if (window.innerWidth <= 768) return;   /* 모바일: 세로 스토리 레이아웃 — 하이재킹 없음 */
-    if (window.scrollY > 2) return;
-    if (animating) { e.preventDefault(); return; }
-    if (e.deltaY > 8 && idx < MAX) { e.preventDefault(); go(idx + 1); }
-    else if (e.deltaY < -8 && idx > 0) { e.preventDefault(); go(idx - 1); }
-  }, { passive: false });
-  // 스크롤 다운 시엔 아무 것도 건드리지 않는다 — 히어로(100vh)는 마지막
-  // 프레임 그대로 정상 흐름대로 위로 밀려 사라진다(페이드/리셋 없음).
-  var tx = null;
-  hero.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, { passive: true });
-  hero.addEventListener('touchend', function(e){
-    if (tx === null) return;
-    var dx = e.changedTouches[0].clientX - tx;
-    if (Math.abs(dx) > 60) go(idx + (dx < 0 ? 1 : -1));
-    tx = null;
-  }, { passive: true });
+  function play(){ var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting) play(); else v.pause(); });
+    }, { threshold: 0.15 }).observe(v);
+  } else { play(); }
+  /* 뒤로가기 복원(bfcache)으로 돌아왔을 때 멈춰 있지 않게 */
+  window.addEventListener('pageshow', function(e){ if (e.persisted) play(); });
 })();
-    `}} />
+      `}} />
     </section>
 
     {/* ============ MARQUEE ============ */}
