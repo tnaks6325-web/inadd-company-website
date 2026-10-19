@@ -1,5 +1,6 @@
 // 인플루언서 히어로: 인스타그램 릴스·피드, 유튜브 쇼츠·영상 화면이 여러 휴대폰에서 동시에 재생된다.
-// 영상은 Pexels 무료 영상(상업적 사용 가능, 출처 표기 불필요)을 6초·360x640으로 줄인 것이고 계정명·문구는 가상이다.
+// 인물은 전부 AI로 만든 가상 인물(폼보드 기준 9명, Higgsfield 장면 사진 → 5초 영상)이고 계정명·문구도 가상이다.
+// 화면 비율대로 세로(360x640)·피드(360x480)·가로(640x360) 영상을 둔다.
 // 실제 협업 콘텐츠로 바꿀 때는 public/static/influencer-phones 의 mp4·webp 와 아래 목록만 바꾼다. 움직임은 influencer-phones.js.
 const V = '/static/influencer-phones/'
 
@@ -36,7 +37,7 @@ const Video = (p: { id: string; cls?: string }) => (
 )
 const Ava = (p: { c: string }) => <span class="ip-ava" style={`--a:${p.c}`} />
 
-type Clip = { id: string; handle: string; caption: string; likes: string; comments: string; color: string; title?: string; channel?: string; subs?: string; views?: string }
+type Clip = { id: string; handle: string; caption: string; likes: string; comments: string; color: string; title?: string; channel?: string; subs?: string; views?: string; cmt?: string; next?: string }
 
 /* 인스타그램 릴스 */
 const Reels = (c: Clip) => (
@@ -88,27 +89,27 @@ const Watch = (c: Clip) => (
       <div class="ip-yt-meta">조회수 {c.views} · 3일 전 · #{c.caption}</div>
       <div class="ip-yt-ch"><Ava c={c.color} /><b>{c.channel}</b><small>{c.subs}</small><span class="ip-yt-subbtn">구독</span></div>
       <div class="ip-yt-btns"><span><Svg d={I.like} w={19} /> {c.likes} <i /> <Svg d={I.dislike} w={19} /></span><span><Svg d={I.share} w={19} /> 공유</span><span><Svg d={I.bookmark} w={19} /> 저장</span></div>
-      <div class="ip-yt-cmt"><b>댓글 {c.comments}</b><div><Ava c="#c9b6e4" /><span>영상 보고 바로 따라 해봤어요 너무 맛있어요!!</span></div></div>
-      <div class="ip-yt-next"><span class="ip-yt-thumb" /><div><b>다음 영상 · 일주일 집밥 브이로그</b><small>{c.channel} · 조회수 21만회</small></div></div>
+      <div class="ip-yt-cmt"><b>댓글 {c.comments}</b><div><Ava c="#c9b6e4" /><span>{c.cmt}</span></div></div>
+      <div class="ip-yt-next"><span class="ip-yt-thumb" /><div><b>다음 영상 · {c.next}</b><small>{c.channel} · 조회수 21만회</small></div></div>
     </div>
   </div>
 )
 
 const SCREENS: [typeof Reels, Clip][][] = [
   [
-    [Reels, { id: '6868395', handle: 'soft.minji', caption: '5분 데일리 메이크업 💄 블러셔 하나로 끝', likes: '3.1만', comments: '412', color: '#e98fb0' }],
-    [Watch, { id: '7424442', handle: 'cookwithjun', caption: '집밥', likes: '1.8만', comments: '936', color: '#8bb3e8', title: '자취 10년차가 알려주는 손만두 쉽게 빚는 법', channel: '준의 부엌', subs: '구독자 48.2만명', views: '62만회' }],
-    [Feed, { id: '6965116', handle: 'ootd.seol', caption: '가을엔 역시 가죽 재킷 🖤 #데일리룩', likes: '8,214', comments: '157', color: '#2b2b2b' }],
+    [Reels, { id: 'blush', handle: 'soft.minji', caption: '5분 데일리 메이크업 💄 블러셔 하나로 끝', likes: '3.1만', comments: '412', color: '#e98fb0' }],
+    [Watch, { id: 'homecook', handle: 'jiwon.home', caption: '집밥', likes: '1.8만', comments: '936', color: '#d8b48a', title: '자취 7년차 된장찌개 황금 레시피 🍲 일주일 집밥 브이로그', channel: '지원의 집밥일기', subs: '구독자 27.4만명', views: '38만회', cmt: '영상 보고 바로 따라 해봤어요 너무 맛있어요!!', next: '반찬 5가지 한 번에 만들기' }],
+    [Feed, { id: 'lip', handle: 'lip.yerin', caption: '오늘의 립 💋 로즈 코랄 발색 비교해봤어요', likes: '8,214', comments: '157', color: '#d9667f' }],
   ],
   [
-    [Shorts, { id: '8908650', handle: 'hana_eats.kr', caption: '초밥 한입 크기 실화냐 🍣 #먹방', likes: '5.4만', comments: '1,203', color: '#f4b03e' }],
-    [Reels, { id: '12322776', handle: 'yuna.log_', caption: '아침 준비 같이 해요 ☀️ 헤어밴드 필수', likes: '2.2만', comments: '388', color: '#7cc4b8' }],
-    [Feed, { id: '7507256', handle: 'daily.chaeyoung', caption: '블루 블레이저 하나로 출근룩 완성 💙', likes: '1.2만', comments: '264', color: '#6f9ae0' }],
+    [Shorts, { id: 'dessert', handle: 'cafe.seol', caption: '성수 신상 디저트 카페 딸기 케이크 🍰 #카페투어', likes: '5.4만', comments: '1,203', color: '#f4b03e' }],
+    [Reels, { id: 'skincare-am', handle: 'yuna.log_', caption: '아침 스킨케어 같이 해요 ☀️ 토너 패팅 필수', likes: '2.2만', comments: '388', color: '#7cc4b8' }],
+    [Feed, { id: 'grwm', handle: 'daily.chaeyoung', caption: '출근 전 겟레디윗미 🎀 쿠션 하나로 피부 정리', likes: '1.2만', comments: '264', color: '#b79be6' }],
   ],
   [
-    [Feed, { id: '6543584', handle: 'skin.diary_su', caption: '자기 전 스킨케어 루틴 🌙 3단계면 충분해요', likes: '9,870', comments: '201', color: '#d8b48a' }],
-    [Shorts, { id: '7594436', handle: 'bori_mukbang', caption: '성수 신상 국숫집 웨이팅 1시간 실화? 🍜', likes: '3.8만', comments: '872', color: '#e86b5a' }],
-    [Watch, { id: '8908655', handle: 'hana_eats.kr', caption: '맛집', likes: '2.6만', comments: '1,540', color: '#f4b03e', title: '오마카세 처음 가본 날 솔직 후기 🍣 가격·맛 다 공개', channel: '하나의 먹고 기록', subs: '구독자 31.7만명', views: '44만회' }],
+    [Feed, { id: 'skincare-pm', handle: 'skin.diary_su', caption: '자기 전 스킨케어 루틴 🌙 3단계면 충분해요', likes: '9,870', comments: '201', color: '#c9b6e4' }],
+    [Shorts, { id: 'noodle', handle: 'bori_mukbang', caption: '성수 신상 국숫집 웨이팅 1시간 실화? 🍜', likes: '3.8만', comments: '872', color: '#e86b5a' }],
+    [Watch, { id: 'omakase', handle: 'hana_eats.kr', caption: '맛집', likes: '2.6만', comments: '1,540', color: '#6f9ae0', title: '오마카세 처음 가본 날 솔직 후기 🍣 가격·맛 다 공개', channel: '하나의 먹고 기록', subs: '구독자 31.7만명', views: '44만회', cmt: '저도 이번 주말에 예약했어요 기대돼요!!', next: '성수 디저트 카페 5곳 비교' }],
   ],
 ]
 
