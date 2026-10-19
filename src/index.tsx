@@ -130,8 +130,8 @@ Sitemap: https://www.inadcompany.co.kr/sitemap.xml`
 // Routes
 app.get('/', (c) => {
   return c.render(<HomePage />, {
-    title: '풀퍼널 마케팅 에이전시',
-    description: '채팅·커뮤니티·SNS 중심의 실전형 바이럴 마케팅 에이전시 인애드컴퍼니. 바이럴·인플루언서·체험단·리뷰·올리브영·PPL 마케팅 전문.',
+    title: '풀퍼널 마케팅 에이전시 - 바이럴부터 광고까지 한 팀에서',
+    description: '바이럴과 광고를 한 팀이 같이 운영하는 풀퍼널 마케팅 에이전시입니다. 커뮤니티 바이럴, 네이버·구글·메타 광고, 인플루언서·체험단, 올리브영, PPL까지 맡길 수 있습니다.',
     canonical: 'https://www.inadcompany.co.kr',
     schema: JSON.stringify({
       "@context": "https://schema.org",
@@ -153,7 +153,7 @@ app.get('/', (c) => {
             "postalCode": "15352",
             "addressCountry": "KR"
           },
-          "foundingDate": "2022-05-06",
+          "foundingDate": "2019",
           "sameAs": [
             "https://soomgo.com/profile/users/16782447",
             "https://www.i-boss.co.kr/company/1258/%EC%9D%B8%EC%95%A0%EB%93%9C%EC%BB%B4%ED%8D%BC%EB%8B%88",
@@ -199,24 +199,24 @@ app.get('/', (c) => {
 
 app.get('/about', (c) => {
   return c.render(<AboutPage />, {
-    title: '회사 소개',
-    description: '인애드컴퍼니는 채팅·커뮤니티·SNS 중심의 실전형 바이럴 마케팅 에이전시입니다. 브랜드 인지도와 전환율을 동시에 높이는 퍼포먼스 마케팅 전문 기업.',
+    title: '회사 소개 - 2019년부터 바이럴·광고를 해 온 에이전시',
+    description: '인애드컴퍼니는 2019년 시작해 2022년 법인으로 전환한 마케팅 에이전시입니다. 바이럴과 퍼포먼스 광고를 한 팀에서 운영합니다. 연혁, 비즈니스 파트너, 경기도 안산 사무실 위치를 소개합니다.',
     canonical: 'https://www.inadcompany.co.kr/about'
   })
 })
 
 app.get('/works', (c) => {
   return c.render(<WorksPage />, {
-    title: '포트폴리오',
-    description: '인애드컴퍼니의 바이럴·인플루언서·체험단·리뷰 마케팅 성공 사례를 확인하세요. 다양한 브랜드의 실전 캠페인 포트폴리오.',
+    title: '포트폴리오 - 바이럴·광고·인플루언서 캠페인 사례',
+    description: '바이럴·인플루언서·체험단·리뷰·광고 캠페인을 어떻게 운영했는지 실제 브랜드 사례로 정리했습니다.',
     canonical: 'https://www.inadcompany.co.kr/works'
   })
 })
 
 app.get('/insight', (c) => {
   return c.render(<InsightPage />, {
-    title: '마케팅 인사이트',
-    description: '바이럴 마케팅, 인플루언서 마케팅, 리뷰 마케팅 최신 트렌드와 실전 전략을 인애드컴퍼니 전문가가 알려드립니다.',
+    title: '마케팅 인사이트 - 광고·바이럴·올리브영 실무 가이드',
+    description: '광고비 계산, 체험단·공동구매 수수료, 올리브영 입점처럼 브랜드 담당자가 자주 묻는 마케팅 질문에 숫자와 출처를 붙여 답합니다.',
     canonical: 'https://www.inadcompany.co.kr/insight'
   })
 })
@@ -254,14 +254,14 @@ app.get('/viral', (c) => c.redirect('/#services', 301))
 
 // 개별 서비스 페이지
 app.get('/marketing/performance', (c) => c.render(<SvcPerformancePage />, {
-  title: '퍼포먼스 마케팅',
+  title: '퍼포먼스 마케팅 대행 - 네이버·구글·메타 광고 운영',
   description: '네이버·구글·메타·카카오 광고 운영부터 GA4·GTM 전환 측정, 소재 제작과 성과 분석까지. 인애드컴퍼니의 퍼포먼스 마케팅.',
   canonical: 'https://www.inadcompany.co.kr/marketing/performance'
 }))
 
 app.get('/marketing/subscription', (c) => {
   return c.render(<SvcSubscriptionPage />, {
-    title: '마케팅팀 구독',
+    title: '마케팅팀 구독 - 신입 1명 비용으로 전담 TF팀',
     description: '신입 마케터 1명 비용(월 300만 원, 부가세 별도)으로 광고·기획·디자인·영상·바이럴·체험단 전담 TF팀을 구독하세요. 초기진단·세팅 무료, 매주 브랜드 주간보고서.',
     canonical: 'https://www.inadcompany.co.kr/marketing/subscription'
   })
@@ -269,24 +269,24 @@ app.get('/marketing/subscription', (c) => {
 
 app.get('/marketing/viral', (c) => {
   return c.render(<SvcViralPage />, {
-    title: '바이럴 마케팅',
-    description: '커뮤니티·카페·SNS 기반 자연확산 바이럴 마케팅 전문. 실제 사용자 리뷰와 입소문으로 브랜드 인지도를 높이는 인애드컴퍼니의 바이럴 전략.',
+    title: '바이럴 마케팅 대행 - 커뮤니티·카페·SNS 입소문',
+    description: '커뮤니티·카페·SNS 기반 바이럴 마케팅. 실제 사용자 후기와 입소문으로 브랜드를 알립니다.',
     canonical: 'https://www.inadcompany.co.kr/marketing/viral'
   })
 })
 
 app.get('/marketing/influencer', (c) => {
   return c.render(<SvcInfluencerPage />, {
-    title: '인플루언서 마케팅',
-    description: '1,200+ 크리에이터 네트워크를 활용한 인플루언서 마케팅. 브랜드에 최적화된 인플루언서 섭외부터 콘텐츠 제작까지 인애드컴퍼니가 책임집니다.',
+    title: '인플루언서 마케팅 대행 - 섭외부터 콘텐츠 제작까지',
+    description: '자사 보유 1,200+ 크리에이터 DB와 전담 디렉터가 브랜드에 맞는 인플루언서를 섭외하고 콘텐츠 제작까지 진행합니다.',
     canonical: 'https://www.inadcompany.co.kr/marketing/influencer'
   })
 })
 
 app.get('/marketing/seeding', (c) => {
   return c.render(<SvcSeedingPage />, {
-    title: '체험단 마케팅',
-    description: '샘플 배포와 체험단 운영으로 진짜 후기를 만드는 체험단 캠페인. 소비자 신뢰를 높이는 인애드컴퍼니의 체험단 마케팅 전략.',
+    title: '체험단 마케팅 - 네이버 블로그·인스타그램 체험단 운영',
+    description: '샘플 배포와 체험단 운영으로 실사용 후기가 쌓이도록 하는 체험단 캠페인. 네이버 블로그·인스타그램 체험단 패키지를 운영합니다.',
     canonical: 'https://www.inadcompany.co.kr/marketing/seeding'
   })
 })
@@ -298,7 +298,7 @@ app.get('/marketing/seo', (c) => {
 
 app.get('/marketing/review', (c) => {
   return c.render(<SvcReviewPage />, {
-    title: '리뷰 마케팅',
+    title: '리뷰 마케팅 - 블로그 리뷰 기획·평판 관리',
     description: '브랜드 신뢰도와 구매 전환율을 높이는 리뷰 마케팅. 진성 리뷰 수집과 리뷰 관리로 온라인 평판을 관리하는 인애드컴퍼니.',
     canonical: 'https://www.inadcompany.co.kr/marketing/review'
   })
@@ -306,24 +306,24 @@ app.get('/marketing/review', (c) => {
 
 app.get('/marketing/oliveyoung', (c) => {
   return c.render(<SvcOliveYoungPage />, {
-    title: '올리브영 마케팅',
-    description: '올리브영 랭킹 최적화와 H&B 채널 마케팅 전문. 올리브영 입점 브랜드의 매출 성장을 이끄는 인애드컴퍼니의 올리브영 마케팅.',
+    title: '올리브영 마케팅 - 입점 준비·리뷰·랭킹 전략',
+    description: '올리브영 입점 준비부터 리뷰 확보, 랭킹 전략, 오프라인 매대 노출 제안까지 H&B 채널 마케팅을 운영합니다.',
     canonical: 'https://www.inadcompany.co.kr/marketing/oliveyoung'
   })
 })
 
 app.get('/marketing/ppl', (c) => {
   return c.render(<SvcPplPage />, {
-    title: 'PPL 마케팅',
-    description: '드라마·예능·유튜브 콘텐츠 속 자연스러운 브랜드 노출 PPL 마케팅. 시청자에게 거부감 없이 브랜드를 각인시키는 인애드컴퍼니의 PPL 전략.',
+    title: 'PPL 마케팅 - 드라마·예능 방송 협찬 기획',
+    description: '드라마·예능 프로그램 선정부터 장면 기획, 방송사·제작사 협찬 계약, 방영 후 리포트까지 PPL 전 과정을 진행합니다.',
     canonical: 'https://www.inadcompany.co.kr/marketing/ppl'
   })
 })
 
 app.get('/development', (c) => {
   return c.render(<DevelopmentPage />, {
-    title: '마케팅 자동화 개발',
-    description: '인애드컴퍼니의 마케팅 자동화 개발 서비스. 반복 업무를 자동화하고 데이터 기반 운영 체계를 구축합니다.',
+    title: '마케팅 자동화 개발 - 업무 자동화·운영 시스템',
+    description: '캠페인 운영, 체험단·리뷰 진행, 원고 관리, 성과 데이터 수집을 자체 시스템으로 자동화했습니다. 인애드컴퍼니가 직접 만들어 쓰는 마케팅 운영 시스템을 소개합니다.',
     canonical: 'https://www.inadcompany.co.kr/development'
   })
 })
