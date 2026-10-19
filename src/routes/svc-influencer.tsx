@@ -1,10 +1,12 @@
 import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
+import { InfluencerPhones } from './influencer-phones'
 export const SvcInfluencerPage = () => (
   <>
+    <link rel="stylesheet" href="/static/influencer-phones.css?v=20261019a" />
     {/* ══ HERO ══ */}
-    <section class="vh-hero vh-hero--photo">
-      <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/mkt-images/hero-influencer.png')"></div>
+    <section class="vh-hero vh-hero--ip">
+      <div class="vh-glow" aria-hidden="true"></div>
       <canvas id="vhCanvas2" class="vh-canvas"></canvas>
       <div class="vh-bg">
         <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(168,85,247,0.26) 0%,transparent 70%)"></div>
@@ -63,6 +65,10 @@ export const SvcInfluencerPage = () => (
           </a>
         </div>
       </div>
+
+      {/* 인스타그램·유튜브 화면이 여러 휴대폰에서 동시에 재생 */}
+      <InfluencerPhones />
+      <script src="/static/influencer-phones.js?v=20261019a" defer></script>
 
       <div class="vh-scroll-hint">
         <div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div>

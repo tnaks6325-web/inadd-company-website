@@ -1,0 +1,97 @@
+/* 인플루언서 히어로: 휴대폰 3줄이 위아래로 엇갈려 흐르며 인스타그램·유튜브 화면이 동시에 재생된다.
+   화면은 390x844(아이폰 기준)로 그리고 --s 배율로 줄인다. */
+.vh-hero--ip { background:#f4f2f8; }
+.vh-hero--ip::before { display:none; }
+.vh-hero--ip .vh-inner { position:relative; z-index:2; }
+.vh-hero--ip .vh-glow { position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(40% 60% at 78% 45%,rgba(168,85,247,.16),transparent 70%),radial-gradient(34% 46% at 96% 96%,rgba(236,72,153,.14),transparent 70%),radial-gradient(30% 40% at 58% 0%,rgba(40,92,204,.12),transparent 70%); }
+.ip { --s:.5; --bz:8px; --gap:20px; position:absolute; top:78px; bottom:0; left:52%; right:0; z-index:1; overflow:hidden; pointer-events:none; display:flex; justify-content:center; gap:var(--gap);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12%),linear-gradient(180deg,transparent 0,#000 9%,#000 91%,transparent); -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent 0,#000 12%),linear-gradient(180deg,transparent 0,#000 9%,#000 91%,transparent); mask-composite:intersect; }
+.ip-col { display:flex; flex-direction:column; gap:var(--gap); flex:none; animation:ip-drift 22s ease-in-out infinite alternate; will-change:transform; }
+.ip-col--1 { animation-duration:26s; animation-direction:alternate-reverse; margin-top:-120px; }
+.ip-col--2 { animation-duration:24s; margin-top:-60px; }
+@keyframes ip-drift { from { transform:translateY(40px); } to { transform:translateY(calc(-1 * (844px * var(--s) + var(--bz) * 2 + var(--gap)) * 1.25)); } }
+.ip.is-paused .ip-col { animation-play-state:paused; }
+.ip-phone { flex:none; width:calc(390px * var(--s) + var(--bz) * 2); height:calc(844px * var(--s) + var(--bz) * 2); padding:var(--bz); border-radius:calc(54px * var(--s) + var(--bz)); background:#111318;
+  box-shadow:0 0 0 1.5px #3a3d45 inset,0 24px 50px rgba(40,20,70,.20),0 6px 14px rgba(17,19,24,.12); }
+.ip-screen { position:relative; width:390px; height:844px; transform:scale(var(--s)); transform-origin:0 0; border-radius:47px; overflow:hidden; background:#fff; }
+.ip-island { position:absolute; top:11px; left:50%; width:120px; height:35px; margin-left:-60px; border-radius:20px; background:#000; z-index:9; }
+
+.ip-app, .ip-app * { box-sizing:border-box; margin:0; letter-spacing:normal; }
+.ip-app { position:relative; height:100%; display:flex; flex-direction:column; color:#000; background:#fff; font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif; font-size:15px; line-height:1.4; -webkit-font-smoothing:antialiased; text-align:left; word-break:keep-all; }
+.ip-dark { background:#000; color:#fff; }
+.ip-status { position:relative; z-index:3; flex:none; display:flex; justify-content:space-between; align-items:center; height:47px; padding:14px 30px 0 34px; }
+.ip-status b { font-size:16px; font-weight:600; }
+.ip-status span { display:flex; gap:6px; align-items:center; }
+.ip-status--light { color:#fff; }
+.ip-video { display:block; width:100%; object-fit:cover; background:#222; }
+.ip-video--full { position:absolute; inset:0; height:100%; }
+.ip-video--feed { aspect-ratio:4/5; height:auto; flex:none; }
+.ip-video--wide { aspect-ratio:16/9; height:auto; flex:none; object-position:50% 35%; }
+.ip-shade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.35) 0,transparent 16%,transparent 58%,rgba(0,0,0,.6) 100%); }
+.ip-ava { flex:none; width:32px; height:32px; border-radius:50%; background:radial-gradient(circle at 50% 38%,rgba(255,255,255,.75) 0 6px,transparent 6.5px),var(--a,#ccc); }
+.ip-me { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#f6c3a5,#c98e7b); display:inline-block; }
+.ip-user { display:flex; align-items:center; gap:9px; font-size:15px; }
+.ip-cap { font-size:15px; margin-top:8px; }
+.ip-nav { position:relative; z-index:3; margin-top:auto; flex:none; display:flex; justify-content:space-around; align-items:center; height:78px; padding-bottom:22px; border-top:1px solid #eee; background:#fff; }
+.ip-nav--dark { background:#000; color:#fff; border-color:#222; }
+
+/* 릴스 */
+.ip-reels-top { position:relative; z-index:3; display:flex; justify-content:space-between; align-items:center; padding:8px 18px; font-size:22px; }
+.ip-side { position:absolute; z-index:3; right:12px; bottom:118px; display:flex; flex-direction:column; align-items:center; gap:18px; }
+.ip-side span { display:flex; flex-direction:column; align-items:center; gap:3px; }
+.ip-side em { font-style:normal; font-size:13px; font-weight:600; }
+.ip-reels-info { position:absolute; z-index:3; left:14px; right:70px; bottom:96px; }
+.ip-follow { border:1.5px solid rgba(255,255,255,.8); border-radius:8px; padding:3px 10px; font-size:13px; font-weight:700; }
+.ip-music { font-size:13px; margin-top:8px; opacity:.9; }
+
+/* 쇼츠 */
+.ip-shorts-top { position:relative; z-index:3; display:flex; justify-content:flex-end; gap:22px; padding:10px 18px; }
+.ip-side--yt { bottom:104px; gap:14px; }
+.ip-round { display:flex; width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,.16); align-items:center; justify-content:center; font-style:normal; }
+.ip-shorts-info { position:absolute; z-index:3; left:14px; right:76px; bottom:96px; }
+.ip-sub { background:#fff; color:#0f0f0f; border-radius:16px; padding:5px 12px; font-size:13px; font-weight:700; }
+.ip-nav--yt { background:#0f0f0f; color:#fff; border-color:#222; font-size:10px; }
+.ip-nav--yt > span { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.ip-yt-plus { width:40px; height:40px; border-radius:50%; background:#272727; font-size:26px; line-height:38px; text-align:center; display:block !important; }
+
+/* 인스타 피드 */
+.ip-feed-top { display:flex; align-items:center; gap:20px; padding:4px 16px 8px; }
+.ip-ig-logo { flex:1; font:italic 600 27px/1 "Snell Roundhand","Brush Script MT","Segoe Script",cursive; }
+.ip-stories { display:flex; gap:12px; padding:4px 14px 12px; border-bottom:1px solid #efefef; }
+.ip-story { width:62px; height:62px; border-radius:50%; padding:3px; background:conic-gradient(#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5,#feda75); position:relative; }
+.ip-story::after { content:''; position:absolute; inset:3px; border-radius:50%; border:3px solid #fff; background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.7) 0 9px,transparent 9.5px),var(--a); }
+.ip-post-head { display:flex; align-items:center; gap:10px; padding:10px 12px; }
+.ip-post-head div { flex:1; display:flex; flex-direction:column; font-size:14px; }
+.ip-post-head small { font-size:12px; color:#555; }
+.ip-actions { display:flex; gap:16px; padding:10px 12px 6px; }
+.ip-actions i { flex:1; }
+.ip-feed-txt { padding:0 12px; font-size:14px; display:flex; flex-direction:column; gap:3px; }
+.ip-feed-txt span { color:#777; }
+
+/* 유튜브 영상 */
+.ip-yt-body { padding:12px 14px; display:flex; flex-direction:column; gap:10px; }
+.ip-yt-title { font-size:18px; font-weight:700; line-height:1.35; }
+.ip-yt-meta { font-size:12px; color:#606060; margin-top:-6px; }
+.ip-yt-ch { display:flex; align-items:center; gap:8px; font-size:15px; }
+.ip-yt-ch small { flex:1; font-size:12px; color:#606060; }
+.ip-yt-subbtn { background:#0f0f0f; color:#fff; border-radius:18px; padding:7px 14px; font-size:13px; font-weight:700; }
+.ip-yt-btns { display:flex; gap:8px; }
+.ip-yt-btns span { display:flex; align-items:center; gap:6px; background:#f2f2f2; border-radius:18px; padding:7px 12px; font-size:13px; font-weight:600; }
+.ip-yt-btns i { width:1px; height:18px; background:#ccc; }
+.ip-yt-cmt { background:#f2f2f2; border-radius:12px; padding:10px 12px; font-size:13px; }
+.ip-yt-cmt div { display:flex; gap:8px; align-items:center; margin-top:6px; }
+.ip-yt-cmt .ip-ava { width:24px; height:24px; }
+.ip-yt-next { display:flex; gap:10px; font-size:13px; }
+.ip-yt-thumb { flex:none; width:150px; height:84px; border-radius:10px; background:linear-gradient(135deg,#f3d9b5,#e8a774); }
+.ip-yt-next div { display:flex; flex-direction:column; gap:4px; }
+.ip-yt-next small { color:#606060; }
+
+@media(max-width:1024px) { .ip { left:50%; --s:.44; --gap:16px; } }
+@media(max-width:767px) {
+  .vh-hero--ip { flex-direction:column; align-items:stretch; }
+  .ip { position:relative; left:auto; right:auto; top:auto; bottom:auto; flex:none; height:440px; margin-top:-30px; --s:.36; --bz:6px; --gap:12px;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 12%,#000 88%,transparent); mask-image:linear-gradient(180deg,transparent 0,#000 12%,#000 88%,transparent); }
+}
+@media (prefers-reduced-motion:reduce) { .ip-col { animation:none; } }
