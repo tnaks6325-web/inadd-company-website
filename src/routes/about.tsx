@@ -500,7 +500,7 @@ export const AboutPage = () => (
                 </div>
                 <div>
                   <span class="ldl-label">주소</span>
-                  <p class="ldl-value">경기도 안산시 단원구 고잔로 51<br />타워아이즈빌 2F, 204호</p>
+                  <p class="ldl-value">경기도 안산시 단원구 고잔로 51<br />타워아이즈빌 2층 204호</p>
                 </div>
               </li>
               <li class="ldl-item">

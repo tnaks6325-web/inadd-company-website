@@ -462,6 +462,7 @@ export const SvcReviewPage = () => (
         </div>
         <div class="faq-wrap" id="faqWrap" data-service="review"></div>
         <script dangerouslySetInnerHTML={{__html:`(function(){
+          var pre=document.getElementById('faqWrap'); if(pre&&pre.children.length)return; // 서버(main.tsx)가 미리 채운 경우
           fetch('/api/admin/public/svc-faq/review')
             .then(function(r){return r.json();})
             .then(function(data){

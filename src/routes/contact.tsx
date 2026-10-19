@@ -295,12 +295,12 @@ export const ContactPage = () => (
                   <div class="kf-fixed-addr-card">
                     <svg viewBox="0 0 24 24" fill="none" width="18" height="18" style="flex-shrink:0;margin-top:2px"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" stroke="rgba(160,120,255,0.85)" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="10" r="3" stroke="rgba(160,120,255,0.85)" stroke-width="1.8"/></svg>
                     <div>
-                      <p class="kf-fixed-addr-main">경기도 안산시 단원구 고잔로 51, 타워아이즈빌 2F, 204호</p>
+                      <p class="kf-fixed-addr-main">경기도 안산시 단원구 고잔로 51, 타워아이즈빌 2층 204호</p>
                       <p class="kf-fixed-addr-sub">주차 가능 · 지하철 4호선 중앙역 도보 5분</p>
                     </div>
                   </div>
                   {/* hidden으로 form 데이터에 포함 */}
-                  <input type="hidden" name="visitAddress" value="경기도 안산시 단원구 고잔로 51, 타워아이즈빌 2F, 204호" />
+                  <input type="hidden" name="visitAddress" value="경기도 안산시 단원구 고잔로 51, 타워아이즈빌 2층 204호" />
                 </div>
 
                 {/* onsite: 주소 직접 입력 */}
