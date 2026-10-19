@@ -153,3 +153,17 @@
   .vp-phone { top:50%; }
 }
 @media (prefers-reduced-motion:reduce) { .vp-phone,.vp-scroll { transition:none !important; } }
+
+/* ── 히어로 배경: 퍼져 나가는 반응 ── */
+.vb { position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+.vb-glow { position:absolute; inset:0;
+  background:radial-gradient(40% 58% at 72% 52%,rgba(40,92,204,.30),transparent 72%),radial-gradient(30% 42% at 96% 92%,rgba(110,170,255,.32),transparent 70%),radial-gradient(30% 40% at 52% 4%,rgba(150,190,255,.26),transparent 70%),radial-gradient(26% 36% at 6% 96%,rgba(150,190,255,.18),transparent 70%); }
+.vb-ring { position:absolute; width:360px; height:360px; margin:-180px 0 0 -180px; border-radius:50%; border:2px solid rgba(40,92,204,.42); background:radial-gradient(closest-side,transparent 70%,rgba(40,92,204,.06)); opacity:0; animation:vb-ring 2.4s cubic-bezier(.2,.6,.3,1) forwards; }
+@keyframes vb-ring { 0% { transform:scale(.9); opacity:1; } 100% { transform:scale(3); opacity:0; } }
+.vb-chip { position:absolute; z-index:30; display:flex; align-items:center; gap:8px; padding:8px 12px 8px 8px; border-radius:12px; background:rgba(255,255,255,.96); box-shadow:0 12px 28px rgba(17,19,24,.14),0 2px 5px rgba(17,19,24,.08);
+  font:600 14px/1.2 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif; color:#111318; white-space:nowrap; opacity:0; animation:vb-rise var(--dur,6s) cubic-bezier(.25,.6,.35,1) forwards; }
+.vb-chip i { flex:none; width:24px; height:24px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-style:normal; font-size:12px; color:#fff; background:var(--c,#285ccc); }
+.vb-chip small { font-weight:500; color:#555a66; font-size:12px; }
+@keyframes vb-rise { 0% { transform:translateY(24px) scale(var(--sc,1)); opacity:0; } 14% { opacity:var(--peak,.92); } 75% { opacity:var(--peak,.92); } 100% { transform:translateY(-130px) scale(var(--sc,1)); opacity:0; } }
+@media (prefers-reduced-motion:reduce) { .vb-chip { animation:none; opacity:var(--peak,.7); } .vb-ring { display:none; } }
+@media(max-width:767px) { .vb-glow { background:radial-gradient(70% 40% at 50% 78%,rgba(40,92,204,.20),transparent 70%),radial-gradient(50% 30% at 90% 30%,rgba(110,170,255,.16),transparent 70%); } .vb-chip { font-size:11px; padding:6px 9px 6px 6px; } .vb-chip i { width:20px; height:20px; } }

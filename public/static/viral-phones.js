@@ -35,6 +35,7 @@
     cur = (cur + 1) % n;
     apply();
     var center = phones[cur];
+    document.dispatchEvent(new CustomEvent('vp:arrive', { detail: center }));
     setTimeout(function () { if (relOf(phones.indexOf(center)) === 0) scrollPhone(center, true); }, SCROLL_DELAY);
   }
 
@@ -49,4 +50,53 @@
     advance();
     setInterval(function () { if (visible && !document.hidden) advance(); }, STEP_MS);
   }, 350);
+})();
+
+/* 히어로 배경: 가운데 화면이 도착할 때마다 물결이 퍼지고, 휴대폰 가장자리 위로 반응 알림이 떠올랐다 사라진다. */
+(function () {
+  var bg = document.querySelector('[data-vb]');
+  if (!bg) return;
+  var hero = bg.parentNode, layer = hero.querySelector('[data-vp]') || bg;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var CHIPS = [
+    ['♥', '#f0284a', '좋아요 +24', ''], ['💬', '#03c75a', '댓글 12', '저도 써봤어요!'], ['👁', '#5b6bd6', '조회 1,284', ''],
+    ['↗', '#285ccc', '공유 38', ''], ['👍', '#3d63c9', '추천 412', ''], ['＋', '#03c75a', '이웃추가', ''],
+    ['💬', '#03c75a', '새 댓글', '어디서 사셨어요?'], ['★', '#f3a51b', '실시간 인기글', ''], ['🔖', '#7a5af0', '스크랩 9', ''],
+    ['♥', '#f0284a', '좋아요 +41', ''], ['💬', '#3d63c9', '댓글 186', '재구매 각'], ['👁', '#5b6bd6', '조회 38,120', '']
+  ];
+  var mobile = function () { return window.innerWidth < 768; };
+  var k = 0;
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+  function chip(x, y, still) {
+    var c = CHIPS[k++ % CHIPS.length], el = document.createElement('div');
+    el.className = 'vb-chip';
+    el.innerHTML = '<i style="--c:' + c[1] + '">' + c[0] + '</i><span>' + c[2] + (c[3] ? ' <small>' + c[3] + '</small>' : '') + '</span>';
+    el.style.left = x + '%'; el.style.top = y + '%';
+    el.style.setProperty('--sc', rnd(.9, 1).toFixed(2));
+    el.style.setProperty('--dur', rnd(4.5, 6) + 's');
+    if (!still) el.addEventListener('animationend', function () { el.remove(); });
+    layer.appendChild(el);
+  }
+  // 휴대폰 묶음 안에서 가운데 화면 양옆 가장자리(옆 화면 위)에 띄워 가운데 화면 글은 가리지 않는다
+  var side = 0;
+  function spot() { side = 1 - side; var y = rnd(12, 78); return mobile() ? [side ? rnd(2, 10) : rnd(52, 60), y] : [side ? rnd(10, 24) : rnd(64, 76), y]; }
+  if (reduce) { for (var i = 0; i < 7; i++) { var p = spot(); chip(p[0], p[1], true); } return; }
+
+  document.addEventListener('vp:arrive', function (e) {
+    if (document.hidden) return;
+    var r = e.detail.getBoundingClientRect(), h = hero.getBoundingClientRect();
+    var ring = document.createElement('div');
+    ring.className = 'vb-ring';
+    ring.style.left = (r.left + r.width / 2 - h.left) + 'px';
+    ring.style.top = (r.top + r.height / 2 - h.top) + 'px';
+    ring.addEventListener('animationend', function () { ring.remove(); });
+    bg.appendChild(ring);
+  });
+  var visible = true;
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }).observe(bg);
+  for (var j = 0; j < 2; j++) { var q = spot(); chip(q[0], q[1]); }
+  setInterval(function () {
+    if (!visible || document.hidden || layer.querySelectorAll('.vb-chip').length >= 4) return;
+    var p = spot(); chip(p[0], p[1]);
+  }, 1100);
 })();

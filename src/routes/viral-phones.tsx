@@ -172,3 +172,8 @@ export const ViralPhones = () => (
     </div>)}
   </div>
 )
+
+// 히어로 배경: 파란 빛 번짐 + 가운데 화면 도착 때마다 퍼지는 물결 + 떠오르는 반응 알림(viral-phones.js가 만든다)
+export const ViralBackdrop = () => (
+  <div class="vb" aria-hidden="true" data-vb><div class="vb-glow" /></div>
+)
