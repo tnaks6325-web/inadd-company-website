@@ -331,6 +331,19 @@ export const SUBSCRIPTION_BODY = `
   </div>
 </section>
 
+<section data-screen-label="07-2 자주 묻는 질문" id="svc-faq" style="padding:96px 64px 0;">
+  <h2 style="margin:0;font-size:48px;line-height:1.36;font-weight:800;letter-spacing:-0.04em;">자주 묻는 질문</h2>
+  <div style="margin-top:40px;border-top:3px solid #21306F;">
+    <details style="border-bottom:2px solid #F4EDDC;padding:28px 0;"><summary style="cursor:pointer;font-size:28px;font-weight:800;">마케팅팀 구독 비용은 얼마인가요?</summary><div style="font-size:21px;line-height:1.55;margin-top:12px;">월 300만 원이고 부가세는 별도예요. 광고비, 체험단 제품·배송비, 구매평에 쓰이는 상품 비용, 촬영 모델·장소 비용은 따로 들어요.</div></details>
+    <details style="border-bottom:2px solid #F4EDDC;padding:28px 0;"><summary style="cursor:pointer;font-size:28px;font-weight:800;">어떤 회사에 맞나요?</summary><div style="font-size:21px;line-height:1.55;margin-top:12px;">마케터가 없어 대표가 직접 마케팅하는 회사, 마케터 한 명이 광고·디자인·체험단을 혼자 맡은 회사, 여러 대행사를 따로 쓰고 있는 회사에 맞아요. 마케터를 더 뽑아야 하거나 사내에 디자인할 사람이 없을 때도 검토해 볼 만해요.</div></details>
+    <details style="border-bottom:2px solid #F4EDDC;padding:28px 0;"><summary style="cursor:pointer;font-size:28px;font-weight:800;">약정 기간이 있나요?</summary><div style="font-size:21px;line-height:1.55;margin-top:12px;">월 단위로 연장하고 다음 달부터 해지할 수 있어요.</div></details>
+    <details style="border-bottom:2px solid #F4EDDC;padding:28px 0;"><summary style="cursor:pointer;font-size:28px;font-weight:800;">계약하면 언제부터 시작하나요?</summary><div style="font-size:21px;line-height:1.55;margin-top:12px;">초기진단과 세팅은 무료로 진행하고 계약 후 2주 안에 집행을 시작해요. 브랜드 주간보고서는 매주 보내 드려요.</div></details>
+    <details style="border-bottom:2px solid #F4EDDC;padding:28px 0;"><summary style="cursor:pointer;font-size:28px;font-weight:800;">광고 계정과 만든 콘텐츠는 누구 것인가요?</summary><div style="font-size:21px;line-height:1.55;margin-top:12px;">모두 브랜드 소유예요. 구독을 마친 뒤에도 그대로 쓰실 수 있어요.</div></details>
+    <details style="border-bottom:2px solid #F4EDDC;padding:28px 0;"><summary style="cursor:pointer;font-size:28px;font-weight:800;">다른 업체에 다시 맡기나요?</summary><div style="font-size:21px;line-height:1.55;margin-top:12px;">아니요. 광고·디자인·영상·바이럴·체험단 모두 인애드컴퍼니 전담 TF팀이 직접 진행해요.</div></details>
+  </div>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "마케팅팀 구독 비용은 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "월 300만 원이고 부가세는 별도예요. 광고비, 체험단 제품·배송비, 구매평에 쓰이는 상품 비용, 촬영 모델·장소 비용은 따로 들어요."}}, {"@type": "Question", "name": "어떤 회사에 맞나요?", "acceptedAnswer": {"@type": "Answer", "text": "마케터가 없어 대표가 직접 마케팅하는 회사, 마케터 한 명이 광고·디자인·체험단을 혼자 맡은 회사, 여러 대행사를 따로 쓰고 있는 회사에 맞아요. 마케터를 더 뽑아야 하거나 사내에 디자인할 사람이 없을 때도 검토해 볼 만해요."}}, {"@type": "Question", "name": "약정 기간이 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "월 단위로 연장하고 다음 달부터 해지할 수 있어요."}}, {"@type": "Question", "name": "계약하면 언제부터 시작하나요?", "acceptedAnswer": {"@type": "Answer", "text": "초기진단과 세팅은 무료로 진행하고 계약 후 2주 안에 집행을 시작해요. 브랜드 주간보고서는 매주 보내 드려요."}}, {"@type": "Question", "name": "광고 계정과 만든 콘텐츠는 누구 것인가요?", "acceptedAnswer": {"@type": "Answer", "text": "모두 브랜드 소유예요. 구독을 마친 뒤에도 그대로 쓰실 수 있어요."}}, {"@type": "Question", "name": "다른 업체에 다시 맡기나요?", "acceptedAnswer": {"@type": "Answer", "text": "아니요. 광고·디자인·영상·바이럴·체험단 모두 인애드컴퍼니 전담 TF팀이 직접 진행해요."}}]}</script>
+</section>
+
 <section data-screen-label="08 상담" style="padding:120px 64px 100px;">
   <div style="position:relative;border-radius:20px;overflow:hidden;">
     <img src="/static/subscription/dog-meme.webp" width="1400" height="1055" loading="lazy" decoding="async" alt="밀짚모자를 쓴 강아지가 깡통 4개 위에 겨우 서 있는 사진" style="display:block;width:100%;height:auto;">
