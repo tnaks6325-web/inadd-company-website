@@ -278,7 +278,7 @@ app.get('/marketing/viral', (c) => {
 app.get('/marketing/influencer', (c) => {
   return c.render(<SvcInfluencerPage />, {
     title: '인플루언서 마케팅 대행 - 섭외부터 콘텐츠 제작까지',
-    description: '자사 보유 1,200+ 크리에이터 DB와 전담 디렉터가 브랜드에 맞는 인플루언서를 섭외하고 콘텐츠 제작까지 진행합니다.',
+    description: '자사 보유 1,520+ 크리에이터 DB와 전담 디렉터가 브랜드에 맞는 인플루언서를 섭외하고 콘텐츠 제작까지 진행합니다.',
     canonical: 'https://www.inadcompany.co.kr/marketing/influencer'
   })
 })

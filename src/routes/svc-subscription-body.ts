@@ -320,6 +320,17 @@ export const SUBSCRIPTION_BODY = `
   </div>
 </section>
 
+<section data-screen-label="07 진행 조건" id="svc-terms" style="padding:120px 64px 0;">
+  <div style="font-size:24px;font-weight:800;color:#21306F;">07</div>
+  <h2 style="margin:16px 0 0;font-size:48px;line-height:1.36;font-weight:800;letter-spacing:-0.04em;">계약 전에 확인하실 것</h2>
+  <div style="margin-top:56px;border-top:3px solid #21306F;">
+    <div style="display:grid;grid-template-columns:210px 1fr;gap:24px;padding:28px 0;border-bottom:2px solid #F4EDDC;"><div style="font-size:28px;font-weight:800;">금액</div><div style="font-size:21px;line-height:1.55;">월 300만 원, 부가세 별도</div></div>
+    <div style="display:grid;grid-template-columns:210px 1fr;gap:24px;padding:28px 0;border-bottom:2px solid #F4EDDC;"><div style="font-size:28px;font-weight:800;">계약 단위</div><div style="font-size:21px;line-height:1.55;">월 단위로 연장하고 다음 달부터 해지할 수 있어요.</div></div>
+    <div style="display:grid;grid-template-columns:210px 1fr;gap:24px;padding:28px 0;border-bottom:2px solid #F4EDDC;"><div style="font-size:28px;font-weight:800;">시작</div><div style="font-size:21px;line-height:1.55;">계약 후 2주 안에 집행을 시작해요. 초기진단·세팅은 무료예요.</div></div>
+    <div style="display:grid;grid-template-columns:210px 1fr;gap:24px;padding:28px 0;border-bottom:2px solid #F4EDDC;"><div style="font-size:28px;font-weight:800;">따로 드는 비용</div><div style="font-size:21px;line-height:1.55;">광고비, 체험단 제품·배송비, 구매평에 쓰이는 상품 비용, 촬영 모델·장소 비용</div></div>
+  </div>
+</section>
+
 <section data-screen-label="08 상담" style="padding:120px 64px 100px;">
   <div style="position:relative;border-radius:20px;overflow:hidden;">
     <img src="/static/subscription/dog-meme.webp" width="1400" height="1055" loading="lazy" decoding="async" alt="밀짚모자를 쓴 강아지가 깡통 4개 위에 겨우 서 있는 사진" style="display:block;width:100%;height:auto;">

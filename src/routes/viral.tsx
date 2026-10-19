@@ -155,7 +155,7 @@ export const ViralPage = () => (
             {
               icon: 'star', href: '/marketing/influencer', title: '인플루언서 마케팅', tag: 'INFLUENCER',
               hook: '내 브랜드를 진짜처럼 말해줄 사람이 필요할 때',
-              sub:  '1,200명의 크리에이터가\n브랜드를 대신 이야기합니다.',
+              sub:  '1,520명의 크리에이터가\n브랜드를 대신 이야기합니다.',
               img: '/static/svc-images/influencer.png',
               accentColor: '#a855f7',
             },

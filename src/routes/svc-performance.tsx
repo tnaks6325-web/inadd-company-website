@@ -69,7 +69,7 @@ export const SvcPerformancePage = () => (
             <article><span>담당자별 광고주</span><strong>최대 3<small>개</small></strong><p>광고주별 전담 관리</p></article>
             <article><span>정기 미팅</span><strong>월 최대 4<small>회</small></strong><p>운영 현황과 개선 사항 협의</p></article>
           </div>
-          <div class="pm-budget"><b>월 광고비 300만원 이상</b><p>수수료 산정 기준, 소재 제작 수량, 미팅·보고 범위는 상담 후 제안서에 안내합니다.</p></div>
+          <div class="pm-budget"><b>월 광고비 300만원 이상 · 최소 3개월 운영</b><p>수수료 산정 기준, 소재 제작 수량, 미팅·보고 범위는 상담 후 제안서에 안내합니다.</p></div>
         </div>
       </section>
 
