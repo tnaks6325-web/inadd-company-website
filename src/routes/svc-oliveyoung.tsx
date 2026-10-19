@@ -1,3 +1,4 @@
+import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
 export const SvcOliveYoungPage = () => (
   <>
@@ -333,6 +334,8 @@ export const SvcOliveYoungPage = () => (
     </section>
 
     {/* ══ RESULTS ══ */}
+    <SvcTerms service="oliveyoung" />
+
     {/* ══ FAQ ══ */}
     <section class="section svc-faq-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>

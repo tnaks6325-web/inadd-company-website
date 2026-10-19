@@ -8,6 +8,19 @@ const media = [
 const Arrow = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
 const Check = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
 
+// 자주 하는 질문 — 화면과 FAQPage 구조화 데이터(AI 검색 인용용)가 같은 목록을 쓴다
+const PM_FAQ: [string, string][] = [
+  ['기존 광고 계정도 무료로 진단할 수 있나요?', '네. 공유 가능한 계정 정보를 바탕으로 캠페인 구조, 타겟 설정, 소재 효율, 예산 소진을 점검하고 개선 방향을 제안합니다.'],
+  ['GA4·GTM 설치 비용이 따로 있나요?', '기본 설치와 주요 전환 이벤트 설정을 무료로 지원합니다. 사이트 구조와 접근 권한을 먼저 확인하며, 별도 개발이 필요한 항목은 범위를 협의합니다.'],
+  ['광고 소재를 직접 준비해야 하나요?', '제품·브랜드 이미지를 전달해 주시면 매체 규격에 맞춰 소재를 제작합니다. 제작 수량과 수정 범위는 계약 전에 정합니다.'],
+  ['모든 매체를 한 번에 운영해야 하나요?', '아닙니다. 업종과 예산, 목표에 맞는 매체를 선택하고 성과에 따라 확대 여부를 결정합니다.'],
+  // 대표 인터뷰(2026-10-20)로 더한 질문
+  ['광고비와 운영 수수료는 얼마인가요?', '월 광고비 300만 원 이상부터 맡습니다. 운영 수수료는 광고 규모와 운영 범위에 따라 광고비의 8~10%이며 최소 3개월 운영을 기준으로 합니다.'],
+  ['광고 성과는 언제부터 나오나요?', '첫 달은 타겟·소재·입찰을 테스트하며 데이터를 모으는 기간입니다. 효율 개선은 보통 2~3개월째부터 나타납니다.'],
+  ['광고 계정과 만든 소재는 누구 것인가요?', '광고 계정과 운영 중 만든 소재는 모두 브랜드 소유입니다. 운영을 마친 뒤에도 그대로 쓰실 수 있습니다.'],
+  ['다른 업체에 다시 맡겨 운영하나요?', '아닙니다. 매체 운영, 데이터 분석, 소재 제작 모두 인애드컴퍼니가 직접 합니다.'],
+]
+
 export const SvcPerformancePage = () => (
   <div class="pm-page">
     <link rel="stylesheet" href="/static/performance.css" />
@@ -69,7 +82,7 @@ export const SvcPerformancePage = () => (
             <article><span>담당자별 광고주</span><strong>최대 3<small>개</small></strong><p>광고주별 전담 관리</p></article>
             <article><span>정기 미팅</span><strong>월 최대 4<small>회</small></strong><p>운영 현황과 개선 사항 협의</p></article>
           </div>
-          <div class="pm-budget"><b>월 광고비 300만원 이상</b><p>수수료 산정 기준, 소재 제작 수량, 미팅·보고 범위는 상담 후 제안서에 안내합니다.</p></div>
+          <div class="pm-budget"><b>월 광고비 300만원 이상 · 최소 3개월 운영</b><p>수수료 산정 기준, 소재 제작 수량, 미팅·보고 범위는 상담 후 제안서에 안내합니다.</p></div>
         </div>
       </section>
 
@@ -85,13 +98,10 @@ export const SvcPerformancePage = () => (
       </section>
 
       <section class="pm-section" id="pm-faq"><div class="container"><div class="section-head"><span class="sec-label">FAQ</span><h2 class="sec-title">자주 하는 질문</h2></div><div class="pm-faq">
-        {[
-          ['기존 광고 계정도 무료로 진단할 수 있나요?', '네. 공유 가능한 계정 정보를 바탕으로 캠페인 구조, 타겟 설정, 소재 효율, 예산 소진을 점검하고 개선 방향을 제안합니다.'],
-          ['GA4·GTM 설치 비용이 따로 있나요?', '기본 설치와 주요 전환 이벤트 설정을 무료로 지원합니다. 사이트 구조와 접근 권한을 먼저 확인하며, 별도 개발이 필요한 항목은 범위를 협의합니다.'],
-          ['광고 소재를 직접 준비해야 하나요?', '제품·브랜드 이미지를 전달해 주시면 매체 규격에 맞춰 소재를 제작합니다. 제작 수량과 수정 범위는 계약 전에 정합니다.'],
-          ['모든 매체를 한 번에 운영해야 하나요?', '아닙니다. 업종과 예산, 목표에 맞는 매체를 선택하고 성과에 따라 확대 여부를 결정합니다.'],
-        ].map(([q,a]) => <details key={q}><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}
-      </div></div></section>
+        {PM_FAQ.map(([q,a]) => <details key={q}><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}
+      </div></div>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: PM_FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }).replace(/</g, '\\u003c') }} />
+      </section>
 
       <section class="pm-contact"><div class="container"><div><h2>광고 계정<br /><em>무료 진단</em></h2><p>운영 중인 매체와 광고 예산, 개선하고 싶은 점을 알려주세요.<br />담당자가 확인 후 연락드립니다.</p><a class="vh-cta-btn" href="/contact" data-pm-contact>문의하기 <Arrow /></a></div><img src="/static/svc-images/performance.png" width="1872" height="1248" loading="lazy" alt="" /></div></section>
     </div>

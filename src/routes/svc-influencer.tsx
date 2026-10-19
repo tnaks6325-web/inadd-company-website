@@ -1,3 +1,4 @@
+import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
 export const SvcInfluencerPage = () => (
   <>
@@ -983,7 +984,7 @@ export const SvcInfluencerPage = () => (
               <div class="iflp2-panel-img"><img src="/static/images/process/step04.png" alt="인플루언서 매칭" loading="lazy" /></div>
               <div class="iflp2-panel-body">
                 <span class="iflp2-panel-tag" style="--pc:#0891b2">Creator Matching</span>
-                <p class="iflp2-panel-desc">1,200+ 크리에이터 DB에서 타겟 적합성·퍼포먼스·단가를 종합 분석합니다.<br />단순 팔로워 수가 아닌 실제 전환율과 브랜드 핏을 기준으로 최적 크리에이터를 선별합니다.</p>
+                <p class="iflp2-panel-desc">1,520+ 크리에이터 DB에서 타겟 적합성·퍼포먼스·단가를 종합 분석합니다.<br />단순 팔로워 수가 아닌 실제 전환율과 브랜드 핏을 기준으로 최적 크리에이터를 선별합니다.</p>
                 <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#0891b2">DB 분석</span><span class="iflp2-ptag" style="--pc:#0891b2">적합성 검증</span><span class="iflp2-ptag" style="--pc:#0891b2">단가 협의</span><span class="iflp2-ptag" style="--pc:#0891b2">전환율 선별</span></div></div>
               </div>
             </div>
@@ -1017,6 +1018,8 @@ export const SvcInfluencerPage = () => (
       <script dangerouslySetInnerHTML={{__html:`(function(){var items=document.querySelectorAll('#iflp2List .iflp2-item');var panels=document.querySelectorAll('#iflp2Panels .iflp2-panel');items.forEach(function(item){item.querySelector('button').addEventListener('click',function(){var idx=parseInt(item.dataset.idx);items.forEach(function(el){el.classList.remove('active');});panels.forEach(function(el){el.classList.remove('active');});item.classList.add('active');panels[idx].classList.add('active');});});})();`}} />
     </section>
     {/* ══ RESULTS ══ */}
+    <SvcTerms service="influencer" />
+
     {/* ══ FAQ ══ */}
     <section class="section svc-faq-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
@@ -1055,7 +1058,7 @@ export const SvcInfluencerPage = () => (
         <div class="svc-cta-inner">
           <div class="svc-cta-text">
             <h2>우리 브랜드에 맞는<br /><em>인플루언서를 찾아드립니다</em></h2>
-            <p>1,200+ 크리에이터 네트워크에서 브랜드에 맞는 파트너를 무료로 추천해드립니다.</p>
+            <p>1,520+ 크리에이터 네트워크에서 브랜드에 맞는 파트너를 무료로 추천해드립니다.</p>
           </div>
         </div>
       </div>

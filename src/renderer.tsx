@@ -103,7 +103,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
         {/* Pretendard — 전체 폰트 (한국어/영문 통일) */}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-        <link href="/static/style.css?v=20261018b" rel="stylesheet" />
+        <link href="/static/style.css?v=20261020a" rel="stylesheet" />
         {/* ── Meta Pixel Code ── */}
         <script dangerouslySetInnerHTML={{ __html: `
 !function(f,b,e,v,n,t,s)
@@ -186,7 +186,7 @@ fbq('track', 'PageView');
                     <a href="/marketing/influencer" class="ndm-item">
                       <span class="ndm-text">
                         <strong>인플루언서 마케팅</strong>
-                        <em>1,200+ 크리에이터 네트워크</em>
+                        <em>1,520+ 크리에이터 네트워크</em>
                       </span>
                     </a>
                     <a href="/marketing/seeding" class="ndm-item">

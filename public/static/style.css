@@ -27116,3 +27116,28 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
 @media (max-width: 768px) {
   #heroSlider.hero-video-wrap::after { display: none; }
 }
+
+/* ============================================
+   서비스 페이지 '진행 조건' (svc-terms.tsx) — 2026-10-20
+   표는 각진 모서리, 머리줄은 파랑 바탕 흰 글자
+   ============================================ */
+.svt-section { position: relative; }
+.svt-section .section-head { margin-bottom: 40px; }
+.svt-table-wrap { max-width: 880px; margin: 0 0 40px; }
+.svt-table { width: 100%; border-collapse: collapse; background: var(--black-2); border: 1px solid var(--border); font-size: 16px; }
+.svt-table thead th { background: var(--blue-deep); color: #FFFFFF; font-weight: 700; text-align: left; padding: 14px 20px; }
+.svt-table tbody th, .svt-table td { padding: 16px 20px; border-top: 1px solid var(--border); text-align: left; color: var(--white); vertical-align: top; }
+.svt-table tbody th { font-weight: 600; }
+.svt-table td:nth-child(2) { white-space: nowrap; color: var(--gray-1); }
+.svt-table td:last-child { font-weight: 700; color: var(--blue-deep); white-space: nowrap; }
+.svt-note { margin-top: 12px; font-size: 14px; line-height: 1.7; color: var(--gray-1); }
+.svt-terms { max-width: 880px; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; border-top: 2px solid var(--blue-deep); }
+.svt-terms > div { padding: 20px 0; border-bottom: 1px solid var(--border); }
+.svt-terms dt { font-size: 15px; font-weight: 700; color: var(--blue-deep); margin-bottom: 6px; }
+.svt-terms dd { margin: 0; font-size: 16px; line-height: 1.7; color: var(--white); word-break: keep-all; }
+@media (max-width: 720px) {
+  .svt-terms { grid-template-columns: 1fr; }
+  .svt-table { font-size: 15px; }
+  .svt-table tbody th, .svt-table td, .svt-table thead th { padding: 12px 12px; }
+  .svt-table td:last-child { white-space: normal; }
+}

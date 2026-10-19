@@ -1,3 +1,4 @@
+import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
 export const SvcSeedingPage = () => (
   <>
@@ -559,6 +560,8 @@ export const SvcSeedingPage = () => (
 
       </div>
     </section>
+
+    <SvcTerms service="seeding" />
 
     {/* ══ FAQ ══ */}
     <section class="section svc-faq-section">

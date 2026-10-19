@@ -1,3 +1,4 @@
+import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
 export const SvcViralPage = () => (
   <>
@@ -251,6 +252,8 @@ export const SvcViralPage = () => (
     </section>
 
     {/* ============ 성과 사례 ============ */}
+    <SvcTerms service="viral" />
+
     {/* ══ FAQ ══ */}
     <section class="section svc-faq-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>

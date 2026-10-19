@@ -1,3 +1,4 @@
+import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
 export const SvcReviewPage = () => (
   <>
@@ -451,6 +452,8 @@ export const SvcReviewPage = () => (
     </section>
 
     {/* ══ RESULTS ══ */}
+    <SvcTerms service="review" />
+
     {/* ══ FAQ ══ */}
     <section class="section svc-faq-section">
       <div class="svc-bg-deco"><div class="svc-dot-pattern"></div><div class="svc-orb-right"></div><div class="svc-section-glow-top"></div></div>
