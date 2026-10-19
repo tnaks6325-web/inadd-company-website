@@ -106,11 +106,11 @@ export const AboutPage = () => (
                 <p class="astat-copy-desc">업종을 가리지 않고, 퍼널 단위로 설계했습니다</p>
               </div>
             </div>
-            <div class="astat-card" data-target="98" data-suffix="%" data-label="재계약률">
-              <div class="astat-num"><span class="astat-counter">98</span><span class="astat-unit">%</span></div>
+            <div class="astat-card" data-target="1520" data-suffix="+" data-label="크리에이터 DB">
+              <div class="astat-num"><span class="astat-counter">1,520</span><span class="astat-unit">+</span></div>
               <div class="astat-copy">
-                <p class="astat-copy-label">재계약률</p>
-                <p class="astat-copy-desc">한 번 함께한 브랜드가 다시 찾습니다</p>
+                <p class="astat-copy-label">크리에이터 DB</p>
+                <p class="astat-copy-desc">전담 디렉터가 관리하는 자사 크리에이터 DB입니다</p>
               </div>
             </div>
             <div class="astat-card" data-target="50" data-suffix="+" data-label="파트너 브랜드">

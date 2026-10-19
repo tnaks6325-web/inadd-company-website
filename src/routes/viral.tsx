@@ -30,7 +30,7 @@ export const ViralPage = () => (
 
           <div class="mkt-hero-metrics">
             <div class="mhm-item"><strong>320+</strong><span>완료 프로젝트</span></div>
-            <div class="mhm-item"><strong>98%</strong><span>재계약률</span></div>
+            <div class="mhm-item"><strong>1,520+</strong><span>크리에이터 DB</span></div>
             <div class="mhm-item"><strong>5년+</strong><span>업계 경력</span></div>
           </div>
 
@@ -107,7 +107,7 @@ export const ViralPage = () => (
               num: '03',
               icon: 'chart',
               title: '성과 기반 운영',
-              desc: '캠페인 중에도 데이터를 실시간 모니터링하고 최적화합니다. 98% 재계약률이 결과로 증명합니다.',
+              desc: '캠페인 중에도 데이터를 실시간 모니터링하고 최적화합니다.',
               color: '#34d399',
             },
           ].map((f, i) => (

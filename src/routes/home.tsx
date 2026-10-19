@@ -561,7 +561,7 @@ export const HomePage = () => (
               <span class="stat-unit-big sg-unit">+</span>
             </div>
             <div class="sg-mini">
-              <div class="sg-mini-item"><span class="sg-mini-num">98<i>%</i></span><span class="sg-mini-label">재계약률</span></div>
+              <div class="sg-mini-item"><span class="sg-mini-num">1,520<i>+</i></span><span class="sg-mini-label">크리에이터 DB</span></div>
               <span class="sg-mini-div"></span>
               <div class="sg-mini-item"><span class="sg-mini-num">7<i>년+</i></span><span class="sg-mini-label">업계 경험</span></div>
               <span class="sg-mini-div"></span>
@@ -570,8 +570,8 @@ export const HomePage = () => (
           </div>
           <div class="sg-chart" aria-hidden="true">
             <div class="sg-callout">
-              <span class="sg-callout-num"><span class="sg-callout-ico">▲</span> 2,400<i>%</i></span>
-              <span class="sg-callout-txt">7년 누적 성장</span>
+              <span class="sg-callout-num">2019<i>년부터</i></span>
+              <span class="sg-callout-txt">쌓아 온 캠페인</span>
             </div>
             {[
               { y: '2019', h: 4 }, { y: '2020', h: 7 }, { y: '2021', h: 12 }, { y: '2022', h: 19 },

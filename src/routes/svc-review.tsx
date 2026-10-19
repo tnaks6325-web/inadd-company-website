@@ -445,7 +445,7 @@ export const SvcReviewPage = () => (
 
         <div class="sdtl-footer">
           <span class="sdtl-footer-icon">{icon('clipboard')}</span>
-          <span>모든 단계에서 <strong>전담 PM</strong>이 함께합니다 &nbsp;·&nbsp; 평균 캠페인 기간 <strong>3–5주</strong></span>
+          <span>모든 단계에서 <strong>전담 PM</strong>이 함께합니다 &nbsp;·&nbsp; 첫 리뷰 <strong>1주</strong> 안 &nbsp;·&nbsp; <strong>월 단위</strong> 운영</span>
         </div>
 
       </div>

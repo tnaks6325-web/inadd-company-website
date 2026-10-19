@@ -156,7 +156,7 @@ export const ContactPage = () => (
                   <span>성과 보장이 되나요?</span>
                   <svg class="faq-arr" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </button>
-                <div class="faq-a">명확한 KPI를 함께 설정하고 지속 최적화합니다. 인애드컴퍼니의 재계약률 98%가 그 결과입니다.</div>
+                <div class="faq-a">명확한 KPI를 함께 설정하고 지속 최적화합니다. 게시글 수·리뷰 수처럼 계약으로 약속한 숫자는 보장합니다.</div>
               </div>
               <div class="faq-item">
                 <button class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">

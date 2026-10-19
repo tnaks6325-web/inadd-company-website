@@ -276,13 +276,11 @@ const HERO_KPI_DEFAULTS: Record<string, Array<{num:string, label:string}>> = {
   viral: [
     { num: '1억+',   label: '누적 콘텐츠 노출' },
     { num: '48시간', label: '최단 바이럴 달성' },
-    { num: '98%',    label: '재계약률' },
     { num: '320+',   label: '완료 프로젝트' },
   ],
   influencer: [
-    { num: '1,200+', label: '파트너 크리에이터' },
+    { num: '1,520+', label: '파트너 크리에이터' },
     { num: '+580%',  label: '최대 매출 증가' },
-    { num: '98%',    label: '재계약률' },
   ],
   seeding: [
     { num: '68%',    label: '후기 전환율' },
