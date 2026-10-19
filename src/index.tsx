@@ -130,7 +130,7 @@ Sitemap: https://www.inadcompany.co.kr/sitemap.xml`
 // Routes
 app.get('/', (c) => {
   return c.render(<HomePage />, {
-    title: '풀퍼널 마케팅 에이전시 - 바이럴부터 광고까지 한 팀에서',
+    title: '풀퍼널 마케팅 에이전시 - 브랜드마케팅 에이스팀',
     description: '바이럴과 광고를 한 팀이 같이 운영하는 풀퍼널 마케팅 에이전시입니다. 커뮤니티 바이럴, 네이버·구글·메타 광고, 인플루언서·체험단, 올리브영, PPL까지 맡길 수 있습니다.',
     canonical: 'https://www.inadcompany.co.kr',
     schema: JSON.stringify({
