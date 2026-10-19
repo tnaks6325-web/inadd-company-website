@@ -1,12 +1,13 @@
 import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
+import { ViralPhones } from './viral-phones'
 export const SvcViralPage = () => (
   <>
+    <link rel="stylesheet" href="/static/viral-phones.css?v=20261019a" />
     {/* ════════════════════════════════════════
         VIRAL HERO — 시네마틱 풀스크린
     ════════════════════════════════════════ */}
-    <section class="vh-hero vh-hero--photo">
-      <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/mkt-images/hero-viral.png')"></div>
+    <section class="vh-hero vh-hero--phones">
       {/* 배경 캔버스 파티클 */}
       <canvas id="vhCanvas" class="vh-canvas"></canvas>
 
@@ -74,6 +75,10 @@ export const SvcViralPage = () => (
           </a>
         </div>
       </div>
+
+      {/* 카페·블로그·뽐뿌·뉴스·에펨코리아 모바일 화면 롤링 */}
+      <ViralPhones />
+      <script src="/static/viral-phones.js?v=20261019a" defer></script>
 
       {/* 하단 스크롤 힌트 */}
       <div class="vh-scroll-hint">
