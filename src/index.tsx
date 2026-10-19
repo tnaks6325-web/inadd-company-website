@@ -147,12 +147,19 @@ app.get('/', (c) => {
           "telephone": "010-9186-9944",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "고잔로 51, 타워아이즈빌 2F, 204호",
+            "streetAddress": "고잔로 51, 타워아이즈빌 2층 204호",
             "addressLocality": "안산시 단원구",
             "addressRegion": "경기도",
+            "postalCode": "15352",
             "addressCountry": "KR"
           },
-          "sameAs": ["https://www.inadcompany.co.kr"]
+          "foundingDate": "2022-05-06",
+          "sameAs": [
+            "https://soomgo.com/profile/users/16782447",
+            "https://www.i-boss.co.kr/company/1258/%EC%9D%B8%EC%95%A0%EB%93%9C%EC%BB%B4%ED%8D%BC%EB%8B%88",
+            "https://www.saramin.co.kr/zf_user/company-info/view/csn/ODBvbEo3MXVraWFBSHQwNjBzMnhsdz09",
+            "https://www.jobkorea.co.kr/company/49001197"
+          ]
         },
         {
           "@type": "LocalBusiness",
@@ -164,10 +171,10 @@ app.get('/', (c) => {
           "priceRange": "$$",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "고잔로 51, 타워아이즈빌 2F, 204호",
+            "streetAddress": "고잔로 51, 타워아이즈빌 2층 204호",
             "addressLocality": "안산시 단원구",
             "addressRegion": "경기도",
-            "postalCode": "15380",
+            "postalCode": "15352",
             "addressCountry": "KR"
           },
           "openingHoursSpecification": {

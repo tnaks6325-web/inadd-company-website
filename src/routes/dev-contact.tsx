@@ -87,7 +87,7 @@ export const DevContactPage = () => (
             </div>
             <div class="dct-info-body">
               <span class="dct-info-label">오시는 길</span>
-              <span class="dct-info-value dct-info-value--sm">경기 안산시 단원구 고잔로 51<br />타워아이즈빌 2F, 204호</span>
+              <span class="dct-info-value dct-info-value--sm">경기도 안산시 단원구 고잔로 51<br />타워아이즈빌 2층 204호</span>
             </div>
           </div>
 

@@ -5,6 +5,7 @@ import { BlogRouter } from './routes/api-blog'
 import { InsightDetailPage } from './routes/insight-detail'
 import { AdCards, WorkCards, visibleWorks, type WorkItem } from './routes/works'
 import { kvGet } from './admin/store'
+import { SVC_FAQ_DEFAULTS, VALID_SVC_NAMES } from './admin/api'
 import {
   getPosts, realId, postPath, absoluteUrl, plainText, xmlEscape,
   SITE_URL, CAT_LABEL, SUB_LABEL, type InsightPost,
@@ -17,6 +18,7 @@ import {
 //   - /sitemap.xml, /robots.txt : 글 주소 추가 / 썸네일·공개 데이터 크롤링 허용
 //   - /insight/rss.xml : 새 글 알림용 RSS
 //   - /works : 포트폴리오 카드를 서버에서 미리 채워 검색로봇이 읽을 수 있게
+//   - /marketing/:서비스 : 자주 묻는 질문을 서버에서 미리 채우고 FAQPage 구조화 데이터를 붙인다(스크립트를 안 돌리는 AI 검색 로봇용)
 //   - /api/admin/public/* : 화면이 불러가는 공개 데이터 — 로봇이 읽게 열되 검색결과에는 안 나오게
 //   - /api/blog/* : 노션 자동 발행 API
 // ─────────────────────────────────────────────
@@ -93,6 +95,41 @@ root.get('/works', async (c) => {
   const html = (await res.text())
     .replace(open + ads, `<div class="wg-grid" id="worksGrid" data-ssr="1">${ads}${await (<WorkCards items={items} />).toString()}`)
   return c.html(html, 200)
+})
+
+// 서비스 페이지 자주 묻는 질문 — 화면 스크립트와 같은 모양으로 미리 채운다
+const FAQ_ID_PREFIX: Record<string, string> = { viral: 'viral', influencer: 'infl', seeding: 'seed', seo: 'seo', review: 'review', ppl: 'ppl', oliveyoung: 'oy' }
+const FAQ_TOGGLE = "(function(btn){var item=btn.closest('.faq-item');var isOpen=item.classList.contains('faq-item--open');document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('faq-item--open');});if(!isOpen){item.classList.add('faq-item--open');}})(this)"
+const FAQ_CHEVRON = '<span class="faq-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></span>'
+const attrEscape = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+// 구조화 데이터용 글자 — <strong> 같은 강조 태그는 띄어쓰기 없이 벗긴다
+const faqText = (html: string) => html.replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim()
+
+root.get('/marketing/:svc', async (c) => {
+  const svc = c.req.param('svc')
+  if (!VALID_SVC_NAMES.includes(svc)) return passThrough(c)
+  const [res, raw] = await Promise.all([passThrough(c), kvGet(kvOf(c), `svc_faq_${svc}`).catch(() => null)])
+  if (!res.ok) return res
+  let faq: Array<{ q: string; a: string }>
+  try { faq = raw ? JSON.parse(raw) : (SVC_FAQ_DEFAULTS[svc] || []) } catch { return res }
+  faq = (faq || []).filter(it => it && it.q && it.a)
+  if (!faq.length) return res
+  const open = `<div class="faq-wrap" id="faqWrap" data-service="${svc}">`
+  // 질문·답은 관리자 화면에서 넣은 HTML(<strong> 등)이라 화면 스크립트처럼 그대로 넣는다
+  const items = faq.map((it, i) =>
+    `<div class="faq-item" id="faq-${FAQ_ID_PREFIX[svc]}-${i}">`
+    + `<button class="faq-q" type="button" onclick="${attrEscape(FAQ_TOGGLE)}">`
+    + `<div class="faq-q-left"><span class="faq-q-badge">Q</span><span class="faq-q-text">${it.q}</span></div>${FAQ_CHEVRON}</button>`
+    + `<div class="faq-a"><div class="faq-a-inner">${it.a}</div></div></div>`).join('')
+  const ld = JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(it => ({ '@type': 'Question', name: faqText(it.q), acceptedAnswer: { '@type': 'Answer', text: faqText(it.a) } })),
+  }).replace(/</g, '\\u003c')
+  const html = await res.text()
+  if (!html.includes(open)) return c.html(html, 200)
+  return c.html(html
+    .replace(open, open + items)
+    .replace('</head>', `<script type="application/ld+json">${ld}</script></head>`), 200)
 })
 
 // ── RSS ──

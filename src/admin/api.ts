@@ -619,7 +619,7 @@ admin.get('/public/gallery', async (c) => {
 //  SERVICE FAQ (서비스별 자주 하는 질문)
 // ════════════════════════════════════════════════
 
-const SVC_FAQ_DEFAULTS: Record<string, Array<{q:string,a:string}>> = {
+export const SVC_FAQ_DEFAULTS: Record<string, Array<{q:string,a:string}>> = {
   viral: [
     { q:'바이럴 마케팅과 일반 광고는 어떻게 다른가요?', a:'일반 광고는 브랜드가 직접 메시지를 전달하지만, 바이럴 마케팅은 <strong>소비자가 자발적으로 콘텐츠를 공유</strong>하도록 설계합니다. 신뢰도가 높고 비용 대비 도달 범위가 훨씬 넓습니다.' },
     { q:'어떤 채널에서 바이럴 마케팅이 가능한가요?', a:'인스타그램, 유튜브 등 SNS는 물론 <strong>네이버 카페·커뮤니티, 맘카페, 직장인 커뮤니티</strong> 등 타겟 고객이 모이는 채널 전반에 걸쳐 운영합니다.' },
@@ -678,7 +678,7 @@ const SVC_FAQ_DEFAULTS: Record<string, Array<{q:string,a:string}>> = {
   ],
 }
 
-const VALID_SVC_NAMES = ['viral','influencer','seeding','seo','review','ppl','oliveyoung']
+export const VALID_SVC_NAMES = ['viral','influencer','seeding','seo','review','ppl','oliveyoung']
 
 // Auth: FAQ 조회
 admin.get('/svc-faq/:service', authMiddleware, async (c) => {
