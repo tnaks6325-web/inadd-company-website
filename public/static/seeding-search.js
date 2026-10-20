@@ -13,11 +13,12 @@
     c1: $('c1'), c2: $('c2'), img: $('img'), q: $('q'), n: $('n'), track: $('track') };
   var cuts = Array.prototype.slice.call(root.querySelectorAll('[data-ss-cut]'));
   var go = root.querySelector('.ss-go');
-  var CYCLE = 6, CUT_AT = [0, 0.85, 1.7], SHOT = 1.3, PUSH = [2.2, 2.82], TO_WEB = [2.7, 2.92], SETTLE = [2.95, 3.3], TXT = [3.0, 3.35], PUB = 3.4,
+  var CYCLE = 6, CUT_AT = [0, 0.85, 1.7], SHOT = 1.3, PUSH = [2.2, 2.82], PUSH_V = [2.5, 2.86], TO_WEB = [2.7, 2.92], SETTLE = [2.95, 3.3], TXT = [3.0, 3.35], PUB = 3.4,
     SWITCH = [3.55, 3.67], Q = [3.65, 3.92], SEARCH = 3.94, CARD_AT = 4.05, CARD_GAP = 0.19, CARD_IN = 0.26, OUT = [5.75, 6.0], ROW = 124, ROWS_SHOWN = 3;
   // 노트북 화면 칸(무대 비율): 이 칸이 무대 전체가 되도록 키운다. 사진이면 data-scr 값, 임시 그림이면 기본값
   var sv = cuts[2] && cuts[2].getAttribute('data-scr'), sa = sv ? sv.split(',').map(Number) : [0.33, 0.26, 0.34, 0.31];
   var scr = { x: sa[0], y: sa[1], w: sa[2], h: sa[3] };
+  var fv = cuts[2] && cuts[2].getAttribute('data-fit'), fit = fv ? fv.split(',').map(Number) : null;
   var cur = -1, cards = [], playing = -1;
 
   function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
@@ -58,6 +59,12 @@
     if (l < TO_WEB[1]) syncVideo(ci, l - CUT_AT[ci], seeking); else syncVideo(-1, 0, seeking);
     el.flash.style.opacity = l >= SHOT && l < SHOT + 0.22 ? (1 - (l - SHOT) / 0.22) * 0.9 : 0;
     // 작성 컷: 영상이 없으면 임시 그림을 노트북 화면 쪽으로 키워 카메라가 들어가는 움직임을 흉내
+    var vid = cuts[2] && cuts[2].querySelector('video');
+    if (vid && fit) {
+      // 영상: 끝나갈 때 화면 속 글쓰기 창이 웹 창 자리와 겹치도록 조금 더 다가감(무대 가운데 기준)
+      var fz = inout(seg(l, PUSH_V));
+      vid.style.transform = 'translate(' + (fit[1] * fz).toFixed(1) + 'px,' + (fit[2] * fz).toFixed(1) + 'px) scale(' + (1 + (fit[0] - 1) * fz).toFixed(3) + ')';
+    }
     var ph = cuts[2] && cuts[2].querySelector('.ss-cut-ph');
     if (ph) {
       var SCR = scr;

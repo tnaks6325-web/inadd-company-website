@@ -5,17 +5,17 @@
 // 인물은 AI 가상 인물(실존 인물 아님).
 // 브랜드·후기는 퍼포먼스·바이럴 페이지와 같은 샘플 브랜드(온숨·바삭공방·말끔·물결랩·바름) 가상 후기다.
 // 대가·협찬 표시 문구는 넣지 않는다(홈페이지 대가 언급 금지). 움직임은 seeding-search.js.
-type Review = { t: string; by: string; d: string; s: string; ph: string }
+type Review = { t: string; by: string; d: string; s: string; ph: string; img?: string }
 type Brand = { q: string; kw: string; n: number; color: string; reviews: Review[] }
 
 export const SS_BRANDS: Brand[] = [
   { q: '온숨 공기청정기 후기', kw: '온숨', n: 128, color: '#9fb8c8', reviews: [
-    { t: '3주 써본 온숨 공기청정기 S1 솔직 후기', by: '살림하는 하루', d: '2026.10.12.', s: '7평 원룸이라 소음이 제일 걱정이었는데 수면모드에선 켜진 줄도 몰랐어요.', ph: '거실 협탁 위 공기청정기' },
-    { t: '1인 가구 공기청정기 고민 끝, 온숨 S1', by: '혼자사는 연두', d: '2026.10.09.', s: '작은 방에 두기 좋은 크기를 찾다가 골랐어요. 상자 열자마자 바로 켤 수 있었어요.', ph: '상자 여는 손' },
-    { t: '온숨 공기청정기 소음 직접 재봤어요', by: '측정하는 남자', d: '2026.10.07.', s: '휴대폰 앱으로 재 보니 수면모드 22dB 정도. 잘 때 켜 두기 좋네요.', ph: '소음 측정하는 손' },
-    { t: '고양이 키우는 집 온숨 S1 한 달 사용기', by: '냥이랑 둘이', d: '2026.10.03.', s: '털 날리는 계절이라 걱정했는데 아침에 일어났을 때 공기가 달라요.', ph: '거실 협탁 위 공기청정기' },
-    { t: '온숨 S1 필터 교체까지 써 본 후기', by: '미니멀 홈로그', d: '2026.09.28.', s: '두 달 쓰고 첫 필터 교체, 뚜껑 열고 끼우면 끝이라 1분도 안 걸렸어요.', ph: '상자 여는 손' },
-    { t: '신혼집 침실용 공기청정기, 온숨 후기', by: '우리집 기록장', d: '2026.09.25.', s: '디자인이 튀지 않아서 침대 옆에 두기 좋아요. 무드등도 은은해요.', ph: '소음 측정하는 손' },
+    { t: '3주 써본 온숨 공기청정기 S1 솔직 후기', by: '살림하는 하루', d: '2026.10.12.', s: '7평 원룸이라 소음이 제일 걱정이었는데 수면모드에선 켜진 줄도 몰랐어요.', ph: '거실 협탁 위 공기청정기', img: '/static/seeding-search/rv-0.webp' },
+    { t: '1인 가구 공기청정기 고민 끝, 온숨 S1', by: '혼자사는 연두', d: '2026.10.09.', s: '작은 방에 두기 좋은 크기를 찾다가 골랐어요. 상자 열자마자 바로 켤 수 있었어요.', ph: '상자 여는 손', img: '/static/seeding-search/rv-1.webp' },
+    { t: '온숨 공기청정기 소음 직접 재봤어요', by: '측정하는 남자', d: '2026.10.07.', s: '휴대폰 앱으로 재 보니 수면모드 22dB 정도. 잘 때 켜 두기 좋네요.', ph: '소음 측정하는 손', img: '/static/seeding-search/rv-5.webp' },
+    { t: '고양이 키우는 집 온숨 S1 한 달 사용기', by: '냥이랑 둘이', d: '2026.10.03.', s: '털 날리는 계절이라 걱정했는데 아침에 일어났을 때 공기가 달라요.', ph: '고양이 옆 공기청정기', img: '/static/seeding-search/rv-3.webp' },
+    { t: '온숨 S1 필터 교체까지 써 본 후기', by: '미니멀 홈로그', d: '2026.09.28.', s: '두 달 쓰고 첫 필터 교체, 뚜껑 열고 끼우면 끝이라 1분도 안 걸렸어요.', ph: '필터 교체하는 손', img: '/static/seeding-search/rv-4.webp' },
+    { t: '신혼집 침실용 공기청정기, 온숨 후기', by: '우리집 기록장', d: '2026.09.25.', s: '디자인이 튀지 않아서 침대 옆에 두기 좋아요. 무드등도 은은해요.', ph: '침대 옆 공기청정기', img: '/static/seeding-search/rv-2.webp' },
   ] },
   { q: '바삭공방 김부각 후기', kw: '바삭공방', n: 96, color: '#d9b37c', reviews: [
     { t: '바삭공방 찹쌀 김부각 3봉 먹어 본 후기', by: '오늘도 간식', d: '2026.10.11.', s: '두 번 튀겨서 그런지 봉지 연 지 하루가 지나도 바삭해요.', ph: '식탁 위 김부각 접시' },
@@ -63,7 +63,7 @@ export const SsCard = (p: { r: Review; kw: string; color: string }) => (
       <strong class="ss-ttl"><Hl t={p.r.t} kw={p.kw} /></strong>
       <p class="ss-snip">{p.r.s}</p>
     </div>
-    <div class="ss-ph" style={`--a:${p.color}`}><span>{p.r.ph}</span></div>
+    <div class="ss-ph" style={`--a:${p.color}` + (p.r.img ? `;background-image:url(${p.r.img})` : '')}>{!p.r.img && <span>{p.r.ph}</span>}</div>
   </article>
 )
 
@@ -72,10 +72,12 @@ const Mag = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" ar
 // 현실 컷(0~0.85초 개봉, 0.85~1.7초 촬영, 1.7~2.9초 작성). src 가 있으면 public/static/seeding-search/{src}.mp4·.webp
 // 작성 컷 영상은 마지막 장면이 노트북 화면 가득 글쓰기 창이어야 브라우저 창과 이어진다(영상이 없을 땐 임시 그림을 키워 흉내).
 // 영상이 아직 없으면 img(첫 장면 사진)를 보여 준다. scr = 사진 속 노트북 화면 위치(무대 비율 x,y,w,h) — 이 칸이 무대를 꽉 채울 때까지 다가간다.
-const REAL: { n: string; label: string; src?: string; img?: string; scr?: string }[] = [
-  { n: '개봉', label: '인물이 집에서 택배 상자를 열고 제품을 꺼냄', img: 'unbox' },
-  { n: '촬영', label: '인물이 휴대폰으로 식탁 위 제품을 찍음(찰칵)', img: 'shoot' },
-  { n: '작성', label: '노트북으로 글 쓰는 뒷모습 → 카메라가 어깨를 지나 화면 속으로', img: 'write', scr: '.427,.26,.432,.327' },
+// fit = 영상 마지막 장면을 웹 창 위치에 맞추는 값(배율, 가로 이동 px, 세로 이동 px, 무대 680x620 기준).
+// 영상이 화면을 꽉 채우기 직전에 멈추므로, 끝나갈 때 이만큼 더 다가가 화면 속 글쓰기 창이 웹 창과 겹치게 한다.
+const REAL: { n: string; label: string; src?: string; img?: string; scr?: string; fit?: string }[] = [
+  { n: '개봉', label: '인물이 집에서 택배 상자를 열고 제품을 꺼냄', src: 'unbox' },
+  { n: '촬영', label: '인물이 휴대폰으로 창가 협탁 위 제품을 찍음(찰칵)', src: 'shoot' },
+  { n: '작성', label: '노트북으로 글 쓰는 뒷모습 → 카메라가 어깨를 지나 화면 속으로', src: 'write', fit: '1.12,-13,-49' },
 ]
 
 // 지금은 온숨 한 브랜드만 6초마다 반복한다(브랜드를 돌리려면 개봉 영상·사진이 브랜드마다 필요).
@@ -88,7 +90,7 @@ export const SeedSearch = () => {
       <div class="ss-stage">
         {/* 현실: 인물 영상 3컷(영상이 없으면 임시 상자) */}
         <div class="ss-real" data-ss-real>
-          {REAL.map((c) => <div class="ss-cut" data-ss-cut data-scr={c.scr}>{c.src
+          {REAL.map((c) => <div class="ss-cut" data-ss-cut data-scr={c.scr} data-fit={c.fit}>{c.src
             ? <video src={`/static/seeding-search/${c.src}.mp4`} poster={`/static/seeding-search/${c.src}.webp`} muted playsinline preload="auto" />
             : c.img ? <div class="ss-cut-ph ss-cut-img" style={`background-image:url(/static/seeding-search/${c.img}.webp)`} />
             : <div class="ss-cut-ph"><b>{c.n}</b><span>{c.label}</span>{c.n === '작성' && <><i class="ss-cut-screen" /><i class="ss-cut-head" /></>}</div>}</div>)}
@@ -101,7 +103,7 @@ export const SeedSearch = () => {
             <div class="ss-ed-bar"><span class="ss-ed-logo">blog</span><span class="ss-ed-tools">사진 · 동영상 · 인용구 · 구분선 · 장소</span><span class="ss-pub" data-ss-pub>발행</span></div>
             <div class="ss-ed-body">
               <strong class="ss-ed-ttl"><span data-ss-ttl>{mine.t}</span><span class="ss-caret" data-ss-c1 /></strong>
-              <div class="ss-ed-img" data-ss-img style={`--a:${b.color}`}><span>{mine.ph}</span></div>
+              <div class="ss-ed-img" data-ss-img style={`--a:${b.color}` + (mine.img ? `;background-image:url(${mine.img})` : '')}>{!mine.img && <span>{mine.ph}</span>}</div>
               <p class="ss-ed-txt"><span data-ss-txt>{mine.s}</span><span class="ss-caret" data-ss-c2 /></p>
             </div>
           </div>
