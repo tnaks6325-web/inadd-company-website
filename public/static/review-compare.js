@@ -1,8 +1,9 @@
-/* 리뷰 마케팅 히어로(한 바퀴 약 7초): '리뷰가 다음 선택을 만든다'.
-   0~1.25초 소파에서 휴대폰으로 고민(영상), 0.75초부터 휴대폰 화면 속으로 → 1.25~4.4초 쇼핑 앱 비교 화면:
-   오른쪽 물결랩 세럼에 사진 후기가 차오르며 별점 4.1→4.9, 리뷰 5→1,284, 후기 구절이 휴대폰 옆에 옮겨 적힘 → 엄지가 장바구니를 누름 →
-   4.4~5.6초 받은 세럼을 손등에 덜며 미소(영상) → 5.5~6.4초 직접 리뷰 쓰기(별 5개 → 한 줄 → 사진 → 등록) →
-   6.4초~ 비교 화면 맨 위에 그 리뷰가 '방금 전'으로 뜸(리뷰 1,285) → 처음으로. 화면 상태는 시간 t 하나로 계산한다(render).
+/* 리뷰 마케팅 히어로(한 바퀴 약 8초): '리뷰가 다음 선택을 만든다'.
+   0~1.3초 소파에서 고민하던 인물 주위를 카메라가 빠르게 돌아 휴대폰 화면 속으로 빨려 들어감(영상, 끝 장면 = 손에 든 휴대폰 속 앱 화면) →
+   영상 속 휴대폰 화면 자리에서 앱 휴대폰이 그대로 이어받아 앞으로 다가옴 → 쇼핑 앱 비교 화면: 오른쪽 물결랩 세럼에 사진 후기가 차오르며
+   별점 4.1→4.9, 리뷰 5→1,284, 후기 구절이 옆에 옮겨 적힘 → 엄지가 장바구니를 누름 → 4.7초 택배에서 꺼낸 세럼(영상) →
+   5.15초 클로즈업으로 볼에 한 방울 떨어뜨리고 손끝으로 굴려 바름(영상) → 6.3초 직접 리뷰 쓰기(별 5개 → 한 줄 → 사진 → 등록) →
+   비교 화면 맨 위에 그 리뷰가 '방금 전'으로 뜸(리뷰 1,285) → 처음으로. 화면 상태는 시간 t 하나로 계산한다(render).
    히어로가 화면 밖이거나 탭이 숨겨지면 멈추고, '움직임 줄이기' 설정이면 후기가 다 찬 비교 화면에서 멈춘다.
    window.rcSeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
@@ -16,10 +17,12 @@
   var revs = Array.prototype.slice.call(el.track.querySelectorAll('.rc-pr:not(.is-mine)'));
   var notes = Array.prototype.slice.call(root.querySelectorAll('[data-rc-note]'));
   var MINE_TXT = el.wtxt.textContent;
-  var CYCLE = 7.1, PUSH = [0.75, 1.2], APP_IN = [1.0, 1.25], REV_AT = 1.5, REV_GAP = 0.3, REV_IN = 0.26, ROW = 74, ROWS = 3.4,
-    STAR = [1.5, 3.3], TOUCH_IN = [3.35, 3.5], TOUCH_MOVE = [3.45, 3.7], PRESS = 3.72, TOAST = [3.85, 4.35], TO_REAL = [4.35, 4.55],
-    APP2_IN = [5.45, 5.65], WSTAR_AT = 5.62, WSTAR_GAP = 0.06, WTXT = [5.88, 6.2], WPH = 6.0, TOUCH2_MOVE = [6.05, 6.25], PRESS2 = 6.28,
-    BACK_CMP = [6.36, 6.48], MINE_IN = [6.45, 6.7], MNOTE = [6.6, 6.85], OUT = [6.85, 7.1];
+  var CUT_AT = [0, 4.7, 5.15], HAND = [1.25, 1.62], APP_IN = [1.25, 1.33], REV_AT = 1.85, REV_GAP = 0.3, REV_IN = 0.26, ROW = 74, ROWS = 3.4,
+    STAR = [1.85, 3.65], TOUCH_IN = [3.7, 3.85], TOUCH_MOVE = [3.8, 4.05], PRESS = 4.07, TOAST = [4.2, 4.65], TO_REAL = [4.65, 4.85],
+    APP2_IN = [6.3, 6.5], WSTAR_AT = 6.47, WSTAR_GAP = 0.06, WTXT = [6.73, 7.05], WPH = 6.85, TOUCH2_MOVE = [6.9, 7.1], PRESS2 = 7.13,
+    BACK_CMP = [7.21, 7.33], MINE_IN = [7.3, 7.55], MNOTE = [7.45, 7.7], OUT = [7.7, 7.95], CYCLE = 7.95;
+  // 영상 끝 장면 속 휴대폰 위치(무대 좌표): 앱 휴대폰이 이 크기·자리에서 시작해 제자리(왼쪽 96, 위 10, 0.82배)로 다가옴
+  var HAND_FROM = { dx: 166.1, dy: 120.1, s: 0.433 }, HAND_TO = { dx: 0, dy: 0, s: 0.82 };
   var TOUCH_FROM = [250, 470], TOUCH_TO = [249, 669], TOUCH2_FROM = [210, 520], TOUCH2_TO = [171, 670];
   var playing = -1;
 
@@ -43,19 +46,20 @@
   function render(t, seeking) {
     var l = t % CYCLE;
     var app = seg(l, APP_IN), back = seg(l, TO_REAL), app2 = seg(l, APP2_IN), out = seg(l, OUT), cmp2 = seg(l, BACK_CMP);
-    // 현실: 고민(0~1.25) → 미소(4.35~5.65). 고민 컷은 끝에서 휴대폰 화면 쪽으로 다가가며 사라짐
-    var ci = l >= TO_REAL[0] ? 1 : 0;
-    cuts.forEach(function (c, i) { c.style.opacity = i === ci ? 1 : 0; });
-    var pz = inout(seg(l, PUSH)), first = cuts[0] && cuts[0].firstElementChild;
-    if (first) { first.style.transformOrigin = cuts[0].getAttribute('data-zo') || '50% 50%'; first.style.transform = 'scale(' + (1 + 1.6 * pz).toFixed(3) + ')'; }
+    // 현실: 고민·빨려 들어감(0~1.3) → 개봉(4.7~) → 볼(5.15~6.5)
+    var ci = l >= CUT_AT[2] ? 2 : l >= TO_REAL[0] ? 1 : 0;
+    cuts.forEach(function (c, i) { c.style.opacity = i === ci ? 1 : i === ci - 1 && ci === 2 ? 1 - clamp((l - CUT_AT[2]) / 0.1) : 0; });
     el.real.style.opacity = ci === 0 ? (1 - app) * clamp(l / 0.15) : back * (1 - app2);
     var realOn = ci === 0 ? l < APP_IN[1] : l < APP2_IN[1];
-    if (realOn) syncVideo(ci, ci ? l - TO_REAL[0] : l, seeking); else syncVideo(-1, 0, seeking);
+    if (realOn) syncVideo(ci, l - (ci === 0 ? 0 : ci === 1 ? TO_REAL[0] : CUT_AT[2]), seeking); else syncVideo(-1, 0, seeking);
 
-    // 휴대폰: 첫 등장은 크게 다가왔다 제자리, 두 번째(리뷰 쓰기)는 살짝 떠오르며
+    // 휴대폰: 첫 등장은 영상 속 휴대폰 화면 자리에서 이어받아 앞으로 다가옴, 두 번째(리뷰 쓰기)는 살짝 떠오르며
     var ph1 = app * (1 - back), ph2 = app2 * (1 - out);
     el.phone.style.opacity = Math.max(ph1, ph2);
-    el.phone.style.transform = 'scale(' + (l < TO_REAL[1] ? 0.82 * (1.35 - 0.35 * ease(app)) : 0.82 * (1.04 - 0.04 * ease(app2))).toFixed(3) + ')';
+    if (l < TO_REAL[1]) {
+      var hp = inout(seg(l, HAND));
+      el.phone.style.transform = 'translate(' + lerp(HAND_FROM.dx, HAND_TO.dx, hp).toFixed(1) + 'px,' + lerp(HAND_FROM.dy, HAND_TO.dy, hp).toFixed(1) + 'px) scale(' + lerp(HAND_FROM.s, HAND_TO.s, hp).toFixed(3) + ')';
+    } else el.phone.style.transform = 'scale(' + (0.82 * (1.04 - 0.04 * ease(app2))).toFixed(3) + ')';
 
     // 비교 화면: 후기 차오름(첫 등장) / 끝에서는 맨 위로 올라가 내 리뷰가 추가됨
     var shown = 0;
@@ -118,7 +122,7 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t = 0, prev = 0, on = true, held = false;
   window.rcSeek = function (s) { held = true; t = s; render(t, true); };
-  if (reduce) { render(3.4, true); return; }
+  if (reduce) { render(3.75, true); return; }
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(root);
   function frame(now) {
     var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 0; prev = now;

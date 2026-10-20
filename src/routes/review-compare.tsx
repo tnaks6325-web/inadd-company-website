@@ -1,18 +1,18 @@
 // 리뷰 마케팅 히어로(한 바퀴 약 7초): '리뷰가 다음 선택을 만든다' — 현실 → 앱 → 현실 → 앱.
-// 현실: 소파에서 휴대폰으로 세럼 두 개를 두고 고민 → 휴대폰 화면 속으로.
+// 현실: 소파에서 휴대폰으로 세럼 두 개를 두고 고민 → 카메라가 빠르게 돌아 휴대폰 화면 속으로 빨려 들어감(영상 끝 = 손에 든 휴대폰 속 앱 화면).
 // 앱: 쇼핑 앱 비교 화면. 왼쪽 'A사 세럼'은 리뷰 3개에 머물고, 오른쪽 '물결랩 히알루 세럼'은 사진 후기가 차오르며 별점·리뷰 수가 오른다 →
 //     엄지가 오른쪽 장바구니를 누름 → '장바구니에 담았어요'.
-// 현실: 받은 물결랩 세럼을 손등에 덜어 보며 미소.
+// 현실: 택배를 열어 꺼낸 물결랩 세럼 → 클로즈업으로 볼에 한 방울 떨어뜨리고 손끝으로 굴려 바르며 미소.
 // 앱: 직접 리뷰를 씀(별 5개 → 한 줄 → 사진 → 등록) → 비교 화면 맨 위에 그 리뷰가 '방금 전'으로 뜸(다음 사람이 보게 될 리뷰) → 처음으로.
 // 인물은 AI 가상 인물(폼보드 281번, 연한 하늘색 니트), 브랜드는 다른 페이지와 같은 샘플. 왼쪽 상품은 깎아내리지 않게 별점은 무난하게 두고 후기 수만 적게.
 // 대가·협찬 표시 문구는 넣지 않는다. 움직임은 review-compare.js.
 type Rv = { s: string; by: string; img?: string; ph: string }
 
 // 현실 컷: src 가 있으면 public/static/review-compare/{src}.mp4·.webp, 없으면 img(사진), 그것도 없으면 임시 상자
-// zo = 휴대폰 화면 속으로 다가갈 때 확대 중심(사진 속 휴대폰 위치)
-const REAL: { n: string; label: string; src?: string; img?: string; zo?: string }[] = [
-  { n: '고민', label: '소파에서 휴대폰으로 세럼 두 개를 비교하며 고민', src: 'think', zo: '67.5% 50.6%' },
-  { n: '미소', label: '받은 물결랩 세럼을 손등에 덜어 보며 미소', src: 'smile' },
+const REAL: { n: string; label: string; src?: string; img?: string }[] = [
+  { n: '고민', label: '고민 → 카메라가 돌아 휴대폰 화면 속으로', src: 'dive' },
+  { n: '개봉', label: '택배에서 꺼낸 물결랩 세럼', src: 'smile' },
+  { n: '볼', label: '볼에 한 방울 떨어뜨리고 손끝으로 굴려 바르며 미소', src: 'cheek' },
 ]
 const A = { img: '/static/review-compare/prod-a.webp', name: 'A사 수분 세럼 30ml', price: '26,000원', star: '4.0', n: '3', color: '#d9dde3',
   reviews: ['무난하게 쓰고 있어요', '배송이 빨랐어요', '용량이 적당해요'] }
@@ -44,7 +44,7 @@ export const ReviewCompare = () => (
     <div class="rc-stage">
       {/* 현실 컷 */}
       <div class="rc-real" data-rc-real>
-        {REAL.map((c) => <div class="rc-cut" data-rc-cut data-zo={c.zo}>{c.src
+        {REAL.map((c) => <div class="rc-cut" data-rc-cut>{c.src
           ? <video src={`/static/review-compare/${c.src}.mp4`} poster={`/static/review-compare/${c.src}.webp`} muted playsinline preload="auto" />
           : c.img ? <div class="rc-cut-ph rc-cut-img" style={`background-image:url(/static/review-compare/${c.img}.webp)`} />
           : <div class="rc-cut-ph"><b>{c.n}</b><span>{c.label}</span></div>}</div>)}
