@@ -1,4 +1,4 @@
-/* 올리브영 마케팅 히어로(한 바퀴 약 11.8초): '진열 칸이 바뀌는 순간'. 뒤에 PC 브라우저, 앞에 휴대폰 — 두 화면이 같은 시각에 같은 일을 한다.
+/* 올리브영 마케팅 히어로(한 바퀴 약 8초): '진열 칸이 바뀌는 순간'. 뒤에 PC 브라우저, 앞에 휴대폰 — 두 화면이 같은 시각에 같은 일을 한다.
    판매 랭킹을 내려 보다가 6위의 밋밋한 우리 칸에서 멈춤 →
    ① 썸네일이 왼쪽에서 오른쪽으로 갈리며 '+20매' 스티커·띠가 붙은 새 썸네일로 → ② 상품명이 구성이 보이게 바뀜 →
    ③ 원가 취소선·할인율·기획/증정/세일 딱지 → 주변 칸이 흐려지고 우리 칸이 떠오름 → 아래 주석의 조회·장바구니 담기 수가 오름 →
@@ -37,13 +37,13 @@
   var mob = devs.filter(function (d) { return d.kind === 'm'; })[0];
 
   // 시각표(초)
-  var IN = [0, 0.3], BROWSE = [0.1, 0.95], THUMB = [1.1, 1.6], NAME = [1.95, 2.3], FLAG = 2.55, PRICE = 2.75,
-    FOCUS = [3.1, 3.45], NUMS = [3.3, 5.0], MOVE = [5.15, 6.1], SETTLE = [6.1, 6.45],
-    TAP = 6.85, DT = [6.95, 7.3], BAN = [7.45, 7.75], STAMP = [7.6, 7.9],
-    GLB = [8.7, 9.0], MAP_IN = [8.95, 9.35], KR_IN = [9.1, 9.4], ARC_AT = 9.45, ARC_GAP = 0.32, ARC_LEN = 0.5, OUT = [11.4, 11.8], CYCLE = 11.8;
+  var IN = [0, 0.25], BROWSE = [0.05, 0.6], THUMB = [0.65, 1.05], NAME = [1.2, 1.45], FLAG = 1.58, PRICE = 1.72,
+    FOCUS = [1.95, 2.2], NUMS = [2.05, 3.1], MOVE = [3.2, 3.85], SETTLE = [3.85, 4.1],
+    TAP = 4.28, DT = [4.36, 4.62], BAN = [4.72, 4.95], STAMP = [4.82, 5.05],
+    GLB = [5.7, 5.95], MAP_IN = [5.9, 6.2], KR_IN = [6.0, 6.25], ARC_AT = 6.25, ARC_GAP = 0.22, ARC_LEN = 0.38, OUT = [7.65, 8.0], CYCLE = 8.0;
   // 주석 묶음이 바뀌는 시각: 진열 칸 → 상세페이지 → 글로벌
-  var GRP_AT = [0, 7.0, 8.85];
-  var STEP_AT = [1.0, 1.85, 2.45];
+  var GRP_AT = [0, 4.4, 5.8];
+  var STEP_AT = [0.6, 1.15, 1.55];
 
   function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
   function seg(l, r) { return clamp((l - r[0]) / (r[1] - r[0])); }
@@ -158,7 +158,7 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t = 0, prev = 0, on = true, held = false;
   window.oySeek = function (s) { held = true; t = s; render(t); };
-  if (reduce) { render(8.3); return; }
+  if (reduce) { render(5.4); return; }
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(root);
   function frame(now) {
     var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 0; prev = now;

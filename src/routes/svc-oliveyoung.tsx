@@ -61,7 +61,7 @@ export const SvcOliveYoungPage = () => (
         </div>
       </div>
       <OyShelf />
-      <script src="/static/oy-shelf.js?v=20261021c" defer></script>
+      <script src="/static/oy-shelf.js?v=20261021d" defer></script>
       <div class="vh-scroll-hint"><div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div></div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
