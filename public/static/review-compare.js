@@ -47,7 +47,7 @@
     var ci = l >= TO_REAL[0] ? 1 : 0;
     cuts.forEach(function (c, i) { c.style.opacity = i === ci ? 1 : 0; });
     var pz = inout(seg(l, PUSH)), first = cuts[0] && cuts[0].firstElementChild;
-    if (first) first.style.transform = 'scale(' + (1 + 1.2 * pz).toFixed(3) + ')';
+    if (first) { first.style.transformOrigin = cuts[0].getAttribute('data-zo') || '50% 50%'; first.style.transform = 'scale(' + (1 + 1.6 * pz).toFixed(3) + ')'; }
     el.real.style.opacity = ci === 0 ? (1 - app) * clamp(l / 0.15) : back * (1 - app2);
     var realOn = ci === 0 ? l < APP_IN[1] : l < APP2_IN[1];
     if (realOn) syncVideo(ci, ci ? l - TO_REAL[0] : l, seeking); else syncVideo(-1, 0, seeking);
