@@ -37,7 +37,7 @@ export const REF_CASES: RefCase[] = [
     chartTitle: '영상 1회 시청 비용 (CPV)',
     bars: [{ label: '3월', value: 518, text: '518원' }, { label: '4월', value: 41, text: '41원', hi: true }],
     kpis: [{ num: '-92', unit: '%', label: '시청당 비용 (CPV)', detail: '518원 → 41원' }, { num: '76', unit: '배', label: '영상 시청 (ThruPlay)', detail: '833회 → 63,455회' }, { num: '12.5', unit: '배', label: '시청률 (VTR)', detail: '0.16% → 2.00%' }, { num: '317', unit: '만', label: '월 노출', detail: '52만 → 317만 회' }],
-    note: '기간: 3월 vs 4월 · 광고비 43.1만 → 258.9만 원(VAT 별도) · 클릭률 2.0% → 1.0%, 클릭당 비용 41원 → 137원 · 구글 애즈 기준' },
+    note: '기간: 3월 vs 4월 · 광고비 43.1만 → 258.9만 원(VAT 별도) · 클릭률 2.0% → 1.0%, 클릭당 비용 41원 → 82원 · 구글 애즈 기준' },
   { id: 'da', media: ['디스플레이 광고(DA) · 웹'], group: 'da', client: '가전 리테일 · H브랜드',
     title: ['웹 DA 광고비 280만 원 더 쓰고', '', ''], title2: '매출은 6,560만 원 더 벌었어요',
     desc: '일반광고는 키우고 리타겟팅은 효율화해서, 한 달 만에 웹 DA 매출을 41% 늘렸어요',
