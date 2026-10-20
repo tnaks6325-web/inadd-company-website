@@ -1,9 +1,10 @@
-/* 체험단 히어로(한 바퀴 6초): 현실 → 웹.
-   0~0.75초 개봉 → 0.75~1.85초 촬영(각도가 다른 사진 5장이 찰칵마다 바뀜) → 1.85~2.9초 노트북으로 글 쓰는 뒷모습, 2.3초부터 카메라가 어깨를 지나 화면 속으로 →
-   2.8초 노트북 화면이 무대를 꽉 채우면 그 자리에서 화면 내용이 웹 글쓰기 창으로 바뀌고(정면, 같은 크기) 3.3초까지 비스듬히 자리 잡음 →
-   3.4초 발행 → 3.55초 검색 결과로 바뀜 → 방금 쓴 글이 맨 위, 이어서 후기가 쌓이며 후기 수가 오름 →
-   5.75초부터 처음으로. 화면 상태는 시간 t 하나로 계산한다(render). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고,
-   '움직임 줄이기' 설정이면 후기가 다 찬 장면에서 멈춘다. window.ssSeek(t) 로 특정 순간을 고정해 볼 수 있다. */
+/* 체험단 히어로(한 바퀴 약 7.7초, 찰칵 사진 수에 따라 달라짐): 현실 → 웹.
+   0~0.75초 개봉 → 촬영(각도가 다른 사진이 0.4초마다 찰칵하며 바뀜, 7장이면 0.75~3.55초) → 노트북으로 글 쓰는 뒷모습(영상 1초),
+   끝나갈 때 카메라가 어깨를 지나 화면 속으로 → 노트북 화면이 무대를 꽉 채운 자리에서 웹 글쓰기 창으로 바뀌고 비스듬히 자리 잡음 →
+   발행 → 검색 결과로 바뀜 → 방금 쓴 글이 맨 위, 이어서 후기가 쌓이며 후기 수가 오름 → 처음으로.
+   촬영 뒤 시각은 모두 '작성 컷 시작(W0)'을 기준으로 밀린다. 화면 상태는 시간 t 하나로 계산한다(render).
+   히어로가 화면 밖이거나 탭이 숨겨지면 멈추고, '움직임 줄이기' 설정이면 후기가 다 찬 장면에서 멈춘다.
+   window.ssSeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
   var root = document.querySelector('[data-ss]');
   if (!root) return;
@@ -13,8 +14,13 @@
     c1: $('c1'), c2: $('c2'), img: $('img'), q: $('q'), n: $('n'), track: $('track') };
   var cuts = Array.prototype.slice.call(root.querySelectorAll('[data-ss-cut]'));
   var go = root.querySelector('.ss-go');
-  var CYCLE = 6, CUT_AT = [0, 0.75, 1.85], SHOT = 1.3, PUSH = [2.25, 2.82], PUSH_V = [2.55, 2.88], TO_WEB = [2.7, 2.92], SETTLE = [2.95, 3.3], TXT = [3.0, 3.35], PUB = 3.4,
-    SWITCH = [3.55, 3.67], Q = [3.65, 3.92], SEARCH = 3.94, CARD_AT = 4.05, CARD_GAP = 0.19, CARD_IN = 0.26, OUT = [5.75, 6.0], ROW = 124, ROWS_SHOWN = 3;
+  // 촬영 사진 수 × 0.4초가 촬영 구간. 그 뒤 시각은 작성 컷 시작(W0)에서 얼마나 지났는지로 정한다.
+  var SHOT_LEN = 0.4, nShots = cuts[1] ? cuts[1].querySelectorAll('.ss-shot').length : 0;
+  var W0 = 0.75 + (nShots ? nShots * SHOT_LEN : 1.1);
+  function at(x) { return W0 + x; }
+  var CUT_AT = [0, 0.75, W0], SHOT = 1.3, PUSH = [at(0.4), at(0.97)], PUSH_V = [at(0.7), at(1.03)], TO_WEB = [at(0.85), at(1.07)], SETTLE = [at(1.1), at(1.45)],
+    TXT = [at(1.15), at(1.5)], PUB = at(1.55), SWITCH = [at(1.7), at(1.82)], Q = [at(1.8), at(2.07)], SEARCH = at(2.09), CARD_AT = at(2.2),
+    CARD_GAP = 0.19, CARD_IN = 0.26, OUT = [at(3.9), at(4.15)], CYCLE = at(4.15), ROW = 124, ROWS_SHOWN = 3;
   // 노트북 화면 칸(무대 비율): 이 칸이 무대 전체가 되도록 키운다. 사진이면 data-scr 값, 임시 그림이면 기본값
   var sv = cuts[2] && cuts[2].getAttribute('data-scr'), sa = sv ? sv.split(',').map(Number) : [0.33, 0.26, 0.34, 0.31];
   var scr = { x: sa[0], y: sa[1], w: sa[2], h: sa[3] };
@@ -119,7 +125,7 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t = 0, prev = 0, on = true, held = false;
   window.ssSeek = function (s) { held = true; t = s; render(t, true); };
-  if (reduce) { render(5.5, true); return; }
+  if (reduce) { render(at(3.6), true); return; }
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(root);
   function frame(now) {
     var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 0; prev = now;
