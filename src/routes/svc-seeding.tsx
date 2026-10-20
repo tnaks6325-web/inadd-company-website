@@ -1,9 +1,11 @@
 import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
+import { SeedSearch } from './seeding-search'
 export const SvcSeedingPage = () => (
   <>
-    <section class="vh-hero vh-hero--photo">
-      <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/seeding-images/hero.png')"></div>
+    <link rel="stylesheet" href="/static/seeding-search.css?v=20261020m" />
+    <section class="vh-hero vh-hero--ss">
+      <div class="vh-glow" aria-hidden="true"></div>
       <canvas id="vhCanvas3" class="vh-canvas"></canvas>
       <div class="vh-bg">
         <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(20,184,166,0.24) 0%,transparent 70%)"></div>
@@ -61,6 +63,9 @@ export const SvcSeedingPage = () => (
           </a>
         </div>
       </div>
+
+      <SeedSearch />
+      <script src="/static/seeding-search.js?v=20261020m" defer></script>
 
       <div class="vh-scroll-hint">
         <div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div>
