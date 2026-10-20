@@ -143,7 +143,136 @@ app.get('/', (c) => {
           "alternateName": "IN AD COMPANY",
           "url": "https://www.inadcompany.co.kr",
           "logo": "https://www.inadcompany.co.kr/static/logo.png",
-          "description": "채팅, 커뮤니티, SNS 중심의 실전형 바이럴 마케팅을 설계하는 에이전시",
+          "description": "바이럴·인플루언서·체험단·리뷰·올리브영·PPL 마케팅과 네이버·구글·메타 광고 운영을 사내 조직이 직접 수행하는 풀퍼널 그로스 마케팅 에이전시. 온라인으로 판매하는 브랜드를 대상으로 전국 비대면으로 진행합니다.",
+          "areaServed": { "@type": "Country", "name": "대한민국" },
+          "knowsAbout": ["바이럴 마케팅", "인플루언서 마케팅", "체험단 마케팅", "리뷰 마케팅", "올리브영 마케팅", "PPL", "퍼포먼스 마케팅", "네이버 검색광고", "구글 광고", "메타 광고"],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "인애드컴퍼니 서비스 시작 금액(부가세 별도)",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "url": "https://www.inadcompany.co.kr/marketing/subscription",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "마케팅팀 구독",
+                  "description": "광고·기획·디자인·영상·바이럴·체험단 전담 TF팀, 월 단위 계약"
+                },
+                "priceSpecification": {
+                  "@type": "UnitPriceSpecification",
+                  "minPrice": 3000000,
+                  "priceCurrency": "KRW",
+                  "valueAddedTaxIncluded": false,
+                  "unitText": "월"
+                }
+              },
+              {
+                "@type": "Offer",
+                "url": "https://www.inadcompany.co.kr/marketing/seeding",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "네이버 블로그 체험단",
+                  "description": "일반 블로거 10명 기준 시작 금액"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 200000,
+                  "priceCurrency": "KRW",
+                  "valueAddedTaxIncluded": false
+                }
+              },
+              {
+                "@type": "Offer",
+                "url": "https://www.inadcompany.co.kr/marketing/seeding",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "인스타그램 체험단",
+                  "description": "일반 피드 10명 기준 시작 금액"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 200000,
+                  "priceCurrency": "KRW",
+                  "valueAddedTaxIncluded": false
+                }
+              },
+              {
+                "@type": "Offer",
+                "url": "https://www.inadcompany.co.kr/marketing/review",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "리뷰 마케팅",
+                  "description": "기획형 리뷰 10건 기준 시작 금액(단순 리뷰 50건 20만 원부터)"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 100000,
+                  "priceCurrency": "KRW",
+                  "valueAddedTaxIncluded": false
+                }
+              },
+              {
+                "@type": "Offer",
+                "url": "https://www.inadcompany.co.kr/marketing/influencer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "인플루언서 마케팅",
+                  "description": "마이크로 인플루언서 1명 출연료 기준 시작 금액, 대행 수수료 별도"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 50000,
+                  "priceCurrency": "KRW",
+                  "valueAddedTaxIncluded": false
+                }
+              },
+              {
+                "@type": "Offer",
+                "url": "https://www.inadcompany.co.kr/marketing/viral",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "카페 바이럴",
+                  "description": "카페 바이럴 10건 기준 시작 금액"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 300000,
+                  "priceCurrency": "KRW",
+                  "valueAddedTaxIncluded": false
+                }
+              },
+              {
+                "@type": "Offer",
+                "url": "https://www.inadcompany.co.kr/marketing/viral",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "언론 바이럴",
+                  "description": "네이버 뉴스 검색 제휴 매체 기사 1건 기준 시작 금액"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 100000,
+                  "priceCurrency": "KRW",
+                  "valueAddedTaxIncluded": false
+                }
+              },
+              {
+                "@type": "Offer",
+                "url": "https://www.inadcompany.co.kr/marketing/oliveyoung",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "올리브영 랭킹 마케팅",
+                  "description": "올리브영 랭킹 마케팅 시작 금액"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 1000000,
+                  "priceCurrency": "KRW",
+                  "valueAddedTaxIncluded": false
+                }
+              }
+            ]
+          },
           "telephone": "010-9186-9944",
           "address": {
             "@type": "PostalAddress",
@@ -171,7 +300,8 @@ app.get('/', (c) => {
           "image": "https://www.inadcompany.co.kr/static/og-image.png",
           "url": "https://www.inadcompany.co.kr",
           "telephone": "010-9186-9944",
-          "priceRange": "$$",
+          "priceRange": "₩50,000~",
+          "areaServed": { "@type": "Country", "name": "대한민국" },
           "address": {
             "@type": "PostalAddress",
             "streetAddress": "고잔로 51, 타워아이즈빌 2층 204호",
@@ -192,7 +322,7 @@ app.get('/', (c) => {
           "@id": "https://www.inadcompany.co.kr/#website",
           "url": "https://www.inadcompany.co.kr",
           "name": "인애드컴퍼니",
-          "description": "실전형 크리에이티브 바이럴 마케팅 에이전시",
+          "description": "온라인 브랜드를 위한 풀퍼널 그로스 마케팅 에이전시",
           "publisher": { "@id": "https://www.inadcompany.co.kr/#organization" }
         }
       ]
