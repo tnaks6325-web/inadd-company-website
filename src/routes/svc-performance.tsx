@@ -6,6 +6,23 @@ const media = [
   { id: 'kakao', name: '카카오', en: 'kakao', title: '디스플레이·CRM 광고', desc: '브랜드의 고객군과 프로모션 일정에 맞춰 광고와 메시지를 운영하고, 반응과 전환 결과를 분석합니다.', products: ['비즈보드', '디스플레이', 'CRM 광고'], work: ['고객군별 타겟 설정', '프로모션별 소재·메시지 구성', '광고 반응과 전환 실적 점검'] },
 ]
 const Arrow = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+// 히어로 카드 흐름: 샘플 소재(public/static/pm-hero-cards). 실제 소재로 바꿀 때는 파일만 교체하고 이 목록을 맞춘다.
+const HERO_CARDS = ['01-beauty-a', '02-supplement-a', '03-food-a', '04-living-a', '05-appliance-a', '01-beauty-b', '02-supplement-b', '03-food-b', '04-living-b', '05-appliance-b', '01-beauty-c', '02-supplement-c', '03-food-c', '04-living-c', '05-appliance-c']
+const VAULT_ROWS = 7
+const VAULT_COLS = 8
+const BRAND_ROW = 3
+const BRAND_COL = 3
+const VaultCards = () => (
+  <div class="pm-vault is-intro" aria-hidden="true" data-pm-vault>
+    <div class="pm-vault-stage">
+      {Array.from({ length: VAULT_ROWS }, (_, r) => <div class="pm-vault-row" key={r}><div class="pm-vault-track">
+        {Array.from({ length: VAULT_COLS }, (_, c) => r === BRAND_ROW && c === BRAND_COL
+          ? <div class="pm-vault-card pm-vault-brand" key={c}><span class="pm-vault-brand-label">PERFORMANCE MARKETING</span><b>IN AD<br />COMPANY</b></div>
+          : <div class="pm-vault-card" key={c}><img src={`/static/pm-hero-cards/${HERO_CARDS[(r * 4 + c) % HERO_CARDS.length]}.webp`} width="400" height="500" alt="" decoding="async" /></div>)}
+      </div></div>)}
+    </div>
+  </div>
+)
 const Check = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
 
 // 자주 하는 질문 — 화면과 FAQPage 구조화 데이터(AI 검색 인용용)가 같은 목록을 쓴다
@@ -23,10 +40,11 @@ const PM_FAQ: [string, string][] = [
 
 export const SvcPerformancePage = () => (
   <div class="pm-page">
-    <link rel="stylesheet" href="/static/performance.css" />
+    <link rel="stylesheet" href="/static/performance.css?v=20261019b" />
     <link rel="stylesheet" href="/static/performance-ref.css?v=20261014a" />
-    <section class="vh-hero vh-hero--photo pm-hero">
-      <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/mkt-images/hero_im.png')"></div>
+    <section class="vh-hero pm-hero">
+      <VaultCards />
+      <noscript><style>{'.pm-vault.is-intro .pm-vault-stage{--z:1}.pm-vault.is-intro .pm-vault-card{opacity:1;transform:none}'}</style></noscript>
       <div class="container vh-inner">
         <a href="/#services" class="svc-back-link vh-back">← 서비스 전체보기</a>
         <h1 class="vh-title"><span class="vh-tline">매출과 문의를 늘리는</span><span class="vh-tline"><span class="vh-hl">퍼포먼스 마케팅</span></span></h1>
@@ -105,6 +123,7 @@ export const SvcPerformancePage = () => (
 
       <section class="pm-contact"><div class="container"><div><h2>광고 계정<br /><em>무료 진단</em></h2><p>운영 중인 매체와 광고 예산, 개선하고 싶은 점을 알려주세요.<br />담당자가 확인 후 연락드립니다.</p><a class="vh-cta-btn" href="/contact" data-pm-contact>문의하기 <Arrow /></a></div><img src="/static/svc-images/performance.png" width="1872" height="1248" loading="lazy" alt="" /></div></section>
     </div>
+    <script src="/static/pm-hero-vault.js?v=20261019b" defer></script>
     <script dangerouslySetInnerHTML={{ __html: `
       (function () {
         var tabs = Array.from(document.querySelectorAll('.pm-media-tabs [role="tab"]'));

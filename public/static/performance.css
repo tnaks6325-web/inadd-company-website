@@ -108,3 +108,36 @@
 .pm-card-mark { position:absolute; left:28px; top:26px; font-size:12px; letter-spacing:.15em; font-weight:700; }.pm-card-line { position:absolute; width:62%; height:3px; background:#fff; opacity:.8; left:25%; top:62%; transform:rotate(-15deg); border-radius:5px; }.pm-card-dot { position:absolute; width:16px; height:16px; border-radius:50%; background:#fff; left:74%; top:48%; box-shadow:0 0 0 8px #ffffff22; }
 .pm-media-card-copy { padding:24px 28px 27px; display:flex; flex:1; flex-direction:column; }.pm-media-card-copy .pm-caption { color:#a9c4ff; }.pm-media-card-copy h3 { margin:12px 0 10px; font-size:25px; letter-spacing:-.04em; }.pm-media-card-copy p { margin:0; color:#c8cedb; font-size:14px; line-height:1.75; }.pm-card-link { display:flex; align-items:center; gap:7px; margin-top:auto; padding-top:21px; font-size:13px; font-weight:600; }.pm-card-link svg { width:14px; }.pm-objectives { margin-top:32px; }
 @media(max-width:767px) { .pm-media-grid { grid-template-columns:1fr; gap:14px; }.pm-media-card { min-height:390px; }.pm-media-card-image { height:190px; }.pm-media-card-copy { padding:22px; }.pm-media-card-copy h3 { font-size:23px; } }
+
+/* ── 히어로 카드 흐름(The Vault 스타일): 기울어진 소재 카드 줄이 서로 반대로 흐른다.
+   화면 전체 배경으로 흐르고 왼쪽 글자 뒤는 밝게 덮는다(2026-10-19 시안 B 확정). 움직임은 pm-hero-vault.js 가 붙인다. */
+.pm-page .pm-hero { background:#f3f4f7; }
+.pm-page .pm-hero::before { display:none; }
+.pm-page .pm-hero .vh-inner { position:relative; z-index:2; }
+.pm-vault { --cx:70%; --card-w:200px; --card-h:250px; --gap:22px; position:absolute; inset:0; z-index:1; overflow:hidden; pointer-events:none; }
+.pm-vault::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgba(243,244,247,.97) 0%,rgba(243,244,247,.9) 36%,rgba(243,244,247,.35) 62%,rgba(243,244,247,0) 80%); }
+.pm-vault-stage { --z:1; position:absolute; left:var(--cx); top:50%; display:flex; flex-direction:column; gap:var(--gap); width:calc(var(--card-w) * 12); transform:translate(-50%,-50%) rotate(-22deg) scale(var(--z)); transition:transform 1.8s cubic-bezier(.22,1,.36,1); will-change:transform; }
+.pm-vault-row { overflow:visible; }
+.pm-vault-track { display:flex; gap:var(--gap); width:max-content; will-change:transform; }
+.pm-vault-card { flex:none; width:var(--card-w); height:var(--card-h); border-radius:14px; overflow:hidden; background:#fff; box-shadow:0 12px 30px rgba(17,19,24,.10),0 2px 6px rgba(17,19,24,.06); transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1); }
+.pm-vault-card img { display:block; width:100%; height:100%; object-fit:cover; }
+.pm-vault-brand { position:relative; background:#285ccc; color:#fff; display:flex; flex-direction:column; justify-content:space-between; padding:20px 18px 18px; box-shadow:0 18px 40px rgba(40,92,204,.32),0 2px 6px rgba(17,19,24,.08); }
+.pm-vault-brand-label { font-size:10px; font-weight:600; letter-spacing:.14em; opacity:.85; }
+.pm-vault-brand b { font-size:calc(var(--card-w) * .155); line-height:.98; font-weight:800; letter-spacing:-.035em; white-space:nowrap; }
+/* 첫 장면: 파란 카드만 크게 → 카드들이 나타나며 화면이 물러난다 */
+.pm-vault.is-intro .pm-vault-stage { --z:2.1; transition:none; }
+.pm-vault.is-intro:not(.is-run) .pm-vault-card { transition:none; }
+.pm-vault.is-intro .pm-vault-card:not(.pm-vault-brand) { opacity:0; transform:translateY(24px) scale(.94); }
+.pm-vault.is-intro .pm-vault-brand { opacity:0; transform:scale(.86); }
+.pm-vault.is-brand .pm-vault-brand { opacity:1; transform:none; }
+.pm-vault .pm-vault-card { transition-delay:var(--d,0s); }
+
+@media(max-width:1024px) { .pm-vault { --card-w:170px; --card-h:212px; --gap:18px; } }
+@media(max-width:767px) {
+  .pm-vault { --cx:50%; --card-w:128px; --card-h:160px; --gap:14px; }
+  .pm-vault::after { background:rgba(243,244,247,.84); }
+  .pm-vault-brand { padding:13px 12px 12px; border-radius:11px; }
+  .pm-vault-card { border-radius:11px; }
+  .pm-vault-brand-label { font-size:7px; }
+}
+@media (prefers-reduced-motion:reduce) { .pm-vault-stage,.pm-vault-card { transition:none !important; } }
