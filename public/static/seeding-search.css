@@ -77,14 +77,9 @@
 /* 촬영: 각도가 다른 사진이 찰칵마다 바뀜 */
 .ss-shots { position:absolute; inset:0; }
 .ss-shot { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; will-change:transform,opacity; }
-/* 임시 그림: 뒷모습 너머 노트북 화면(영상이 없을 때 이 칸을 키워 '화면 속으로 들어감'을 흉내) */
-.ss-cut-ph { position:relative; transform-origin:var(--ox,50%) var(--oy,50%); will-change:transform; }
-.ss-cut-screen { position:absolute; left:33%; top:26%; width:34%; height:31%; background:#fff; border:6px solid #2a2d33; border-radius:6px; box-shadow:0 0 40px rgba(255,255,255,.5); }
-.ss-cut-screen::after { content:''; position:absolute; left:-12%; right:-12%; top:100%; height:22%; background:#2a2d33; clip-path:polygon(6% 0,94% 0,100% 100%,0 100%); }
-.ss-cut-img { background-size:cover; background-position:center; padding:0; }
-.ss-cut:nth-child(3) .ss-cut-ph:not(.ss-cut-img) { justify-content:flex-start; padding-top:28px; }
-/* 인물 뒷모습(머리·어깨) — 카메라가 지나가면 왼쪽 아래로 빠짐 */
-.ss-cut-head { position:absolute; left:-4%; bottom:-14%; width:52%; height:66%; background:radial-gradient(34% 30% at 52% 30%,#2f2723 98%,transparent 100%),radial-gradient(60% 46% at 50% 100%,#4a3f39 98%,transparent 100%); will-change:transform,opacity; }
+/* 작성 컷: 영상 속 노트북 화면 자리에 원근을 맞춰 겹치는 글쓰기 창 복제본(transform 은 스크립트가 넣음) */
+.ss-win.ss-scr { inset:auto; left:0; top:0; width:680px; height:620px; transform-origin:0 0; border-radius:0; box-shadow:none; }
+.ss-cut video { transform-origin:0 0; will-change:transform; }
 
 @media(max-width:1280px) { .ss { --s:.78; } }
 @media(max-width:1024px) { .ss { --s:.6; } }
