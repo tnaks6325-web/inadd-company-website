@@ -1,8 +1,9 @@
-// 리뷰 마케팅 히어로(한 바퀴 약 6.2초): 현실 → 앱 → 현실.
+// 리뷰 마케팅 히어로(한 바퀴 약 7초): '리뷰가 다음 선택을 만든다' — 현실 → 앱 → 현실 → 앱.
 // 현실: 소파에서 휴대폰으로 세럼 두 개를 두고 고민 → 휴대폰 화면 속으로.
 // 앱: 쇼핑 앱 비교 화면. 왼쪽 'A사 세럼'은 리뷰 3개에 머물고, 오른쪽 '물결랩 히알루 세럼'은 사진 후기가 차오르며 별점·리뷰 수가 오른다 →
 //     엄지가 오른쪽 장바구니를 누름 → '장바구니에 담았어요'.
 // 현실: 받은 물결랩 세럼을 손등에 덜어 보며 미소.
+// 앱: 직접 리뷰를 씀(별 5개 → 한 줄 → 사진 → 등록) → 비교 화면 맨 위에 그 리뷰가 '방금 전'으로 뜸(다음 사람이 보게 될 리뷰) → 처음으로.
 // 인물은 AI 가상 인물(폼보드 281번, 연한 하늘색 니트), 브랜드는 다른 페이지와 같은 샘플. 왼쪽 상품은 깎아내리지 않게 별점은 무난하게 두고 후기 수만 적게.
 // 대가·협찬 표시 문구는 넣지 않는다. 움직임은 review-compare.js.
 type Rv = { s: string; by: string; img?: string; ph: string }
@@ -32,6 +33,9 @@ const NOTES = [
   { rv: 4, top: 430, pre: '한 병 다 쓰고 ', hl: '같은 걸로 다시 샀어요', meta: 'yun*** · 재구매' },
 ]
 
+// 인물이 직접 쓰는 리뷰(끝에서 비교 화면 맨 위에 뜬다)
+const MINE = { s: '세안하고 바로 발라도 끈적이지 않아요', hl: '끈적이지 않아요', by: 'ha***', ph: '손등에 덜어 낸 세럼' }
+
 const Star = () => <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path fill="#f5b301" d="m12 2.5 2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z" /></svg>
 
 export const ReviewCompare = () => (
@@ -46,6 +50,7 @@ export const ReviewCompare = () => (
       </div>
       {/* 휴대폰 옆 인용 */}
       {NOTES.map((n) => <div class="rc-note" data-rc-note data-rv={n.rv} style={`top:${n.top}px`}><p>“{n.pre}<mark>{n.hl}</mark>”</p><span>{n.meta}</span></div>)}
+      <div class="rc-note" data-rc-mnote style="top:150px"><p>“{MINE.s.replace(MINE.hl, '')}<mark>{MINE.hl}</mark>”</p><span>{MINE.by} · 방금 전 · 다음 사람이 보게 될 리뷰</span></div>
       {/* 앱: 쇼핑 앱 비교 화면 */}
       <div class="rc-phone" data-rc-phone>
         <div class="rc-scr">
@@ -65,12 +70,24 @@ export const ReviewCompare = () => (
               <p class="rc-price">{B.price}</p>
               <p class="rc-rate"><Star /> <b data-rc-star>4.9</b> <i>리뷰 <em data-rc-n>1,284</em></i></p>
               <div class="rc-revs rc-revs--b"><div class="rc-track" data-rc-track>
+                <div class="rc-pr is-mine" data-rc-mine><div class="rc-pr-img" style={`--a:${B.color}`}><span>{MINE.ph}</span></div><div><p><Star /><Star /><Star /><Star /><Star /></p><span>{MINE.s.replace(MINE.hl, '')}<mark>{MINE.hl}</mark></span><i>{MINE.by} · 방금 전</i></div></div>
                 {B.reviews.map((r) => <div class="rc-pr"><div class="rc-pr-img" style={`--a:${B.color}` + (r.img ? `;background-image:url(${r.img})` : '')}>{!r.img && <span>{r.ph}</span>}</div><div><p><Star /><Star /><Star /><Star /><Star /></p><span><mark>{r.s}</mark></span><i>{r.by}</i></div></div>)}
               </div></div>
             </div>
           </div>
           <div class="rc-btns"><span class="rc-btn">장바구니</span><span class="rc-btn rc-btn--b" data-rc-cart>장바구니</span></div>
           <div class="rc-toast" data-rc-toast>장바구니에 담았어요</div>
+          {/* 리뷰 쓰기 화면 */}
+          <div class="rc-wr" data-rc-wr>
+            <div class="rc-status"><b>9:41</b><span>●●● ▮</span></div>
+            <div class="rc-bar"><span>←</span><b>리뷰 쓰기</b><span /></div>
+            <div class="rc-wr-prod"><i style={`--a:${B.color}`} /><div><b>{B.name}</b><span>배송 완료</span></div></div>
+            <p class="rc-wr-q">상품은 어떠셨나요?</p>
+            <div class="rc-wr-stars" data-rc-wstars><Star /><Star /><Star /><Star /><Star /></div>
+            <div class="rc-wr-box"><span data-rc-wtxt>{MINE.s}</span><i class="rc-caret" /></div>
+            <div class="rc-wr-photos"><i class="rc-wr-add">+ 사진</i><i class="rc-wr-ph" data-rc-wph style={`--a:${B.color}`} /></div>
+            <span class="rc-wr-go" data-rc-wgo>등록하기</span>
+          </div>
           <i class="rc-touch" data-rc-touch />
         </div>
       </div>

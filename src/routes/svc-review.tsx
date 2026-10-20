@@ -3,7 +3,7 @@ import { icon } from '../icons'
 import { ReviewCompare } from './review-compare'
 export const SvcReviewPage = () => (
   <>
-    <link rel="stylesheet" href="/static/review-compare.css?v=20261020b" />
+    <link rel="stylesheet" href="/static/review-compare.css?v=20261020c" />
     {/* ══ HERO ══ */}
     <section class="vh-hero vh-hero--rc">
       <div class="vh-glow" aria-hidden="true"></div>
@@ -61,7 +61,7 @@ export const SvcReviewPage = () => (
         </div>
       </div>
       <ReviewCompare />
-      <script src="/static/review-compare.js?v=20261020b" defer></script>
+      <script src="/static/review-compare.js?v=20261020c" defer></script>
       <div class="vh-scroll-hint"><div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div></div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
