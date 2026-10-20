@@ -158,7 +158,10 @@ app.get('/', (c) => {
             "https://soomgo.com/profile/users/16782447",
             "https://www.i-boss.co.kr/company/1258/%EC%9D%B8%EC%95%A0%EB%93%9C%EC%BB%B4%ED%8D%BC%EB%8B%88",
             "https://www.saramin.co.kr/zf_user/company-info/view/csn/ODBvbEo3MXVraWFBSHQwNjBzMnhsdz09",
-            "https://www.jobkorea.co.kr/company/49001197"
+            "https://www.jobkorea.co.kr/company/49001197",
+            "https://www.instagram.com/inadcompany.official/",
+            "https://map.naver.com/p/entry/place/1857048028",
+            "https://place.map.kakao.com/942705107"
           ]
         },
         {
