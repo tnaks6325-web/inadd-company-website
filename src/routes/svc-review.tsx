@@ -1,10 +1,12 @@
 import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
+import { ReviewCompare } from './review-compare'
 export const SvcReviewPage = () => (
   <>
+    <link rel="stylesheet" href="/static/review-compare.css?v=20261020a" />
     {/* ══ HERO ══ */}
-    <section class="vh-hero vh-hero--photo">
-      <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/mkt-images/hero-review.png')"></div>
+    <section class="vh-hero vh-hero--rc">
+      <div class="vh-glow" aria-hidden="true"></div>
       <canvas id="vhCanvas5" class="vh-canvas"></canvas>
       <div class="vh-bg">
         <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(234,179,8,0.22) 0%,transparent 70%)"></div>
@@ -58,6 +60,8 @@ export const SvcReviewPage = () => (
           </a>
         </div>
       </div>
+      <ReviewCompare />
+      <script src="/static/review-compare.js?v=20261020a" defer></script>
       <div class="vh-scroll-hint"><div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div></div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
