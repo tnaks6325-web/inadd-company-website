@@ -527,7 +527,7 @@ export const AboutPage = () => (
                 </div>
                 <div>
                   <span class="ldl-label">운영시간</span>
-                  <p class="ldl-value">평일 09:00 – 18:00<br /><span class="ldl-note">주말 및 공휴일 휴무</span></p>
+                  <p class="ldl-value">평일 09:30 – 18:00<br /><span class="ldl-note">주말 및 공휴일 휴무</span></p>
                 </div>
               </li>
             </ul>
