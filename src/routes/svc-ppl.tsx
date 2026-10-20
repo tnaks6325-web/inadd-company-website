@@ -61,7 +61,7 @@ export const SvcPplPage = () => (
         </div>
       </div>
       <PplOnAir />
-      <script src="/static/ppl-onair.js?v=20261021b" defer></script>
+      <script src="/static/ppl-onair.js?v=20261021c" defer></script>
       <div class="vh-scroll-hint"><div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div></div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
