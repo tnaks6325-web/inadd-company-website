@@ -221,7 +221,7 @@ export const HomePage = () => (
             {
               title: '필요할 때, 늘 곁에',
               desc: '6시에 닫고 사라지는 대행사가 아닌, 자정까지 필요한 순간에 곁에 있습니다.',
-              hours: '09:00 – 24:00',
+              hours: '09:30 – 24:00',
               media: (
                 <img src="/static/images/why-02.png?v=1" alt="" class="why-media-img" loading="lazy" />
               )

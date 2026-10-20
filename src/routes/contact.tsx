@@ -370,7 +370,7 @@ export const ContactPage = () => (
                       <div class="cf-select-wrap">
                         <select name="time1" required>
                           <option value="">시간 선택</option>
-                          <option value="09:00">오전 09:00</option>
+                          <option value="09:30">오전 09:30</option>
                           <option value="10:00">오전 10:00</option>
                           <option value="11:00">오전 11:00</option>
                           <option value="13:00">오후 01:00</option>
@@ -398,7 +398,7 @@ export const ContactPage = () => (
                       <div class="cf-select-wrap">
                         <select name="time2">
                           <option value="">시간 선택</option>
-                          <option value="09:00">오전 09:00</option>
+                          <option value="09:30">오전 09:30</option>
                           <option value="10:00">오전 10:00</option>
                           <option value="11:00">오전 11:00</option>
                           <option value="13:00">오후 01:00</option>

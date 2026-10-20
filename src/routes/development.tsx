@@ -470,7 +470,7 @@ export const DevelopmentPage = () => (
             더 빠르고, 더 정확하고, 더 많은 데이터로<br />
             브랜드의 성과를 만들어드립니다.
           </p>
-          <p class="dev-cta-note">평일 09:00 – 18:00 · 문의 접수는 24시간 가능합니다</p>
+          <p class="dev-cta-note">평일 09:30 – 18:00 · 문의 접수는 24시간 가능합니다</p>
           <a href="/contact" class="why-cta cta-inq-btn">
             <span>문의하기</span>
             <svg class="why-cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>

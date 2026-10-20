@@ -131,7 +131,7 @@ export const DevContactPage = () => (
             <h3 class="dct-sidebar-title">운영 시간</h3>
             <div class="dct-hours-row">
               <span class="dct-hours-day">평일</span>
-              <span class="dct-hours-time">09:00 – 18:00</span>
+              <span class="dct-hours-time">09:30 – 18:00</span>
             </div>
             <div class="dct-hours-row">
               <span class="dct-hours-day">주말·공휴일</span>
