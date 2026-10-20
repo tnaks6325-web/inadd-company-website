@@ -38,7 +38,8 @@
 .rc-bar { display:flex; justify-content:space-between; align-items:center; padding:8px 16px 10px; border-bottom:1px solid #eef0f3; font-size:15px; }
 .rc-cols { display:flex; gap:10px; padding:12px 12px 0; }
 .rc-col { flex:1; min-width:0; display:flex; flex-direction:column; gap:4px; padding:8px; border-radius:12px; border:2px solid transparent; transition:border-color .15s,background .15s; }
-.rc-col.is-pick { border-color:#21306F; background:#f6f8fd; }
+.rc-col { transition:none; will-change:opacity,filter,transform; }
+.rc-col--b { --glow:0; border-color:rgba(33,48,111,var(--glow)); background:rgba(246,248,253,var(--glow)); box-shadow:0 0 0 calc(5px * var(--glow)) rgba(33,48,111,calc(.10 * var(--glow))),0 10px 26px rgba(33,48,111,calc(.16 * var(--glow))); }
 .rc-img { height:118px; border-radius:10px; background:linear-gradient(160deg,color-mix(in srgb,var(--a) 45%,#fff),var(--a)); background-size:cover; background-position:center; display:flex; align-items:flex-end; padding:6px; margin-bottom:4px; }
 .rc-img span { font-size:10px; color:#fff; font-weight:700; text-shadow:0 1px 2px rgba(0,0,0,.3); }
 .rc-name { font-size:12.5px; font-weight:600; line-height:1.3; min-height:33px; }
@@ -49,6 +50,8 @@
 .rc-rate em { font-style:normal; font-variant-numeric:tabular-nums; }
 .rc-revs { position:relative; height:300px; overflow:hidden; margin-top:6px; border-top:1px solid #eef0f3; padding-top:6px; -webkit-mask-image:linear-gradient(180deg,#000 85%,transparent); mask-image:linear-gradient(180deg,#000 85%,transparent); }
 .rc-tx { padding:7px 0; border-bottom:1px solid #f2f3f5; font-size:11.5px; color:#444; }
+.rc-tx { height:46px; }
+.rc-tx p { display:flex; gap:1px; }
 .rc-tx span { display:block; margin-top:2px; }
 .rc-tx svg, .rc-pr svg { width:10px; height:10px; }
 .rc-track { position:absolute; left:0; right:0; top:6px; will-change:transform; }
@@ -61,6 +64,26 @@
 .rc-btn { flex:1; text-align:center; padding:11px 0; border-radius:10px; background:#eef0f3; color:#555; font-weight:700; font-size:13px; transition:transform .12s,background .12s; }
 .rc-btn--b { background:#21306F; color:#fff; }
 .rc-btn--b.is-press { transform:scale(.94); background:#16224f; }
+.rc-btns--buy { opacity:0; }
+.rc-btns--buy .rc-btn { flex:1; }
+/* 결제 시트·구매 완료 */
+.rc-sheet { position:absolute; left:0; right:0; bottom:0; padding:18px 18px 26px; border-radius:18px 18px 0 0; background:#fff; box-shadow:0 -12px 30px rgba(17,19,24,.18); display:flex; flex-direction:column; gap:12px; transform:translateY(105%); }
+.rc-sheet-t { font-size:16px; }
+.rc-sheet-row { display:flex; align-items:center; gap:10px; padding-bottom:12px; border-bottom:1px solid #eef0f3; font-size:12.5px; }
+.rc-sheet-row i { flex:none; width:40px; height:40px; border-radius:8px; background-size:cover; background-position:center; }
+.rc-sheet-row span { flex:1; }
+.rc-sheet-kv { display:flex; justify-content:space-between; font-size:12.5px; color:#5b6170; }
+.rc-sheet-kv b { color:#111318; }
+.rc-sheet-go { margin-top:4px; padding:13px 0; border-radius:10px; background:#21306F; color:#fff; font-weight:700; font-size:14px; text-align:center; transition:transform .12s; }
+.rc-sheet-go.is-press { transform:scale(.96); background:#16224f; }
+.rc-done { position:absolute; inset:0; background:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:0 24px; opacity:0; }
+.rc-done-ok { width:64px; height:64px; border-radius:50%; background:#21306F; color:#fff; display:flex; align-items:center; justify-content:center; transform:scale(.6); }
+.rc-done-ok svg { width:30px; height:30px; }
+.rc-done > b { font-size:18px; }
+.rc-done-row { display:flex; gap:10px; align-items:center; width:100%; padding:12px; border:1px solid #eef0f3; border-radius:12px; }
+.rc-done-row i { flex:none; width:48px; height:48px; border-radius:8px; background-size:cover; background-position:center; }
+.rc-done-row div { display:flex; flex-direction:column; gap:3px; font-size:12.5px; }
+.rc-done p { font-size:12.5px; color:#5b6170; }
 .rc-toast { position:absolute; left:20px; right:20px; bottom:92px; padding:12px 14px; border-radius:12px; background:rgba(17,19,24,.88); color:#fff; font-weight:700; font-size:13px; text-align:center; opacity:0; transform:translateY(10px); }
 .rc-pr.is-mine { height:0; padding:0; overflow:hidden; border-bottom-width:0; }
 /* 리뷰 쓰기 화면 */
@@ -83,6 +106,16 @@
 .rc-wr-go { position:absolute; left:20px; right:20px; bottom:26px; padding:13px 0; border-radius:10px; background:#21306F; color:#fff; font-weight:700; font-size:14px; text-align:center; transition:transform .12s; }
 .rc-wr-go.is-press { transform:scale(.96); background:#16224f; }
 .rc-touch { position:absolute; width:46px; height:46px; margin:-23px 0 0 -23px; border-radius:50%; background:rgba(17,19,24,.18); box-shadow:0 0 0 2px rgba(255,255,255,.7) inset; opacity:0; }
+
+/* 마지막: 여러 소비자 */
+.rc-crowd { position:absolute; inset:0; z-index:3; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:8px; pointer-events:none; }
+.rc-crowd-t { position:relative; border-radius:12px; overflow:hidden; background:#dde3ec; background-size:cover; background-position:center; opacity:0; box-shadow:0 14px 30px rgba(30,50,90,.16); will-change:transform,opacity; }
+.rc-crowd-c { position:absolute; left:8px; right:8px; bottom:8px; display:flex; gap:8px; align-items:center; padding:7px 8px; border-radius:8px; background:#fff; box-shadow:0 6px 16px rgba(17,19,24,.18); opacity:0; transform:translateY(8px); font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif; text-align:left; }
+.rc-crowd-c i { flex:none; width:30px; height:30px; border-radius:6px; background-size:cover; background-position:center; }
+.rc-crowd-c div { display:flex; flex-direction:column; gap:1px; min-width:0; }
+.rc-crowd-c span { font-size:11px; color:#5b6170; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.rc-crowd-c b { display:flex; align-items:center; gap:3px; font-size:12.5px; color:#21306F; }
+.rc-crowd-c b svg { width:12px; height:12px; }
 
 @media(max-width:1280px) { .rc { --s:.78; } }
 @media(max-width:1024px) { .rc { --s:.6; } }
