@@ -13,7 +13,7 @@ const V = '/static/review-compare/'
 
 // 현실 컷: src 가 있으면 public/static/review-compare/{src}.mp4·.webp, 없으면 img(사진), 그것도 없으면 임시 상자
 const REAL: { n: string; label: string; src?: string; img?: string }[] = [
-  { n: '고민', label: '고민 → 카메라가 돌아 휴대폰 화면 속으로', src: 'dive' },
+  { n: '고민', label: '엄지 스와이프 클로즈업 → 앞 대각선 고민 → 카메라가 돌아 휴대폰 화면 속으로', src: 'dive' },
   { n: '개봉', label: '택배에서 꺼낸 물결랩 세럼', src: 'smile' },
   { n: '볼', label: '볼에 한 방울 떨어뜨리고 손끝으로 굴려 바르며 미소', src: 'cheek' },
 ]
