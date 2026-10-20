@@ -65,7 +65,7 @@ export const SvcSeedingPage = () => (
       </div>
 
       <SeedSearch />
-      <script src="/static/seeding-search.js?v=20261020j" defer></script>
+      <script src="/static/seeding-search.js?v=20261020k" defer></script>
 
       <div class="vh-scroll-hint">
         <div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div>

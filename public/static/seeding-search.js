@@ -1,5 +1,5 @@
 /* 체험단 히어로(한 바퀴 6초): 현실 → 웹.
-   0~0.85초 개봉 → 0.85~1.7초 촬영(각도가 다른 사진 3장이 찰칵마다 바뀜) → 1.7~2.9초 노트북으로 글 쓰는 뒷모습, 2.3초부터 카메라가 어깨를 지나 화면 속으로 →
+   0~0.75초 개봉 → 0.75~1.85초 촬영(각도가 다른 사진 5장이 찰칵마다 바뀜) → 1.85~2.9초 노트북으로 글 쓰는 뒷모습, 2.3초부터 카메라가 어깨를 지나 화면 속으로 →
    2.8초 노트북 화면이 무대를 꽉 채우면 그 자리에서 화면 내용이 웹 글쓰기 창으로 바뀌고(정면, 같은 크기) 3.3초까지 비스듬히 자리 잡음 →
    3.4초 발행 → 3.55초 검색 결과로 바뀜 → 방금 쓴 글이 맨 위, 이어서 후기가 쌓이며 후기 수가 오름 →
    5.75초부터 처음으로. 화면 상태는 시간 t 하나로 계산한다(render). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고,
@@ -13,7 +13,7 @@
     c1: $('c1'), c2: $('c2'), img: $('img'), q: $('q'), n: $('n'), track: $('track') };
   var cuts = Array.prototype.slice.call(root.querySelectorAll('[data-ss-cut]'));
   var go = root.querySelector('.ss-go');
-  var CYCLE = 6, CUT_AT = [0, 0.85, 1.7], SHOT = 1.3, PUSH = [2.2, 2.82], PUSH_V = [2.5, 2.86], TO_WEB = [2.7, 2.92], SETTLE = [2.95, 3.3], TXT = [3.0, 3.35], PUB = 3.4,
+  var CYCLE = 6, CUT_AT = [0, 0.75, 1.85], SHOT = 1.3, PUSH = [2.25, 2.82], PUSH_V = [2.55, 2.88], TO_WEB = [2.7, 2.92], SETTLE = [2.95, 3.3], TXT = [3.0, 3.35], PUB = 3.4,
     SWITCH = [3.55, 3.67], Q = [3.65, 3.92], SEARCH = 3.94, CARD_AT = 4.05, CARD_GAP = 0.19, CARD_IN = 0.26, OUT = [5.75, 6.0], ROW = 124, ROWS_SHOWN = 3;
   // 노트북 화면 칸(무대 비율): 이 칸이 무대 전체가 되도록 키운다. 사진이면 data-scr 값, 임시 그림이면 기본값
   var sv = cuts[2] && cuts[2].getAttribute('data-scr'), sa = sv ? sv.split(',').map(Number) : [0.33, 0.26, 0.34, 0.31];
@@ -65,7 +65,8 @@
         sh.style.opacity = i === k ? 1 : 0;
         sh.style.transform = 'scale(' + (1 + 0.05 * (1 - ease(clamp(into / gap)))).toFixed(3) + ')';
       });
-      if (l >= CUT_AT[1] && l < CUT_AT[2]) fl = into < 0.16 ? (1 - into / 0.16) * 0.85 : 0;
+      var fd = Math.min(0.14, gap * 0.6);
+      if (l >= CUT_AT[1] && l < CUT_AT[2]) fl = into < fd ? (1 - into / fd) * 0.85 : 0;
     } else if (l >= SHOT && l < SHOT + 0.22) fl = (1 - (l - SHOT) / 0.22) * 0.9;
     el.flash.style.opacity = fl;
     // 작성 컷: 영상이 없으면 임시 그림을 노트북 화면 쪽으로 키워 카메라가 들어가는 움직임을 흉내

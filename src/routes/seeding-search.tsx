@@ -69,14 +69,14 @@ export const SsCard = (p: { r: Review; kw: string; color: string }) => (
 
 const Mag = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2.4" /><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" /></svg>
 
-// 현실 컷(0~0.85초 개봉, 0.85~1.7초 촬영, 1.7~2.9초 작성). 촬영은 각도가 다른 사진(shots)이 '찰칵'마다 바로 넘어간다. src 가 있으면 public/static/seeding-search/{src}.mp4·.webp
+// 현실 컷(0~0.75초 개봉, 0.75~1.85초 촬영, 1.85~2.9초 작성). 촬영은 각도가 다른 사진(shots)이 '찰칵'마다 바로 넘어간다. src 가 있으면 public/static/seeding-search/{src}.mp4·.webp
 // 작성 컷 영상은 마지막 장면이 노트북 화면 가득 글쓰기 창이어야 브라우저 창과 이어진다(영상이 없을 땐 임시 그림을 키워 흉내).
 // 영상이 아직 없으면 img(첫 장면 사진)를 보여 준다. scr = 사진 속 노트북 화면 위치(무대 비율 x,y,w,h) — 이 칸이 무대를 꽉 채울 때까지 다가간다.
 // fit = 영상 마지막 장면을 웹 창 위치에 맞추는 값(배율, 가로 이동 px, 세로 이동 px, 무대 680x620 기준).
 // 영상이 화면을 꽉 채우기 직전에 멈추므로, 끝나갈 때 이만큼 더 다가가 화면 속 글쓰기 창이 웹 창과 겹치게 한다.
 const REAL: { n: string; label: string; src?: string; img?: string; shots?: string[]; scr?: string; fit?: string }[] = [
   { n: '개봉', label: '인물이 집에서 택배 상자를 열고 제품을 꺼냄', src: 'unbox' },
-  { n: '촬영', label: '여기서 찰칵, 저기서 찰칵 — 각도를 바꿔 가며 제품을 찍음', shots: ['shoot-1', 'shoot-2', 'shoot-3'] },
+  { n: '촬영', label: '여기서 찰칵, 저기서 찰칵 — 각도를 바꿔 가며 제품을 찍음', shots: ['shoot-1', 'shoot-4', 'shoot-2', 'shoot-5', 'shoot-3'] },
   { n: '작성', label: '노트북으로 글 쓰는 뒷모습 → 카메라가 어깨를 지나 화면 속으로', src: 'write', fit: '1.12,-13,-49' },
 ]
 
