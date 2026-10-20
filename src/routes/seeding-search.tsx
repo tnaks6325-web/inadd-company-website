@@ -1,5 +1,5 @@
-// 체험단 히어로: PC 브라우저 창 하나에 블로그 검색 결과가 차오른다.
-// 검색어가 한 글자씩 입력되고 → 후기 카드가 하나씩 쌓이고 → 후기 수가 올라가고 → 다음 샘플 브랜드로 넘어간다.
+// 체험단 히어로(한 바퀴 6초): 휴대폰 카메라로 제품 개봉을 찍고 → 찰칵 찍은 사진이 블로그 글쓰기 창으로 날아가
+// 글이 써지고 발행되면 → 같은 창이 검색 결과로 바뀌어 방금 쓴 글을 시작으로 후기가 쌓이고 후기 수가 오른다.
 // 브랜드·후기는 퍼포먼스·바이럴 페이지와 같은 샘플 브랜드(온숨·바삭공방·말끔·물결랩·바름) 가상 후기다.
 // 대가·협찬 표시 문구는 넣지 않는다(홈페이지 대가 언급 금지). 움직임은 seeding-search.js.
 type Review = { t: string; by: string; d: string; s: string; ph: string }
@@ -66,23 +66,50 @@ export const SsCard = (p: { r: Review; kw: string; color: string }) => (
 
 const Mag = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2.4" /><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" /></svg>
 
+// 지금은 온숨 한 브랜드만 6초마다 반복한다(브랜드를 돌리려면 개봉 영상·사진이 브랜드마다 필요).
+const ACTIVE = SS_BRANDS.slice(0, 1)
+
 export const SeedSearch = () => {
-  const b = SS_BRANDS[0]
+  const b = ACTIVE[0], mine = b.reviews[0]
   return (
     <div class="ss" aria-hidden="true" data-ss>
-      <div class="ss-win">
-        <div class="ss-chrome"><i /><i /><i /><span class="ss-url">search.naver.com</span></div>
-        <div class="ss-head">
-          <span class="ss-logo">N</span>
-          <div class="ss-box"><span class="ss-q" data-ss-q>{b.q}</span><span class="ss-caret" /><span class="ss-go"><Mag /></span></div>
+      <div class="ss-stage">
+        <div class="ss-win">
+          <div class="ss-chrome"><i /><i /><i /><span class="ss-url" data-ss-url>search.naver.com</span></div>
+          {/* 1) 블로그 글쓰기 화면 */}
+          <div class="ss-page ss-ed" data-ss-ed>
+            <div class="ss-ed-bar"><span class="ss-ed-logo">blog</span><span class="ss-ed-tools">사진 · 동영상 · 인용구 · 구분선 · 장소</span><span class="ss-pub" data-ss-pub>발행</span></div>
+            <div class="ss-ed-body">
+              <strong class="ss-ed-ttl"><span data-ss-ttl>{mine.t}</span><span class="ss-caret" data-ss-c1 /></strong>
+              <div class="ss-ed-img" data-ss-img style={`--a:${b.color}`}><span>{mine.ph}</span></div>
+              <p class="ss-ed-txt"><span data-ss-txt>{mine.s}</span><span class="ss-caret" data-ss-c2 /></p>
+            </div>
+          </div>
+          {/* 2) 검색 결과 화면 */}
+          <div class="ss-page ss-sr" data-ss-sr>
+            <div class="ss-head">
+              <span class="ss-logo">N</span>
+              <div class="ss-box"><span class="ss-q" data-ss-q>{b.q}</span><span class="ss-caret" /><span class="ss-go"><Mag /></span></div>
+            </div>
+            <nav class="ss-tabs"><span>통합</span><span class="is-on">블로그</span><span>카페</span><span>이미지</span><span>쇼핑</span></nav>
+            <div class="ss-meta"><span>블로그 후기 <b data-ss-n>{b.n}</b>건</span><span class="ss-sort">관련도순 · 최신순</span></div>
+            <div class="ss-list"><div class="ss-track" data-ss-track>
+              {b.reviews.map((r) => <SsCard r={r} kw={b.kw} color={b.color} />)}
+            </div></div>
+          </div>
         </div>
-        <nav class="ss-tabs"><span>통합</span><span class="is-on">블로그</span><span>카페</span><span>이미지</span><span>쇼핑</span></nav>
-        <div class="ss-meta"><span>블로그 후기 <b data-ss-n>{b.n}</b>건</span><span class="ss-sort">관련도순 · 최신순</span></div>
-        <div class="ss-list"><div class="ss-track" data-ss-track>
-          {b.reviews.map((r) => <SsCard r={r} kw={b.kw} color={b.color} />)}
-        </div></div>
+        {/* 휴대폰 카메라: 개봉 장면을 찍는 화면 */}
+        <div class="ss-cam" data-ss-cam>
+          <div class="ss-cam-scr">
+            <div class="ss-cam-view" data-ss-view style={`--a:${b.color}`}><span>개봉 영상 자리<br />(손으로 상자 열기)</span></div>
+            <div class="ss-cam-grid" />
+            <div class="ss-cam-ui"><span>사진</span><i class="ss-shutter" data-ss-shutter /><span class="ss-cam-last" data-ss-last /></div>
+            <div class="ss-flash" data-ss-flash />
+          </div>
+        </div>
+        <div class="ss-fly" data-ss-fly style={`--a:${b.color}`} />
       </div>
-      <script type="application/json" data-ss-data dangerouslySetInnerHTML={{ __html: JSON.stringify(SS_BRANDS) }} />
+      <script type="application/json" data-ss-data dangerouslySetInnerHTML={{ __html: JSON.stringify(ACTIVE) }} />
     </div>
   )
 }
