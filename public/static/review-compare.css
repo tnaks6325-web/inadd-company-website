@@ -20,8 +20,17 @@
 .rc-cut-ph span { font-size:18px; line-height:1.5; font-weight:600; opacity:.9; }
 .rc-cut-img { background-size:cover; background-position:center; padding:0; }
 
+/* 휴대폰 옆 인용: 글자·가는 선·형광펜만(카드·이모지·그림자 없음) */
+.rc-note { position:absolute; left:428px; width:248px; z-index:1; color:#111318; font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif; text-align:left; word-break:keep-all; letter-spacing:-.01em; opacity:0; will-change:transform,opacity; }
+.rc-note p { font-size:16px; line-height:1.5; font-weight:600; }
+.rc-note span { display:block; margin-top:6px; font-size:12.5px; color:#5b6170; }
+.rc-note::before { content:''; position:absolute; left:-30px; top:.8em; width:22px; height:1px; background:#21306F; transform-origin:0 50%; transform:scaleX(var(--ln,1)); }
+.rc-note::after { content:''; position:absolute; left:-33px; top:calc(.8em - 3px); width:7px; height:7px; border-radius:50%; background:#21306F; }
+.rc-note mark, .rc-pr mark { background:linear-gradient(transparent 58%,#FBF0CF 58%); background-size:var(--hl,100%) 100%; background-repeat:no-repeat; color:inherit; }
+.rc-pr mark { --hl:0%; }
+
 /* 앱 화면(휴대폰) */
-.rc-phone { position:absolute; left:192px; top:10px; width:360px; height:732px; transform:scale(.82); transform-origin:0 0; padding:9px; border-radius:46px; background:#111318;
+.rc-phone { position:absolute; left:96px; top:10px; width:360px; height:732px; transform:scale(.82); transform-origin:0 0; padding:9px; border-radius:46px; background:#111318;
   box-shadow:0 0 0 1.5px #3a3d45 inset,0 34px 70px rgba(30,50,90,.26),0 8px 18px rgba(17,19,24,.14); opacity:0; will-change:transform,opacity; }
 .rc-scr { position:relative; width:100%; height:100%; border-radius:38px; overflow:hidden; background:#fff; color:#111318;
   font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif; font-size:13px; line-height:1.35; text-align:left; word-break:keep-all; letter-spacing:normal; }

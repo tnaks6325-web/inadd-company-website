@@ -11,6 +11,7 @@
   var el = { real: $('real'), phone: $('phone'), b: $('b'), star: $('star'), n: $('n'), track: $('track'), cart: $('cart'), toast: $('toast'), touch: $('touch') };
   var cuts = Array.prototype.slice.call(root.querySelectorAll('[data-rc-cut]'));
   var revs = Array.prototype.slice.call(el.track.children);
+  var notes = Array.prototype.slice.call(root.querySelectorAll('[data-rc-note]'));
   var CYCLE = 6.2, PUSH = [0.75, 1.2], APP_IN = [1.0, 1.25], REV_AT = 1.55, REV_GAP = 0.32, REV_IN = 0.28, ROW = 74, ROWS = 3.4,
     STAR = [1.55, 3.45], TOUCH_IN = [3.45, 3.6], TOUCH_MOVE = [3.55, 3.8], PRESS = 3.82, TOAST = [3.95, 4.55], TO_REAL = [4.5, 4.72], OUT = [5.95, 6.2];
   var TOUCH_FROM = [250, 470], TOUCH_TO = [249, 669];
@@ -51,6 +52,15 @@
       shown += p; r.style.opacity = p; r.style.transform = 'translateY(' + ((1 - p) * 18).toFixed(1) + 'px)';
     });
     el.track.style.transform = 'translateY(' + (-Math.max(0, shown - ROWS) * ROW).toFixed(1) + 'px)';
+    // 인용: 연결된 후기가 올라온 직후 그 후기 문장에 형광펜이 그어지고, 같은 구절이 옆에 적힌다(앱이 사라질 때 함께 사라짐)
+    notes.forEach(function (nt) {
+      var i = +nt.getAttribute('data-rv'), at = REV_AT + i * REV_GAP + REV_IN, hl = ease(clamp((l - at) / 0.3)), np = ease(clamp((l - at - 0.15) / 0.35));
+      var mk = revs[i] && revs[i].querySelector('mark'); if (mk) mk.style.setProperty('--hl', (hl * 100).toFixed(0) + '%');
+      nt.style.opacity = np * (1 - back);
+      nt.style.transform = 'translateX(' + ((1 - np) * 10).toFixed(1) + 'px)';
+      nt.style.setProperty('--ln', np.toFixed(3));
+      var nm = nt.querySelector('mark'); if (nm) nm.style.setProperty('--hl', (ease(clamp((l - at - 0.3) / 0.35)) * 100).toFixed(0) + '%');
+    });
     var sp = ease(seg(l, STAR));
     el.star.textContent = (4.1 + 0.8 * sp).toFixed(1);
     el.n.textContent = fmt(Math.round(5 + (1284 - 5) * sp));

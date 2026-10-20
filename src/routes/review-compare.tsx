@@ -17,12 +17,20 @@ const A = { name: 'A사 수분 세럼 30ml', price: '26,000원', star: '4.0', n:
 const B = { name: '물결랩 히알루 세럼 30ml', price: '28,000원', color: '#b9c7e6',
   reviews: [
     { s: '끈적임 없이 촉촉해요', by: 'jin***', ph: '손등에 덜어 낸 세럼' },
-    { s: '세안 후 바로 바르기 좋아요', by: 'soo***', ph: '세면대 옆 세럼' },
-    { s: '향이 없어서 편해요', by: 'min***', ph: '화장대 위 세럼' },
+    { s: '오후까지 안 당겨요', by: 'soo***', ph: '세면대 옆 세럼' },
+    { s: '예민한 날에도 손이 가요', by: 'min***', ph: '화장대 위 세럼' },
     { s: '물처럼 가볍게 스며요', by: 'hye***', ph: '스포이드에서 떨어지는 방울' },
-    { s: '한 병 다 쓰고 재구매해요', by: 'yun***', ph: '빈 병과 새 병' },
+    { s: '같은 걸로 다시 샀어요', by: 'yun***', ph: '빈 병과 새 병' },
     { s: '민감한 날에도 편했어요', by: 'ara***', ph: '파우치 속 세럼' },
   ] as Rv[] }
+
+// 휴대폰 옆 인용(말풍선 대신 지면 주석처럼): 앱 속 후기 한 줄에 형광펜이 그어지는 순간, 그 구절을 옆에 옮겨 적는다.
+// 장식(이모지·유리 카드·별 남발) 없이 글자·가는 선·형광펜만. rv = 오른쪽 후기 목록의 몇 번째 후기와 연결되는지.
+const NOTES = [
+  { rv: 1, top: 150, pre: '세안하고 바로 바르면 ', hl: '오후까지 안 당겨요', meta: 'soo*** · 복합성 · 3주째' },
+  { rv: 2, top: 290, pre: '향이 없어서 ', hl: '예민한 날에도 손이 가요', meta: 'min*** · 민감성' },
+  { rv: 4, top: 430, pre: '한 병 다 쓰고 ', hl: '같은 걸로 다시 샀어요', meta: 'yun*** · 재구매' },
+]
 
 const Star = () => <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path fill="#f5b301" d="m12 2.5 2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z" /></svg>
 
@@ -36,6 +44,8 @@ export const ReviewCompare = () => (
           : c.img ? <div class="rc-cut-ph rc-cut-img" style={`background-image:url(/static/review-compare/${c.img}.webp)`} />
           : <div class="rc-cut-ph"><b>{c.n}</b><span>{c.label}</span></div>}</div>)}
       </div>
+      {/* 휴대폰 옆 인용 */}
+      {NOTES.map((n) => <div class="rc-note" data-rc-note data-rv={n.rv} style={`top:${n.top}px`}><p>“{n.pre}<mark>{n.hl}</mark>”</p><span>{n.meta}</span></div>)}
       {/* 앱: 쇼핑 앱 비교 화면 */}
       <div class="rc-phone" data-rc-phone>
         <div class="rc-scr">
@@ -55,7 +65,7 @@ export const ReviewCompare = () => (
               <p class="rc-price">{B.price}</p>
               <p class="rc-rate"><Star /> <b data-rc-star>4.9</b> <i>리뷰 <em data-rc-n>1,284</em></i></p>
               <div class="rc-revs rc-revs--b"><div class="rc-track" data-rc-track>
-                {B.reviews.map((r) => <div class="rc-pr"><div class="rc-pr-img" style={`--a:${B.color}` + (r.img ? `;background-image:url(${r.img})` : '')}>{!r.img && <span>{r.ph}</span>}</div><div><p><Star /><Star /><Star /><Star /><Star /></p><span>{r.s}</span><i>{r.by}</i></div></div>)}
+                {B.reviews.map((r) => <div class="rc-pr"><div class="rc-pr-img" style={`--a:${B.color}` + (r.img ? `;background-image:url(${r.img})` : '')}>{!r.img && <span>{r.ph}</span>}</div><div><p><Star /><Star /><Star /><Star /><Star /></p><span><mark>{r.s}</mark></span><i>{r.by}</i></div></div>)}
               </div></div>
             </div>
           </div>
