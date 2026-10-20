@@ -74,6 +74,9 @@
 .ss-cut-ph b { font-size:44px; font-weight:800; }
 .ss-cut-ph span { font-size:18px; line-height:1.5; font-weight:600; opacity:.9; }
 .ss-flash { position:absolute; inset:0; background:#fff; opacity:0; }
+/* 촬영: 각도가 다른 사진이 찰칵마다 바뀜 */
+.ss-shots { position:absolute; inset:0; }
+.ss-shot { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; will-change:transform,opacity; }
 /* 임시 그림: 뒷모습 너머 노트북 화면(영상이 없을 때 이 칸을 키워 '화면 속으로 들어감'을 흉내) */
 .ss-cut-ph { position:relative; transform-origin:var(--ox,50%) var(--oy,50%); will-change:transform; }
 .ss-cut-screen { position:absolute; left:33%; top:26%; width:34%; height:31%; background:#fff; border:6px solid #2a2d33; border-radius:6px; box-shadow:0 0 40px rgba(255,255,255,.5); }
