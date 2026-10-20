@@ -98,7 +98,7 @@
 /* ── 우리 칸: 흐릿함 → 썸네일이 갈림(스티커·띠) → 이름·딱지·할인가 → 떠오름 ── */
 .oys-card--me { z-index:2; --lift:0; border-radius:6px;
   box-shadow:0 0 0 calc(8px * var(--lift)) rgba(255,255,255,var(--lift)),0 0 0 calc(10px * var(--lift)) rgba(111,154,53,calc(.9 * var(--lift))),0 calc(20px * var(--lift)) calc(40px * var(--lift)) rgba(40,60,30,calc(.26 * var(--lift))); }
-.oys-th--before { filter:saturate(.25) brightness(1.02); }
+.oys-th--before { filter:saturate(.7); }
 .oys-thnew { position:absolute; inset:0; clip-path:inset(0 calc(100% - var(--w,0%)) 0 0); }
 .oys-stk { position:absolute; right:.6em; top:.6em; width:3.6em; height:3.6em; border-radius:50%; background:#3f6a12; color:#fff; font-size:1em; font-weight:800; line-height:3.6em; text-align:center; transform:rotate(-8deg); }
 .oys-tband { position:absolute; left:0; right:0; bottom:0; padding:.45em .7em; background:rgba(22,40,10,.86); color:#fff; font-size:.95em; font-weight:800; text-align:left; }

@@ -6,21 +6,23 @@
 // 리뷰 수·검색 결과는 다른 페이지(리뷰 마케팅·체험단)에서 쓰므로 여기서는 쓰지 않는다. 대가·협찬 표시 문구 금지. 움직임은 oy-shelf.js.
 type Item = { brand: string; name: string; was: string; off: string; price: string; flags: string[]; a: string; img?: string; ph: string }
 
-// 우리 상품: 바뀌기 전(before)과 후(after). img 가 없으면 색 상자 + 이름표(사진은 /static/oy-shelf/ 에 둔다)
+// 상품 사진은 모두 가상(Higgsfield nano_banana, 2026-10-21): after.webp(da381d80), before.webp(6a646998, after 를 참고해 같은 통을 밋밋하게), o-1~7(87d856ad 3x3 한 장을 잘라 씀)
+const V = '/static/oy-shelf/'
+// 우리 상품: 바뀌기 전(before)과 후(after). img 가 없으면 색 상자 + 이름표
 const BRAND = '소담결'
-const BEFORE = { name: '토너패드 70매', price: '25,000원', a: '#c9ccd1', img: '', ph: '바뀌기 전 썸네일' }
+const BEFORE = { name: '토너패드 70매', price: '25,000원', a: '#c9ccd1', img: V + 'before.webp', ph: '바뀌기 전 썸네일' }
 const AFTER = { name: '[기획] 시카 진정 토너패드 70매+리필 20매 증정', was: '25,000원', off: '24%', price: '18,900원', flags: ['기획', '증정', '세일'],
-  a: '#8fc46a', img: '', ph: '바뀐 뒤 썸네일', sticker: '+20매', band: '시카 진정 기획' }
+  a: '#8fc46a', img: V + 'after.webp', ph: '바뀐 뒤 썸네일', sticker: '+20매', band: '시카 진정 기획' }
 
 // 같은 판매 랭킹의 다른 상품(우리 칸은 6위 자리에서 시작)
 const OTHERS: Item[] = [
-  { brand: '온새', name: '[단독기획] 각질 결 토너 200ml+100ml', was: '22,000원', off: '15%', price: '18,700원', flags: ['세일', '쿠폰'], a: '#cfe6e0', ph: '토너' },
-  { brand: '결고운', name: '약산성 토너패드 60매 기획', was: '19,000원', off: '16%', price: '15,900원', flags: ['증정'], a: '#bcd7ea', ph: '토너패드' },
-  { brand: '하늬', name: '비타 맑은 세럼 30ml', was: '32,000원', off: '25%', price: '24,000원', flags: ['세일', '쿠폰', '증정'], a: '#f4c38c', ph: '세럼' },
-  { brand: '단미', name: '[1+1] 진정 패드 80매 기획', was: '28,000원', off: '25%', price: '21,000원', flags: ['세일'], a: '#c9e3d0', ph: '패드' },
-  { brand: '모아린', name: '장벽 수분 크림 50ml', was: '24,000원', off: '10%', price: '21,500원', flags: ['쿠폰'], a: '#d9dde6', ph: '크림' },
-  { brand: '라온담', name: '수분 선크림 50ml 더블 기획', was: '19,800원', off: '20%', price: '15,800원', flags: ['세일', '증정'], a: '#f2d9a4', ph: '선크림' },
-  { brand: '새결', name: '각질 패드 70매', was: '18,000원', off: '17%', price: '14,900원', flags: ['세일'], a: '#ecc9bd', ph: '패드' },
+  { brand: '온새', name: '[단독기획] 각질 결 토너 200ml+100ml', was: '22,000원', off: '15%', price: '18,700원', flags: ['세일', '쿠폰'], a: '#cfe6e0', img: V + 'o-1.webp', ph: '토너' },
+  { brand: '결고운', name: '약산성 토너패드 60매 기획', was: '19,000원', off: '16%', price: '15,900원', flags: ['증정'], a: '#bcd7ea', img: V + 'o-2.webp', ph: '토너패드' },
+  { brand: '하늬', name: '비타 맑은 세럼 30ml', was: '32,000원', off: '25%', price: '24,000원', flags: ['세일', '쿠폰', '증정'], a: '#f4c38c', img: V + 'o-3.webp', ph: '세럼' },
+  { brand: '단미', name: '[1+1] 진정 패드 80매 기획', was: '28,000원', off: '25%', price: '21,000원', flags: ['세일'], a: '#c9e3d0', img: V + 'o-4.webp', ph: '패드' },
+  { brand: '모아린', name: '장벽 수분 크림 50ml', was: '24,000원', off: '10%', price: '21,500원', flags: ['쿠폰'], a: '#d9dde6', img: V + 'o-5.webp', ph: '크림' },
+  { brand: '라온담', name: '수분 선크림 50ml 더블 기획', was: '19,800원', off: '20%', price: '15,800원', flags: ['세일', '증정'], a: '#f2d9a4', img: V + 'o-6.webp', ph: '선크림' },
+  { brand: '새결', name: '각질 패드 70매', was: '18,000원', off: '17%', price: '14,900원', flags: ['세일'], a: '#ecc9bd', img: V + 'o-7.webp', ph: '패드' },
 ]
 // 우리 칸이 처음 놓이는 자리(0 = 1위). oy-shelf.js 가 data-from 으로 읽는다
 const MY_SLOT = 5
