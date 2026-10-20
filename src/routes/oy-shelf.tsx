@@ -2,7 +2,7 @@
 // 뒤에 PC 브라우저, 앞에 휴대폰. 두 화면의 스킨케어 판매 랭킹에서 6위의 밋밋한 우리 상품 칸이 동시에 바뀐다:
 //   ① 썸네일이 갈리며 '+20매' 스티커가 붙은 새 썸네일로 → ② 상품명이 구성이 보이게 → ③ 원가 취소선·할인율·기획/증정/세일 딱지 →
 //   주변 칸이 흐려지고 우리 칸이 떠오름 → 아래 주석의 조회·장바구니 담기 수가 오름 → 우리 칸이 1위 자리로 옮겨감 →
-//   1위 칸을 눌러 상세페이지로 → 대표 이미지(상징 영역)에 '올리브영 랭킹 1위 제품!' 띠와 1위 도장 → 0.3초 만에 그 이미지가 장면을 가득 채우도록 줌인 →
+//   1위 칸을 눌러 상세페이지로 → 아래로 내리면 상품 설명 중간의 '올리브영 랭킹 1위 제품' 타이틀 → 0.3초 만에 그 타이틀이 장면을 가득 채우도록 줌인 →
 //   점 세계 지도에서 한국(올리브영 1위)에서 미국·일본·동남아·유럽으로 선이 이어짐(글로벌 진출의 발판) → 처음으로.
 // 세계 지도 map.svg 는 world-atlas land-110m(공개 지도 자료)로 만든 점 지도(메르카토르, 경도 -130~165·위도 70~-22, 680x281).
 // 화면 짜임새는 실제 올리브영 랭킹 화면(2026-10-21 대표 캡처)을 참고했지만 로고·실제 상품/모델 사진·고유 서비스명('오늘드림' 등)은 쓰지 않는다.
@@ -84,22 +84,27 @@ const Grid = (p: { dev: 'pc' | 'm' }) => (
   </div>
 )
 
-// 상세페이지: 대표 이미지(상징 영역)에 '올리브영 랭킹 1위 제품!' 띠와 1위 도장이 찍힌다
+// 상세페이지: 열고 아래로 내리면 상품 설명 중간에 '올리브영 랭킹 1위 제품' 타이틀 구역이 나오고, 카메라가 그 타이틀로 줌인한다
 const Detail = (p: { dev: 'pc' | 'm' }) => (
   <div class={'oys-dt oys-dt--' + p.dev} data-oy-dt>
     {p.dev === 'pc' ? <p class="oys-dt-crumb">홈 › 스킨케어 › 토너/패드</p> : <div class="oys-dt-bar"><span>←</span><b>상품 상세</b><Bag /></div>}
-    <div class="oys-dt-body">
-      <div class="oys-dt-kv" style={`background-image:url(${AFTER.img})`}>
-        <b class="oys-dt-ban" data-oy-ban>올리브영 랭킹 1위 제품!</b>
-        <i class="oys-dt-stamp" data-oy-stamp><small>올리브영</small><b>1위</b><small>스킨케어</small></i>
+    <div class="oys-dt-view"><div class="oys-dt-track" data-oy-dtrack>
+      <div class="oys-dt-body">
+        <div class="oys-dt-kv" style={`background-image:url(${AFTER.img})`} />
+        <div class="oys-dt-info">
+          <span class="oys-br">{BRAND}</span><p class="oys-dt-nm">{AFTER.name}</p>
+          <p class="oys-dt-pr"><s>{AFTER.was}</s><u>{AFTER.off}</u><b>{AFTER.price}</b></p>
+          <div class="oys-flags oys-dt-flags">{AFTER.flags.map((x) => <em data-f={x}>{x}</em>)}</div>
+          <div class="oys-dt-btns"><span>장바구니</span><b>바로구매</b></div>
+        </div>
       </div>
-      <div class="oys-dt-info">
-        <span class="oys-br">{BRAND}</span><p class="oys-dt-nm">{AFTER.name}</p>
-        <p class="oys-dt-pr"><s>{AFTER.was}</s><u>{AFTER.off}</u><b>{AFTER.price}</b></p>
-        <div class="oys-flags oys-dt-flags">{AFTER.flags.map((x) => <em data-f={x}>{x}</em>)}</div>
-        <div class="oys-dt-btns"><span>장바구니</span><b>바로구매</b></div>
+      <div class="oys-dt-tabs"><b>상품설명</b><span>구매정보</span><span>Q&amp;A</span></div>
+      <div class="oys-dt-ttl">
+        <div class="oys-dt-ttl-h" data-oy-ttl><small>스킨케어 판매 랭킹</small><h4>올리브영 랭킹<br /><em>1위</em> 제품</h4></div>
+        <div class="oys-dt-ttl-img" style={`background-image:url(${AFTER.img})`} />
       </div>
-    </div>
+      <div class="oys-dt-more"><b>시카 진정 토너패드 70매 + 리필 20매</b><span>병풀 추출물 · 판테놀 · 히알루론산</span></div>
+    </div></div>
   </div>
 )
 
@@ -186,7 +191,7 @@ export const OyShelf = () => (
           </div>
         </div>
         <div class="oys-grp oys-grp--one" data-oy-grp>
-          <div class="oys-step" data-oy-step2><p><mark>상세페이지 첫 화면</mark></p><span>'올리브영 랭킹 1위 제품'을 가장 먼저 보이게</span></div>
+          <div class="oys-step" data-oy-step2><p><mark>상세페이지</mark></p><span>내리면 바로 '올리브영 랭킹 1위 제품'</span></div>
         </div>
         <div class="oys-grp oys-grp--one" data-oy-grp>
           <div class="oys-step" data-oy-step2><p><mark>글로벌 진출의 발판</mark></p><span>올리브영 1위 기록을 해외 몰·현지 유통으로 연결</span></div>

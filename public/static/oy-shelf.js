@@ -3,11 +3,11 @@
    ① 썸네일이 왼쪽에서 오른쪽으로 갈리며 '+20매' 스티커·띠가 붙은 새 썸네일로 → ② 상품명이 구성이 보이게 바뀜 →
    ③ 원가 취소선·할인율·기획/증정/세일 딱지 → 주변 칸이 흐려지고 우리 칸이 떠오름 → 아래 주석의 조회·장바구니 담기 수가 오름 →
    우리 칸이 1위 자리로 옮겨감(다른 칸은 한 칸씩 밀리며 순위 숫자가 바뀜) →
-   1위 칸을 눌러 두 화면 모두 상세페이지로 → 대표 이미지에 '올리브영 랭킹 1위 제품!' 띠·1위 도장 →
-   0.3초 만에 휴대폰 속 그 대표 이미지가 장면을 가득 채우도록 줌인 →
+   1위 칸을 눌러 두 화면 모두 상세페이지로 → 아래로 내리면 상품 설명 중간의 '올리브영 랭킹 1위 제품' 타이틀 →
+   0.3초 만에 휴대폰 속 그 타이틀이 장면을 가득 채우도록 줌인 →
    두 화면이 물러나고 점 세계 지도에서 한국(올리브영 1위)부터 일본·동남아·미국·유럽으로 선이 차례로 이어짐 → 처음으로.
    화면 상태는 시간 t 하나로 계산한다(render). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고,
-   '움직임 줄이기' 설정이면 상세페이지에 '랭킹 1위'가 찍힌 화면에서 멈춘다. window.oySeek(t) 로 특정 순간을 고정해 볼 수 있다. */
+   '움직임 줄이기' 설정이면 상세페이지를 내려 '랭킹 1위' 타이틀이 보이는 화면에서 멈춘다. window.oySeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
   var root = document.querySelector('[data-oy]');
   if (!root) return;
@@ -23,30 +23,38 @@
     var kind = d.getAttribute('data-oy-dev'), c = CONF[kind], me = q(d, 'me'), grid = q(d, 'grid');
     var x = { kind: kind, c: c, box: d, track: q(d, 'track'), grid: grid, me: me, others: qa(d, 'o'),
       thnew: q(me, 'thnew'), wipe: q(me, 'wipe'), flags: Array.prototype.slice.call(q(me, 'flags').children),
-      dt: q(d, 'dt'), ban: q(d, 'ban'), stamp: q(d, 'stamp'),
+      dt: q(d, 'dt'), dtrack: q(d, 'dtrack'), ttl: q(d, 'ttl'),
       nm0: q(me, 'nm0'), nm1: q(me, 'nm1'), was: q(me, 'was'), off: q(me, 'off'), price: q(me, 'price'), rk: q(me, 'rk') };
     x.from = +grid.getAttribute('data-from') || 5;
     x.nos = x.others.map(function (o) { return o.querySelector('.oys-rk'); });
     x.p0 = x.price.textContent; x.p1 = x.price.getAttribute('data-after');
     x.gridTop = grid.offsetTop;
+    // 상세페이지를 내려 '랭킹 1위' 타이틀이 보이는 화면 가운데에 오게 하는 스크롤
+    x.ttlTop = x.ttl.offsetTop; x.ttlH = x.ttl.offsetHeight; x.ttlW = x.ttl.querySelector('h4').offsetWidth;
+    x.dview = x.dtrack.parentNode.clientHeight;
+    x.dscroll = Math.max(0, x.ttlTop + x.ttlH / 2 - x.dview / 2);
     // 우리 칸 줄이 아래 여백까지 다 보이게 멈추는 스크롤
     x.at = Math.max(c.from, x.gridTop + Math.floor(x.from / c.cols) * c.rh + c.ch - c.view + 40);
     return x;
   });
+  var mob = devs.filter(function (d) { return d.kind === 'm'; })[0];
   var el = { side: q(root, 'side'), nums: q(root, 'nums'), view: q(root, 'view'), cart: q(root, 'cart'), touch: q(root, 'touch'), cam: q(root, 'cam'), glb: q(root, 'glb'), kr: q(root, 'kr') };
   var steps = qa(root, 'step'), steps2 = qa(root, 'step2'), grps = qa(root, 'grp'), arcs = qa(root, 'arc'), dots = qa(root, 'dot'), dsts = qa(root, 'dst');
-  var mob = devs.filter(function (d) { return d.kind === 'm'; })[0];
 
   // 시각표(초)
   var IN = [0, 0.25], BROWSE = [0.05, 0.6], THUMB = [0.65, 1.05], NAME = [1.2, 1.45], FLAG = 1.58, PRICE = 1.72,
     FOCUS = [1.95, 2.2], NUMS = [2.05, 3.1], MOVE = [3.2, 3.85], SETTLE = [3.85, 4.1],
-    TAP = 4.28, DT = [4.36, 4.62], BAN = [4.72, 4.95], STAMP = [4.82, 5.05], ZOOM = [5.12, 5.42],
-    GLB = [5.7, 6.0], MAP_IN = [5.75, 6.05], KR_IN = [5.95, 6.2], ARC_AT = 6.25, ARC_GAP = 0.22, ARC_LEN = 0.38, OUT = [7.65, 8.0], CYCLE = 8.0;
-  // 줌인 대상: 휴대폰 상세페이지 대표 이미지(무대 좌표 중심·크기). 휴대폰 왼쪽 448·위 140·0.62배, 화면 안 (9+171, 9+36+44+165)
-  var KV = { x: 448 + 180 * 0.62, y: 140 + 254 * 0.62, w: 342 * 0.62, h: 330 * 0.62 }, STAGE = { w: 680, h: 620 };
-  var ZS = Math.max(STAGE.w / KV.w, STAGE.h / KV.h) * 1.02;
+    TAP = 4.28, DT = [4.36, 4.6], DSCROLL = [4.68, 5.12], ZOOM = [5.18, 5.48],
+    GLB = [5.8, 6.05], MAP_IN = [5.85, 6.12], KR_IN = [6.0, 6.25], ARC_AT = 6.28, ARC_GAP = 0.22, ARC_LEN = 0.38, OUT = [7.65, 8.0], CYCLE = 8.0;
+  // 줌인 대상: 휴대폰 상세페이지를 내린 뒤의 '올리브영 랭킹 1위 제품' 타이틀(무대 좌표 중심·크기).
+  // 휴대폰은 무대 왼쪽 448·위 140·0.62배, 화면 안에서 타이틀 위치 = 테두리 9 + 상태줄 36 + 상단바 44 + (타이틀 위치 - 스크롤)
+  var STAGE = { w: 680, h: 620 }, KV = { x: 0, y: 0 }, ZS = 1;
+  if (mob) {
+    KV = { x: 448 + (9 + 171) * 0.62, y: 140 + (9 + 36 + 44 + mob.ttlTop - mob.dscroll + mob.ttlH / 2) * 0.62 };
+    ZS = Math.min(STAGE.w * 0.86 / (mob.ttlW * 0.62), STAGE.h * 0.8 / (mob.ttlH * 0.62));
+  }
   // 주석 묶음이 바뀌는 시각: 진열 칸 → 상세페이지 → 글로벌
-  var GRP_AT = [0, 4.4, 5.8];
+  var GRP_AT = [0, 4.4, 5.9];
   var STEP_AT = [0.6, 1.15, 1.55];
 
   function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
@@ -73,13 +81,11 @@
     d.me.style.setProperty('--lift', v.lift.toFixed(3));
     d.me.style.transform = 'translate(' + lerp(a[0], b[0], v.mv).toFixed(1) + 'px,' + lerp(a[1], b[1], v.mv).toFixed(1) + 'px) scale(' + (1 + 0.04 * v.focus + 0.03 * Math.sin(Math.PI * v.mv)).toFixed(3) + ')';
     d.rk.textContent = rkText(d.kind, Math.round(v.s) + 1);
-    // 1위 칸을 누름 → 상세페이지: 대표 이미지에 '올리브영 랭킹 1위 제품!' 띠·1위 도장
+    // 1위 칸을 누름 → 상세페이지를 아래로 내려 '올리브영 랭킹 1위 제품' 타이틀까지
     if (v.tap) d.me.style.transform += ' scale(.96)';
     d.dt.style.opacity = v.dt > 0 ? 1 : 0;
     d.dt.style.transform = 'translateX(' + ((1 - v.dt) * 100).toFixed(1) + '%)';
-    d.ban.style.opacity = v.ban; d.ban.style.transform = 'scaleY(' + (0.3 + 0.7 * v.ban).toFixed(3) + ')';
-    d.stamp.style.opacity = clamp(v.stamp * 3);
-    d.stamp.style.transform = 'scale(' + (1.7 - 0.7 * v.stamp).toFixed(3) + ') rotate(' + (-14 + 6 * v.stamp).toFixed(1) + 'deg)';
+    d.dtrack.style.transform = 'translateY(' + (-d.dscroll * v.ds).toFixed(1) + 'px)';
     // ① 썸네일
     d.thnew.style.setProperty('--w', (v.w * 100).toFixed(1) + '%');
     d.wipe.style.setProperty('--w', (v.w * 100).toFixed(1) + '%');
@@ -106,7 +112,7 @@
     // 두 화면은 카메라 묶음째로 사라져야 겹친 부분(뒤 PC)이 비쳐 보이지 않는다
     devs.forEach(function (d) { d.box.style.opacity = vis; });
     el.cam.style.opacity = (1 - gp).toFixed(3);
-    // '랭킹 1위' 줌인: 대표 이미지 중심이 무대 가운데로 오며 장면을 가득 채움
+    // '랭킹 1위' 줌인: 타이틀 중심이 무대 가운데로 오며 장면을 가득 채움
     var z = inout(seg(l, ZOOM)), zs = lerp(1, ZS, z), fx = lerp(KV.x, STAGE.w / 2, z), fy = lerp(KV.y, STAGE.h / 2, z);
     el.cam.style.transform = z > 0 ? 'translate(' + (fx - KV.x * zs).toFixed(1) + 'px,' + (fy - KV.y * zs).toFixed(1) + 'px) scale(' + zs.toFixed(3) + ')' : '';
     el.cam.style.clipPath = z > 0 ? 'inset(' + (-(fy - KV.y * zs) / zs).toFixed(1) + 'px ' + ((fx - KV.x * zs + STAGE.w * zs - STAGE.w) / zs).toFixed(1) + 'px ' + ((fy - KV.y * zs + STAGE.h * zs - STAGE.h) / zs).toFixed(1) + 'px ' + (-(fx - KV.x * zs) / zs).toFixed(1) + 'px round ' + (18 / zs).toFixed(1) + 'px)' : '';
@@ -115,7 +121,7 @@
     var v = { mv: mv, s: lerp(devs[0] ? devs[0].from : 5, 0, mv), focus: focus,
       lift: Math.max(focus, l >= SETTLE[0] && l < OUT[1] ? 0.55 : 0),
       w: inout(seg(l, THUMB)), n: ease(seg(l, NAME)), pr: l >= PRICE,
-      tap: l >= TAP && l < TAP + 0.12, dt: inout(seg(l, DT)), ban: ease(seg(l, BAN)), stamp: ease(seg(l, STAMP)),
+      tap: l >= TAP && l < TAP + 0.12, dt: inout(seg(l, DT)), ds: inout(seg(l, DSCROLL)),
       scroll: function (d) { return lerp(lerp(d.c.from, d.at, br), 0, mv); } };
     devs.forEach(function (d) { renderDev(d, l, v); });
 
@@ -165,7 +171,7 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t = 0, prev = 0, on = true, held = false;
   window.oySeek = function (s) { held = true; t = s; render(t); };
-  if (reduce) { render(5.4); return; }
+  if (reduce) { render(5.15); return; }
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(root);
   function frame(now) {
     var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 0; prev = now;

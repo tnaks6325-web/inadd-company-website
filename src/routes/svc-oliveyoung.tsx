@@ -3,7 +3,7 @@ import { icon } from '../icons'
 import { OyShelf } from './oy-shelf'
 export const SvcOliveYoungPage = () => (
   <>
-    <link rel="stylesheet" href="/static/oy-shelf.css?v=20261021d" />
+    <link rel="stylesheet" href="/static/oy-shelf.css?v=20261021f" />
     {/* ══ HERO ══ */}
     <section class="vh-hero vh-hero--oy">
       <div class="vh-glow" aria-hidden="true"></div>
@@ -61,7 +61,7 @@ export const SvcOliveYoungPage = () => (
         </div>
       </div>
       <OyShelf />
-      <script src="/static/oy-shelf.js?v=20261021g" defer></script>
+      <script src="/static/oy-shelf.js?v=20261021h" defer></script>
       <div class="vh-scroll-hint"><div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div></div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
