@@ -1,5 +1,6 @@
 // 체험단 히어로(한 바퀴 6초): 현실 → 웹.
-// 현실(인물 영상 3컷): 블로거가 택배를 열고 → 휴대폰으로 제품을 찍고 → 노트북으로 글을 쓴다(노트북 화면으로 들어가며 전환).
+// 현실(인물 영상 3컷): 블로거가 택배를 열고 → 휴대폰으로 제품을 찍고 → 노트북으로 글을 쓰는 뒷모습에서
+// 카메라가 인물 어깨를 지나 노트북 화면 속으로 들어간다. 그 화면이 그대로 브라우저 창이 되어 웹 장면으로 이어진다.
 // 웹(브라우저 창): 글쓰기 화면에서 발행 → 검색 결과로 바뀌어 방금 쓴 글을 시작으로 후기가 쌓이고 후기 수가 오른다.
 // 인물은 AI 가상 인물(실존 인물 아님).
 // 브랜드·후기는 퍼포먼스·바이럴 페이지와 같은 샘플 브랜드(온숨·바삭공방·말끔·물결랩·바름) 가상 후기다.
@@ -68,11 +69,12 @@ export const SsCard = (p: { r: Review; kw: string; color: string }) => (
 
 const Mag = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2.4" /><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" /></svg>
 
-// 현실 컷(순서대로 0~0.9초, 0.9~1.8초, 1.8~2.7초). src 가 있으면 public/static/seeding-search/{src}.mp4·.webp
+// 현실 컷(0~0.85초 개봉, 0.85~1.7초 촬영, 1.7~2.9초 작성). src 가 있으면 public/static/seeding-search/{src}.mp4·.webp
+// 작성 컷 영상은 마지막 장면이 노트북 화면 가득 글쓰기 창이어야 브라우저 창과 이어진다(영상이 없을 땐 임시 그림을 키워 흉내).
 const REAL: { n: string; label: string; src?: string }[] = [
   { n: '개봉', label: '인물이 집에서 택배 상자를 열고 제품을 꺼냄' },
   { n: '촬영', label: '인물이 휴대폰으로 식탁 위 제품을 찍음(찰칵)' },
-  { n: '작성', label: '인물이 노트북으로 글을 씀 → 노트북 화면으로 들어감' },
+  { n: '작성', label: '노트북으로 글 쓰는 뒷모습 → 카메라가 어깨를 지나 화면 속으로' },
 ]
 
 // 지금은 온숨 한 브랜드만 6초마다 반복한다(브랜드를 돌리려면 개봉 영상·사진이 브랜드마다 필요).
@@ -87,7 +89,7 @@ export const SeedSearch = () => {
         <div class="ss-real" data-ss-real>
           {REAL.map((c) => <div class="ss-cut" data-ss-cut>{c.src
             ? <video src={`/static/seeding-search/${c.src}.mp4`} poster={`/static/seeding-search/${c.src}.webp`} muted playsinline preload="auto" />
-            : <div class="ss-cut-ph"><b>{c.n}</b><span>{c.label}</span></div>}</div>)}
+            : <div class="ss-cut-ph"><b>{c.n}</b><span>{c.label}</span>{c.n === '작성' && <><i class="ss-cut-screen" /><i class="ss-cut-head" /></>}</div>}</div>)}
           <div class="ss-flash" data-ss-flash />
         </div>
         <div class="ss-win" data-ss-win>

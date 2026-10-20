@@ -1,6 +1,6 @@
 /* 체험단 히어로(한 바퀴 6초): 현실 → 웹.
-   0~0.9초 개봉 → 0.9~1.8초 촬영(1.4초 찰칵) → 1.8~2.7초 노트북으로 글쓰기, 2.4초부터 화면 안으로 들어가며
-   브라우저 글쓰기 창이 나타남 → 3.2초 발행 → 3.4초 검색 결과로 바뀜 → 방금 쓴 글이 맨 위, 이어서 후기가 쌓이며 후기 수가 오름 →
+   0~0.85초 개봉 → 0.85~1.7초 촬영(1.3초 찰칵) → 1.7~2.9초 노트북으로 글 쓰는 뒷모습, 2.3초부터 카메라가 어깨를 지나 화면 속으로 →
+   2.75초 노트북 화면이 그대로 브라우저 창이 되고(정면) 3.25초까지 비스듬히 자리 잡음 → 3.35초 발행 → 3.5초 검색 결과로 바뀜 → 방금 쓴 글이 맨 위, 이어서 후기가 쌓이며 후기 수가 오름 →
    5.75초부터 처음으로. 화면 상태는 시간 t 하나로 계산한다(render). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고,
    '움직임 줄이기' 설정이면 후기가 다 찬 장면에서 멈춘다. window.ssSeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
@@ -12,8 +12,10 @@
     c1: $('c1'), c2: $('c2'), img: $('img'), q: $('q'), n: $('n'), track: $('track') };
   var cuts = Array.prototype.slice.call(root.querySelectorAll('[data-ss-cut]'));
   var go = root.querySelector('.ss-go');
-  var CYCLE = 6, CUT = 0.9, SHOT = 1.4, TO_WEB = [2.4, 2.8], TXT = [2.75, 3.15], PUB = 3.22, SWITCH = [3.38, 3.52],
-    Q = [3.5, 3.82], SEARCH = 3.85, CARD_AT = 3.98, CARD_GAP = 0.2, CARD_IN = 0.26, OUT = [5.75, 6.0], ROW = 124, ROWS_SHOWN = 3;
+  var CYCLE = 6, CUT_AT = [0, 0.85, 1.7], SHOT = 1.3, PUSH = [2.3, 2.85], TO_WEB = [2.75, 2.9], SETTLE = [2.9, 3.25], TXT = [2.95, 3.3], PUB = 3.35,
+    SWITCH = [3.5, 3.62], Q = [3.6, 3.9], SEARCH = 3.92, CARD_AT = 4.05, CARD_GAP = 0.19, CARD_IN = 0.26, OUT = [5.75, 6.0], ROW = 124, ROWS_SHOWN = 3;
+  // 임시 그림의 노트북 화면 칸(무대 비율): 이 칸이 무대 전체가 되도록 키운다
+  var SCR = { x: 0.33, y: 0.26, w: 0.34, h: 0.31 };
   var cur = -1, cards = [], playing = -1;
 
   function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
@@ -49,16 +51,25 @@
     if (bi !== cur) { cur = bi; build(b); }
 
     // 현실: 컷 3개를 차례로(짧게 겹쳐 바뀜), 처음 0.15초는 흰 화면에서 나타남
-    var ci = Math.min(2, Math.floor(l / CUT));
-    cuts.forEach(function (c, i) { c.style.opacity = i === ci ? 1 : i === ci - 1 ? 1 - clamp((l - i * CUT - CUT) / 0.12) : 0; });
-    if (l < TO_WEB[1]) syncVideo(ci, l - ci * CUT, seeking); else syncVideo(-1, 0, seeking);
+    var ci = l >= CUT_AT[2] ? 2 : l >= CUT_AT[1] ? 1 : 0;
+    cuts.forEach(function (c, i) { c.style.opacity = i === ci ? 1 : i === ci - 1 ? 1 - clamp((l - CUT_AT[ci]) / 0.12) : 0; });
+    if (l < TO_WEB[1]) syncVideo(ci, l - CUT_AT[ci], seeking); else syncVideo(-1, 0, seeking);
     el.flash.style.opacity = l >= SHOT && l < SHOT + 0.22 ? (1 - (l - SHOT) / 0.22) * 0.9 : 0;
-    // 현실 → 웹: 노트북 화면으로 들어가듯 현실이 커지며 사라지고 브라우저가 앞으로 나옴
-    var w = inout(seg(l, TO_WEB)), out = seg(l, OUT), back = clamp(l / 0.15);
+    // 작성 컷: 영상이 없으면 임시 그림을 노트북 화면 쪽으로 키워 카메라가 들어가는 움직임을 흉내
+    var ph = cuts[2] && cuts[2].querySelector('.ss-cut-ph');
+    if (ph) {
+      var pz = inout(seg(l, PUSH)), z = 1 + (1 / SCR.w - 1) * pz;
+      ph.style.setProperty('--ox', ((SCR.x + SCR.w / 2) * 100) + '%'); ph.style.setProperty('--oy', ((SCR.y + SCR.h / 2) * 100) + '%');
+      ph.style.transform = 'translate(' + ((0.5 - SCR.x - SCR.w / 2) * 100 * pz).toFixed(2) + '%,' + ((0.5 - SCR.y - SCR.h / 2) * 100 * pz).toFixed(2) + '%) scale(' + z.toFixed(3) + ')';
+      var hd = ph.querySelector('.ss-cut-head'), hz = inout(clamp(seg(l, PUSH) * 1.6));
+      if (hd) { hd.style.transform = 'translate(' + (-40 * hz).toFixed(1) + '%,' + (30 * hz).toFixed(1) + '%) scale(' + (1 + 0.5 * hz).toFixed(3) + ')'; hd.style.opacity = 1 - hz; }
+    }
+    // 현실 → 웹: 화면을 가득 채운 노트북 화면이 그대로 브라우저 창(정면)이 되고, 비스듬한 자리로 물러남
+    var w = seg(l, TO_WEB), st = inout(seg(l, SETTLE)), out = seg(l, OUT), back = clamp(l / 0.15);
     el.real.style.opacity = (1 - w) * back;
-    el.real.style.setProperty('--k', (1 + 0.18 * w).toFixed(3));
     el.win.style.opacity = w * (1 - out);
-    el.win.style.setProperty('--k', (0.9 + 0.1 * w).toFixed(3));
+    el.win.style.setProperty('--tilt', st.toFixed(3));
+    el.win.style.setProperty('--k', (1.04 - 0.04 * st).toFixed(3));
 
     // 글쓰기: 제목·사진은 이미 들어가 있고 본문 마지막 줄이 써진 뒤 발행
     type(el.ttl, mine.t, 1); type(el.txt, mine.s, seg(l, TXT));

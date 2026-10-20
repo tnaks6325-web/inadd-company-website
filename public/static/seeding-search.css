@@ -7,7 +7,7 @@
   background:radial-gradient(42% 60% at 76% 48%,rgba(20,184,166,.16),transparent 70%),radial-gradient(30% 44% at 98% 92%,rgba(40,92,204,.12),transparent 70%),radial-gradient(28% 40% at 56% 4%,rgba(3,199,90,.10),transparent 70%); }
 .ss { --s:.92; position:absolute; top:78px; bottom:0; left:52%; right:0; z-index:1; pointer-events:none; display:flex; align-items:center; justify-content:center; perspective:1800px; }
 .ss-stage { position:relative; flex:none; width:680px; height:620px; transform:scale(var(--s)); transform-style:preserve-3d; }
-.ss-win { position:absolute; inset:0; transform:scale(var(--k,1)) rotateY(-9deg) rotateX(3deg); will-change:transform,opacity; border-radius:14px; overflow:hidden; background:#fff;
+.ss-win { position:absolute; inset:0; transform:scale(var(--k,1)) rotateY(calc(-9deg * var(--tilt,1))) rotateX(calc(3deg * var(--tilt,1))); will-change:transform,opacity; border-radius:14px; overflow:hidden; background:#fff;
   box-shadow:0 0 0 1px rgba(17,19,24,.08),0 40px 80px rgba(20,60,60,.18),0 10px 24px rgba(17,19,24,.10);
   color:#111318; font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif; text-align:left; word-break:keep-all; letter-spacing:normal; }
 .ss-stage * { box-sizing:border-box; margin:0; }
@@ -73,6 +73,13 @@
 .ss-cut-ph b { font-size:44px; font-weight:800; }
 .ss-cut-ph span { font-size:18px; line-height:1.5; font-weight:600; opacity:.9; }
 .ss-flash { position:absolute; inset:0; background:#fff; opacity:0; }
+/* 임시 그림: 뒷모습 너머 노트북 화면(영상이 없을 때 이 칸을 키워 '화면 속으로 들어감'을 흉내) */
+.ss-cut-ph { position:relative; transform-origin:var(--ox,50%) var(--oy,50%); will-change:transform; }
+.ss-cut-screen { position:absolute; left:33%; top:26%; width:34%; height:31%; background:#fff; border:6px solid #2a2d33; border-radius:6px; box-shadow:0 0 40px rgba(255,255,255,.5); }
+.ss-cut-screen::after { content:''; position:absolute; left:-12%; right:-12%; top:100%; height:22%; background:#2a2d33; clip-path:polygon(6% 0,94% 0,100% 100%,0 100%); }
+.ss-cut:nth-child(3) .ss-cut-ph { justify-content:flex-start; padding-top:28px; }
+/* 인물 뒷모습(머리·어깨) — 카메라가 지나가면 왼쪽 아래로 빠짐 */
+.ss-cut-head { position:absolute; left:-4%; bottom:-14%; width:52%; height:66%; background:radial-gradient(34% 30% at 52% 30%,#2f2723 98%,transparent 100%),radial-gradient(60% 46% at 50% 100%,#4a3f39 98%,transparent 100%); will-change:transform,opacity; }
 
 @media(max-width:1280px) { .ss { --s:.78; } }
 @media(max-width:1024px) { .ss { --s:.6; } }
