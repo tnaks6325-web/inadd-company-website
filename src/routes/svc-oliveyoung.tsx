@@ -1,10 +1,12 @@
 import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
+import { OyRanking } from './oy-ranking'
 export const SvcOliveYoungPage = () => (
   <>
+    <link rel="stylesheet" href="/static/oy-ranking.css?v=20261021a" />
     {/* ══ HERO ══ */}
-    <section class="vh-hero vh-hero--photo">
-      <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/oy-images/hero.png')"></div>
+    <section class="vh-hero vh-hero--oy">
+      <div class="vh-glow" aria-hidden="true"></div>
       <canvas id="vhCanvas6" class="vh-canvas"></canvas>
       <div class="vh-bg">
         <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(3,199,90,0.22) 0%,transparent 70%)"></div>
@@ -58,6 +60,8 @@ export const SvcOliveYoungPage = () => (
           </a>
         </div>
       </div>
+      <OyRanking />
+      <script src="/static/oy-ranking.js?v=20261021a" defer></script>
       <div class="vh-scroll-hint"><div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div></div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
