@@ -1,9 +1,9 @@
 import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
-import { OyRanking } from './oy-ranking'
+import { OyShelf } from './oy-shelf'
 export const SvcOliveYoungPage = () => (
   <>
-    <link rel="stylesheet" href="/static/oy-ranking.css?v=20261021a" />
+    <link rel="stylesheet" href="/static/oy-shelf.css?v=20261021a" />
     {/* ══ HERO ══ */}
     <section class="vh-hero vh-hero--oy">
       <div class="vh-glow" aria-hidden="true"></div>
@@ -60,8 +60,8 @@ export const SvcOliveYoungPage = () => (
           </a>
         </div>
       </div>
-      <OyRanking />
-      <script src="/static/oy-ranking.js?v=20261021a" defer></script>
+      <OyShelf />
+      <script src="/static/oy-shelf.js?v=20261021a" defer></script>
       <div class="vh-scroll-hint"><div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div></div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
