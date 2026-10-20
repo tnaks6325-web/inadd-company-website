@@ -71,10 +71,11 @@ const Mag = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" ar
 
 // 현실 컷(0~0.85초 개봉, 0.85~1.7초 촬영, 1.7~2.9초 작성). src 가 있으면 public/static/seeding-search/{src}.mp4·.webp
 // 작성 컷 영상은 마지막 장면이 노트북 화면 가득 글쓰기 창이어야 브라우저 창과 이어진다(영상이 없을 땐 임시 그림을 키워 흉내).
-const REAL: { n: string; label: string; src?: string }[] = [
-  { n: '개봉', label: '인물이 집에서 택배 상자를 열고 제품을 꺼냄' },
-  { n: '촬영', label: '인물이 휴대폰으로 식탁 위 제품을 찍음(찰칵)' },
-  { n: '작성', label: '노트북으로 글 쓰는 뒷모습 → 카메라가 어깨를 지나 화면 속으로' },
+// 영상이 아직 없으면 img(첫 장면 사진)를 보여 준다. scr = 사진 속 노트북 화면 위치(무대 비율) — 이 칸이 무대 전체가 되도록 키운다.
+const REAL: { n: string; label: string; src?: string; img?: string; scr?: string }[] = [
+  { n: '개봉', label: '인물이 집에서 택배 상자를 열고 제품을 꺼냄', img: 'unbox' },
+  { n: '촬영', label: '인물이 휴대폰으로 식탁 위 제품을 찍음(찰칵)', img: 'shoot' },
+  { n: '작성', label: '노트북으로 글 쓰는 뒷모습 → 카메라가 어깨를 지나 화면 속으로', img: 'write', scr: '.42,.24,.45,.36' },
 ]
 
 // 지금은 온숨 한 브랜드만 6초마다 반복한다(브랜드를 돌리려면 개봉 영상·사진이 브랜드마다 필요).
@@ -87,8 +88,9 @@ export const SeedSearch = () => {
       <div class="ss-stage">
         {/* 현실: 인물 영상 3컷(영상이 없으면 임시 상자) */}
         <div class="ss-real" data-ss-real>
-          {REAL.map((c) => <div class="ss-cut" data-ss-cut>{c.src
+          {REAL.map((c) => <div class="ss-cut" data-ss-cut data-scr={c.scr}>{c.src
             ? <video src={`/static/seeding-search/${c.src}.mp4`} poster={`/static/seeding-search/${c.src}.webp`} muted playsinline preload="auto" />
+            : c.img ? <div class="ss-cut-ph ss-cut-img" style={`background-image:url(/static/seeding-search/${c.img}.webp)`} />
             : <div class="ss-cut-ph"><b>{c.n}</b><span>{c.label}</span>{c.n === '작성' && <><i class="ss-cut-screen" /><i class="ss-cut-head" /></>}</div>}</div>)}
           <div class="ss-flash" data-ss-flash />
         </div>

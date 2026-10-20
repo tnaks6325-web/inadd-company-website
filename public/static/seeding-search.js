@@ -14,8 +14,9 @@
   var go = root.querySelector('.ss-go');
   var CYCLE = 6, CUT_AT = [0, 0.85, 1.7], SHOT = 1.3, PUSH = [2.3, 2.85], TO_WEB = [2.75, 2.9], SETTLE = [2.9, 3.25], TXT = [2.95, 3.3], PUB = 3.35,
     SWITCH = [3.5, 3.62], Q = [3.6, 3.9], SEARCH = 3.92, CARD_AT = 4.05, CARD_GAP = 0.19, CARD_IN = 0.26, OUT = [5.75, 6.0], ROW = 124, ROWS_SHOWN = 3;
-  // 임시 그림의 노트북 화면 칸(무대 비율): 이 칸이 무대 전체가 되도록 키운다
-  var SCR = { x: 0.33, y: 0.26, w: 0.34, h: 0.31 };
+  // 노트북 화면 칸(무대 비율): 이 칸이 무대 전체가 되도록 키운다. 사진이면 data-scr 값, 임시 그림이면 기본값
+  var sv = cuts[2] && cuts[2].getAttribute('data-scr'), sa = sv ? sv.split(',').map(Number) : [0.33, 0.26, 0.34, 0.31];
+  var scr = { x: sa[0], y: sa[1], w: sa[2], h: sa[3] };
   var cur = -1, cards = [], playing = -1;
 
   function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
@@ -58,6 +59,7 @@
     // 작성 컷: 영상이 없으면 임시 그림을 노트북 화면 쪽으로 키워 카메라가 들어가는 움직임을 흉내
     var ph = cuts[2] && cuts[2].querySelector('.ss-cut-ph');
     if (ph) {
+      var SCR = scr;
       var pz = inout(seg(l, PUSH)), z = 1 + (1 / SCR.w - 1) * pz;
       ph.style.setProperty('--ox', ((SCR.x + SCR.w / 2) * 100) + '%'); ph.style.setProperty('--oy', ((SCR.y + SCR.h / 2) * 100) + '%');
       ph.style.transform = 'translate(' + ((0.5 - SCR.x - SCR.w / 2) * 100 * pz).toFixed(2) + '%,' + ((0.5 - SCR.y - SCR.h / 2) * 100 * pz).toFixed(2) + '%) scale(' + z.toFixed(3) + ')';
