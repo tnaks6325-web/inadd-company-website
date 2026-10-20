@@ -79,7 +79,7 @@ export const SvcViralPage = () => (
 
       {/* 카페·블로그·뽐뿌·뉴스·에펨코리아 모바일 화면 롤링 */}
       <ViralPhones />
-      <script src="/static/viral-phones.js?v=20261019d" defer></script>
+      <script src="/static/viral-phones.js?v=20261020a" defer></script>
 
       {/* 하단 스크롤 힌트 */}
       <div class="vh-scroll-hint">
