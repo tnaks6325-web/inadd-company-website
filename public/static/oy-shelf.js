@@ -40,7 +40,7 @@
   var IN = [0, 0.25], BROWSE = [0.05, 0.6], THUMB = [0.65, 1.05], NAME = [1.2, 1.45], FLAG = 1.58, PRICE = 1.72,
     FOCUS = [1.95, 2.2], NUMS = [2.05, 3.1], MOVE = [3.2, 3.85], SETTLE = [3.85, 4.1],
     TAP = 4.28, DT = [4.36, 4.62], BAN = [4.72, 4.95], STAMP = [4.82, 5.05],
-    GLB = [5.7, 5.95], MAP_IN = [5.9, 6.2], KR_IN = [6.0, 6.25], ARC_AT = 6.25, ARC_GAP = 0.22, ARC_LEN = 0.38, OUT = [7.65, 8.0], CYCLE = 8.0;
+    GLB = [5.7, 6.0], MAP_IN = [5.75, 6.05], KR_IN = [5.95, 6.2], ARC_AT = 6.25, ARC_GAP = 0.22, ARC_LEN = 0.38, OUT = [7.65, 8.0], CYCLE = 8.0;
   // 주석 묶음이 바뀌는 시각: 진열 칸 → 상세페이지 → 글로벌
   var GRP_AT = [0, 4.4, 5.8];
   var STEP_AT = [0.6, 1.15, 1.55];
@@ -138,7 +138,7 @@
       el.touch.style.transform = 'scale(' + (v.tap ? 0.82 : 1) + ')';
     }
     // 글로벌: 지도가 떠오르고 한국 카드 → 선이 차례로 이어지며 지역 이름표
-    var mp = inout(seg(l, MAP_IN));
+    var mp = ease(seg(l, MAP_IN));
     el.glb.style.opacity = (mp * (1 - seg(l, OUT))).toFixed(3);
     el.glb.style.transform = 'translateY(' + ((1 - mp) * 14).toFixed(1) + 'px)';
     var kp = ease(seg(l, KR_IN));
