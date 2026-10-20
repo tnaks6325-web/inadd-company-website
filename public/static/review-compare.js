@@ -20,6 +20,7 @@
   var notes = Array.prototype.slice.call(root.querySelectorAll('[data-rc-note]'));
   var tiles = Array.prototype.slice.call(root.querySelectorAll('[data-rc-ct]'));
   var MINE_TXT = el.wtxt.textContent;
+  var tvids = tiles.map(function (tl) { return tl.querySelector('video'); }), crowdOn = false;
 
   // 시각표(초)
   var HAND = [1.55, 1.92], APP_IN = [1.55, 1.63], A_SCROLL = [2.05, 2.85], A_OUT = [3.1, 3.35],
@@ -156,8 +157,17 @@
       var p = ease(seg(l, [CROWD_AT + i * 0.05, CROWD_AT + i * 0.05 + 0.3])), c = ease(seg(l, [CROWD_AT + 0.3 + CROWD_POP[i], CROWD_AT + 0.5 + CROWD_POP[i]]));
       tl.style.opacity = p * (1 - out);
       tl.style.transform = 'scale(' + (0.94 + 0.06 * p + 0.03 * seg(l, [CROWD_AT, OUT[1]])).toFixed(3) + ')';
-      var chip = tl.firstElementChild; chip.style.opacity = c; chip.style.transform = 'translateY(' + ((1 - c) * 8).toFixed(1) + 'px)';
+      var chip = tl.querySelector('.rc-crowd-c'); chip.style.opacity = c; chip.style.transform = 'translateY(' + ((1 - c) * 8).toFixed(1) + 'px)';
     });
+    // 소비자 영상: 장면이 시작될 때 6개를 함께 처음부터 재생, 장면 밖에서는 멈춤
+    var inCrowd = l >= CROWD_AT;
+    tvids.forEach(function (v) {
+      if (!v) return;
+      if (seeking) { v.pause(); try { v.currentTime = Math.max(0, l - CROWD_AT); } catch (e) {} return; }
+      if (inCrowd && !crowdOn) { try { v.currentTime = 0; } catch (e) {} var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+      else if (!inCrowd && !v.paused) v.pause();
+    });
+    crowdOn = seeking ? false : inCrowd;
   }
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -167,7 +177,8 @@
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(root);
   function frame(now) {
     var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 0; prev = now;
-    if (!held && on && !document.hidden) { t += dt; render(t); } else if (!held && playing >= 0) syncVideo(-1, 0, false);
+    if (!held && on && !document.hidden) { t += dt; render(t); }
+    else if (!held) { if (playing >= 0) syncVideo(-1, 0, false); tvids.forEach(function (v) { if (v && !v.paused) v.pause(); }); crowdOn = false; }
     requestAnimationFrame(frame);
   }
   render(0);

@@ -40,7 +40,7 @@ const NOTES = [
 // 인물이 직접 쓰는 리뷰(끝에서 비교 화면 맨 위에 뜬다)
 const MINE = { s: '세안하고 바로 발라도 끈적이지 않아요', hl: '끈적이지 않아요', by: 'ha***', ph: '손등에 덜어 낸 세럼', img: V + 'rv-mine.webp' }
 
-// 마지막 장면: 같은 순간 오른쪽 상품을 고르는 여러 소비자
+// 마지막 장면: 같은 순간 오른쪽 상품을 고르는 여러 소비자(각자 휴대폰을 누르는 짧은 영상, 폼보드 12·50·176·284·219·85번)
 const CROWD = ['crowd-1', 'crowd-2', 'crowd-3', 'crowd-4', 'crowd-5', 'crowd-6']
 
 const Star = () => <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path fill="#f5b301" d="m12 2.5 2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z" /></svg>
@@ -119,6 +119,7 @@ export const ReviewCompare = () => (
       {/* 마지막: 여러 소비자가 같은 순간 오른쪽 상품을 고름 */}
       <div class="rc-crowd" data-rc-crowd>
         {CROWD.map((f) => <div class="rc-crowd-t" data-rc-ct style={`background-image:url(${V}${f}.webp)`}>
+          <video src={`${V}${f}.mp4`} poster={`${V}${f}.webp`} muted playsinline preload="auto" />
           <div class="rc-crowd-c"><i style={`background-image:url(${B.img})`} /><div><span>물결랩 히알루 세럼</span><b><Check /> 구매 완료</b></div></div>
         </div>)}
       </div>
