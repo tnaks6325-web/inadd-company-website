@@ -11,8 +11,8 @@ type Rv = { s: string; by: string; img?: string; ph: string }
 // 현실 컷: src 가 있으면 public/static/review-compare/{src}.mp4·.webp, 없으면 img(사진), 그것도 없으면 임시 상자
 // zo = 휴대폰 화면 속으로 다가갈 때 확대 중심(사진 속 휴대폰 위치)
 const REAL: { n: string; label: string; src?: string; img?: string; zo?: string }[] = [
-  { n: '고민', label: '소파에서 휴대폰으로 세럼 두 개를 비교하며 고민', img: 'think', zo: '67.5% 50.6%' },
-  { n: '미소', label: '받은 물결랩 세럼을 손등에 덜어 보며 미소', img: 'smile' },
+  { n: '고민', label: '소파에서 휴대폰으로 세럼 두 개를 비교하며 고민', src: 'think', zo: '67.5% 50.6%' },
+  { n: '미소', label: '받은 물결랩 세럼을 손등에 덜어 보며 미소', src: 'smile' },
 ]
 const A = { img: '/static/review-compare/prod-a.webp', name: 'A사 수분 세럼 30ml', price: '26,000원', star: '4.0', n: '3', color: '#d9dde3',
   reviews: ['무난하게 쓰고 있어요', '배송이 빨랐어요', '용량이 적당해요'] }
