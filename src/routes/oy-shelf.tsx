@@ -1,7 +1,10 @@
 // 올리브영 마케팅 히어로(한 바퀴 약 7.5초): '진열 칸이 바뀌는 순간' — 사람 없이, 온라인몰(PC·모바일) 판매 랭킹 화면 안에서만.
 // 뒤에 PC 브라우저, 앞에 휴대폰. 두 화면의 스킨케어 판매 랭킹에서 6위의 밋밋한 우리 상품 칸이 동시에 바뀐다:
 //   ① 썸네일이 갈리며 '+20매' 스티커가 붙은 새 썸네일로 → ② 상품명이 구성이 보이게 → ③ 원가 취소선·할인율·기획/증정/세일 딱지 →
-//   주변 칸이 흐려지고 우리 칸이 떠오름 → 아래 주석의 조회·장바구니 담기 수가 오름 → 우리 칸이 1위 자리로 옮겨감 → 처음으로.
+//   주변 칸이 흐려지고 우리 칸이 떠오름 → 아래 주석의 조회·장바구니 담기 수가 오름 → 우리 칸이 1위 자리로 옮겨감 →
+//   1위 칸을 눌러 상세페이지로 → 대표 이미지(상징 영역)에 '올리브영 랭킹 1위 제품!' 띠와 1위 도장 →
+//   점 세계 지도에서 한국(올리브영 1위)에서 미국·일본·동남아·유럽으로 선이 이어짐(글로벌 진출의 발판) → 처음으로.
+// 세계 지도 map.svg 는 world-atlas land-110m(공개 지도 자료)로 만든 점 지도(메르카토르, 경도 -130~165·위도 70~-22, 680x281).
 // 화면 짜임새는 실제 올리브영 랭킹 화면(2026-10-21 대표 캡처)을 참고했지만 로고·실제 상품/모델 사진·고유 서비스명('오늘드림' 등)은 쓰지 않는다.
 // 리뷰 수·검색 결과는 다른 페이지(리뷰 마케팅·체험단)에서 쓰므로 여기서는 쓰지 않는다. 대가·협찬 표시 문구 금지. 움직임은 oy-shelf.js.
 type Item = { brand: string; name: string; was: string; off: string; price: string; flags: string[]; a: string; img?: string; ph: string }
@@ -81,6 +84,53 @@ const Grid = (p: { dev: 'pc' | 'm' }) => (
   </div>
 )
 
+// 상세페이지: 대표 이미지(상징 영역)에 '올리브영 랭킹 1위 제품!' 띠와 1위 도장이 찍힌다
+const Detail = (p: { dev: 'pc' | 'm' }) => (
+  <div class={'oys-dt oys-dt--' + p.dev} data-oy-dt>
+    {p.dev === 'pc' ? <p class="oys-dt-crumb">홈 › 스킨케어 › 토너/패드</p> : <div class="oys-dt-bar"><span>←</span><b>상품 상세</b><Bag /></div>}
+    <div class="oys-dt-body">
+      <div class="oys-dt-kv" style={`background-image:url(${AFTER.img})`}>
+        <b class="oys-dt-ban" data-oy-ban>올리브영 랭킹 1위 제품!</b>
+        <i class="oys-dt-stamp" data-oy-stamp><small>올리브영</small><b>1위</b><small>스킨케어</small></i>
+      </div>
+      <div class="oys-dt-info">
+        <span class="oys-br">{BRAND}</span><p class="oys-dt-nm">{AFTER.name}</p>
+        <p class="oys-dt-pr"><s>{AFTER.was}</s><u>{AFTER.off}</u><b>{AFTER.price}</b></p>
+        <div class="oys-flags oys-dt-flags">{AFTER.flags.map((x) => <em data-f={x}>{x}</em>)}</div>
+        <div class="oys-dt-btns"><span>장바구니</span><b>바로구매</b></div>
+      </div>
+    </div>
+  </div>
+)
+
+// 글로벌: 점 지도 위 한국(올리브영 1위)에서 각 지역으로 선이 이어진다. 좌표는 map.svg(680x281) 기준
+const KR = [592.4, 135.8]
+const DEST = [
+  { n: '일본', s: '현지 유통 입점', at: [621.7, 141], lx: -26, ly: 14 },
+  { n: '동남아', s: '현지 몰 판매', at: [538.9, 210.7], lx: 14, ly: 8 },
+  { n: '미국', s: '글로벌 몰 판매', at: [73.8, 131.4], lx: 14, ly: 8 },
+  { n: '유럽', s: '글로벌 몰 판매', at: [318.1, 102.7], lx: 14, ly: 8 },
+]
+const arc = (a: number[], b: number[]) => {
+  const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, d = Math.hypot(b[0] - a[0], b[1] - a[1])
+  return `M${a[0]} ${a[1]} Q${mx.toFixed(1)} ${(my - Math.max(28, d * 0.32)).toFixed(1)} ${b[0]} ${b[1]}`
+}
+const Globe = () => (
+  <div class="oys-glb" data-oy-glb>
+    <img class="oys-map" src={V + 'map.svg'} alt="" />
+    <svg class="oys-arcs" viewBox="0 0 680 281" aria-hidden="true">
+      {DEST.map((d) => <path d={arc(KR, d.at)} pathLength="1" data-oy-arc />)}
+      <circle cx={KR[0]} cy={KR[1]} r="5" class="oys-kr-dot" />
+      {DEST.map((d) => <circle cx={d.at[0]} cy={d.at[1]} r="4.5" class="oys-dst-dot" data-oy-dot />)}
+    </svg>
+    <div class="oys-kr" data-oy-kr style={`left:${KR[0] - 236}px;top:${KR[1] - 104}px`}>
+      <i style={`background-image:url(${AFTER.img})`} />
+      <p><b>한국 · 올리브영 랭킹 1위</b><span>{BRAND} 시카 진정 토너패드</span></p>
+    </div>
+    {DEST.map((d) => <div class="oys-dst" data-oy-dst style={`left:${d.at[0] + d.lx}px;top:${d.at[1] + d.ly}px`}><b>{d.n}</b><span>{d.s}</span></div>)}
+  </div>
+)
+
 const PC_CATS = ['전체', '스킨케어', '마스크팩', '클렌징', '선케어', '메이크업', '네일', '뷰티소품', '더모 코스메틱', '향수', '헤어케어', '바디케어']
 
 export const OyShelf = () => (
@@ -96,7 +146,7 @@ export const OyShelf = () => (
           <div class="oys-band"><b>랭킹</b><span>최근 24시간 온라인 판매 기준</span></div>
           <div class="oys-cat">{PC_CATS.map((c) => <span class={c === '스킨케어' ? 'is-on' : ''}>{c}</span>)}</div>
           <Grid dev="pc" />
-        </div></div>
+        </div><Detail dev="pc" /></div>
       </div>
 
       {/* 휴대폰(360x732 로 그리고 0.6배) */}
@@ -110,21 +160,33 @@ export const OyShelf = () => (
             <div class="oys-mchips"><span>전체</span><b>스킨케어</b><span>마스크팩</span><span>클렌징</span><span>선케어</span></div>
             <div class="oys-mupd"><span>50분 전 업데이트</span><i>성별 ⌄　연령대 ⌄　실시간 ⌄</i></div>
             <Grid dev="m" />
-          </div></div>
+          </div><Detail dev="m" /></div>
+          <i class="oys-touch" data-oy-touch />
           <div class="oys-mbar"><span><Home />홈</span><span><Menu />카테고리</span><span class="is-on"><Bag />랭킹</span><span><Heart />좋아요</span><span><User />마이</span></div>
         </div>
       </div>
 
-      {/* 주석: 무엇이 바뀌었는지 + 조회·담기 수 */}
+      {/* 글로벌 */}
+      <Globe />
+
+      {/* 주석: 장면마다 바뀐다 — 진열 칸 세 가지+조회·담기 수 → 상세페이지 → 글로벌 */}
       <div class="oys-side" data-oy-side>
-        <div class="oys-steps">
-          <div class="oys-step" data-oy-step><p><mark>썸네일</mark></p><span>구성이 보이는 컷으로</span></div>
-          <div class="oys-step" data-oy-step><p><mark>상품명</mark></p><span>무엇이 몇 매인지 한눈에</span></div>
-          <div class="oys-step" data-oy-step><p><mark>기획 구성</mark></p><span>리필 증정 · 기획 할인가</span></div>
+        <div class="oys-grp" data-oy-grp>
+          <div class="oys-steps">
+            <div class="oys-step" data-oy-step><p><mark>썸네일</mark></p><span>구성이 보이는 컷으로</span></div>
+            <div class="oys-step" data-oy-step><p><mark>상품명</mark></p><span>무엇이 몇 매인지 한눈에</span></div>
+            <div class="oys-step" data-oy-step><p><mark>기획 구성</mark></p><span>리필 증정 · 기획 할인가</span></div>
+          </div>
+          <div class="oys-nums" data-oy-nums>
+            <div><span>조회</span><b data-oy-view>312</b></div>
+            <div><span>장바구니 담기</span><b data-oy-cart>41</b></div>
+          </div>
         </div>
-        <div class="oys-nums" data-oy-nums>
-          <div><span>조회</span><b data-oy-view>312</b></div>
-          <div><span>장바구니 담기</span><b data-oy-cart>41</b></div>
+        <div class="oys-grp oys-grp--one" data-oy-grp>
+          <div class="oys-step" data-oy-step2><p><mark>상세페이지 첫 화면</mark></p><span>'올리브영 랭킹 1위 제품'을 가장 먼저 보이게</span></div>
+        </div>
+        <div class="oys-grp oys-grp--one" data-oy-grp>
+          <div class="oys-step" data-oy-step2><p><mark>글로벌 진출의 발판</mark></p><span>올리브영 1위 기록을 해외 몰·현지 유통으로 연결</span></div>
         </div>
       </div>
     </div>

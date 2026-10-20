@@ -1,10 +1,12 @@
-/* 올리브영 마케팅 히어로(한 바퀴 약 7.5초): '진열 칸이 바뀌는 순간'. 뒤에 PC 브라우저, 앞에 휴대폰 — 두 화면이 같은 시각에 같은 일을 한다.
+/* 올리브영 마케팅 히어로(한 바퀴 약 11.8초): '진열 칸이 바뀌는 순간'. 뒤에 PC 브라우저, 앞에 휴대폰 — 두 화면이 같은 시각에 같은 일을 한다.
    판매 랭킹을 내려 보다가 6위의 밋밋한 우리 칸에서 멈춤 →
    ① 썸네일이 왼쪽에서 오른쪽으로 갈리며 '+20매' 스티커·띠가 붙은 새 썸네일로 → ② 상품명이 구성이 보이게 바뀜 →
    ③ 원가 취소선·할인율·기획/증정/세일 딱지 → 주변 칸이 흐려지고 우리 칸이 떠오름 → 아래 주석의 조회·장바구니 담기 수가 오름 →
-   우리 칸이 1위 자리로 옮겨감(다른 칸은 한 칸씩 밀리며 순위 숫자가 바뀜) → 처음으로.
+   우리 칸이 1위 자리로 옮겨감(다른 칸은 한 칸씩 밀리며 순위 숫자가 바뀜) →
+   1위 칸을 눌러 두 화면 모두 상세페이지로 → 대표 이미지에 '올리브영 랭킹 1위 제품!' 띠·1위 도장 →
+   두 화면이 물러나고 점 세계 지도에서 한국(올리브영 1위)부터 일본·동남아·미국·유럽으로 선이 차례로 이어짐 → 처음으로.
    화면 상태는 시간 t 하나로 계산한다(render). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고,
-   '움직임 줄이기' 설정이면 1위 자리로 옮겨간 화면에서 멈춘다. window.oySeek(t) 로 특정 순간을 고정해 볼 수 있다. */
+   '움직임 줄이기' 설정이면 상세페이지에 '랭킹 1위'가 찍힌 화면에서 멈춘다. window.oySeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
   var root = document.querySelector('[data-oy]');
   if (!root) return;
@@ -20,6 +22,7 @@
     var kind = d.getAttribute('data-oy-dev'), c = CONF[kind], me = q(d, 'me'), grid = q(d, 'grid');
     var x = { kind: kind, c: c, box: d, track: q(d, 'track'), grid: grid, me: me, others: qa(d, 'o'),
       thnew: q(me, 'thnew'), wipe: q(me, 'wipe'), flags: Array.prototype.slice.call(q(me, 'flags').children),
+      dt: q(d, 'dt'), ban: q(d, 'ban'), stamp: q(d, 'stamp'),
       nm0: q(me, 'nm0'), nm1: q(me, 'nm1'), was: q(me, 'was'), off: q(me, 'off'), price: q(me, 'price'), rk: q(me, 'rk') };
     x.from = +grid.getAttribute('data-from') || 5;
     x.nos = x.others.map(function (o) { return o.querySelector('.oys-rk'); });
@@ -29,12 +32,17 @@
     x.at = Math.max(c.from, x.gridTop + Math.floor(x.from / c.cols) * c.rh + c.ch - c.view + 40);
     return x;
   });
-  var el = { side: q(root, 'side'), nums: q(root, 'nums'), view: q(root, 'view'), cart: q(root, 'cart') };
-  var steps = qa(root, 'step');
+  var el = { side: q(root, 'side'), nums: q(root, 'nums'), view: q(root, 'view'), cart: q(root, 'cart'), touch: q(root, 'touch'), glb: q(root, 'glb'), kr: q(root, 'kr') };
+  var steps = qa(root, 'step'), steps2 = qa(root, 'step2'), grps = qa(root, 'grp'), arcs = qa(root, 'arc'), dots = qa(root, 'dot'), dsts = qa(root, 'dst');
+  var mob = devs.filter(function (d) { return d.kind === 'm'; })[0];
 
   // 시각표(초)
   var IN = [0, 0.3], BROWSE = [0.1, 0.95], THUMB = [1.1, 1.6], NAME = [1.95, 2.3], FLAG = 2.55, PRICE = 2.75,
-    FOCUS = [3.1, 3.45], NUMS = [3.3, 5.0], MOVE = [5.15, 6.1], SETTLE = [6.1, 6.45], OUT = [7.2, 7.5], CYCLE = 7.5;
+    FOCUS = [3.1, 3.45], NUMS = [3.3, 5.0], MOVE = [5.15, 6.1], SETTLE = [6.1, 6.45],
+    TAP = 6.85, DT = [6.95, 7.3], BAN = [7.45, 7.75], STAMP = [7.6, 7.9],
+    GLB = [8.7, 9.0], MAP_IN = [8.95, 9.35], KR_IN = [9.1, 9.4], ARC_AT = 9.45, ARC_GAP = 0.32, ARC_LEN = 0.5, OUT = [11.4, 11.8], CYCLE = 11.8;
+  // 주석 묶음이 바뀌는 시각: 진열 칸 → 상세페이지 → 글로벌
+  var GRP_AT = [0, 7.0, 8.85];
   var STEP_AT = [1.0, 1.85, 2.45];
 
   function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
@@ -61,6 +69,13 @@
     d.me.style.setProperty('--lift', v.lift.toFixed(3));
     d.me.style.transform = 'translate(' + lerp(a[0], b[0], v.mv).toFixed(1) + 'px,' + lerp(a[1], b[1], v.mv).toFixed(1) + 'px) scale(' + (1 + 0.04 * v.focus + 0.03 * Math.sin(Math.PI * v.mv)).toFixed(3) + ')';
     d.rk.textContent = rkText(d.kind, Math.round(v.s) + 1);
+    // 1위 칸을 누름 → 상세페이지: 대표 이미지에 '올리브영 랭킹 1위 제품!' 띠·1위 도장
+    if (v.tap) d.me.style.transform += ' scale(.96)';
+    d.dt.style.opacity = v.dt > 0 ? 1 : 0;
+    d.dt.style.transform = 'translateX(' + ((1 - v.dt) * 100).toFixed(1) + '%)';
+    d.ban.style.opacity = v.ban; d.ban.style.transform = 'scaleY(' + (0.3 + 0.7 * v.ban).toFixed(3) + ')';
+    d.stamp.style.opacity = clamp(v.stamp * 3);
+    d.stamp.style.transform = 'scale(' + (1.7 - 0.7 * v.stamp).toFixed(3) + ') rotate(' + (-14 + 6 * v.stamp).toFixed(1) + 'deg)';
     // ① 썸네일
     d.thnew.style.setProperty('--w', (v.w * 100).toFixed(1) + '%');
     d.wipe.style.setProperty('--w', (v.w * 100).toFixed(1) + '%');
@@ -83,12 +98,17 @@
   function render(t) {
     var l = t % CYCLE;
     var vis = ease(seg(l, IN)) * (1 - seg(l, OUT));
-    devs.forEach(function (d) { d.box.style.opacity = vis; });
+    var gp = inout(seg(l, GLB));
+    devs.forEach(function (d) {
+      d.box.style.opacity = (vis * (1 - gp)).toFixed(3);
+      d.box.style.transform = (d.kind === 'pc' ? 'scale(.5)' : 'scale(.62)') + ' translateY(' + (60 * gp).toFixed(1) + 'px)';
+    });
     el.side.style.opacity = vis;
     var mv = inout(seg(l, MOVE)), br = inout(seg(l, BROWSE)), focus = ease(seg(l, FOCUS)) * (1 - ease(seg(l, SETTLE)));
     var v = { mv: mv, s: lerp(devs[0] ? devs[0].from : 5, 0, mv), focus: focus,
       lift: Math.max(focus, l >= SETTLE[0] && l < OUT[1] ? 0.55 : 0),
       w: inout(seg(l, THUMB)), n: ease(seg(l, NAME)), pr: l >= PRICE,
+      tap: l >= TAP && l < TAP + 0.12, dt: inout(seg(l, DT)), ban: ease(seg(l, BAN)), stamp: ease(seg(l, STAMP)),
       scroll: function (d) { return lerp(lerp(d.c.from, d.at, br), 0, mv); } };
     devs.forEach(function (d) { renderDev(d, l, v); });
 
@@ -100,6 +120,35 @@
       st.style.setProperty('--ln', p.toFixed(3));
       var m = st.querySelector('mark'); if (m) m.style.setProperty('--hl', (ease(seg(l, [STEP_AT[i] + 0.15, STEP_AT[i] + 0.5])) * 100).toFixed(0) + '%');
     });
+    grps.forEach(function (g, i) {
+      var inP = i === 0 ? 1 : ease(seg(l, [GRP_AT[i], GRP_AT[i] + 0.3])), outP = i + 1 < GRP_AT.length ? seg(l, [GRP_AT[i + 1] - 0.15, GRP_AT[i + 1] + 0.1]) : 0;
+      g.style.opacity = (inP * (1 - outP)).toFixed(3);
+      g.style.transform = 'translateY(' + ((1 - inP) * 8).toFixed(1) + 'px)';
+    });
+    steps2.forEach(function (st, i) {
+      var a = GRP_AT[i + 1], p = ease(seg(l, [a, a + 0.3]));
+      st.style.setProperty('--ln', p.toFixed(3));
+      var m = st.querySelector('mark'); if (m) m.style.setProperty('--hl', (ease(seg(l, [a + 0.15, a + 0.5])) * 100).toFixed(0) + '%');
+    });
+    // 모바일 손끝: 1위 칸을 누름
+    if (mob && el.touch) {
+      el.touch.style.left = (mob.c.pad + mob.c.w / 2).toFixed(1) + 'px';
+      el.touch.style.top = (36 + mob.gridTop + mob.c.w / 2).toFixed(1) + 'px';
+      el.touch.style.opacity = l > TAP - 0.18 && l < TAP + 0.2 ? clamp((l - TAP + 0.18) / 0.08) * clamp((TAP + 0.2 - l) / 0.06) : 0;
+      el.touch.style.transform = 'scale(' + (v.tap ? 0.82 : 1) + ')';
+    }
+    // 글로벌: 지도가 떠오르고 한국 카드 → 선이 차례로 이어지며 지역 이름표
+    var mp = inout(seg(l, MAP_IN));
+    el.glb.style.opacity = (mp * (1 - seg(l, OUT))).toFixed(3);
+    el.glb.style.transform = 'translateY(' + ((1 - mp) * 14).toFixed(1) + 'px)';
+    var kp = ease(seg(l, KR_IN));
+    el.kr.style.opacity = kp; el.kr.style.transform = 'translateY(' + ((1 - kp) * 8).toFixed(1) + 'px)';
+    arcs.forEach(function (a, i) {
+      var t0 = ARC_AT + i * ARC_GAP, p = inout(seg(l, [t0, t0 + ARC_LEN])), e = ease(seg(l, [t0 + ARC_LEN - 0.05, t0 + ARC_LEN + 0.2]));
+      a.style.strokeDashoffset = (1 - p).toFixed(3);
+      if (dots[i]) dots[i].style.opacity = e;
+      if (dsts[i]) { dsts[i].style.opacity = e; dsts[i].style.transform = 'translateY(' + ((1 - e) * 6).toFixed(1) + 'px)'; }
+    });
     el.nums.style.opacity = ease(seg(l, [NUMS[0], NUMS[0] + 0.25]));
     var np = ease(seg(l, NUMS));
     el.view.textContent = fmt(Math.round(lerp(312, 4870, np)));
@@ -109,7 +158,7 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t = 0, prev = 0, on = true, held = false;
   window.oySeek = function (s) { held = true; t = s; render(t); };
-  if (reduce) { render(6.6); return; }
+  if (reduce) { render(8.3); return; }
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(root);
   function frame(now) {
     var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 0; prev = now;
