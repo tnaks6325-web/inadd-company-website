@@ -13,6 +13,9 @@
 .oys-track { position:relative; will-change:transform; }
 .oys-logo { font-style:italic; font-weight:900; letter-spacing:-.01em; }
 
+/* 카메라: '랭킹 1위' 줌인 때 PC·휴대폰을 함께 키운다(줌 중에는 장면 크기로 잘라 냄) */
+.oys-cam { position:absolute; inset:0; transform-origin:0 0; will-change:transform; }
+
 /* ── PC 브라우저 ── */
 .oys-pc { position:absolute; left:0; top:6px; width:1120px; height:960px; transform:scale(.5); transform-origin:0 0; border-radius:16px; overflow:hidden; background:#fff;
   box-shadow:0 0 0 2px #dfe3dc,0 50px 100px rgba(40,60,30,.20),0 16px 34px rgba(17,19,24,.10); will-change:opacity; }
