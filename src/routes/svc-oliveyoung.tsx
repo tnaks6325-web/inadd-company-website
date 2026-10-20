@@ -1,10 +1,12 @@
 import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
+import { OyShelf } from './oy-shelf'
 export const SvcOliveYoungPage = () => (
   <>
+    <link rel="stylesheet" href="/static/oy-shelf.css?v=20261021f" />
     {/* ══ HERO ══ */}
-    <section class="vh-hero vh-hero--photo">
-      <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/oy-images/hero.png')"></div>
+    <section class="vh-hero vh-hero--oy">
+      <div class="vh-glow" aria-hidden="true"></div>
       <canvas id="vhCanvas6" class="vh-canvas"></canvas>
       <div class="vh-bg">
         <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(3,199,90,0.22) 0%,transparent 70%)"></div>
@@ -58,6 +60,8 @@ export const SvcOliveYoungPage = () => (
           </a>
         </div>
       </div>
+      <OyShelf />
+      <script src="/static/oy-shelf.js?v=20261021h" defer></script>
       <div class="vh-scroll-hint"><div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div></div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
