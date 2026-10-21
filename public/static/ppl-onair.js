@@ -97,6 +97,7 @@
   // 영상 위치를 시간 t 에 맞춘다. 재생 구간이고 화면이 돌아가는 중이면 재생(0.25초 넘게 어긋날 때만 다시 맞춤), 아니면 멈추고 그 순간 장면을 보여 준다
   function syncVid(l) {
     vids.forEach(function (v) {
+      if (v.seeking) return;   // 위치를 옮기는 중엔 다시 옮기지 않는다(느린 회선에서 계속 0초로 돌아가는 것 방지)
       var at = +v.getAttribute('data-pon-vid') || 0, end = isFinite(v.duration) ? v.duration - 0.05 : 3;
       var vt = Math.min(end, Math.max(0, l - at));
       if (live && l >= at && vt < end) {

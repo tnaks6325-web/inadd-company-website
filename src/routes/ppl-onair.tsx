@@ -6,6 +6,9 @@
 // 드라마 장면은 4초 영상(scene.mp4, kling3_0 60cdd7f3 — 병을 들어 한 모금 마시고 웃음). 감독 모니터 화면과 방송 화면에서 같은 시각으로 이어서 돈다. 대체 이미지는 scene.webp.
 // 반응은 말풍선(바이럴 페이지)·검색 결과 화면(체험단 페이지)과 겹치지 않게 게시판 글 목록으로. 대가·협찬 표시 문구 금지. 움직임은 ppl-onair.js.
 const V = '/static/ppl-onair/'
+// 영상은 부분 전송(206)을 해 주는 통로로 받는다(src/index.tsx /hero-video). 파일을 바꾸면 v 값을 올린다
+const VID = '/hero-video/ppl-onair-'
+const VV = '?v=20261021'
 
 // 게시판 글(방송 직후 시각 순)
 const POSTS = [
@@ -28,19 +31,19 @@ export const PplOnAir = () => (
       {/* 현실 컷: 촬영 현장 → 감독 모니터 */}
       <div class="pon-real" data-pon-real>
         <div class="pon-cut" data-pon-cut style={`background-image:url(${V}set.webp)`}>
-          <video class="pon-tv-vid" src={`${V}set.mp4`} muted playsinline preload="auto" data-pon-vid="0" />
+          <video class="pon-tv-vid" src={`${VID}set.mp4${VV}`} muted playsinline preload="auto" data-pon-vid="0" />
           <i class="pon-flash" data-pon-flash />
         </div>
         <div class="pon-cut" data-pon-cut style={`background-image:url(${V}monitor.webp)`}>
           {/* 감독 모니터 화면 속에서도 같은 드라마 영상이 돈다(모니터 각도에 맞춰 비스듬히 끼움, 흰 선은 촬영용 안전선) */}
-          <div class="pon-mscr" data-pon-mscr><video class="pon-tv-vid" src={`${V}scene.mp4`} muted playsinline preload="auto" data-pon-vid="1.3" /><i /></div>
+          <div class="pon-mscr" data-pon-mscr><video class="pon-tv-vid" src={`${VID}scene.mp4${VV}`} muted playsinline preload="auto" data-pon-vid="1.3" /><i /></div>
         </div>
       </div>
 
       {/* 방송 화면 */}
       <div class="pon-tv" data-pon-tv />
       <div class="pon-tv-scr" style={`background-image:url(${V}scene.webp)`} data-pon-scr>
-        <video class="pon-tv-vid" src={`${V}scene.mp4`} poster={`${V}scene.webp`} muted playsinline preload="auto" data-pon-vid="1.3" />
+        <video class="pon-tv-vid" src={`${VID}scene.mp4${VV}`} poster={`${V}scene.webp`} muted playsinline preload="auto" data-pon-vid="1.3" />
         <b class="pon-tv-title">봄날의 계절</b>
         <i class="pon-tv-age">15</i>
         <span class="pon-tv-ep">12회</span>
