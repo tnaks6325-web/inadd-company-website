@@ -3,7 +3,7 @@ import { icon } from '../icons'
 import { PplOnAir } from './ppl-onair'
 export const SvcPplPage = () => (
   <>
-    <link rel="stylesheet" href="/static/ppl-onair.css?v=20261021d" />
+    <link rel="stylesheet" href="/static/ppl-onair.css?v=20261021e" />
     {/* ══ HERO ══ */}
     <section class="vh-hero vh-hero--pon">
       <div class="vh-glow" aria-hidden="true"></div>
@@ -61,7 +61,7 @@ export const SvcPplPage = () => (
         </div>
       </div>
       <PplOnAir />
-      <script src="/static/ppl-onair.js?v=20261021d" defer></script>
+      <script src="/static/ppl-onair.js?v=20261021e" defer></script>
       <div class="vh-scroll-hint"><div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div></div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){

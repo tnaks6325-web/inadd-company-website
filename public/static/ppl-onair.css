@@ -11,6 +11,8 @@
 /* 현실 컷 */
 .pon-real { position:absolute; inset:0; z-index:2; border-radius:18px; overflow:hidden; background:#111; box-shadow:0 40px 80px rgba(30,30,40,.22),0 10px 24px rgba(17,19,24,.12); }
 .pon-cut { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transform-origin:0 0; }
+.pon-mscr { position:absolute; left:0; top:0; width:640px; height:360px; transform-origin:0 0; overflow:hidden; background:#0d1220; }
+.pon-mscr i { position:absolute; inset:6% .6% 6% .6%; border:3px solid rgba(255,255,255,.88); font-style:normal; }
 .pon-flash { position:absolute; inset:0; background:#fff; opacity:0; font-style:normal; }
 
 /* 방송 화면: 처음엔 무대를 채우는 TV, 뒤에는 왼쪽 위 작은 화면 */
