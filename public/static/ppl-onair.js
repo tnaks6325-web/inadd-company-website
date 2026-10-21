@@ -16,9 +16,9 @@
   var IN = [0, 0.25], CLAP = 0.35, SET_PUSH = [0, 1.4], TO_MON = [1.3, 1.5], ZOOM = [1.85, 2.5], TO_TV = [2.4, 2.6],
     ONAIR = [2.85, 3.05], SHRINK = [3.75, 4.25], GRAPH = [4.2, 4.4], LINE = [4.3, 5.2], X = [4.75, 5.4],
     BOARD = [5.3, 5.5], POST_AT = 5.45, POST_GAP = 0.32, OUT = [7.6, 8.0], CYCLE = 8.0;
-  // 드라마 장면 영상(4초): 감독 모니터가 보일 때(1.3초) 처음부터 재생하고, 방송 화면으로 넘어가도 같은 시각으로 이어서 돈다.
-  // 한 모금 마시는 순간(영상 1.5~3초)이 큰 방송 화면(2.8~4.3초)에 걸린다. 끝나면 마지막 장면(웃음)에서 멈춤
-  var VID_AT = TO_MON[0], VID_OFF = 0, VID_END = 4.0;
+  // 영상마다 시작 시각(data-pon-vid 값, 초): 촬영 현장 3초 영상은 0초, 드라마 장면 4초 영상은 감독 모니터가 보일 때(1.3초).
+  // 드라마 영상은 모니터 화면 → 방송 화면으로 넘어가도 같은 시각으로 이어서 돌고, 한 모금 마시는 순간(영상 1.5~3초)이 큰 방송 화면(2.8~4.3초)에 걸린다.
+  // 끝나면 마지막 장면에서 멈춤
   // 무대 좌표: 모니터 사진 속 화면 중심·너비(사진 2400x1792 을 680x620 에 꽉 채운 기준), 방송 화면 큰/작은 자리
   var MON = { x: 372.7, y: 318.0, w: 170.2 }, ZS = 680 / MON.w;
   var BIG = { x: 0, y: 118.5, w: 680, h: 382.5 }, SMALL = { x: 0, y: 0, w: 300, h: 168.75 };
@@ -96,9 +96,10 @@
 
   // 영상 위치를 시간 t 에 맞춘다. 재생 구간이고 화면이 돌아가는 중이면 재생(0.25초 넘게 어긋날 때만 다시 맞춤), 아니면 멈추고 그 순간 장면을 보여 준다
   function syncVid(l) {
-    var vt = Math.min(VID_END, VID_OFF + Math.max(0, l - VID_AT));
     vids.forEach(function (v) {
-      if (live && l >= VID_AT && vt < VID_END) {
+      var at = +v.getAttribute('data-pon-vid') || 0, end = isFinite(v.duration) ? v.duration - 0.05 : 3;
+      var vt = Math.min(end, Math.max(0, l - at));
+      if (live && l >= at && vt < end) {
         if (v.paused) { v.currentTime = vt; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
         else if (Math.abs(v.currentTime - vt) > 0.25) v.currentTime = vt;
       } else {
