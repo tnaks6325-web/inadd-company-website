@@ -1,5 +1,5 @@
-/* 마케팅팀 구독 상세페이지 효과 — 시안(inad-team-subscription-mobile.html)의 효과 스크립트를 그대로 옮김.
-   1) 860px 페이지를 화면 폭에 맞춰 축소  2) 하단 고정 '무료 상담 신청' 버튼
+/* 마케팅팀 구독 상세페이지 효과 — 시안(Claude Design '종합 마케팅 구독 상세페이지 A 채용고민형')의 효과 스크립트를 옮김.
+   1) 860px 페이지를 화면 폭에 맞춰 축소  2) 하단 고정 '무료 상담 신청' 버튼  5) 성과 레퍼런스 탭·막대
    3) 구간 등장·화살표 그리기·숫자 올라가기·비교 막대·비용 더미·보고 목록 효과
    4) 상담 신청 버튼 → 전역 문의 팝업(main.js)에 '마케팅팀 구독' 관심 서비스를 미리 체크 */
 (function () {
@@ -45,7 +45,47 @@
   document.addEventListener('scroll', onScroll, { passive: true, capture: true });
   onScroll();
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 성과 레퍼런스: 탭을 누르면 그 카드로 바꾸고 막대를 아래부터 다시 키움.
+  // 화면에 보이기 시작하면 3.5초마다 다음 탭으로 넘어가고, 사용자가 탭을 누르면 자동 넘김을 멈춤
+  var ref = page.querySelector('[data-ref]');
+  if (ref) {
+    var tabs = ref.querySelectorAll('[data-ref-tab]'), panels = ref.querySelectorAll('[data-ref-panel]');
+    var refIdx = 0, refStop = false, refSeen = false;
+    var grow = function (panel) {
+      if (reduced) return;
+      var bs = panel.querySelectorAll('[data-ref-bar]');
+      bs.forEach(function (b) { b.style.transition = 'none'; b.style.transform = 'scaleY(0)'; });
+      setTimeout(function () {
+        bs.forEach(function (b, i) {
+          b.style.transition = 'transform ' + (i ? 1.5 : 1.3) + 's cubic-bezier(0.7,0,0.2,1)'; b.style.transform = 'scaleY(1)';
+        });
+      }, 60);
+    };
+    var showRef = function (j) {
+      refIdx = j;
+      tabs.forEach(function (t, k) {
+        var on = k === j;
+        t.style.fontWeight = on ? '800' : '600';
+        t.style.color = on ? '#21306F' : '#111318';
+        t.style.boxShadow = 'inset 0 -4px 0 ' + (on ? '#21306F' : 'transparent');
+        t.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      panels.forEach(function (p, k) { p.style.display = k === j ? '' : 'none'; });
+      grow(panels[j]);
+    };
+    tabs.forEach(function (t, k) {
+      t.addEventListener('click', function () { refStop = true; showRef(k); });
+    });
+    if (!reduced) {
+      panels[0].querySelectorAll('[data-ref-bar]').forEach(function (b) { b.style.transform = 'scaleY(0)'; });
+      once(panels[0].parentElement, function () { refSeen = true; if (!refStop) showRef(refIdx); }, 0.4);
+      setInterval(function () { if (refSeen && !refStop) showRef((refIdx + 1) % panels.length); }, 3500);
+    }
+  }
+
+  if (reduced) return;
   var ease = 'cubic-bezier(0.2,0.7,0.2,1)', pop = 'cubic-bezier(0.34,1.56,0.64,1)';
 
   page.querySelectorAll('section[data-screen-label]').forEach(function (sec) {
