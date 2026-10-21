@@ -1,10 +1,12 @@
 import { SvcTerms } from './svc-terms'
 import { icon } from '../icons'
+import { PplOnAir } from './ppl-onair'
 export const SvcPplPage = () => (
   <>
+    <link rel="stylesheet" href="/static/ppl-onair.css?v=20261021f" />
     {/* ══ HERO ══ */}
-    <section class="vh-hero vh-hero--photo vh-hero--photo-dark">
-      <div class="vh-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/ppl-images/hero.png')"></div>
+    <section class="vh-hero vh-hero--pon">
+      <div class="vh-glow" aria-hidden="true"></div>
       <canvas id="vhCanvas5" class="vh-canvas"></canvas>
       <div class="vh-bg">
         <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(239,68,68,0.22) 0%,transparent 70%)"></div>
@@ -58,6 +60,8 @@ export const SvcPplPage = () => (
           </a>
         </div>
       </div>
+      <PplOnAir />
+      <script src="/static/ppl-onair.js?v=20261021g" defer></script>
       <div class="vh-scroll-hint"><div class="vh-scroll-mouse"><div class="vh-scroll-wheel"></div></div></div>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
