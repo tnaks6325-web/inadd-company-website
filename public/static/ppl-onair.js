@@ -10,12 +10,14 @@
   function qa(k) { return Array.prototype.slice.call(root.querySelectorAll('[data-pon-' + k + ']')); }
   var el = { real: q('real'), flash: q('flash'), tv: q('tv'), scr: q('scr'), onair: q('onair'), graph: q('graph'), x: q('x'),
     line: q('line'), fill: q('fill'), mark: q('mark'), tag: q('tag'), board: q('board') };
-  var cuts = qa('cut'), posts = qa('post');
+  var cuts = qa('cut'), posts = qa('post'), vid = q('vid');
 
   // 시각표(초)
   var IN = [0, 0.25], CLAP = 0.35, SET_PUSH = [0, 1.4], TO_MON = [1.3, 1.5], ZOOM = [1.85, 2.5], TO_TV = [2.4, 2.6],
     ONAIR = [2.85, 3.05], SHRINK = [3.75, 4.25], GRAPH = [4.2, 4.4], LINE = [4.3, 5.2], X = [4.75, 5.4],
     BOARD = [5.3, 5.5], POST_AT = 5.45, POST_GAP = 0.32, OUT = [7.6, 8.0], CYCLE = 8.0;
+  // 드라마 장면 영상(4초): 방송 화면이 뜰 때 0.9초 지점부터 재생해, 한 모금 마시는 순간(영상 1.5~3초)이 큰 화면에 걸리게 한다. 끝나면 마지막 장면(웃음)에서 멈춤
+  var VID_AT = TO_TV[0], VID_OFF = 0.9, VID_END = 4.0;
   // 무대 좌표: 모니터 사진 속 화면 중심·너비(사진 2400x1792 을 680x620 에 꽉 채운 기준), 방송 화면 큰/작은 자리
   var MON = { x: 372.7, y: 318.0, w: 170.2 }, ZS = 680 / MON.w;
   var BIG = { x: 0, y: 118.5, w: 680, h: 382.5 }, SMALL = { x: 0, y: 0, w: 300, h: 168.75 };
@@ -50,6 +52,8 @@
     el.scr.style.width = r.w.toFixed(1) + 'px'; el.scr.style.height = r.h.toFixed(1) + 'px';
     el.scr.style.fontSize = (r.w / 680 * 26).toFixed(2) + 'px';
     el.scr.style.backgroundSize = 'auto ' + (100 + 4 * seg(l, [TO_TV[0], SHRINK[0]])).toFixed(2) + '%';
+    if (vid) vid.style.transform = 'scale(' + (1 + 0.04 * seg(l, [TO_TV[0], SHRINK[0]])).toFixed(4) + ')';
+    syncVid(l);
     // 본방송 21:40: 큰 화면에선 화면 위 오른쪽, 작아지면 화면 오른쪽 옆
     var oa = ease(seg(l, ONAIR));
     el.onair.style.opacity = (vis * oa).toFixed(3);
@@ -77,14 +81,29 @@
     });
   }
 
+  // 영상 위치를 시간 t 에 맞춘다. 재생 구간이고 화면이 돌아가는 중이면 재생(0.25초 넘게 어긋날 때만 다시 맞춤), 아니면 멈추고 그 순간 장면을 보여 준다
+  function syncVid(l) {
+    if (!vid) return;
+    var vt = Math.min(VID_END, VID_OFF + Math.max(0, l - VID_AT));
+    if (live && l >= VID_AT && vt < VID_END) {
+      if (vid.paused) { vid.currentTime = vt; var p = vid.play(); if (p && p.catch) p.catch(function () {}); }
+      else if (Math.abs(vid.currentTime - vt) > 0.25) vid.currentTime = vt;
+    } else {
+      if (!vid.paused) vid.pause();
+      if (vid.readyState > 0 && Math.abs(vid.currentTime - vt) > 0.05) vid.currentTime = vt;
+    }
+  }
+
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var t = 0, prev = 0, on = true, held = false;
-  window.ponSeek = function (s) { held = true; t = s; render(t); };
+  var t = 0, prev = 0, on = true, held = false, live = false;
+  window.ponSeek = function (s) { held = true; live = false; t = s; render(t); };
   if (reduce) { render(7.4); return; }
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(root);
   function frame(now) {
     var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 0; prev = now;
-    if (!held && on && !document.hidden) { t += dt; render(t); }
+    live = !held && on && !document.hidden;
+    if (live) { t += dt; render(t); }
+    else if (vid && !vid.paused) vid.pause();
     requestAnimationFrame(frame);
   }
   render(0);

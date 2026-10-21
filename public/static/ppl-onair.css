@@ -16,6 +16,7 @@
 /* 방송 화면: 처음엔 무대를 채우는 TV, 뒤에는 왼쪽 위 작은 화면 */
 .pon-tv { position:absolute; inset:0; z-index:3; border-radius:18px; background:#0d0f12; opacity:0; }
 .pon-tv-scr { position:absolute; z-index:4; background-size:cover; background-position:center; border-radius:6px; box-shadow:0 0 0 3px #1b1d22,0 18px 40px rgba(0,0,0,.35); opacity:0; overflow:hidden; }
+.pon-tv-vid { position:absolute; inset:0; display:block; width:100%; height:100%; object-fit:cover; transform-origin:50% 50%; }
 .pon-tv-title { position:absolute; left:4%; top:5%; color:#fff; font-size:1em; font-weight:800; letter-spacing:-.02em; text-shadow:0 1px 4px rgba(0,0,0,.6); }
 .pon-tv-age { position:absolute; right:4%; top:5%; width:1.9em; height:1.9em; border-radius:50%; border:2px solid #fff; color:#fff; font-style:normal; font-size:.72em; font-weight:800; line-height:calc(1.9em - 4px); text-align:center; text-shadow:0 1px 3px rgba(0,0,0,.5); }
 .pon-tv-ep { position:absolute; left:4%; top:calc(5% + 2.2em); color:#fff; font-size:.66em; font-weight:600; text-shadow:0 1px 4px rgba(0,0,0,.6); }

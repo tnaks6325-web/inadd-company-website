@@ -2,6 +2,7 @@
 // 촬영 현장(슬레이트 'S#12 T3', 세트 책상 위 음료) → 감독 모니터 속 장면으로 줌인 → 그 화면이 그대로 방송 화면(21:40 본방송) →
 // 방송 화면이 왼쪽 위로 작아지고 검색량 그래프가 21:40 에서 치솟음(18배) → 커뮤니티 게시판에 글 제목이 시각과 함께 한 줄씩 → 처음으로.
 // 인물은 AI 가상 인물(폼보드 16번, 아이보리 블라우스), 음료 'LEMON SPARKLING'·드라마 「봄날의 계절」·채널은 모두 가상(실제 방송사 로고·프로그램명 없음).
+// 방송 화면 속 드라마 장면은 4초 영상(scene.mp4, kling3_0 60cdd7f3 — 병을 들어 한 모금 마시고 웃음), 첫 화면·대체 이미지는 scene.webp.
 // 반응은 말풍선(바이럴 페이지)·검색 결과 화면(체험단 페이지)과 겹치지 않게 게시판 글 목록으로. 대가·협찬 표시 문구 금지. 움직임은 ppl-onair.js.
 const V = '/static/ppl-onair/'
 
@@ -32,6 +33,7 @@ export const PplOnAir = () => (
       {/* 방송 화면 */}
       <div class="pon-tv" data-pon-tv />
       <div class="pon-tv-scr" style={`background-image:url(${V}scene.webp)`} data-pon-scr>
+        <video class="pon-tv-vid" src={`${V}scene.mp4`} poster={`${V}scene.webp`} muted playsinline preload="auto" data-pon-vid />
         <b class="pon-tv-title">봄날의 계절</b>
         <i class="pon-tv-age">15</i>
         <span class="pon-tv-ep">12회</span>
