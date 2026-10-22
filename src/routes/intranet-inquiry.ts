@@ -8,13 +8,13 @@
  * - 실패해도 예외를 던지지 않는다. 문의 접수·회사 메일은 이 결과와 상관없이 그대로 진행한다.
  * - external_id(문의 백업 키)로 인트라넷이 같은 문의를 한 번만 저장한다.
  *
- * 지난 문의(backfillInquiriesToIntranet): 연결 전에 쌓인 문의 백업(KV lead_contact_*)을 관리자 버튼으로 한꺼번에 보낸다.
- * 인트라넷은 알림 없이 원래 접수 시각으로 '지난 문의'(기록용) 묶음에 넣는다. 여러 번 눌러도 같은 문의는 한 번만 들어간다.
+ * 지난 문의(backfillInquiriesToIntranet): 연결 전에 쌓인 문의 백업(KV lead_contact_*)을 한 번만 보낸다(admin/api.ts, 끝나면 잠금).
+ * 인트라넷은 알림 없이 원래 접수 시각으로 '지난 문의'(기록용) 묶음에 넣는다. 같은 문의는 한 번만 들어간다.
  */
 
 export const DEFAULT_INTRANET_URL = 'https://inadd-system.pages.dev'
 const TIMEOUT_MS = 8000
-export const BACKFILL_PAGE = 200    // 관리자 버튼 1번 호출에서 읽는 백업 수(KV 읽기·하위요청 제한 여유)
+export const BACKFILL_PAGE = 200    // 1번 호출에서 읽는 백업 수(KV 읽기·하위요청 제한 여유)
 export const BACKFILL_CHUNK = 40    // 인트라넷 1회 전송 건수(인트라넷 BACKFILL_MAX 와 같게)
 const LEAD_PREFIX = 'lead_contact_'
 

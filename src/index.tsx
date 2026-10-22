@@ -1049,14 +1049,6 @@ function adminDashboardHTML(): string {
           <button class="btn btn-primary" id="btnSaveMailRecipients"><i class="fas fa-save"></i> 받는 사람 저장</button>
           <button class="btn btn-secondary" id="btnTestMailRecipients"><i class="fas fa-paper-plane"></i> 테스트 메일 보내기</button>
         </div>
-        <div style="margin-top:20px;padding-top:16px;border-top:1px solid #EEEFF1;">
-          <p style="color:#7A7A80;font-size:13px;margin-bottom:10px;">
-            사내 인트라넷 연결 전에 들어온 문의를 인트라넷 「홈페이지 문의 › 지난 문의」에 기록용으로 옮깁니다.<br>
-            <small style="color:#8A8A90">알림은 가지 않고, 이미 옮긴 문의는 다시 들어가지 않아 여러 번 눌러도 됩니다.</small>
-          </p>
-          <button class="btn btn-secondary" id="btnBackfillIntranet"><i class="fas fa-database"></i> 지난 문의 인트라넷으로 보내기</button>
-          <p id="backfillIntranetNote" style="color:#8A8A90;font-size:12px;margin-top:10px;"></p>
-        </div>
       </div>
 
       <!-- KPI 수치 -->
