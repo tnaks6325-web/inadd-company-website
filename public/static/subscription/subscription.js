@@ -48,20 +48,31 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // 성과 레퍼런스: 탭을 누르면 그 카드로 바꾸고 막대를 아래부터 다시 키움.
-  // 화면에 보이기 시작하면 3.5초마다 다음 탭으로 넘어가고, 사용자가 탭을 누르면 자동 넘김을 멈춤
+  // 화면에 보이기 시작하면 4.5초마다 다음 탭으로 넘어가고, 사용자가 탭을 누르면 자동 넘김을 멈춤
   var ref = page.querySelector('[data-ref]');
   if (ref) {
     var tabs = ref.querySelectorAll('[data-ref-tab]'), panels = ref.querySelectorAll('[data-ref-panel]');
     var refIdx = 0, refStop = false;
+    // 막대를 접고 개선 값(오른쪽 숫자)을 숨겨 둔다
+    var collapse = function (panel) {
+      panel.querySelectorAll('[data-ref-bar]').forEach(function (b) { b.style.transition = 'none'; b.style.transform = 'scaleY(0)'; });
+      var after = panel.querySelector('[data-ref-after]');
+      if (after) { after.style.transition = 'none'; after.style.opacity = '0'; after.style.transform = 'scale(0.6)'; after.style.backgroundSize = '0% 40%'; }
+    };
+    // 막대가 다 자란 뒤 개선 값이 튀어나오고 형광펜 밑줄이 그어진다
     var grow = function (panel) {
       if (reduced) return;
-      var bs = panel.querySelectorAll('[data-ref-bar]');
-      bs.forEach(function (b) { b.style.transition = 'none'; b.style.transform = 'scaleY(0)'; });
+      collapse(panel);
+      var bs = panel.querySelectorAll('[data-ref-bar]'), after = panel.querySelector('[data-ref-after]');
       setTimeout(function () {
         bs.forEach(function (b, i) {
           b.style.transition = 'transform ' + (i ? 1.5 : 1.3) + 's cubic-bezier(0.7,0,0.2,1)'; b.style.transform = 'scaleY(1)';
         });
       }, 60);
+      if (after) setTimeout(function () {
+        after.style.transition = 'opacity 0.2s ease, transform 0.5s cubic-bezier(0.34,1.9,0.64,1), background-size 0.45s ease 0.35s';
+        after.style.opacity = '1'; after.style.transform = 'none'; after.style.backgroundSize = '100% 40%';
+      }, 1500);
     };
     var showRef = function (j) {
       refIdx = j;
@@ -79,13 +90,13 @@
       t.addEventListener('click', function () { refStop = true; showRef(k); });
     });
     if (!reduced) {
-      panels[0].querySelectorAll('[data-ref-bar]').forEach(function (b) { b.style.transform = 'scaleY(0)'; });
+      collapse(panels[0]);
       // 구획 전체는 짧은 화면보다 길 수 있으므로 첫 카드의 막대 영역(300px)이 보이는지로 판단하고,
-      // 자동 넘김 타이머도 그때부터 센다(첫 카드가 온전히 3.5초 보이도록)
+      // 자동 넘김 타이머도 그때부터 센다(첫 카드가 온전히 4.5초 보이도록 — 개선 값 강조가 2초쯤 끝나고 읽을 시간)
       once(panels[0].querySelector('[data-ref-bar]').parentElement.parentElement, function () {
         if (refStop) return;
         showRef(refIdx);
-        setInterval(function () { if (!refStop) showRef((refIdx + 1) % panels.length); }, 3500);
+        setInterval(function () { if (!refStop) showRef((refIdx + 1) % panels.length); }, 4500);
       }, 0.4);
     }
   }

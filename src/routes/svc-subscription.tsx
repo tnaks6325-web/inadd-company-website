@@ -10,6 +10,6 @@ export const SvcSubscriptionPage = () => (
       <script dangerouslySetInnerHTML={{ __html: `document.documentElement.style.setProperty('--mts-zoom',Math.min(1,document.documentElement.clientWidth/860))` }} />
       <div dangerouslySetInnerHTML={{ __html: SUBSCRIPTION_BODY }} />
     </div>
-    <script src="/static/subscription/subscription.js?v=20261022a" defer></script>
+    <script src="/static/subscription/subscription.js?v=20261022b" defer></script>
   </>
 )
