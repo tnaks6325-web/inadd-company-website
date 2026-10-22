@@ -289,7 +289,7 @@ export const SUBSCRIPTION_BODY = `
       <div style="font-size:19px;line-height:1.55;margin-top:12px;">상담 때 브랜드 상황에 맞춰 골라 드려요.</div>
     </div>
   </div>
-  <div style="font-size:17px;line-height:1.6;margin-top:20px;">광고비는 별도예요 · 소재 무제한은 월 운영 범위 안에서 제작해요 · 카페·블로그·구매후기 체험단은 광고(협찬) 표시 후 게재해요</div>
+  <div style="font-size:17px;line-height:1.6;margin-top:20px;">광고비, 체험단 제품·배송비, 구매평에 쓰이는 상품 비용, 촬영 모델·장소 비용은 별도예요 · 소재 무제한은 월 운영 범위 안에서 제작해요 · 카페·블로그·구매후기 체험단은 광고(협찬) 표시 후 게재해요</div>
 </section>
 
 <section data-screen-label="06 TF팀" style="padding:120px 64px;">
