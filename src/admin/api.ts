@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { kvGet, kvPut, kvDelete, signToken, verifyToken, type Bindings } from './store'
 import { MAIL_RECIPIENTS_KEY, MAX_RECIPIENTS, DEFAULT_RECIPIENTS, checkRecipients, parseStoredRecipients, resolveRecipients } from '../routes/mail-recipients'
 import { sendMailTo, internalTemplate } from '../routes/api-mail'
+import { backfillInquiriesToIntranet } from '../routes/intranet-inquiry'
 
 const admin = new Hono<{ Bindings: Bindings }>()
 
@@ -424,6 +425,24 @@ admin.post('/mail-recipients/test', authMiddleware, async (c) => {
     return c.json({ error: '시험 메일 발송에 실패했습니다: ' + e.message }, 502)
   }
   return c.json({ ok: true, recipients })
+})
+
+// 인트라넷 연결 전에 쌓인 상담 문의 백업(lead_contact_*)을 인트라넷 '지난 문의'(기록용, 알림 없음)로 한 번만 옮긴다.
+// 화면 버튼은 없다(사용자 결정 2026-10-22: 이번 한 번만, 이후 문의는 실시간 전송). 운영 반영 직후 관리자 세션으로 1회 호출한다.
+// 백업 200건씩 — cursor 를 넘기며 끝까지 반복 호출. 실패 없이 끝나면 KV 에 완료 표시를 남기고 그 뒤로는 409 로 잠근다.
+const BACKFILL_DONE_KEY = 'intranet_backfill_done'
+admin.post('/inquiries/backfill-intranet', authMiddleware, async (c) => {
+  const env = c.env as any
+  const done = await kvGet(env.ADMIN_KV, BACKFILL_DONE_KEY)
+  if (done) return c.json({ error: '지난 문의는 이미 인트라넷으로 옮겼습니다.', done: JSON.parse(done) }, 409)
+  const body: any = await c.req.json().catch(() => ({}))
+  const cursor = typeof body?.cursor === 'string' && body.cursor ? body.cursor : null
+  const result = await backfillInquiriesToIntranet(env, env.ADMIN_KV, cursor)
+  if (result.reason === 'no_key') return c.json({ error: '인트라넷 연결 열쇠(INTRANET_INQUIRY_KEY)가 설정되지 않았습니다.' }, 503)
+  if (result.reason === 'preview') return c.json({ error: '테스트 서버에서는 인트라넷으로 보내지 않습니다.' }, 400)
+  // 마지막 장이고 실패가 없으면 잠근다(앞 장의 실패는 호출한 쪽이 실패 응답을 보고 멈추므로 여기까지 오지 않는다)
+  if (!result.cursor && !result.failed) await kvPut(env.ADMIN_KV, BACKFILL_DONE_KEY, JSON.stringify({ at: new Date().toISOString() }))
+  return c.json(result, result.failed ? 502 : 200)
 })
 
 // ═══════════════════════ PUBLIC DATA API ═══════════════════════
