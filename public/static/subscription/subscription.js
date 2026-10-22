@@ -52,7 +52,7 @@
   var ref = page.querySelector('[data-ref]');
   if (ref) {
     var tabs = ref.querySelectorAll('[data-ref-tab]'), panels = ref.querySelectorAll('[data-ref-panel]');
-    var refIdx = 0, refStop = false, refSeen = false;
+    var refIdx = 0, refStop = false;
     var grow = function (panel) {
       if (reduced) return;
       var bs = panel.querySelectorAll('[data-ref-bar]');
@@ -80,8 +80,13 @@
     });
     if (!reduced) {
       panels[0].querySelectorAll('[data-ref-bar]').forEach(function (b) { b.style.transform = 'scaleY(0)'; });
-      once(panels[0].parentElement, function () { refSeen = true; if (!refStop) showRef(refIdx); }, 0.4);
-      setInterval(function () { if (refSeen && !refStop) showRef((refIdx + 1) % panels.length); }, 3500);
+      // 구획 전체는 짧은 화면보다 길 수 있으므로 첫 카드의 막대 영역(300px)이 보이는지로 판단하고,
+      // 자동 넘김 타이머도 그때부터 센다(첫 카드가 온전히 3.5초 보이도록)
+      once(panels[0].querySelector('[data-ref-bar]').parentElement.parentElement, function () {
+        if (refStop) return;
+        showRef(refIdx);
+        setInterval(function () { if (!refStop) showRef((refIdx + 1) % panels.length); }, 3500);
+      }, 0.4);
     }
   }
 
