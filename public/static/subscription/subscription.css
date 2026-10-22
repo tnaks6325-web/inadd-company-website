@@ -17,6 +17,7 @@
 .mts-page a { color: #21306F; }
 .mts-page a:hover { color: #111318; }
 .mts-page a[data-mts-cta]:hover { opacity: 0.92; }
+.mts-page [data-ref-tab]:hover { color: #21306F !important; }
 .mts-page img { max-width: none; }
 
 /* 흰 판 위라서 머리말이 투명할 때 메뉴 글씨를 어둡게 (다른 밝은 서비스 페이지와 같은 규칙) */
