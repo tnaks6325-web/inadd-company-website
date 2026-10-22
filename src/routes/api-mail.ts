@@ -8,6 +8,7 @@
 import { Hono } from 'hono'
 import { kvGet } from '../admin/store'
 import { resolveRecipients } from './mail-recipients'
+import { forwardInquiryToIntranet } from './intranet-inquiry'
 
 type Bindings = {
   RESEND_API_KEY: string     // re_xxxx
@@ -15,6 +16,9 @@ type Bindings = {
   RESEND_TO: string          // tnaks6325@inadcompany.com
   ADMIN_KV: KVNamespace      // home_brochure_url 등 KV 값 읽기용
   MAIL_REDIRECT_TO?: string  // 테스트 서버 전용: 모든 메일을 이 주소로만 보낸다(wrangler.jsonc env.preview)
+  SITE_ENV?: string          // 'preview' = 테스트 서버(wrangler.jsonc env.preview)
+  INTRANET_INQUIRY_KEY?: string // 인트라넷 문의 받기 전용 키(인트라넷 HOMEPAGE_INQUIRY_KEY 와 같은 값). 없으면 메일만 보낸다
+  INTRANET_URL?: string      // 선택. 기본 https://inadd-system.pages.dev
 }
 
 const mail = new Hono<{ Bindings: Bindings }>()
@@ -33,9 +37,10 @@ mail.use('*', async (c, next) => {
   await next()
 })
 
-async function backupLead(env: Bindings, type: string, data: Record<string, string>) {
+async function backupLead(env: Bindings, type: string, data: Record<string, string>): Promise<string> {
   const key = 'lead_' + type + '_' + Date.now() + '_' + crypto.randomUUID().slice(0, 8)
   await env.ADMIN_KV.put(key, JSON.stringify({ type, data, receivedAt: new Date().toISOString() }))
+  return key
 }
 
 /* ─────────────────────────────────────────────
@@ -301,7 +306,10 @@ function brochureReplyTemplate(
 mail.post('/contact', async (c) => {
   try {
     const data = await c.req.json() as Record<string, string>
-    await backupLead(c.env, 'contact', data)
+    const leadKey = await backupLead(c.env, 'contact', data)
+    // 인트라넷에도 쌓는다(회신 담당자 배치·리드 관리). 응답·메일을 기다리게 하지 않고, 실패해도 접수는 그대로 진행한다.
+    const toIntranet = forwardInquiryToIntranet(c.env, leadKey, data)
+    try { c.executionCtx.waitUntil(toIntranet) } catch { await toIntranet }
     const formType = data.formType === 'agency' ? '에이전시' : data.formType === 'brand' ? '브랜드' : ''
 
     const rows = [
