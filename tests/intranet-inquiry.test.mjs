@@ -48,3 +48,59 @@ test('인트라넷이 거절하거나 연결이 안 돼도 예외를 던지지 �
   const down = async () => { throw new TypeError('fetch failed') }
   assert.deepEqual(await forwardInquiryToIntranet({ INTRANET_INQUIRY_KEY: 'k1' }, 'x', DATA, down), { sent: false, reason: 'error' })
 })
+
+// ── 지난 문의 한꺼번에 ──
+import { BACKFILL_CHUNK, backfillInquiriesToIntranet } from '../src/routes/intranet-inquiry.ts'
+
+const fakeKv = (entries) => ({
+  async list({ prefix, limit, cursor }) {
+    const all = Object.keys(entries).filter(k => k.startsWith(prefix)).sort()
+    const start = cursor ? Number(cursor) : 0
+    const keys = all.slice(start, start + limit).map(name => ({ name }))
+    const end = start + keys.length
+    return { keys, list_complete: end >= all.length, cursor: end >= all.length ? undefined : String(end) }
+  },
+  async get(k) { return entries[k] ?? null },
+})
+
+test('지난 문의: 백업을 40건씩 나눠 backfill 로 보내고, 접수 시각은 백업 시각(없으면 키의 시각)', async () => {
+  const entries = {}
+  for (let i = 0; i < 45; i++) {
+    const ms = Date.UTC(2026, 8, 1) + i * 60000
+    entries[`lead_contact_${ms}_a${i}`] = JSON.stringify({ type: 'contact', data: { ...DATA, company: `회사${i}` }, receivedAt: new Date(ms).toISOString() })
+  }
+  entries['lead_contact_1790000000000_nots'] = JSON.stringify({ type: 'contact', data: DATA })
+  entries['lead_contact_1790000000001_broken'] = '{broken'
+  entries['lead_brochure_1790000000000_b'] = JSON.stringify({ type: 'brochure', data: { email: 'x@example.test' } })
+  const f = fakeFetch(() => new Response(JSON.stringify({ success: true, inserted: 20, duplicate: 0, invalid: 0 }), { status: 200 }))
+  const r = await backfillInquiriesToIntranet({ INTRANET_INQUIRY_KEY: 'k1' }, fakeKv(entries), null, f)
+  assert.equal(r.listed, 47)                 // 회사소개서 백업은 빼고 문의 백업만
+  assert.equal(r.invalid, 1)                 // 깨진 백업
+  assert.equal(r.cursor, null)
+  assert.equal(f.calls.length, 2)            // 46건 → 40 + 6
+  assert.equal(f.calls[0].body.backfill, true)
+  assert.equal(f.calls[0].body.items.length, BACKFILL_CHUNK)
+  assert.equal(f.calls[1].body.items.length, 6)
+  const nots = [...f.calls[0].body.items, ...f.calls[1].body.items].find(it => it.external_id.endsWith('_nots'))
+  assert.equal(nots.received_at, new Date(1790000000000).toISOString())
+  assert.equal(r.inserted, 40)
+  assert.equal(r.ok, true)
+})
+
+test('지난 문의: 200건씩 끊어 cursor 로 이어 가고, 실패한 묶음은 failed 로 센다', async () => {
+  const entries = {}
+  for (let i = 0; i < 230; i++) entries[`lead_contact_${1790000000000 + i}_x`] = JSON.stringify({ data: DATA, receivedAt: '2026-09-01T00:00:00Z' })
+  let n = 0
+  const f = fakeFetch(() => (++n === 2 ? new Response('{}', { status: 500 }) : new Response(JSON.stringify({ inserted: 40 }), { status: 200 })))
+  const r1 = await backfillInquiriesToIntranet({ INTRANET_INQUIRY_KEY: 'k1' }, fakeKv(entries), null, f)
+  assert.equal(r1.listed, 200)
+  assert.equal(r1.cursor, '200')
+  assert.equal(r1.failed, 40)
+  assert.equal(r1.ok, false)
+  const r2 = await backfillInquiriesToIntranet({ INTRANET_INQUIRY_KEY: 'k1' }, fakeKv(entries), r1.cursor, f)
+  assert.equal(r2.listed, 30)
+  assert.equal(r2.cursor, null)
+  // 열쇠 없음·테스트 서버는 보내지 않는다
+  assert.equal((await backfillInquiriesToIntranet({}, fakeKv(entries), null, f)).reason, 'no_key')
+  assert.equal((await backfillInquiriesToIntranet({ INTRANET_INQUIRY_KEY: 'k1', SITE_ENV: 'preview' }, fakeKv(entries), null, f)).reason, 'preview')
+})

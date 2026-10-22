@@ -320,6 +320,29 @@ document.getElementById('btnTestMailRecipients').addEventListener('click', async
   }
 });
 
+// 인트라넷 연결 전 문의 백업 → 인트라넷 '지난 문의'(기록용). 서버가 200건씩 처리하므로 끝날 때까지 이어서 부른다.
+document.getElementById('btnBackfillIntranet').addEventListener('click', async function() {
+  if (!confirm('지난 문의를 인트라넷 「홈페이지 문의 › 지난 문의」로 옮깁니다. 알림은 가지 않습니다. 진행할까요?')) return;
+  const note = document.getElementById('backfillIntranetNote');
+  const total = { listed: 0, inserted: 0, duplicate: 0, invalid: 0 };
+  this.disabled = true;
+  try {
+    let cursor = null;
+    do {
+      const r = await api('POST', '/inquiries/backfill-intranet', { cursor: cursor });
+      total.listed += r.listed || 0; total.inserted += r.inserted || 0; total.duplicate += r.duplicate || 0; total.invalid += r.invalid || 0;
+      if (note) note.textContent = '확인 ' + total.listed + '건 · 새로 옮김 ' + total.inserted + '건 · 이미 있음 ' + total.duplicate + '건';
+      cursor = r.cursor;
+    } while (cursor);
+    showToast('✅ 지난 문의 ' + total.inserted + '건을 인트라넷으로 옮겼습니다.' + (total.duplicate ? ' (이미 있던 ' + total.duplicate + '건 제외)' : ''));
+    if (note) note.textContent = '완료: 확인 ' + total.listed + '건 · 새로 옮김 ' + total.inserted + '건 · 이미 있음 ' + total.duplicate + '건' + (total.invalid ? ' · 읽을 수 없음 ' + total.invalid + '건' : '');
+  } catch (e) {
+    showToast('옮기는 중 오류: ' + e.message + ' (다시 누르면 이어서 옮깁니다)', 'error');
+  } finally {
+    this.disabled = false;
+  }
+});
+
 document.getElementById('btnSaveStats').addEventListener('click', async () => {
   await api('PUT', '/home', { stats: {
     projects: +document.getElementById('statProjects').value,
