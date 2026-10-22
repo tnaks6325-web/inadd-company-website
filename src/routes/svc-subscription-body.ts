@@ -282,7 +282,7 @@ export const SUBSCRIPTION_BODY = `
     <div style="background:#21306F;color:#FFFFFF;border-radius:20px;padding:36px 32px;">
       <div style="font-size:22px;font-weight:700;">패키지로 한 번에 구독하면</div>
       <div style="margin-top:12px;"><span style="font-size:24px;font-weight:700;">월 </span><span style="font-size:60px;font-weight:900;letter-spacing:-0.04em;">300</span><span style="font-size:24px;font-weight:700;">만 원</span></div>
-      <div style="font-size:20px;font-weight:700;color:#FFE94A;margin-top:8px;">매달 150만 원 아껴요</div>
+      <div style="font-size:20px;font-weight:700;color:#FFE94A;margin-top:8px;">최대 200만 원 아껴요</div>
     </div>
     <div style="background:#FFFFFF;border-radius:20px;padding:36px 32px;display:flex;flex-direction:column;justify-content:center;">
       <div style="font-size:26px;font-weight:800;line-height:1.4;">필요한 서비스만<br>부분 구독도 가능해요</div>
@@ -450,7 +450,7 @@ export const SUBSCRIPTION_BODY = `
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div style="font-size:26px;font-weight:800;">1.41%</div><div data-ref-bar="1" style="width:100%;height:56.1753%;background:#D9C59A;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:700;">2023</div></div>
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div style="font-size:26px;font-weight:800;color:#21306F;">2.51%</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">2024</div></div>
       </div>
-      <div style="text-align:center;font-size:19px;font-weight:600;margin-top:12px;">SNS 광고 ROAS</div>
+      <div style="text-align:center;font-size:19px;font-weight:600;margin-top:12px;">SNS 광고 구매 전환율</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;border-top:2px solid #F4EDDC;padding-top:28px;">
         <div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">2.2배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">구매 전환
 6건 → 13건</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">+101%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">전환 매출
