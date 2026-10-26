@@ -74,7 +74,7 @@ if (menuToggle && mainNav) {
   document.querySelectorAll('.nav-link').forEach(a => {
     const h = a.getAttribute('href');
     if (h === p || (h !== '/' && p.startsWith(h))) {
-      a.style.color      = 'var(--blue-light)';
+      a.style.color      = 'var(--blue)';  /* blue-light 는 밝은 바탕에서 대비 3.3:1 이라 진한 파랑으로 */
       a.style.background = 'rgba(26,107,255,0.08)';
     }
   });

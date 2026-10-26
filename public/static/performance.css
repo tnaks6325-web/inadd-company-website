@@ -26,7 +26,7 @@
 .pm-media-tabs button svg { grid-column:2; grid-row:1/3; align-self:center; }
 .pm-media-panel { padding:50px 56px; }
 .pm-media-panel[hidden] { display:none; }
-.pm-caption { color:#285ccc; font-size:11px; letter-spacing:.13em; font-weight:700; }
+.pm-caption { color:#285ccc; font-size:12px; letter-spacing:.13em; font-weight:700; }
 .pm-media-panel h3 { font-size:32px; font-weight:800; line-height:1.3; letter-spacing:-.04em; margin:16px 0 20px; }
 .pm-media-panel>p { color:#6e6e73; font-size:16px; line-height:1.85; max-width:600px; }
 .pm-product-tags { display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 26px; }
@@ -46,10 +46,10 @@
 .pm-page .pm-note { font-size:12px; color:#7d7d83; line-height:1.8; margin:18px 0 0; }
 .pm-funnel { border:1px solid #e0e3eb; border-radius:20px; padding:30px; background:#fff; box-shadow:0 14px 40px #25375405; }
 .pm-funnel-head { display:flex; justify-content:space-between; gap:12px; align-items:center; padding-bottom:24px; }
-.pm-funnel-head b { font-size:16px; }.pm-funnel-head>span { font-size:11px; color:#747b89; }
+.pm-funnel-head b { font-size:16px; }.pm-funnel-head>span { font-size:12px; color:#5f6470; }
 .pm-funnel ol { list-style:none; padding:0; margin:0; }
 .pm-funnel li { padding:18px 0; border-top:1px solid #e9ebf0; display:grid; grid-template-columns:28px 1fr; gap:4px 12px; }
-.pm-funnel-step { grid-row:1/3; font-size:11px; color:#285ccc; align-self:center; }
+.pm-funnel-step { grid-row:1/3; font-size:12px; color:#285ccc; align-self:center; }
 .pm-funnel li b { font-size:17px; font-weight:700; }
 .pm-funnel li>span:last-child { grid-column:2; font-size:13px; color:#7a7c83; }
 .pm-funnel>p { font-size:12px; color:#8a8d96; border-top:1px solid #e9ebf0; padding-top:18px; line-height:1.7; margin:8px 0 0; }
@@ -86,8 +86,8 @@
 @media(max-width:767px) {
   .pm-page .pm-hero .vh-photo-bg::after { background:linear-gradient(90deg,rgba(255,255,255,.94),rgba(255,255,255,.82) 65%,rgba(255,255,255,.55)); }
   .pm-section { padding:64px 0; }.pm-page .section-head { margin-bottom:32px; }.pm-page .sec-sub { font-size:15px; }.pm-page .pm-hero .vh-inner { padding-top:112px; padding-bottom:76px; }.pm-page .pm-hero { min-height:610px; }.pm-page .pm-hero .vh-photo-bg { background-position:63% center; }.pm-page .pm-hero .vh-title { font-size:clamp(30px,7.2vw,42px); line-height:1.3; }.pm-page .pm-hero .vh-sub-wrap { max-width:90%; }.pm-page .pm-hero .vh-sub { font-size:15px; }
-  .pm-section-nav .container { gap:0; justify-content:space-between; }.pm-section-nav a { font-size:11px; min-height:58px; }
-  .pm-media-shell { grid-template-columns:1fr; border-radius:18px; }.pm-media-tabs { display:grid; grid-template-columns:repeat(4,1fr); padding:12px; gap:4px; border-right:0; border-bottom:1px solid #e4e4e9; }.pm-media-tabs button { min-height:70px; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:12px 4px; border-radius:10px; gap:6px; }.pm-platform { font-size:17px; }.pm-media-tabs button>span:nth-child(2) { font-size:10px; }.pm-media-tabs button svg { display:none; }.pm-media-panel { padding:28px 24px; }.pm-media-panel h3 { font-size:27px; }.pm-media-panel>p { font-size:15px; }.pm-checks li { font-size:14px; }
+  .pm-section-nav .container { gap:0; justify-content:space-between; }.pm-section-nav a { font-size:12px; min-height:58px; }
+  .pm-media-shell { grid-template-columns:1fr; border-radius:18px; }.pm-media-tabs { display:grid; grid-template-columns:repeat(4,1fr); padding:12px; gap:4px; border-right:0; border-bottom:1px solid #e4e4e9; }.pm-media-tabs button { min-height:70px; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:12px 4px; border-radius:10px; gap:6px; }.pm-platform { font-size:17px; }.pm-media-tabs button>span:nth-child(2) { font-size:12px; }.pm-media-tabs button svg { display:none; }.pm-media-panel { padding:28px 24px; }.pm-media-panel h3 { font-size:27px; }.pm-media-panel>p { font-size:15px; }.pm-checks li { font-size:14px; }
   .pm-objectives { grid-template-columns:repeat(3,1fr); gap:18px 10px; padding-top:24px; }.pm-objectives>span { grid-column:1/-1; }.pm-objectives b { font-size:13px; }.pm-objectives p { font-size:12px; }
   .pm-feature { grid-template-columns:1fr; gap:30px; padding:10px 0 42px; }.pm-feature+.pm-feature { padding:42px 0; }.pm-feature-reverse .pm-feature-copy { grid-row:1; }.pm-feature h3 { font-size:28px; margin-bottom:18px; }.pm-feature-copy>p { font-size:15px; }.pm-funnel { padding:24px; }.pm-creative-art { padding:16px 24px 0; }
   .pm-report { grid-template-columns:1fr; gap:22px; padding-top:42px; }.pm-report h3 { font-size:26px; }.pm-report dl>div { gap:14px; grid-template-columns:70px 1fr; }
