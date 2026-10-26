@@ -10,7 +10,7 @@ export interface InsightPost {
   title: string
   summary?: string
   content?: string          // HTML
-  mainCategory?: string     // 'content-strategy' | 'case-study'
+  mainCategory?: string     // 'content-strategy' | 'case-study' | 'resources'
   subCategory?: string      // viral | influencer | seeding | seo | review | oliveyoung | ppl
   thumbnail?: string
   metaDescription?: string  // 검색 결과 설명문 (없으면 summary)
@@ -25,6 +25,7 @@ export const SITE_URL = 'https://www.inadcompany.co.kr'
 export const CAT_LABEL: Record<string, string> = {
   'case-study': '실전 사례',
   'content-strategy': '콘텐츠 별 전략',
+  resources: '실무 자료실',
 }
 export const SUB_LABEL: Record<string, string> = {
   viral: '바이럴 마케팅', influencer: '인플루언서', seeding: '체험단',

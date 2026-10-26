@@ -25,7 +25,7 @@ BlogRouter.use('*', async (c, next) => {
   await next()
 })
 
-const MAIN = ['content-strategy', 'case-study']
+const MAIN = ['content-strategy', 'case-study', 'resources']
 const SUB = ['viral', 'influencer', 'seeding', 'seo', 'review', 'oliveyoung', 'ppl']
 const EDITABLE = ['title', 'summary', 'content', 'mainCategory', 'subCategory',
   'thumbnail', 'metaDescription', 'keywords', 'notionId'] as const

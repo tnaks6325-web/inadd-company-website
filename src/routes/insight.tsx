@@ -24,6 +24,7 @@ export const InsightPage = () => {
             <button class="ins2-tab active" data-main="all">All</button>
             <button class="ins2-tab" data-main="content-strategy">콘텐츠 별 전략</button>
             <button class="ins2-tab" data-main="case-study">실전 사례</button>
+            <button class="ins2-tab" data-main="resources">실무 자료실</button>
             <button class="ins2-tab ins2-tab--gallery" data-main="gallery">
               <span class="ins2-tab-dot"></span>인애드 일상
             </button>
@@ -126,7 +127,7 @@ export const InsightPage = () => {
   var lbImages  = [];  // 현재 패키지의 이미지 배열
   var lbCurrent = 0;  // 현재 인덱스
 
-  var CAT_LABELS = { 'content-strategy':'콘텐츠 전략', 'case-study':'실전 사례' };
+  var CAT_LABELS = { 'content-strategy':'콘텐츠 전략', 'case-study':'실전 사례', 'resources':'실무 자료실' };
   var SUB_LABELS = { viral:'바이럴 마케팅', influencer:'인플루언서', seeding:'체험단', seo:'SEO', review:'리뷰', oliveyoung:'올리브영', ppl:'PPL' };
   var TAG_COLORS = {
     '일상':    { bg:'rgba(41,121,255,0.18)',  border:'rgba(41,121,255,0.55)',  color:'#7ab4ff' },
@@ -359,6 +360,12 @@ export const InsightPage = () => {
       applyFilter();
     });
   });
+
+  /* ── 주소로 탭 열기 (예: /insight?tab=resources) ── */
+  var tabParam = new URLSearchParams(location.search).get('tab');
+  if (tabParam) {
+    mainTabs.forEach(function(t){ if (t.getAttribute('data-main') === tabParam) t.click(); });
+  }
 
   /* ── 갤러리 서브 탭 ── */
   if (galSubTabs) {

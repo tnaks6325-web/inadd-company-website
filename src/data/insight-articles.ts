@@ -10,7 +10,7 @@
 //    'viral' | 'influencer' | 'seeding' | 'seo' | 'review' | 'oliveyoung' | 'ppl'
 // ─────────────────────────────────────────────
 
-export type InsightCategory = 'content-strategy' | 'case-study'
+export type InsightCategory = 'content-strategy' | 'case-study' | 'resources'
 
 export type ContentSubCategory =
   | 'viral'
