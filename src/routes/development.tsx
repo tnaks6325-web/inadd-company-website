@@ -198,9 +198,6 @@ export const DevelopmentPage = () => (
               <div class="dev-area-tags">
                 {a.tags.map(t => <span class="dev-area-tag">{t}</span>)}
               </div>
-              <div class="dev-area-card-footer">
-                <span class="dev-area-arrow">→</span>
-              </div>
             </div>
           ))}
         </div>
@@ -570,16 +567,6 @@ export const DevelopmentPage = () => (
     }
     draw();
   })();
-
-  /* ── 카드 호버 틸트 ── */
-  document.querySelectorAll('.dev-area-card, .dev-why-card, .dev-tech-card').forEach(function(card){
-    card.addEventListener('mousemove', function(e){
-      var rect = card.getBoundingClientRect();
-      var x = (e.clientX-rect.left)/rect.width-.5, y = (e.clientY-rect.top)/rect.height-.5;
-      card.style.transform='perspective(600px) rotateY('+x*8+'deg) rotateX('+(-y*8)+'deg) translateY(-4px)';
-    });
-    card.addEventListener('mouseleave', function(){ card.style.transform=''; });
-  });
 })();
     `}} />
   </>
