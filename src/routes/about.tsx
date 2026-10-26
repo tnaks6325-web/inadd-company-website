@@ -60,32 +60,32 @@ export const AboutPage = () => (
               <p>바이럴·인플루언서·유튜브·리뷰·PPL까지 상황에 맞게 조합하되, 기준은 하나입니다: 설득력 있는 메시지. 브랜드 콘텐츠가 널리 닿게 만들고, 그 흐름이 전환으로 이어지도록 끝까지 설계합니다.</p>
             </div>
 
-            {/* 서비스 태그 그리드 */}
+            {/* 서비스 태그 그리드 — 각 서비스 페이지로 이동 */}
             <div class="ai-services-grid">
-              <div class="ai-svc-item">
+              <a class="ai-svc-item" href="/marketing/viral">
                 <span class="ai-svc-dot"></span>
                 <span class="ai-svc-name">바이럴 마케팅</span>
-              </div>
-              <div class="ai-svc-item">
+              </a>
+              <a class="ai-svc-item" href="/marketing/influencer">
                 <span class="ai-svc-dot"></span>
                 <span class="ai-svc-name">인플루언서 마케팅</span>
-              </div>
-              <div class="ai-svc-item">
+              </a>
+              <a class="ai-svc-item" href="/marketing/seeding">
                 <span class="ai-svc-dot"></span>
                 <span class="ai-svc-name">체험단 마케팅</span>
-              </div>
-              <div class="ai-svc-item">
+              </a>
+              <a class="ai-svc-item" href="/marketing/review">
                 <span class="ai-svc-dot"></span>
                 <span class="ai-svc-name">리뷰 마케팅</span>
-              </div>
-              <div class="ai-svc-item">
+              </a>
+              <a class="ai-svc-item" href="/marketing/ppl">
                 <span class="ai-svc-dot"></span>
                 <span class="ai-svc-name">PPL 광고</span>
-              </div>
-              <div class="ai-svc-item">
+              </a>
+              <a class="ai-svc-item" href="/marketing/oliveyoung">
                 <span class="ai-svc-dot"></span>
                 <span class="ai-svc-name">올리브영 마케팅</span>
-              </div>
+              </a>
             </div>
 
           </div>

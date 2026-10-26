@@ -2462,15 +2462,18 @@ em {
   border: 1px solid var(--border);
   border-radius: 999px;
   box-shadow: 0 2px 8px -5px rgba(26,31,46,0.1);
-  cursor: default;
-  user-select: none;
+  text-decoration: none;
+  cursor: pointer;
   transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, border-color .25s;
 }
-.ai-svc-item:hover {
+/* 서비스 페이지로 가는 링크 — 올리거나 키보드로 고르면 반응 */
+.ai-svc-item:hover,
+.ai-svc-item:focus-visible {
   transform: translateY(-2px);
   border-color: rgba(40,92,204,0.4);
   box-shadow: 0 10px 22px -10px rgba(40,92,204,0.28);
 }
+.ai-svc-item:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 .ai-svc-dot {
   width: 6px;
   height: 6px;
@@ -19686,10 +19689,6 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   overflow: hidden;
   transition: transform 0.3s, border-color 0.3s;
 }
-.dev-why-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--card-color, #a78bfa);
-}
 .dev-why-card-glow {
   position: absolute;
   top: -30px; right: -30px;
@@ -19721,7 +19720,6 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   opacity: 0;
   transition: opacity 0.3s;
 }
-.dev-why-card:hover .dev-why-card-line { opacity: 1; }
 
 /* ── SECTION 3 — DEVELOPMENT AREA ── */
 .dev-area {
@@ -19768,11 +19766,6 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
   cursor: default;
 }
-.dev-area-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--area-color, #a78bfa);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-}
 .dev-area-card-glow {
   position: absolute;
   top: -40px; right: -40px;
@@ -19783,43 +19776,16 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   opacity: 0.08;
   transition: opacity 0.3s;
 }
-.dev-area-card:hover .dev-area-card-glow { opacity: 0.15; }
 
-/* 호버 시 테두리를 따라 도는 파란빛 (border beam) — WHAT WE AUTOMATE 카드 전용 */
+/* 호버 시 테두리를 따라 도는 빛 (border beam) — .mkt-feat-card 가 사용.
+   WHAT WE AUTOMATE 카드는 눌리지 않아 2026-10-26 호버 효과를 뺐다. */
 @property --dev-beam-angle {
   syntax: "<angle>";
   initial-value: 0deg;
   inherits: false;
 }
-.dev-area-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1.5px;
-  background: conic-gradient(from var(--dev-beam-angle),
-    transparent 0deg,
-    transparent 295deg,
-    rgba(40,92,204,0.65) 330deg,
-    #5a82db 352deg,
-    transparent 360deg);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 4;
-  transition: opacity 0.3s ease;
-}
-.dev-area-card:hover::after {
-  opacity: 1;
-  animation: devCardBeam 2s linear infinite;
-}
 @keyframes devCardBeam {
   to { --dev-beam-angle: 360deg; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .dev-area-card:hover::after { animation: none; opacity: 0; }
 }
 .dev-area-card-top {
   display: flex;
@@ -19867,14 +19833,6 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   border-radius: 100px;
   color: rgba(255,255,255,0.5);
 }
-.dev-area-card-footer { display: flex; justify-content: flex-end; }
-.dev-area-arrow {
-  font-size: 18px;
-  color: var(--area-color, #a78bfa);
-  opacity: 0.5;
-  transition: opacity 0.2s, transform 0.2s;
-}
-.dev-area-card:hover .dev-area-arrow { opacity: 1; transform: translateX(4px); }
 
 /* ── SECTION 4 — PROCESS ── */
 .dev-process {
@@ -20167,10 +20125,6 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   overflow: hidden;
   transition: transform 0.3s, border-color 0.3s;
 }
-.dev-tech-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--tech-color, #a78bfa);
-}
 .dev-tech-card-glow {
   position: absolute;
   top: -30px; right: -30px;
@@ -20181,7 +20135,6 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   opacity: 0.08;
   transition: opacity 0.3s;
 }
-.dev-tech-card:hover .dev-tech-card-glow { opacity: 0.18; }
 .dev-tech-card-top {
   display: flex;
   align-items: flex-start;
@@ -22979,7 +22932,7 @@ body:has(.vh-hero) .site-header:not(.scrolled) .header-logo {
 }
 /* 보라 액센트 → 브랜드 블루 */
 .dev-section-title em, .dev-sub em, .dev-kpi-num, .dev-kpi-unit,
-.dev-area-num, .dev-area-title-ko, .dev-area-arrow, .dev-fstat-num,
+.dev-area-num, .dev-area-title-ko, .dev-fstat-num,
 .dev-fstat-unit, .dev-process-step, .dev-cta-label, .dev-cta-title em,
 .dev-sys-dot, .dev-pos-check, .dev-flagship-badge {
   color: var(--blue) !important;
@@ -23080,7 +23033,7 @@ body:has(.vh-hero) .site-header:not(.scrolled) .header-logo {
   border-color: var(--border-blue) !important;
 }
 .dev-why-card-line, .dev-process-connector,
-.dev-flagship-badge, .dev-area-arrow, .dev-process-step {
+.dev-flagship-badge, .dev-process-step {
   background: rgba(40,92,204,0.12) !important;
 }
 .dev-flagship-badge {
