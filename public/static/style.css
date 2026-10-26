@@ -25926,8 +25926,8 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
   padding: 0 !important;
 }
 .svc-light .ifl-data-section .ifl-matching-row .ifl-data-db-live-text {
-  color: #16a34a !important;
-  -webkit-text-fill-color: #16a34a !important;
+  color: #137036 !important;
+  -webkit-text-fill-color: #137036 !important;
 }
 .svc-light .ifl-data-section .ifl-matching-row .ifl-data-db-right .ifl-data-counter-num,
 .svc-light .ifl-data-section .ifl-matching-row .ifl-data-db-plus {
@@ -27117,3 +27117,32 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
   width: auto !important; height: auto !important;
   background: transparent !important; border-radius: 0;
 }
+
+/* ============================================
+   디자인 점검 4단계-1 (2026-10-26) — 작은 글자·흐린 글자
+   기준: 글자 최소 12px, 회색 글자는 배경 대비 4.5:1 이상(--gray-2)
+   휴대폰·앱 화면을 흉내 낸 그림 속 글자는 제외
+   ============================================ */
+.logo-sub, .footer-col h4, .ndm-text em, .sec-label,
+.sdtl-card-en, .marquee-en, .sg-mini-label, .sg-callout-txt, .sg-year,
+.testi-tag, .testi-info span,
+.ai-eyebrow-text, .hn-year-label, .hn-future-badge,
+.aptn-eyebrow, .aptn-step-badge, .aptn-result-tagline, .aptn-result-metric-key, .aptn-vm-divider-badge,
+.lc-sub, .ldl-label,
+.dev-kpi-label, .dev-area-tag, .dev-tech-tag,
+.ifl-data-db-live-text, .ifl2-case-badge, .ifl2-case-price-label, .svctab-btn-num,
+.iflp2-num, .iflp2-en, .iflp2-panel-tag, .iflp2-ptag-label,
+.seed-story-index, .seed-note span, .svc-list-num, .sdng-list-best-badge, .svc-ptag-label,
+.rvt-tier-badge { font-size: 12px !important; }
+.footer-bottom p, .footer-legal, .sec-label, .dev-pos-item span,
+.iflp2-num, .iflp2-en, .svc-list-num { color: var(--gray-2) !important; -webkit-text-fill-color: var(--gray-2) !important; }
+/* 연혁 카드 연도: 연한 파랑(대비 2.7:1) → 브랜드 파랑 */
+.hn-card-year { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; }
+/* 더 구체적인 기존 규칙(아이디·.svc-light)이 이기는 곳은 같은 세기로 덮음 */
+#iflp2List .iflp2-num, #iflp2List .iflp2-en,
+.sdng-split-layout .svc-list-num { color: var(--gray-2) !important; -webkit-text-fill-color: var(--gray-2) !important; }
+.svc-light .ifl2-case-badge { font-size: 12px !important; }
+.svc-light .ifl2-case-badge--bad,
+.svc-light .ifl2-case-price-label { color: #5f6878 !important; -webkit-text-fill-color: #5f6878 !important; }#creatorProposalCriteria .ifl2-case-badge { font-size: 12px !important; }
+#creatorProposalCriteria .ifl2-case-status--bad { color: #5f6878 !important; -webkit-text-fill-color: #5f6878 !important; }
+

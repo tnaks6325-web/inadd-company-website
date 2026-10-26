@@ -17,7 +17,7 @@
 .pm-page .pr-bars { flex:1; display:grid; grid-template-columns:repeat(var(--n),1fr); gap:16px; align-items:end; border-bottom:2px solid #dfe2ea; margin-top:14px; padding:0 6px; }
 .pm-page .pr-bar { height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; position:relative; padding-bottom:0; }
 .pm-page .pr-bar-val { font-size:15px; font-weight:800; color:#5b6070 !important; text-align:center; margin-bottom:8px; line-height:1.25; }
-.pm-page .pr-bar-val small { display:block; font-size:11px; font-weight:600; color:#8a8f9b !important; margin-top:2px; }
+.pm-page .pr-bar-val small { display:block; font-size:12px; font-weight:600; color:#5f6470 !important; margin-top:2px; }
 .pm-page .pr-bar-fill { width:100%; max-width:120px; height:var(--h); max-height:150px; min-height:10px; border-radius:10px 10px 0 0; background:#c8cfdd !important; }
 .pm-page .pr-bar.is-hi .pr-bar-val { color:var(--pr-blue) !important; font-size:17px; }
 .pm-page .pr-bar.is-hi .pr-bar-fill { background:var(--pr-blue) !important; }
@@ -31,13 +31,13 @@
 .pm-page .pr-kpi strong small { font-size:15px; margin-left:2px; }
 .pm-page .pr-kpi b { margin-top:10px; font-size:14px; color:var(--pr-ink) !important; }
 .pm-page .pr-kpi span { margin-top:4px; font-size:12.5px; color:var(--pr-sub) !important; }
-.pm-page .pr-note { margin:20px 0 0; font-size:12px; line-height:1.6; color:#8a8f9b !important; }
+.pm-page .pr-note { margin:20px 0 0; font-size:12px; line-height:1.6; color:#5f6470 !important; }
 
 /* 매체 탭 + 사례 한 장씩 */
 .pm-page .pr-tabs { display:flex; justify-content:center; flex-wrap:wrap; gap:0 34px; margin-bottom:32px; border-bottom:1px solid #dfe2ea; }
-.pm-page .pr-tab { display:inline-flex; align-items:center; gap:6px; height:52px; padding:0 2px; margin-bottom:-1px; border:0; border-bottom:2px solid transparent; border-radius:0; background:transparent !important; font:inherit; font-size:16px; font-weight:700; color:#8a8f9b !important; cursor:pointer; transition:color .2s,border-color .2s; }
+.pm-page .pr-tab { display:inline-flex; align-items:center; gap:6px; height:52px; padding:0 2px; margin-bottom:-1px; border:0; border-bottom:2px solid transparent; border-radius:0; background:transparent !important; font:inherit; font-size:16px; font-weight:700; color:#5f6470 !important; cursor:pointer; transition:color .2s,border-color .2s; }
 .pm-page .pr-tab:hover { color:var(--pr-ink) !important; }
-.pm-page .pr-tab span { font-size:12px; color:#9a9ea8 !important; }
+.pm-page .pr-tab span { font-size:12px; color:#5f6470 !important; }
 .pm-page .pr-tab.is-on { color:var(--pr-ink) !important; border-bottom-color:var(--pr-blue); }
 .pm-page .pr-tab.is-on span { color:var(--pr-blue) !important; }
 .pm-page .pr-viewport { position:relative; }
@@ -63,7 +63,7 @@
   .pm-page .pr-kpis { gap:8px; }
   .pm-page .pr-kpi { padding:14px 2px 12px; }
   .pm-page .pr-kpi strong { font-size:22px; } .pm-page .pr-kpi strong small { font-size:12px; }
-  .pm-page .pr-kpi b { font-size:13px; margin-top:6px; } .pm-page .pr-kpi span { font-size:11.5px; }
+  .pm-page .pr-kpi b { font-size:13px; margin-top:6px; } .pm-page .pr-kpi span { font-size:12px; }
   .pm-page .pr-tabs { flex-wrap:nowrap; overflow-x:auto; justify-content:flex-start; gap:0 22px; margin:0 -20px 20px; padding:0 20px; scrollbar-width:none; }
   .pm-page .pr-tab { flex:none; height:46px; padding:0 2px; font-size:15px; }
   /* 휴대폰: 넘김 화살표를 카드 오른쪽 위에 작게 */
