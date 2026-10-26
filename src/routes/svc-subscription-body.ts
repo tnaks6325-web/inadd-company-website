@@ -72,23 +72,23 @@ export const SUBSCRIPTION_BODY = `
   <div style="display:flex;flex-direction:column;gap:16px;margin-top:56px;">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;background:#F8F7F4;border-radius:14px;padding:30px 36px;">
       <div style="font-size:27px;font-weight:600;line-height:1.45;">“들어오고 3개월은 가르치기만 했어요”</div>
-      <div style="flex:none;font-size:20px;font-weight:700;border:2px solid #D9C59A;border-radius:999px;padding:8px 18px;">신입 교육</div>
+      <div style="flex:none;font-size:20px;font-weight:700;border:2px solid #D9C59A;border-radius:4px;padding:8px 18px;">신입 교육</div>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;background:#F8F7F4;border-radius:14px;padding:30px 36px;">
       <div style="font-size:27px;font-weight:600;line-height:1.45;">“겨우 손에 익으니 그만두더라고요”</div>
-      <div style="flex:none;font-size:20px;font-weight:700;border:2px solid #D9C59A;border-radius:999px;padding:8px 18px;">잦은 퇴사</div>
+      <div style="flex:none;font-size:20px;font-weight:700;border:2px solid #D9C59A;border-radius:4px;padding:8px 18px;">잦은 퇴사</div>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;background:#F8F7F4;border-radius:14px;padding:30px 36px;">
       <div style="font-size:27px;font-weight:600;line-height:1.45;">“새로 온 사람한테 또 처음부터 설명해요”</div>
-      <div style="flex:none;font-size:20px;font-weight:700;border:2px solid #D9C59A;border-radius:999px;padding:8px 18px;">재교육</div>
+      <div style="flex:none;font-size:20px;font-weight:700;border:2px solid #D9C59A;border-radius:4px;padding:8px 18px;">재교육</div>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;background:#F8F7F4;border-radius:14px;padding:30px 36px;">
       <div style="font-size:27px;font-weight:600;line-height:1.45;">“광고 계정 비밀번호를 아무도 몰라요”</div>
-      <div style="flex:none;font-size:20px;font-weight:700;border:2px solid #D9C59A;border-radius:999px;padding:8px 18px;">인수인계</div>
+      <div style="flex:none;font-size:20px;font-weight:700;border:2px solid #D9C59A;border-radius:4px;padding:8px 18px;">인수인계</div>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;background:#F8F7F4;border-radius:14px;padding:30px 36px;">
       <div style="font-size:27px;font-weight:600;line-height:1.45;">“광고는 돌리는데 랜딩페이지는 못 만들어요”</div>
-      <div style="flex:none;font-size:20px;font-weight:700;border:2px solid #D9C59A;border-radius:999px;padding:8px 18px;">좁은 업무 범위</div>
+      <div style="flex:none;font-size:20px;font-weight:700;border:2px solid #D9C59A;border-radius:4px;padding:8px 18px;">좁은 업무 범위</div>
     </div>
   </div>
   <div style="margin-top:48px;border-top:2px solid #F4EDDC;padding-top:40px;font-size:26px;line-height:1.65;text-wrap:pretty;">구독하면 그 분야를 이미 하고 있던 전담자가 맡아요. 담당자가 바뀌어도 TF팀 안에서 넘겨받으니, <strong style="font-weight:800;">처음부터 다시 설명하실 필요가 없어요.</strong></div>
@@ -145,11 +145,11 @@ export const SUBSCRIPTION_BODY = `
   <div style="background:#FFFFFF;border-radius:20px;padding:44px;margin-top:24px;">
     <div style="font-size:30px;font-weight:800;line-height:1.4;">인애드마케팅 TF팀의 능력,<br>자체 구현하려면?</div>
     <div style="display:flex;align-items:flex-end;justify-content:center;gap:18px;margin-top:40px;">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;"><img src="/static/subscription/ace-1.webp" width="300" height="300" loading="lazy" decoding="async" alt="에이스 마케터" style="display:block;width:124px;height:124px;border-radius:50%;border:4px solid #21306F;object-fit:cover;"><div style="background:#21306F;color:#FFFFFF;font-size:19px;font-weight:800;padding:5px 14px;border-radius:999px;">에이스</div></div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;"><img src="/static/subscription/ace-2.webp" width="300" height="300" loading="lazy" decoding="async" alt="에이스 마케터" style="display:block;width:124px;height:124px;border-radius:50%;border:4px solid #21306F;object-fit:cover;"><div style="background:#21306F;color:#FFFFFF;font-size:19px;font-weight:800;padding:5px 14px;border-radius:999px;">에이스</div></div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;"><img src="/static/subscription/ace-3.webp" width="300" height="300" loading="lazy" decoding="async" alt="에이스 마케터" style="display:block;width:124px;height:124px;border-radius:50%;border:4px solid #21306F;object-fit:cover;"><div style="background:#21306F;color:#FFFFFF;font-size:19px;font-weight:800;padding:5px 14px;border-radius:999px;">에이스</div></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;"><img src="/static/subscription/ace-1.webp" width="300" height="300" loading="lazy" decoding="async" alt="에이스 마케터" style="display:block;width:124px;height:124px;border-radius:50%;border:4px solid #21306F;object-fit:cover;"><div style="background:#21306F;color:#FFFFFF;font-size:19px;font-weight:800;padding:5px 14px;border-radius:4px;">에이스</div></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;"><img src="/static/subscription/ace-2.webp" width="300" height="300" loading="lazy" decoding="async" alt="에이스 마케터" style="display:block;width:124px;height:124px;border-radius:50%;border:4px solid #21306F;object-fit:cover;"><div style="background:#21306F;color:#FFFFFF;font-size:19px;font-weight:800;padding:5px 14px;border-radius:4px;">에이스</div></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;"><img src="/static/subscription/ace-3.webp" width="300" height="300" loading="lazy" decoding="async" alt="에이스 마케터" style="display:block;width:124px;height:124px;border-radius:50%;border:4px solid #21306F;object-fit:cover;"><div style="background:#21306F;color:#FFFFFF;font-size:19px;font-weight:800;padding:5px 14px;border-radius:4px;">에이스</div></div>
       <div style="align-self:center;font-size:44px;font-weight:800;color:#21306F;margin:0 4px 40px;">+</div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;"><img src="/static/subscription/rookie-face.webp" width="400" height="400" loading="lazy" decoding="async" alt="루키 마케터" style="display:block;width:124px;height:124px;border-radius:50%;border:4px dashed #D9C59A;object-fit:cover;"><div style="border:2px solid #D9C59A;font-size:19px;font-weight:800;padding:3px 14px;border-radius:999px;">루키</div></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;"><img src="/static/subscription/rookie-face.webp" width="400" height="400" loading="lazy" decoding="async" alt="루키 마케터" style="display:block;width:124px;height:124px;border-radius:50%;border:4px dashed #D9C59A;object-fit:cover;"><div style="border:2px solid #D9C59A;font-size:19px;font-weight:800;padding:3px 14px;border-radius:4px;">루키</div></div>
     </div>
     <div style="text-align:center;font-size:26px;font-weight:800;margin-top:28px;">최소 <span style="color:#21306F;">에이스 3명</span>에 <span style="color:#21306F;">루키 1명</span>은 뽑아야 해요</div>
     <div style="display:flex;justify-content:flex-end;margin-top:20px;">
@@ -486,7 +486,7 @@ export const SUBSCRIPTION_BODY = `
     <img src="/static/subscription/cta-rangers.webp" width="885" height="662" loading="lazy" decoding="async" alt="" style="position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:100%;width:auto;opacity:0.5;pointer-events:none;">
     <h2 style="position:relative;margin:0;font-size:46px;line-height:1.38;font-weight:800;letter-spacing:-0.04em;color:#FFFFFF;">채용 공고 올리기 전에,<br>무료 진단부터 받아 보세요</h2>
     <p style="position:relative;margin:28px 0 0;font-size:24px;line-height:1.6;color:#FFFFFF;">신청하시면 담당자가 연락드려요.</p>
-    <a href="/contact" data-mts-cta="1" style="position:relative;display:inline-block;margin-top:44px;background:#FFFFFF;color:#21306F;font-size:28px;font-weight:800;text-decoration:none;padding:26px 64px;border-radius:999px;">무료 상담 신청</a>
+    <a href="/contact" data-mts-cta="1" style="position:relative;display:inline-block;margin-top:44px;background:#FFFFFF;color:#21306F;font-size:28px;font-weight:800;text-decoration:none;padding:26px 64px;border-radius:4px;">무료 상담 신청</a>
   </div>
   <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:64px;">
     <img src="/static/subscription/inad-logo.webp" width="480" height="480" loading="lazy" decoding="async" alt="인애드컴퍼니 로고" style="display:block;width:32px;height:32px;">
@@ -494,7 +494,7 @@ export const SUBSCRIPTION_BODY = `
     <div style="font-size:22px;font-weight:800;">인애드컴퍼니</div>
   </div>
 </section>
-<a href="/contact" data-mts-cta="1" data-sticky="1" style="position:fixed;left:50%;bottom:24px;z-index:50;transform:translate(-50%,160%);opacity:0;pointer-events:none;transition:opacity 0.3s ease, transform 0.45s cubic-bezier(0.2,0.7,0.2,1);display:flex;align-items:center;gap:12px;background:#21306F;color:#FFFFFF;text-decoration:none;font-size:24px;font-weight:800;padding:18px 44px;border-radius:999px;box-shadow:0 10px 30px rgba(17,19,24,0.28);white-space:nowrap;">무료 상담 신청<span style="font-size:18px;font-weight:600;">초기진단 무료</span></a>
+<a href="/contact" data-mts-cta="1" data-sticky="1" style="position:fixed;left:50%;bottom:24px;z-index:50;transform:translate(-50%,160%);opacity:0;pointer-events:none;transition:opacity 0.3s ease, transform 0.45s cubic-bezier(0.2,0.7,0.2,1);display:flex;align-items:center;gap:12px;background:#21306F;color:#FFFFFF;text-decoration:none;font-size:24px;font-weight:800;padding:18px 44px;border-radius:4px;box-shadow:0 10px 30px rgba(17,19,24,0.28);white-space:nowrap;">무료 상담 신청<span style="font-size:18px;font-weight:600;">초기진단 무료</span></a>
 
 </div>
 `
