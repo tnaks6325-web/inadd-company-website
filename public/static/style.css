@@ -23133,11 +23133,6 @@ body:has(.vh-hero) .site-header:not(.scrolled) .header-logo {
   box-shadow: 0 4px 18px rgba(26,31,46,0.05) !important;
   transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease) !important;
 }
-.dev-tech-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-blue) !important;
-  box-shadow: 0 14px 34px rgba(40,92,204,0.14) !important;
-}
 .dev-tech-icon {
   width: 46px !important;
   height: 46px !important;
@@ -23150,7 +23145,6 @@ body:has(.vh-hero) .site-header:not(.scrolled) .header-logo {
   transition: background 0.3s var(--ease), color 0.3s var(--ease);
 }
 .dev-tech-icon svg { width: 22px !important; height: 22px !important; }
-.dev-tech-card:hover .dev-tech-icon { background: var(--blue); color: #fff !important; }
 /* 무지개 태그/바 인라인 색 덮기 (아래 절제 블록에서 뉴트럴로 마무리) */
 .dev-tech-tag { border-color: var(--border) !important; }
 .dev-tech-bar-fill { background: var(--blue) !important; }
@@ -23163,9 +23157,7 @@ body:has(.vh-hero) .site-header:not(.scrolled) .header-logo {
   background: rgba(40,92,204,0.08) !important;
   color: var(--blue) !important;
 }
-.dev-why-card:hover .dev-why-icon,
-.dev-sys-card:hover .dev-sys-icon,
-.dev-tech-card:hover .dev-tech-icon {
+.dev-sys-card:hover .dev-sys-icon {
   background: var(--blue) !important;
   color: #fff !important;
 }
@@ -23260,17 +23252,12 @@ body:has(.vh-hero) .site-header:not(.scrolled) .header-logo {
 .dev-sys-card  { --sys-color:  var(--blue) !important; }
 .dev-tech-card { --tech-color: var(--blue) !important; }
 
-/* WHY IT MATTERS 카드 차별화 — 아이콘 칩 + 깊이 + 호버 인터랙션 */
+/* WHY IT MATTERS 카드 — 아이콘 칩 + 깊이 (눌리지 않는 카드라 호버 반응은 2026-10-26 제거) */
 .dev-why-card {
   background: var(--black-2) !important;
   border: 1px solid var(--border) !important;
   box-shadow: 0 4px 18px rgba(26,31,46,0.05) !important;
   transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease) !important;
-}
-.dev-why-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-blue) !important;
-  box-shadow: 0 14px 34px rgba(40,92,204,0.14) !important;
 }
 .dev-why-icon {
   width: 46px !important;
@@ -23284,10 +23271,6 @@ body:has(.vh-hero) .site-header:not(.scrolled) .header-logo {
   transition: background 0.3s var(--ease), color 0.3s var(--ease);
 }
 .dev-why-icon svg { width: 23px !important; height: 23px !important; }
-.dev-why-card:hover .dev-why-icon {
-  background: var(--blue);
-  color: #fff;
-}
 /* 하단 호버 라인은 칩/그림자와 중복 → 제거 */
 .dev-why-card-line { display: none !important; }
 
