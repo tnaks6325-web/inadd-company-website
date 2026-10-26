@@ -72,16 +72,16 @@
       q('[data-mte-total]').textContent = won(total);
       var note = q('[data-mte-note]');
       note.className = 'mte-bar-note' + (capped ? ' is-hot' : '');
-      if (!n) note.textContent = '위에서 항목을 골라 주세요.';
+      if (!n) note.textContent = '항목을 골라 주세요.';
       else if (capped) {
-        note.textContent = '팀구독 ' + won(PACKAGE) + '만 원이 적용돼요. 같은 금액에 10가지가 다 들어가요.';
+        note.textContent = '팀구독 적용 · 10가지가 다 들어가요';
         if (n < boxes.length) {
           var b = document.createElement('button');
           b.type = 'button'; b.textContent = '전부 담기';
           b.addEventListener('click', function () { checkAll(true); });
           note.appendChild(b);
         }
-      } else note.textContent = '초기진단·세팅(' + won(FREE) + '만 원)은 무료로 들어가요. ' + won(PACKAGE - sub) + '만 원어치 더 고르면 10가지가 다 들어간 팀구독과 같아져요.';
+      } else note.textContent = won(PACKAGE - sub) + '만 원 더 담으면 팀구독 금액이에요';
     }
     boxes.forEach(function (b) { b.addEventListener('change', update); });
     q('[data-mte-all]').addEventListener('click', function () { checkAll(true); });
