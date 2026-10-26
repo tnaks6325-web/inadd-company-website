@@ -27146,3 +27146,30 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
 .svc-light .ifl2-case-price-label { color: #5f6878 !important; -webkit-text-fill-color: #5f6878 !important; }#creatorProposalCriteria .ifl2-case-badge { font-size: 12px !important; }
 #creatorProposalCriteria .ifl2-case-status--bad { color: #5f6878 !important; -webkit-text-fill-color: #5f6878 !important; }
 
+/* ============================================
+   디자인 점검 4단계-2 (2026-10-27) — 모서리·그림자 규칙
+   모서리: 버튼·라벨·작은 선택지 4px / 카드·패널 16px
+   그림자: 0 없음(일반 카드는 테두리로 구분) / 1 버튼·강조 카드 / 2 떠 있는 메뉴·팝업
+   (같은 세기의 기존 !important 를 이기려고 body 를 앞에 붙임)
+   ============================================ */
+:root {
+  --r-card: 16px;
+  --shadow-1: 0 10px 24px -14px rgba(26,31,46,0.30);
+  --shadow-2: 0 18px 44px -18px rgba(26,31,46,0.28);
+}
+body .testi-card, body .hn-card, body .aptn-step-card, body .pm-media-card, body .svctab-stage,
+body .why-media, body .hsvc-panel, body .location-map-wrap, body .dev-area-card, body .dev-tech-card,
+body .dev-sys-card, body .dev-pos-col, body .pm-funnel, body .aptn-result-card, body .aptn-vm-row,
+body .dev-flagship, body .svc-panel, body .nav-dropdown-menu, body .sg-callout,
+body .pm-page .pr-case { border-radius: var(--r-card) !important; }
+body .svctab-sub { border-radius: 4px !important; }
+/* 그림자 0 — 일반 카드 */
+body .dev-sys-card, body .dev-tech-card, body .pm-funnel, body .aptn-vm-row, body .aptn-result-card,
+body .dev-flagship, body .hsvc-panel, body .svc-panel, body .svctab-stage,
+body .dev-pos-col:not(.dev-pos-col--us) { box-shadow: none !important; }
+/* 그림자 1 — 버튼·강조 카드 */
+body .why-cta, body .hero2-cta, body .vh-cta-btn, body .sg-callout, body .rvp-premium-banner-cta,
+body .dev-pos-col--us, body .rvt-card--premium, body .seed-note { box-shadow: var(--shadow-1) !important; }
+/* 그림자 2 — 떠 있는 메뉴·팝업 */
+body .hn-card, body .nav-dropdown-menu { box-shadow: var(--shadow-2) !important; }
+
