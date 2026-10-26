@@ -71,6 +71,15 @@ PR 이 열리거나 커밋이 더 올라오면 GitHub Actions 가 자동으로:
   - 미리보기: `node scripts/notion-publish.mjs --dry-run --page <노션 페이지 ID>` (홈페이지·노션 변경 없음)
   - 로컬 시험: `--no-notion-write --site http://localhost:<포트>` (로컬 홈페이지에만 올림)
   - 열쇠: `~/.config/inadd/notion-token`(노션 내부 연결 '인애드 홈페이지 발행'), `~/.config/inadd/blog-api-key`
+- 인스타 카드뉴스 자동 게시: 노션 '🎬 릴스 파이프라인 / 🎞 2. 릴스 제작'에서 **카드뉴스 상태=확정**이고 **카드뉴스 게시일**(예정일)이 된 것을
+  대표 맥의 예약 작업(launchd `com.sooman.inadd-insta-publish`, 30분마다 → `~/dev/.devtools/inadd-insta-publish.sh`)이
+  `scripts/insta-publish.mjs` 로 @inadcompany.official 에 캐러셀로 올린다(메타 공식 API).
+  - 한국 시각 12시 이후, 하루 1세트만. 연결된 계정이 @inadcompany.official 이 아니면 올리지 않는다.
+  - 카드 이미지는 '카드뉴스 폴더' 칸의 맥 폴더 PNG/JPG(이름순, 2~10장) → JPEG 변환 → 인사이트 이미지 저장소(`/api/blog/insight/thumb`)의 공개 주소로 메타에 넘긴다.
+  - 캡션 = '캡션' 칸 + '해시태그' 칸(최대 5개). 성공하면 카드뉴스 상태=게시됨·카드뉴스 게시일=오늘·카드뉴스 주소=게시물 주소.
+  - 실패하면 카드뉴스 상태가 미리보기로 돌아가고 차단 사유 맨 앞에 `[인스타 게시 오류 날짜] 이유`가 적힌다.
+  - 미리보기: `node scripts/insta-publish.mjs --dry-run --page <노션 페이지 ID>` (업로드·게시·노션 변경 없음, 계정·장수·캡션·JPEG 변환만 확인)
+  - 열쇠: 위 두 개 + `~/.config/inadd/meta-ig-token`(메타 시스템 사용자 'Inad Lead Mailer', instagram_content_publish 포함)
 
 ## 로컬 개발
 
