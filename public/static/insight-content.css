@@ -54,3 +54,106 @@
 .ins-detail-content figcaption { font-size: 13px; color: var(--gray-2); }
 /* 노션 체크리스트: 글머리 점 대신 ☐ */
 .ins-detail-content ul.ins-checklist { list-style: none; padding-left: 0; }
+
+/* ── 2026-10-26 본문 꾸미기: 글자 위계·명령문 상자·표 머리줄·인용 상자 ── */
+.ins-detail-content { color: var(--white); }
+.ins-detail-content h2 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 64px 0 18px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+.ins-detail-content h2:first-child { padding-top: 0; border-top: 0; }
+.ins-detail-content h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 19px;
+  font-weight: 800;
+  margin: 36px 0 10px;
+}
+.ins-detail-content h3::before {
+  content: '';
+  flex: none;
+  width: 5px;
+  height: 18px;
+  background: rgba(26,107,255,0.9);
+}
+.ins-detail-content h3 + p { margin-top: 0; }
+.ins-detail-content ul li::marker { color: rgba(26,107,255,0.9); }
+/* 명령문·단어 목록 상자 (복사 버튼은 insight-content.js 가 붙인다) */
+.ins-detail-content pre {
+  position: relative;
+  margin: 0 0 28px;
+  padding: 50px 22px 20px;
+  background: #F4F6FA;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+}
+.ins-detail-content pre code {
+  display: block;
+  font-family: 'Pretendard', -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #1F2430;
+  white-space: pre-wrap;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.ins-detail-content pre::before {
+  content: '복사해서 쓰세요';
+  position: absolute;
+  left: 22px;
+  top: 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(26,107,255,0.95);
+}
+.ins-copy-btn {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(26,107,255,1);
+  background: #fff;
+  border: 1px solid rgba(26,107,255,0.45);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.ins-copy-btn:hover { background: rgba(26,107,255,0.06); }
+.ins-copy-btn.done { color: #fff; background: rgba(26,107,255,1); }
+/* 표: 머리줄 진하게, 줄무늬, 첫 칸 굵게 */
+.ins-detail-content th {
+  color: #fff;
+  background: #1F4FBF;
+  border-color: #1F4FBF;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ins-detail-content td { border-color: rgba(0,0,0,0.08); }
+.ins-detail-content tr:nth-child(even) td { background: #F7F9FC; }
+.ins-detail-content td:first-child { font-weight: 700; color: #1F2430; }
+/* 인용 상자: 답글·공지 예시 등 */
+.ins-detail-content blockquote {
+  padding: 18px 22px;
+  border-left: 4px solid rgba(26,107,255,0.9);
+  background: #F2F6FF;
+  border-radius: 0 10px 10px 0;
+  color: var(--white);
+}
+/* 안내 상자: 본문 중간에서도 쓰도록 여백 조정 */
+.ins-detail-content .ins-callout { margin: 28px 0 32px; }
+.ins-detail-content .ins-callout > p:first-child { font-weight: 800; color: #1F2430; margin-bottom: 8px; }
+.ins-detail-content .ins-callout ul { margin-bottom: 0; }
+.ins-detail-content figcaption { text-align: center; }
+@media (max-width: 640px) {
+  .ins-detail-content h2 { font-size: 22px; margin-top: 48px; padding-top: 22px; }
+  .ins-detail-content h3 { font-size: 17px; }
+  .ins-detail-content pre { padding: 48px 16px 16px; }
+  .ins-detail-content pre::before { left: 16px; }
+  .ins-detail-content pre code { font-size: 14px; }
+}
