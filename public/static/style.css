@@ -27088,3 +27088,32 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
   .svt-table tbody th, .svt-table td, .svt-table thead th { padding: 12px 12px; }
   .svt-table td:last-child { white-space: normal; }
 }
+
+/* ============================================
+   디자인 점검 3단계 (2026-10-26) — 카드 안 카드 줄이기
+   ============================================ */
+/* 회사 소개 3단계 카드: 진한 그림자·윗줄 빛·호버 떠오름·아이콘 상자 제거 → 얇은 테두리 카드 하나만 */
+.svc-light .aptn-step-card,
+.svc-light .aptn-step-card--accent,
+.svc-light .aptn-step-card:hover { box-shadow: none !important; transform: none; }
+.svc-light .aptn-step-card::before { display: none; }
+.svc-light .aptn-step-icon-wrap,
+.svc-light .aptn-step-card:hover .aptn-step-icon-wrap {
+  width: auto; height: auto;
+  border: 0; background: transparent; box-shadow: none;
+  margin-bottom: 14px;
+}
+/* 자동화 개발 강점 4개: 카드·아이콘 칩 상자 제거 → 윗줄로 나눈 2열 목록 (대표 결정 B안) */
+.dev-why-cards { gap: 0 40px; }
+.dev-why-card {
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid var(--border) !important;
+  border-radius: 0;
+  box-shadow: none !important;
+  padding: 24px 0;
+}
+.dev-why-icon {
+  width: auto !important; height: auto !important;
+  background: transparent !important; border-radius: 0;
+}
