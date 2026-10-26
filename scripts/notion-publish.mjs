@@ -39,7 +39,7 @@ const readKey = (name) => readFileSync(join(homedir(), '.config/inadd', name), '
 const NOTION_TOKEN = readKey('notion-token')
 const BLOG_KEY = DRY ? '' : readKey('blog-api-key')
 
-const MAIN_CAT = { '콘텐츠 별 전략': 'content-strategy', '실전 사례': 'case-study' }
+const MAIN_CAT = { '콘텐츠 별 전략': 'content-strategy', '실전 사례': 'case-study', '실무 자료실': 'resources' }
 const SUB_CAT = { 바이럴: 'viral', 인플루언서: 'influencer', 체험단: 'seeding', SEO: 'seo', 리뷰: 'review', 올리브영: 'oliveyoung', PPL: 'ppl' }
 const NAVER_HEADING = '네이버 블로그용 원고'
 const NAVER_URL_PLACEHOLDER = '(발행 후 홈페이지 URL이 여기에 들어갑니다)'

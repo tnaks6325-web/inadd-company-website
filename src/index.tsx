@@ -1449,6 +1449,7 @@ function adminDashboardHTML(): string {
           <select id="iMainCat">
             <option value="content-strategy">콘텐츠 별 전략</option>
             <option value="case-study">실전 사례</option>
+            <option value="resources">실무 자료실</option>
           </select>
         </div>
         <div class="form-group">
