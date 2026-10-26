@@ -2460,7 +2460,7 @@ em {
   padding: 11px 16px;
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 4px;
   box-shadow: 0 2px 8px -5px rgba(26,31,46,0.1);
   text-decoration: none;
   cursor: pointer;
@@ -2793,7 +2793,7 @@ em {
   color: rgba(140,190,255,1);
   padding: 5px 16px;
   border: 1px solid rgba(80,140,255,0.6);
-  border-radius: 20px;
+  border-radius: 4px;
   background: rgba(41,121,255,0.18);
   box-shadow: 0 0 12px rgba(41,121,255,0.2);
 }
@@ -3144,7 +3144,7 @@ em {
   color: rgba(255,255,255,0.45);
   padding: 5px 18px;
   border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 20px;
+  border-radius: 4px;
   white-space: nowrap;
   background: rgba(255,255,255,0.03);
 }
@@ -11410,7 +11410,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   color: var(--blue) !important;
   padding: 6px 14px;
   border: 1px solid rgba(40, 92, 204, 0.3) !important;
-  border-radius: 40px;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.72) !important;
   margin: -14px 0 18px;
 }
@@ -13006,17 +13006,19 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
 .svctab-btn.active .svctab-btn-sub { color: rgba(255,255,255,0.38); }
 
 /* ── 컴팩트 탭 (서브 문구 아래 작은 세그먼트) ── */
+/* 2026-10-26 알약 세그먼트 → 밑줄 글자 탭 */
 .svctab-nav--compact {
   display: inline-flex;
   flex-direction: row !important;   /* 640px 이하 기본 column 규칙 무시 — 항상 가로 */
   width: auto;
   max-width: 100%;
-  gap: 4px;
-  padding: 5px;
+  gap: 28px;
+  padding: 0;
   margin: 2px 0 30px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: rgba(26,31,46,0.03);
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
   overflow-x: auto;
   overflow-y: visible;
 }
@@ -13026,12 +13028,14 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   flex-direction: row;
   align-items: center;
   gap: 7px;
-  padding: 9px 18px;
-  border-radius: 999px;
+  padding: 12px 2px;
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
 }
 .svctab-nav--compact .svctab-btn::after { display: none; }
-.svctab-nav--compact .svctab-btn:hover { background: rgba(40,92,204,0.05); }
-.svctab-nav--compact .svctab-btn.active { background: #fff; box-shadow: 0 2px 10px -4px rgba(26,31,46,0.2); }
+.svctab-nav--compact .svctab-btn:hover { background: transparent; }
+.svctab-nav--compact .svctab-btn.active { background: transparent; border-bottom-color: var(--blue); }
 .svctab-nav--compact .svctab-btn-num {
   font-size: 10.5px; letter-spacing: 0.1em; margin: 0;
   color: var(--gray-3) !important;
@@ -17245,7 +17249,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   font-weight: 700;
   letter-spacing: 0.1em;
   padding: 5px 12px;
-  border-radius: 20px;
+  border-radius: 4px;
   border: 1px solid;
   width: fit-content;
 }
@@ -17542,7 +17546,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   font-weight: 700;
   letter-spacing: 2px;
   padding: 5px 14px;
-  border-radius: 20px;
+  border-radius: 4px;
   background: linear-gradient(135deg, rgba(234,179,8,0.2), rgba(234,179,8,0.08));
   border: 1px solid rgba(234,179,8,0.45);
   color: #eab308;
@@ -17555,7 +17559,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   font-weight: 600;
   letter-spacing: 1px;
   padding: 5px 14px;
-  border-radius: 20px;
+  border-radius: 4px;
   background: rgba(26,107,255,0.12);
   border: 1px solid rgba(26,107,255,0.35);
   color: rgba(96,165,250,0.9);
@@ -19830,7 +19834,7 @@ a.ci-value:hover { color: rgba(26,107,255,0.9); }
   padding: 3px 10px;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 100px;
+  border-radius: 4px;
   color: rgba(255,255,255,0.5);
 }
 
@@ -22350,6 +22354,13 @@ body:has(.vh-hero) .site-header:not(.scrolled) .header-logo {
 .svc-light .svctab-btn::after {
   background: linear-gradient(90deg, #285CCC, #5A82DB) !important;
 }
+/* 컴팩트 탭은 겉 테두리·바탕 없이 밑줄 글자 탭 */
+.svc-light .svctab-nav.svctab-nav--compact {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.svc-light .svctab-nav--compact .svctab-btn.active { background: transparent !important; }
 
 /* ── influencer CASE 카드 레이아웃: 오른쪽 카드 컬럼 넓혀 여백 축소 ── */
 .svc-light .ifl2-diff-layout {
@@ -23703,7 +23714,7 @@ body:has(.vh-hero) .site-header:not(.scrolled) .header-logo {
   align-items: center;
   justify-content: center;
   padding: 15px 38px;
-  border-radius: 99px;
+  border-radius: 4px;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.2px;
@@ -23936,7 +23947,7 @@ body:has(#heroSlider.hero2--s2) .site-header:not(.scrolled) .logo-wordmark { col
   align-items: center;
   gap: 7px;
   padding: 8px 15px;
-  border-radius: 99px;
+  border-radius: 4px;
   background: rgba(40, 92, 204, 0.08);
   color: var(--blue);
   font-size: 14px;
@@ -23958,7 +23969,7 @@ body:has(#heroSlider.hero2--s2) .site-header:not(.scrolled) .logo-wordmark { col
   align-items: center;
   gap: 10px;
   padding: 17px 42px;
-  border-radius: 99px;
+  border-radius: 4px;
   font-size: 16.5px;
   font-weight: 700;
   letter-spacing: -0.2px;
@@ -24137,7 +24148,7 @@ body:has(#heroSlider.hero2--s2) .site-header:not(.scrolled) .logo-wordmark { col
   align-items: center;
   align-self: flex-start;
   padding: 11px 26px;
-  border-radius: 99px;
+  border-radius: 4px;
   border: 1px solid var(--border);
   font-size: 14px;
   font-weight: 700;
@@ -25305,7 +25316,7 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
   align-items: center;
   gap: 8px;
   padding: 13px 26px;
-  border-radius: 99px;
+  border-radius: 4px;
   background: var(--blue);
   color: #fff;
   font-size: 14.5px;
@@ -25343,7 +25354,7 @@ body:has(.hero-slider) .site-header:not(.scrolled) .nav-dropdown-trigger.is-acti
   flex-shrink: 0;
   margin-left: auto;
   padding: 13px 24px;
-  border-radius: 99px;
+  border-radius: 4px;
   background: var(--blue);
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
