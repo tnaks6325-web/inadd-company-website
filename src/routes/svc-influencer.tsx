@@ -34,7 +34,7 @@ export const SvcInfluencerPage = () => (
 
         <div class="vh-sub-wrap" id="ifSub">
           <p class="vh-sub"><strong style="color:rgba(255,255,255,0.9)">인플루언서 분석 프로세스</strong>로 후보를 먼저 걸러낸 후</p>
-          <p class="vh-sub">브랜드 메시지와 크리에이터의 결을 비교해, <span style="color:rgba(255,255,255,0.85);font-weight:500">"왜 이 조합인지"까지 제안합니다.</span></p>
+          <p class="vh-sub">브랜드 메시지와 크리에이터의 결을 비교해, <span style="color:rgba(255,255,255,0.85);font-weight:400">"왜 이 조합인지"까지 제안합니다.</span></p>
           <p class="vh-sub" style="margin-top:12px">인애드는 감이 아니라 숫자로 고른 매칭이 <span style="color:rgba(168,85,247,0.9);font-weight:600">캠페인의 출발선을 바꿉니다.</span></p>
         </div>
 

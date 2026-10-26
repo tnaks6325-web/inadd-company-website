@@ -29,7 +29,7 @@ export const SUBSCRIPTION_BODY = `
     <img src="/static/subscription/dog-meme.webp" width="1400" height="1055" loading="lazy" decoding="async" alt="밀짚모자를 쓴 강아지가 깡통 4개 위에 겨우 서 있는 사진" style="display:block;width:100%;height:auto;">
     <div style="position:absolute;left:4%;right:4%;top:2%;background:#111318;padding:18px 16px;text-align:center;color:#FFFFFF;font-size:29px;font-weight:600;line-height:1.4;letter-spacing:-0.02em;">마케터 한 명 신규채용하고 편해질 줄 알았는데<br>서 있는 것조차 힘든 마케터.jpg</div>
     <div style="position:absolute;left:17%;top:28%;width:15%;aspect-ratio:1/1;background:#111318;transform:rotate(-20deg);display:flex;align-items:center;justify-content:center;text-align:center;color:#FFFFFF;font-size:26px;font-weight:800;line-height:1.2;letter-spacing:-0.02em;">우리<br>브랜드</div>
-    <div style="position:absolute;left:52%;top:39%;transform:translate(-50%,-50%);text-align:center;color:#FFE94A;font-size:34px;font-weight:900;line-height:1.25;white-space:nowrap;text-shadow:-2px -2px 0 #111318,2px -2px 0 #111318,-2px 2px 0 #111318,2px 2px 0 #111318,0 2px 0 #111318,0 -2px 0 #111318,2px 0 0 #111318,-2px 0 0 #111318;">우리 브랜드<br>마케팅 세팅</div>
+    <div style="position:absolute;left:52%;top:39%;transform:translate(-50%,-50%);text-align:center;color:#FFE94A;font-size:34px;font-weight:800;line-height:1.25;white-space:nowrap;text-shadow:-2px -2px 0 #111318,2px -2px 0 #111318,-2px 2px 0 #111318,2px 2px 0 #111318,0 2px 0 #111318,0 -2px 0 #111318,2px 0 0 #111318,-2px 0 0 #111318;">우리 브랜드<br>마케팅 세팅</div>
     <div style="position:absolute;left:54.5%;top:67%;transform:translate(-50%,-50%);color:#FFFFFF;font-size:26px;font-weight:600;white-space:nowrap;text-shadow:0 0 6px rgba(17,19,24,0.9),0 1px 2px #111318;">노가다</div>
     <div style="position:absolute;left:67.5%;top:81%;transform:translate(-50%,-50%);color:#FFFFFF;font-size:34px;font-weight:600;white-space:nowrap;text-shadow:0 0 6px rgba(17,19,24,0.9),0 1px 2px #111318;">운빨</div>
     <div style="position:absolute;left:35%;top:88%;transform:translate(-50%,-50%);text-align:center;color:#FFFFFF;font-size:24px;font-weight:600;line-height:1.3;white-space:nowrap;text-shadow:0 0 6px rgba(17,19,24,0.9),0 1px 2px #111318;">영끌한<br>예산</div>
@@ -228,52 +228,52 @@ export const SUBSCRIPTION_BODY = `
   <div style="background:#FFFFFF;border-radius:20px;padding:12px 40px 0;margin-top:48px;">
     <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;padding:20px 0;border-bottom:2px solid #21306F;font-size:19px;font-weight:700;"><div>항목</div><div style="text-align:right;">구독 제공량</div><div style="text-align:right;">단품가</div></div>
           <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:900;">✓</span><div><div style="font-size:24px;font-weight:800;">초기진단·세팅</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">초기진단·세팅</div></div></div>
         <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">무료</div>
         <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">30만 원</span></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:900;">✓</span><div><div style="font-size:24px;font-weight:800;">퍼포먼스 마케팅</div><div style="font-size:17px;font-weight:600;margin-top:4px;">광고비 월 1,000만 원 한도까지 운영</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">퍼포먼스 마케팅</div><div style="font-size:17px;font-weight:600;margin-top:4px;">광고비 월 1,000만 원 한도까지 운영</div></div></div>
         <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">운영 대행</div>
         <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">100만 원</span></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:900;">✓</span><div><div style="font-size:24px;font-weight:800;">광고 소재 제작</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">광고 소재 제작</div></div></div>
         <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">무제한</div>
         <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">80만 원</span></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:900;">✓</span><div><div style="font-size:24px;font-weight:800;">릴스 소재 제작</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">릴스 소재 제작</div></div></div>
         <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">월 1회</div>
         <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">30만 원</span></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:900;">✓</span><div><div style="font-size:24px;font-weight:800;">랜딩페이지 제작·운영</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">랜딩페이지 제작·운영</div></div></div>
         <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">3개월마다 1회</div>
         <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">60만 원</span></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:900;">✓</span><div><div style="font-size:24px;font-weight:800;">카페 바이럴</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">카페 바이럴</div></div></div>
         <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">월 15회</div>
         <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">40만 원</span></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:900;">✓</span><div><div style="font-size:24px;font-weight:800;">블로그 체험단</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">블로그 체험단</div></div></div>
         <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">월 15회</div>
         <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">40만 원</span></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:900;">✓</span><div><div style="font-size:24px;font-weight:800;">구매후기 체험단</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">구매후기 체험단</div></div></div>
         <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">월 50회</div>
         <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">50만 원</span></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:900;">✓</span><div><div style="font-size:24px;font-weight:800;">언론기사 작성·송출</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">언론기사 작성·송출</div></div></div>
         <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">월 1회</div>
         <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">20만 원</span></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:900;">✓</span><div><div style="font-size:24px;font-weight:800;">브랜드 주간보고서</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">브랜드 주간보고서</div></div></div>
         <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">매주</div>
         <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;">포함</div>
       </div>
@@ -282,7 +282,7 @@ export const SUBSCRIPTION_BODY = `
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
     <div style="background:#21306F;color:#FFFFFF;border-radius:20px;padding:36px 32px;">
       <div style="font-size:22px;font-weight:700;">패키지로 한 번에 구독하면</div>
-      <div style="margin-top:12px;"><span style="font-size:24px;font-weight:700;">월 </span><span style="font-size:60px;font-weight:900;letter-spacing:-0.04em;">300</span><span style="font-size:24px;font-weight:700;">만 원</span></div>
+      <div style="margin-top:12px;"><span style="font-size:24px;font-weight:700;">월 </span><span style="font-size:60px;font-weight:800;letter-spacing:-0.04em;">300</span><span style="font-size:24px;font-weight:700;">만 원</span></div>
       <div style="font-size:20px;font-weight:700;color:#FFE94A;margin-top:8px;">최대 200만 원 아껴요</div>
     </div>
     <div style="background:#FFFFFF;border-radius:20px;padding:36px 32px;display:flex;flex-direction:column;justify-content:center;">
@@ -374,13 +374,13 @@ export const SUBSCRIPTION_BODY = `
       <div style="font-size:34px;font-weight:800;line-height:1.4;margin-top:12px;">브랜드 초기 3개월 만에 월 문의 14건 → 74건</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:end;height:300px;margin-top:36px;padding:0 60px;">
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div style="font-size:26px;font-weight:800;">14건</div><div data-ref-bar="1" style="width:100%;height:18.9189%;background:#D9C59A;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:700;">7월</div></div>
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:900;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">74건</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">9월</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:800;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">74건</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">9월</div></div>
       </div>
       <div style="text-align:center;font-size:19px;font-weight:600;margin-top:12px;">월 문의 건수</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;border-top:2px solid #F4EDDC;padding-top:28px;">
-        <div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">-66%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">문의당 비용
-10만 → 3.4만 원</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">1.8배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">월 광고비
-140만 → 250만 원</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">166건</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">누적 문의
+        <div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">-66%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">문의당 비용
+10만 → 3.4만 원</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">1.8배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">월 광고비
+140만 → 250만 원</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">166건</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">누적 문의
 7월 ~ 10월 14일</div></div>
       </div>
       <div style="font-size:16px;line-height:1.5;margin-top:24px;">2026년 7월 ~ 10월 14일 · 구글 검색 + 메타 합산</div>
@@ -390,12 +390,12 @@ export const SUBSCRIPTION_BODY = `
       <div style="font-size:34px;font-weight:800;line-height:1.4;margin-top:12px;">광고비 350만 원 더 쓰고 매출 1억 410만 원 더</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:end;height:300px;margin-top:36px;padding:0 60px;">
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div style="font-size:26px;font-weight:800;">2.21억</div><div data-ref-bar="1" style="width:100%;height:68%;background:#D9C59A;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:700;">6월</div></div>
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:900;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">3.25억</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">7월</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:800;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">3.25억</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">7월</div></div>
       </div>
       <div style="text-align:center;font-size:19px;font-weight:600;margin-top:12px;">월 광고 매출</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;border-top:2px solid #F4EDDC;padding-top:28px;">
-        <div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">+1억 410만</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">월 매출 증가</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">1,373%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">ROAS
-1,095% → 1,373%</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">1.8배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">유입당 매출
+        <div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">+1억 410만</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">월 매출 증가</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">1,373%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">ROAS
+1,095% → 1,373%</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">1.8배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">유입당 매출
 3,628원 → 6,508원</div></div>
       </div>
       <div style="font-size:16px;line-height:1.5;margin-top:24px;">2025년 6월 vs 7월 · 네이버 키워드광고 기준</div>
@@ -405,13 +405,13 @@ export const SUBSCRIPTION_BODY = `
       <div style="font-size:34px;font-weight:800;line-height:1.4;margin-top:12px;">한 달 만에 매출 57%, 구매 74% 상승</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:end;height:300px;margin-top:36px;padding:0 60px;">
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div style="font-size:26px;font-weight:800;">4,436만</div><div data-ref-bar="1" style="width:100%;height:63.5986%;background:#D9C59A;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:700;">3월</div></div>
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:900;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">6,975만</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">4월</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:800;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">6,975만</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">4월</div></div>
       </div>
       <div style="text-align:center;font-size:19px;font-weight:600;margin-top:12px;">월 광고 매출</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;border-top:2px solid #F4EDDC;padding-top:28px;">
-        <div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">+74%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">구매 건수
-326건 → 568건</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">+167%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">장바구니 담기
-1,178건 → 3,144건</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">+135%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">회원가입
+        <div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">+74%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">구매 건수
+326건 → 568건</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">+167%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">장바구니 담기
+1,178건 → 3,144건</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">+135%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">회원가입
 264건 → 620건</div></div>
       </div>
       <div style="font-size:16px;line-height:1.5;margin-top:24px;">3월 vs 4월 · ROAS 4,700%대 유지 · 네이버 광고관리시스템 기준</div>
@@ -421,13 +421,13 @@ export const SUBSCRIPTION_BODY = `
       <div style="font-size:34px;font-weight:800;line-height:1.4;margin-top:12px;">영상 시청 비용 92% 절감, 시청은 76배</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:end;height:300px;margin-top:36px;padding:0 60px;">
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div style="font-size:26px;font-weight:800;">518원</div><div data-ref-bar="1" style="width:100%;height:100%;background:#D9C59A;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:700;">3월</div></div>
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:900;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">41원</div><div data-ref-bar="1" style="width:100%;height:7.91506%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">4월</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:800;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">41원</div><div data-ref-bar="1" style="width:100%;height:7.91506%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">4월</div></div>
       </div>
       <div style="text-align:center;font-size:19px;font-weight:600;margin-top:12px;">영상 1회 시청 비용 (낮을수록 좋아요)</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;border-top:2px solid #F4EDDC;padding-top:28px;">
-        <div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">76배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">영상 시청
-833회 → 63,455회</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">12.5배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">시청률
-0.16% → 2.00%</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">317만</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">월 노출
+        <div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">76배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">영상 시청
+833회 → 63,455회</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">12.5배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">시청률
+0.16% → 2.00%</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">317만</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">월 노출
 52만 → 317만 회</div></div>
       </div>
       <div style="font-size:16px;line-height:1.5;margin-top:24px;">3월 vs 4월 · 구글 애즈 기준</div>
@@ -437,12 +437,12 @@ export const SUBSCRIPTION_BODY = `
       <div style="font-size:34px;font-weight:800;line-height:1.4;margin-top:12px;">웹 DA 광고비 280만 원 더 쓰고 매출 6,560만 원 더</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:end;height:300px;margin-top:36px;padding:0 60px;">
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div style="font-size:26px;font-weight:800;">1.62억</div><div data-ref-bar="1" style="width:100%;height:71.3656%;background:#D9C59A;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:700;">6월</div></div>
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:900;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">2.27억</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">7월</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:800;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">2.27억</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">7월</div></div>
       </div>
       <div style="text-align:center;font-size:19px;font-weight:600;margin-top:12px;">웹 DA 월 매출</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;border-top:2px solid #F4EDDC;padding-top:28px;">
-        <div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">385%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">ROAS
-288% → 385%</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">+3,870만</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">일반광고 매출 (+82%)</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">+2,690만</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">리타겟팅 매출 (+23%)</div></div>
+        <div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">385%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">ROAS
+288% → 385%</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">+3,870만</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">일반광고 매출 (+82%)</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">+2,690만</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">리타겟팅 매출 (+23%)</div></div>
       </div>
       <div style="font-size:16px;line-height:1.5;margin-top:24px;">2025년 6월 vs 7월 · 웹 일반광고 + 리타겟팅 기준</div>
     </div>
@@ -451,13 +451,13 @@ export const SUBSCRIPTION_BODY = `
       <div style="font-size:34px;font-weight:800;line-height:1.4;margin-top:12px;">같은 클릭 단가로 구매 전환 2배 이상</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:end;height:300px;margin-top:36px;padding:0 60px;">
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div style="font-size:26px;font-weight:800;">1.41%</div><div data-ref-bar="1" style="width:100%;height:56.1753%;background:#D9C59A;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:700;">2023</div></div>
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:900;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">2.51%</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">2024</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:800;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">2.51%</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">2024</div></div>
       </div>
       <div style="text-align:center;font-size:19px;font-weight:600;margin-top:12px;">SNS 광고 구매 전환율</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;border-top:2px solid #F4EDDC;padding-top:28px;">
-        <div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">2.2배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">구매 전환
-6건 → 13건</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">+101%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">전환 매출
-103만 → 208만 원</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">+13%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">클릭 수
+        <div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">2.2배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">구매 전환
+6건 → 13건</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">+101%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">전환 매출
+103만 → 208만 원</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">+13%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">클릭 수
 62,799 → 71,217회</div></div>
       </div>
       <div style="font-size:16px;line-height:1.5;margin-top:24px;">2023년 vs 2024년 연간 · 마지막 클릭 기준 전환</div>
@@ -467,13 +467,13 @@ export const SUBSCRIPTION_BODY = `
       <div style="font-size:34px;font-weight:800;line-height:1.4;margin-top:12px;">신청 0건 계정에서 한 달 만에 신청 179건</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:end;height:300px;margin-top:36px;padding:0 60px;">
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div style="font-size:26px;font-weight:800;">0건</div><div data-ref-bar="1" style="width:100%;height:4%;background:#D9C59A;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:700;">11월</div></div>
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:900;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">179건</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">12월</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;height:100%;"><div data-ref-after="1" style="font-size:40px;font-weight:800;line-height:1.2;letter-spacing:-0.03em;color:#21306F;padding:0 8px;background:linear-gradient(#FFE94A,#FFE94A) no-repeat left 88% / 100% 40%;">179건</div><div data-ref-bar="1" style="width:100%;height:100%;background:#21306F;border-radius:10px 10px 0 0;transform-origin:bottom;transform:scaleY(1);"></div><div style="font-size:21px;font-weight:800;">12월</div></div>
       </div>
       <div style="text-align:center;font-size:19px;font-weight:600;margin-top:12px;">신청하기 전환</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;border-top:2px solid #F4EDDC;padding-top:28px;">
-        <div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">5.2배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">클릭 수
-1,330 → 6,900회</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">9.46%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">영상 시청률
-8.53% → 9.46%</div></div><div><div style="font-size:38px;font-weight:900;color:#21306F;letter-spacing:-0.03em;">1.35%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">이미지 소재 클릭률
+        <div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">5.2배</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">클릭 수
+1,330 → 6,900회</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">9.46%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">영상 시청률
+8.53% → 9.46%</div></div><div><div style="font-size:38px;font-weight:800;color:#21306F;letter-spacing:-0.03em;">1.35%</div><div style="font-size:19px;line-height:1.45;margin-top:6px;white-space:pre-line;">이미지 소재 클릭률
 영상 소재의 12배</div></div>
       </div>
       <div style="font-size:16px;line-height:1.5;margin-top:24px;">11월 vs 12월 · 신청당 비용 8.2만 원 · 메타 광고관리자 기준</div>
