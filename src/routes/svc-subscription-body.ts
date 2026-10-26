@@ -1,5 +1,6 @@
 // 마케팅팀 구독 상세페이지 본문 — 디자인 시안(Claude Design '종합 마케팅 구독 상세페이지 A 채용고민형', 860px 상세페이지 규격)을 그대로 옮긴 것.
 // 시안의 인라인 스타일을 유지한다. 문구·사진을 바꿀 때는 이 파일을 직접 고친다.
+// <!--ESTIMATE--> 자리에 견적 조합 화면(svc-subscription-estimate.ts)이 들어간다.
 // 사진: public/static/subscription/*.webp · 효과(숫자 올라가기·등장 효과·하단 고정 버튼): public/static/subscription/subscription.js
 export const SUBSCRIPTION_BODY = `
 <div class="mts-page" id="mtsPage" style="width:860px;margin:0 auto;background:#FFFFFF;color:#111318;word-break:keep-all;letter-spacing:-0.02em;">
@@ -287,11 +288,13 @@ export const SUBSCRIPTION_BODY = `
     <div style="background:#FFFFFF;border-radius:20px;padding:36px 32px;display:flex;flex-direction:column;justify-content:center;">
       <div style="font-size:26px;font-weight:800;line-height:1.4;">필요한 서비스만<br>부분 구독도 가능해요</div>
       <div style="font-size:19px;line-height:1.55;margin-top:12px;">상담 때 브랜드 상황에 맞춰 골라 드려요.</div>
+      <a href="#estimate" style="align-self:flex-start;margin-top:16px;font-size:20px;font-weight:800;text-decoration:underline;text-underline-offset:5px;">아래에서 직접 조합해 보기</a>
     </div>
   </div>
   <div style="font-size:17px;line-height:1.6;margin-top:20px;">광고비, 체험단 제품·배송비, 구매평에 쓰이는 상품 비용, 촬영 모델·장소 비용은 별도예요 · 소재 무제한은 월 운영 범위 안에서 제작해요 · 카페·블로그·구매후기 체험단은 광고(협찬) 표시 후 게재해요</div>
 </section>
 
+<!--ESTIMATE-->
 <section data-screen-label="06 TF팀" style="padding:120px 64px;">
   <div style="font-size:24px;font-weight:800;color:#21306F;">05</div>
   <h2 style="margin:16px 0 0;font-size:48px;line-height:1.36;font-weight:800;letter-spacing:-0.04em;">우리 브랜드 전담 TF팀 구성</h2>

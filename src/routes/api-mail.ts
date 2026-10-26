@@ -3,12 +3,14 @@
  *
  * POST /api/mail/contact   (일반 상담 - 에이전시/브랜드)
  * POST /api/mail/brochure  (회사소개서 요청)
+ * POST /api/mail/estimate  (마케팅팀 구독 견적 조합 → 상담 신청 + 손님에게 조합 내역 메일)
  */
 
 import { Hono } from 'hono'
 import { kvGet } from '../admin/store'
 import { resolveRecipients } from './mail-recipients'
 import { forwardInquiryToIntranet } from './intranet-inquiry'
+import { computeEstimate, estimateText, ESTIMATE_ITEMS, PACKAGE_PRICE, type Estimate } from '../lib/subscription-estimate'
 
 type Bindings = {
   RESEND_API_KEY: string     // re_xxxx
@@ -386,6 +388,134 @@ mail.post('/brochure', async (c) => {
     return c.json({ ok: true })
   } catch (e: any) {
     console.error('[mail/brochure]', e.message)
+    return c.json({ ok: false, error: e.message }, 500)
+  }
+})
+
+/* ─────────────────────────────────────────────
+   손님용 견적 조합 내역 메일 (합쇼체 — 고객 메일 규칙)
+───────────────────────────────────────────── */
+export function estimateReplyTemplate(est: Estimate, company: string, footerAddress: string, contactEmail: string): string {
+  const safeContactEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail) ? escapeHtml(contactEmail) : ''
+  const won = (n: number) => n.toLocaleString('ko-KR') + '만 원'
+  const rows = ESTIMATE_ITEMS
+    .filter(it => it.fixed || est.picked.includes(it))
+    .map(it => `
+      <tr>
+        <td style="padding:12px 0;border-bottom:1px solid #E6E8EE;font-size:15px;color:#111318;font-weight:700;">${escapeHtml(it.name)}</td>
+        <td style="padding:12px 0;border-bottom:1px solid #E6E8EE;font-size:14px;color:#21306F;text-align:right;white-space:nowrap;">${it.free ? '' : escapeHtml(it.amount)}</td>
+        <td style="padding:12px 0 12px 16px;border-bottom:1px solid #E6E8EE;font-size:14px;color:#5B5F6B;text-align:right;white-space:nowrap;">${it.fixed ? (it.free ? '무료' : '포함') : won(it.price)}</td>
+      </tr>`).join('')
+  return `<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>마케팅 팀구독 견적 조합 내역</title></head>
+<body style="margin:0;padding:0;background:#F1F1F1;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F1F1F1;padding:40px 16px;">
+  <tr><td align="center">
+  <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#FFFFFF;border-radius:4px;overflow:hidden;">
+    <tr><td style="height:4px;background:#21306F;font-size:0;line-height:0;">&nbsp;</td></tr>
+    <tr><td style="padding:40px 40px 8px;font-size:15px;line-height:1.8;color:#111318;">
+      ${company ? escapeHtml(company) + ' 담당자님, 안녕하세요.<br>' : '안녕하세요.<br>'}
+      인애드컴퍼니입니다.<br>
+      홈페이지에서 고르신 마케팅 팀구독 조합을 정리해 보내 드립니다.<br>
+      담당자가 확인한 뒤 연락드리겠습니다.
+    </td></tr>
+    <tr><td style="padding:24px 40px 0;">
+      <p style="margin:0 0 8px;font-size:18px;font-weight:800;color:#111318;">고르신 조합</p>
+      <table width="100%" cellpadding="0" cellspacing="0" style="border-top:2px solid #21306F;">${rows}</table>
+    </td></tr>
+    <tr><td style="padding:20px 40px 0;">
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#F8F7F4;border-radius:4px;">
+        <tr><td style="padding:18px 20px 4px;font-size:14px;color:#5B5F6B;">단품가로 따로 맡기면</td><td style="padding:18px 20px 4px;font-size:14px;color:#5B5F6B;text-align:right;text-decoration:line-through;">${won(est.listTotal)}</td></tr>
+        <tr><td style="padding:4px 20px 18px;font-size:16px;font-weight:800;color:#21306F;">예상 월 금액</td><td style="padding:4px 20px 18px;font-size:22px;font-weight:900;color:#21306F;text-align:right;white-space:nowrap;">${won(est.total)} <span style="font-size:13px;font-weight:600;color:#5B5F6B;">부가세 별도</span></td></tr>
+      </table>
+      ${est.capped ? `<p style="margin:12px 0 0;font-size:14px;line-height:1.7;color:#111318;">단품가 합계가 ${won(PACKAGE_PRICE)} 이상이라 팀구독 ${won(PACKAGE_PRICE)}으로 계산했습니다.<br>같은 금액으로 10가지 항목을 모두 받으실 수 있습니다.</p>` : ''}
+      <p style="margin:12px 0 0;font-size:13px;line-height:1.7;color:#5B5F6B;">홈페이지에서 계산한 예상 금액입니다. 최종 금액은 상담에서 브랜드 상황에 맞춰 확정됩니다.<br>광고비, 체험단 제품·배송비, 촬영 모델·장소 비용은 별도입니다.</p>
+    </td></tr>
+    <tr><td style="padding:28px 40px 36px;">
+      <a href="${PROFILE_URL}/download" style="display:inline-block;padding:14px 24px;background:#21306F;color:#FFFFFF;font-size:14px;font-weight:700;text-decoration:none;border-radius:4px;">회사소개서 받기</a>
+      <a href="https://www.inadcompany.co.kr/marketing/subscription#estimate" style="display:inline-block;margin-left:8px;padding:13px 24px;border:1px solid #CDD1DA;color:#21306F;font-size:14px;font-weight:700;text-decoration:none;border-radius:4px;">조합 다시 해 보기</a>
+      <p style="margin:28px 0 0;font-size:15px;color:#111318;">인애드컴퍼니 드림</p>
+    </td></tr>
+    <tr><td style="background:#EDEDED;padding:20px 40px;font-size:12px;line-height:1.7;color:#8A8A90;">
+      인애드컴퍼니 · 대표 김수만${footerAddress ? '<br>' + escapeHtml(footerAddress) : ''}<br>
+      문의 ${safeContactEmail ? `<a href="mailto:${safeContactEmail}" style="color:#21306F;">${safeContactEmail}</a> · ` : ''}010-9186-9944<br>
+      본 메일은 inadcompany.co.kr 견적 조합에서 상담을 신청하셔서 자동 발송되었습니다.
+    </td></tr>
+  </table>
+  </td></tr>
+  </table>
+</body>
+</html>`
+}
+
+/* ─────────────────────────────────────────────
+   API 라우트 — 마케팅팀 구독 견적 조합 상담 신청
+   금액은 손님 화면 값을 믿지 않고 고른 항목으로 다시 계산한다.
+   일반 상담과 같은 길(백업 lead_contact_* · 인트라넷 · 회사 알림 메일)로 접수하고, 손님에게 조합 내역 메일을 보낸다.
+───────────────────────────────────────────── */
+mail.post('/estimate', async (c) => {
+  let body: any
+  try { body = await c.req.json() } catch { return c.json({ ok: false, error: '요청 형식이 올바르지 않습니다.' }, 400) }
+  const str = (v: unknown, max: number) => String(v ?? '').trim().slice(0, max)
+  const company = str(body?.company, 100)
+  const name = str(body?.name, 50)
+  const phone = str(body?.phone, 30)
+  const email = str(body?.email, 120)
+  const message = str(body?.message, 2000)
+  const est = computeEstimate(body?.items)
+  if (!est.picked.length) return c.json({ ok: false, error: '항목을 하나 이상 골라 주세요.' }, 400)
+  if (!company || !name || !phone || !email) return c.json({ ok: false, error: '별표(*) 칸을 모두 채워 주세요.' }, 400)
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return c.json({ ok: false, error: '이메일 주소를 확인해 주세요.' }, 400)
+  if (body?.privacy !== true) return c.json({ ok: false, error: '개인정보 수집 및 이용에 동의해 주세요.' }, 400)
+
+  try {
+    const summary = estimateText(est)
+    // 일반 상담 폼과 같은 칸 이름을 써서 인트라넷·백업이 그대로 읽게 한다. 조합 내역은 '문의 내용' 앞에 붙인다.
+    const data: Record<string, string> = {
+      formType: 'estimate',
+      company, name, phone, email,
+      services: '마케팅팀 구독(견적 조합)',
+      budget: `월 ${est.total.toLocaleString('ko-KR')}만 원(부가세 별도, 견적 조합)`,
+      message: `[견적 조합]\n${summary}` + (message ? `\n\n[문의 내용]\n${message}` : ''),
+      estimateItems: est.picked.map(it => it.id).join(','),
+      estimateTotal: String(est.total),
+    }
+    const leadKey = await backupLead(c.env, 'contact', data)
+    const toIntranet = forwardInquiryToIntranet(c.env, leadKey, data)
+    try { c.executionCtx.waitUntil(toIntranet) } catch { await toIntranet }
+
+    // 손님 메일은 실패해도 접수는 성공으로 둔다(회사 알림·백업이 우선)
+    const toCustomer = (async () => {
+      const [rawAddress, rawAddressDetail] = await Promise.all([
+        kvGet(c.env.ADMIN_KV, 'about_address'),
+        kvGet(c.env.ADMIN_KV, 'about_address_detail'),
+      ])
+      await sendMailTo(
+        c.env,
+        email,
+        `[인애드컴퍼니] ${company} 마케팅 팀구독 견적 조합 내역`,
+        estimateReplyTemplate(est, company, [rawAddress, rawAddressDetail].filter(Boolean).join(' '), c.env.RESEND_TO)
+      )
+    })().catch((e: any) => console.error('[mail/estimate] 손님 메일 실패', e?.message || e))
+    try { c.executionCtx.waitUntil(toCustomer) } catch { await toCustomer }
+
+    await sendMail(
+      c.env,
+      `[견적 조합] ${company} · 월 ${est.total.toLocaleString('ko-KR')}만 원`,
+      internalTemplate('🧮 견적 조합 상담 신청이 접수됐습니다', [
+        { label: '폼 유형', value: '마케팅팀 구독 견적 조합' },
+        { label: '회사명', value: company },
+        { label: '이름', value: name },
+        { label: '연락처', value: phone },
+        { label: '이메일', value: email },
+        { label: '견적 조합', value: summary },
+        { label: '문의 내용', value: message },
+      ])
+    )
+    return c.json({ ok: true, total: est.total })
+  } catch (e: any) {
+    console.error('[mail/estimate]', e.message)
     return c.json({ ok: false, error: e.message }, 500)
   }
 })
