@@ -1,7 +1,8 @@
 /* 마케팅팀 구독 상세페이지 효과 — 시안(Claude Design '종합 마케팅 구독 상세페이지 A 채용고민형')의 효과 스크립트를 옮김.
    1) 860px 페이지를 화면 폭에 맞춰 축소  2) 하단 고정 '무료 상담 신청' 버튼  5) 성과 레퍼런스 탭·막대
    3) 구간 등장·화살표 그리기·숫자 올라가기·비교 막대·비용 더미·보고 목록 효과
-   4) 상담 신청 버튼 → 전역 문의 팝업(main.js)에 '마케팅팀 구독' 관심 서비스를 미리 체크 */
+   4) 상담 신청 버튼 → 전역 문의 팝업(main.js)에 '마케팅팀 구독' 관심 서비스를 미리 체크
+   6) 견적 조합(#estimate): 합계 계산·상담 신청 접수 */
 (function () {
   var page = document.getElementById('mtsPage');
   if (!page) return;
@@ -33,17 +34,100 @@
   var sticky = page.querySelector('[data-sticky]');
   var ctaBox = page.querySelector('section[data-screen-label="08 상담"] a[data-mts-cta]');
   var heroBand = page.querySelector('section[data-screen-label="01 히어로 비교"]');
+  var estSec = page.querySelector('[data-estimate]');
   function onScroll() {
     if (!sticky) return;
     var passed = heroBand && heroBand.getBoundingClientRect().bottom < 0;
     var atCta = ctaBox && ctaBox.getBoundingClientRect().top < window.innerHeight;
-    var show = passed && !atCta;
+    // 견적 조합 구획에서는 그 구획의 합계 막대가 아래에 붙으므로 고정 버튼을 숨긴다
+    var er = estSec && estSec.getBoundingClientRect();
+    var atEst = er && er.top < window.innerHeight && er.bottom > 0;
+    var show = passed && !atCta && !atEst;
     sticky.style.opacity = show ? '1' : '0';
     sticky.style.transform = show ? 'translate(-50%,0)' : 'translate(-50%,160%)';
     sticky.style.pointerEvents = show ? 'auto' : 'none';
   }
   document.addEventListener('scroll', onScroll, { passive: true, capture: true });
   onScroll();
+
+  // 견적 조합: 고른 항목 단품가 합계, 300만 원 이상이면 팀구독 300만 원. 초기진단·세팅은 무료로 들어간다.
+  // 화면 표시용 계산이고, 메일·인트라넷에 찍히는 금액은 서버가 다시 계산한다(src/lib/subscription-estimate.ts).
+  if (estSec) (function () {
+    var form = estSec.querySelector('#mteForm');
+    var done = estSec.querySelector('[data-mte-done]');
+    var boxes = estSec.querySelectorAll('input[name="item"]');
+    var PACKAGE = Number(form.dataset.package), FREE = Number(form.dataset.free);
+    var q = function (s) { return estSec.querySelector(s); };
+    var won = function (n) { return n.toLocaleString('ko-KR'); };
+    var checkAll = function (on) { boxes.forEach(function (b) { b.checked = on; }); update(); };
+
+    function update() {
+      var n = 0, sub = 0;
+      boxes.forEach(function (b) { if (b.checked) { n++; sub += Number(b.dataset.price); } });
+      var capped = sub >= PACKAGE, total = capped ? PACKAGE : sub, list = n ? sub + FREE : 0;
+      q('[data-mte-count]').textContent = n;
+      var ls = q('[data-mte-list]');
+      ls.textContent = won(list) + '만 원';
+      ls.className = list > total ? '' : 'is-plain';
+      q('[data-mte-total]').textContent = won(total);
+      var note = q('[data-mte-note]');
+      note.className = 'mte-bar-note' + (capped ? ' is-hot' : '');
+      if (!n) note.textContent = '위에서 항목을 골라 주세요.';
+      else if (capped) {
+        note.textContent = '팀구독 ' + won(PACKAGE) + '만 원이 적용돼요. 같은 금액에 10가지가 다 들어가요.';
+        if (n < boxes.length) {
+          var b = document.createElement('button');
+          b.type = 'button'; b.textContent = '전부 담기';
+          b.addEventListener('click', function () { checkAll(true); });
+          note.appendChild(b);
+        }
+      } else note.textContent = '초기진단·세팅(' + won(FREE) + '만 원)은 무료로 들어가요. ' + won(PACKAGE - sub) + '만 원어치 더 고르면 10가지가 다 들어간 팀구독과 같아져요.';
+    }
+    boxes.forEach(function (b) { b.addEventListener('change', update); });
+    q('[data-mte-all]').addEventListener('click', function () { checkAll(true); });
+    q('[data-mte-clear]').addEventListener('click', function () { checkAll(false); });
+    update();
+
+    var pv = q('[data-mte-privacy]'), panel = q('#mtePrivacy');
+    pv.addEventListener('click', function () {
+      panel.hidden = !panel.hidden;
+      pv.setAttribute('aria-expanded', panel.hidden ? 'false' : 'true');
+      pv.textContent = panel.hidden ? '내용 보기' : '닫기';
+    });
+
+    var err = q('[data-mte-error]'), btn = form.querySelector('.mte-submit'), busy = false;
+    function fail(msg) { err.textContent = msg; err.hidden = false; }
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (busy) return;
+      var fd = new FormData(form);
+      var v = function (k) { return String(fd.get(k) || '').trim(); };
+      var items = [];
+      boxes.forEach(function (b) { if (b.checked) items.push(b.value); });
+      var payload = { items: items, company: v('company'), name: v('name'), phone: v('phone'), email: v('email'), message: v('message'), privacy: !!fd.get('privacy') };
+      if (!items.length) return fail('항목을 하나 이상 골라 주세요.');
+      if (!payload.company || !payload.name || !payload.phone || !payload.email) return fail('별표(*) 칸을 모두 채워 주세요.');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) return fail('이메일 주소를 확인해 주세요.');
+      if (!payload.privacy) return fail('개인정보 수집 및 이용에 동의해 주세요.');
+      err.hidden = true; busy = true; btn.disabled = true; btn.textContent = '접수 중...';
+      fetch('/api/mail/estimate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function (res) {
+          return res.json().catch(function () { return {}; }).then(function (j) {
+            if (!res.ok || !j.ok) throw new Error(res.status === 400 || res.status === 429 ? (j.error || '') : '');
+          });
+        })
+        .then(function () {
+          form.hidden = true;
+          q('[data-mte-done-email]').textContent = payload.email;
+          done.hidden = false;
+          done.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        })
+        .catch(function (x) {
+          busy = false; btn.disabled = false; btn.textContent = '이 조합으로 상담 신청';
+          fail((x && x.message) || '접수 중 오류가 났어요. 잠시 뒤 다시 시도하거나 010-9186-9944로 전화 주세요.');
+        });
+    });
+  })();
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
