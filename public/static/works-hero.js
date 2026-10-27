@@ -1,7 +1,7 @@
-/* 포트폴리오 히어로(한 바퀴 약 14초): 물결랩 세럼 예시 시나리오 — 단계 카드 12장이 하나씩 가운데에 크게 떴다가
-   책상에 사진을 흩뜨리듯 위쪽에 서로 겹치며 쌓인다(레이어 누적). 뒤로 갈수록 카드 간격이 짧아지고(1.05초 → 0.7초),
+/* 포트폴리오 히어로(한 바퀴 약 14.5초): 물결랩 세럼 예시 시나리오 — 단계 카드 12장이 하나씩 가운데에 크게 떴다가
+   책상에 사진을 흩뜨리듯 위쪽에 서로 겹치며 쌓인다(레이어 누적). 뒤로 갈수록 카드 간격이 짧아지고(0.8초 → 0.5초),
    내려앉는 움직임도 끝으로 갈수록 빨라졌다가 '툭' 멈춘다(가속). 실행 카드(2~11)가 내려앉을 때마다 아래 월 매출 계단이 한 칸씩 차오르고,
-   마지막엔 출고 현장 사진이 뒤에 깔리며 '마케팅을 더할 때마다 한 칸씩'. 카드 안 영상(있으면)은 쌓인 뒤에도 각자 계속 반복 재생된다.
+   마지막엔 출고 현장 사진이 뒤에 깔리며 '마케팅을 더할 때마다 한 칸씩' → 이어서 '실제 운영 성과' 타일 8장이 빠르게 연달아 채워진다. 카드 안 영상(있으면)은 쌓인 뒤에도 각자 계속 반복 재생된다.
    카드 위치·계단은 시간 t 하나로 계산한다(render). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고(영상도 멈춤),
    '움직임 줄이기' 설정이면 카드가 다 쌓인 결과 화면에서 멈춘다. window.wkhSeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
@@ -9,17 +9,20 @@
   if (!root) return;
   function q(k, from) { return (from || root).querySelector('[data-wkh-' + k + ']'); }
   function qa(k, from) { return Array.prototype.slice.call((from || root).querySelectorAll('[data-wkh-' + k + ']')); }
-  var bg = q('bg'), chart = q('chart'), big = q('big'), sts = qa('st');
+  var bg = q('bg'), chart = q('chart'), big = q('big'), sts = qa('st'), real = q('real'), rts = qa('rt');
   var cards = qa('card').map(function (c) {
     return { el: c, pops: qa('pop', c), cnts: qa('cnt', c), nums: qa('num', c), bar: q('bar', c), copy: q('copy', c), vids: Array.prototype.slice.call(c.querySelectorAll('video')) };
   });
   var N = cards.length;
 
-  // 시각표(초): 카드 간격이 1.05초에서 0.7초로 점점 짧아진다(처음부터 빠르게 — 대표 의견 '초반에 너무 느려')
-  var FIRST = 0.3, GAP0 = 1.05, GAP1 = 0.7, ENTER = 0.28, IN = [0, 0.25], CHART_IN = [0.1, 0.4];
+  // 시각표(초): 카드 간격이 0.8초에서 0.5초로 점점 짧아진다(대표 의견 '초반에 너무 느려' → '더 빨리')
+  var FIRST = 0.3, GAP0 = 0.8, GAP1 = 0.5, ENTER = 0.28, IN = [0, 0.25], CHART_IN = [0.1, 0.4];
   var AT = [], GAPS = [], acc = FIRST;
   for (var i = 0; i < N; i++) { var g = GAP0 + (GAP1 - GAP0) * (i / (N - 1)); AT.push(acc); GAPS.push(g); acc += g; }
-  var END = acc, BG = [END - 0.2, END + 0.4], BIG = [END, END + 0.3], OUT = [END + 2.8, END + 3.2], CYCLE = END + 3.2;   // 다 쌓인 결과는 조금 더 오래 보여 준다
+  var END = acc, BG = [END - 0.2, END + 0.4], BIG = [END, END + 0.3];
+  // 실제 운영 성과: 예시가 끝나고 0.9초 뒤 덮고, 타일이 0.42초 간격으로 연달아 내려앉는다. 다 채운 뒤 1.8초 머묾
+  var R = END + 0.9, REAL_IN = [R, R + 0.3], RT0 = R + 0.25, RT_GAP = 0.42, RT_LAND = 0.3;
+  var RT_END = RT0 + (rts.length - 1) * RT_GAP + RT_LAND, OUT = [RT_END + 1.8, RT_END + 2.2], CYCLE = RT_END + 2.2;
   // 콜라주 자리(카드 가운데 좌표, 기울기) — 4칸 x 3줄을 살짝 어긋나게
   var BIGC = { x: 340, y: 190 }, PILE_S = 0.36;
   var PILE = [[92, 70, -4], [255, 64, 3], [425, 74, -2.5], [590, 66, 4], [110, 182, 2.5], [272, 176, -3.5],
@@ -50,7 +53,7 @@
       c.el.style.opacity = (vis * e).toFixed(3);
       c.el.style.zIndex = 10 + i;
       c.el.style.transform = 'translate(' + (x - 230).toFixed(1) + 'px,' + (y - 172.5).toFixed(1) + 'px) rotate(' + (PILE[i][2] * d).toFixed(2) + 'deg) scale(' + s.toFixed(4) + ')';
-      var span = Math.max(0.5, gp - land - 0.25);   // 크게 떠 있는 동안 내용이 차례로
+      var span = Math.max(0.35, gp - land - 0.15);   // 크게 떠 있는 동안 내용이 차례로
       c.pops.forEach(function (p, k) { var a = 0.2 + span * 0.6 * k / Math.max(1, c.pops.length); pop(p, ease(seg(u, [a, a + 0.22]))); });
       c.cnts.forEach(function (n) {
         var k = ease(seg(u, [0.3, 0.3 + span])), to = +n.getAttribute('data-wkh-cnt');
@@ -68,17 +71,24 @@
       }
       // 카드 영상: 카드가 보이는 동안 계속 반복 재생
       c.vids.forEach(function (v) {
-        if (live && e > 0 && vis > 0) { if (v.paused) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } }
+        if (live && e > 0 && vis > 0 && l < REAL_IN[1]) { if (v.paused) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } }
         else if (!v.paused) v.pause();
       });
+    });
+    // 실제 운영 성과 타일: 크게 떴다가 가속하며 제자리에 '툭'
+    real.style.opacity = (seg(l, REAL_IN) * (1 - seg(l, OUT))).toFixed(3);
+    rts.forEach(function (r, k) {
+      var u = l - (RT0 + k * RT_GAP), d = accel(seg(u, [0, RT_LAND])), hit = seg(u, [RT_LAND, RT_LAND + 0.2]);
+      r.style.opacity = seg(u, [0, 0.12]).toFixed(3);
+      r.style.transform = 'translateY(' + ((1 - d) * -18).toFixed(1) + 'px) scale(' + (lerp(1.22, 1, d) * (1 + 0.04 * Math.sin(Math.PI * hit) * (1 - hit))).toFixed(4) + ')';
     });
   }
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t = 0, prev = 0, on = true, held = false, live = false;
   window.wkhSeek = function (s) { held = true; live = false; t = s; render(t); };
-  window.wkhTimes = { AT: AT, END: END, CYCLE: CYCLE };
-  if (reduce) { t = END + 0.8; render(t); return; }
+  window.wkhTimes = { AT: AT, END: END, R: R, RT_END: RT_END, CYCLE: CYCLE };
+  if (reduce) { t = RT_END + 0.5; render(t); return; }
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(root);
   function frame(now) {
     var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 0; prev = now;
