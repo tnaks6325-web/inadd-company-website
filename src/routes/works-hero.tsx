@@ -4,15 +4,14 @@
 // 실행 카드(2~11)가 내려앉을 때마다 아래 '월 매출' 계단이 한 칸씩 차오른다. 1 시장 분석은 출시 전, 12 주간 보고서는 정리라 계단 없음.
 // 1 시장·경쟁사 분석 2 브랜드 메시지 3 체험단 4 블로그 검색 노출 5 구매평·별점 6 바이럴·커뮤니티 7 핫딜·공동구매 8 인플루언서 9 유튜브·쇼츠 10 광고 11 올리브영·PPL 12 주간 성과 보고서
 // → 결과: 출고 현장 사진이 뒤에 깔리고 '마케팅을 더할 때마다 한 칸씩'. 여기까지 숫자는 모두 예시('예시 시나리오' 표기 — 실제 성과 아님).
-// → 마지막: '실제 운영 성과' 타일 8장(실제 광고 성과 7건 + 누적 캠페인)이 빠르게 연달아 채워진다.
+// → 마지막: 문구 없이 실제 포트폴리오 브랜드 사진 47장이 점점 빠르게 쏟아지고 '130개 브랜드와 함께'(실제).
 // 인물·장소는 AI 가상(사진 nano_banana_pro → 영상 kling3_0 3초를 앞뒤로 이어 6초 반복. 사진: meet 77c9fc63, review d63e8c23, influencer d521492d, youtube 02880edc, drama 0320f16d, ship f2072308, 세럼은 리뷰 페이지 prod-b 기준).
 // 실제 올리브영 매장·방송사·플랫폼 로고는 쓰지 않는다. 대가·협찬 표시 문구 금지. 움직임은 works-hero.js.
-import { REF_CASES } from './svc-performance-ref'
 const V = '/static/works-hero/'
 
-// 마지막 '실제 운영 성과' 타일: 퍼포먼스 성과 레퍼런스(실제 운영 계정, 광고주는 업종+이니셜)의 대표 지표 + 홈 누적 수치(home.tsx 신뢰 지표와 같은 값)
-const REAL = REF_CASES.map(c => ({ client: c.client, num: c.kpis[0].num, unit: c.kpis[0].unit || '', label: c.media.join(' · ') + ' · ' + c.kpis[0].label, detail: c.kpis[0].detail }))
-const TOTAL = { client: '인애드컴퍼니 누적', num: '37,000', unit: '+', label: '2019년부터 완료한 캠페인', detail: '파트너 브랜드 50+ · 크리에이터 DB 1,520+' }
+// 마지막 '실제 브랜드' 사진 벽: 포트폴리오에 공개된 대표 사진(cover) 47장을 260px 정사각 webp 로 줄인 것(brands/b00~b46, 약 350KB).
+// 브랜드 수는 화면에서 포트폴리오 목록 수로 갱신(works-hero.js), 누적 캠페인은 홈 신뢰 지표와 같은 값.
+const BRAND_PHOTOS = 47
 
 // 월 매출 계단(예시, 단위 만 원) — 카드 2~11 에 하나씩
 export const STEPS = [
@@ -185,20 +184,11 @@ export const WorksHero = () => (
         </div>
       </div>
 
-      {/* 결과: 예시 시나리오가 끝나면 실제 운영 성과가 빠르게 연달아 채워진다 */}
-      <div class="wkh-real" data-wkh-real>
-        <p class="wkh-real-h"><b>실제 운영 성과</b><span>광고주명은 업종과 이니셜로 표기 · 매체 리포트 기준</span></p>
-        <div class="wkh-rts">
-          {[...REAL, TOTAL].map((r, i) => (
-            <div class={'wkh-rt' + (r === TOTAL ? ' is-hl' : '')} data-wkh-rt>
-              <p class="wkh-rt-c">{r.client}</p>
-              <p class="wkh-rt-n"><b>{r.num}</b><small>{r.unit}</small></p>
-              <p class="wkh-rt-l">{r.label}</p>
-              <p class="wkh-rt-d">{r.detail}</p>
-            </div>
-          ))}
-        </div>
+      {/* 마지막: 문구 없이 장면만 바뀌며 실제 포트폴리오 브랜드 사진이 쏟아지고, 끝에 한 줄 */}
+      <div class="wkh-wall" data-wkh-wall>
+        {Array.from({ length: BRAND_PHOTOS }, (_, i) => <img data-wkh-ph src={`${V}brands/b${String(i).padStart(2, '0')}.webp`} alt="" width="260" height="260" decoding="async" />)}
       </div>
+      <p class="wkh-end" data-wkh-end><b><u data-wkh-brands>130</u>개 브랜드와 함께</b><span>2019년부터 누적 캠페인 37,000+</span></p>
     </div>
   </div>
 )
