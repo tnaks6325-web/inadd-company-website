@@ -79,7 +79,7 @@ export const InsightPage = () => {
               {/* 고정 비율 이미지 컨테이너 — prev/next 버튼 포함 */}
               <div class="insgal-lb-img-wrap">
                 <button class="insgal-lb-prev" id="insGalLbPrev">&#8249;</button>
-                <img class="insgal-lb-img" id="insGalLbImg" src="" alt="" />
+                <img class="insgal-lb-img" id="insGalLbImg" alt="" />
                 <button class="insgal-lb-next" id="insGalLbNext">&#8250;</button>
               </div>
               <div class="insgal-lb-info">
