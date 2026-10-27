@@ -4,7 +4,7 @@
 // 실행 카드(2~11)가 내려앉을 때마다 아래 '월 매출' 계단이 한 칸씩 차오른다. 1 시장 분석은 출시 전, 12 주간 보고서는 정리라 계단 없음.
 // 1 시장·경쟁사 분석 2 브랜드 메시지 3 체험단 4 블로그 검색 노출 5 구매평·별점 6 바이럴·커뮤니티 7 핫딜·공동구매 8 인플루언서 9 유튜브·쇼츠 10 광고 11 올리브영·PPL 12 주간 성과 보고서
 // → 결과: 출고 현장 사진이 뒤에 깔리고 '마케팅을 더할 때마다 한 칸씩'. 숫자는 모두 예시('예시 시나리오' 표기 — 실제 성과 아님).
-// 인물·장소는 AI 가상(nano_banana_pro: meet 77c9fc63, review d63e8c23, influencer d521492d, youtube 02880edc, drama 0320f16d, ship f2072308, 세럼은 리뷰 페이지 prod-b 기준).
+// 인물·장소는 AI 가상(사진 nano_banana_pro → 영상 kling3_0 3초를 앞뒤로 이어 6초 반복. 사진: meet 77c9fc63, review d63e8c23, influencer d521492d, youtube 02880edc, drama 0320f16d, ship f2072308, 세럼은 리뷰 페이지 prod-b 기준).
 // 실제 올리브영 매장·방송사·플랫폼 로고는 쓰지 않는다. 대가·협찬 표시 문구 금지. 움직임은 works-hero.js.
 const V = '/static/works-hero/'
 
@@ -23,8 +23,8 @@ export const STEPS = [
 ]
 
 const Chip = ({ n, k }: { n: number; k: string }) => <p class="wkh-chip"><span>STEP {n}</span>{k}</p>
-// 카드 바탕: 사진(나중에 같은 이름의 영상이 생기면 video loop 로 바꿔 끼운다)
-const Photo = ({ f }: { f: string }) => <div class="wkh-ph" style={`background-image:url(${V}${f}.webp)`} />
+// 카드 바탕: 3초 영상을 앞뒤로 이어 붙인 6초 반복 영상(끊김 없이 돈다, kling3_0). 영상이 뜨기 전·못 뜨면 같은 이름의 사진(poster)
+const Photo = ({ f }: { f: string }) => <video src={`${V}${f}.mp4`} poster={`${V}${f}.webp`} muted loop playsinline preload="auto" />
 const Serum = ({ c }: { c?: string }) => <i class={'wkh-serum ' + (c || '')} style={`background-image:url(${V}serum.webp)`} />
 
 export const WorksHero = () => (
