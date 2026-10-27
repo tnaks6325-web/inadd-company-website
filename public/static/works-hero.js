@@ -2,7 +2,7 @@
    위쪽에 서로 겹치며 쌓인다(앞 카드가 내려앉기 전에 다음 카드가 들어옴). 카드 간격은 0.36초 → 0.2초로 점점 짧아지고,
    내려앉는 움직임은 끝에서 빨라졌다가 '툭' 멈춘다(가속). 실행 카드(2~11)가 내려앉을 때마다 아래 월 매출 계단이 한 칸씩 차오르고,
    다 쌓이면 '마케팅을 더할 때마다 한 칸씩'. 이어서 문구 없이 장면만 바뀌며 실제 포트폴리오 브랜드 사진이 점점 빠르게 쏟아지고
-   '130개 브랜드와 함께'(포트폴리오 목록 수로 갱신). 카드 안 영상은 쌓인 뒤에도 각자 계속 반복 재생된다.
+   '130개 브랜드와 함께'(포트폴리오 목록 수로 갱신). 사진 사이에 홈에 공개 중인 실제 고객 후기 카드가 섞인다. 카드 안 영상은 쌓인 뒤에도 각자 계속 반복 재생된다.
    화면은 시간 t 하나로 계산한다(render). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고(영상도 멈춤),
    '움직임 줄이기' 설정이면 마지막 화면에서 멈춘다. window.wkhSeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
@@ -39,6 +39,8 @@
     var cell = cells[k % 48];
     return { x: (cell % 8 + 0.5) * 85 + (rnd() - 0.5) * 36, y: (Math.floor(cell / 8) + 0.5) * 103 + (rnd() - 0.5) * 36, a: (rnd() - 0.5) * 18, s: 0.88 + rnd() * 0.3 };
   });
+  // 후기 카드처럼 크기가 다른 것도 가운데 기준으로 놓는다
+  phs.forEach(function (ph, k) { SPOT[k].hw = (ph.offsetWidth || 150) / 2; SPOT[k].hh = (ph.offsetHeight || 150) / 2; if (ph.tagName !== 'IMG') SPOT[k].s = 1; });
 
   function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
   function seg(l, r) { return clamp((l - r[0]) / (r[1] - r[0])); }
@@ -94,7 +96,7 @@
     phs.forEach(function (ph, k) {
       var u = l - PAT[k], o = SPOT[k], d = accel(seg(u, [0, PFLY])), hit = seg(u, [PFLY, PFLY + 0.18]);
       ph.style.opacity = seg(u, [0, 0.06]).toFixed(3);
-      ph.style.transform = 'translate(' + (o.x - 75).toFixed(1) + 'px,' + (o.y - 75 - (1 - d) * 70).toFixed(1) + 'px) rotate(' + (o.a * (0.4 + 0.6 * d)).toFixed(2) + 'deg) scale(' + (lerp(2.1, 1, d) * o.s * (1 + 0.05 * thud(hit))).toFixed(4) + ')';
+      ph.style.transform = 'translate(' + (o.x - o.hw).toFixed(1) + 'px,' + (o.y - o.hh - (1 - d) * 70).toFixed(1) + 'px) rotate(' + (o.a * (0.4 + 0.6 * d)).toFixed(2) + 'deg) scale(' + (lerp(2.1, 1, d) * o.s * (1 + 0.05 * thud(hit))).toFixed(4) + ')';
     });
     var en = ease(seg(l, END_IN));
     endEl.style.opacity = (vis * en).toFixed(3);

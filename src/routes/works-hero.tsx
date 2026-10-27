@@ -4,14 +4,18 @@
 // 실행 카드(2~11)가 내려앉을 때마다 아래 '월 매출' 계단이 한 칸씩 차오른다. 1 시장 분석은 출시 전, 12 주간 보고서는 정리라 계단 없음.
 // 1 시장·경쟁사 분석 2 브랜드 메시지 3 체험단 4 블로그 검색 노출 5 구매평·별점 6 바이럴·커뮤니티 7 핫딜·공동구매 8 인플루언서 9 유튜브·쇼츠 10 광고 11 올리브영·PPL 12 주간 성과 보고서
 // → 결과: 출고 현장 사진이 뒤에 깔리고 '마케팅을 더할 때마다 한 칸씩'. 여기까지 숫자는 모두 예시('예시 시나리오' 표기 — 실제 성과 아님).
-// → 마지막: 문구 없이 실제 포트폴리오 브랜드 사진 47장이 점점 빠르게 쏟아지고 '130개 브랜드와 함께'(실제).
+// → 마지막: 문구 없이 실제 포트폴리오 브랜드 사진 47장 + 홈에 공개 중인 실제 고객 후기 11장이 점점 빠르게 쏟아지고 '130개 브랜드와 함께'(실제).
 // 인물·장소는 AI 가상(사진 nano_banana_pro → 영상 kling3_0 3초를 앞뒤로 이어 6초 반복. 사진: meet 77c9fc63, review d63e8c23, influencer d521492d, youtube 02880edc, drama 0320f16d, ship f2072308, 세럼은 리뷰 페이지 prod-b 기준).
 // 실제 올리브영 매장·방송사·플랫폼 로고는 쓰지 않는다. 대가·협찬 표시 문구 금지. 움직임은 works-hero.js.
+import { TESTI } from './home'
 const V = '/static/works-hero/'
 
 // 마지막 '실제 브랜드' 사진 벽: 포트폴리오에 공개된 대표 사진(cover) 47장을 260px 정사각 webp 로 줄인 것(brands/b00~b46, 약 350KB).
 // 브랜드 수는 화면에서 포트폴리오 목록 수로 갱신(works-hero.js), 누적 캠페인은 홈 신뢰 지표와 같은 값.
 const BRAND_PHOTOS = 47
+// 사진 사이에 섞는 고객 후기: 홈에 공개 중인 실제 후기(TESTI)의 강조 문장 + 가린 이름. 사진 4장마다 1장
+const REVIEWS = TESTI.map(t => ({ line: (t.body.split('**')[1] || t.body).replace(/\.$/, ''), who: t.name + ' · ' + t.role }))
+const WALL = Array.from({ length: BRAND_PHOTOS }, (_, i) => i).flatMap(i => (i % 4 === 3 && REVIEWS[(i - 3) / 4] ? [i, -1 - (i - 3) / 4] : [i]))
 
 // 월 매출 계단(예시, 단위 만 원) — 카드 2~11 에 하나씩
 export const STEPS = [
@@ -186,7 +190,9 @@ export const WorksHero = () => (
 
       {/* 마지막: 문구 없이 장면만 바뀌며 실제 포트폴리오 브랜드 사진이 쏟아지고, 끝에 한 줄 */}
       <div class="wkh-wall" data-wkh-wall>
-        {Array.from({ length: BRAND_PHOTOS }, (_, i) => <img data-wkh-ph src={`${V}brands/b${String(i).padStart(2, '0')}.webp`} alt="" width="260" height="260" decoding="async" />)}
+        {WALL.map(i => i >= 0
+          ? <img data-wkh-ph src={`${V}brands/b${String(i).padStart(2, '0')}.webp`} alt="" width="260" height="260" decoding="async" />
+          : <div class="wkh-rvc" data-wkh-ph><p class="wkh-rvc-h">고객 후기</p><b>“{REVIEWS[-1 - i].line}”</b><span>{REVIEWS[-1 - i].who}</span></div>)}
       </div>
       <p class="wkh-end" data-wkh-end><b><u data-wkh-brands>130</u>개 브랜드와 함께</b><span>2019년부터 누적 캠페인 37,000+</span></p>
     </div>
