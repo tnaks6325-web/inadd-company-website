@@ -27173,3 +27173,21 @@ body .dev-pos-col--us, body .rvt-card--premium, body .seed-note { box-shadow: va
 /* 그림자 2 — 떠 있는 메뉴·팝업 */
 body .hn-card, body .nav-dropdown-menu { box-shadow: var(--shadow-2) !important; }
 
+
+/* ============================================
+   디자인 점검 5단계 (2026-10-27) — 누름 영역·남은 작은 글자
+   누름 영역: 보이는 크기는 그대로 두고 눌리는 범위만 위아래로 넓힘(최소 24px 이상)
+   글자: 4단계-1 이후 남은 실제 내용 글자 12px (휴대폰·앱 화면 흉내 그림 속 글자는 제외)
+   ============================================ */
+.vh-back, .svc-back-link, .ldl-link { position: relative; }
+.vh-back::after, .svc-back-link::after, .ldl-link::after {
+  content: ""; position: absolute; left: -4px; right: -4px; top: -10px; bottom: -10px;
+}
+.ldl-link { display: inline-block; }
+body .dev-process-step, body .dev-flagship-badge, body .dev-fstat-label,
+body .vp-tile-needs-label, body .svc-light .vp-tile .vp-tile-front-en,
+body .rvp-hero-badge, body .rvp-hero-sub-badge,
+body .oy-card-img-badge, body .svc-light .oy-grid .oy-card-en, body .oyc-label, body .oyc-kp span,
+body .ppl-ep-img-badge, body .svc-light .ppl-ep-label-bar { font-size: 12px !important; }
+/* 파란 바탕 위 'SYNERGY EFFECT'가 바탕에 묻힘 → 진하게 */
+body .oyc-label { color: rgba(255,255,255,0.85) !important; -webkit-text-fill-color: rgba(255,255,255,0.85) !important; }
