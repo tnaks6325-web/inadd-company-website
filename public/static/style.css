@@ -27205,3 +27205,20 @@ body .cmodal-box .cf-error {
 body .cmodal-box .cf-error[hidden] { display: none; }
 body .cmodal-box .cf-error a { color: #8E1B1B !important; -webkit-text-fill-color: #8E1B1B !important; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
 body .cmodal-box .cf-submit { border-radius: 4px !important; }
+
+/* ── 휴대폰 전용 가벼운 그림 (2026-10-28) ──
+   767px 이하에서만 /static/m/ 아래 webp 사본을 쓴다. PC는 원본 그대로.
+   CSS 배경은 실제로 적용되는 그림만 받으므로 휴대폰은 원본을 내려받지 않는다.
+   <img>는 <picture class="m-pic">로 감쌌고, display:contents로 감싸기 전 배치를 유지한다. */
+picture.m-pic { display: contents; }
+@media (max-width: 767px) {
+  .cta-img-bg { background-image: var(--cta-img-m, var(--cta-img)); }
+  .dev-cta-photo { background-image: var(--cta-photo-m, var(--cta-photo)); }
+  .dev-hero--photo .dev-photo-bg, .vh-hero--photo .vh-photo-bg { background-image: var(--hero-photo-m, var(--hero-photo)); }
+  .svctab-photo { background-image: var(--img-m, var(--img, none)); }
+  #hsvcPanelImg { background-image: var(--hsvc-m) !important; }
+  .msig-img { background-image: var(--msig-m) !important; }
+  .about-location-section::before { background-image: url('/static/m/images/오시는길 이미지.webp'); }
+  .insight-hero .page-hero-img-bg { background-image: url('/static/m/images/insight_im.webp'); }
+  .about-hero .page-hero-img-bg { background-image: url('/static/m/about-images/about-hero.webp'); }
+}

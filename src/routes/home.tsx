@@ -224,7 +224,7 @@ export const HomePage = () => (
               title: '쌓인 데이터가, 다음 성과를 만듭니다',
               desc: '수많은 캠페인 데이터가 시스템에 축적됩니다. 매번 감으로 다시 시작하지 않고, 검증된 방식을 골라 노출이 아닌 매출로 이어지는 성과를 냅니다.',
               media: (
-                <img src="/static/images/why-01.png?v=1" alt="" class="why-media-img" loading="lazy" />
+                <picture class="m-pic"><source media="(max-width: 767px)" srcset="/static/m/images/why-01.webp" type="image/webp" /><img src="/static/images/why-01.png?v=1" alt="" class="why-media-img" loading="lazy" /></picture>
               )
             },
             {
@@ -232,14 +232,14 @@ export const HomePage = () => (
               desc: '6시에 닫고 사라지는 대행사가 아닌, 자정까지 필요한 순간에 곁에 있습니다.',
               hours: '09:30 – 24:00',
               media: (
-                <img src="/static/images/why-02.png?v=1" alt="" class="why-media-img" loading="lazy" />
+                <picture class="m-pic"><source media="(max-width: 767px)" srcset="/static/m/images/why-02.webp" type="image/webp" /><img src="/static/images/why-02.png?v=1" alt="" class="why-media-img" loading="lazy" /></picture>
               )
             },
             {
               title: '모든 브랜드를 시스템화',
               desc: '담당자가 자주 바뀌고 실무가 인수인계되지 않으면서, 했던 말을 또 하고 또 해야 했던 적 있으신가요? 인애드컴퍼니는 모든 브랜드를 시스템에 넣어 과거부터 현재까지를 연결하고, 모든 업무가 끊기지 않고 이어지게 합니다.',
               media: (
-                <img src="/static/images/why-03.png?v=1" alt="" class="why-media-img" loading="lazy" />
+                <picture class="m-pic"><source media="(max-width: 767px)" srcset="/static/m/images/why-03.webp" type="image/webp" /><img src="/static/images/why-03.png?v=1" alt="" class="why-media-img" loading="lazy" /></picture>
               )
             },
           ].map((f, i) => (
@@ -319,6 +319,7 @@ export const HomePage = () => (
               data-desc={c.desc}
               data-href={c.href}
               data-img={`/static/svc-images/${c.key}.png`}
+              data-img-m={`/static/m/svc-images/${c.key}.webp`}
               data-image-size={c.key === 'performance' ? '90% auto' : 'contain'}
             >{c.ko}</button>
           ))}
@@ -333,7 +334,7 @@ export const HomePage = () => (
               <p class="hsvc-panel-desc" id="hsvcPanelDesc">{HSVC[0].desc}</p>
               <a class="hsvc-panel-link" id="hsvcPanelLink" href={HSVC[0].href}>자세히 보기 →</a>
             </div>
-            <div class="hsvc-panel-img" id="hsvcPanelImg" style={`background-image:url('/static/svc-images/${HSVC[0].key}.png')`}></div>
+            <div class="hsvc-panel-img" id="hsvcPanelImg" style={`background-image:url('/static/svc-images/${HSVC[0].key}.png');--hsvc-m:url('/static/m/svc-images/${HSVC[0].key}.webp')`}></div>
           </div>
         </div>
 
@@ -354,6 +355,7 @@ export const HomePage = () => (
     desc.textContent = tab.getAttribute('data-desc');
     link.href = tab.getAttribute('data-href');
     img.style.backgroundImage = "url('" + tab.getAttribute('data-img') + "')";
+    img.style.setProperty('--hsvc-m', "url('" + tab.getAttribute('data-img-m') + "')");
     img.style.backgroundSize = tab.getAttribute('data-image-size');
   }
   tabs.forEach(function(tab, i){
@@ -630,7 +632,7 @@ export const HomePage = () => (
 
     {/* ============ ⑦ 클로징 + 문의 CTA ============ */}
     <section class="home-cta" id="homeCta">
-      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-home.png')"></div>
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-home.png');--cta-img-m:url('/static/m/images/cta-home.webp')"></div>
       <div class="home-cta-bg">
         <div class="hcta-glow"></div>
         {/* 파티클 캔버스 */}

@@ -293,7 +293,7 @@ export const SvcViralPage = () => (
 
     {/* ============ CTA ============ */}
     <section class="svc-cta-section">
-      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-viral.png')"></div>
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-viral.png');--cta-img-m:url('/static/m/images/cta-viral.webp')"></div>
 
       <div class="container">
         <div class="svc-cta-inner">
@@ -310,7 +310,7 @@ export const SvcViralPage = () => (
     <script dangerouslySetInnerHTML={{__html: `
 (function(){
   var s = document.createElement('script');
-  s.src = '/static/scroll-reveal.js?v=20260722b';
+  s.src = '/static/scroll-reveal.js?v=20261028a';
   document.head.appendChild(s);
 
   /* vi- 섹션 진입 애니메이션 */

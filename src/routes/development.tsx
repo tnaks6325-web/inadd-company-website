@@ -5,7 +5,7 @@ export const DevelopmentPage = () => (
         SECTION 1 — HERO
     ════════════════════════════════════════ */}
     <section class="dev-hero dev-hero--photo">
-      <div class="dev-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/mkt-images/TECH_HERO.png')"></div>
+      <div class="dev-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/mkt-images/TECH_HERO.png');--hero-photo-m:url('/static/m/mkt-images/TECH_HERO.webp')"></div>
       <canvas id="devThreeCanvas" class="dev-three-canvas"></canvas>
       <div class="dev-hero-bg">
         <div class="dev-orb dev-orb--1"></div>
@@ -450,7 +450,7 @@ export const DevelopmentPage = () => (
     ════════════════════════════════════════ */}
     <section class="dev-cta reveal-section">
       <div class="dev-cta-bg">
-        <div class="dev-cta-photo" aria-hidden="true" style="--cta-photo:url('/static/mkt-images/our tech under.png')"></div>
+        <div class="dev-cta-photo" aria-hidden="true" style="--cta-photo:url('/static/mkt-images/our tech under.png');--cta-photo-m:url('/static/m/mkt-images/our tech under.webp')"></div>
         <div class="dev-cta-orb-l"></div>
         <div class="dev-cta-orb-r"></div>
         <div class="dev-cta-grid"></div>

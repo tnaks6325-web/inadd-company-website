@@ -126,7 +126,7 @@ export const SvcOliveYoungPage = () => (
           {/* 02 검색 노출 */}
           <div class="oy-card oy-card--ranking">
             <div class="oy-card-img-wrap">
-              <img src="/static/oy-images/oy-ranking.jpg" alt="검색 노출" class="oy-card-img" />
+              <picture class="m-pic"><source media="(max-width: 767px)" srcset="/static/m/oy-images/oy-ranking.webp" type="image/webp" /><img src="/static/oy-images/oy-ranking.jpg" alt="검색 노출" class="oy-card-img" /></picture>
               <div class="oy-card-img-overlay">
                 <span class="oy-card-img-badge oy-card-img-badge--ranking">Category Content</span>
               </div>
@@ -158,7 +158,7 @@ export const SvcOliveYoungPage = () => (
           {/* 03 검색 노출 */}
           <div class="oy-card oy-card--exposure">
             <div class="oy-card-img-wrap">
-              <img src="/static/oy-images/oy-exposure.jpg" alt="검색 노출" class="oy-card-img" />
+              <picture class="m-pic"><source media="(max-width: 767px)" srcset="/static/m/oy-images/oy-exposure.webp" type="image/webp" /><img src="/static/oy-images/oy-exposure.jpg" alt="검색 노출" class="oy-card-img" /></picture>
               <div class="oy-card-img-overlay">
                 <span class="oy-card-img-badge oy-card-img-badge--exposure">Search Exposure</span>
               </div>
@@ -373,7 +373,7 @@ export const SvcOliveYoungPage = () => (
 
     {/* ══ CTA ══ */}
     <section class="svc-cta-section">
-      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-oliveyoung.png')"></div>
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-oliveyoung.png');--cta-img-m:url('/static/m/images/cta-oliveyoung.webp')"></div>
       <div class="container">
         <div class="svc-cta-inner">
           <div class="svc-cta-text">
@@ -389,7 +389,7 @@ export const SvcOliveYoungPage = () => (
     <script dangerouslySetInnerHTML={{__html: `
 (function(){
   var s = document.createElement('script');
-  s.src = '/static/scroll-reveal.js?v=20260722b';
+  s.src = '/static/scroll-reveal.js?v=20261028a';
   document.head.appendChild(s);
 })();
     `}} />

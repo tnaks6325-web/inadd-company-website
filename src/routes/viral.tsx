@@ -189,7 +189,7 @@ export const ViralPage = () => (
             },
           ].map((s, i) => (
             <a href={s.href} class="msig-card reveal-up" style={`transition-delay:${i * 0.08}s;--accent:${s.accentColor}`} key={s.href}>
-              <div class="msig-img" style={`background-image:url('${s.img}');background-position:${'imgPos' in s ? (s as any).imgPos : 'center center'}`}></div>
+              <div class="msig-img" style={`background-image:url('${s.img}');--msig-m:url('${s.img.replace('/static/', '/static/m/').replace(/\.(png|jpe?g)$/, '.webp')}');background-position:${'imgPos' in s ? (s as any).imgPos : 'center center'}`}></div>
               <div class="msig-overlay"></div>
               <div class="msig-accent-glow" style={`background: radial-gradient(circle at 50% 100%, ${s.accentColor}44 0%, transparent 65%)`}></div>
               <div class="msig-tag" style={`background:${s.accentColor}22;border-color:${s.accentColor}66`}>{s.tag}</div>

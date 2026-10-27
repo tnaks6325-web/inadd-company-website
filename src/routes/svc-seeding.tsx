@@ -181,7 +181,7 @@ export const SvcSeedingPage = () => (
             {/* 패널 1 — 특화 블로거 */}
             <div class="svc-panel" data-sdng-panel="1" style="display:none">
               <div class="svc-panel-img sdng-img-wrap">
-                <img src="/static/seeding-images/blog-specialized-new.jpg" alt="특화 블로거 체험단" class="sdng-panel-photo" />
+                <picture class="m-pic"><source media="(max-width: 767px)" srcset="/static/m/seeding-images/blog-specialized-new.webp" type="image/webp" /><img src="/static/seeding-images/blog-specialized-new.jpg" alt="특화 블로거 체험단" class="sdng-panel-photo" /></picture>
                 <span class="sdng-panel-badge sdng-panel-badge--specialized">Specialized</span>
               </div>
               <div class="svc-panel-info">
@@ -354,7 +354,7 @@ export const SvcSeedingPage = () => (
             {/* 패널 0 — 일반 피드 체험단 */}
             <div class="svc-panel active" data-insta-panel="0" style="display:flex">
               <div class="svc-panel-img sdng-img-wrap">
-                <img src="/static/seeding-images/insta-general-new.jpg" alt="일반 피드 체험단" class="sdng-panel-photo" />
+                <picture class="m-pic"><source media="(max-width: 767px)" srcset="/static/m/seeding-images/insta-general-new.webp" type="image/webp" /><img src="/static/seeding-images/insta-general-new.jpg" alt="일반 피드 체험단" class="sdng-panel-photo" /></picture>
                 <span class="sdng-panel-badge sdng-panel-badge--insta-basic">Basic</span>
               </div>
               <div class="svc-panel-info">
@@ -379,7 +379,7 @@ export const SvcSeedingPage = () => (
             {/* 패널 1 — 특화 타깃 체험단 */}
             <div class="svc-panel" data-insta-panel="1" style="display:none">
               <div class="svc-panel-img sdng-img-wrap">
-                <img src="/static/seeding-images/insta-specialized-new.jpg" alt="특화 타깃 체험단" class="sdng-panel-photo" />
+                <picture class="m-pic"><source media="(max-width: 767px)" srcset="/static/m/seeding-images/insta-specialized-new.webp" type="image/webp" /><img src="/static/seeding-images/insta-specialized-new.jpg" alt="특화 타깃 체험단" class="sdng-panel-photo" /></picture>
                 <span class="sdng-panel-badge sdng-panel-badge--insta-specialized">Specialized</span>
               </div>
               <div class="svc-panel-info">
@@ -600,7 +600,7 @@ export const SvcSeedingPage = () => (
     </section>
 
     <section class="svc-cta-section">
-      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-seeding.png')"></div>
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-seeding.png');--cta-img-m:url('/static/m/images/cta-seeding.webp')"></div>
       <div class="container">
         <div class="svc-cta-inner">
           <div class="svc-cta-text">
@@ -616,7 +616,7 @@ export const SvcSeedingPage = () => (
     <script dangerouslySetInnerHTML={{__html: `
 (function(){
   var s = document.createElement('script');
-  s.src = '/static/scroll-reveal.js?v=20260722b';
+  s.src = '/static/scroll-reveal.js?v=20261028a';
   document.head.appendChild(s);
 })();
     `}} />

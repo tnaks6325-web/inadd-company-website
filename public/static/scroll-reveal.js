@@ -152,12 +152,15 @@
   /* ─────────────────────────────────────────────
      요소 표시
   ───────────────────────────────────────────── */
-  function applyShow(el, delay) {
+  function applyShow(el, delay, dur) {
     setTimeout(function () {
       el.style.opacity   = '1';
       el.style.transform = 'translateY(0) translateX(0) scale(1)';
       el.classList.add('sr-shown');
       delete el.dataset.srHidden;
+      /* 등장이 끝나면 별도 레이어 예약(will-change)을 풀어 준다.
+         남겨 두면 지나간 요소까지 GPU 레이어로 계속 붙들고 있어 휴대폰 스크롤이 버벅인다. */
+      setTimeout(function () { el.style.willChange = ''; }, (dur || 720) + 100);
     }, delay || 0);
   }
 
@@ -170,7 +173,7 @@
     var baseDelay = rule.delay     || 0;
 
     if (!('IntersectionObserver' in window)) {
-      els.forEach(function (el) { applyShow(el, 0); });
+      els.forEach(function (el) { applyShow(el, 0, rule.dur); });
       return;
     }
 
@@ -189,7 +192,7 @@
           if (!entry.isIntersecting) return;
           var el  = entry.target;
           var idx = parseInt(el.dataset.srIdx || '0', 10);
-          applyShow(el, baseDelay + idx * stagger);
+          applyShow(el, baseDelay + idx * stagger, rule.dur);
           io.unobserve(el);
         });
       }, { threshold: threshold, rootMargin: '0px 0px -36px 0px' });
@@ -210,8 +213,12 @@
       if (!all.length) return;
 
       /* 히어로 섹션 내부, 이미 처리된 요소 제외 */
+      /* 휴대폰에서는 화면 1.5장보다 긴 덩어리(섹션 통째)는 움직이지 않는다.
+         안쪽 요소들이 각자 등장하므로 겉 덩어리까지 움직이면 큰 레이어가 겹쳐 버벅인다. */
+      var isPhone = window.matchMedia && window.matchMedia('(max-width: 767px)').matches;
       var els = all.filter(function (el) {
         return (
+          !(isPhone && el.offsetHeight > window.innerHeight * 1.5) &&
           !el.dataset.srHidden &&
           !el.closest('.vh-hero') &&
           !el.closest('.mkt-hero')

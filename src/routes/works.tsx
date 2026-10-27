@@ -130,7 +130,7 @@ export const WorksPage = () => (
 
     {/* ── CTA ── */}
     <section class="home-cta">
-      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/다음 성공 케이스는 당신의 브랜드입니다.png')"></div>
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/다음 성공 케이스는 당신의 브랜드입니다.png');--cta-img-m:url('/static/m/images/다음 성공 케이스는 당신의 브랜드입니다.webp')"></div>
       <div class="home-cta-bg"><div class="hcta-glow"></div></div>
       <div class="container">
         <div class="home-cta-inner">

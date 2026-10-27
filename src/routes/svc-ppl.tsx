@@ -318,7 +318,7 @@ export const SvcPplPage = () => (
 
     {/* ══ CTA ══ */}
     <section class="svc-cta-section">
-      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-ppl.png')"></div>
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-ppl.png');--cta-img-m:url('/static/m/images/cta-ppl.webp')"></div>
       <div class="container">
         <div class="svc-cta-inner">
           <div class="svc-cta-text">
@@ -334,7 +334,7 @@ export const SvcPplPage = () => (
     <script dangerouslySetInnerHTML={{__html: `
 (function(){
   var s = document.createElement('script');
-  s.src = '/static/scroll-reveal.js?v=20260722b';
+  s.src = '/static/scroll-reveal.js?v=20261028a';
   document.head.appendChild(s);
 })();
     `}} />

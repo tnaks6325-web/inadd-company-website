@@ -85,7 +85,7 @@ export const SvcPerformancePage = () => (
             <div class="pm-funnel"><div class="pm-funnel-head"><b>구매 전환 분석</b><span>GA4 · GTM</span></div><ol>{[['유입', '어떤 광고에서 방문했는가'], ['상품 조회', '어떤 상품을 살펴봤는가'], ['장바구니', '구매 전 어떤 행동을 했는가'], ['결제·구매', '어느 단계에서 이탈했는가']].map(([a,b],i) => <li key={a}><span class="pm-funnel-step">{String(i+1).padStart(2,'0')}</span><b>{a}</b><span>{b}</span></li>)}</ol><p>구매형 사이트의 분석 예시입니다. 서비스에 따라 문의·상담을 전환 목표로 설정합니다.</p></div>
           </div>
           <div class="pm-feature pm-feature-reverse">
-            <div class="pm-creative"><div class="pm-creative-art"><img src="/static/svc-images/performance.png" width="1872" height="1248" loading="lazy" alt="광고 성과 분석과 타겟팅을 표현한 3D 일러스트" /></div><div class="pm-creative-stages"><span>소재 제작</span><Arrow /><span>광고주 확인</span><Arrow /><span>집행·교체</span></div></div>
+            <div class="pm-creative"><div class="pm-creative-art"><picture class="m-pic"><source media="(max-width: 767px)" srcset="/static/m/svc-images/performance.webp" type="image/webp" /><img src="/static/svc-images/performance.png" width="1872" height="1248" loading="lazy" alt="광고 성과 분석과 타겟팅을 표현한 3D 일러스트" /></picture></div><div class="pm-creative-stages"><span>소재 제작</span><Arrow /><span>광고주 확인</span><Arrow /><span>집행·교체</span></div></div>
             <div class="pm-feature-copy"><span class="pm-number">02</span><h3>광고 소재 제작과<br />효율 관리</h3><p>보유한 제품·브랜드 이미지로 매체 규격에 맞는 광고 소재를 제작합니다. 이미지와 문구별 반응을 비교하고, 성과가 낮은 소재는 교체합니다.</p><ul class="pm-checks"><li><Check />배너·카드뉴스 등 매체별 소재 제작</li><li><Check />프로모션에 맞는 카피와 CTA 구성</li><li><Check />체험단·리뷰 콘텐츠의 광고 소재 활용</li></ul><p class="pm-note">기본 제작 기간은 영업일 2~3일이며, 월 제작 수량과 수정 범위는 사전에 협의합니다. 콘텐츠 활용 시 광고 사용 권한을 확인합니다.</p></div>
           </div>
           <div class="pm-report"><div><span class="pm-number">03</span><h3>성과 보고와 운영 협의</h3><p>집행 결과와 조정 사항을 정리해 공유합니다.</p></div><dl><div><dt>일간 보고</dt><dd>전일 성과, 소재·타겟별 반응, 예산 소진 현황</dd></div><div><dt>수시 공유</dt><dd>운영시간 내 광고 현황 확인 및 요청사항 대응</dd></div><div><dt>월간 보고</dt><dd>월별 성과와 주요 이슈, 다음 달 운영 계획</dd></div></dl></div>
@@ -121,7 +121,7 @@ export const SvcPerformancePage = () => (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: PM_FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }).replace(/</g, '\\u003c') }} />
       </section>
 
-      <section class="pm-contact"><div class="container"><div><h2>광고 계정<br /><em>무료 진단</em></h2><p>운영 중인 매체와 광고 예산, 개선하고 싶은 점을 알려주세요.<br />담당자가 확인 후 연락드립니다.</p><a class="vh-cta-btn" href="/contact" data-pm-contact>문의하기 <Arrow /></a></div><img src="/static/svc-images/performance.png" width="1872" height="1248" loading="lazy" alt="" /></div></section>
+      <section class="pm-contact"><div class="container"><div><h2>광고 계정<br /><em>무료 진단</em></h2><p>운영 중인 매체와 광고 예산, 개선하고 싶은 점을 알려주세요.<br />담당자가 확인 후 연락드립니다.</p><a class="vh-cta-btn" href="/contact" data-pm-contact>문의하기 <Arrow /></a></div><picture class="m-pic"><source media="(max-width: 767px)" srcset="/static/m/svc-images/performance.webp" type="image/webp" /><img src="/static/svc-images/performance.png" width="1872" height="1248" loading="lazy" alt="" /></picture></div></section>
     </div>
     <script src="/static/pm-hero-vault.js?v=20261019b" defer></script>
     <script dangerouslySetInnerHTML={{ __html: `
