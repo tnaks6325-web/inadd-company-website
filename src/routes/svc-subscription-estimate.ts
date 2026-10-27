@@ -2,7 +2,8 @@ import { ESTIMATE_ITEMS, PACKAGE_PRICE } from '../lib/subscription-estimate'
 
 const FREE_PRICE = ESTIMATE_ITEMS.filter(it => it.free).reduce((s, it) => s + it.price, 0)
 
-// 마케팅팀 구독 — 견적 조합 화면. 상세페이지 '04 포함 항목' 바로 아래에 끼운다(svc-subscription.tsx).
+// 마케팅팀 구독 — 견적 조합 화면. 상세페이지 '04 포함 항목' 제목 아래, 예전 포함 항목 표 자리에 끼운다(svc-subscription.tsx).
+// 10가지가 모두 담긴 상태(팀구독 300만 원)로 시작해 빼 나가는 방식이다(대표 결정 2026-10-27).
 // 상세페이지는 좁은 화면에서 통째로 축소되므로, 이 구획만 축소를 되돌려(.mte zoom) 휴대폰에서도 보통 크기로 보인다.
 // 동작(합계 계산·제출): public/static/subscription/subscription.js · 접수: POST /api/mail/estimate · 모양: subscription.css 의 .mte-*
 
@@ -13,19 +14,17 @@ const row = (it: (typeof ESTIMATE_ITEMS)[number]) => {
   const price = it.free ? '<b>무료</b>' : it.fixed ? '<b>포함</b>' : `${it.price}만 원`
   const input = it.fixed
     ? `<input type="checkbox" checked disabled aria-label="${it.name} 항상 포함">`
-    : `<input type="checkbox" name="item" value="${it.id}" data-price="${it.price}">`
+    : `<input type="checkbox" name="item" value="${it.id}" data-price="${it.price}" checked>`
   return `<label class="mte-item${it.fixed ? ' mte-item--fixed' : ''}">${input}<span class="mte-box" aria-hidden="true"></span>`
     + `<span class="mte-name">${it.name}</span><span class="mte-amount">${amount}</span><span class="mte-price">${price}</span></label>`
 }
 
 // 항목 설명은 줄 안에 넣지 않고 여기 한 문장으로(lib 의 note 와 같은 내용)
-const NOTES = '퍼포먼스 마케팅은 광고비 월 1,000만 원 한도까지 운영하고, 광고 소재는 월 운영 범위 안에서 무제한 제작해요'
+const NOTES = '퍼포먼스 마케팅은 광고비 월 1,000만 원 한도까지 운영해요'
 
 export const ESTIMATE_SECTION = `
 <section id="estimate" data-estimate="1" class="mte-sec" aria-labelledby="mteTitle">
 <div class="mte">
-  <h2 id="mteTitle" class="mte-title">필요한 것만 골라 견적을 직접 맞춰 보세요</h2>
-  <p class="mte-lead">항목을 고르면 예상 월 금액이 바로 바뀌어요. 단품가 합계가 ${PACKAGE_PRICE}만 원을 넘으면 10가지가 다 들어간 팀구독 ${PACKAGE_PRICE}만 원이에요.</p>
   <form id="mteForm" class="mte-form" data-package="${PACKAGE_PRICE}" data-free="${FREE_PRICE}" novalidate>
     <div class="mte-tools">
       <button type="button" data-mte-all>10가지 전부 담기</button>
@@ -60,7 +59,7 @@ export const ESTIMATE_SECTION = `
       </div>
       <p class="mte-error" data-mte-error role="alert" hidden></p>
       <button type="submit" class="mte-submit">이 조합으로 상담 신청</button>
-      <p class="mte-foot">신청하시면 고른 조합과 예상 금액을 메일로 보내 드려요. 최종 금액은 상담에서 브랜드 상황에 맞춰 확정해요.<br>${NOTES}.<br>광고비, 체험단 제품·배송비, 촬영 모델·장소 비용은 별도예요.</p>
+      <p class="mte-foot">신청하시면 고른 조합과 예상 금액을 메일로 보내 드려요. 최종 금액은 상담에서 브랜드 상황에 맞춰 확정해요.<br>${NOTES}.</p>
     </div>
   </form>
   <div class="mte-done" data-mte-done hidden>

@@ -1,6 +1,6 @@
 // 마케팅팀 구독 상세페이지 본문 — 디자인 시안(Claude Design '종합 마케팅 구독 상세페이지 A 채용고민형', 860px 상세페이지 규격)을 그대로 옮긴 것.
 // 시안의 인라인 스타일을 유지한다. 문구·사진을 바꿀 때는 이 파일을 직접 고친다.
-// <!--ESTIMATE--> 자리에 견적 조합 화면(svc-subscription-estimate.ts)이 들어간다.
+// <!--ESTIMATE--> 자리에 견적 조합 화면(svc-subscription-estimate.ts)이 들어간다 — '04 포함 항목' 표를 대신한다(10가지 모두 담긴 상태로 시작).
 // 사진: public/static/subscription/*.webp · 효과(숫자 올라가기·등장 효과·하단 고정 버튼): public/static/subscription/subscription.js
 export const SUBSCRIPTION_BODY = `
 <div class="mts-page" id="mtsPage" style="width:860px;margin:0 auto;background:#FFFFFF;color:#111318;word-break:keep-all;letter-spacing:-0.02em;">
@@ -9,7 +9,10 @@ export const SUBSCRIPTION_BODY = `
 <section data-screen-label="01 히어로" style="position:relative;padding:88px 64px 0;">
   <div style="font-size:24px;font-weight:700;margin-bottom:32px;">인애드 종합 마케팅 구독</div>
   <h1 style="margin:0;font-size:58px;line-height:1.32;font-weight:800;letter-spacing:-0.04em;text-wrap:pretty;">신입마케터 1명 비용<br>월 300만 원+α,<br>기획·디자인·광고·분석까지<br>혼자 다 할 수 있을까요?</h1>
-  <a href="/contact" data-mts-cta="1" style="position:relative;z-index:3;display:inline-flex;align-items:center;justify-content:center;max-width:100%;min-height:calc(48px / var(--mts-zoom, 1));margin-top:40px;padding:22px 48px;border-radius:4px;background:#21306F;color:#FFFFFF;font-size:max(28px, calc(16px / var(--mts-zoom, 1)));font-weight:800;line-height:1.4;text-decoration:none;">무료 상담 신청</a>
+  <div style="position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:12px;margin-top:40px;">
+    <a href="/contact" data-mts-cta="1" style="display:inline-flex;align-items:center;justify-content:center;max-width:100%;min-height:calc(48px / var(--mts-zoom, 1));padding:22px 48px;border-radius:4px;background:#21306F;color:#FFFFFF;font-size:max(28px, calc(16px / var(--mts-zoom, 1)));font-weight:800;line-height:1.4;text-decoration:none;">무료 상담 신청</a>
+    <a href="#estimate" style="display:inline-flex;align-items:center;justify-content:center;max-width:100%;min-height:calc(48px / var(--mts-zoom, 1));padding:22px 24px;border-radius:4px;background:#FFFFFF;color:#21306F;box-shadow:inset 0 0 0 3px #21306F;font-size:max(28px, calc(16px / var(--mts-zoom, 1)));font-weight:800;line-height:1.4;text-decoration:none;">견적 직접 맞춰 보기</a>
+  </div>
     <svg width="480" height="750" viewBox="0 0 480 750" fill="none" style="position:absolute;left:380px;top:200px;z-index:2;pointer-events:none;overflow:visible;"><path d="M64 62 C160 48 320 40 390 80 C420 110 425 190 420 250 C420 320 340 340 345 290 C350 240 440 260 425 340 C410 463 290 563 150 573" stroke="#21306F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M173 557 L150 573 L175 585" stroke="#21306F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
   </section>
 
@@ -221,80 +224,13 @@ export const SUBSCRIPTION_BODY = `
   </div>
 </section>
 
-<section data-screen-label="05 포함 항목" style="background:#F8F7F4;padding:120px 64px;">
+<section data-screen-label="05 포함 항목" style="background:#F8F7F4;padding:120px 64px 0;">
   <div style="font-size:24px;font-weight:800;color:#21306F;">04</div>
-  <h2 style="margin:16px 0 0;font-size:48px;line-height:1.36;font-weight:800;letter-spacing:-0.04em;">따로 맡기면 450만 원,<br>팀구독은 월 300만 원</h2>
-  <p style="margin:24px 0 0;font-size:24px;line-height:1.6;">인애드마케팅 팀구독에 들어 있는 10가지예요.</p>
-  <div style="background:#FFFFFF;border-radius:20px;padding:12px 40px 0;margin-top:48px;">
-    <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;padding:20px 0;border-bottom:2px solid #21306F;font-size:19px;font-weight:700;"><div>항목</div><div style="text-align:right;">구독 제공량</div><div style="text-align:right;">단품가</div></div>
-          <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">초기진단·세팅</div></div></div>
-        <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">무료</div>
-        <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">30만 원</span></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">퍼포먼스 마케팅</div><div style="font-size:17px;font-weight:600;margin-top:4px;">광고비 월 1,000만 원 한도까지 운영</div></div></div>
-        <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">운영 대행</div>
-        <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">100만 원</span></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">광고 소재 제작</div></div></div>
-        <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">무제한</div>
-        <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">80만 원</span></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">릴스 소재 제작</div></div></div>
-        <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">월 1회</div>
-        <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">30만 원</span></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">랜딩페이지 제작·운영</div></div></div>
-        <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">3개월마다 1회</div>
-        <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">60만 원</span></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">카페 바이럴</div></div></div>
-        <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">월 15회</div>
-        <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">40만 원</span></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">블로그 체험단</div></div></div>
-        <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">월 15회</div>
-        <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">40만 원</span></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">구매후기 체험단</div></div></div>
-        <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">월 50회</div>
-        <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">50만 원</span></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">언론기사 작성·송출</div></div></div>
-        <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">월 1회</div>
-        <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;"><span style="text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:2px;">20만 원</span></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 200px 140px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px dashed #D9C59A;">
-        <div style="display:flex;align-items:center;gap:12px;"><span style="color:#E0322B;font-size:24px;font-weight:800;">✓</span><div><div style="font-size:24px;font-weight:800;">브랜드 주간보고서</div></div></div>
-        <div style="text-align:right;font-size:24px;font-weight:800;color:#21306F;">매주</div>
-        <div style="text-align:right;font-size:22px;font-weight:700;color:#5B5F6B;">포함</div>
-      </div>
-    <div style="display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:26px 0;"><div style="font-size:22px;font-weight:700;">단품 합계</div><div style="font-size:32px;font-weight:800;color:#5B5F6B;text-decoration:line-through;text-decoration-color:#E0322B;text-decoration-thickness:3px;">450만 원</div></div>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
-    <div style="background:#21306F;color:#FFFFFF;border-radius:20px;padding:36px 32px;">
-      <div style="font-size:22px;font-weight:700;">패키지로 한 번에 구독하면</div>
-      <div style="margin-top:12px;"><span style="font-size:24px;font-weight:700;">월 </span><span style="font-size:60px;font-weight:800;letter-spacing:-0.04em;">300</span><span style="font-size:24px;font-weight:700;">만 원</span></div>
-      <div style="font-size:20px;font-weight:700;color:#FFE94A;margin-top:8px;">최대 200만 원 아껴요</div>
-    </div>
-    <div style="background:#FFFFFF;border-radius:20px;padding:36px 32px;display:flex;flex-direction:column;justify-content:center;">
-      <div style="font-size:26px;font-weight:800;line-height:1.4;">필요한 서비스만<br>부분 구독도 가능해요</div>
-      <div style="font-size:19px;line-height:1.55;margin-top:12px;">상담 때 브랜드 상황에 맞춰 골라 드려요.</div>
-      <a href="#estimate" style="align-self:flex-start;margin-top:16px;font-size:20px;font-weight:800;text-decoration:underline;text-underline-offset:5px;">아래에서 직접 조합해 보기</a>
-    </div>
-  </div>
-  <div style="font-size:17px;line-height:1.6;margin-top:20px;">광고비, 체험단 제품·배송비, 구매평에 쓰이는 상품 비용, 촬영 모델·장소 비용은 별도예요 · 소재 무제한은 월 운영 범위 안에서 제작해요 · 카페·블로그·구매후기 체험단은 광고(협찬) 표시 후 게재해요</div>
+  <h2 id="mteTitle" style="margin:16px 0 0;font-size:48px;line-height:1.36;font-weight:800;letter-spacing:-0.04em;">따로 맡기면 450만 원,<br>팀구독은 월 300만 원</h2>
+  <p style="margin:24px 0 0;font-size:24px;line-height:1.6;">10가지가 모두 담겨 있어요.<br>필요 없는 항목은 빼서 견적을 직접 맞춰 보세요.</p>
 </section>
-
 <!--ESTIMATE-->
+<div style="background:#F8F7F4;padding:0 64px 120px;"><div style="font-size:17px;line-height:1.6;">광고비, 체험단 제품·배송비, 구매평에 쓰이는 상품 비용, 촬영 모델·장소 비용은 별도예요 · 소재 무제한은 월 운영 범위 안에서 제작해요 · 카페·블로그·구매후기 체험단은 광고(협찬) 표시 후 게재해요</div></div>
 <section data-screen-label="06 TF팀" style="padding:120px 64px;">
   <div style="font-size:24px;font-weight:800;color:#21306F;">05</div>
   <h2 style="margin:16px 0 0;font-size:48px;line-height:1.36;font-weight:800;letter-spacing:-0.04em;">우리 브랜드 전담 TF팀 구성</h2>
@@ -497,7 +433,7 @@ export const SUBSCRIPTION_BODY = `
     <div style="font-size:22px;font-weight:800;">인애드컴퍼니</div>
   </div>
 </section>
-<a href="/contact" data-mts-cta="1" data-sticky="1" style="position:fixed;left:50%;bottom:24px;z-index:50;transform:translate(-50%,160%);opacity:0;pointer-events:none;transition:opacity 0.3s ease, transform 0.45s cubic-bezier(0.2,0.7,0.2,1);display:flex;align-items:center;gap:12px;background:#21306F;color:#FFFFFF;text-decoration:none;font-size:24px;font-weight:800;padding:18px 44px;border-radius:4px;box-shadow:0 10px 30px rgba(17,19,24,0.28);white-space:nowrap;">무료 상담 신청<span style="font-size:18px;font-weight:600;">초기진단 무료</span></a>
+<div data-sticky="1" class="mts-sticky" style="position:fixed;left:50%;bottom:24px;z-index:50;transform:translate(-50%,160%);opacity:0;pointer-events:none;transition:opacity 0.3s ease, transform 0.45s cubic-bezier(0.2,0.7,0.2,1);display:flex;gap:10px;white-space:nowrap;"><a href="#estimate" style="display:flex;align-items:center;background:#FFFFFF;color:#21306F;text-decoration:none;font-size:max(24px, calc(15px / var(--mts-zoom, 1)));font-weight:800;padding:18px 28px;border-radius:4px;box-shadow:inset 0 0 0 3px #21306F, 0 10px 30px rgba(17,19,24,0.22);">견적 맞춰 보기</a><a href="/contact" data-mts-cta="1" style="display:flex;align-items:center;gap:12px;background:#21306F;color:#FFFFFF;text-decoration:none;font-size:max(24px, calc(15px / var(--mts-zoom, 1)));font-weight:800;padding:18px 44px;border-radius:4px;box-shadow:0 10px 30px rgba(17,19,24,0.28);">무료 상담 신청<span class="mts-sticky-sub" style="font-size:18px;font-weight:600;">초기진단 무료</span></a></div>
 
 </div>
 `
