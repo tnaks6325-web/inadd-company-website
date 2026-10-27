@@ -1,5 +1,5 @@
 /**
- * Resend Mail API — 상담 폼 이메일 발송
+ * Brevo Mail API — 상담 폼 이메일 발송
  *
  * POST /api/mail/contact   (일반 상담 - 에이전시/브랜드)
  * POST /api/mail/brochure  (회사소개서 요청)
@@ -7,15 +7,17 @@
  */
 
 import { Hono } from 'hono'
+import { sendBrevoEmail } from '../lib/brevo-mail.ts'
 import { kvGet } from '../admin/store'
 import { resolveRecipients } from './mail-recipients'
 import { forwardInquiryToIntranet } from './intranet-inquiry'
 import { computeEstimate, estimateText, ESTIMATE_ITEMS, PACKAGE_PRICE, type Estimate } from '../lib/subscription-estimate'
 
 type Bindings = {
-  RESEND_API_KEY: string     // re_xxxx
-  RESEND_FROM: string        // noreply@inadcompany.co.kr
-  RESEND_TO: string          // tnaks6325@inadcompany.com
+  BREVO_API_KEY?: string
+  BREVO_FROM?: string        // 기본값: no-reply@notify.inadcompany.co.kr
+  MAIL_REPLY_TO?: string     // 문의 회신용 주소(메일 본문에 노출)
+  RESEND_TO?: string         // 기존 환경설정 호환용
   ADMIN_KV: KVNamespace      // home_brochure_url 등 KV 값 읽기용
   MAIL_REDIRECT_TO?: string  // 테스트 서버 전용: 모든 메일을 이 주소로만 보낸다(wrangler.jsonc env.preview)
   SITE_ENV?: string          // 'preview' = 테스트 서버(wrangler.jsonc env.preview)
@@ -61,26 +63,17 @@ export async function sendMailTo(
     subject = `[테스트서버] ${subject}`
     recipients = [env.MAIL_REDIRECT_TO]
   }
-  if (!env.RESEND_API_KEY || !env.RESEND_FROM || recipients.length === 0) {
+  const from = env.BREVO_FROM || 'In Ad Company <no-reply@notify.inadcompany.co.kr>'
+  if (!env.BREVO_API_KEY || recipients.length === 0) {
     throw new Error('메일 환경변수가 설정되지 않았습니다.')
   }
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: env.RESEND_FROM,
-      to: recipients,
-      subject,
-      html: htmlBody,
-    }),
+  return await sendBrevoEmail(env.BREVO_API_KEY, {
+    from,
+    to: recipients,
+    subject,
+    html: htmlBody,
+    replyTo: env.MAIL_REPLY_TO || env.RESEND_TO,
   })
-  if (!res.ok) {
-    const text = await res.text()
-    throw new Error(`메일 발송 실패: ${res.status} ${text}`)
-  }
 }
 
 /* ─────────────────────────────────────────────
@@ -383,7 +376,7 @@ mail.post('/brochure', async (c) => {
       c.env,
       toEmail,
       mailSubject,
-      brochureReplyTemplate(pdfUrl, downloadUrl, headline, bodyText, tags, [rawAddress, rawAddressDetail].filter(Boolean).join(' '), c.env.RESEND_TO)
+      brochureReplyTemplate(pdfUrl, downloadUrl, headline, bodyText, tags, [rawAddress, rawAddressDetail].filter(Boolean).join(' '), c.env.MAIL_REPLY_TO || c.env.RESEND_TO || '')
     )
     return c.json({ ok: true })
   } catch (e: any) {
@@ -500,7 +493,7 @@ mail.post('/estimate', async (c) => {
         c.env,
         email,
         `[인애드컴퍼니] ${company} 마케팅 팀구독 견적 조합 내역`,
-        estimateReplyTemplate(est, company, [rawAddress, rawAddressDetail].filter(Boolean).join(' '), c.env.RESEND_TO, source)
+estimateReplyTemplate(est, company, [rawAddress, rawAddressDetail].filter(Boolean).join(' '), c.env.MAIL_REPLY_TO || c.env.RESEND_TO || '', source)
       )
     })().catch((e: any) => console.error('[mail/estimate] 손님 메일 실패', e?.message || e))
     try { c.executionCtx.waitUntil(toCustomer) } catch { await toCustomer }
