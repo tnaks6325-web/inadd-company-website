@@ -1,4 +1,5 @@
 import { REF_CASES } from './svc-performance-ref'
+import { WorksHero } from './works-hero'
 
 // ── 포트폴리오 카드 ──
 // 관리자에 등록된 사례(works_items)를 서버에서 미리 그려 검색로봇도 읽게 한다(main.tsx 가 채움).
@@ -54,15 +55,51 @@ export const AdCards = () => (
 
 export const WorksPage = () => (
   <>
-    {/* ── Page Hero ── */}
-    <section class="page-hero page-hero--works">
-      <div class="page-hero-img-bg" aria-hidden="true"></div>
-      <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
-      <div class="container">
-        <span class="sec-label">Our Works</span>
-        <h1 class="page-title">[ WORKS ]</h1>
-        <p class="page-desc">인애드컴퍼니가 함께한 브랜드들의 마케팅 성과입니다.</p>
+    {/* ── Page Hero: 왼쪽 글, 오른쪽 통합 마케팅 예시 시나리오 애니메이션(works-hero) ── */}
+    <link rel="stylesheet" href="/static/works-hero.css?v=20261027j" />
+    <section class="vh-hero vh-hero--wkh">
+      <div class="vh-glow" aria-hidden="true"></div>
+      <div class="vh-bg">
+        <div class="vh-grid"></div>
+        <div class="vh-noise"></div>
       </div>
+      <div class="container vh-inner">
+        <h1 class="vh-h1">
+          <span class="vh-badge" style="color:rgba(33,48,111,0.95);border-color:rgba(33,48,111,0.3);background:rgba(33,48,111,0.06)">
+            <span class="vh-badge-dot" style="background:#21306F;box-shadow:0 0 8px rgba(33,48,111,0.6)"></span>
+            <span>포트폴리오</span>
+          </span>
+          <span class="vh-title">
+            <span class="vh-tline" id="wkL1">브랜드 메시지부터 매출까지,</span>
+            <span class="vh-tline" id="wkL2"><span class="vh-hl">한 흐름으로</span> 키웁니다</span>
+          </span>
+        </h1>
+        <div class="vh-sub-wrap" id="wkSub">
+          <p class="vh-sub">페르소나와 카피를 정하고, 후기·바이럴·인플루언서·광고·올리브영을 차례로 쌓습니다.</p>
+          <p class="vh-sub">실제 브랜드 사례는 아래에서 확인하세요.</p>
+        </div>
+        <div class="vh-btns" id="wkBtns">
+          <a href="/contact" class="vh-cta-btn">
+            <span>문의하기</span>
+            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#worksFilter" class="vh-scroll-btn">
+            <span>사례 보기</span>
+            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+      <WorksHero />
+      <script src="/static/works-hero.js?v=20261027j" defer></script>
+      <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  function anim(el,delay,dir){if(!el)return;el.style.opacity='0';el.style.transform=dir==='up'?'translateY(32px)':'translateX(-32px)';el.style.transition='opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)';setTimeout(function(){el.style.opacity='1';el.style.transform='none';},delay);}
+  anim(document.getElementById('wkL1'),200,'left');
+  anim(document.getElementById('wkL2'),440,'left');
+  anim(document.getElementById('wkSub'),700,'up');
+  anim(document.getElementById('wkBtns'),940,'up');
+})();
+      `}} />
     </section>
 
     {/* ══ 라이트 테마 콘텐츠 래퍼 (히어로 제외) ══ */}
