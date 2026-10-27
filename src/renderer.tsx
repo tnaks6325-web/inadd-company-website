@@ -318,7 +318,7 @@ fbq('track', 'PageView');
                 </div>
                 <div class="cf-group">
                   <label for="cm-phone">연락처</label>
-                  <input type="tel" id="cm-phone" name="phone" placeholder="010-0000-0000" />
+                  <input type="tel" id="cm-phone" name="phone" inputmode="numeric" maxlength="13" autocomplete="tel" placeholder="010-0000-0000" />
                 </div>
                 <div class="cf-group">
                   <label>관심 서비스 <span class="cf-opt">(복수 선택 가능)</span></label>
@@ -383,7 +383,7 @@ fbq('track', 'PageView');
           </div>
         </div>
 
-        <script src="/static/main.js?v=20261027b"></script>
+        <script src="/static/main.js?v=20261027c"></script>
         {/* ── Ribbons 커서 제거 (파란 줄 트레일 비활성화) ── */}
       </body>
     </html>

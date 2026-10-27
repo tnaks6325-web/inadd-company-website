@@ -13,27 +13,6 @@
 
   // 견적 조합: 고른 항목 단품가 합계, 300만 원 이상이면 팀구독 300만 원. 초기진단·세팅은 무료로 들어간다.
   // 화면 표시용 계산이고, 메일·인트라넷에 찍히는 금액은 서버가 다시 계산한다(src/lib/subscription-estimate.ts).
-  // 연락처: 숫자만 눌러도 하이픈을 넣어 준다(대표 요청 2026-10-27).
-  // 02(서울)는 02-123-4567 / 02-1234-5678, 대표번호는 1588-1234, 그 밖은 010-1234-5678 / 031-123-4567. 입력 중에도 앞부분부터 맞춘다.
-  function formatPhone(v) {
-    var d = String(v).replace(/\D/g, '');
-    if (/^82(?:1|2|[3-6]\d)/.test(d) && d.length >= 10) d = '0' + d.slice(2);   // +82 10 … 국가번호로 쓴 경우
-    d = d.slice(0, 11);
-    if (/^1[5-9]\d{2}/.test(d)) return d.length <= 4 ? d : d.slice(0, 4) + '-' + d.slice(4, 8);   // 1588-1234 같은 대표번호
-    if (d.indexOf('02') === 0) {
-      d = d.slice(0, 10);
-      if (d.length <= 2) return d;
-      if (d.length <= 5) return d.slice(0, 2) + '-' + d.slice(2);
-      if (d.length <= 9) return d.slice(0, 2) + '-' + d.slice(2, 5) + '-' + d.slice(5);
-      return d.slice(0, 2) + '-' + d.slice(2, 6) + '-' + d.slice(6);
-    }
-    if (d.length <= 3) return d;
-    if (d.length <= 6) return d.slice(0, 3) + '-' + d.slice(3);
-    if (d.length <= 10) return d.slice(0, 3) + '-' + d.slice(3, 6) + '-' + d.slice(6);
-    return d.slice(0, 3) + '-' + d.slice(3, 7) + '-' + d.slice(7);
-  }
-  window.mteFormatPhone = formatPhone;
-
   function init(estSec) {
     var form = estSec.querySelector('.mte-form'), source = form.dataset.source || '';
     var done = estSec.querySelector('[data-mte-done]');
@@ -81,17 +60,7 @@
       pv.textContent = panel.hidden ? '내용 보기' : '닫기';
     });
 
-    var phone = form.querySelector('input[name="phone"]');
-    if (phone) phone.addEventListener('input', function () {
-      var f = formatPhone(phone.value);
-      if (f === phone.value) return;
-      // 중간을 고칠 때 커서가 끝으로 튀지 않게, 커서 앞 숫자 개수를 기준으로 자리를 되찾는다
-      var pos = phone.selectionStart == null ? phone.value.length : phone.selectionStart;
-      var digits = phone.value.slice(0, pos).replace(/\D/g, '').length, at = 0;
-      while (at < f.length && digits > 0) { if (/\d/.test(f[at])) digits--; at++; }
-      phone.value = f;
-      try { phone.setSelectionRange(at, at); } catch (e) {}
-    });
+    // 연락처 하이픈 자동은 사이트 공통(/static/main.js)이 모든 연락처 칸에 해 준다.
 
     var err = q('[data-mte-error]'), btn = form.querySelector('.mte-submit'), busy = false;
     function fail(msg) { err.textContent = msg; err.hidden = false; }
