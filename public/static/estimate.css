@@ -118,11 +118,20 @@
   .mte-bar-total strong { font-size: 26px; }
   .mte-bar-total small { font-size: 12px; }
   .mte-bar-note { font-size: 12.5px; }
-  .mte-fields { margin-top: 40px; }
-  .mte-fields-title { font-size: 21px; }
-  .mte-grid { grid-template-columns: 1fr; }
-  .mte-privacy { font-size: 14px; }
-  .mte-submit { font-size: 18px; padding: 18px; }
+  /* 신청 칸: 휴대폰에서 세로 길이를 줄인다(대표 요청 2026-10-27) — 두 칸씩 나란히, 칸·간격·여백 축소.
+     글자는 16px 유지(아이폰이 입력할 때 화면을 확대하지 않게) */
+  .mte-fields { margin-top: 28px; }
+  .mte-fields-title { font-size: 19px; margin-bottom: 12px; }
+  .mte-grid { grid-template-columns: 1fr 1fr; gap: 10px 8px; }
+  .mte-grid + .mte-field { margin-top: 10px; }
+  .mte-field { margin-bottom: 10px; }
+  .mte-field > span { font-size: 13px; margin-bottom: 4px; }
+  .mte-field input, .mte-field textarea { padding: 10px 11px; }
+  .mte-field textarea { min-height: 64px; }
+  .mte-privacy { font-size: 13.5px; }
+  .mte-error { margin-top: 10px; font-size: 14px; }
+  .mte-submit { font-size: 17px; padding: 15px; margin-top: 14px; }
+  .mte-foot { font-size: 12.5px; margin-top: 10px; }
 }
 
 /* 도구 줄 왼쪽 안내(홈: '마케팅팀 구독 견적' 범위 표시) */

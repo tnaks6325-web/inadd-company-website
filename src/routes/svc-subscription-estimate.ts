@@ -51,7 +51,7 @@ export const estimateSection = (o: { id: string; labelledBy: string; source: Est
         <label class="mte-field"><span>연락처 <i>*</i></span><input type="tel" name="phone" autocomplete="tel" maxlength="30" placeholder="010-0000-0000" required></label>
         <label class="mte-field"><span>이메일 <i>*</i></span><input type="email" name="email" autocomplete="email" maxlength="120" required></label>
       </div>
-      <label class="mte-field"><span>더 알려 주실 내용</span><textarea name="message" rows="3" maxlength="2000" placeholder="판매 채널, 지금 쓰는 월 광고비, 고민 중인 점 등"></textarea></label>
+      <label class="mte-field"><span>더 알려 주실 내용</span><textarea name="message" rows="2" maxlength="2000" placeholder="판매 채널, 월 광고비, 고민 중인 점 등"></textarea></label>
       <div class="mte-privacy">
         <label><input type="checkbox" name="privacy" required> 개인정보 수집 및 이용에 동의합니다. <i>*</i></label>
         <button type="button" aria-expanded="false" aria-controls="${o.id}Privacy" data-mte-privacy>내용 보기</button>
