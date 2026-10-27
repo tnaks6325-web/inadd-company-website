@@ -74,7 +74,7 @@ export const DevContactPage = () => (
             </div>
             <div class="dct-info-body">
               <span class="dct-info-label">이메일</span>
-              <a href="mailto:inadcompany@naver.com" class="dct-info-value">inadcompany@naver.com</a>
+              <a href="mailto:tnaks6325@inadcompany.com" class="dct-info-value">tnaks6325@inadcompany.com</a>
             </div>
           </div>
 
@@ -469,7 +469,7 @@ export const DevContactPage = () => (
       ].join('\n');
 
       var subject = '[개발문의] ' + name + ' (' + (company || phone) + ')';
-      var mailtoUrl = 'mailto:inadcompany@naver.com'
+      var mailtoUrl = 'mailto:tnaks6325@inadcompany.com'
         + '?subject=' + encodeURIComponent(subject)
         + '&body=' + encodeURIComponent(body);
 
