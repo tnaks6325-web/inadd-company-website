@@ -11,7 +11,7 @@ export const SvcInfluencerPage = () => (
       <div class="vh-bg">
         <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(168,85,247,0.26) 0%,transparent 70%)"></div>
         <div class="vh-orb vh-orb--2" style="background:radial-gradient(circle,rgba(236,72,153,0.18) 0%,transparent 70%)"></div>
-        <div class="vh-orb vh-orb--3" style="background:radial-gradient(circle,rgba(26,107,255,0.20) 0%,transparent 70%)"></div>
+        <div class="vh-orb vh-orb--3" style="background:radial-gradient(circle,rgba(37,70,158,0.20) 0%,transparent 70%)"></div>
         <div class="vh-grid"></div>
         <div class="vh-noise"></div>
       </div>
@@ -182,7 +182,7 @@ export const SvcInfluencerPage = () => (
               <li><b>지표 신뢰도</b><span>왜곡 채널을 사전에 선별·제외</span></li>
             </ul>
             <div class="ifl-data-insight-bar">
-              <svg viewBox="0 0 18 18" fill="none" width="16" height="16"><circle cx="9" cy="9" r="8" stroke="#1a6bff" stroke-width="1.4"/><path d="M9 5v4l3 2" stroke="#1a6bff" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg viewBox="0 0 18 18" fill="none" width="16" height="16"><circle cx="9" cy="9" r="8" stroke="#25469E" stroke-width="1.4"/><path d="M9 5v4l3 2" stroke="#25469E" stroke-width="1.4" stroke-linecap="round"/></svg>
               <span>검토 후 <strong>제안서 전달까지 평균 24시간 이내</strong></span>
             </div>
           </div>
@@ -300,7 +300,7 @@ export const SvcInfluencerPage = () => (
                   <span class="ifl2-case-price-val">800 – 1,000만원</span>
                 </div>
                 <div class="ifl2-case-arrow">
-                  <svg viewBox="0 0 24 10" fill="none" width="28"><path d="M0 5h22M17 1l5 4-5 4" stroke="rgba(26,107,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg viewBox="0 0 24 10" fill="none" width="28"><path d="M0 5h22M17 1l5 4-5 4" stroke="rgba(37,70,158,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
                 <div class="ifl2-case-price-to">
                   <span class="ifl2-case-price-label ifl2-case-price-label--em">실제 집행 비용</span>
@@ -413,16 +413,16 @@ export const SvcInfluencerPage = () => (
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#285CCC">브랜딩 강화</span>
-                      <span style="--tc:#285CCC">팬덤 마케팅</span>
-                      <span style="--tc:#285CCC">퍼포먼스 광고</span>
-                      <span style="--tc:#285CCC">판매 촉진</span>
+                      <span style="--tc:#25469E">브랜딩 강화</span>
+                      <span style="--tc:#25469E">팬덤 마케팅</span>
+                      <span style="--tc:#25469E">퍼포먼스 광고</span>
+                      <span style="--tc:#25469E">판매 촉진</span>
                     </div>
                     <p class="svctab-desc-text">연예인이 가진 팬덤과 콘텐츠 파급력은 "인지"를 빠르게 만듭니다. 다만 중요한 건 노출이 아니라 맥락. <strong>노출형 협업부터 스토리형 PPL까지,</strong> 브랜드 목표에 맞는 형태로 제안합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>팬덤 기반 확산으로 인지도 부스팅</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>채널 콘텐츠 + 협찬 콘텐츠를 함께 굴려 효과 확대</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>메가부터 마이크로까지, 예산/목표에 맞춘 캐스팅 범위</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>팬덤 기반 확산으로 인지도 부스팅</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>채널 콘텐츠 + 협찬 콘텐츠를 함께 굴려 효과 확대</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>메가부터 마이크로까지, 예산/목표에 맞춘 캐스팅 범위</li>
                     </ul>
                   </div>
                 </div>
@@ -452,16 +452,16 @@ export const SvcInfluencerPage = () => (
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#285CCC">인지도 상승</span>
-                      <span style="--tc:#285CCC">시청층 타겟</span>
-                      <span style="--tc:#285CCC">합리적 비용</span>
-                      <span style="--tc:#285CCC">판매 촉진</span>
+                      <span style="--tc:#25469E">인지도 상승</span>
+                      <span style="--tc:#25469E">시청층 타겟</span>
+                      <span style="--tc:#25469E">합리적 비용</span>
+                      <span style="--tc:#25469E">판매 촉진</span>
                     </div>
                     <p class="svctab-desc-text">연예인 대비 더 <strong>합리적인 비용으로, 고효율을 노릴 수 있는 선택지.</strong> 검증된 1,520+ DB 안에서 브랜드 목표와 타깃에 맞는 조합만 남깁니다. 핵심은 '누가 유명한가'가 아니라, <strong>'누가 전환을 만드는가'</strong>입니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>조회수·반응지표·성장 흐름까지 보고, 검증된 크리에이터만 매칭</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>나노–메가까지 폭넓게 구성, 예산/목표에 맞춘 스케일링</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>인스타그램 피드 연계까지 묶어 확산–검색–전환 흐름으로 운영</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>조회수·반응지표·성장 흐름까지 보고, 검증된 크리에이터만 매칭</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>나노–메가까지 폭넓게 구성, 예산/목표에 맞춘 스케일링</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>인스타그램 피드 연계까지 묶어 확산–검색–전환 흐름으로 운영</li>
                     </ul>
                   </div>
                 </div>
@@ -491,16 +491,16 @@ export const SvcInfluencerPage = () => (
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#285CCC">팬덤 소통</span>
-                      <span style="--tc:#285CCC">브랜드 친밀감</span>
-                      <span style="--tc:#285CCC">피드 전략</span>
-                      <span style="--tc:#285CCC">진정성</span>
+                      <span style="--tc:#25469E">팬덤 소통</span>
+                      <span style="--tc:#25469E">브랜드 친밀감</span>
+                      <span style="--tc:#25469E">피드 전략</span>
+                      <span style="--tc:#25469E">진정성</span>
                     </div>
                     <p class="svctab-desc-text">단순 노출이 아니라, 브랜드의 <strong>'분위기'가 쌓이게 만듭니다.</strong> 피드·릴스·스토리 흐름을 한 톤으로 맞추고, 리포스트 확산까지 연결합니다. 결과는 저장·공유·재방문, 그리고 <strong>검색으로 이어지는 잔상.</strong></p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>피드/스토리/릴스 흐름을 고려한 콘텐츠 릴레이 기획</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>인플루언서 콘텐츠 리포스트로 브랜드 채널 신뢰도 강화</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>확산 이후 유입 동선까지 정리(프로필·링크·하이라이트)</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>피드/스토리/릴스 흐름을 고려한 콘텐츠 릴레이 기획</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>인플루언서 콘텐츠 리포스트로 브랜드 채널 신뢰도 강화</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>확산 이후 유입 동선까지 정리(프로필·링크·하이라이트)</li>
                     </ul>
                   </div>
                 </div>
@@ -550,15 +550,15 @@ export const SvcInfluencerPage = () => (
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#285CCC">스토리텔링</span>
-                      <span style="--tc:#285CCC">프리미엄 제작</span>
-                      <span style="--tc:#285CCC">세계관 연계</span>
+                      <span style="--tc:#25469E">스토리텔링</span>
+                      <span style="--tc:#25469E">프리미엄 제작</span>
+                      <span style="--tc:#25469E">세계관 연계</span>
                     </div>
                     <p class="svctab-desc-text">브랜드 메시지를 콘텐츠 그 자체로 승화시킵니다. 크리에이터의 세계관과 브랜드 스토리가 결합된 <strong>프리미엄 콘텐츠</strong>를 제작합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>크리에이터 세계관 연계 기획</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>브랜드 스토리를 더 길게 끌고 감</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>자연스러운 메시지 임베딩</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>크리에이터 세계관 연계 기획</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>브랜드 스토리를 더 길게 끌고 감</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>자연스러운 메시지 임베딩</li>
                     </ul>
                   </div>
                 </div>
@@ -588,15 +588,15 @@ export const SvcInfluencerPage = () => (
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#285CCC">자연 노출</span>
-                      <span style="--tc:#285CCC">이탈률 최소화</span>
-                      <span style="--tc:#285CCC">브랜드 친밀감</span>
+                      <span style="--tc:#25469E">자연 노출</span>
+                      <span style="--tc:#25469E">이탈률 최소화</span>
+                      <span style="--tc:#25469E">브랜드 친밀감</span>
                     </div>
                     <p class="svctab-desc-text">콘텐츠 흐름 안에 브랜드를 자연스럽게 담아, 시청자가 <strong>거부감 없이 브랜드를 경험</strong>하게 합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>콘텐츠 흐름 내 자연스러운 제품 노출</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>시청자 이탈률 최소화</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>브랜드 친밀감 및 신뢰 형성</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>콘텐츠 흐름 내 자연스러운 제품 노출</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>시청자 이탈률 최소화</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>브랜드 친밀감 및 신뢰 형성</li>
                     </ul>
                   </div>
                 </div>
@@ -626,16 +626,16 @@ export const SvcInfluencerPage = () => (
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#285CCC">크리에이터 제작</span>
-                      <span style="--tc:#285CCC">릴스 / 쇼츠</span>
-                      <span style="--tc:#285CCC">자연 노출</span>
-                      <span style="--tc:#285CCC">바이럴</span>
+                      <span style="--tc:#25469E">크리에이터 제작</span>
+                      <span style="--tc:#25469E">릴스 / 쇼츠</span>
+                      <span style="--tc:#25469E">자연 노출</span>
+                      <span style="--tc:#25469E">바이럴</span>
                     </div>
                     <p class="svctab-desc-text">크리에이터가 <strong>직접 기획하고 출연</strong>하는 숏폼 콘텐츠. 크리에이터 고유의 톤으로 시청자의 공감을 이끌어내고 빠른 확산을 만듭니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>크리에이터 고유 톤·스타일로 브랜드 자연 녹여내기</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>릴스·쇼츠 각 플랫폼 특성에 맞는 포맷 기획</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>광고 거부감 없이 높은 시청 완료율 달성</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>크리에이터 고유 톤·스타일로 브랜드 자연 녹여내기</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>릴스·쇼츠 각 플랫폼 특성에 맞는 포맷 기획</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>광고 거부감 없이 높은 시청 완료율 달성</li>
                     </ul>
                   </div>
                 </div>
@@ -665,16 +665,16 @@ export const SvcInfluencerPage = () => (
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#285CCC">유튜브</span>
-                      <span style="--tc:#285CCC">롱폼</span>
-                      <span style="--tc:#285CCC">AI 롱폼·숏폼</span>
-                      <span style="--tc:#285CCC">프리미엄</span>
+                      <span style="--tc:#25469E">유튜브</span>
+                      <span style="--tc:#25469E">롱폼</span>
+                      <span style="--tc:#25469E">AI 롱폼·숏폼</span>
+                      <span style="--tc:#25469E">프리미엄</span>
                     </div>
                     <p class="svctab-desc-text">브랜드 메시지를 <strong>깊이 있는 스토리</strong>로 풀어내는 유튜브 전문 영상 제작. 프리미엄 롱폼부터 AI 기반 롱폼·숏폼까지 예산과 목적에 맞게 선택할 수 있습니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>프리미엄 롱폼 — 브랜드 스토리 심층 전달</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>AI 롱폼·AI 숏폼 — 합리적 단가의 스마트한 제작</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>유튜브 알고리즘 최적화 기획·편집 포함</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>프리미엄 롱폼 — 브랜드 스토리 심층 전달</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>AI 롱폼·AI 숏폼 — 합리적 단가의 스마트한 제작</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>유튜브 알고리즘 최적화 기획·편집 포함</li>
                     </ul>
                   </div>
                 </div>
@@ -724,15 +724,15 @@ export const SvcInfluencerPage = () => (
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#285CCC">커머스 활성화</span>
-                      <span style="--tc:#285CCC">팬층 타겟</span>
-                      <span style="--tc:#285CCC">합리적 비용</span>
+                      <span style="--tc:#25469E">커머스 활성화</span>
+                      <span style="--tc:#25469E">팬층 타겟</span>
+                      <span style="--tc:#25469E">합리적 비용</span>
                     </div>
                     <p class="svctab-desc-text">크리에이터 커머스와 팬층 타겟에 맞는 모델. 연예인 모델보다 <strong>합리적인 비용</strong>으로 그 이상의 반응을 끌어내기도 합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>팬층 기반 구매 전환율 높음</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>채널 연계 콘텐츠 광고 동시 집행 가능</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>합리적 금액대로 높은 ROI 실현</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>팬층 기반 구매 전환율 높음</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>채널 연계 콘텐츠 광고 동시 집행 가능</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>합리적 금액대로 높은 ROI 실현</li>
                     </ul>
                   </div>
                 </div>
@@ -762,15 +762,15 @@ export const SvcInfluencerPage = () => (
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#285CCC">이미지 제고</span>
-                      <span style="--tc:#285CCC">프리미엄</span>
-                      <span style="--tc:#285CCC">탄력적 비용</span>
+                      <span style="--tc:#25469E">이미지 제고</span>
+                      <span style="--tc:#25469E">프리미엄</span>
+                      <span style="--tc:#25469E">탄력적 비용</span>
                     </div>
                     <p class="svctab-desc-text">브랜드 <strong>이미지를 끌어올려야 할 때</strong> 어울리는 선택. 촬영 분량과 규모에 따라 비용을 유연하게 협의합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>브랜드 고급화 이미지 순간 확립</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>대중 신뢰도와 인지도 확대</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>규모에 따른 탄력적 예산 협의</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>브랜드 고급화 이미지 순간 확립</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>대중 신뢰도와 인지도 확대</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>규모에 따른 탄력적 예산 협의</li>
                     </ul>
                   </div>
                 </div>
@@ -800,15 +800,15 @@ export const SvcInfluencerPage = () => (
                   </div>
                   <div class="svctab-item-desc">
                     <div class="svctab-desc-tags">
-                      <span style="--tc:#285CCC">시각 표현</span>
-                      <span style="--tc:#285CCC">합리적 비용</span>
-                      <span style="--tc:#285CCC">제품 표현</span>
+                      <span style="--tc:#25469E">시각 표현</span>
+                      <span style="--tc:#25469E">합리적 비용</span>
+                      <span style="--tc:#25469E">제품 표현</span>
                     </div>
                     <p class="svctab-desc-text">브랜드 제품을 <strong>시각적으로 표현</strong>할 때 최적화된 모델. 비교적 합리적인 비용으로 모델 특색을 살려 제품 핵심을 고급스럽게 표현합니다.</p>
                     <ul class="svctab-desc-points">
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>제품 핵심을 직관적으로 전달</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>합리적 비용으로 고품질 촬영</li>
-                      <li><span class="svctab-desc-dot" style="--dc:#285CCC"></span>상황·컨셉에 맞는 다양한 모델 풀 보유</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>제품 핵심을 직관적으로 전달</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>합리적 비용으로 고품질 촬영</li>
+                      <li><span class="svctab-desc-dot" style="--dc:#25469E"></span>상황·컨셉에 맞는 다양한 모델 풀 보유</li>
                     </ul>
                   </div>
                 </div>
@@ -965,9 +965,9 @@ export const SvcInfluencerPage = () => (
             <div class="iflp2-panel active" data-panel="0">
               <div class="iflp2-panel-img"><img src="/static/images/process/step01.png" alt="상담 진행" loading="lazy" /></div>
               <div class="iflp2-panel-body">
-                <span class="iflp2-panel-tag" style="--pc:#2563eb">Strategy Consultation</span>
+                <span class="iflp2-panel-tag" style="--pc:#25469E">Strategy Consultation</span>
                 <p class="iflp2-panel-desc">브랜드 목표·예산·타겟을 먼저 뜯어봅니다.<br />KPI와 방향을 같이 정하고 맞춤 전략을 제안합니다.<br />견적만 받는 상담이 아니라, 성장 전략을 짜는 미팅입니다.</p>
-                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#2563eb">목표 정의</span><span class="iflp2-ptag" style="--pc:#2563eb">예산 협의</span><span class="iflp2-ptag" style="--pc:#2563eb">KPI 설정</span><span class="iflp2-ptag" style="--pc:#2563eb">전략 수립</span></div></div>
+                <div class="iflp2-panel-tags"><p class="iflp2-ptag-label">KEY ACTIONS</p><div class="iflp2-ptag-grid"><span class="iflp2-ptag" style="--pc:#25469E">목표 정의</span><span class="iflp2-ptag" style="--pc:#25469E">예산 협의</span><span class="iflp2-ptag" style="--pc:#25469E">KPI 설정</span><span class="iflp2-ptag" style="--pc:#25469E">전략 수립</span></div></div>
               </div>
             </div>
             <div class="iflp2-panel" data-panel="1">

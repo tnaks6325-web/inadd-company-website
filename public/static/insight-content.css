@@ -3,7 +3,7 @@
 .ins-detail-content blockquote {
   margin: 0 0 24px;
   padding: 16px 20px;
-  border-left: 3px solid rgba(26,107,255,0.8);
+  border-left: 3px solid rgba(37,70,158,0.8);
   background: rgba(0,0,0,0.03);
   color: var(--gray-2);
 }
@@ -43,9 +43,9 @@
 .ins-detail-content .ins-callout {
   margin: 40px 0 0;
   padding: 22px 24px;
-  border: 1px solid rgba(26,107,255,0.35);
+  border: 1px solid rgba(37,70,158,0.35);
   border-radius: 12px;
-  background: rgba(26,107,255,0.06);
+  background: rgba(37,70,158,0.06);
 }
 .ins-detail-content .ins-callout p:last-child { margin-bottom: 0; }
 /* 노션 이미지 캡션 */
@@ -79,10 +79,10 @@
   flex: none;
   width: 5px;
   height: 18px;
-  background: rgba(26,107,255,0.9);
+  background: rgba(37,70,158,0.9);
 }
 .ins-detail-content h3 + p { margin-top: 0; }
-.ins-detail-content ul li::marker { color: rgba(26,107,255,0.9); }
+.ins-detail-content ul li::marker { color: rgba(37,70,158,0.9); }
 /* 명령문·단어 목록 상자 (복사 버튼은 insight-content.js 가 붙인다) */
 .ins-detail-content pre {
   position: relative;
@@ -109,7 +109,7 @@
   top: 16px;
   font-size: 13px;
   font-weight: 700;
-  color: rgba(26,107,255,0.95);
+  color: rgba(37,70,158,0.95);
 }
 .ins-copy-btn {
   position: absolute;
@@ -118,14 +118,14 @@
   padding: 6px 14px;
   font-size: 13px;
   font-weight: 700;
-  color: rgba(26,107,255,1);
+  color: rgba(37,70,158,1);
   background: #fff;
-  border: 1px solid rgba(26,107,255,0.45);
+  border: 1px solid rgba(37,70,158,0.45);
   border-radius: 6px;
   cursor: pointer;
 }
-.ins-copy-btn:hover { background: rgba(26,107,255,0.06); }
-.ins-copy-btn.done { color: #fff; background: rgba(26,107,255,1); }
+.ins-copy-btn:hover { background: rgba(37,70,158,0.06); }
+.ins-copy-btn.done { color: #fff; background: rgba(37,70,158,1); }
 /* 표: 머리줄 진하게, 줄무늬, 첫 칸 굵게 */
 .ins-detail-content th {
   color: #fff;
@@ -140,7 +140,7 @@
 /* 인용 상자: 답글·공지 예시 등 */
 .ins-detail-content blockquote {
   padding: 18px 22px;
-  border-left: 4px solid rgba(26,107,255,0.9);
+  border-left: 4px solid rgba(37,70,158,0.9);
   background: #F2F6FF;
   border-radius: 0 10px 10px 0;
   color: var(--white);

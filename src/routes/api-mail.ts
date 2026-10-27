@@ -395,7 +395,8 @@ mail.post('/brochure', async (c) => {
 /* ─────────────────────────────────────────────
    손님용 견적 조합 내역 메일 (합쇼체 — 고객 메일 규칙)
 ───────────────────────────────────────────── */
-export function estimateReplyTemplate(est: Estimate, company: string, footerAddress: string, contactEmail: string): string {
+export function estimateReplyTemplate(est: Estimate, company: string, footerAddress: string, contactEmail: string, source: 'home' | 'subscription' = 'subscription'): string {
+  const againUrl = source === 'home' ? 'https://www.inadcompany.co.kr/#homeEstimate' : 'https://www.inadcompany.co.kr/marketing/subscription#estimate'
   const safeContactEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail) ? escapeHtml(contactEmail) : ''
   const won = (n: number) => n.toLocaleString('ko-KR') + '만 원'
   const rows = ESTIMATE_ITEMS
@@ -434,7 +435,7 @@ export function estimateReplyTemplate(est: Estimate, company: string, footerAddr
     </td></tr>
     <tr><td style="padding:28px 40px 36px;">
       <a href="${PROFILE_URL}/download" style="display:inline-block;padding:14px 24px;background:#21306F;color:#FFFFFF;font-size:14px;font-weight:700;text-decoration:none;border-radius:4px;">회사소개서 받기</a>
-      <a href="https://www.inadcompany.co.kr/marketing/subscription#estimate" style="display:inline-block;margin-left:8px;padding:13px 24px;border:1px solid #CDD1DA;color:#21306F;font-size:14px;font-weight:700;text-decoration:none;border-radius:4px;">조합 다시 해 보기</a>
+      <a href="${againUrl}" style="display:inline-block;margin-left:8px;padding:13px 24px;border:1px solid #CDD1DA;color:#21306F;font-size:14px;font-weight:700;text-decoration:none;border-radius:4px;">조합 다시 해 보기</a>
       <p style="margin:28px 0 0;font-size:15px;color:#111318;">인애드컴퍼니 드림</p>
     </td></tr>
     <tr><td style="background:#EDEDED;padding:20px 40px;font-size:12px;line-height:1.7;color:#8A8A90;">
@@ -464,6 +465,9 @@ mail.post('/estimate', async (c) => {
   const email = str(body?.email, 120)
   const message = str(body?.message, 2000)
   const est = computeEstimate(body?.items)
+  // 어느 화면의 조합기에서 왔는지(구독 페이지·홈 하단) — 담당자 메일·인트라넷 문의 내용에 적는다
+  const source = body?.source === 'home' ? 'home' : 'subscription'
+  const sourceLabel = source === 'home' ? '홈 화면 하단' : '마케팅팀 구독 페이지'
   if (!est.picked.length) return c.json({ ok: false, error: '항목을 하나 이상 골라 주세요.' }, 400)
   if (!company || !name || !phone || !email) return c.json({ ok: false, error: '별표(*) 칸을 모두 채워 주세요.' }, 400)
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return c.json({ ok: false, error: '이메일 주소를 확인해 주세요.' }, 400)
@@ -477,9 +481,10 @@ mail.post('/estimate', async (c) => {
       company, name, phone, email,
       services: '마케팅팀 구독(견적 조합)',
       budget: `월 ${est.total.toLocaleString('ko-KR')}만 원(부가세 별도, 견적 조합)`,
-      message: `[견적 조합]\n${summary}` + (message ? `\n\n[문의 내용]\n${message}` : ''),
+      message: `[견적 조합 · ${sourceLabel}]\n${summary}` + (message ? `\n\n[문의 내용]\n${message}` : ''),
       estimateItems: est.picked.map(it => it.id).join(','),
       estimateTotal: String(est.total),
+      estimateSource: source,
     }
     const leadKey = await backupLead(c.env, 'contact', data)
     const toIntranet = forwardInquiryToIntranet(c.env, leadKey, data)
@@ -495,7 +500,7 @@ mail.post('/estimate', async (c) => {
         c.env,
         email,
         `[인애드컴퍼니] ${company} 마케팅 팀구독 견적 조합 내역`,
-        estimateReplyTemplate(est, company, [rawAddress, rawAddressDetail].filter(Boolean).join(' '), c.env.RESEND_TO)
+        estimateReplyTemplate(est, company, [rawAddress, rawAddressDetail].filter(Boolean).join(' '), c.env.RESEND_TO, source)
       )
     })().catch((e: any) => console.error('[mail/estimate] 손님 메일 실패', e?.message || e))
     try { c.executionCtx.waitUntil(toCustomer) } catch { await toCustomer }
@@ -505,6 +510,7 @@ mail.post('/estimate', async (c) => {
       `[견적 조합] ${company} · 월 ${est.total.toLocaleString('ko-KR')}만 원`,
       internalTemplate('🧮 견적 조합 상담 신청이 접수됐습니다', [
         { label: '폼 유형', value: '마케팅팀 구독 견적 조합' },
+        { label: '접수 위치', value: sourceLabel },
         { label: '회사명', value: company },
         { label: '이름', value: name },
         { label: '연락처', value: phone },

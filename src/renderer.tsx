@@ -78,6 +78,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-XFPHBJNW38');
+          // 대표 계정에서 보이는 속성(488401721 · 회사홈페이지)에도 같이 보낸다(2026-10-27).
+          // 위 G-XFPHBJNW38 은 지금 로그인된 대표 계정에 권한이 없어, 주인 계정을 찾을 때까지 두 곳에 똑같이 쌓는다.
+          gtag('config', 'G-474V2Z6PHE');
         `}} />
 
         {/* ── 네이버 애널리틱스 + 검색광고 전환추적 (공통 스크립트) ── */}
@@ -103,7 +106,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
         {/* Pretendard — 전체 폰트 (한국어/영문 통일) */}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-        <link href="/static/style.css?v=20261027e" rel="stylesheet" />
+        <link href="/static/style.css?v=20261027p" rel="stylesheet" />
         {/* ── Meta Pixel Code ── */}
         <script dangerouslySetInnerHTML={{ __html: `
 !function(f,b,e,v,n,t,s)
@@ -318,7 +321,7 @@ fbq('track', 'PageView');
                 </div>
                 <div class="cf-group">
                   <label for="cm-phone">연락처</label>
-                  <input type="tel" id="cm-phone" name="phone" placeholder="010-0000-0000" />
+                  <input type="tel" id="cm-phone" name="phone" inputmode="numeric" maxlength="13" autocomplete="tel" placeholder="010-0000-0000" />
                 </div>
                 <div class="cf-group">
                   <label>관심 서비스 <span class="cf-opt">(복수 선택 가능)</span></label>
@@ -372,7 +375,7 @@ fbq('track', 'PageView');
             {/* 완료 화면 */}
             <div class="cmodal-success" id="cmSuccess" style="display:none">
               <div class="cs-check">
-                <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(26,107,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(37,70,158,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(37,70,158,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
               <h3>문의가 접수되었습니다!</h3>
               <p>담당자가 <strong>1영업일 이내</strong> 메일로 연락드립니다.</p>
@@ -383,7 +386,7 @@ fbq('track', 'PageView');
           </div>
         </div>
 
-        <script src="/static/main.js?v=20261027b"></script>
+        <script src="/static/main.js?v=20261027p"></script>
         {/* ── Ribbons 커서 제거 (파란 줄 트레일 비활성화) ── */}
       </body>
     </html>

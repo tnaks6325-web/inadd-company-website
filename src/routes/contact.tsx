@@ -111,7 +111,7 @@ export const ContactPage = () => (
               <div class="contact-success" id="contactSuccess" style="display:none;">
                 <div class="cs-main">
                   <div class="cs-check">
-                    <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(26,107,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(37,70,158,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(37,70,158,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
                   <h3>문의가 접수되었습니다!</h3>
                 </div>
