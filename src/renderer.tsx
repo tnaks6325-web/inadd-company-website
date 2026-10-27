@@ -78,6 +78,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-XFPHBJNW38');
+          // 대표 계정에서 보이는 속성(488401721 · 회사홈페이지)에도 같이 보낸다(2026-10-27).
+          // 위 G-XFPHBJNW38 은 지금 로그인된 대표 계정에 권한이 없어, 주인 계정을 찾을 때까지 두 곳에 똑같이 쌓는다.
+          gtag('config', 'G-474V2Z6PHE');
         `}} />
 
         {/* ── 네이버 애널리틱스 + 검색광고 전환추적 (공통 스크립트) ── */}
