@@ -1,5 +1,5 @@
-/* 포트폴리오 히어로: 물결랩 세럼 예시 시나리오 — 단계 카드(사진·영상·화면)가 가운데에 크게 떴다가 위쪽 3x2 자리에 차곡차곡 쌓이고, 아래 월 매출 계단이 한 칸씩 오른다.
-   무대는 680x620, --s 배율로 줄인다. 카드는 460x345 로 그리고 자리에서는 0.448배. */
+/* 포트폴리오 히어로: 물결랩 세럼 예시 시나리오 — 단계 카드 12장이 가운데에 크게 떴다가 위쪽에 서로 겹치는 콜라주로 쌓이고, 아래 월 매출 계단이 한 칸씩 오른다.
+   무대는 680x620, --s 배율로 줄인다. 카드는 460x345 로 그리고 콜라주 자리에서는 0.36배. */
 .vh-hero--wkh { background:#f4f3f1; }
 .vh-hero--wkh::before { display:none; }
 .vh-hero--wkh .vh-inner { position:relative; z-index:2; }
@@ -9,6 +9,7 @@
 .wkh-stage { position:relative; flex:none; width:680px; height:620px; transform:scale(var(--s)); font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif; color:#111318; text-align:left; word-break:keep-all; letter-spacing:normal; line-height:1.35; }
 .wkh-stage * { box-sizing:border-box; margin:0; padding:0; list-style:none; }
 .wkh-stage u { text-decoration:none; font-variant-numeric:tabular-nums; }
+.wkh-stage [data-wkh-pop] { opacity:0; }
 
 /* 결과 때 뒤에 깔리는 출고 현장 */
 .wkh-bg { position:absolute; inset:0; border-radius:18px; background-size:cover; background-position:center; opacity:0; }
@@ -20,72 +21,117 @@
 .wkh-ph, .wkh-card video { position:absolute; inset:0; display:block; width:100%; height:100%; background-size:cover; background-position:center; object-fit:cover; }
 .wkh-chip { position:absolute; z-index:3; left:8px; top:8px; display:flex; align-items:center; gap:6px; padding:5px 9px 5px 7px !important; border-radius:3px; background:#21306F; color:#fff; font-size:12px; font-weight:800; }
 .wkh-chip span { padding:1px 5px !important; border-radius:2px; background:rgba(255,255,255,.18); font-size:9px; font-weight:700; letter-spacing:.04em; }
-.wkh-stage [data-wkh-pop] { opacity:0; }
-.wkh-ov { position:absolute; z-index:2; padding:9px 11px !important; border-radius:7px; background:#fff; box-shadow:0 10px 24px rgba(17,19,24,.18); }
-.wkh-ov-h { font-size:9.5px; font-weight:700; padding-bottom:5px !important; margin-bottom:5px !important; border-bottom:1px solid #eceef0; }
+.wkh-serum { display:block; flex:none; width:40px; height:40px; border-radius:5px; background:#e6f0f3 center/cover; }
+.wkh-serum.lg { width:56px; height:56px; }
 
-/* ① 브랜드 메시지 */
-.wkh-persona { right:10px; top:34px; width:152px; }
-.wkh-persona b { display:block; font-size:12.5px; font-weight:800; margin-bottom:3px !important; }
-.wkh-persona li { position:relative; padding-left:9px !important; font-size:10px; line-height:1.55; }
-.wkh-persona li::before { content:''; position:absolute; left:0; top:6px; width:4px; height:4px; background:#D9C59A; }
+/* 사진 위 카드 */
+.wkh-ov { position:absolute; z-index:2; width:158px; padding:9px 11px !important; border-radius:7px; background:#fff; box-shadow:0 10px 24px rgba(17,19,24,.18); }
+.wkh-tr { right:10px; top:34px; } .wkh-tl { left:10px; top:40px; }
+.wkh-ov-h { font-size:9.5px; font-weight:700; padding-bottom:5px !important; margin-bottom:5px !important; border-bottom:1px solid #eceef0; }
+.wkh-ov-b { display:block; font-size:12.5px; font-weight:800; margin-bottom:3px !important; }
+.wkh-ov li { position:relative; padding-left:9px !important; font-size:10px; line-height:1.55; }
+.wkh-ov li::before { content:''; position:absolute; left:0; top:6px; width:4px; height:4px; background:#D9C59A; }
+.wkh-big { display:flex; align-items:baseline; gap:4px; }
+.wkh-big u { font-size:26px; font-weight:800; color:#21306F; letter-spacing:-.03em; }
+.wkh-big small { font-size:10.5px; font-weight:700; }
+.wkh-rv { margin-top:5px !important; padding:5px 7px !important; border-radius:4px; background:#F8F7F4; font-size:10px; }
 .wkh-copy { position:absolute; z-index:1; left:183px; top:106px; width:88px; display:flex; flex-direction:column; gap:2px; color:#21306F; font-weight:800; transform:rotate(-1deg); clip-path:inset(0 100% 0 0); }
 .wkh-copy span:first-child { font-size:6.5px; }
 .wkh-copy span:last-child { font-size:12px; letter-spacing:-.03em; }
-
-/* ② 체험단·리뷰 */
-.wkh-reviews { right:10px; top:34px; width:164px; }
-.wkh-star { display:flex; align-items:baseline; gap:8px; margin-bottom:3px !important; }
-.wkh-star b { font-size:17px; font-weight:800; color:#21306F; }
-.wkh-star span { font-size:10.5px; font-weight:700; }
-.wkh-rv { margin-top:4px !important; padding:5px 7px !important; border-radius:4px; background:#F8F7F4; font-size:10px; }
-
-/* ③ 바이럴·커뮤니티 */
-.wkh-post { position:absolute; left:14px; top:44px; width:282px; padding:12px 14px !important; border-radius:9px; background:#fff; box-shadow:0 10px 24px rgba(17,19,24,.10); }
-.wkh-post-h { display:flex; align-items:baseline; gap:6px; font-size:10.5px; font-weight:800; }
-.wkh-post-h small { font-size:9.5px; font-weight:600; }
-.wkh-post-t { display:block; margin:7px 0 8px !important; font-size:14px; font-weight:800; line-height:1.4; }
-.wkh-cm { padding:7px 0 !important; border-top:1px solid #eceef0; font-size:11px; }
-.wkh-cm b { margin-right:6px; font-size:10.5px; }
-.wkh-deal { position:absolute; left:196px; top:222px; width:236px; display:flex; align-items:center; gap:10px; padding:9px !important; border-radius:8px; border:2.5px solid #21306F; background:#FBF0CF; box-shadow:0 10px 24px rgba(17,19,24,.14); }
-.wkh-deal i { flex:none; width:48px; height:48px; border-radius:5px; background:#fff center/cover; }
-.wkh-deal span { display:flex; flex-direction:column; gap:1px; }
-.wkh-deal small { font-size:10px; font-weight:800; color:#21306F; }
-.wkh-deal b { font-size:12.5px; font-weight:800; }
-.wkh-deal em { font-style:normal; font-size:13px; font-weight:800; color:#21306F; }
-
-/* ④ 인플루언서 */
-.wkh-reel { left:10px; top:40px; width:150px; }
-.wkh-reel-n { display:flex; align-items:baseline; justify-content:space-between; }
-.wkh-reel-n span { font-size:10.5px; font-weight:700; }
-.wkh-reel-n b { font-size:26px; font-weight:800; color:#21306F; letter-spacing:-.03em; }
-
-/* ⑤ 광고 */
-.wkh-ads { position:absolute; left:14px; right:14px; top:44px; bottom:14px; display:flex; gap:10px; }
-.wkh-ad { flex:1; display:flex; flex-direction:column; padding:10px !important; border-radius:9px; background:#fff; box-shadow:0 10px 24px rgba(17,19,24,.10); }
-.wkh-ad b { font-size:12.5px; font-weight:800; }
-.wkh-ad i { flex:1; margin:8px 0 !important; border-radius:6px; background:#e6f0f3 center/contain no-repeat; }
-.wkh-ad span { font-size:11px; font-weight:700; line-height:1.3; }
-.wkh-ad span u { font-size:22px; font-weight:800; color:#21306F; }
-
-/* ⑥ 올리브영·PPL */
-.wkh-oy { right:10px; top:34px; width:152px; }
 .wkh-oy-r { display:flex; align-items:center; gap:3px; }
 .wkh-oy-r b { font-size:34px; font-weight:800; color:#21306F; line-height:1; letter-spacing:-.04em; }
 .wkh-oy-r span { font-size:14px; font-weight:800; color:#21306F; margin-right:auto; }
-.wkh-oy-r i { flex:none; width:36px; height:36px; border-radius:5px; background:#e6f0f3 center/cover; }
+
+/* 화면 카드 공통 */
+.wkh-ui { position:absolute; padding:12px 14px !important; border-radius:9px; background:#fff; box-shadow:0 10px 24px rgba(17,19,24,.10); }
+.wkh-ui-h { font-size:12px; font-weight:800; margin-bottom:8px !important; }
+
+/* 1 시장·경쟁사 분석 */
+.wkh-mkt { left:14px; top:42px; width:300px; }
+.wkh-mkt table { width:100%; border-collapse:collapse; font-size:10.5px; }
+.wkh-mkt th { padding:5px 4px !important; background:#21306F; color:#fff; font-weight:700; text-align:left; }
+.wkh-mkt td { padding:5px 4px !important; border-bottom:1px solid #eceef0; }
+.wkh-mkt tr.is-gap td { background:#FBF0CF; font-weight:800; border:0; }
+.wkh-mkt tr.is-gap { outline:2.5px solid #21306F; outline-offset:-2.5px; }
+.wkh-kw { right:14px; bottom:14px; width:142px; display:flex; flex-direction:column; gap:2px; }
+.wkh-kw span { font-size:10.5px; font-weight:700; }
+.wkh-kw b { font-size:28px; font-weight:800; color:#21306F; letter-spacing:-.03em; }
+.wkh-kw small { font-size:9.5px; }
+
+/* 4 블로그 검색 노출 */
+.wkh-srch { left:14px; right:14px; top:42px; bottom:14px; }
+.wkh-sbar { height:30px; padding:0 10px !important; border:2px solid #03c75a; border-radius:6px; font-size:12px; font-weight:700; line-height:26px; }
+.wkh-tabs { display:flex; gap:12px; margin:8px 0 4px !important; font-size:11px; }
+.wkh-tabs b { padding-bottom:3px !important; border-bottom:2px solid #111318; }
+.wkh-sr { display:flex; align-items:center; gap:10px; padding:8px 0 !important; border-top:1px solid #eceef0; }
+.wkh-sr > span { flex:1; display:flex; flex-direction:column; gap:2px; }
+.wkh-sr b { font-size:12px; font-weight:800; }
+.wkh-sr small { font-size:9.5px; }
+
+/* 5 구매평·별점 */
+.wkh-store { left:14px; right:14px; top:42px; bottom:14px; }
+.wkh-store-top { display:flex; align-items:center; gap:10px; padding-bottom:10px !important; border-bottom:1px solid #eceef0; }
+.wkh-store-top span { display:flex; flex-direction:column; gap:2px; }
+.wkh-store-top b { font-size:13px; font-weight:800; }
+.wkh-store-top small { font-size:10px; }
+.wkh-rate { display:flex; align-items:baseline; gap:12px; margin:12px 0 !important; }
+.wkh-rate b { font-size:30px; font-weight:800; color:#21306F; letter-spacing:-.02em; }
+.wkh-rate span { font-size:12px; font-weight:700; }
+.wkh-chips { display:flex; flex-wrap:wrap; gap:6px; }
+.wkh-chips span { padding:4px 7px !important; border-radius:3px; background:#F8F7F4; font-size:10.5px; font-weight:700; }
+
+/* 6 바이럴·커뮤니티 */
+.wkh-post { left:14px; right:14px; top:42px; }
+.wkh-post-h { display:flex; align-items:baseline; gap:6px; font-size:10.5px; font-weight:800; }
+.wkh-post-h small { font-size:9.5px; font-weight:600; }
+.wkh-post-t { display:block; margin:7px 0 8px !important; font-size:15px; font-weight:800; line-height:1.4; }
+.wkh-cm { padding:8px 0 !important; border-top:1px solid #eceef0; font-size:11.5px; }
+.wkh-cm b { margin-right:6px; font-size:11px; }
+
+/* 7 핫딜·공동구매: 광고주 강조(연한 노랑 + 다크 블루 테두리) */
+.wkh-deal { left:14px; right:14px; top:44px; display:flex; align-items:center; gap:12px; border:2.5px solid #21306F; background:#FBF0CF; }
+.wkh-deal-tx { display:flex; flex-direction:column; gap:2px; }
+.wkh-deal-tx small { font-size:10.5px; font-weight:800; color:#21306F; }
+.wkh-deal-tx b { font-size:15px; font-weight:800; }
+.wkh-deal-tx em { font-style:normal; font-size:16px; font-weight:800; color:#21306F; }
+.wkh-stock { left:14px; right:14px; top:150px; }
+.wkh-stock p { display:flex; justify-content:space-between; align-items:baseline; font-size:12px; }
+.wkh-stock p b { font-size:14px; font-weight:800; }
+.wkh-stock p b u { color:#21306F; }
+.wkh-stock p span { font-weight:700; }
+.wkh-stock > i { display:block; height:10px; margin-top:8px !important; border-radius:5px; background:#eef0f5; overflow:hidden; }
+.wkh-stock > i b { display:block; height:100%; width:0; background:#21306F; }
+
+/* 10 광고 */
+.wkh-ads { position:absolute; left:14px; right:14px; top:44px; bottom:14px; display:flex; gap:10px; }
+.wkh-ad { flex:1; display:flex; flex-direction:column; padding:10px !important; border-radius:9px; background:#fff; box-shadow:0 10px 24px rgba(17,19,24,.10); }
+.wkh-ad b { font-size:12.5px; font-weight:800; }
+.wkh-ad .wkh-serum { flex:1; width:auto; height:auto; margin:8px 0 !important; background-size:contain; background-repeat:no-repeat; }
+.wkh-ad span { font-size:11px; font-weight:700; line-height:1.3; }
+.wkh-ad span u { font-size:22px; font-weight:800; color:#21306F; }
+
+/* 12 주간 성과 보고서 */
+.wkh-rep { left:14px; right:14px; top:42px; bottom:14px; }
+.wkh-rep-h { display:flex; justify-content:space-between; align-items:baseline; padding-bottom:8px !important; border-bottom:2px solid #111318; }
+.wkh-rep-h b { font-size:15px; font-weight:800; } .wkh-rep-h span { font-size:11px; font-weight:700; }
+.wkh-rep-k { display:flex; gap:10px; margin:12px 0 !important; }
+.wkh-rep-k p { flex:1; padding:10px !important; border-radius:6px; background:#F8F7F4; display:flex; flex-direction:column; gap:2px; }
+.wkh-rep-k span { font-size:10.5px; font-weight:700; }
+.wkh-rep-k b { font-size:22px; font-weight:800; color:#21306F; letter-spacing:-.02em; }
+.wkh-rep-n { font-size:11.5px; line-height:1.5; }
+.wkh-rep-n b { display:block; font-size:11px; font-weight:800; }
 
 /* 월 매출 계단(아래 자리, 처음부터 끝까지 떠 있음). 다다른 칸은 다크 블루로 차오름 */
-.wkh-chart { position:absolute; left:20px; top:368px; width:640px; height:236px; padding:16px 20px 12px !important; border-radius:16px; background:#fff; box-shadow:0 18px 44px rgba(17,19,24,.12); opacity:0; }
+.wkh-chart { position:absolute; left:20px; top:372px; width:640px; height:232px; padding:14px 18px 10px !important; border-radius:16px; background:#fff; box-shadow:0 18px 44px rgba(17,19,24,.12); opacity:0; }
 .wkh-chart-h { display:flex; align-items:baseline; gap:10px; }
-.wkh-chart-h b { font-size:20px; font-weight:800; letter-spacing:-.02em; }
-.wkh-chart-h span { padding:2px 6px !important; border:1.5px solid #111318; font-size:11.5px; font-weight:700; }
+.wkh-chart-h b { font-size:19px; font-weight:800; letter-spacing:-.02em; }
+.wkh-chart-h span { padding:2px 6px !important; border:1.5px solid #111318; font-size:11px; font-weight:700; }
 .wkh-chart-h em { margin-left:auto; font-style:normal; font-size:14px; font-weight:800; color:#21306F; opacity:0; }
-.wkh-steps { position:absolute; left:20px; right:20px; bottom:12px; height:172px; display:flex; align-items:flex-end; gap:12px; }
-.wkh-st { flex:1; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:5px; }
-.wkh-st i { display:block; width:100%; height:var(--h); border-radius:5px 5px 0 0; background:linear-gradient(#21306F,#21306F) bottom/100% calc(var(--p, 0) * 100%) no-repeat, #eef0f5; }
-.wkh-st small { font-size:15px; font-weight:800; color:#21306F; font-variant-numeric:tabular-nums; white-space:nowrap; opacity:0; }
-.wkh-st span { font-size:11.5px; font-weight:700; white-space:nowrap; }
+.wkh-steps { position:absolute; left:18px; right:18px; bottom:10px; height:174px; display:flex; align-items:flex-end; gap:8px; }
+.wkh-st { flex:1; min-width:0; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:4px; }
+.wkh-st i { display:block; width:100%; height:var(--h); border-radius:4px 4px 0 0; background:linear-gradient(#21306F,#21306F) bottom/100% calc(var(--p, 0) * 100%) no-repeat, #eef0f5; }
+.wkh-st small { font-size:11.5px; font-weight:800; color:#21306F; font-variant-numeric:tabular-nums; white-space:nowrap; opacity:0; }
+.wkh-st span { font-size:10px; font-weight:700; white-space:nowrap; letter-spacing:-.03em; }
 
 @media(max-width:1280px) { .wkh { --s:.78; } }
 @media(max-width:1024px) { .wkh { --s:.6; } }
