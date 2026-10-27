@@ -2,7 +2,8 @@
    1) 860px 페이지를 화면 폭에 맞춰 축소  2) 하단 고정 '무료 상담 신청' 버튼  5) 성과 레퍼런스 탭·막대
    3) 구간 등장·화살표 그리기·숫자 올라가기·비교 막대·비용 더미·보고 목록 효과
    4) 상담 신청 버튼 → 전역 문의 팝업(main.js)에 '마케팅팀 구독' 관심 서비스를 미리 체크
-   6) 견적 조합(#estimate): 합계 계산·상담 신청 접수 */
+   6) 견적 조합(#estimate): 합계 계산·상담 신청 접수
+   7) 방문 기록(GA4 이벤트): 어디서 어떤 버튼을 눌렀는지, 조합기를 봤는지·바꿨는지·신청했는지 */
 (function () {
   var page = document.getElementById('mtsPage');
   if (!page) return;
@@ -50,6 +51,15 @@
   document.addEventListener('scroll', onScroll, { passive: true, capture: true });
   onScroll();
 
+  // 방문 기록(GA4) — 견적 조합기 위치 효과를 숫자로 보기 위함(대표 요청 2026-10-27)
+  // estimate_cta_click·consult_cta_click {position: hero|sticky|final}, estimate_view, estimate_edit, estimate_submit {value, currency, item_count, capped}
+  function track(name, params) { try { if (typeof window.gtag === 'function') window.gtag('event', name, params || {}); } catch (e) {} }
+  page.querySelectorAll('[data-mts-pos]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      track(a.getAttribute('href') === '#estimate' ? 'estimate_cta_click' : 'consult_cta_click', { position: a.dataset.mtsPos });
+    });
+  });
+
   // 견적 조합: 고른 항목 단품가 합계, 300만 원 이상이면 팀구독 300만 원. 초기진단·세팅은 무료로 들어간다.
   // 화면 표시용 계산이고, 메일·인트라넷에 찍히는 금액은 서버가 다시 계산한다(src/lib/subscription-estimate.ts).
   if (estSec) (function () {
@@ -83,10 +93,14 @@
         }
       } else note.textContent = won(PACKAGE - sub) + '만 원 더 담으면 팀구독 금액이에요';
     }
-    boxes.forEach(function (b) { b.addEventListener('change', update); });
-    q('[data-mte-all]').addEventListener('click', function () { checkAll(true); });
-    q('[data-mte-clear]').addEventListener('click', function () { checkAll(false); });
+    var edited = false;
+    var markEdit = function () { if (!edited) { edited = true; track('estimate_edit'); } };
+    boxes.forEach(function (b) { b.addEventListener('change', function () { update(); markEdit(); }); });
+    q('[data-mte-all]').addEventListener('click', function () { checkAll(true); markEdit(); });
+    q('[data-mte-clear]').addEventListener('click', function () { checkAll(false); markEdit(); });
     update();
+    // 구획이 길어(휴대폰 2화면 남짓) 보이는 비율이 작으므로 낮은 기준으로 한 번만 센다
+    once(estSec, function () { track('estimate_view'); }, 0.1);
 
     var pv = q('[data-mte-privacy]'), panel = q('#mtePrivacy');
     pv.addEventListener('click', function () {
@@ -114,9 +128,12 @@
         .then(function (res) {
           return res.json().catch(function () { return {}; }).then(function (j) {
             if (!res.ok || !j.ok) throw new Error(res.status === 400 || res.status === 429 ? (j.error || '') : '');
+            return j;
           });
         })
-        .then(function () {
+        .then(function (j) {
+          var total = Number(j.total) || 0;
+          track('estimate_submit', { value: total * 10000, currency: 'KRW', item_count: items.length, capped: total >= PACKAGE });
           form.hidden = true;
           q('[data-mte-done-email]').textContent = payload.email;
           done.hidden = false;
