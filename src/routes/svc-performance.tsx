@@ -40,8 +40,8 @@ const PM_FAQ: [string, string][] = [
 
 export const SvcPerformancePage = () => (
   <div class="pm-page">
-    <link rel="stylesheet" href="/static/performance.css?v=20261027b" />
-    <link rel="stylesheet" href="/static/performance-ref.css?v=20261027b" />
+    <link rel="stylesheet" href="/static/performance.css?v=20261027p" />
+    <link rel="stylesheet" href="/static/performance-ref.css?v=20261027p" />
     <section class="vh-hero pm-hero">
       <VaultCards />
       <noscript><style>{'.pm-vault.is-intro .pm-vault-stage{--z:1}.pm-vault.is-intro .pm-vault-card{opacity:1;transform:none}'}</style></noscript>

@@ -478,7 +478,7 @@ export const SvcSeedingPage = () => (
           {/* STEP 01 */}
           <div class="sdtl-item sdtl-item--left">
             <div class="sdtl-card">
-              <div class="sdtl-card-icon" style="--tc:#1a6bff">
+              <div class="sdtl-card-icon" style="--tc:#25469E">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
               </div>
               <div class="sdtl-card-body">
@@ -487,7 +487,7 @@ export const SvcSeedingPage = () => (
                 <p class="sdtl-card-desc">브랜드 목표·예산·타겟을 정리한 뒤, 캠페인 범위·일정·성과 지표를 투명한 계약으로 확정합니다.</p>
               </div>
             </div>
-            <div class="sdtl-dot" style="--tc:#1a6bff"><span class="sdtl-num">01</span></div>
+            <div class="sdtl-dot" style="--tc:#25469E"><span class="sdtl-num">01</span></div>
             <div class="sdtl-spacer"></div>
           </div>
 

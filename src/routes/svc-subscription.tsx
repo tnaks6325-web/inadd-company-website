@@ -8,7 +8,7 @@ const BODY = SUBSCRIPTION_BODY.replace('<!--ESTIMATE-->', ESTIMATE_SECTION)
 
 export const SvcSubscriptionPage = () => (
   <>
-    <link rel="stylesheet" href="/static/estimate.css?v=20261027b" />
+    <link rel="stylesheet" href="/static/estimate.css?v=20261027p" />
     <link rel="stylesheet" href="/static/subscription/subscription.css?v=20261027d" />
     <div class="mts-wrap">
       {/* 첫 그림 전에 축소 비율을 정해 가로 스크롤·깜빡임을 막는다 */}
