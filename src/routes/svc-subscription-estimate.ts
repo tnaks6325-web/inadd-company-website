@@ -48,7 +48,7 @@ export const estimateSection = (o: { id: string; labelledBy: string; source: Est
       <div class="mte-grid">
         <label class="mte-field"><span>회사/브랜드명 <i>*</i></span><input type="text" name="company" autocomplete="organization" maxlength="100" required></label>
         <label class="mte-field"><span>담당자 이름 <i>*</i></span><input type="text" name="name" autocomplete="name" maxlength="50" required></label>
-        <label class="mte-field"><span>연락처 <i>*</i></span><input type="tel" name="phone" autocomplete="tel" maxlength="30" placeholder="010-0000-0000" required></label>
+        <label class="mte-field"><span>연락처 <i>*</i></span><input type="tel" name="phone" inputmode="numeric" autocomplete="tel" maxlength="13" placeholder="010-0000-0000" required></label>
         <label class="mte-field"><span>이메일 <i>*</i></span><input type="email" name="email" autocomplete="email" maxlength="120" required></label>
       </div>
       <label class="mte-field"><span>더 알려 주실 내용</span><textarea name="message" rows="2" maxlength="2000" placeholder="판매 채널, 월 광고비, 고민 중인 점 등"></textarea></label>
