@@ -103,7 +103,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
         {/* Pretendard — 전체 폰트 (한국어/영문 통일) */}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-        <link href="/static/style.css?v=20261027d" rel="stylesheet" />
+        <link href="/static/style.css?v=20261027e" rel="stylesheet" />
         {/* ── Meta Pixel Code ── */}
         <script dangerouslySetInnerHTML={{ __html: `
 !function(f,b,e,v,n,t,s)
@@ -358,6 +358,10 @@ fbq('track', 'PageView');
                   </div>
                 </div>
               </div>
+              {/* 접수 실패 안내 — 브라우저 기본 경고창 대신 버튼 바로 위에 표시 */}
+              <p class="cf-error" id="cmError" role="alert" hidden>
+                접수가 완료되지 않았습니다. 입력하신 내용은 그대로 있으니 잠시 후 다시 눌러 주시거나, <a href="tel:010-9186-9944">010-9186-9944</a>로 전화 주세요.
+              </p>
               <button type="submit" class="cf-submit">
                 <span>문의하기</span>
                 <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -379,7 +383,7 @@ fbq('track', 'PageView');
           </div>
         </div>
 
-        <script src="/static/main.js?v=20261027a"></script>
+        <script src="/static/main.js?v=20261027b"></script>
         {/* ── Ribbons 커서 제거 (파란 줄 트레일 비활성화) ── */}
       </body>
     </html>
