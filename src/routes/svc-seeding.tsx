@@ -3,7 +3,7 @@ import { icon } from '../icons'
 import { SeedSearch } from './seeding-search'
 export const SvcSeedingPage = () => (
   <>
-    <link rel="stylesheet" href="/static/seeding-search.css?v=20261020m" />
+    <link rel="stylesheet" href="/static/seeding-search.css?v=20261027q" />
     <section class="vh-hero vh-hero--ss">
       <div class="vh-glow" aria-hidden="true"></div>
       <canvas id="vhCanvas3" class="vh-canvas"></canvas>

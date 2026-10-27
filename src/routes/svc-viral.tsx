@@ -3,7 +3,7 @@ import { icon } from '../icons'
 import { ViralPhones, ViralBackdrop } from './viral-phones'
 export const SvcViralPage = () => (
   <>
-    <link rel="stylesheet" href="/static/viral-phones.css?v=20261019d" />
+    <link rel="stylesheet" href="/static/viral-phones.css?v=20261027q" />
     {/* ════════════════════════════════════════
         VIRAL HERO — 시네마틱 풀스크린
     ════════════════════════════════════════ */}
