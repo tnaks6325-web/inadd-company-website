@@ -27191,3 +27191,16 @@ body .oy-card-img-badge, body .svc-light .oy-grid .oy-card-en, body .oyc-label, 
 body .ppl-ep-img-badge, body .svc-light .ppl-ep-label-bar { font-size: 12px !important; }
 /* 파란 바탕 위 'SYNERGY EFFECT'가 바탕에 묻힘 → 진하게 */
 body .oyc-label { color: rgba(255,255,255,0.85) !important; -webkit-text-fill-color: rgba(255,255,255,0.85) !important; }
+
+/* ============================================
+   디자인 점검 6단계 (2026-10-27) — 문의 팝업
+   접수 실패: 브라우저 기본 경고창 대신 버튼 위 안내 / 팝업 버튼 알약 모양 → 4px
+   ============================================ */
+body .cmodal-box .cf-error {
+  margin: 0 0 12px; padding: 12px 14px;
+  border-left: 3px solid #C62828; border-radius: 4px; background: #FDECEC;
+  color: #8E1B1B !important; -webkit-text-fill-color: #8E1B1B !important; font-size: 14px; line-height: 1.6; text-align: left;
+}
+body .cmodal-box .cf-error[hidden] { display: none; }
+body .cmodal-box .cf-error a { color: #8E1B1B !important; -webkit-text-fill-color: #8E1B1B !important; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+body .cmodal-box .cf-submit { border-radius: 4px !important; }
