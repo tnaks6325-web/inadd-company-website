@@ -8,12 +8,12 @@ const BODY = SUBSCRIPTION_BODY.replace('<!--ESTIMATE-->', ESTIMATE_SECTION)
 
 export const SvcSubscriptionPage = () => (
   <>
-    <link rel="stylesheet" href="/static/subscription/subscription.css?v=20261027b" />
+    <link rel="stylesheet" href="/static/subscription/subscription.css?v=20261027c" />
     <div class="mts-wrap">
       {/* 첫 그림 전에 축소 비율을 정해 가로 스크롤·깜빡임을 막는다 */}
       <script dangerouslySetInnerHTML={{ __html: `document.documentElement.style.setProperty('--mts-zoom',Math.min(1,document.documentElement.clientWidth/860))` }} />
       <div dangerouslySetInnerHTML={{ __html: BODY }} />
     </div>
-    <script src="/static/subscription/subscription.js?v=20261027b" defer></script>
+    <script src="/static/subscription/subscription.js?v=20261027c" defer></script>
   </>
 )

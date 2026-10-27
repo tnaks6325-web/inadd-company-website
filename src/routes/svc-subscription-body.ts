@@ -10,8 +10,8 @@ export const SUBSCRIPTION_BODY = `
   <div style="font-size:24px;font-weight:700;margin-bottom:32px;">인애드 종합 마케팅 구독</div>
   <h1 style="margin:0;font-size:58px;line-height:1.32;font-weight:800;letter-spacing:-0.04em;text-wrap:pretty;">신입마케터 1명 비용<br>월 300만 원+α,<br>기획·디자인·광고·분석까지<br>혼자 다 할 수 있을까요?</h1>
   <div style="position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:12px;margin-top:40px;">
-    <a href="/contact" data-mts-cta="1" style="display:inline-flex;align-items:center;justify-content:center;max-width:100%;min-height:calc(48px / var(--mts-zoom, 1));padding:22px 48px;border-radius:4px;background:#21306F;color:#FFFFFF;font-size:max(28px, calc(16px / var(--mts-zoom, 1)));font-weight:800;line-height:1.4;text-decoration:none;">무료 상담 신청</a>
-    <a href="#estimate" style="display:inline-flex;align-items:center;justify-content:center;max-width:100%;min-height:calc(48px / var(--mts-zoom, 1));padding:22px 24px;border-radius:4px;background:#FFFFFF;color:#21306F;box-shadow:inset 0 0 0 3px #21306F;font-size:max(28px, calc(16px / var(--mts-zoom, 1)));font-weight:800;line-height:1.4;text-decoration:none;">견적 직접 맞춰 보기</a>
+    <a href="/contact" data-mts-cta="1" data-mts-pos="hero" style="display:inline-flex;align-items:center;justify-content:center;max-width:100%;min-height:calc(48px / var(--mts-zoom, 1));padding:22px 48px;border-radius:4px;background:#21306F;color:#FFFFFF;font-size:max(28px, calc(16px / var(--mts-zoom, 1)));font-weight:800;line-height:1.4;text-decoration:none;">무료 상담 신청</a>
+    <a href="#estimate" data-mts-pos="hero" style="display:inline-flex;align-items:center;justify-content:center;max-width:100%;min-height:calc(48px / var(--mts-zoom, 1));padding:22px 24px;border-radius:4px;background:#FFFFFF;color:#21306F;box-shadow:inset 0 0 0 3px #21306F;font-size:max(28px, calc(16px / var(--mts-zoom, 1)));font-weight:800;line-height:1.4;text-decoration:none;">견적 직접 맞춰 보기</a>
   </div>
     <svg width="480" height="750" viewBox="0 0 480 750" fill="none" style="position:absolute;left:380px;top:200px;z-index:2;pointer-events:none;overflow:visible;"><path d="M64 62 C160 48 320 40 390 80 C420 110 425 190 420 250 C420 320 340 340 345 290 C350 240 440 260 425 340 C410 463 290 563 150 573" stroke="#21306F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M173 557 L150 573 L175 585" stroke="#21306F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
   </section>
@@ -230,7 +230,7 @@ export const SUBSCRIPTION_BODY = `
   <p style="margin:24px 0 0;font-size:24px;line-height:1.6;">10가지가 모두 담겨 있어요.<br>필요 없는 항목은 빼서 견적을 직접 맞춰 보세요.</p>
 </section>
 <!--ESTIMATE-->
-<div style="background:#F8F7F4;padding:0 64px 120px;"><div style="font-size:17px;line-height:1.6;">광고비, 체험단 제품·배송비, 구매평에 쓰이는 상품 비용, 촬영 모델·장소 비용은 별도예요 · 소재 무제한은 월 운영 범위 안에서 제작해요 · 카페·블로그·구매후기 체험단은 광고(협찬) 표시 후 게재해요</div></div>
+<div style="background:#F8F7F4;padding:0 64px 120px;"><div style="font-size:17px;line-height:1.6;">광고비, 체험단 제품·배송비, 구매평에 쓰이는 상품 비용, 촬영 모델·장소 비용은 별도예요 · 소재 무제한은 월 운영 범위 안에서 제작해요</div></div>
 <section data-screen-label="06 TF팀" style="padding:120px 64px;">
   <div style="font-size:24px;font-weight:800;color:#21306F;">05</div>
   <h2 style="margin:16px 0 0;font-size:48px;line-height:1.36;font-weight:800;letter-spacing:-0.04em;">우리 브랜드 전담 TF팀 구성</h2>
@@ -425,7 +425,7 @@ export const SUBSCRIPTION_BODY = `
     <img src="/static/subscription/cta-rangers.webp" width="885" height="662" loading="lazy" decoding="async" alt="" style="position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:100%;width:auto;opacity:0.5;pointer-events:none;">
     <h2 style="position:relative;margin:0;font-size:46px;line-height:1.38;font-weight:800;letter-spacing:-0.04em;color:#FFFFFF;">채용 공고 올리기 전에,<br>무료 진단부터 받아 보세요</h2>
     <p style="position:relative;margin:28px 0 0;font-size:24px;line-height:1.6;color:#FFFFFF;">신청하시면 담당자가 연락드려요.</p>
-    <a href="/contact" data-mts-cta="1" style="position:relative;display:inline-block;margin-top:44px;background:#FFFFFF;color:#21306F;font-size:28px;font-weight:800;text-decoration:none;padding:26px 64px;border-radius:4px;">무료 상담 신청</a>
+    <a href="/contact" data-mts-cta="1" data-mts-pos="final" style="position:relative;display:inline-block;margin-top:44px;background:#FFFFFF;color:#21306F;font-size:28px;font-weight:800;text-decoration:none;padding:26px 64px;border-radius:4px;">무료 상담 신청</a>
   </div>
   <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:64px;">
     <img src="/static/subscription/inad-logo.webp" width="480" height="480" loading="lazy" decoding="async" alt="인애드컴퍼니 로고" style="display:block;width:32px;height:32px;">
@@ -433,7 +433,7 @@ export const SUBSCRIPTION_BODY = `
     <div style="font-size:22px;font-weight:800;">인애드컴퍼니</div>
   </div>
 </section>
-<div data-sticky="1" class="mts-sticky" style="position:fixed;left:50%;bottom:24px;z-index:50;transform:translate(-50%,160%);opacity:0;pointer-events:none;transition:opacity 0.3s ease, transform 0.45s cubic-bezier(0.2,0.7,0.2,1);display:flex;gap:10px;white-space:nowrap;"><a href="#estimate" style="display:flex;align-items:center;background:#FFFFFF;color:#21306F;text-decoration:none;font-size:max(24px, calc(15px / var(--mts-zoom, 1)));font-weight:800;padding:18px 28px;border-radius:4px;box-shadow:inset 0 0 0 3px #21306F, 0 10px 30px rgba(17,19,24,0.22);">견적 맞춰 보기</a><a href="/contact" data-mts-cta="1" style="display:flex;align-items:center;gap:12px;background:#21306F;color:#FFFFFF;text-decoration:none;font-size:max(24px, calc(15px / var(--mts-zoom, 1)));font-weight:800;padding:18px 44px;border-radius:4px;box-shadow:0 10px 30px rgba(17,19,24,0.28);">무료 상담 신청<span class="mts-sticky-sub" style="font-size:18px;font-weight:600;">초기진단 무료</span></a></div>
+<div data-sticky="1" class="mts-sticky" style="position:fixed;left:50%;bottom:24px;z-index:50;transform:translate(-50%,160%);opacity:0;pointer-events:none;transition:opacity 0.3s ease, transform 0.45s cubic-bezier(0.2,0.7,0.2,1);display:flex;gap:10px;white-space:nowrap;"><a href="#estimate" data-mts-pos="sticky" style="display:flex;align-items:center;background:#FFFFFF;color:#21306F;text-decoration:none;font-size:max(24px, calc(15px / var(--mts-zoom, 1)));font-weight:800;padding:18px 28px;border-radius:4px;box-shadow:inset 0 0 0 3px #21306F, 0 10px 30px rgba(17,19,24,0.22);">견적 맞춰 보기</a><a href="/contact" data-mts-cta="1" data-mts-pos="sticky" style="display:flex;align-items:center;gap:12px;background:#21306F;color:#FFFFFF;text-decoration:none;font-size:max(24px, calc(15px / var(--mts-zoom, 1)));font-weight:800;padding:18px 44px;border-radius:4px;box-shadow:0 10px 30px rgba(17,19,24,0.28);">무료 상담 신청<span class="mts-sticky-sub" style="font-size:18px;font-weight:600;">초기진단 무료</span></a></div>
 
 </div>
 `
