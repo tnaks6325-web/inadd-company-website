@@ -383,7 +383,7 @@ export const InsightPage = () => {
 
       {/* ── CTA ── */}
       <section class="home-cta">
-        <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/우리 브랜드에 맞는 마케팅 전략이 궁금하신가요.png')"></div>
+        <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/우리 브랜드에 맞는 마케팅 전략이 궁금하신가요.png');--cta-img-m:url('/static/m/images/우리 브랜드에 맞는 마케팅 전략이 궁금하신가요.webp')"></div>
         <div class="home-cta-bg"><div class="hcta-glow"></div></div>
         <div class="container">
           <div class="home-cta-inner">

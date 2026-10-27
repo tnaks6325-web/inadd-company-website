@@ -318,7 +318,7 @@ export const SvcPplPage = () => (
 
     {/* ══ CTA ══ */}
     <section class="svc-cta-section">
-      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-ppl.png')"></div>
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-ppl.png');--cta-img-m:url('/static/m/images/cta-ppl.webp')"></div>
       <div class="container">
         <div class="svc-cta-inner">
           <div class="svc-cta-text">

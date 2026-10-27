@@ -194,7 +194,7 @@ export const SvcInfluencerPage = () => (
         {/* ── 02 — 합리적 제안을 위한 선별 시스템 ── */}
         <div class="ifl-data-row ifl-data-row--rev ifl-matching-row">
           <div class="ifl-data-img-wrap ifl-data-img-wrap--filter">
-            <img src="/static/images/process/filter-list.jpg" alt="크리에이터 상세 분석 리스트 뷰" class="ifl-filter-img ifl-filter-img--top" />
+            <picture class="m-pic"><source media="(max-width: 767px)" srcset="/static/m/images/process/filter-list.webp" type="image/webp" /><img src="/static/images/process/filter-list.jpg" alt="크리에이터 상세 분석 리스트 뷰" class="ifl-filter-img ifl-filter-img--top" /></picture>
             <img src="/static/images/process/filter-grid.jpg" alt="크리에이터 그리드 필터링 시스템" class="ifl-filter-img ifl-filter-img--bottom" />
           </div>
           <div class="ifl-data-text">
@@ -405,7 +405,7 @@ export const SvcInfluencerPage = () => (
               </button>
               <div class="svctab-item-body open">
                 <div class="svctab-item-content">
-                  <div class="svctab-photo svctab-photo--filled" style="--img:url('/static/mkt-images/casting-celebrity.png')">
+                  <div class="svctab-photo svctab-photo--filled" style="--img:url('/static/mkt-images/casting-celebrity.png');--img-m:url('/static/m/mkt-images/casting-celebrity.webp')">
                     <div class="svctab-photo-ph">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></svg>
                       <span>Celebrity Casting</span>
@@ -1059,7 +1059,7 @@ export const SvcInfluencerPage = () => (
 
     {/* ══ CTA ══ */}
     <section class="svc-cta-section">
-      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/우리 브랜드에 맞는 인플루언서를 찾아드립니다.png')"></div>
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/우리 브랜드에 맞는 인플루언서를 찾아드립니다.png');--cta-img-m:url('/static/m/images/우리 브랜드에 맞는 인플루언서를 찾아드립니다.webp')"></div>
       <div class="container">
         <div class="svc-cta-inner">
           <div class="svc-cta-text">

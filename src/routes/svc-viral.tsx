@@ -293,7 +293,7 @@ export const SvcViralPage = () => (
 
     {/* ============ CTA ============ */}
     <section class="svc-cta-section">
-      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-viral.png')"></div>
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-viral.png');--cta-img-m:url('/static/m/images/cta-viral.webp')"></div>
 
       <div class="container">
         <div class="svc-cta-inner">

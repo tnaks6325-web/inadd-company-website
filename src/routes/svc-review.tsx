@@ -97,7 +97,7 @@ export const SvcReviewPage = () => (
               <div class="rvt-tier-badge" style="background:rgba(234,179,8,0.15);border-color:rgba(234,179,8,0.4);color:#eab308">PREMIUM SERVICE</div>
               <div class="rvt-mock-preview rvt-mock--blog">
                 <div class="rvt-mock-header-bar"><div class="rvt-mock-dots"><span></span><span></span><span></span></div></div>
-                <img src="/static/seo-images/review-planned.jpg" alt="기획형 리뷰 예시" class="rvt-mock-real-img" />
+                <picture class="m-pic"><source media="(max-width: 767px)" srcset="/static/m/seo-images/review-planned.webp" type="image/webp" /><img src="/static/seo-images/review-planned.jpg" alt="기획형 리뷰 예시" class="rvt-mock-real-img" /></picture>
               </div>
             </div>
             <div class="rvt-card-body">
@@ -491,7 +491,7 @@ export const SvcReviewPage = () => (
 
     {/* ══ CTA ══ */}
     <section class="svc-cta-section">
-      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-review.png')"></div>
+      <div class="cta-img-bg" aria-hidden="true" style="--cta-img:url('/static/images/cta-review.png');--cta-img-m:url('/static/m/images/cta-review.webp')"></div>
       <div class="container">
         <div class="svc-cta-inner">
           <div class="svc-cta-text">
