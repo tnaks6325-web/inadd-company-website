@@ -702,6 +702,8 @@ function closeCallModal() {
       /* 연타 시 같은 문의가 여러 번 발송되던 문제 방지 */
       if (cmSubmitting) return;
       cmSubmitting = true;
+      var errBox = document.getElementById('cmError');
+      if (errBox) errBox.hidden = true;
       var submitBtn = form.querySelector('button[type="submit"]');
       var submitLabel = submitBtn ? submitBtn.querySelector('span') : null;
       var submitPrev = submitLabel ? submitLabel.textContent : '';
@@ -746,7 +748,12 @@ function closeCallModal() {
         if (!responses[0].ok) throw new Error('mail failed');
       } catch (err) {
         releaseSubmit();
-        alert('접수 중 오류가 발생했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.');
+        if (errBox) {
+          errBox.hidden = false;
+          (submitBtn || errBox).scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        } else {
+          alert('접수가 완료되지 않았습니다. 잠시 후 다시 시도하거나 010-9186-9944로 전화 주세요.');
+        }
         return;
       }
       form.style.display = 'none';
