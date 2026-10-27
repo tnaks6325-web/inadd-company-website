@@ -3,7 +3,7 @@ import { icon } from '../icons'
 import { PplOnAir } from './ppl-onair'
 export const SvcPplPage = () => (
   <>
-    <link rel="stylesheet" href="/static/ppl-onair.css?v=20261021f" />
+    <link rel="stylesheet" href="/static/ppl-onair.css?v=20261027p" />
     {/* ══ HERO ══ */}
     <section class="vh-hero vh-hero--pon">
       <div class="vh-glow" aria-hidden="true"></div>

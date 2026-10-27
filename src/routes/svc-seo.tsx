@@ -116,7 +116,7 @@ export const SvcSeoPage = () => (
 
                 {/* 4가지 세부 작업 카드 */}
                 <div class="seop-sub-grid">
-                  <div class="seop-sub-card seop-sub-card--blog-trigger" id="seoBlogCard" style="--sc:#3b82f6" tabindex="0" role="button" aria-label="블로그 배포 효과 보기">
+                  <div class="seop-sub-card seop-sub-card--blog-trigger" id="seoBlogCard" style="--sc:#2D52B0" tabindex="0" role="button" aria-label="블로그 배포 효과 보기">
                     <div class="seop-sub-icon">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
                     </div>
@@ -899,13 +899,13 @@ export const SvcSeoPage = () => (
           {/* STEP 01 */}
           <div class="seop-proc-step">
             <div class="seop-proc-num-col">
-              <div class="seop-proc-circle" style="--pc:#1a6bff">
+              <div class="seop-proc-circle" style="--pc:#25469E">
                 <span class="seop-proc-n">01</span>
               </div>
               <div class="seop-proc-line"></div>
             </div>
             <div class="seop-proc-body">
-              <div class="seop-proc-icon-wrap" style="--pc:#1a6bff">
+              <div class="seop-proc-icon-wrap" style="--pc:#25469E">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
               </div>
               <div class="seop-proc-text">

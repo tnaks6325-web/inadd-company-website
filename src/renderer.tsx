@@ -103,7 +103,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
         {/* Pretendard — 전체 폰트 (한국어/영문 통일) */}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-        <link href="/static/style.css?v=20261027e" rel="stylesheet" />
+        <link href="/static/style.css?v=20261027p" rel="stylesheet" />
         {/* ── Meta Pixel Code ── */}
         <script dangerouslySetInnerHTML={{ __html: `
 !function(f,b,e,v,n,t,s)
@@ -372,7 +372,7 @@ fbq('track', 'PageView');
             {/* 완료 화면 */}
             <div class="cmodal-success" id="cmSuccess" style="display:none">
               <div class="cs-check">
-                <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(26,107,255,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(26,107,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="rgba(37,70,158,0.3)" stroke-width="1.5"/><path d="M14 24l8 8 12-12" stroke="rgba(37,70,158,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
               <h3>문의가 접수되었습니다!</h3>
               <p>담당자가 <strong>1영업일 이내</strong> 메일로 연락드립니다.</p>
@@ -383,7 +383,7 @@ fbq('track', 'PageView');
           </div>
         </div>
 
-        <script src="/static/main.js?v=20261027c"></script>
+        <script src="/static/main.js?v=20261027p"></script>
         {/* ── Ribbons 커서 제거 (파란 줄 트레일 비활성화) ── */}
       </body>
     </html>

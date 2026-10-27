@@ -3,7 +3,7 @@ import { icon } from '../icons'
 import { OyShelf } from './oy-shelf'
 export const SvcOliveYoungPage = () => (
   <>
-    <link rel="stylesheet" href="/static/oy-shelf.css?v=20261021f" />
+    <link rel="stylesheet" href="/static/oy-shelf.css?v=20261027p" />
     {/* ══ HERO ══ */}
     <section class="vh-hero vh-hero--oy">
       <div class="vh-glow" aria-hidden="true"></div>
@@ -245,7 +245,7 @@ export const SvcOliveYoungPage = () => (
           {/* STEP 01 */}
           <div class="sdtl-item sdtl-item--left">
             <div class="sdtl-card">
-              <div class="sdtl-card-icon" style="--tc:#1a6bff">
+              <div class="sdtl-card-icon" style="--tc:#25469E">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
               </div>
               <div class="sdtl-card-body">
@@ -254,7 +254,7 @@ export const SvcOliveYoungPage = () => (
                 <p class="sdtl-card-desc">브랜드 현황·목표 카테고리·예산·기간을 파악합니다. 리뷰·노출·검색 중 무엇을 어떤 순서로 묶을지 정해 드립니다.</p>
               </div>
             </div>
-            <div class="sdtl-dot" style="--tc:#1a6bff"><span class="sdtl-num">01</span></div>
+            <div class="sdtl-dot" style="--tc:#25469E"><span class="sdtl-num">01</span></div>
             <div class="sdtl-spacer"></div>
           </div>
 
@@ -304,7 +304,7 @@ export const SvcOliveYoungPage = () => (
                 <p class="sdtl-card-desc">계약된 서비스를 특성에 맞는 순서로 실행합니다. 리뷰·노출·검색 작업이 맞물려 돌아가도록 설계합니다.</p>
                 <div class="seop-proc-chips" style="margin-top:12px">
                   <span class="seop-proc-chip" style="--cc:#03c75a">리뷰 마케팅</span>
-                  <span class="seop-proc-chip" style="--cc:#1a6bff">노출 강화</span>
+                  <span class="seop-proc-chip" style="--cc:#25469E">노출 강화</span>
                   <span class="seop-proc-chip" style="--cc:#f59e0b">검색 노출</span>
                 </div>
               </div>

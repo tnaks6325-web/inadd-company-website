@@ -150,7 +150,7 @@ export const ViralPage = () => (
               hook: '단 하루만에 브랜드가 퍼져야 할 때',
               sub:  '하루아침에 모든 피드에 올라오는 그 브랜드,\n바로 우리가 만듭니다.',
               img: '/static/svc-images/viral.png',
-              accentColor: '#1a6bff',
+              accentColor: '#25469E',
             },
             {
               icon: 'star', href: '/marketing/influencer', title: '인플루언서 마케팅', tag: 'INFLUENCER',

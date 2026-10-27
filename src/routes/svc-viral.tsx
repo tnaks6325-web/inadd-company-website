@@ -231,7 +231,7 @@ export const SvcViralPage = () => (
         </div>
         <div class="svc-process-steps">
           {[
-            { num:'01', title:'브랜드 분석', desc:'브랜드 특성, 타겟 소비자, 경쟁 환경을 분석해 바이럴 포인트를 발굴합니다.', img:'/static/process-images/process-01.png', accent:'#1a6bff' },
+            { num:'01', title:'브랜드 분석', desc:'브랜드 특성, 타겟 소비자, 경쟁 환경을 분석해 바이럴 포인트를 발굴합니다.', img:'/static/process-images/process-01.png', accent:'#25469E' },
             { num:'02', title:'채널 전략 수립', desc:'맘카페, 커뮤니티, SNS 등 타겟이 모이는 최적 채널과 확산 시나리오를 설계합니다.', img:'/static/process-images/process-02.png', accent:'#7c3aed' },
             { num:'03', title:'콘텐츠 제작', desc:'타깃이 공감하는 경험 콘텐츠를 기획·제작합니다.', img:'/static/process-images/process-03.png', accent:'#059669' },
             { num:'04', title:'시드 배포', desc:'핵심 커뮤니티에 콘텐츠를 먼저 풀고, 초기 반응을 지켜봅니다.', img:'/static/process-images/process-04.png', accent:'#0891b2' },

@@ -47,7 +47,7 @@ function passThrough(c: any): Response | Promise<Response> {
   return app.fetch(c.req.raw, c.env, ctx)
 }
 
-const CONTENT_CSS = '<link href="/static/insight-content.css?v=20261026a" rel="stylesheet" /><script src="/static/insight-content.js?v=20261026a" defer></script>'
+const CONTENT_CSS = '<link href="/static/insight-content.css?v=20261027p" rel="stylesheet" /><script src="/static/insight-content.js?v=20261026a" defer></script>'
 
 // ── 목록: 기존 화면을 그대로 쓰고, 카드만 서버에서 미리 채운다 ──
 const Cards = ({ posts }: { posts: InsightPost[] }) => (

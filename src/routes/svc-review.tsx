@@ -3,7 +3,7 @@ import { icon } from '../icons'
 import { ReviewCompare } from './review-compare'
 export const SvcReviewPage = () => (
   <>
-    <link rel="stylesheet" href="/static/review-compare.css?v=20261021c" />
+    <link rel="stylesheet" href="/static/review-compare.css?v=20261027p" />
     {/* ══ HERO ══ */}
     <section class="vh-hero vh-hero--rc">
       <div class="vh-glow" aria-hidden="true"></div>
@@ -11,7 +11,7 @@ export const SvcReviewPage = () => (
       <div class="vh-bg">
         <div class="vh-orb vh-orb--1" style="background:radial-gradient(circle,rgba(234,179,8,0.22) 0%,transparent 70%)"></div>
         <div class="vh-orb vh-orb--2" style="background:radial-gradient(circle,rgba(249,115,22,0.18) 0%,transparent 70%)"></div>
-        <div class="vh-orb vh-orb--3" style="background:radial-gradient(circle,rgba(26,107,255,0.18) 0%,transparent 70%)"></div>
+        <div class="vh-orb vh-orb--3" style="background:radial-gradient(circle,rgba(37,70,158,0.18) 0%,transparent 70%)"></div>
         <div class="vh-grid"></div>
         <div class="vh-noise"></div>
       </div>
@@ -107,21 +107,21 @@ export const SvcReviewPage = () => (
               </h3>
               <ul class="rvt-feature-list">
                 <li>
-                  <div class="rvt-feat-icon" style="--fi:#285CCC">{icon('star')}</div>
+                  <div class="rvt-feat-icon" style="--fi:#25469E">{icon('star')}</div>
                   <div>
                     <strong>평판 관리</strong>
                     <p>브랜드 신뢰도를 높이는 고품질 경험 콘텐츠 제작</p>
                   </div>
                 </li>
                 <li>
-                  <div class="rvt-feat-icon" style="--fi:#285CCC">{icon('camera')}</div>
+                  <div class="rvt-feat-icon" style="--fi:#25469E">{icon('camera')}</div>
                   <div>
                     <strong>사진 및 영상 첨부</strong>
                     <p>고퀄리티 시각 자료 필수 포함으로 신뢰도 상승</p>
                   </div>
                 </li>
                 <li>
-                  <div class="rvt-feat-icon" style="--fi:#285CCC">{icon('pen')}</div>
+                  <div class="rvt-feat-icon" style="--fi:#25469E">{icon('pen')}</div>
                   <div>
                     <strong>스토리라인 리뷰</strong>
                     <p>체계적인 기획 기반의 스토리텔링으로 구매 전환 유도</p>
@@ -320,7 +320,7 @@ export const SvcReviewPage = () => (
           {/* STEP 01 */}
           <div class="sdtl-item sdtl-item--left">
             <div class="sdtl-card">
-              <div class="sdtl-card-icon" style="--tc:#1a6bff">
+              <div class="sdtl-card-icon" style="--tc:#25469E">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
               </div>
               <div class="sdtl-card-body">
@@ -329,7 +329,7 @@ export const SvcReviewPage = () => (
                 <p class="sdtl-card-desc">브랜드 목표·현재 리뷰 현황·타겟 채널을 살핍니다. 기획형과 단순 리뷰를 어떤 비율로 섞을지 짜 드립니다.</p>
               </div>
             </div>
-            <div class="sdtl-dot" style="--tc:#1a6bff"><span class="sdtl-num">01</span></div>
+            <div class="sdtl-dot" style="--tc:#25469E"><span class="sdtl-num">01</span></div>
             <div class="sdtl-spacer"></div>
           </div>
 

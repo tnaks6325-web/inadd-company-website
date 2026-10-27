@@ -314,7 +314,7 @@ export const AboutPage = () => (
                 <div class="aptn-step-card">
                   <div class="aptn-step-icon-wrap">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                      <path d="M14 4L17.5 10.5H24L19 15L21 22L14 18L7 22L9 15L4 10.5H10.5L14 4Z" stroke="rgba(41,121,255,0.9)" stroke-width="1.6" stroke-linejoin="round" fill="rgba(41,121,255,0.1)"/>
+                      <path d="M14 4L17.5 10.5H24L19 15L21 22L14 18L7 22L9 15L4 10.5H10.5L14 4Z" stroke="rgba(37,70,158,0.9)" stroke-width="1.6" stroke-linejoin="round" fill="rgba(37,70,158,0.1)"/>
                     </svg>
                   </div>
                   <strong class="aptn-step-title">차별화된 솔루션</strong>
@@ -353,9 +353,9 @@ export const AboutPage = () => (
                 <div class="aptn-step-card">
                   <div class="aptn-step-icon-wrap">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                      <circle cx="14" cy="14" r="9" stroke="rgba(41,121,255,0.9)" stroke-width="1.6"/>
-                      <circle cx="14" cy="14" r="4" fill="rgba(41,121,255,0.3)" stroke="rgba(41,121,255,0.9)" stroke-width="1.6"/>
-                      <circle cx="14" cy="14" r="1.5" fill="rgba(41,121,255,0.9)"/>
+                      <circle cx="14" cy="14" r="9" stroke="rgba(37,70,158,0.9)" stroke-width="1.6"/>
+                      <circle cx="14" cy="14" r="4" fill="rgba(37,70,158,0.3)" stroke="rgba(37,70,158,0.9)" stroke-width="1.6"/>
+                      <circle cx="14" cy="14" r="1.5" fill="rgba(37,70,158,0.9)"/>
                     </svg>
                   </div>
                   <strong class="aptn-step-title">브랜딩 강화</strong>
@@ -430,12 +430,12 @@ export const AboutPage = () => (
             <div class="aptn-vm-item aptn-vm-item--vision">
               <div class="aptn-vm-item-icon">
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <circle cx="11" cy="11" r="8" stroke="rgba(41,121,255,0.8)" stroke-width="1.5"/>
-                  <circle cx="11" cy="11" r="3" fill="rgba(41,121,255,0.9)"/>
-                  <line x1="11" y1="1" x2="11" y2="4" stroke="rgba(41,121,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
-                  <line x1="11" y1="18" x2="11" y2="21" stroke="rgba(41,121,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
-                  <line x1="1" y1="11" x2="4" y2="11" stroke="rgba(41,121,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
-                  <line x1="18" y1="11" x2="21" y2="11" stroke="rgba(41,121,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+                  <circle cx="11" cy="11" r="8" stroke="rgba(37,70,158,0.8)" stroke-width="1.5"/>
+                  <circle cx="11" cy="11" r="3" fill="rgba(37,70,158,0.9)"/>
+                  <line x1="11" y1="1" x2="11" y2="4" stroke="rgba(37,70,158,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+                  <line x1="11" y1="18" x2="11" y2="21" stroke="rgba(37,70,158,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+                  <line x1="1" y1="11" x2="4" y2="11" stroke="rgba(37,70,158,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+                  <line x1="18" y1="11" x2="21" y2="11" stroke="rgba(37,70,158,0.6)" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
               </div>
               <div class="aptn-vm-item-content">
@@ -451,7 +451,7 @@ export const AboutPage = () => (
             <div class="aptn-vm-item aptn-vm-item--mission">
               <div class="aptn-vm-item-icon aptn-vm-item-icon--mission">
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <path d="M11 3L13.5 8.5L20 9.3L15.5 13.5L16.8 20L11 16.8L5.2 20L6.5 13.5L2 9.3L8.5 8.5L11 3Z" stroke="rgba(140,80,255,0.8)" stroke-width="1.5" stroke-linejoin="round" fill="rgba(140,80,255,0.08)"/>
+                  <path d="M11 3L13.5 8.5L20 9.3L15.5 13.5L16.8 20L11 16.8L5.2 20L6.5 13.5L2 9.3L8.5 8.5L11 3Z" stroke="rgba(37,70,158,0.8)" stroke-width="1.5" stroke-linejoin="round" fill="rgba(37,70,158,0.08)"/>
                 </svg>
               </div>
               <div class="aptn-vm-item-content">
@@ -577,7 +577,7 @@ export const AboutPage = () => (
     // 커스텀 마커 아이콘
     var icon = L.divIcon({
       className: '',
-      html: '<div style="width:36px;height:36px;background:#1a6bff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 3px 12px rgba(26,107,255,0.6);position:relative">' +
+      html: '<div style="width:36px;height:36px;background:#25469E;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 3px 12px rgba(37,70,158,0.6);position:relative">' +
             '<div style="width:10px;height:10px;background:#fff;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"></div></div>',
       iconSize: [36, 36],
       iconAnchor: [18, 36],
@@ -586,7 +586,7 @@ export const AboutPage = () => (
     markerInstance = L.marker([lat, lng], { icon: icon }).addTo(mapInstance);
     markerInstance.bindPopup(
       '<div style="font-family:inherit;padding:4px 2px">' +
-      '<strong style="font-size:14px;color:#1a6bff">인애드컴퍼니</strong><br>' +
+      '<strong style="font-size:14px;color:#25469E">인애드컴퍼니</strong><br>' +
       '<span style="font-size:12px;color:#666">' + (address || '') + '</span>' +
       '</div>',
       { maxWidth: 260 }
@@ -812,9 +812,9 @@ export const AboutPage = () => (
 
               /* 그라데이션: 카드 하단(연한 파랑) → 수렴점(밝은 파랑) */
               var grad = ctx.createLinearGradient(ln.sx, ln.sy, mx, my);
-              grad.addColorStop(0,   'rgba(60,120,255,0.45)');
-              grad.addColorStop(0.5, 'rgba(90,150,255,0.80)');
-              grad.addColorStop(1,   'rgba(140,200,255,0.95)');
+              grad.addColorStop(0,   'rgba(37,70,158,0.45)');
+              grad.addColorStop(0.5, 'rgba(85,113,192,0.80)');
+              grad.addColorStop(1,   'rgba(169,182,220,0.95)');
 
               ctx.beginPath();
               ctx.moveTo(ln.sx, ln.sy);
@@ -823,7 +823,7 @@ export const AboutPage = () => (
               ctx.lineWidth   = idx === 1 ? 2.5 : 1.8;
               ctx.lineCap     = 'round';
               ctx.shadowBlur  = 8;
-              ctx.shadowColor = 'rgba(80,140,255,0.45)';
+              ctx.shadowColor = 'rgba(37,70,158,0.45)';
               ctx.stroke();
               ctx.shadowBlur  = 0;
             });

@@ -134,7 +134,7 @@ export const DevelopmentPage = () => (
             <div class="dev-why-cards">
               {[
                 { icon: 'zap', title: '남들보다 빠른 실행', desc: '캠페인 셋업부터 배포까지 자동화로 처리. 경쟁사 대비 2배 빠른 실행 속도.', color: '#6440ff' },
-                { icon: 'chart', title: '실시간 데이터 기반 운영', desc: '조회수·반응·전환을 24시간 자동 수집. 데이터가 보이는 만큼 전략이 정교해집니다.', color: '#1a6bff' },
+                { icon: 'chart', title: '실시간 데이터 기반 운영', desc: '조회수·반응·전환을 24시간 자동 수집. 데이터가 보이는 만큼 전략이 정교해집니다.', color: '#25469E' },
                 { icon: 'refresh', title: '무중단 캠페인 유지', desc: '사람이 자리를 비워도 시스템이 돌아갑니다. 타이밍을 놓치지 않는 운영 구조.', color: '#00d4a8' },
                 { icon: 'target', title: '전략에 집중하는 구조', desc: '반복 업무는 시스템이, 전략적 판단은 사람이. 마케터의 시간이 핵심에 쓰입니다.', color: '#f0b429' },
               ].map(c => (
@@ -178,7 +178,7 @@ export const DevelopmentPage = () => (
         <div class="dev-area-grid">
           {[
             { num: '01', icon: 'rocket', title: 'Campaign Workflow', ko: '캠페인 자동 운영', desc: '캠페인 생성부터 배포, 모니터링, 마감까지 자동 처리. 수작업 없이 일정에 따라 자동 실행됩니다.', tags: ['자동 생성', '일정 관리', '자동 마감'], color: '#6440ff' },
-            { num: '02', icon: 'filePen', title: 'Content Management', ko: '콘텐츠·원고 자동 관리', desc: '인플루언서·체험단 원고를 자동으로 수집·분류·배포. 수백 건을 체계적으로 관리합니다.', tags: ['원고 자동 수집', '콘텐츠 분류', '배포 자동화'], color: '#1a6bff' },
+            { num: '02', icon: 'filePen', title: 'Content Management', ko: '콘텐츠·원고 자동 관리', desc: '인플루언서·체험단 원고를 자동으로 수집·분류·배포. 수백 건을 체계적으로 관리합니다.', tags: ['원고 자동 수집', '콘텐츠 분류', '배포 자동화'], color: '#25469E' },
             { num: '03', icon: 'star', title: 'Review Operations', ko: '리뷰·체험단 자동 운영', desc: '체험단 모집부터 리뷰 확인, 완료 처리까지 리뷰 마케팅 전 과정이 시스템으로 돌아갑니다.', tags: ['체험단 모집', '리뷰 확인', '완료 처리'], color: '#00d4a8' },
             { num: '04', icon: 'chart', title: 'Data Collection', ko: '성과 데이터 자동 수집', desc: '유튜브 조회수, 댓글 수, 블로그 방문자 등 마케팅 성과를 실시간으로 자동 수집·정리합니다.', tags: ['조회수 수집', '댓글 모니터링', '성과 리포트'], color: '#f0b429' },
             { num: '05', icon: 'settings', title: 'Internal Workflow', ko: '팀 운영 자동화', desc: '정산, 보고서, 알림, 스케줄 관리 등 팀 내부 반복 업무가 자동화되어 전략에 집중합니다.', tags: ['정산 자동화', '보고서 생성', '슬랙 알림'], color: '#ff6b6b' },
@@ -223,7 +223,7 @@ export const DevelopmentPage = () => (
         <div class="dev-process-flow">
           {[
             { step: '01', title: '캠페인 기획', desc: '클라이언트 목표를 분석하고 채널·타겟·예산에 맞는 전략을 설계합니다.', icon: 'target', color: '#6440ff' },
-            { step: '02', title: '시스템 셋업', desc: '자동화 워크플로우를 구성해 캠페인 전체가 시스템 위에서 돌아가게 준비합니다.', icon: 'settings', color: '#1a6bff' },
+            { step: '02', title: '시스템 셋업', desc: '자동화 워크플로우를 구성해 캠페인 전체가 시스템 위에서 돌아가게 준비합니다.', icon: 'settings', color: '#25469E' },
             { step: '03', title: '자동 실행', desc: '배포·수집·모니터링이 자동으로 진행됩니다. 사람의 개입 없이 타이밍을 지킵니다.', icon: 'rocket', color: '#00d4a8' },
             { step: '04', title: '실시간 데이터 수집', desc: '성과 지표를 24시간 자동 수집. 캠페인이 진행되는 동안 데이터가 쌓입니다.', icon: 'chart', color: '#f0b429' },
             { step: '05', title: '인사이트 리포트', desc: '수집된 데이터를 정리해 다음 캠페인을 더 정교하게 만드는 인사이트로 전달합니다.', icon: 'trending', color: '#a78bfa' },

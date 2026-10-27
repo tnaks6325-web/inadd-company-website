@@ -190,7 +190,7 @@
     pts.forEach(function(p){
       ctx.beginPath();
       ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(100,160,255,'+p.o+')';
+      ctx.fillStyle='rgba(85,113,192,'+p.o+')';
       ctx.fill();
       p.x+=p.dx; p.y+=p.dy;
       if(p.x-0<0||p.x-W>0) p.dx*=-1;
