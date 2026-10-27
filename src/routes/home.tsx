@@ -100,7 +100,7 @@ export const HomePage = () => (
       <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto"
         poster="/static/hero/hero-kinetic-v17-poster.jpg" aria-label="인애드컴퍼니 소개 영상">
         <source src="/hero-video/hero-kinetic-v17.mp4" type="video/mp4" media="(min-width: 769px)" />
-        <source src="/hero-video/hero-kinetic-v17-m.mp4" type="video/mp4" />
+        <source src="/hero-video/hero-kinetic-v17b-m.mp4" type="video/mp4" />
       </video>
       {/* 화면 밖으로 스크롤하면 멈추고, 돌아오면 이어서 재생(노트북 발열·배터리 절약).
           움직임 줄이기 설정을 켠 방문자에게는 첫 장면만 보여준다. */}
