@@ -389,7 +389,7 @@ export const SvcOliveYoungPage = () => (
     <script dangerouslySetInnerHTML={{__html: `
 (function(){
   var s = document.createElement('script');
-  s.src = '/static/scroll-reveal.js?v=20260722b';
+  s.src = '/static/scroll-reveal.js?v=20261028a';
   document.head.appendChild(s);
 })();
     `}} />

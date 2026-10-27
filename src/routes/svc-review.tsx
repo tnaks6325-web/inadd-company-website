@@ -507,7 +507,7 @@ export const SvcReviewPage = () => (
     <script dangerouslySetInnerHTML={{__html: `
 (function(){
   var s = document.createElement('script');
-  s.src = '/static/scroll-reveal.js?v=20260722b';
+  s.src = '/static/scroll-reveal.js?v=20261028a';
   document.head.appendChild(s);
   // 리뷰 타입 비교 인트로 — 밑줄 이펙트 스크롤 진입 시 그리기
   var intro = document.querySelector('.rvt-intro');
