@@ -518,7 +518,7 @@ export const AboutPage = () => (
                 </div>
                 <div>
                   <span class="ldl-label">이메일</span>
-                  <a href="mailto:inadcompany@naver.com" class="ldl-value ldl-link">inadcompany@naver.com</a>
+                  <a href="mailto:tnaks6325@inadcompany.com" class="ldl-value ldl-link">tnaks6325@inadcompany.com</a>
                 </div>
               </li>
               <li class="ldl-item">
