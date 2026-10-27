@@ -7,7 +7,9 @@ declare module 'hono' {
 }
 
 export const renderer = jsxRenderer(({ children, title, description, canonical, schema }: { children?: any; title?: string; description?: string; canonical?: string; schema?: string }) => {
-  const pageTitle = title ? `${title} | 인애드컴퍼니` : '인애드컴퍼니 — 실전형 크리에이티브 바이럴 마케팅 에이전시'
+  // 검색 결과 제목은 60자 안팎에서 잘리므로, 붙이면 60자를 넘는 긴 제목(인사이트 글 등)에는 회사명 꼬리를 생략한다
+  const pageTitle = !title ? '인애드컴퍼니 — 실전형 크리에이티브 바이럴 마케팅 에이전시'
+    : `${title} | 인애드컴퍼니`.length > 60 ? title : `${title} | 인애드컴퍼니`
   const pageDesc = description || '채팅, 커뮤니티, SNS 중심의 실전형 바이럴 마케팅을 설계하는 인애드컴퍼니. 브랜드 인지도와 전환율을 동시에 높이는 퍼포먼스를 제공합니다.'
   const siteUrl = 'https://www.inadcompany.co.kr'
   const canonicalUrl = canonical || siteUrl

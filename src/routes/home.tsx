@@ -96,7 +96,7 @@ export const HomePage = () => (
         이전의 다크 공감 카피 슬라이드(2026-08~10)는 git 기록에 있다.
         ============================================================ */}
     <section class="hero-slider hero2--s2 hero-video-wrap" id="heroSlider">
-      <h2 class="hero-video-title">Full Funnel Marketing Agency — IN AD COMPANY</h2>
+      <h1 class="hero-video-title">Full Funnel Marketing Agency — IN AD COMPANY</h1>
       <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto"
         poster="/static/hero/hero-kinetic-v17-poster.jpg" aria-label="인애드컴퍼니 소개 영상">
         <source src="/hero-video/hero-kinetic-v17.mp4" type="video/mp4" media="(min-width: 769px)" />
