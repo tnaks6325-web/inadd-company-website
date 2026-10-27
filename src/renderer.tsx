@@ -388,7 +388,7 @@ fbq('track', 'PageView');
           </div>
         </div>
 
-        <script src="/static/main.js?v=20261027p"></script>
+        <script src="/static/main.js?v=20261028a"></script>
         {/* ── Ribbons 커서 제거 (파란 줄 트레일 비활성화) ── */}
       </body>
     </html>

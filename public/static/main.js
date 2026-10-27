@@ -322,6 +322,49 @@ if (menuToggle && mainNav) {
 })();
 
 
+/* ── 5-1. 숫자 세기 자리 미리 잡기 ──
+   0 → 1,520처럼 숫자가 올라가는 동안 글자 폭이 바뀌면, 좁은 휴대폰 화면에서 줄바꿈이 생겼다 없어지며
+   상자 높이가 변한다. 아이폰(사파리·카카오톡 브라우저)은 이 높이 변화를 스크롤 위치로 보정하지 않아
+   아래 내용이 덜덜 떨린다. 그래서 최종 숫자의 폭으로 자리를 처음부터 고정해 둔다
+   (다 센 뒤 모습은 지금과 같고, 세는 중 잠깐 더 넓은 숫자는 자리 밖으로 1~2px 넘칠 뿐 배치는 안 바뀜).
+   대상: data-target / data-count 를 가진 모든 숫자 요소(페이지별 카운터 스크립트 공통). */
+(function reserveCounterWidth() {
+  function widest(el, str) {
+    var probe = el.cloneNode(false);
+    probe.removeAttribute('id');
+    probe.style.cssText += ';position:absolute;visibility:hidden;white-space:nowrap;min-width:0;width:auto;display:inline-block';
+    el.parentNode.insertBefore(probe, el);
+    probe.textContent = str;
+    var w = probe.offsetWidth; /* offsetWidth: 등장 효과의 확대·축소(transform)에 영향받지 않는 실제 폭 */
+    probe.remove();
+    return w;
+  }
+  function run() {
+    document.querySelectorAll('[data-target], [data-count]').forEach(function (el) {
+      var t = parseInt(el.getAttribute('data-target') || el.getAttribute('data-count'), 10);
+      if (isNaN(t) || el.children.length || !el.parentNode) return;
+      if (!/^[0-9,.\s]*$/.test(el.textContent.trim())) return; /* 숫자만 든 요소만(탭 버튼 등 data-target 다른 용도 제외) */
+      var isYear = t >= 1990 && t <= 2100;
+      var w = widest(el, isYear ? String(t) : t.toLocaleString());
+      if (!w) return;
+      if (getComputedStyle(el).display === 'inline') el.style.display = 'inline-block';
+      el.style.width = w + 'px';
+      el.style.minWidth = '0';
+      el.style.flex = 'none';
+      el.style.whiteSpace = 'nowrap';
+      el.style.textAlign = 'right';
+    });
+  }
+  run();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+  /* 홈 KPI처럼 열린 뒤 관리자 값으로 목표 숫자가 바뀌면 자리를 다시 잡는다 */
+  if ('MutationObserver' in window) {
+    new MutationObserver(function (ms) {
+      if (ms.some(function (m) { return m.type === 'attributes'; })) run();
+    }).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['data-count', 'data-target'] });
+  }
+})();
+
 /* ── 6. Count-up animation ── */
 {
   const cs = document.querySelectorAll('[data-count]');
