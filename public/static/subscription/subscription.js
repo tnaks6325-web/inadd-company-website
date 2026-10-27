@@ -2,8 +2,7 @@
    1) 860px 페이지를 화면 폭에 맞춰 축소  2) 하단 고정 '무료 상담 신청' 버튼  5) 성과 레퍼런스 탭·막대
    3) 구간 등장·화살표 그리기·숫자 올라가기·비교 막대·비용 더미·보고 목록 효과
    4) 상담 신청 버튼 → 전역 문의 팝업(main.js)에 '마케팅팀 구독' 관심 서비스를 미리 체크
-   6) 견적 조합(#estimate): 합계 계산·상담 신청 접수
-   7) 방문 기록(GA4 이벤트): 어디서 어떤 버튼을 눌렀는지, 조합기를 봤는지·바꿨는지·신청했는지 */
+   6) 방문 기록(GA4 이벤트): 어디서 어떤 버튼을 눌렀는지 — 조합기를 봤는지·바꿨는지·신청했는지는 /static/estimate.js */
 (function () {
   var page = document.getElementById('mtsPage');
   if (!page) return;
@@ -52,7 +51,7 @@
   onScroll();
 
   // 방문 기록(GA4) — 견적 조합기 위치 효과를 숫자로 보기 위함(대표 요청 2026-10-27)
-  // estimate_cta_click·consult_cta_click {position: hero|sticky|final}, estimate_view, estimate_edit, estimate_submit {value, currency, item_count, capped}
+  // estimate_cta_click·consult_cta_click {position: hero|sticky|final} (estimate_view·edit·submit 은 /static/estimate.js)
   function track(name, params) { try { if (typeof window.gtag === 'function') window.gtag('event', name, params || {}); } catch (e) {} }
   page.querySelectorAll('[data-mts-pos]').forEach(function (a) {
     a.addEventListener('click', function () {
@@ -60,91 +59,8 @@
     });
   });
 
-  // 견적 조합: 고른 항목 단품가 합계, 300만 원 이상이면 팀구독 300만 원. 초기진단·세팅은 무료로 들어간다.
-  // 화면 표시용 계산이고, 메일·인트라넷에 찍히는 금액은 서버가 다시 계산한다(src/lib/subscription-estimate.ts).
-  if (estSec) (function () {
-    var form = estSec.querySelector('#mteForm');
-    var done = estSec.querySelector('[data-mte-done]');
-    var boxes = estSec.querySelectorAll('input[name="item"]');
-    var PACKAGE = Number(form.dataset.package), FREE = Number(form.dataset.free);
-    var q = function (s) { return estSec.querySelector(s); };
-    var won = function (n) { return n.toLocaleString('ko-KR'); };
-    var checkAll = function (on) { boxes.forEach(function (b) { b.checked = on; }); update(); };
+  // 견적 조합기 동작(합계 계산·접수·방문 기록)은 /static/estimate.js 가 한다(홈과 공용).
 
-    function update() {
-      var n = 0, sub = 0;
-      boxes.forEach(function (b) { if (b.checked) { n++; sub += Number(b.dataset.price); } });
-      var capped = sub >= PACKAGE, total = capped ? PACKAGE : sub, list = n ? sub + FREE : 0;
-      q('[data-mte-count]').textContent = n;
-      var ls = q('[data-mte-list]');
-      ls.textContent = won(list) + '만 원';
-      ls.className = list > total ? '' : 'is-plain';
-      q('[data-mte-total]').textContent = won(total);
-      var note = q('[data-mte-note]');
-      note.className = 'mte-bar-note' + (capped ? ' is-hot' : '');
-      if (!n) note.textContent = '항목을 골라 주세요.';
-      else if (capped) {
-        note.textContent = '팀구독 적용 · 10가지가 다 들어가요';
-        if (n < boxes.length) {
-          var b = document.createElement('button');
-          b.type = 'button'; b.textContent = '전부 담기';
-          b.addEventListener('click', function () { checkAll(true); });
-          note.appendChild(b);
-        }
-      } else note.textContent = won(PACKAGE - sub) + '만 원 더 담으면 팀구독 금액이에요';
-    }
-    var edited = false;
-    var markEdit = function () { if (!edited) { edited = true; track('estimate_edit'); } };
-    boxes.forEach(function (b) { b.addEventListener('change', function () { update(); markEdit(); }); });
-    q('[data-mte-all]').addEventListener('click', function () { checkAll(true); markEdit(); });
-    q('[data-mte-clear]').addEventListener('click', function () { checkAll(false); markEdit(); });
-    update();
-    // 구획이 길어(휴대폰 2화면 남짓) 보이는 비율이 작으므로 낮은 기준으로 한 번만 센다
-    once(estSec, function () { track('estimate_view'); }, 0.1);
-
-    var pv = q('[data-mte-privacy]'), panel = q('#mtePrivacy');
-    pv.addEventListener('click', function () {
-      panel.hidden = !panel.hidden;
-      pv.setAttribute('aria-expanded', panel.hidden ? 'false' : 'true');
-      pv.textContent = panel.hidden ? '내용 보기' : '닫기';
-    });
-
-    var err = q('[data-mte-error]'), btn = form.querySelector('.mte-submit'), busy = false;
-    function fail(msg) { err.textContent = msg; err.hidden = false; }
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (busy) return;
-      var fd = new FormData(form);
-      var v = function (k) { return String(fd.get(k) || '').trim(); };
-      var items = [];
-      boxes.forEach(function (b) { if (b.checked) items.push(b.value); });
-      var payload = { items: items, company: v('company'), name: v('name'), phone: v('phone'), email: v('email'), message: v('message'), privacy: !!fd.get('privacy') };
-      if (!items.length) return fail('항목을 하나 이상 골라 주세요.');
-      if (!payload.company || !payload.name || !payload.phone || !payload.email) return fail('별표(*) 칸을 모두 채워 주세요.');
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) return fail('이메일 주소를 확인해 주세요.');
-      if (!payload.privacy) return fail('개인정보 수집 및 이용에 동의해 주세요.');
-      err.hidden = true; busy = true; btn.disabled = true; btn.textContent = '접수 중...';
-      fetch('/api/mail/estimate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-        .then(function (res) {
-          return res.json().catch(function () { return {}; }).then(function (j) {
-            if (!res.ok || !j.ok) throw new Error(res.status === 400 || res.status === 429 ? (j.error || '') : '');
-            return j;
-          });
-        })
-        .then(function (j) {
-          var total = Number(j.total) || 0;
-          track('estimate_submit', { value: total * 10000, currency: 'KRW', item_count: items.length, capped: total >= PACKAGE });
-          form.hidden = true;
-          q('[data-mte-done-email]').textContent = payload.email;
-          done.hidden = false;
-          done.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        })
-        .catch(function (x) {
-          busy = false; btn.disabled = false; btn.textContent = '이 조합으로 상담 신청';
-          fail((x && x.message) || '접수 중 오류가 났어요. 잠시 뒤 다시 시도하거나 010-9186-9944로 전화 주세요.');
-        });
-    });
-  })();
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

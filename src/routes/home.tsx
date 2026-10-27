@@ -1,3 +1,5 @@
+import { estimateSection } from './svc-subscription-estimate'
+
 /* ── 마퀴/서비스 공용 SVG 아이콘 (Lucide 기반, 단색 currentColor) ──
    이모지 대신 단색 SVG를 써서 OS별 렌더 편차를 없애고 톤을 통일한다. */
 const svgIcon = (paths: any, extra?: any) => (
@@ -69,6 +71,13 @@ const TCard = ({ t, dup }: { t: any; dup?: boolean }) => (
   </blockquote>
 )
 /* ── 홈 서비스 간략 데이터 (WHAT WE DO 간소화 — 텍스트 탭 선택형) ── */
+// 홈 하단 '필요한 것은 무엇인가요?' 아래 마케팅팀 구독 견적 조합기(대표 결정 2026-10-27 — 목록·금액·신청서 전체).
+// 조합기에는 구독 항목만 있으므로 범위를 도구 줄에 적고, 다른 서비스는 아래 '문의하기'로 받는다.
+const HOME_ESTIMATE = estimateSection({
+  id: 'homeEstimate', labelledBy: 'homeCtaTitle', source: 'home', className: 'mte-sec--home',
+  intro: '마케팅팀 구독 견적 <a href="/marketing/subscription">자세히 보기</a>',
+})
+
 const HSVC = [
   { key: 'viral', en: 'Viral Marketing', ko: '바이럴 마케팅', desc: '검색해도 우리 브랜드 이야기가 없을 때', href: '/marketing/viral' },
   { key: 'performance', en: 'Performance Marketing', ko: '퍼포먼스 마케팅', desc: '네이버·구글·메타·카카오 광고 운영과 전환 분석', href: '/marketing/performance' },
@@ -632,7 +641,7 @@ export const HomePage = () => (
       </div>
       <div class="container">
         <div class="home-cta-inner">
-          <h2 class="hcta-title">
+          <h2 class="hcta-title" id="homeCtaTitle">
             <span class="hcta-line hcta-line--1">지금 당신의 브랜드에</span>
             <em class="hcta-line hcta-line--2 shiny-text">필요한 것은 무엇인가요?</em>
           </h2>
@@ -640,13 +649,19 @@ export const HomePage = () => (
             어떤 채널부터 손대야 할지 모르겠다면, 그것부터 같이 정리합니다.<br />
             <span class="hcta-desc-sub">검색 → 발견 → 신뢰 → 구매 → 재방문, 퍼널 전 단계를 함께 봅니다.</span>
           </p>
-          {/* 버튼 그룹 */}
+        </div>
+        <div dangerouslySetInnerHTML={{ __html: HOME_ESTIMATE }} />
+        {/* 구독 밖 서비스(인플루언서·PPL·올리브영 등) 문의 */}
+        <div class="hcta-other">
+          <p>인플루언서·PPL·올리브영 등 다른 서비스가 필요하다면</p>
           <div class="hcta-btns">
             <a href="/contact" class="hero2-cta">문의하기</a>
           </div>
         </div>
       </div>
     </section>
+    <link rel="stylesheet" href="/static/estimate.css?v=20261027b" />
+    <script src="/static/estimate.js?v=20261027b" defer></script>
 
     {/* ============ HOME PAGE — 인터랙티브 JS (외부 파일로 분리, JSX < > 파싱 에러 방지) ============ */}
     <script src="/static/home.js?v=20260715" />
