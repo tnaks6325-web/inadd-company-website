@@ -3,7 +3,7 @@ import { icon } from '../icons'
 import { ReviewCompare } from './review-compare'
 export const SvcReviewPage = () => (
   <>
-    <link rel="stylesheet" href="/static/review-compare.css?v=20261027p" />
+    <link rel="stylesheet" href="/static/review-compare.css?v=20261027q" />
     {/* ══ HERO ══ */}
     <section class="vh-hero vh-hero--rc">
       <div class="vh-glow" aria-hidden="true"></div>

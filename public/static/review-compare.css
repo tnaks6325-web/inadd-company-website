@@ -4,7 +4,7 @@
 .vh-hero--rc::before { display:none; }
 .vh-hero--rc .vh-inner { position:relative; z-index:2; }
 .vh-hero--rc .vh-glow { position:absolute; inset:0; z-index:0; pointer-events:none;
-  background:radial-gradient(42% 60% at 76% 48%,rgba(80,120,220,.16),transparent 70%),radial-gradient(30% 44% at 98% 92%,rgba(234,179,8,.12),transparent 70%),radial-gradient(28% 40% at 56% 4%,rgba(160,190,240,.16),transparent 70%); }
+  background:radial-gradient(42% 60% at 76% 48%,rgba(37,70,158,.14),transparent 70%),radial-gradient(30% 44% at 98% 92%,rgba(217,197,154,.20),transparent 70%),radial-gradient(28% 40% at 56% 4%,rgba(169,182,220,.16),transparent 70%); }
 .rc { --s:.92; position:absolute; top:78px; bottom:0; left:52%; right:0; z-index:1; pointer-events:none; display:flex; align-items:center; justify-content:center; }
 .rc-stage { position:relative; flex:none; width:680px; height:620px; transform:scale(var(--s)); }
 .rc-stage * { box-sizing:border-box; margin:0; }

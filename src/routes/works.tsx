@@ -56,7 +56,7 @@ export const AdCards = () => (
 export const WorksPage = () => (
   <>
     {/* ── Page Hero: 왼쪽 글, 오른쪽 통합 마케팅 예시 시나리오 애니메이션(works-hero) ── */}
-    <link rel="stylesheet" href="/static/works-hero.css?v=20261027j" />
+    <link rel="stylesheet" href="/static/works-hero.css?v=20261027q" />
     <section class="vh-hero vh-hero--wkh">
       <div class="vh-glow" aria-hidden="true"></div>
       <div class="vh-bg">
