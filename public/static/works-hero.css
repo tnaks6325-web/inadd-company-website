@@ -1,0 +1,87 @@
+/* 포트폴리오 히어로: 브랜드 벽 → S브랜드 한 달 매출 흐름 → 인스타그램 광고 전환 → H브랜드 광고비 대비 매출. 무대는 680x620, --s 배율로 줄인다. */
+.vh-hero--wkh { background:#f4f3f1; }
+.vh-hero--wkh::before { display:none; }
+.vh-hero--wkh .vh-inner { position:relative; z-index:2; }
+.vh-hero--wkh .vh-glow { position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(42% 60% at 76% 48%,rgba(33,48,111,.10),transparent 70%),radial-gradient(30% 44% at 98% 92%,rgba(217,197,154,.22),transparent 70%),radial-gradient(28% 40% at 56% 4%,rgba(33,48,111,.06),transparent 70%); }
+.wkh { --s:.92; position:absolute; top:78px; bottom:0; left:52%; right:0; z-index:1; pointer-events:none; display:flex; align-items:center; justify-content:center; }
+.wkh-stage { position:relative; flex:none; width:680px; height:620px; transform:scale(var(--s)); font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif; color:#111318; text-align:left; word-break:keep-all; letter-spacing:normal; line-height:1.35; }
+.wkh-stage * { box-sizing:border-box; margin:0; padding:0; list-style:none; }
+.wkh-sc { position:absolute; inset:0; opacity:0; }
+
+/* ① 브랜드 벽 */
+.wkh-wall { overflow:hidden; }
+.wkh-cap { position:absolute; left:0; right:0; top:34px; text-align:center; font-size:22px; font-weight:700; letter-spacing:-.02em; }
+.wkh-cap b { font-weight:800; color:#21306F; font-size:44px; letter-spacing:-.03em; margin-left:6px; }
+.wkh-cap u { text-decoration:none; font-variant-numeric:tabular-nums; }
+.wkh-rows { position:absolute; left:0; right:0; top:118px; display:flex; flex-direction:column; gap:14px; -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent); mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent); }
+.wkh-row { height:110px; overflow:visible; }
+.wkh-track { display:flex; gap:14px; width:max-content; will-change:transform; }
+.wkh-tile { flex:none; display:flex; align-items:center; justify-content:center; width:160px; height:110px; border-radius:12px; background:#fff; box-shadow:0 8px 22px rgba(30,30,40,.07); }
+.wkh-tile img { max-width:116px; max-height:52px; object-fit:contain; }
+.wkh-tile b { font-size:15px; font-weight:800; letter-spacing:-.02em; }
+
+/* 카드 공통 */
+.wkh-card { padding:26px 30px !important; border-radius:18px; background:#fff; box-shadow:0 40px 80px rgba(30,30,40,.14),0 10px 24px rgba(17,19,24,.08); }
+.wkh-card-h { display:flex; align-items:baseline; gap:12px; padding-bottom:16px !important; margin-bottom:6px !important; border-bottom:2px solid #111318; }
+.wkh-card-h b { font-size:24px; font-weight:800; letter-spacing:-.02em; }
+.wkh-card-h span { font-size:14px; font-weight:600; }
+
+/* 막대: 이전 버터 브라운, 이후 다크 블루, 끝에 값 */
+.wkh-bar { display:flex; align-items:center; gap:10px; height:22px; margin-top:6px !important; }
+.wkh-bar i { display:block; flex:none; height:100%; width:calc(var(--w) * .72 * var(--p, 1)); border-radius:0 4px 4px 0; }
+.wkh-bar--a i { background:#D9C59A; }
+.wkh-bar--b i { background:#21306F; }
+.wkh-bar small { flex:none; font-size:13px; font-weight:700; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.wkh-bar--b small { color:#21306F; }
+
+/* ② S브랜드 한 달 */
+.wkh-step { padding:14px 0 12px !important; border-bottom:1px solid #eceef0; opacity:0; }
+.wkh-step:last-child { border-bottom:0; }
+.wkh-step-h { display:flex; align-items:center; gap:10px; }
+.wkh-step-h b { font-size:18px; font-weight:800; }
+.wkh-step-h span { padding:2px 7px !important; border-radius:3px; background:#F8F7F4; font-size:12px; font-weight:600; }
+.wkh-step-h em { margin-left:auto; font-style:normal; font-size:24px; font-weight:800; color:#21306F; letter-spacing:-.02em; }
+
+/* ③ 인스타그램 광고 */
+.wkh-meta { display:block; }
+.wkh-feed { position:absolute; left:30px; top:96px; width:280px; border:1px solid #e3e5e8; border-radius:12px; background:#fff; overflow:visible; }
+.wkh-feed-h { display:flex; align-items:center; gap:8px; height:46px; padding:0 12px !important; font-size:13px; }
+.wkh-feed-h i { width:28px; height:28px; border-radius:50%; background:#F8F7F4; border:2px solid #D9C59A; }
+.wkh-feed-h span { margin-left:auto; font-size:11px; }
+.wkh-feed-img { display:flex; align-items:center; justify-content:center; height:280px; background:#F8F7F4; font-size:13px; font-weight:600; }
+.wkh-feed-cta { display:flex; justify-content:space-between; align-items:center; height:44px; padding:0 14px !important; background:#21306F; color:#fff; font-size:14px; font-weight:700; border-radius:0 0 11px 11px; }
+.wkh-feed-cta span { font-size:20px; line-height:1; }
+.wkh-buys { position:absolute; left:16px; right:16px; top:70px; display:flex; flex-direction:column; gap:8px; }
+.wkh-buys li { padding:10px 14px !important; border-radius:8px; background:#fff; box-shadow:0 10px 24px rgba(17,19,24,.16); font-size:14px; font-weight:700; opacity:0; }
+.wkh-buys li::before { content:''; display:inline-block; width:8px; height:8px; margin-right:8px; border-radius:50%; background:#21306F; vertical-align:1px; }
+.wkh-meta-nums { position:absolute; left:340px; right:30px; top:110px; display:flex; flex-direction:column; gap:22px; }
+.wkh-mn { padding:16px 18px !important; border-radius:10px; background:#F8F7F4; opacity:0; }
+.wkh-mn b { font-size:15px; font-weight:800; }
+.wkh-mn p { display:flex; align-items:baseline; gap:8px; margin-top:8px !important; font-size:16px; }
+.wkh-mn p strong { font-size:28px; font-weight:800; color:#21306F; }
+.wkh-mn em { display:block; margin-top:4px !important; font-style:normal; font-size:20px; font-weight:800; color:#21306F; }
+.wkh-todo { font-size:12px; font-weight:700; color:#111318; border:1px dashed #111318; padding:6px 10px !important; align-self:flex-start; }
+
+/* ④ H브랜드 */
+.wkh-pair { display:flex; align-items:center; gap:24px; margin-top:44px !important; }
+.wkh-pair > div { display:flex; flex-direction:column; gap:6px; }
+.wkh-pair span { font-size:15px; font-weight:700; }
+.wkh-pair-a b { font-size:34px; font-weight:800; letter-spacing:-.02em; }
+.wkh-pair-b b { font-size:54px; font-weight:800; letter-spacing:-.03em; color:#21306F; white-space:nowrap; }
+.wkh-pair small { font-size:.45em; margin-left:4px; }
+.wkh-pair-b u { text-decoration:none; font-variant-numeric:tabular-nums; }
+.wkh-arrow { flex:none; width:44px; height:3px; background:#D9C59A; position:relative; }
+.wkh-arrow::after { content:''; position:absolute; right:-2px; top:-6px; border:7.5px solid transparent; border-left:11px solid #D9C59A; border-right:0; }
+.wkh-rbar { margin-top:56px !important; padding-top:20px !important; border-top:1px solid #eceef0; }
+.wkh-rbar p { display:flex; align-items:baseline; gap:10px; margin-bottom:6px !important; }
+.wkh-rbar p b { font-size:18px; font-weight:800; }
+.wkh-rbar p span { font-size:13px; font-weight:600; }
+.wkh-rbar .wkh-bar { height:30px; }
+
+@media(max-width:1280px) { .wkh { --s:.78; } }
+@media(max-width:1024px) { .wkh { --s:.6; } }
+@media(max-width:767px) {
+  .vh-hero--wkh { flex-direction:column; align-items:stretch; }
+  .wkh { position:relative; left:auto; right:auto; top:auto; bottom:auto; flex:none; height:360px; margin-top:-20px; --s:.52; overflow:hidden; }
+}
