@@ -55,8 +55,8 @@ export const AdCards = () => (
 
 export const WorksPage = () => (
   <>
-    {/* ── Page Hero: 왼쪽 글, 오른쪽 커머스 브랜드 대상 성과 애니메이션(works-hero) ── */}
-    <link rel="stylesheet" href="/static/works-hero.css?v=20261027b" />
+    {/* ── Page Hero: 왼쪽 글, 오른쪽 통합 마케팅 예시 시나리오 애니메이션(works-hero) ── */}
+    <link rel="stylesheet" href="/static/works-hero.css?v=20261027c" />
     <section class="vh-hero vh-hero--wkh">
       <div class="vh-glow" aria-hidden="true"></div>
       <div class="vh-bg">
@@ -70,13 +70,13 @@ export const WorksPage = () => (
             <span>포트폴리오</span>
           </span>
           <span class="vh-title">
-            <span class="vh-tline" id="wkL1">함께한 브랜드의</span>
-            <span class="vh-tline" id="wkL2">실제 <span class="vh-hl">매출 변화</span>입니다</span>
+            <span class="vh-tline" id="wkL1">브랜드 메시지부터 매출까지,</span>
+            <span class="vh-tline" id="wkL2"><span class="vh-hl">한 흐름으로</span> 키웁니다</span>
           </span>
         </h1>
         <div class="vh-sub-wrap" id="wkSub">
-          <p class="vh-sub">노출부터 장바구니·구매·매출까지,</p>
-          <p class="vh-sub">브랜드별로 무엇이 바뀌었는지 숫자로 정리했습니다.</p>
+          <p class="vh-sub">페르소나와 카피를 정하고, 후기·바이럴·인플루언서·광고·올리브영을 차례로 쌓습니다.</p>
+          <p class="vh-sub">실제 브랜드 사례는 아래에서 확인하세요.</p>
         </div>
         <div class="vh-btns" id="wkBtns">
           <a href="/contact" class="vh-cta-btn">
@@ -90,7 +90,7 @@ export const WorksPage = () => (
         </div>
       </div>
       <WorksHero />
-      <script src="/static/works-hero.js?v=20261027b" defer></script>
+      <script src="/static/works-hero.js?v=20261027c" defer></script>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
   function anim(el,delay,dir){if(!el)return;el.style.opacity='0';el.style.transform=dir==='up'?'translateY(32px)':'translateX(-32px)';el.style.transition='opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)';setTimeout(function(){el.style.opacity='1';el.style.transform='none';},delay);}

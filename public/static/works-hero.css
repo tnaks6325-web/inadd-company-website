@@ -1,4 +1,4 @@
-/* 포트폴리오 히어로: 지하철 인스타그램 → 피드 광고 구매 → 송장 프린터 → S브랜드 한 달 매출 흐름 → H브랜드 광고비 대비 매출 → 브랜드 벽. 무대는 680x620, --s 배율로 줄인다. */
+/* 포트폴리오 히어로: 물결랩 세럼 예시 시나리오 — 브랜드 메시지 → 체험단·리뷰 → 바이럴 → 인플루언서 → 광고 → 올리브영·PPL → 월 매출 계단. 무대는 680x620, --s 배율로 줄인다. */
 .vh-hero--wkh { background:#f4f3f1; }
 .vh-hero--wkh::before { display:none; }
 .vh-hero--wkh .vh-inner { position:relative; z-index:2; }
@@ -7,98 +7,88 @@
 .wkh { --s:.92; position:absolute; top:78px; bottom:0; left:52%; right:0; z-index:1; pointer-events:none; display:flex; align-items:center; justify-content:center; }
 .wkh-stage { position:relative; flex:none; width:680px; height:620px; transform:scale(var(--s)); font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif; color:#111318; text-align:left; word-break:keep-all; letter-spacing:normal; line-height:1.35; }
 .wkh-stage * { box-sizing:border-box; margin:0; padding:0; list-style:none; }
-.wkh-sc { position:absolute; inset:0; opacity:0; }
 
-/* ⑥ 브랜드 벽 */
-.wkh-wall { overflow:hidden; }
-.wkh-cap { position:absolute; left:0; right:0; top:34px; text-align:center; font-size:22px; font-weight:700; letter-spacing:-.02em; }
-.wkh-cap b { font-weight:800; color:#21306F; font-size:44px; letter-spacing:-.03em; margin-left:6px; }
-.wkh-cap u { text-decoration:none; font-variant-numeric:tabular-nums; }
-.wkh-rows { position:absolute; left:0; right:0; top:118px; display:flex; flex-direction:column; gap:14px; -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent); mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent); }
-.wkh-row { height:110px; overflow:visible; }
-.wkh-track { display:flex; gap:14px; width:max-content; will-change:transform; }
-.wkh-tile { flex:none; display:flex; align-items:center; justify-content:center; width:160px; height:110px; border-radius:12px; background:#fff; box-shadow:0 8px 22px rgba(30,30,40,.07); }
-.wkh-tile img { max-width:116px; max-height:52px; object-fit:contain; }
-.wkh-tile b { font-size:15px; font-weight:800; letter-spacing:-.02em; }
-
-/* 카드 공통 */
-.wkh-card { padding:26px 30px !important; border-radius:18px; background:#fff; box-shadow:0 40px 80px rgba(30,30,40,.14),0 10px 24px rgba(17,19,24,.08); }
-.wkh-card-h { display:flex; align-items:baseline; gap:12px; padding-bottom:16px !important; margin-bottom:6px !important; border-bottom:2px solid #111318; }
-.wkh-card-h b { font-size:24px; font-weight:800; letter-spacing:-.02em; }
-.wkh-card-h span { font-size:14px; font-weight:600; }
-
-/* 막대: 이전 버터 브라운, 이후 다크 블루, 끝에 값 */
-.wkh-bar { display:flex; align-items:center; gap:10px; height:22px; margin-top:6px !important; }
-.wkh-bar i { display:block; flex:none; height:100%; width:calc(var(--w) * .72 * var(--p, 1)); border-radius:0 4px 4px 0; }
-.wkh-bar--a i { background:#D9C59A; }
-.wkh-bar--b i { background:#21306F; }
-.wkh-bar small { flex:none; font-size:13px; font-weight:700; white-space:nowrap; font-variant-numeric:tabular-nums; }
-.wkh-bar--b small { color:#21306F; }
-
-/* ④ S브랜드 한 달 */
-.wkh-step { padding:14px 0 12px !important; border-bottom:1px solid #eceef0; opacity:0; }
-.wkh-step:last-child { border-bottom:0; }
-.wkh-step-h { display:flex; align-items:center; gap:10px; }
-.wkh-step-h b { font-size:18px; font-weight:800; }
-.wkh-step-h span { padding:2px 7px !important; border-radius:3px; background:#F8F7F4; font-size:12px; font-weight:600; }
-.wkh-step-h em { margin-left:auto; font-style:normal; font-size:24px; font-weight:800; color:#21306F; letter-spacing:-.02em; }
-
-/* ⑤ H브랜드 */
-.wkh-pair { display:flex; align-items:center; gap:24px; margin-top:44px !important; }
-.wkh-pair > div { display:flex; flex-direction:column; gap:6px; }
-.wkh-pair span { font-size:15px; font-weight:700; }
-.wkh-pair-a b { font-size:34px; font-weight:800; letter-spacing:-.02em; }
-.wkh-pair-b b { font-size:54px; font-weight:800; letter-spacing:-.03em; color:#21306F; white-space:nowrap; }
-.wkh-pair small { font-size:.45em; margin-left:4px; }
-.wkh-pair-b u { text-decoration:none; font-variant-numeric:tabular-nums; }
-.wkh-arrow { flex:none; width:44px; height:3px; background:#D9C59A; position:relative; }
-.wkh-arrow::after { content:''; position:absolute; right:-2px; top:-6px; border:7.5px solid transparent; border-left:11px solid #D9C59A; border-right:0; }
-.wkh-rbar { margin-top:56px !important; padding-top:20px !important; border-top:1px solid #eceef0; }
-.wkh-rbar p { display:flex; align-items:baseline; gap:10px; margin-bottom:6px !important; }
-.wkh-rbar p b { font-size:18px; font-weight:800; }
-.wkh-rbar p span { font-size:13px; font-weight:600; }
-.wkh-rbar .wkh-bar { height:30px; }
-
-/* ①③ 현실 컷 */
-.wkh-real { position:absolute; inset:0; z-index:2; border-radius:18px; overflow:hidden; background:#ddd; opacity:0; box-shadow:0 40px 80px rgba(30,30,40,.22),0 10px 24px rgba(17,19,24,.12); }
-.wkh-cut { position:absolute; inset:0; background-size:cover; background-position:center; transform-origin:0 0; }
+/* 장면 */
+.wkh-scn { position:absolute; inset:0; border-radius:18px; overflow:hidden; background:#ddd; opacity:0; box-shadow:0 40px 80px rgba(30,30,40,.22),0 10px 24px rgba(17,19,24,.12); }
+.wkh-scn--ui { background:#F8F7F4; }
+.wkh-cut { position:absolute; inset:0; background-size:cover; background-position:center; transform-origin:50% 50%; }
 .wkh-cut video { position:absolute; inset:0; display:block; width:100%; height:100%; object-fit:cover; }
-.wkh-pscr { position:absolute; left:0; top:0; width:284px; height:594px; transform-origin:0 0; overflow:hidden; border-radius:26px; background:#fff; opacity:0; }
+.wkh-dim { position:absolute; inset:0; background:rgba(17,19,24,.38); opacity:0; }
+.wkh-chip { position:absolute; z-index:3; left:16px; top:16px; display:flex; align-items:center; gap:8px; padding:7px 12px 7px 10px !important; border-radius:4px; background:#21306F; color:#fff; font-size:15px; font-weight:800; letter-spacing:-.01em; opacity:0; }
+.wkh-chip span { padding:2px 6px !important; border-radius:2px; background:rgba(255,255,255,.18); font-size:11px; font-weight:700; letter-spacing:.04em; }
 
-/* ② 휴대폰 화면: 인스타그램 피드 광고 → 결제 */
-.wkh-ph { position:absolute; z-index:4; left:190px; top:5px; width:300px; height:610px; padding:8px !important; border-radius:44px; background:#16181d; box-shadow:0 30px 60px rgba(17,19,24,.22); opacity:0; }
-.wkh-ph > .wkh-scr { inset:8px; border-radius:36px; overflow:hidden; }
-.wkh-scr { position:absolute; inset:0; background:#fff; overflow:hidden; }
-.wkh-stat { display:flex; justify-content:space-between; align-items:center; height:40px; padding:0 26px !important; font-size:14px; }
-.wkh-stat i { width:24px; height:11px; border:1.5px solid #111318; border-radius:3px; }
-.wkh-fd-h { display:flex; align-items:center; gap:10px; height:50px; padding:0 12px !important; }
-.wkh-fd-h > i { width:32px; height:32px; border-radius:50%; border:2px solid #D9C59A; background:#F8F7F4; }
-.wkh-fd-h span { display:flex; flex-direction:column; line-height:1.2; }
-.wkh-fd-h b { font-size:13px; font-weight:700; }
-.wkh-fd-h small { font-size:11px; }
-.wkh-fd-h em { margin-left:auto; font-style:normal; font-weight:800; letter-spacing:1px; }
-.wkh-fd-img { width:284px; height:284px; background-size:cover; background-position:center; }
-.wkh-fd-cta { position:relative; display:flex; justify-content:space-between; align-items:center; height:44px; padding:0 14px !important; background:#21306F; color:#fff; font-size:14px; font-weight:700; }
-.wkh-fd-cta span { font-size:22px; line-height:1; }
-.wkh-fd-act { display:flex; gap:16px; height:40px; align-items:center; padding:0 14px !important; }
-.wkh-fd-act i { width:20px; height:20px; border:2px solid #111318; }
-.wkh-fd-act .h { border-radius:50% 50% 4px 50%; transform:rotate(45deg) scale(.85); }
-.wkh-fd-act .c { border-radius:50%; }
-.wkh-fd-act .s { border-width:2px 2px 0 0; transform:rotate(45deg) scale(.8); }
-.wkh-fd-tx { padding:0 14px !important; font-size:13px; line-height:1.45; }
-.wkh-fd-tx b { margin-right:4px; }
-.wkh-pay { position:absolute; left:0; right:0; bottom:0; height:330px; padding:22px 18px !important; border-radius:18px 18px 0 0; background:#fff; box-shadow:0 -12px 30px rgba(17,19,24,.16); transform:translateY(100%); }
-.wkh-pay-h { font-size:17px; font-weight:800; }
-.wkh-pay-item { display:flex; align-items:center; gap:12px; margin-top:16px !important; padding:12px !important; border-radius:10px; background:#F8F7F4; }
-.wkh-pay-item i { width:56px; height:56px; border-radius:6px; background-size:cover; background-position:center; }
-.wkh-pay-item span { display:flex; flex-direction:column; gap:3px; }
-.wkh-pay-item b { font-size:14px; } .wkh-pay-item small { font-size:12px; }
-.wkh-pay-btn { margin-top:18px !important; height:50px; border-radius:10px; background:#21306F; color:#fff; font-size:16px; font-weight:800; line-height:50px; text-align:center; }
-.wkh-done { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; border-radius:18px 18px 0 0; background:#fff; opacity:0; }
-.wkh-done i { position:relative; width:58px; height:58px; border-radius:50%; background:#21306F; margin-bottom:8px; }
-.wkh-done i::after { content:''; position:absolute; left:20px; top:14px; width:13px; height:24px; border:solid #fff; border-width:0 4px 4px 0; transform:rotate(45deg); }
-.wkh-done b { font-size:20px; font-weight:800; } .wkh-done small { font-size:13px; }
-.wkh-tap { position:absolute; left:0; right:0; top:374px; height:44px; background:rgba(255,255,255,.35); opacity:0; }
+/* 위에 뜨는 카드 */
+.wkh-ov { position:absolute; z-index:2; padding:14px 16px !important; border-radius:10px; background:#fff; box-shadow:0 16px 40px rgba(17,19,24,.18); opacity:0; }
+.wkh-ov-h { font-size:12px; font-weight:700; padding-bottom:8px !important; margin-bottom:8px !important; border-bottom:1px solid #eceef0; }
+.wkh-stage [data-wkh-pop] { opacity:0; }
+.wkh-stage u { text-decoration:none; font-variant-numeric:tabular-nums; }
+
+/* ① 브랜드 메시지 */
+.wkh-persona { left:452px; top:18px; width:212px; }
+.wkh-persona b { display:block; font-size:16px; font-weight:800; margin-bottom:6px !important; }
+.wkh-persona li { position:relative; padding-left:12px !important; font-size:13px; line-height:1.6; }
+.wkh-persona li::before { content:''; position:absolute; left:0; top:9px; width:5px; height:5px; background:#D9C59A; }
+.wkh-copy { position:absolute; left:256px; top:196px; width:154px; display:flex; flex-direction:column; gap:4px; color:#21306F; font-weight:800; transform:rotate(-1deg); clip-path:inset(0 100% 0 0); }
+.wkh-copy span:first-child { font-size:12.5px; }
+.wkh-copy span:last-child { font-size:22px; letter-spacing:-.03em; }
+
+/* ② 체험단·리뷰 */
+.wkh-reviews { left:424px; top:18px; width:240px; }
+.wkh-star { display:flex; align-items:baseline; gap:10px; margin-bottom:6px !important; }
+.wkh-star b { font-size:22px; font-weight:800; color:#21306F; }
+.wkh-star span { font-size:13px; font-weight:700; }
+.wkh-rv { margin-top:6px !important; padding:7px 10px !important; border-radius:6px; background:#F8F7F4; font-size:12.5px; }
+
+/* ③ 바이럴·커뮤니티 */
+.wkh-post { position:absolute; left:40px; top:78px; width:420px; padding:18px 20px !important; border-radius:12px; background:#fff; box-shadow:0 16px 40px rgba(17,19,24,.10); opacity:0; }
+.wkh-post-h { display:flex; align-items:baseline; gap:8px; font-size:13px; font-weight:800; }
+.wkh-post-h small { font-size:12px; font-weight:600; }
+.wkh-post-t { display:block; margin:10px 0 12px !important; font-size:18px; font-weight:800; line-height:1.4; }
+.wkh-cm { padding:10px 0 !important; border-top:1px solid #eceef0; font-size:14px; }
+.wkh-cm b { margin-right:8px; font-size:13px; }
+.wkh-deal { position:absolute; left:300px; top:330px; width:330px; display:flex; align-items:center; gap:12px; padding:12px !important; border-radius:10px; border:2.5px solid #21306F; background:#FBF0CF; box-shadow:0 16px 40px rgba(17,19,24,.14); opacity:0; }
+.wkh-deal i { flex:none; width:64px; height:64px; border-radius:6px; background:#fff center/cover; }
+.wkh-deal span { display:flex; flex-direction:column; gap:2px; }
+.wkh-deal small { font-size:12px; font-weight:800; color:#21306F; }
+.wkh-deal b { font-size:15px; font-weight:800; }
+.wkh-deal em { font-style:normal; font-size:16px; font-weight:800; color:#21306F; }
+
+/* ④ 인플루언서 */
+.wkh-reel { left:16px; top:66px; width:220px; }
+.wkh-reel-n { display:flex; align-items:baseline; justify-content:space-between; }
+.wkh-reel-n span { font-size:13px; font-weight:700; }
+.wkh-reel-n b { font-size:34px; font-weight:800; color:#21306F; letter-spacing:-.03em; }
+.wkh-reel-s { display:flex; gap:14px; margin-top:4px !important; font-size:13px; font-weight:700; }
+
+/* ⑤ 광고 */
+.wkh-ads { position:absolute; left:20px; right:20px; top:76px; display:flex; gap:16px; }
+.wkh-ad { flex:1; padding:14px !important; border-radius:12px; background:#fff; box-shadow:0 16px 40px rgba(17,19,24,.10); }
+.wkh-ad p { display:flex; flex-direction:column; gap:2px; margin-bottom:10px !important; }
+.wkh-ad p b { font-size:15px; font-weight:800; }
+.wkh-ad p small { font-size:12px; }
+.wkh-ad i { display:block; height:150px; border-radius:8px; background:#e6f0f3 center/contain no-repeat; }
+.wkh-ad span { display:block; margin-top:12px !important; font-size:14px; font-weight:700; }
+.wkh-ad span u { font-size:24px; font-weight:800; color:#21306F; }
+
+/* ⑥ 올리브영·PPL */
+.wkh-oy { left:424px; top:18px; width:240px; }
+.wkh-oy-r { display:flex; align-items:center; gap:4px; }
+.wkh-oy-r b { font-size:44px; font-weight:800; color:#21306F; line-height:1; letter-spacing:-.04em; }
+.wkh-oy-r > span { font-size:18px; font-weight:800; color:#21306F; margin-right:10px; }
+.wkh-oy-r i { flex:none; width:44px; height:44px; border-radius:6px; background:#e6f0f3 center/cover; }
+.wkh-oy-r small { margin-left:8px; font-size:13px; font-weight:700; line-height:1.3; }
+
+/* 월 매출 계단: 632x420 으로 그리고, 평소엔 0.4배로 오른쪽 아래, 결과에서 1배로 화면 가운데. 다다른 칸은 다크 블루로 차오름 */
+.wkh-chart { position:absolute; z-index:20; left:0; top:0; width:632px; height:420px; padding:26px 28px 22px !important; border-radius:22px; background:#fff; box-shadow:0 24px 60px rgba(17,19,24,.22); transform-origin:0 0; opacity:0; }
+.wkh-chart-h { display:flex; align-items:baseline; gap:12px; }
+.wkh-chart-h b { font-size:30px; font-weight:800; letter-spacing:-.02em; }
+.wkh-chart-h span { padding:3px 8px !important; border:1.5px solid #111318; font-size:15px; font-weight:700; }
+.wkh-chart-h em { margin-left:auto; font-style:normal; font-size:17px; font-weight:700; color:#111318; opacity:0; }
+.wkh-steps { position:absolute; left:28px; right:28px; bottom:22px; height:300px; display:flex; align-items:flex-end; gap:14px; }
+.wkh-st { flex:1; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:8px; }
+.wkh-st i { display:block; width:100%; height:var(--h); border-radius:6px 6px 0 0; background:linear-gradient(#21306F,#21306F) bottom/100% calc(var(--p, 0) * 100%) no-repeat, #eef0f5; }
+.wkh-st small { font-size:22px; font-weight:800; color:#21306F; font-variant-numeric:tabular-nums; white-space:nowrap; opacity:0; }
+.wkh-st span { font-size:15px; font-weight:700; white-space:nowrap; opacity:0; }
 
 @media(max-width:1280px) { .wkh { --s:.78; } }
 @media(max-width:1024px) { .wkh { --s:.6; } }
