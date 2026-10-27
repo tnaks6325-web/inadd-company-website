@@ -56,7 +56,7 @@ export const AdCards = () => (
 export const WorksPage = () => (
   <>
     {/* ── Page Hero: 왼쪽 글, 오른쪽 통합 마케팅 예시 시나리오 애니메이션(works-hero) ── */}
-    <link rel="stylesheet" href="/static/works-hero.css?v=20261027f" />
+    <link rel="stylesheet" href="/static/works-hero.css?v=20261027g" />
     <section class="vh-hero vh-hero--wkh">
       <div class="vh-glow" aria-hidden="true"></div>
       <div class="vh-bg">
@@ -90,7 +90,7 @@ export const WorksPage = () => (
         </div>
       </div>
       <WorksHero />
-      <script src="/static/works-hero.js?v=20261027f" defer></script>
+      <script src="/static/works-hero.js?v=20261027g" defer></script>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
   function anim(el,delay,dir){if(!el)return;el.style.opacity='0';el.style.transform=dir==='up'?'translateY(32px)':'translateX(-32px)';el.style.transition='opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)';setTimeout(function(){el.style.opacity='1';el.style.transform='none';},delay);}
