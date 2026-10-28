@@ -411,6 +411,60 @@ admin.put('/mail-recipients', authMiddleware, async (c) => {
   return c.json({ ok: true, recipients })
 })
 
+// One-time, admin-only Brevo verification. Never reads the configured contact-recipient list.
+const BREVO_VERIFY_ONCE_KEY = 'brevo_migration_verification_v1'
+const BREVO_VERIFY_IDEMPOTENCY_KEY = 'de6852ad-1c12-4d0a-9ab2-83facd96fc01'
+const BREVO_VERIFY_RECIPIENT_SHA256 = 'db92b7c715f4af5e928128111f6552d6d1d6240bbd441d3100eb0c02820fd17c'
+
+async function sha256Hex(value: string): Promise<string> {
+  const bytes = new TextEncoder().encode(value)
+  const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))
+  return Array.from(digest, byte => byte.toString(16).padStart(2, '0')).join('')
+}
+
+admin.post('/mail-provider/test', authMiddleware, async (c) => {
+  const env = c.env as any
+  if (env.SITE_ENV === 'preview' || env.MAIL_REDIRECT_TO) {
+    return c.json({ error: 'Brevo 운영 수신 확인은 Production 환경에서만 사용할 수 있습니다.' }, 403)
+  }
+  if (!env.ADMIN_KV) return c.json({ error: '발송 제한 기록을 저장할 수 없습니다.' }, 503)
+  if (!env.BREVO_API_KEY) return c.json({ error: 'Brevo 연결이 설정되지 않았습니다.' }, 503)
+
+  let body: any
+  try { body = await c.req.json() } catch { return c.json({ error: '올바른 JSON 형식이 아닙니다.' }, 400) }
+  const { recipients, invalid } = checkRecipients([body?.to_email])
+  if (invalid.length || recipients.length !== 1) return c.json({ error: '시험 발송 주소를 확인해 주세요.' }, 400)
+  const recipient = recipients[0]
+  if (await sha256Hex(recipient) !== BREVO_VERIFY_RECIPIENT_SHA256) {
+    return c.json({ error: '승인된 시험 수신 주소와 일치하지 않습니다.' }, 403)
+  }
+
+  const prior = await kvGet(env.ADMIN_KV, BREVO_VERIFY_ONCE_KEY)
+  if (prior) return c.json({ error: '이 운영 메일 확인은 이미 처리됐습니다. 발송 기록을 확인해 주세요.' }, 409)
+  await kvPut(env.ADMIN_KV, BREVO_VERIFY_ONCE_KEY, JSON.stringify({ state: 'claimed', createdAt: new Date().toISOString() }))
+
+  try {
+    const result = await sendMailTo(
+      env,
+      [recipient],
+      '[시험 발송] 홈페이지 Brevo 운영 확인',
+      internalTemplate('홈페이지 메일 전환 확인', [
+        { label: '안내', value: '개인정보가 없는 1회 운영 수신 테스트입니다. 홈페이지 메일이 Brevo를 통해 발송됐는지 확인하기 위한 메시지입니다.' },
+      ]),
+      BREVO_VERIFY_IDEMPOTENCY_KEY,
+    )
+    await kvPut(env.ADMIN_KV, BREVO_VERIFY_ONCE_KEY, JSON.stringify({
+      state: 'sent', providerMessageId: String(result?.messageId || '').slice(0, 200), createdAt: new Date().toISOString(),
+    }))
+    return c.json({ ok: true, sent: 1 })
+  } catch (e: any) {
+    // 실패도 소모 처리한다. 응답이 유실됐을 수 있으므로 중복 재시도를 허용하지 않는다.
+    await kvPut(env.ADMIN_KV, BREVO_VERIFY_ONCE_KEY, JSON.stringify({ state: 'indeterminate', createdAt: new Date().toISOString() }))
+    console.error('[mail-provider/test] Brevo verification failed; locked against retry')
+    return c.json({ error: '발송 결과를 확인할 수 없습니다. Gmail과 발송 기록을 확인해 주세요.' }, 502)
+  }
+})
+
 // 저장된 목록(없으면 기본 수신자)으로 시험 메일을 실제 발송한다.
 admin.post('/mail-recipients/test', authMiddleware, async (c) => {
   const env = c.env as any

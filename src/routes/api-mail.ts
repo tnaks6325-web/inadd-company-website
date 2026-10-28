@@ -54,8 +54,9 @@ export async function sendMailTo(
   env: Bindings,
   to: string | string[],
   subject: string,
-  htmlBody: string
-): Promise<void> {
+  htmlBody: string,
+  idempotencyKey?: string,
+): Promise<any> {
   let recipients = Array.isArray(to) ? to : [to]
   // 테스트 서버에서는 실제 고객·직원에게 메일이 나가지 않도록 시험 주소로만 보낸다.
   if (env.MAIL_REDIRECT_TO) {
@@ -73,6 +74,7 @@ export async function sendMailTo(
     subject,
     html: htmlBody,
     replyTo: env.MAIL_REPLY_TO || env.RESEND_TO,
+    idempotencyKey,
   })
 }
 

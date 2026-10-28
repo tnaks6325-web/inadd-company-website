@@ -23,7 +23,7 @@ function parseSender(value: string): Address {
 
 export async function sendBrevoEmail(
   apiKey: string,
-  message: { from: string; to: string[]; subject: string; html: string; replyTo?: string },
+  message: { from: string; to: string[]; subject: string; html: string; replyTo?: string; idempotencyKey?: string },
   fetcher: typeof fetch = fetch,
 ): Promise<any> {
   if (!apiKey || !message.from || !message.to.length) throw new Error('메일 환경변수가 설정되지 않았습니다.')
@@ -32,7 +32,7 @@ export async function sendBrevoEmail(
     to: message.to.map(parseAddress),
     subject: message.subject,
     htmlContent: message.html,
-    headers: { idempotencyKey: crypto.randomUUID() },
+    headers: { idempotencyKey: message.idempotencyKey || crypto.randomUUID() },
     ...(message.replyTo ? { replyTo: parseAddress(message.replyTo) } : {}),
   }
   const response = await fetcher(BREVO_EMAIL_ENDPOINT, {

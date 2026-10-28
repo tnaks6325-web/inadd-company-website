@@ -24,6 +24,19 @@ test('상담 메일 어댑터는 mock fetch로 Brevo에 전달하고 ID를 읽�
   assert.equal(result.messageId, 'mock-message-id')
 })
 
+
+test('운영 시험 발송은 전달된 고정 idempotency key를 재사용할 수 있다', async () => {
+  let request
+  await sendBrevoEmail('test-key-only', {
+    from: 'no-reply@notify.inadcompany.co.kr', to: ['test@example.test'], subject: '가상 확인',
+    html: '<p>가상</p>', idempotencyKey: 'de6852ad-1c12-4d0a-9ab2-83facd96fc01',
+  }, async (_url, init) => {
+    request = JSON.parse(init.body)
+    return new Response(JSON.stringify({ messageId: 'mock-message-id' }), { status: 201 })
+  })
+  assert.equal(request.headers.idempotencyKey, 'de6852ad-1c12-4d0a-9ab2-83facd96fc01')
+})
+
 test('Brevo 오류는 호출자에게 전달한다', async () => {
   await assert.rejects(
     sendBrevoEmail('test-key-only', {
