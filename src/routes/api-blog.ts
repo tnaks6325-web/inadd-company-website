@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { kvPut } from '../admin/store'
 import { getPosts, savePosts, postPath, SITE_URL, type InsightPost } from '../lib/insight-posts'
+import { keepCustomMeta } from '../lib/meta-description'
 
 // ─────────────────────────────────────────────
 //  블로그 자동 발행 API (노션 → 홈페이지 인사이트)
@@ -63,7 +64,7 @@ BlogRouter.post('/insight', async (c) => {
   const now = new Date().toISOString()
   const existing = body.notionId ? posts.find(p => p.notionId === body.notionId) : undefined
   if (existing) {
-    Object.assign(existing, body, { updatedAt: now })
+    Object.assign(existing, keepCustomMeta(existing, body), { updatedAt: now })
     await savePosts(kv, posts)
     return c.json({ ok: true, updated: true, post: view(existing) })
   }
