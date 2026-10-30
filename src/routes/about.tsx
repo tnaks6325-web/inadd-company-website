@@ -1,15 +1,13 @@
 import { icon } from '../icons'
+import { AboutHero } from './about-hero'
 export const AboutPage = () => (
   <>
-    {/* ── Page Hero ── */}
-    <section class="page-hero about-hero">
-      <div class="page-hero-img-bg" aria-hidden="true"></div>
-      <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
-      <div class="container">
-        <span class="sec-label">About Us</span>
-        <h1 class="page-title">브랜드의 설득력을<br /><em>설계하는 크리에이티브 퍼포먼스</em></h1>
-        <p class="page-desc">단순 노출이 아니라, 타깃이 '행동'하게 만드는 캠페인을 설계합니다.</p>
-      </div>
+    {/* ── Page Hero: 홈처럼 상단 구역 좌우 전체를 채우는 움직이는 화면(about-hero). 제목은 화면 안의 큰 글자로 나오고, 검색엔진용 제목은 숨겨 둔다 ── */}
+    <link rel="stylesheet" href="/static/about-hero.css?v=20261030i" />
+    <section class="abh-hero">
+      <h1 class="abh-sr">브랜드의 설득력을 설계하는 크리에이티브 퍼포먼스 — 인애드컴퍼니 회사소개</h1>
+      <AboutHero />
+      <script src="/static/about-hero.js?v=20261030i" defer></script>
     </section>
 
     {/* 밴드 등장 — 뷰포트 진입 시 reveal */}
