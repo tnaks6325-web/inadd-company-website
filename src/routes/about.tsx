@@ -3,11 +3,11 @@ import { AboutHero } from './about-hero'
 export const AboutPage = () => (
   <>
     {/* ── Page Hero: 홈처럼 상단 구역 좌우 전체를 채우는 움직이는 화면(about-hero). 제목은 화면 안의 큰 글자로 나오고, 검색엔진용 제목은 숨겨 둔다 ── */}
-    <link rel="stylesheet" href="/static/about-hero.css?v=20261031f" />
+    <link rel="stylesheet" href="/static/about-hero.css?v=20261031g" />
     <section class="abh-hero">
       <h1 class="abh-sr">브랜드의 설득력을 설계하는 크리에이티브 퍼포먼스 — 인애드컴퍼니 회사소개</h1>
       <AboutHero />
-      <script src="/static/about-hero.js?v=20261031f" defer></script>
+      <script src="/static/about-hero.js?v=20261031g" defer></script>
     </section>
 
     {/* 밴드 등장 — 뷰포트 진입 시 reveal */}
