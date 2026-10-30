@@ -2,51 +2,12 @@ import { icon } from '../icons'
 import { AboutHero } from './about-hero'
 export const AboutPage = () => (
   <>
-    {/* ── Page Hero: 왼쪽 글, 오른쪽 '일하는 방식 → 결과 → 쌓아 온 시간' 애니메이션(about-hero) ── */}
-    <link rel="stylesheet" href="/static/about-hero.css?v=20261030c" />
-    <section class="vh-hero vh-hero--abh">
-      <div class="vh-glow" aria-hidden="true"></div>
-      <div class="vh-bg">
-        <div class="vh-grid"></div>
-        <div class="vh-noise"></div>
-      </div>
-      <div class="container vh-inner">
-        <h1 class="vh-h1">
-          <span class="vh-badge" style="color:rgba(33,48,111,0.95);border-color:rgba(33,48,111,0.3);background:rgba(33,48,111,0.06)">
-            <span class="vh-badge-dot" style="background:#21306F;box-shadow:0 0 8px rgba(33,48,111,0.6)"></span>
-            <span>회사소개</span>
-          </span>
-          <span class="vh-title">
-            <span class="vh-tline" id="abL1">브랜드의 설득력을</span>
-            <span class="vh-tline" id="abL2"><span class="vh-hl">설계하는</span></span>
-            <span class="vh-tline" id="abL3">크리에이티브 퍼포먼스</span>
-          </span>
-        </h1>
-        <div class="vh-sub-wrap" id="abSub">
-          <p class="vh-sub">단순 노출이 아니라, 타깃이 '행동'하게 만드는 캠페인을 설계합니다.</p>
-        </div>
-        <div class="vh-btns" id="abBtns">
-          <a href="/contact" class="vh-cta-btn">
-            <span>문의하기</span>
-            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="/works" class="vh-scroll-btn">
-            <span>포트폴리오 보기</span>
-          </a>
-        </div>
-      </div>
+    {/* ── Page Hero: 홈처럼 상단 구역 좌우 전체를 채우는 움직이는 화면(about-hero). 제목은 화면 안의 큰 글자로 나오고, 검색엔진용 제목은 숨겨 둔다 ── */}
+    <link rel="stylesheet" href="/static/about-hero.css?v=20261030d" />
+    <section class="abh-hero">
+      <h1 class="abh-sr">브랜드의 설득력을 설계하는 크리에이티브 퍼포먼스 — 인애드컴퍼니 회사소개</h1>
       <AboutHero />
-      <script src="/static/about-hero.js?v=20261030c" defer></script>
-      <script dangerouslySetInnerHTML={{ __html: `
-(function(){
-  function anim(el,delay,dir){if(!el)return;el.style.opacity='0';el.style.transform=dir==='up'?'translateY(32px)':'translateX(-32px)';el.style.transition='opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)';setTimeout(function(){el.style.opacity='1';el.style.transform='none';},delay);}
-  anim(document.getElementById('abL1'),200,'left');
-  anim(document.getElementById('abL2'),440,'left');
-  anim(document.getElementById('abL3'),560,'left');
-  anim(document.getElementById('abSub'),700,'up');
-  anim(document.getElementById('abBtns'),940,'up');
-})();
-      `}} />
+      <script src="/static/about-hero.js?v=20261030d" defer></script>
     </section>
 
     {/* 밴드 등장 — 뷰포트 진입 시 reveal */}
