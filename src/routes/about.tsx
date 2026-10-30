@@ -3,7 +3,7 @@ import { AboutHero } from './about-hero'
 export const AboutPage = () => (
   <>
     {/* ── Page Hero: 왼쪽 글, 오른쪽 '일하는 방식 → 결과 → 쌓아 온 시간' 애니메이션(about-hero) ── */}
-    <link rel="stylesheet" href="/static/about-hero.css?v=20261030a" />
+    <link rel="stylesheet" href="/static/about-hero.css?v=20261030b" />
     <section class="vh-hero vh-hero--abh">
       <div class="vh-glow" aria-hidden="true"></div>
       <div class="vh-bg">
@@ -36,7 +36,7 @@ export const AboutPage = () => (
         </div>
       </div>
       <AboutHero />
-      <script src="/static/about-hero.js?v=20261030a" defer></script>
+      <script src="/static/about-hero.js?v=20261030b" defer></script>
       <script dangerouslySetInnerHTML={{ __html: `
 (function(){
   function anim(el,delay,dir){if(!el)return;el.style.opacity='0';el.style.transform=dir==='up'?'translateY(32px)':'translateX(-32px)';el.style.transition='opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)';setTimeout(function(){el.style.opacity='1';el.style.transform='none';},delay);}

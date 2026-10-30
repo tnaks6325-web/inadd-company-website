@@ -1,53 +1,61 @@
-// 회사소개 히어로(한 바퀴 약 12초): '일하는 방식 → 결과 → 쌓아 온 시간'(A) 또는 '결과 → 일하는 방식 → 쌓아 온 시간'(B).
-// 일하는 방식: 우리 일이 세상에 닿는 장면 6개(바이럴·체험단·인플루언서·리뷰·올리브영·PPL)가 차례로 크게 떴다가 3x2 칸으로 모인다.
-//   장면은 각 서비스 페이지 히어로에서 쓰는 AI 가상 장면(영상·사진)을 그대로 다시 쓴다(새 크레딧 없음).
-// 결과: 포트폴리오에 공개된 실제 고객 로고 130개(포트폴리오 thumb 을 여백 잘라 220x82 webp)가 터지듯 흩어졌다가 모여 'IN AD COMPANY'.
-// 쌓아 온 시간: 2019~2026 막대(홈 '누적 성과' 막대와 같은 모양, 연도별 숫자 없음)가 차오르고 '2019년부터 · 130개 브랜드 · 누적 캠페인 37,000+'.
-// 순서는 data-abh-order(a|b), 미리보기는 주소 뒤 ?abh=b. 움직임은 about-hero.js.
-const LOGOS = 130
-const SCENES = [
-  { k: '바이럴·커뮤니티', v: '/static/review-compare/crowd-1' },
-  { k: '체험단', v: '/static/seeding-search/unbox' },
-  { k: '인플루언서', v: '/static/influencer-phones/skincare-am' },
-  { k: '리뷰', v: '/static/review-compare/smile' },
-  { k: '올리브영', img: '/static/oy-shelf/after.webp' },
-  { k: 'PPL', v: '/static/ppl-onair/scene' },
+// 회사소개 히어로(한 바퀴 약 11.5초): '한 문장이 설계되는 과정' — 제목 '브랜드의 설득력을 설계하는'을 장면으로 보여 준다.
+// 1 고민: 카피 설계 노트 위에 타깃·고민·상황과 카피 후보들이 빠르게 적힌다.
+// 2 지우기: 후보 카피에 줄이 그어지며 하나씩 사라진다(점점 빠르게).
+// 3 한 문장: '오후 3시에도 당기지 않는 피부'만 남아 크게 적힌다(광고주 강조색).
+// 4 번짐: 노트가 위로 작아지고, 같은 문장이 검색창·릴스·상세페이지로 번져 간다.
+// 5 끝: '2019년부터 · 누적 캠페인 37,000+'(홈 신뢰 지표와 같은 값).
+// 노트 내용과 문장은 예시(노트에 '예시' 표기). 고객사 로고·실제 인물 없음. 릴스 화면은 인플루언서 페이지 히어로의 AI 가상 영상을 다시 씀. 움직임은 about-hero.js.
+const KEEP = [
+  { k: '타깃', v: '29세 사무직 직장인', x: 28, y: 66 },
+  { k: '고민', v: '오후만 되면 당기는 피부', x: 300, y: 66 },
+  { k: '상황', v: '하루 종일 히터·에어컨 바람', x: 28, y: 112 },
 ]
-// 홈 '누적 성과' 막대와 같은 높이 비율(2019=4 … 2026=100)
-const YEARS = [['2019', 4], ['2020', 7], ['2021', 12], ['2022', 19], ['2023', 31], ['2024', 49], ['2025', 73], ['2026', 100]] as const
+const DRAFTS = [
+  { v: '히알루론산 5중 보습', x: 34, y: 172 },
+  { v: '1+1 최저가 특가', x: 330, y: 184 },
+  { v: '피부과 전문의 추천', x: 64, y: 236 },
+  { v: '성분이 다른 세럼', x: 336, y: 248 },
+  { v: '촉촉함, 그 이상', x: 180, y: 302 },
+]
+const LINE = '오후 3시에도 당기지 않는 피부'
 
-export const AboutHero = ({ order = 'a' }: { order?: 'a' | 'b' }) => (
-  <div class="abh" aria-hidden="true" data-abh data-abh-order={order}>
+export const AboutHero = () => (
+  <div class="abh" aria-hidden="true" data-abh>
     <div class="abh-stage">
-      {/* 일하는 방식: 채널 장면 */}
-      {SCENES.map(s => (
-        <div class="abh-sc" data-abh-sc>
-          {s.v
-            ? <video src={`${s.v}.mp4`} poster={`${s.v}.webp`} muted loop playsinline preload="auto" />
-            : <img src={s.img} alt="" />}
-          <p class="abh-chip">{s.k}</p>
-        </div>
-      ))}
+      {/* 번질 때 문장에서 각 화면으로 이어지는 선 */}
+      <svg class="abh-links" viewBox="0 0 680 620" data-abh-links>
+        <path d="M300 272 C 260 292, 150 280, 130 300" />
+        <path d="M340 272 L 340 282" />
+        <path d="M380 272 C 420 292, 530 280, 550 300" />
+      </svg>
 
-      {/* 결과: 실제 고객 로고 */}
-      <div class="abh-logos">
-        {Array.from({ length: LOGOS }, (_, i) => <img data-abh-lg src={`/static/about-hero/logos/l${String(i).padStart(3, '0')}.webp`} alt="" width="220" height="82" decoding="async" />)}
-      </div>
-      <div class="abh-word" data-abh-word>
-        <b>IN AD COMPANY</b>
-        <span data-abh-wsub><u data-abh-brands>130</u>개 브랜드와 함께</span>
+      {/* 카피 설계 노트 */}
+      <div class="abh-note" data-abh-note>
+        <div class="abh-paper" data-abh-paper><p class="abh-note-h"><b>카피 설계 노트</b><span>예시</span></p></div>
+        {KEEP.map(it => <p class="abh-kw abh-kw--keep" data-abh-kw style={`left:${it.x}px;top:${it.y}px`}><small>{it.k}</small>{it.v}</p>)}
+        {DRAFTS.map(it => <p class="abh-kw abh-kw--draft" data-abh-kw data-abh-draft style={`left:${it.x}px;top:${it.y}px`}>“{it.v}”<i data-abh-strike /></p>)}
+        <p class="abh-line" data-abh-line><span>“{LINE}”</span></p>
       </div>
 
-      {/* 쌓아 온 시간 */}
-      <div class="abh-hist" data-abh-hist>
-        <p class="abh-hist-h">누적 캠페인</p>
-        <div class="abh-bars">
-          {YEARS.map(([y, h], i) => (
-            <div class={'abh-bar' + (i === YEARS.length - 1 ? ' is-now' : '')} data-abh-bar style={`--h:${h}`}><i /><span>{y}</span></div>
-          ))}
-        </div>
-        <p class="abh-hist-f" data-abh-foot>2019년부터 · <u data-abh-brands>130</u>개 브랜드 · 누적 캠페인 <b>37,000+</b></p>
+      {/* 같은 문장이 번져 가는 화면 */}
+      <div class="abh-mk abh-mk--search" data-abh-mk>
+        <p class="abh-mk-h">검색</p>
+        <p class="abh-sbar"><i />{LINE}</p>
+        <p class="abh-sr"><b>{LINE}, 사무실 세럼 정착기</b><small>블로그 · 피부일기</small></p>
+        <p class="abh-sr"><b>건성 직장인 보습 루틴</b><small>카페 · 뷰티 커뮤니티</small></p>
       </div>
+      <div class="abh-mk abh-mk--reel" data-abh-mk>
+        <p class="abh-mk-h">릴스</p>
+        <div class="abh-phone"><video src="/static/influencer-phones/skincare-am.mp4" poster="/static/influencer-phones/skincare-am.webp" muted loop playsinline preload="auto" /><p>{LINE}</p><small>♡ 1.2만 · 저장 3,410</small></div>
+      </div>
+      <div class="abh-mk abh-mk--detail" data-abh-mk>
+        <p class="abh-mk-h">상세페이지</p>
+        <i class="abh-serum" />
+        <b>{LINE}</b>
+        <small>히알루 세럼 30ml</small>
+      </div>
+
+      <p class="abh-foot" data-abh-foot>2019년부터 · 누적 캠페인 <b>37,000+</b></p>
     </div>
   </div>
 )
