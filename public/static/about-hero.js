@@ -1,7 +1,6 @@
-/* 회사소개 히어로(상단 전체 화면, 한 바퀴 약 12.4초)
-   - 제목(0~2초): '브랜드의 설득력을 / 설계하는 / 크리에이티브 퍼포먼스'가 한 줄씩 올라왔다가 위로 빠진다.
+/* 회사소개 히어로(상단 전체 화면, 한 바퀴 약 11.5초, 제목 장면 없이 바로 시작 — 검색엔진용 제목은 about.tsx 에 숨겨 둠)
    - ① 사무실의 하루(약 3.3초): 실제 사무실 사진을 시간대별로 바꾼 6장(08:00~22:00)을 이어 만든 타임랩스 영상 — 사람들이 매우 빠르게 오간다.
-     아래 가운데 시계 글자. 영상이 끝나면 밤 사진(원본)으로 바뀐다.
+     아래 가운데 아날로그 시계 바늘이 08시→22시로 빠르게 돈다(영상 구간마다 10·13·16·19시에 맞춤). 영상이 끝나면 밤 사진(원본)으로 바뀐다.
    - ② 화면 속으로(약 1.5초): 마지막 밤 사진에서 오른쪽 줄 가운데 모니터로 점점 빨라지며 쭉 빨려 들어간다(약 22배).
      거의 다 다가갔을 때 모니터에 ③ 첫 장면이 원근으로 켜지고, 화면이 무대를 다 덮으면 ③으로 이어진다.
    - ③ 크리에이티브 × 데이터: 네 줄의 손 장면이 줄마다 엇갈리며 점점 빠르게 바뀐다(아래에서 밀어 올림).
@@ -13,8 +12,8 @@
   if (!root) return;
   function q(k, from) { return (from || root).querySelector('[data-abh-' + k + ']'); }
   function qa(k, from) { return Array.prototype.slice.call((from || root).querySelectorAll('[data-abh-' + k + ']')); }
-  var stage = q('stage'), tls = qa('tl'), tags = qa('tag'), meet = q('meet');
-  var day = q('day'), cks = qa('ck'), clock = q('clock'), dv = q('dv'), night = q('night'), zps = qa('zp'), scr = q('scr');
+  var stage = q('stage'), tags = qa('tag'), meet = q('meet');
+  var day = q('day'), clock = q('clock'), hHand = q('hh'), mHand = q('mh'), dv = q('dv'), night = q('night'), zps = qa('zp'), scr = q('scr');
   var cols = qa('col').map(function (c) { return { el: c, clips: qa('clip', c).map(function (x) { return { el: x, v: x.querySelector('video') }; }) }; });
 
   // 무대 배율: 칸을 빈틈없이 덮게
@@ -28,9 +27,8 @@
   fit(); window.addEventListener('resize', fit);
 
   // 시각표(초)
-  var T_IN = 0.15, T_GAP = 0.18, T_OUT = [1.75, 2.1];
   // ① 사무실의 하루: 타임랩스 영상(VD초, 시간대 5구간)이 끝나면 밤 사진(원본)으로 0.1초 만에 바뀐다
-  var D0 = 1.9, VD = 3.3, NIGHT = D0 + VD;   // 고해상도 조각은 밤 사진부터
+  var D0 = 0.2, VD = 3.3, NIGHT = D0 + VD, HOURS = [8, 10, 13, 16, 19, 22];   // 고해상도 조각은 밤 사진부터
   // ② 밤 사진의 모니터 화면 네 귀퉁이(무대 좌표: 왼위·오위·오아래·왼아래)와 그 가운데, 끝 배율
   var QUAD = [983.7, 341.9, 1100.8, 342.6, 1091.5, 413.2, 980.2, 413.0], F = { x: 1039.05, y: 377.7 }, ZMAX = 22;
   var ZOOM = [NIGHT + 0.15, NIGHT + 1.65], SCR_IN = [ZOOM[0] + 1.2, ZOOM[0] + 1.36];   // 모니터 화면은 거의 다 다가갔을 때(화면 폭의 약 60%) 바뀐다
@@ -70,25 +68,21 @@
 
   function render(t) {
     var l = t % CYCLE, vis = 1 - seg(l, OUT);
-    // 제목
-    var tout = accel(seg(l, T_OUT));
-    tls.forEach(function (e, i) {
-      var p = ease(seg(l, [T_IN + i * T_GAP, T_IN + i * T_GAP + 0.4]));
-      e.style.opacity = (p * (1 - tout)).toFixed(3);
-      e.style.transform = 'translateY(' + ((1 - p) * 40 - tout * 120).toFixed(1) + 'px)';
-    });
     // ① 사무실의 하루
     // ② 모니터로 확대: 배율은 로그로 점점 빨라지고, 모니터 가운데가 무대 가운데로 끌려온다
     var zq = seg(l, ZOOM), zq2 = zq * zq, A = Math.pow(ZMAX, zq2);
     var BX = F.x + (800 - F.x) * zq2 - F.x * A, BY = F.y + (450 - F.y) * zq2 - F.y * A;
-    day.style.opacity = (seg(l, [D0, D0 + 0.2]) * (l < C0 + 0.2 ? 1 : 0)).toFixed(3);
+    day.style.opacity = (seg(l, [0, D0]) * (l < C0 + 0.2 ? 1 : 0)).toFixed(3);
     day.style.transform = 'translate(' + BX.toFixed(2) + 'px,' + BY.toFixed(2) + 'px) scale(' + A.toFixed(5) + ')';
     night.style.opacity = seg(l, [NIGHT - 0.1, NIGHT]).toFixed(3);
     zps.forEach(function (z) { z.style.opacity = l >= NIGHT ? 1 : 0; });
     syncDay(l);
-    // 시계: 08:00 10:00 13:00 16:00 19:00 은 영상 구간 시작, 22:00 은 밤 사진
-    cks.forEach(function (b, k) { var a = D0 + k * VD / (cks.length - 1); b.style.opacity = (l >= a && (k === cks.length - 1 || l < a + VD / (cks.length - 1)) ? 1 : 0); });
-    clock.style.opacity = (seg(l, [D0, D0 + 0.2]) * (1 - seg(l, [ZOOM[0], ZOOM[0] + 0.2]))).toFixed(3);
+    // 시계: 영상 구간 시작마다 8·10·13·16·19시, 끝(밤 사진)은 22시. 분침은 한 시간에 한 바퀴, 시침은 12시간에 한 바퀴
+    var sp = Math.min(Math.max((l - D0) / VD, 0), 1) * (HOURS.length - 1), si = Math.min(Math.floor(sp), HOURS.length - 2);
+    var hr = HOURS[si] + (HOURS[si + 1] - HOURS[si]) * (sp - si);
+    hHand.setAttribute('transform', 'rotate(' + (hr * 30).toFixed(2) + ' 60 60)');
+    mHand.setAttribute('transform', 'rotate(' + (hr * 360).toFixed(2) + ' 60 60)');
+    clock.style.opacity = (seg(l, [0, D0]) * (1 - seg(l, [ZOOM[0], ZOOM[0] + 0.2]))).toFixed(3);
     // ② 모니터 화면: 사진과 같은 움직임을 네 귀퉁이에 적용해 원근으로 붙인다(선명하게 그리려고 사진 밖에 따로 둠)
     var sv = ease(seg(l, SCR_IN)) * (l < C0 + 0.2 ? 1 : 0);
     scr.style.opacity = sv.toFixed(3);
