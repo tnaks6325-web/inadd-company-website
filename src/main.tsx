@@ -79,6 +79,12 @@ root.get('/insight', async (c) => {
   html = html
     .replace('id="ins2Loading"', 'id="ins2Loading" style="display:none"')
     .replace('<div class="ins2-grid" id="ins2Grid">', `<div class="ins2-grid" id="ins2Grid">${await cards}`)
+  // 글 목록 구조화 데이터 — AI 검색이 어떤 글이 있는지 한 번에 읽도록(제목·주소만)
+  const list = JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'ItemList', '@id': `${SITE_URL}/insight#posts`, name: '마케팅 인사이트 글 목록',
+    itemListElement: posts.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE_URL}${postPath(p)}`, name: p.title })),
+  }).replace(/</g, '\\u003c')
+  html = html.replace('</head>', `<script type="application/ld+json">${list}</script></head>`)
   return c.html(html, 200)
 })
 

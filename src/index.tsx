@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { OFFERS, pageSchema } from './lib/page-schema'
 import { serveStatic } from 'hono/cloudflare-workers'
 import { renderer } from './renderer'
 import { HomePage } from './routes/home'
@@ -153,129 +154,7 @@ app.get('/', (c) => {
           "hasOfferCatalog": {
             "@type": "OfferCatalog",
             "name": "인애드컴퍼니 서비스 시작 금액(부가세 별도)",
-            "itemListElement": [
-              {
-                "@type": "Offer",
-                "url": "https://www.inadcompany.co.kr/marketing/subscription",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "마케팅팀 구독",
-                  "description": "광고·기획·디자인·영상·바이럴·체험단 전담 TF팀, 월 단위 계약"
-                },
-                "priceSpecification": {
-                  "@type": "UnitPriceSpecification",
-                  "minPrice": 3000000,
-                  "priceCurrency": "KRW",
-                  "valueAddedTaxIncluded": false,
-                  "unitText": "월"
-                }
-              },
-              {
-                "@type": "Offer",
-                "url": "https://www.inadcompany.co.kr/marketing/seeding",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "네이버 블로그 체험단",
-                  "description": "일반 블로거 10명 기준 시작 금액"
-                },
-                "priceSpecification": {
-                  "@type": "PriceSpecification",
-                  "minPrice": 200000,
-                  "priceCurrency": "KRW",
-                  "valueAddedTaxIncluded": false
-                }
-              },
-              {
-                "@type": "Offer",
-                "url": "https://www.inadcompany.co.kr/marketing/seeding",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "인스타그램 체험단",
-                  "description": "일반 피드 10명 기준 시작 금액"
-                },
-                "priceSpecification": {
-                  "@type": "PriceSpecification",
-                  "minPrice": 200000,
-                  "priceCurrency": "KRW",
-                  "valueAddedTaxIncluded": false
-                }
-              },
-              {
-                "@type": "Offer",
-                "url": "https://www.inadcompany.co.kr/marketing/review",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "리뷰 마케팅",
-                  "description": "기획형 리뷰 10건 기준 시작 금액(단순 리뷰 50건 20만 원부터)"
-                },
-                "priceSpecification": {
-                  "@type": "PriceSpecification",
-                  "minPrice": 100000,
-                  "priceCurrency": "KRW",
-                  "valueAddedTaxIncluded": false
-                }
-              },
-              {
-                "@type": "Offer",
-                "url": "https://www.inadcompany.co.kr/marketing/influencer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "인플루언서 마케팅",
-                  "description": "마이크로 인플루언서 1명 출연료 기준 시작 금액, 대행 수수료 별도"
-                },
-                "priceSpecification": {
-                  "@type": "PriceSpecification",
-                  "minPrice": 50000,
-                  "priceCurrency": "KRW",
-                  "valueAddedTaxIncluded": false
-                }
-              },
-              {
-                "@type": "Offer",
-                "url": "https://www.inadcompany.co.kr/marketing/viral",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "카페 바이럴",
-                  "description": "카페 바이럴 10건 기준 시작 금액"
-                },
-                "priceSpecification": {
-                  "@type": "PriceSpecification",
-                  "minPrice": 300000,
-                  "priceCurrency": "KRW",
-                  "valueAddedTaxIncluded": false
-                }
-              },
-              {
-                "@type": "Offer",
-                "url": "https://www.inadcompany.co.kr/marketing/viral",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "언론 바이럴",
-                  "description": "네이버 뉴스 검색 제휴 매체 기사 1건 기준 시작 금액"
-                },
-                "priceSpecification": {
-                  "@type": "PriceSpecification",
-                  "minPrice": 100000,
-                  "priceCurrency": "KRW",
-                  "valueAddedTaxIncluded": false
-                }
-              },
-              {
-                "@type": "Offer",
-                "url": "https://www.inadcompany.co.kr/marketing/oliveyoung",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "올리브영 랭킹 마케팅",
-                  "description": "올리브영 랭킹 마케팅 시작 금액"
-                },
-                "priceSpecification": {
-                  "@type": "PriceSpecification",
-                  "minPrice": 1000000,
-                  "priceCurrency": "KRW",
-                  "valueAddedTaxIncluded": false
-                }
-              }
-            ]
+            "itemListElement": OFFERS
           },
           "telephone": "010-9186-9944",
           "email": "tnaks6325@inadcompany.com",
@@ -340,7 +219,8 @@ app.get('/about', (c) => {
   return c.render(<AboutPage />, {
     title: '회사 소개 - 2019년부터 바이럴·광고를 해 온 에이전시',
     description: '인애드컴퍼니는 2019년 시작해 2022년 법인으로 전환한 마케팅 에이전시입니다. 바이럴과 퍼포먼스 광고를 한 팀에서 운영합니다. 연혁, 비즈니스 파트너, 경기도 안산 사무실 위치를 소개합니다.',
-    canonical: 'https://www.inadcompany.co.kr/about'
+    canonical: 'https://www.inadcompany.co.kr/about',
+    schema: pageSchema('/about', 'about')
   })
 })
 
@@ -348,7 +228,8 @@ app.get('/works', (c) => {
   return c.render(<WorksPage />, {
     title: '포트폴리오 - 바이럴·광고·인플루언서 캠페인 사례',
     description: '바이럴·인플루언서·체험단·리뷰·광고 캠페인을 어떻게 운영했는지 실제 브랜드 사례로 정리했습니다.',
-    canonical: 'https://www.inadcompany.co.kr/works'
+    canonical: 'https://www.inadcompany.co.kr/works',
+    schema: pageSchema('/works', 'collection')
   })
 })
 
@@ -356,7 +237,8 @@ app.get('/insight', (c) => {
   return c.render(<InsightPage />, {
     title: '마케팅 인사이트 - 광고·바이럴·올리브영 실무 가이드',
     description: '광고비 계산, 체험단·공동구매 수수료, 올리브영 입점처럼 브랜드 담당자가 자주 묻는 마케팅 질문에 숫자와 출처를 붙여 답합니다.',
-    canonical: 'https://www.inadcompany.co.kr/insight'
+    canonical: 'https://www.inadcompany.co.kr/insight',
+    schema: pageSchema('/insight', 'collection')
   })
 })
 
@@ -395,14 +277,16 @@ app.get('/viral', (c) => c.redirect('/#services', 301))
 app.get('/marketing/performance', (c) => c.render(<SvcPerformancePage />, {
   title: '퍼포먼스 마케팅 대행 - 네이버·구글·메타 광고 운영',
   description: '네이버·구글·메타·카카오 광고 운영부터 GA4·GTM 전환 측정, 소재 제작과 성과 분석까지. 인애드컴퍼니의 퍼포먼스 마케팅.',
-  canonical: 'https://www.inadcompany.co.kr/marketing/performance'
+  canonical: 'https://www.inadcompany.co.kr/marketing/performance',
+    schema: pageSchema('/marketing/performance', 'service')
 }))
 
 app.get('/marketing/subscription', (c) => {
   return c.render(<SvcSubscriptionPage />, {
     title: '마케팅팀 구독 - 월 300만 원 전담 TF팀',
     description: '신입 마케터 1명 비용(월 300만 원, 부가세 별도)으로 광고·기획·디자인·영상·바이럴·체험단 전담 TF팀을 구독하세요. 초기진단·세팅 무료, 매주 브랜드 주간보고서.',
-    canonical: 'https://www.inadcompany.co.kr/marketing/subscription'
+    canonical: 'https://www.inadcompany.co.kr/marketing/subscription',
+    schema: pageSchema('/marketing/subscription', 'service')
   })
 })
 
@@ -410,7 +294,8 @@ app.get('/marketing/viral', (c) => {
   return c.render(<SvcViralPage />, {
     title: '바이럴 마케팅 대행 - 커뮤니티·카페·SNS 입소문',
     description: '커뮤니티·카페·SNS 기반 바이럴 마케팅. 실제 사용자 후기와 입소문으로 브랜드를 알립니다.',
-    canonical: 'https://www.inadcompany.co.kr/marketing/viral'
+    canonical: 'https://www.inadcompany.co.kr/marketing/viral',
+    schema: pageSchema('/marketing/viral', 'service')
   })
 })
 
@@ -418,7 +303,8 @@ app.get('/marketing/influencer', (c) => {
   return c.render(<SvcInfluencerPage />, {
     title: '인플루언서 마케팅 대행 - 섭외부터 콘텐츠 제작까지',
     description: '자사 보유 1,520+ 크리에이터 DB와 전담 디렉터가 브랜드에 맞는 인플루언서를 섭외하고 콘텐츠 제작까지 진행합니다.',
-    canonical: 'https://www.inadcompany.co.kr/marketing/influencer'
+    canonical: 'https://www.inadcompany.co.kr/marketing/influencer',
+    schema: pageSchema('/marketing/influencer', 'service')
   })
 })
 
@@ -426,7 +312,8 @@ app.get('/marketing/seeding', (c) => {
   return c.render(<SvcSeedingPage />, {
     title: '체험단 마케팅 - 네이버 블로그·인스타그램 체험단 운영',
     description: '샘플 배포와 체험단 운영으로 실사용 후기가 쌓이도록 하는 체험단 캠페인. 네이버 블로그·인스타그램 체험단 패키지를 운영합니다.',
-    canonical: 'https://www.inadcompany.co.kr/marketing/seeding'
+    canonical: 'https://www.inadcompany.co.kr/marketing/seeding',
+    schema: pageSchema('/marketing/seeding', 'service')
   })
 })
 
@@ -439,7 +326,8 @@ app.get('/marketing/review', (c) => {
   return c.render(<SvcReviewPage />, {
     title: '리뷰 마케팅 - 블로그 리뷰·구매평 통합 운영',
     description: '브랜드 신뢰도와 구매 전환율을 높이는 리뷰 마케팅. 진성 리뷰 수집과 리뷰 관리로 온라인 평판을 관리하는 인애드컴퍼니.',
-    canonical: 'https://www.inadcompany.co.kr/marketing/review'
+    canonical: 'https://www.inadcompany.co.kr/marketing/review',
+    schema: pageSchema('/marketing/review', 'service')
   })
 })
 
@@ -447,7 +335,8 @@ app.get('/marketing/oliveyoung', (c) => {
   return c.render(<SvcOliveYoungPage />, {
     title: '올리브영 마케팅 - 입점 준비·리뷰·랭킹 전략',
     description: '올리브영 입점 준비부터 리뷰 확보, 랭킹 전략, 오프라인 매대 노출 제안까지 H&B 채널 마케팅을 운영합니다.',
-    canonical: 'https://www.inadcompany.co.kr/marketing/oliveyoung'
+    canonical: 'https://www.inadcompany.co.kr/marketing/oliveyoung',
+    schema: pageSchema('/marketing/oliveyoung', 'service')
   })
 })
 
@@ -455,7 +344,8 @@ app.get('/marketing/ppl', (c) => {
   return c.render(<SvcPplPage />, {
     title: 'PPL 마케팅 - 드라마·예능 방송 협찬 기획',
     description: '드라마·예능 프로그램 선정부터 장면 기획, 방송사·제작사 협찬 계약, 방영 후 리포트까지 PPL 전 과정을 진행합니다.',
-    canonical: 'https://www.inadcompany.co.kr/marketing/ppl'
+    canonical: 'https://www.inadcompany.co.kr/marketing/ppl',
+    schema: pageSchema('/marketing/ppl', 'service')
   })
 })
 
@@ -463,7 +353,8 @@ app.get('/development', (c) => {
   return c.render(<DevelopmentPage />, {
     title: '마케팅 자동화 개발 - 업무 자동화·운영 시스템',
     description: '캠페인 운영, 체험단·리뷰 진행, 원고 관리, 성과 데이터 수집을 자체 시스템으로 자동화했습니다. 인애드컴퍼니가 직접 만들어 쓰는 마케팅 운영 시스템을 소개합니다.',
-    canonical: 'https://www.inadcompany.co.kr/development'
+    canonical: 'https://www.inadcompany.co.kr/development',
+    schema: pageSchema('/development', 'webpage')
   })
 })
 
