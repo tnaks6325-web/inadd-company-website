@@ -1,6 +1,6 @@
 /* 아워테크 히어로: 회사소개 히어로와 같은 틀 — 고정 헤더(78px) 아래에서 시작하고 1600x900 무대를 칸에 꽉 차게(cover) 키운다.
    배율과 위치는 tech-hero.js 가 --k, --x, --y 로 넣는다. 칸은 너비의 16:9(화면 높이를 넘지 않게), 휴대폰도 16:9.
-   모니터 화면(.tch-scr)은 2100x900 — 넓은 모니터 비율. 화면이 무대를 꽉 채우면 가운데 1600만 보이므로 앱 내용은 가운데 1600 안에 둔다. */
+   노트북 화면(.tch-scr)은 1600x1000(16:10). 화면이 무대를 꽉 채우면 위아래 50씩 잘려 가운데 1600x900만 보이므로 앱 내용은 그 안에 둔다. */
 .tch-hero { position:relative; padding-top:78px; background:#f4f3f1; }
 .tch-sr { position:absolute; width:1px; height:1px; margin:-1px; padding:0; border:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 .tch { position:relative; width:100%; height:min(56.25vw, calc(100vh - 78px)); min-height:480px; overflow:hidden; background:#f4f3f1; }
@@ -9,15 +9,14 @@
 .tch-world { position:absolute; left:0; top:0; width:1600px; height:900px; transform-origin:0 0; }
 .tch-world img { display:block; width:100%; height:100%; object-fit:cover; }
 
-/* 모니터 화면: 네 귀퉁이 원근(matrix3d)은 js가 매 순간 계산 */
-.tch-scr { position:absolute; left:0; top:0; width:2100px; height:900px; transform-origin:0 0; overflow:hidden; background:#F3F4F7; }
-.tch-off { position:absolute; inset:0; background:#0b0c10; }
-.th-tabs { position:absolute; left:0; right:0; top:0; height:56px; display:flex; align-items:stretch; gap:0; padding:0 250px; background:#E4E6EC; border-bottom:2px solid #D3D6DE; }
+/* 노트북 화면: 네 귀퉁이 원근(matrix3d)은 js가 매 순간 계산. 꺼져 있을 땐 투명 — 사진 속 검은 유리가 그대로 보인다 */
+.tch-scr { position:absolute; left:0; top:0; width:1600px; height:1000px; transform-origin:0 0; overflow:hidden; background:#E4E6EC; opacity:0; }
+.th-tabs { position:absolute; left:0; right:0; top:50px; height:56px; display:flex; align-items:stretch; gap:0; padding:0; background:#E4E6EC; border-bottom:2px solid #D3D6DE; }
 .th-tabs span { display:flex; align-items:center; padding:0 26px; font-size:19px; font-weight:600; color:#111318; border-bottom:4px solid transparent; }
 .th-tabs span.on { background:#F3F4F7; border-bottom-color:#21306F; font-weight:800; }
-.th-tabs em { margin-left:auto; align-self:center; font-style:normal; font-size:16px; font-weight:600; }
-.th-panes { position:absolute; left:0; right:0; top:56px; bottom:0; }
-.th-pane { position:absolute; inset:0; padding:0 250px; background:#F3F4F7; visibility:hidden; }
+.th-tabs em { margin-left:auto; margin-right:24px; align-self:center; font-style:normal; font-size:16px; font-weight:600; }
+.th-panes { position:absolute; left:0; right:0; top:106px; height:844px; }
+.th-pane { position:absolute; inset:0; background:#F3F4F7; visibility:hidden; }
 
 /* 화면 속 요소 공통 — 나타나기(data-a)는 js가 opacity·위치를 넣는다 */
 .th-app { position:relative; width:1600px; height:844px; display:flex; background:#F6F7F9; font-size:18px; overflow:hidden; }

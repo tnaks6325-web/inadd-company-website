@@ -5,11 +5,11 @@ export const DevelopmentPage = () => (
     {/* ════════════════════════════════════════
         SECTION 1 — HERO: 책상 모니터 속으로 들어가 직접 만든 시스템 화면들이 일하는 모습(tech-hero). 검색엔진용 제목은 숨겨 둔다
     ════════════════════════════════════════ */}
-    <link rel="stylesheet" href="/static/tech-hero.css?v=20261031a" />
+    <link rel="stylesheet" href="/static/tech-hero.css?v=20261031b" />
     <section class="tch-hero">
       <h1 class="tch-sr">마케팅을 코드로 설계하는 실전 에이전시 — 인애드컴퍼니 자체 자동화 기술</h1>
       <TechHero />
-      <script src="/static/tech-hero.js?v=20261031a" defer></script>
+      <script src="/static/tech-hero.js?v=20261031b" defer></script>
     </section>
 
     {/* ════════════════════════════════════════

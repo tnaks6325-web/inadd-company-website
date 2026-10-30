@@ -1,9 +1,9 @@
 /* 아워테크 히어로(상단 전체 화면, 한 바퀴 약 13.8초)
-   - ① 책상(약 0.9초): 대표 책상 사진, 꺼진 넓은 모니터가 켜진다.
-   - ② 화면 속으로(약 1.1초): 카메라가 모니터로 날아 들어가고, 모니터 화면의 네 귀퉁이가 무대 네 귀퉁이로 펴진다.
+   - ① 책상(약 0.9초): 사무실 책상 위 노트북(AI 생성 사진), 꺼진 화면이 켜진다.
+   - ② 화면 속으로(약 1.1초): 카메라가 노트북으로 날아 들어가고, 화면의 네 귀퉁이가 무대 네 귀퉁이로 펴진다.
    - ③ 시스템 화면(약 9초): 인트라넷 → 협찬 찾기 → 리뷰 운영 → 카페 운영 → 성과 분석 → 광고주 리포트 센터 → 착수 보고서.
      화면마다 시작된 뒤 몇 초인지(u)에 맞춰 data-a(나타남)·data-n(숫자 세기)·data-w(막대)·data-p(선 그리기)·data-c(상태 바뀜)를 움직인다.
-   - ④ 뒤로 빠지며 책상이 다시 보이고 '마케팅을 코드로 설계하는 실전 에이전시', 모니터가 꺼지며 처음(꺼진 모니터)으로 이어진다.
+   - ④ 뒤로 빠지며 책상이 다시 보이고 '마케팅을 코드로 설계하는 실전 에이전시', 화면이 꺼지며 처음(꺼진 화면)으로 이어진다.
    1600x900 무대를 칸에 꽉 차게(cover) 키운다(--k·--x·--y). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고,
    '움직임 줄이기' 설정이면 마지막 문구 화면에서 멈춘다. window.tchSeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
@@ -11,7 +11,7 @@
   if (!root) return;
   function q(k) { return root.querySelector('[data-tch-' + k + ']'); }
   function qa(k, from) { return Array.prototype.slice.call((from || root).querySelectorAll('[data-' + k + ']')); }
-  var world = q('world'), scr = q('scr'), off = q('off'), card = q('card');
+  var world = q('world'), scr = q('scr'), card = q('card');
   var tabs = qa('tch-tab'), panes = qa('tch-pane');
 
   // 무대 배율: 칸을 빈틈없이 덮게. 무대가 많이 작아지면(휴대폰) 마지막 문구만 TS배 키워 읽히게 한다
@@ -30,10 +30,10 @@
   var ON = [0.45, 0.8], FLY = [0.9, 2.0];
   var S = [0.8, 2.3, 3.8, 5.3, 6.8, 8.3, 9.4], TAB = [0, 1, 2, 3, 4, 5, 5], TR = 0.25;   // 화면마다 시작하는 때, 위 탭 번호, 넘김 길이
   var OUT = [10.9, 12.0], CARD = [11.6, 11.9], OFF = [13.4, 13.8], CYCLE = 13.8;
-  // 사진 속 모니터 화면 네 귀퉁이(무대 좌표: 왼위·오위·오아래·왼아래), 다 펴졌을 때(가운데 1600만 보임)
-  var QUAD = [171.4, 107.4, 1465.1, 93.7, 1334.9, 579.4, 420.6, 499.4];
-  var FLAT = [-250, 0, 1850, 0, 1850, 900, -250, 900];
-  var F = { x: 848, y: 320 }, ZIN = 2.6;
+  // 사진 속 노트북 화면(베젤 안쪽) 네 귀퉁이(무대 좌표: 왼위·오위·오아래·왼아래), 다 펴졌을 때(위아래 50씩 잘려 가운데 900만 보임)
+  var QUAD = [641.0, 138.2, 1177.6, 145.6, 1130.4, 521.1, 596.7, 462.2];
+  var FLAT = [0, -50, 1600, -50, 1600, 950, 0, 950];
+  var F = { x: 886.4, y: 316.8 }, ZIN = 3;
 
   function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
   function seg(l, r) { return clamp((l - r[0]) / (r[1] - r[0])); }
@@ -41,13 +41,13 @@
   function eio(x) { return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
   function thud(h) { return Math.sin(Math.PI * h) * (1 - h); }
 
-  // 2100x900 화면을 네 점에 맞추는 원근 변환(matrix3d)
+  // 1600x1000 화면을 네 점에 맞추는 원근 변환(matrix3d)
   function quad3d(p) {
     var x0 = p[0], y0 = p[1], x1 = p[2], y1 = p[3], x2 = p[4], y2 = p[5], x3 = p[6], y3 = p[7];
     var dx1 = x1 - x2, dx2 = x3 - x2, dy1 = y1 - y2, dy2 = y3 - y2, sx = x0 - x1 + x2 - x3, sy = y0 - y1 + y2 - y3;
     var den = dx1 * dy2 - dx2 * dy1, g = (sx * dy2 - dx2 * sy) / den, h = (dx1 * sy - sx * dy1) / den;
     var a = x1 - x0 + g * x1, b = x3 - x0 + h * x3, d = y1 - y0 + g * y1, e = y3 - y0 + h * y3;
-    return 'matrix3d(' + [a / 2100, d / 2100, 0, g / 2100, b / 900, e / 900, 0, h / 900, 0, 0, 1, 0, x0, y0, 0, 1].join(',') + ')';
+    return 'matrix3d(' + [a / 1600, d / 1600, 0, g / 1600, b / 1000, e / 1000, 0, h / 1000, 0, 0, 1, 0, x0, y0, 0, 1].join(',') + ')';
   }
 
   // 화면 속 움직이는 요소를 화면별로 모아 둔다
@@ -78,7 +78,7 @@
     var BX = F.x + (800 - F.x) * z - F.x * A, BY = F.y + (450 - F.y) * z - F.y * A;
     world.style.transform = 'translate(' + BX.toFixed(2) + 'px,' + BY.toFixed(2) + 'px) scale(' + A.toFixed(5) + ')';
     scr.style.transform = quad3d(QUAD.map(function (v, i) { var p = v * A + (i % 2 ? BY : BX); return p + (FLAT[i] - p) * z; }));
-    off.style.opacity = (l < OFF[0] ? 1 - seg(l, ON) : seg(l, OFF)).toFixed(3);
+    scr.style.opacity = (l < OFF[0] ? seg(l, ON) : 1 - seg(l, OFF)).toFixed(3);
     // ③ 시스템 화면: 다음 화면이 오른쪽에서 살짝 밀려 들어오며 덮는다
     var cur = 0;
     for (var i = 0; i < S.length; i++) if (l >= S[i]) cur = i;
@@ -86,8 +86,8 @@
       var inT = i === 0 ? 1 : ease(seg(l, [S[i], S[i] + TR])), shown = (i === cur && (l >= S[i] || i === 0)) || (i === cur - 1 && l < S[cur] + TR);
       o.el.style.visibility = shown ? 'visible' : 'hidden';
       o.el.style.zIndex = i;
-      o.el.style.opacity = (i === cur ? inT : 1).toFixed(3);
-      o.el.style.transform = i === cur && i > 0 ? 'translateX(' + ((1 - inT) * 90).toFixed(1) + 'px)' : 'none';
+      o.el.style.opacity = (i === cur && i > 0 ? seg(l, [S[i], S[i] + 0.12]) : 1).toFixed(3);   // 겹쳐 비치지 않게 금방 불투명해지고, 밀려 들어오는 건 조금 더 길게
+      o.el.style.transform = i === cur && i > 0 ? 'translateX(' + ((1 - inT) * 70).toFixed(1) + 'px)' : 'none';
       if (shown) pane(o, l - S[i]);
     });
     tabs.forEach(function (b, i) { b.classList.toggle('on', i === TAB[cur]); });
