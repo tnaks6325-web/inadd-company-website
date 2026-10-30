@@ -179,6 +179,9 @@ admin.put('/works', authMiddleware, async (c) => {
   return c.json({ ok: true })
 })
 
+// 업로드 그림은 키가 업로드 시각(…_<ms>)이라 내용이 바뀌지 않으므로 브라우저·CDN 에 1년 보관
+const IMG_CACHE = 'public, max-age=31536000, immutable'
+
 // 썸네일 이미지 업로드 (base64)
 admin.post('/works/thumb', authMiddleware, async (c) => {
   const kv = (c.env as any)?.ADMIN_KV
@@ -201,7 +204,8 @@ admin.get('/works-img/:key', async (c) => {
   const bytes = new Uint8Array(binary.length)
   for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
   // 공개 이미지 — 로컬 개발 등 다른 오리진에서 캔버스 처리(누끼) 가능하도록 CORS 허용
-  return new Response(bytes, { headers: { 'Content-Type': mime, 'Access-Control-Allow-Origin': '*' } })
+  // 키가 업로드 시각(thumb_<ms>)이라 한 번 올린 그림은 바뀌지 않는다 → 1년 캐시
+  return new Response(bytes, { headers: { 'Content-Type': mime, 'Access-Control-Allow-Origin': '*', 'Cache-Control': IMG_CACHE } })
 })
 
 // ═══════════════════════ INSIGHT ═══════════════════════
@@ -268,7 +272,7 @@ admin.get('/insight-img/:key', async (c) => {
   const binary = atob(b64)
   const bytes = new Uint8Array(binary.length)
   for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
-  return new Response(bytes, { headers: { 'Content-Type': mime } })
+  return new Response(bytes, { headers: { 'Content-Type': mime, 'Cache-Control': IMG_CACHE } })
 })
 
 // ═══════════════════════ HERO KPI (서비스 히어로 수치) ═══════════════════════
