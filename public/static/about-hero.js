@@ -88,7 +88,7 @@
     syncDay(l);
     // 시계: 08:00 10:00 13:00 16:00 19:00 은 영상 구간 시작, 22:00 은 밤 사진
     cks.forEach(function (b, k) { var a = D0 + k * VD / (cks.length - 1); b.style.opacity = (l >= a && (k === cks.length - 1 || l < a + VD / (cks.length - 1)) ? 1 : 0); });
-    clock.style.opacity = (1 - seg(l, [ZOOM[0], ZOOM[0] + 0.2])).toFixed(3);
+    clock.style.opacity = (seg(l, [D0, D0 + 0.2]) * (1 - seg(l, [ZOOM[0], ZOOM[0] + 0.2]))).toFixed(3);
     // ② 모니터 화면: 사진과 같은 움직임을 네 귀퉁이에 적용해 원근으로 붙인다(선명하게 그리려고 사진 밖에 따로 둠)
     var sv = ease(seg(l, SCR_IN)) * (l < C0 + 0.2 ? 1 : 0);
     scr.style.opacity = sv.toFixed(3);
