@@ -12,9 +12,10 @@
 .abh-title span { display:block; font-size:82px; font-weight:900; letter-spacing:-.035em; line-height:1.12; opacity:0; }
 .abh-title em { font-style:normal; color:#21306F; }
 
-/* ① 사무실의 하루: 6장을 겹쳐 두고 차례로 보인다. 시계 글자는 아래 가운데. 확대·이동은 js(원점 0 0) */
+/* ① 사무실의 하루: 타임랩스 영상 위에 밤 사진(원본)을 겹쳐 두고 영상이 끝나면 보인다. 시계 글자는 아래 가운데. 확대·이동은 js(원점 0 0) */
 .abh-day { position:absolute; left:0; top:0; width:1600px; height:900px; z-index:3; opacity:0; transform-origin:0 0; }
-.abh-day-f { position:absolute; inset:0; display:block; width:100%; height:100%; object-fit:cover; opacity:0; }
+.abh-day-f { position:absolute; inset:0; display:block; width:100%; height:100%; object-fit:cover; }
+.abh-night { opacity:0; }
 .abh-zp { position:absolute; display:block; opacity:0; }
 .abh-zp--1 { left:839px; top:265px; width:400px; height:225px; }
 .abh-zp--2 { left:938.1px; top:321px; width:201.7px; height:113.4px; }
