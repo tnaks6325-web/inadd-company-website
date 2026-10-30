@@ -178,8 +178,10 @@ root.get('/insight/:id', renderer, async (c) => {
     title: post.title,
     description,
     canonical: url,
+    // 글 정보 + 이동 경로(홈 › 마케팅 인사이트 › 글). 글 정보 칸은 그대로 두고 @graph 로 묶기만 한다
     schema: JSON.stringify({
       '@context': 'https://schema.org',
+      '@graph': [{
       '@type': 'BlogPosting',
       headline: post.title,
       description,
@@ -190,7 +192,15 @@ root.get('/insight/:id', renderer, async (c) => {
       ...(post.keywords?.length ? { keywords: post.keywords.join(', ') } : {}),
       author: { '@type': 'Organization', name: '인애드컴퍼니', url: SITE_URL },
       publisher: { '@type': 'Organization', name: '(주)인애드컴퍼니', url: SITE_URL },
-    }),
+      }, {
+        '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: '홈', item: `${SITE_URL}/` },
+          { '@type': 'ListItem', position: 2, name: '마케팅 인사이트', item: `${SITE_URL}/insight` },
+          { '@type': 'ListItem', position: 3, name: post.title, item: url },
+        ],
+      }],
+    }).replace(/</g, '\\u003c'),
   })
   let html = await res.text()
   html = html.replace('<meta property="og:type" content="website"/>', '<meta property="og:type" content="article"/>')
