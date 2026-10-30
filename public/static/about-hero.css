@@ -1,6 +1,6 @@
 /* 회사소개 히어로: 홈처럼 상단 구역 좌우 전체를 채운다. 고정 헤더 높이(78px)만큼 아래에서 시작하고,
    1600x900 무대를 칸에 꽉 차게(cover) 키운다 — 배율과 위치는 about-hero.js 가 --k, --x, --y 로 넣는다.
-   칸 높이는 너비의 16:9, 화면 높이를 넘지 않게. 휴대폰은 4:5. */
+   칸 높이는 너비의 16:9, 화면 높이를 넘지 않게. 휴대폰도 16:9(4:5는 양옆이 잘려 확대돼 보였음). */
 .abh-hero { position:relative; padding-top:78px; background:#f4f3f1; }
 .abh-sr { position:absolute; width:1px; height:1px; margin:-1px; padding:0; border:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 .abh { position:relative; width:100%; height:min(56.25vw, calc(100vh - 78px)); min-height:480px; overflow:hidden; background:#f4f3f1; }
@@ -42,9 +42,15 @@
 .abh.is-narrow .abh-meet b { font-size:62px; }
 .abh.is-narrow .abh-meet span { font-size:22px; }
 
+/* 무대가 많이 작아진 화면(휴대폰): 회사 문구 상자를 가운데 쪽으로 올리고 작은 줄 글자를 키운다(상자 배율은 js) */
+.abh.is-small .abh-meet { top:56%; }
+.abh.is-small .abh-meet-s { font-size:40px; }
+.abh.is-small .abh-meet span { font-size:34px; }
+
+/* 휴대폰도 PC와 같은 16:9 — 양옆이 잘려 확대돼 보이지 않게 장면 전체를 보여 준다 */
 @media(max-width:767px) {
   .abh-hero { padding-top:64px; }
-  .abh { height:auto; aspect-ratio:4 / 5; min-height:0; }
+  .abh { height:auto; aspect-ratio:16 / 9; min-height:0; }
 }
 
 /* 고정 헤더: 밝은 히어로 위라 다른 라이트 히어로(.vh-hero 등)와 같은 글자색 */

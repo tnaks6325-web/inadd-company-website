@@ -6,7 +6,7 @@
    - ③ 실제 사무실 컷(약 7초): 기획 메모 쓰는 손(크리에이티브) → 화이트보드에 적는 직원(데이터) → 회의실 TV 회의 →
      회의실 유리벽 로고 근접에서 사무실 전체로 쭉 빠짐 — 다음 컷이 아래에서 밀어 올라온다.
      '크리에이티브와 데이터가 만나는 곳 · IN AD COMPANY'가 '툭'(약 1.2초), 아침 사진으로 넘어가며 처음(타임랩스)으로 끊김 없이 이어진다.
-   1600x900 무대를 칸에 꽉 차게(cover) 키운다(--k·--x·--y). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고,
+   1600x900 무대를 칸에 꽉 차게(cover) 키운다(--k·--x·--y). 휴대폰도 16:9 칸이라 장면 전체가 보이고, 이름표·회사 문구만 키운다(TS). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고,
    '움직임 줄이기' 설정이면 마지막 화면에서 멈춘다. window.abhSeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
   var root = document.querySelector('[data-abh]');
@@ -16,13 +16,16 @@
   var stage = q('stage'), tags = qa('tag'), meet = q('meet'), cuts = qa('cut').map(function (c) { return { el: c, v: c.querySelector('video') }; }), pull = q('pull'), morning = q('morning');
   var day = q('day'), dv = q('dv'), night = q('night'), zps = qa('zp'), scr = q('scr');
 
-  // 무대 배율: 칸을 빈틈없이 덮게
+  // 무대 배율: 칸을 빈틈없이 덮게. 무대가 많이 작아지면(휴대폰) 이름표·회사 문구만 TS배 키워 읽히게 한다
+  var TS = 1;
   function fit() {
     var w = root.clientWidth, h = root.clientHeight, k = Math.max(w / 1600, h / 900);
     root.style.setProperty('--k', k.toFixed(5));
     root.style.setProperty('--x', ((w - 1600 * k) / 2).toFixed(1) + 'px');
     root.style.setProperty('--y', ((h - 900 * k) / 2).toFixed(1) + 'px');
-    root.classList.toggle('is-narrow', w / k < 1000);   // 휴대폰처럼 무대 가운데만 보이면 글자를 줄인다
+    root.classList.toggle('is-narrow', w / k < 1000);   // 무대 가운데만 보일 만큼 좁으면 글자를 줄인다
+    TS = Math.min(2, Math.max(1, 0.42 / k));
+    root.classList.toggle('is-small', TS > 1);
   }
   fit(); window.addEventListener('resize', fit);
 
@@ -100,11 +103,11 @@
     tags.forEach(function (g, i) {
       var p = ease(seg(u, [TAGS[i][0], TAGS[i][0] + 0.25])) * (1 - seg(u, [TAGS[i][1] - 0.15, TAGS[i][1]]));
       g.style.opacity = p.toFixed(3);
-      g.style.transform = 'translate(-50%,' + ((1 - p) * -20).toFixed(1) + 'px)';
+      g.style.transform = 'translate(-50%,' + ((1 - p) * -20).toFixed(1) + 'px) scale(' + TS.toFixed(3) + ')';
     });
     var mi = ease(seg(u, MEET_IN)), mh = seg(u, [MEET_IN[1], MEET_IN[1] + 0.25]);
     meet.style.opacity = (u >= 0 ? vis * mi : 0).toFixed(3);
-    meet.style.transform = 'translate(-50%,-50%) scale(' + ((0.86 + 0.14 * mi) * (1 + 0.05 * thud(mh))).toFixed(4) + ')';
+    meet.style.transform = 'translate(-50%,-50%) scale(' + ((0.86 + 0.14 * mi) * (1 + 0.05 * thud(mh)) * (1 + (TS - 1) * 0.6)).toFixed(4) + ')';
   }
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
