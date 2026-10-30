@@ -317,9 +317,10 @@ app.get('/marketing/seeding', (c) => {
   })
 })
 
-{/* SEO 마케팅 페이지 삭제(2026-07 네이버 광고정책) — 기존 URL은 마케팅 허브로 301 리다이렉트 */}
+{/* SEO 마케팅 페이지 삭제(2026-07 네이버 광고정책) — 기존 URL은 서비스 목록으로 바로 301 리다이렉트
+    (/marketing 도 /#services 로 301 되므로 거쳐 가지 않고 한 번에 보낸다) */}
 app.get('/marketing/seo', (c) => {
-  return c.redirect('/marketing', 301)
+  return c.redirect('/#services', 301)
 })
 
 app.get('/marketing/review', (c) => {
