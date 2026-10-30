@@ -278,6 +278,7 @@ app.get('/', (c) => {
             ]
           },
           "telephone": "010-9186-9944",
+          "email": "tnaks6325@inadcompany.com",
           "address": {
             "@type": "PostalAddress",
             "streetAddress": "고잔로 51, 타워아이즈빌 2층 204호",
@@ -304,6 +305,7 @@ app.get('/', (c) => {
           "image": "https://www.inadcompany.co.kr/static/og-image.png",
           "url": "https://www.inadcompany.co.kr",
           "telephone": "010-9186-9944",
+          "email": "tnaks6325@inadcompany.com",
           "priceRange": "₩50,000~",
           "areaServed": { "@type": "Country", "name": "대한민국" },
           "address": {
