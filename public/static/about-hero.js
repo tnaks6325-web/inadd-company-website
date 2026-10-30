@@ -1,11 +1,11 @@
-/* 회사소개 히어로(상단 전체 화면, 한 바퀴 약 12.4초)
-   - 제목(0~2초): '브랜드의 설득력을 / 설계하는 / 크리에이티브 퍼포먼스'가 한 줄씩 올라왔다가 위로 빠진다.
+/* 회사소개 히어로(상단 전체 화면, 한 바퀴 약 12.2초, 제목 장면 없이 바로 시작 — 검색엔진용 제목은 about.tsx 에 숨겨 둠)
    - ① 사무실의 하루(약 3.3초): 실제 사무실 사진을 시간대별로 바꾼 6장(08:00~22:00)을 이어 만든 타임랩스 영상 — 사람들이 매우 빠르게 오간다.
-     아래 가운데 시계 글자. 영상이 끝나면 밤 사진(원본)으로 바뀐다.
+     영상이 끝나면 밤 사진(원본)으로 바뀐다.
    - ② 화면 속으로(약 1.5초): 마지막 밤 사진에서 오른쪽 줄 가운데 모니터로 점점 빨라지며 쭉 빨려 들어간다(약 22배).
-     거의 다 다가갔을 때 모니터에 ③ 첫 장면이 원근으로 켜지고, 화면이 무대를 다 덮으면 ③으로 이어진다.
-   - ③ 크리에이티브 × 데이터: 네 줄의 손 장면이 줄마다 엇갈리며 점점 빠르게 바뀐다(아래에서 밀어 올림).
-     네 줄이 가운데로 가속하며 모이고 '툭' — '크리에이티브와 데이터가 만나는 곳 · IN AD COMPANY'.
+     거의 다 다가갔을 때 모니터에 ③ 첫 컷이 원근으로 켜지고, 화면이 무대를 다 덮으면 ③으로 이어진다.
+   - ③ 실제 사무실 컷(약 7초): 기획 메모 쓰는 손(크리에이티브) → 화이트보드에 적는 직원(데이터) → 회의실 TV 회의 →
+     회의실 유리벽 로고 근접에서 사무실 전체로 쭉 빠짐 — 다음 컷이 아래에서 밀어 올라온다.
+     '크리에이티브와 데이터가 만나는 곳 · IN AD COMPANY'가 '툭'(약 1.2초), 아침 사진으로 넘어가며 처음(타임랩스)으로 끊김 없이 이어진다.
    1600x900 무대를 칸에 꽉 차게(cover) 키운다(--k·--x·--y). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고,
    '움직임 줄이기' 설정이면 마지막 화면에서 멈춘다. window.abhSeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
@@ -13,9 +13,8 @@
   if (!root) return;
   function q(k, from) { return (from || root).querySelector('[data-abh-' + k + ']'); }
   function qa(k, from) { return Array.prototype.slice.call((from || root).querySelectorAll('[data-abh-' + k + ']')); }
-  var stage = q('stage'), tls = qa('tl'), tags = qa('tag'), meet = q('meet');
-  var day = q('day'), cks = qa('ck'), clock = q('clock'), dv = q('dv'), night = q('night'), zps = qa('zp'), scr = q('scr');
-  var cols = qa('col').map(function (c) { return { el: c, clips: qa('clip', c).map(function (x) { return { el: x, v: x.querySelector('video') }; }) }; });
+  var stage = q('stage'), tags = qa('tag'), meet = q('meet'), cuts = qa('cut').map(function (c) { return { el: c, v: c.querySelector('video') }; }), pull = q('pull'), morning = q('morning');
+  var day = q('day'), dv = q('dv'), night = q('night'), zps = qa('zp'), scr = q('scr');
 
   // 무대 배율: 칸을 빈틈없이 덮게
   function fit() {
@@ -28,23 +27,23 @@
   fit(); window.addEventListener('resize', fit);
 
   // 시각표(초)
-  var T_IN = 0.15, T_GAP = 0.18, T_OUT = [1.75, 2.1];
   // ① 사무실의 하루: 타임랩스 영상(VD초, 시간대 5구간)이 끝나면 밤 사진(원본)으로 0.1초 만에 바뀐다
-  var D0 = 1.9, VD = 3.3, NIGHT = D0 + VD;   // 고해상도 조각은 밤 사진부터
+  var D0 = 0.2, VD = 3.3, NIGHT = D0 + VD;   // 고해상도 조각은 밤 사진부터
   // ② 밤 사진의 모니터 화면 네 귀퉁이(무대 좌표: 왼위·오위·오아래·왼아래)와 그 가운데, 끝 배율
   var QUAD = [983.7, 341.9, 1100.8, 342.6, 1091.5, 413.2, 980.2, 413.0], F = { x: 1039.05, y: 377.7 }, ZMAX = 22;
   var ZOOM = [NIGHT + 0.15, NIGHT + 1.65], SCR_IN = [ZOOM[0] + 1.2, ZOOM[0] + 1.36];   // 모니터 화면은 거의 다 다가갔을 때(화면 폭의 약 60%) 바뀐다
   var C0 = ZOOM[1];
-  // 줄마다 장면이 바뀌는 때(③ 시작 기준, 점점 빨라짐) — 바뀔 때 0.22초 동안 아래에서 밀어 올림
-  var CUT = [[0, 1.0, 1.7], [0.3, 1.25, 1.9], [0.15, 1.1, 1.8], [0.45, 1.35, 2.0]], WIPE = 0.22;
-  var MERGE = [2.55, 3.05], MEET_IN = [2.95, 3.25];
-  var OUT = [C0 + 6.1, C0 + 6.5], CYCLE = C0 + 6.5;
-  var CX = [198, 600, 1000, 1402];   // 줄 가운데 x
+  // ③ 컷 시작 때와 영상 길이(③ 시작 기준) — 바뀔 때 0.22초 동안 아래에서 밀어 올림. 컷4는 영상 없이 사진이 뒤로 빠진다
+  var CUT_AT = [0, 1.3, 2.6, 4.25], CUT_LEN = [1.33, 1.3, 1.67, 0], WIPE = 0.22;
+  var TAGS = [[0.15, 1.2], [1.45, 2.5]];   // 컷1 '크리에이티브', 컷2 '데이터' 이름표가 보이는 때
+  // 컷4 뒤로 빠지기: 로고 주변 가운데(무대 좌표)를 6배 확대한 상태에서 1배로(처음 빠르고 끝에서 느리게)
+  var PF = { x: 578.2, y: 285.0 }, PS = 6, PULL = [4.3, 5.7];
+  var MEET_IN = [5.35, 5.65];
+  var OUT = [C0 + 6.6, C0 + 7.0], CYCLE = C0 + 7.0;   // 마지막 회사 문구는 약 1.2초, 사라지며 아침 사진으로
 
   function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
   function seg(l, r) { return clamp((l - r[0]) / (r[1] - r[0])); }
   function ease(x) { return 1 - Math.pow(1 - x, 3); }
-  function accel(x) { return x * x * x; }
   function thud(h) { return Math.sin(Math.PI * h) * (1 - h); }
 
   // 1600x900 사각형을 네 점(왼위·오위·오아래·왼아래)에 맞추는 원근 변환(matrix3d)
@@ -56,63 +55,52 @@
     return 'matrix3d(' + [a / 1600, d / 1600, 0, g / 1600, b / 900, e / 900, 0, h / 900, 0, 0, 1, 0, x0, y0, 0, 1].join(',') + ')';
   }
 
-  // 타임랩스 영상: 시각표에 맞춰 재생(어긋나면 맞춤), 끝나면 마지막 장면에서 멈춤
-  function syncDay(l) {
-    var want = Math.min(Math.max(l - D0, 0), VD - 0.03), on = live && l >= D0 && l < NIGHT;
+  // 영상을 시각표에 맞춰 재생(어긋나면 맞춤): s = 이 영상 안에서 지금 보여야 할 초, 길이를 넘으면 마지막 장면에서 멈춤
+  function syncVid(v, s, len) {
+    var want = Math.min(Math.max(s, 0), len - 0.03), on = live && s >= 0 && s < len;
     if (on) {
-      if (dv.paused) { var pr = dv.play(); if (pr && pr.catch) pr.catch(function () {}); }
-      if (Math.abs(dv.currentTime - want) > 0.25) dv.currentTime = want;
+      if (v.paused) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      if (Math.abs(v.currentTime - want) > 0.25) v.currentTime = want;
     } else {
-      if (!dv.paused) dv.pause();
-      if (dv.readyState > 0 && Math.abs(dv.currentTime - want) > 0.05) dv.currentTime = want;
+      if (!v.paused) v.pause();
+      if (v.readyState > 0 && Math.abs(v.currentTime - want) > 0.05) v.currentTime = want;
     }
   }
 
   function render(t) {
     var l = t % CYCLE, vis = 1 - seg(l, OUT);
-    // 제목
-    var tout = accel(seg(l, T_OUT));
-    tls.forEach(function (e, i) {
-      var p = ease(seg(l, [T_IN + i * T_GAP, T_IN + i * T_GAP + 0.4]));
-      e.style.opacity = (p * (1 - tout)).toFixed(3);
-      e.style.transform = 'translateY(' + ((1 - p) * 40 - tout * 120).toFixed(1) + 'px)';
-    });
     // ① 사무실의 하루
     // ② 모니터로 확대: 배율은 로그로 점점 빨라지고, 모니터 가운데가 무대 가운데로 끌려온다
     var zq = seg(l, ZOOM), zq2 = zq * zq, A = Math.pow(ZMAX, zq2);
     var BX = F.x + (800 - F.x) * zq2 - F.x * A, BY = F.y + (450 - F.y) * zq2 - F.y * A;
-    day.style.opacity = (seg(l, [D0, D0 + 0.2]) * (l < C0 + 0.2 ? 1 : 0)).toFixed(3);
+    day.style.opacity = ((t < CYCLE ? seg(l, [0, D0]) : 1) * (l < C0 + 0.2 ? 1 : 0)).toFixed(3);   // 처음 한 번만 서서히, 반복 때는 아침 사진에서 바로 이어짐
     day.style.transform = 'translate(' + BX.toFixed(2) + 'px,' + BY.toFixed(2) + 'px) scale(' + A.toFixed(5) + ')';
     night.style.opacity = seg(l, [NIGHT - 0.1, NIGHT]).toFixed(3);
     zps.forEach(function (z) { z.style.opacity = l >= NIGHT ? 1 : 0; });
-    syncDay(l);
-    // 시계: 08:00 10:00 13:00 16:00 19:00 은 영상 구간 시작, 22:00 은 밤 사진
-    cks.forEach(function (b, k) { var a = D0 + k * VD / (cks.length - 1); b.style.opacity = (l >= a && (k === cks.length - 1 || l < a + VD / (cks.length - 1)) ? 1 : 0); });
-    clock.style.opacity = (seg(l, [D0, D0 + 0.2]) * (1 - seg(l, [ZOOM[0], ZOOM[0] + 0.2]))).toFixed(3);
+    syncVid(dv, l > C0 ? -1 : l - D0, VD);   // 사진이 숨은 뒤에는 미리 처음으로 감아 둔다(반복 때 아침 장면에서 바로 시작)
     // ② 모니터 화면: 사진과 같은 움직임을 네 귀퉁이에 적용해 원근으로 붙인다(선명하게 그리려고 사진 밖에 따로 둠)
     var sv = ease(seg(l, SCR_IN)) * (l < C0 + 0.2 ? 1 : 0);
     scr.style.opacity = sv.toFixed(3);
     if (sv > 0) scr.style.transform = quad3d(QUAD.map(function (v, i) { return i % 2 ? v * A + BY : v * A + BX; }));
-    // ③ (화면 속 첫 장면에서 이어지므로 네 줄은 제자리에서 나타난다)
-    var u = l - C0, mg = accel(seg(u, MERGE));
-    cols.forEach(function (c, i) {
-      var x = (800 - CX[i]) * mg, sx = 1 - 0.75 * mg;
-      c.el.style.opacity = (vis * seg(u, [-0.12, 0.02]) * (1 - seg(u, [MERGE[1] - 0.12, MERGE[1] + 0.08]))).toFixed(3);
-      c.el.style.transform = 'translate(' + x.toFixed(1) + 'px,0px) scale(' + sx.toFixed(4) + ',' + (1 - 0.3 * mg).toFixed(4) + ')';
-      c.clips.forEach(function (x2, k) {
-        var at = CUT[i][k], w = k === 0 ? 1 : ease(seg(u, [at, at + WIPE]));
-        var gone = k < c.clips.length - 1 ? (u >= CUT[i][k + 1] + WIPE ? 1 : 0) : 0;
-        x2.el.style.zIndex = k + 1;
-        x2.el.style.transform = 'translateY(' + ((1 - w) * 100).toFixed(2) + '%)';
-        x2.el.style.visibility = (u >= at || k === 0) && !gone ? 'visible' : 'hidden';
-        var on = live && vis > 0 && u >= Math.max(0, at) && !gone && u < MERGE[1];
-        if (x2.v) { if (on) { if (x2.v.paused) { var pr = x2.v.play(); if (pr && pr.catch) pr.catch(function () {}); } } else if (!x2.v.paused) x2.v.pause(); }
-      });
+    // ③ 실제 사무실 컷: 컷1은 화면 속 장면에서 이어지므로 제자리에서 나타나고, 다음 컷은 아래에서 밀어 올라온다
+    var u = l - C0;
+    cuts.forEach(function (c, i) {
+      var at = CUT_AT[i], w = i === 0 ? seg(u, [-0.12, 0.02]) : ease(seg(u, [at, at + WIPE]));
+      var gone = i < cuts.length - 1 && u >= CUT_AT[i + 1] + WIPE;
+      c.el.style.zIndex = 5 + i;
+      c.el.style.visibility = (vis > 0 || i === cuts.length - 1) && w > 0 && !gone && l < CYCLE ? 'visible' : 'hidden';
+      c.el.style.opacity = (i === 0 ? w : 1).toFixed(3);
+      c.el.style.transform = i === 0 ? 'none' : 'translateY(' + ((1 - w) * 100).toFixed(2) + '%)';
+      if (c.v) syncVid(c.v, u >= at - (i === 0 ? 0.12 : 0) && !gone ? u - at : -1, CUT_LEN[i]);
     });
+    var pz = ease(seg(u, PULL)), ps = PS + (1 - PS) * pz;   // 6배 → 1배, 로고 가운데가 무대 가운데에서 제자리로
+    var px = 800 + (PF.x - 800) * pz - PF.x * ps, py = 450 + (PF.y - 450) * pz - PF.y * ps;
+    pull.style.transform = 'translate(' + px.toFixed(2) + 'px,' + py.toFixed(2) + 'px) scale(' + ps.toFixed(4) + ')';
+    morning.style.opacity = seg(l, OUT).toFixed(3);
     tags.forEach(function (g, i) {
-      var p = ease(seg(u, [0.45, 0.75]));
-      g.style.opacity = (u >= 0 ? vis * p * (1 - seg(u, [MERGE[0], MERGE[0] + 0.2])) : 0).toFixed(3);
-      g.style.transform = 'translateY(' + ((1 - p) * -20).toFixed(1) + 'px)';
+      var p = ease(seg(u, [TAGS[i][0], TAGS[i][0] + 0.25])) * (1 - seg(u, [TAGS[i][1] - 0.15, TAGS[i][1]]));
+      g.style.opacity = p.toFixed(3);
+      g.style.transform = 'translate(-50%,' + ((1 - p) * -20).toFixed(1) + 'px)';
     });
     var mi = ease(seg(u, MEET_IN)), mh = seg(u, [MEET_IN[1], MEET_IN[1] + 0.25]);
     meet.style.opacity = (u >= 0 ? vis * mi : 0).toFixed(3);
@@ -122,8 +110,8 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t = 0, prev = 0, on = true, held = false, live = false;
   window.abhSeek = function (s) { held = true; live = false; t = s; render(t); };
-  window.abhTimes = { D0: D0, VD: VD, NIGHT: NIGHT, ZOOM: ZOOM, C0: C0, MERGE: MERGE, CYCLE: CYCLE };
-  if (reduce) { t = C0 + 4.5; render(t); return; }
+  window.abhTimes = { D0: D0, VD: VD, NIGHT: NIGHT, ZOOM: ZOOM, C0: C0, CUT_AT: CUT_AT, CYCLE: CYCLE };
+  if (reduce) { t = C0 + 6.2; render(t); return; }
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(root);
   function frame(now) {
     var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 0; prev = now;
