@@ -19,8 +19,9 @@
 //    --page     상태와 상관없이 그 페이지만 처리(--dry-run 과 같이 쓰는 용도)
 //  예약 실행: ~/Library/LaunchAgents/com.sooman.inadd-notion-publish.plist (30분마다)
 // ─────────────────────────────────────────────
-import { readFileSync, mkdirSync, writeFileSync } from 'node:fs'
-import { homedir } from 'node:os'
+import { readFileSync, mkdirSync, writeFileSync, existsSync, mkdtempSync, rmSync } from 'node:fs'
+import { homedir, tmpdir } from 'node:os'
+import { execFileSync } from 'node:child_process'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -94,8 +95,27 @@ async function rehostImage(url) {
   const type = res.headers.get('content-type') || 'image/png'
   const buf = Buffer.from(await res.arrayBuffer())
   if (buf.length > 5 * 1024 * 1024) throw new Error('이미지가 5MB 를 넘습니다. 노션에서 줄여 주세요.')
-  const r = await site('/api/blog/insight/thumb', { method: 'POST', body: { dataUrl: `data:${type};base64,${buf.toString('base64')}` } })
+  const light = toWebp(buf, type)
+  const out = light || { type, buf }
+  const r = await site('/api/blog/insight/thumb', { method: 'POST', body: { dataUrl: `data:${out.type};base64,${out.buf.toString('base64')}` } })
   return r.url
+}
+
+// 노션 그림(대부분 PNG, 장당 0.3~0.8MB)을 WebP(품질 80, 폭 1600px 이하)로 줄인다.
+// 이 맥의 cwebp·sips 를 쓰고, 없거나 실패하거나 더 커지면 원본 그대로 올린다.
+const CWEBP = ['/opt/homebrew/bin/cwebp', '/usr/local/bin/cwebp'].find(p => existsSync(p))
+function toWebp(buf, type) {
+  if (!CWEBP || !/^image\/(png|jpe?g)$/.test(type)) return null
+  const dir = mkdtempSync(join(tmpdir(), 'inadd-img-'))
+  try {
+    const src = join(dir, 'in'), dst = join(dir, 'out.webp')
+    writeFileSync(src, buf)
+    let w = 0
+    try { w = Number(/pixelWidth: (\d+)/.exec(execFileSync('/usr/bin/sips', ['-g', 'pixelWidth', src]).toString())?.[1] || 0) } catch {}
+    execFileSync(CWEBP, ['-quiet', '-q', '80', '-metadata', 'none', ...(w > 1600 ? ['-resize', '1600', '0'] : []), src, '-o', dst])
+    const webp = readFileSync(dst)
+    return webp.length < buf.length ? { type: 'image/webp', buf: webp } : null
+  } catch { return null } finally { rmSync(dir, { recursive: true, force: true }) }
 }
 
 // ── 노션 블록 → HTML ──
