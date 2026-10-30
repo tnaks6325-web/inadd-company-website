@@ -5,13 +5,15 @@
 //   깊이 확대해도 선명하도록 원본 고해상도에서 자른 조각 2장(zoom1 4배·zoom2 약 8배)을 제자리에 겹쳐 둔다. 모니터에는 ③ 첫 컷이 원근으로 켜진다
 // → ③ 실제 사무실 컷(대표 촬영 사진·영상, 글씨는 모두 흐림 처리, 인물은 AI 가상·뒷모습만):
 //    컷1 크리에이티브: 기획 메모를 쓰는 손(IMG_0289 → kling b559ff68) / 컷2 데이터: 화이트보드에 적는 직원(IMG_0291 + nano 2d5ab310 → kling c04a76f9)
-//    컷3 만나는 곳: 회의실에서 4명이 TV(광고 소재+성과 그래프)를 보며 회의(IMG_0290 + nano dbf2e169 → eb60384c → kling 7877588f, 앞 1.7초만)
+//    컷3 만나는 곳: 회의실에서 4명이 TV(마케팅 슬라이드 '브랜드 페르소나 · 타겟설정' — 핵심 타겟(예시) 표 + 가상 브랜드 HAEON 제품 사진 nano a95d9bbd → 17ce3b5a)를 보며 회의(IMG_0290 + nano dbf2e169 → eb60384c → kling 7877588f, 앞 1.7초만.
+//      TV 화면은 영상 생성 후 테두리를 따라가며 슬라이드로 덮어씀)
 //    컷4 뒤로 빠지기: 밤 사진(원본) 회의실 유리벽 IN AD COMPANY 로고 근접(원본 고해상도 조각 out1·out2)에서 사무실 전체로 쭉 빠지고
 //    '크리에이티브와 데이터가 만나는 곳 · IN AD COMPANY' → 아침 사진으로 넘어가며 처음(타임랩스)으로 이어진다
 // 사무실 시간대 사진: nano_banana_pro 03cde637 2e2fe066 5fa5e2bb 376e8dfd aab5591b.
 // 움직임은 about-hero.js.
 const V = '/static/about-hero/'
 const CUTS = ['cut1', 'cut2', 'cut3']
+const CV = '?v=20261031u'   // 컷 영상을 바꾸면 올려서 옛 파일을 기억해 둔 브라우저도 새로 받게
 
 export const AboutHero = () => (
   <div class="abh" aria-hidden="true" data-abh>
@@ -29,7 +31,7 @@ export const AboutHero = () => (
       <div class="abh-scr" data-abh-scr><img src={`${V}cut1.webp`} alt="" /></div>
 
       {/* ③ 실제 사무실 컷 — 다음 컷이 아래에서 밀어 올라온다 */}
-      {CUTS.map(c => <div class="abh-cut" data-abh-cut><video src={`${V}${c}.mp4`} poster={`${V}${c}.webp`} muted playsinline preload="auto" /></div>)}
+      {CUTS.map(c => <div class="abh-cut" data-abh-cut><video src={`${V}${c}.mp4${CV}`} poster={`${V}${c}.webp${CV}`} muted playsinline preload="auto" /></div>)}
       {/* 컷4: 밤 사진 전체 + 로고 주변 고해상도 조각(무대 좌표 그대로) — 통째로 확대된 상태에서 1배로 빠진다. 끝에 아침 사진이 겹쳐 처음으로 */}
       <div class="abh-cut" data-abh-cut>
         <div class="abh-pull" data-abh-pull>
