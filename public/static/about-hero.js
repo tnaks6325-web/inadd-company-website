@@ -1,6 +1,6 @@
 /* 회사소개 히어로(상단 전체 화면, 한 바퀴 약 11.5초, 제목 장면 없이 바로 시작 — 검색엔진용 제목은 about.tsx 에 숨겨 둠)
    - ① 사무실의 하루(약 3.3초): 실제 사무실 사진을 시간대별로 바꾼 6장(08:00~22:00)을 이어 만든 타임랩스 영상 — 사람들이 매우 빠르게 오간다.
-     아래 가운데 아날로그 시계 바늘이 08시→22시로 빠르게 돈다(영상 구간마다 10·13·16·19시에 맞춤). 영상이 끝나면 밤 사진(원본)으로 바뀐다.
+     아래 가운데 실물 벽시계(화이트 미니멀, clock.webp) 바늘이 08시→22시로 일정한 속도로 빠르게 돌고(분침 초당 약 4바퀴), 분침 뒤에 부채꼴 잔상이 남는다. 영상이 끝나면 밤 사진(원본)으로 바뀐다.
    - ② 화면 속으로(약 1.5초): 마지막 밤 사진에서 오른쪽 줄 가운데 모니터로 점점 빨라지며 쭉 빨려 들어간다(약 22배).
      거의 다 다가갔을 때 모니터에 ③ 첫 장면이 원근으로 켜지고, 화면이 무대를 다 덮으면 ③으로 이어진다.
    - ③ 크리에이티브 × 데이터: 네 줄의 손 장면이 줄마다 엇갈리며 점점 빠르게 바뀐다(아래에서 밀어 올림).
@@ -13,7 +13,7 @@
   function q(k, from) { return (from || root).querySelector('[data-abh-' + k + ']'); }
   function qa(k, from) { return Array.prototype.slice.call((from || root).querySelectorAll('[data-abh-' + k + ']')); }
   var stage = q('stage'), tags = qa('tag'), meet = q('meet');
-  var day = q('day'), clock = q('clock'), hHand = q('hh'), mHand = q('mh'), dv = q('dv'), night = q('night'), zps = qa('zp'), scr = q('scr');
+  var day = q('day'), clock = q('clock'), hHand = q('hh'), mHand = q('mh'), mGhosts = qa('mg'), dv = q('dv'), night = q('night'), zps = qa('zp'), scr = q('scr');
   var cols = qa('col').map(function (c) { return { el: c, clips: qa('clip', c).map(function (x) { return { el: x, v: x.querySelector('video') }; }) }; });
 
   // 무대 배율: 칸을 빈틈없이 덮게
@@ -28,7 +28,7 @@
 
   // 시각표(초)
   // ① 사무실의 하루: 타임랩스 영상(VD초, 시간대 5구간)이 끝나면 밤 사진(원본)으로 0.1초 만에 바뀐다
-  var D0 = 0.2, VD = 3.3, NIGHT = D0 + VD, HOURS = [8, 10, 13, 16, 19, 22];   // 고해상도 조각은 밤 사진부터
+  var D0 = 0.2, VD = 3.3, NIGHT = D0 + VD, H0 = 8, H1 = 22, TRAIL = 0.045;   // 시계: 8시→22시, 잔상 길이 = 0.045초 동안 분침이 도는 각도   // 고해상도 조각은 밤 사진부터
   // ② 밤 사진의 모니터 화면 네 귀퉁이(무대 좌표: 왼위·오위·오아래·왼아래)와 그 가운데, 끝 배율
   var QUAD = [983.7, 341.9, 1100.8, 342.6, 1091.5, 413.2, 980.2, 413.0], F = { x: 1039.05, y: 377.7 }, ZMAX = 22;
   var ZOOM = [NIGHT + 0.15, NIGHT + 1.65], SCR_IN = [ZOOM[0] + 1.2, ZOOM[0] + 1.36];   // 모니터 화면은 거의 다 다가갔을 때(화면 폭의 약 60%) 바뀐다
@@ -77,11 +77,16 @@
     night.style.opacity = seg(l, [NIGHT - 0.1, NIGHT]).toFixed(3);
     zps.forEach(function (z) { z.style.opacity = l >= NIGHT ? 1 : 0; });
     syncDay(l);
-    // 시계: 영상 구간 시작마다 8·10·13·16·19시, 끝(밤 사진)은 22시. 분침은 한 시간에 한 바퀴, 시침은 12시간에 한 바퀴
-    var sp = Math.min(Math.max((l - D0) / VD, 0), 1) * (HOURS.length - 1), si = Math.min(Math.floor(sp), HOURS.length - 2);
-    var hr = HOURS[si] + (HOURS[si + 1] - HOURS[si]) * (sp - si);
+    // 시계: 영상 동안 8시→22시를 일정하게(분침 한 시간 한 바퀴, 시침 12시간 한 바퀴). 도는 동안 분침 뒤로 잔상이 옅어지며 남는다
+    var running = l > D0 && l < NIGHT, hr = H0 + (H1 - H0) * Math.min(Math.max((l - D0) / VD, 0), 1);
+    var ma = hr * 360, trail = running ? (H1 - H0) * 360 / VD * TRAIL : 0;
     hHand.setAttribute('transform', 'rotate(' + (hr * 30).toFixed(2) + ' 60 60)');
-    mHand.setAttribute('transform', 'rotate(' + (hr * 360).toFixed(2) + ' 60 60)');
+    mHand.setAttribute('transform', 'rotate(' + ma.toFixed(2) + ' 60 60)');
+    mGhosts.forEach(function (g, i) {
+      var f = (i + 1) / mGhosts.length;
+      g.setAttribute('transform', 'rotate(' + (ma - trail * f).toFixed(2) + ' 60 60)');
+      g.setAttribute('opacity', trail ? (0.32 * (1 - f) + 0.04).toFixed(3) : '0');
+    });
     clock.style.opacity = (seg(l, [0, D0]) * (1 - seg(l, [ZOOM[0], ZOOM[0] + 0.2]))).toFixed(3);
     // ② 모니터 화면: 사진과 같은 움직임을 네 귀퉁이에 적용해 원근으로 붙인다(선명하게 그리려고 사진 밖에 따로 둠)
     var sv = ease(seg(l, SCR_IN)) * (l < C0 + 0.2 ? 1 : 0);
