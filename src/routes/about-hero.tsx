@@ -1,61 +1,32 @@
-// 회사소개 히어로(한 바퀴 약 11.5초): '한 문장이 설계되는 과정' — 제목 '브랜드의 설득력을 설계하는'을 장면으로 보여 준다.
-// 1 고민: 카피 설계 노트 위에 타깃·고민·상황과 카피 후보들이 빠르게 적힌다.
-// 2 지우기: 후보 카피에 줄이 그어지며 하나씩 사라진다(점점 빠르게).
-// 3 한 문장: '오후 3시에도 당기지 않는 피부'만 남아 크게 적힌다(광고주 강조색).
-// 4 번짐: 노트가 위로 작아지고, 같은 문장이 검색창·릴스·상세페이지로 번져 간다.
-// 5 끝: '2019년부터 · 누적 캠페인 37,000+'(홈 신뢰 지표와 같은 값).
-// 노트 내용과 문장은 예시(노트에 '예시' 표기). 고객사 로고·실제 인물 없음. 릴스 화면은 인플루언서 페이지 히어로의 AI 가상 영상을 다시 씀. 움직임은 about-hero.js.
-const KEEP = [
-  { k: '타깃', v: '29세 사무직 직장인', x: 28, y: 66 },
-  { k: '고민', v: '오후만 되면 당기는 피부', x: 300, y: 66 },
-  { k: '상황', v: '하루 종일 히터·에어컨 바람', x: 28, y: 112 },
-]
-const DRAFTS = [
-  { v: '히알루론산 5중 보습', x: 34, y: 172 },
-  { v: '1+1 최저가 특가', x: 330, y: 184 },
-  { v: '피부과 전문의 추천', x: 64, y: 236 },
-  { v: '성분이 다른 세럼', x: 336, y: 248 },
-  { v: '촉촉함, 그 이상', x: 180, y: 302 },
-]
-const LINE = '오후 3시에도 당기지 않는 피부'
+// 회사소개 히어로: 회사 아이덴티티 — ① 사무실의 하루(타임랩스, 대표 제공 사진으로 제작 예정) → ② 사무실 한 바퀴 → 모니터 화면 속으로(대표 촬영 예정)
+// → ③ 크리에이티브 × 데이터: 화면이 반으로 갈라져 왼쪽은 쓰고·놓고·그리는 손, 오른쪽은 대시보드·리포트·표를 보는 손이 점점 빠르게 바뀌다가
+//    가운데로 모여 '크리에이티브와 데이터가 만나는 곳 · IN AD COMPANY'(사이트 하단 회사 문구).
+// 지금은 ③만 있다. 손 장면은 AI 가상(nano_banana_pro → kling3_0 3초, 얼굴 없음): c1 b8e77971 c2 33595f34 c3 0c51dc77 / d1 dc0e2e82 d2 af53ef92 d3 7418358a.
+// 움직임은 about-hero.js.
+const V = '/static/about-hero/'
+const CREATIVE = ['c1', 'c2', 'c3']
+const DATA = ['d1', 'd2', 'd3']
+
+const Clip = ({ f }: { f: string }) => (
+  <div class="abh-clip" data-abh-clip><video src={`${V}${f}.mp4`} poster={`${V}${f}.webp`} muted playsinline preload="auto" /></div>
+)
 
 export const AboutHero = () => (
   <div class="abh" aria-hidden="true" data-abh>
     <div class="abh-stage">
-      {/* 번질 때 문장에서 각 화면으로 이어지는 선 */}
-      <svg class="abh-links" viewBox="0 0 680 620" data-abh-links>
-        <path d="M300 272 C 260 292, 150 280, 130 300" />
-        <path d="M340 272 L 340 282" />
-        <path d="M380 272 C 420 292, 530 280, 550 300" />
-      </svg>
-
-      {/* 카피 설계 노트 */}
-      <div class="abh-note" data-abh-note>
-        <div class="abh-paper" data-abh-paper><p class="abh-note-h"><b>카피 설계 노트</b><span>예시</span></p></div>
-        {KEEP.map(it => <p class="abh-kw abh-kw--keep" data-abh-kw style={`left:${it.x}px;top:${it.y}px`}><small>{it.k}</small>{it.v}</p>)}
-        {DRAFTS.map(it => <p class="abh-kw abh-kw--draft" data-abh-kw data-abh-draft style={`left:${it.x}px;top:${it.y}px`}>“{it.v}”<i data-abh-strike /></p>)}
-        <p class="abh-line" data-abh-line><span>“{LINE}”</span></p>
+      <div class="abh-pane abh-pane--l" data-abh-pane>
+        {CREATIVE.map(f => <Clip f={f} />)}
+        <p class="abh-tag">크리에이티브</p>
       </div>
-
-      {/* 같은 문장이 번져 가는 화면 */}
-      <div class="abh-mk abh-mk--search" data-abh-mk>
-        <p class="abh-mk-h">검색</p>
-        <p class="abh-sbar"><i />{LINE}</p>
-        <p class="abh-sr"><b>{LINE}, 사무실 세럼 정착기</b><small>블로그 · 피부일기</small></p>
-        <p class="abh-sr"><b>건성 직장인 보습 루틴</b><small>카페 · 뷰티 커뮤니티</small></p>
+      <div class="abh-pane abh-pane--r" data-abh-pane>
+        {DATA.map(f => <Clip f={f} />)}
+        <p class="abh-tag">데이터</p>
       </div>
-      <div class="abh-mk abh-mk--reel" data-abh-mk>
-        <p class="abh-mk-h">릴스</p>
-        <div class="abh-phone"><video src="/static/influencer-phones/skincare-am.mp4" poster="/static/influencer-phones/skincare-am.webp" muted loop playsinline preload="auto" /><p>{LINE}</p><small>♡ 1.2만 · 저장 3,410</small></div>
+      <div class="abh-meet" data-abh-meet>
+        <p class="abh-meet-s">크리에이티브와 데이터가 만나는 곳</p>
+        <b>IN AD COMPANY</b>
+        <span>2019년부터 · 누적 캠페인 <u>37,000+</u></span>
       </div>
-      <div class="abh-mk abh-mk--detail" data-abh-mk>
-        <p class="abh-mk-h">상세페이지</p>
-        <i class="abh-serum" />
-        <b>{LINE}</b>
-        <small>히알루 세럼 30ml</small>
-      </div>
-
-      <p class="abh-foot" data-abh-foot>2019년부터 · 누적 캠페인 <b>37,000+</b></p>
     </div>
   </div>
 )
