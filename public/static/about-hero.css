@@ -12,6 +12,18 @@
 .abh-title span { display:block; font-size:82px; font-weight:900; letter-spacing:-.035em; line-height:1.12; opacity:0; }
 .abh-title em { font-style:normal; color:#21306F; }
 
+/* ① 사무실의 하루: 6장을 겹쳐 두고 차례로 보인다. 시계 글자는 아래 가운데 */
+.abh-day { position:absolute; inset:0; z-index:3; overflow:hidden; opacity:0; }
+.abh-day-f { position:absolute; inset:0; display:block; width:100%; height:100%; object-fit:cover; opacity:0; }
+.abh-clock { position:absolute; left:50%; bottom:64px; width:190px; height:68px; margin-left:-95px !important; border-radius:4px; background:#fff; box-shadow:0 12px 30px rgba(17,19,24,.18); }
+.abh-clock b { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:40px; font-weight:800; letter-spacing:.02em; color:#111318; font-variant-numeric:tabular-nums; opacity:0; }
+
+/* ② 사무실 한 바퀴: 영상은 무대 전체, 끝에서 모니터 쪽으로 확대된다(원점 0 0, 배율·위치는 js) */
+.abh-walk { position:absolute; inset:0; z-index:4; overflow:hidden; opacity:0; transform-origin:0 0; }
+.abh-walk video { position:absolute; inset:0; display:block; width:100%; height:100%; object-fit:cover; }
+.abh-scr { position:absolute; left:0; top:0; width:1600px; height:900px; transform-origin:0 0; background:#f4f3f1; opacity:0; }
+.abh-scr-c { position:absolute; top:0; width:396px; height:900px; object-fit:cover; }
+
 /* 크리에이티브 × 데이터: 네 줄(각 396x900, 사이 8px) */
 .abh-col { position:absolute; top:0; z-index:5; width:396px; height:900px; overflow:hidden; background:#ddd; opacity:0; }
 .abh-col--0 { left:0; } .abh-col--1 { left:402px; } .abh-col--2 { left:802px; } .abh-col--3 { left:1204px; }
@@ -33,6 +45,7 @@
 .abh.is-narrow .abh-meet-s { font-size:26px; }
 .abh.is-narrow .abh-meet b { font-size:62px; }
 .abh.is-narrow .abh-meet span { font-size:22px; }
+.abh.is-narrow .abh-clock { transform:scale(.8); transform-origin:50% 100%; }
 
 @media(max-width:767px) {
   .abh-hero { padding-top:64px; }
