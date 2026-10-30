@@ -1,0 +1,42 @@
+/* 회사소개 히어로: 채널 장면 6개 → 실제 고객 로고 130개가 모여 IN AD COMPANY → 2019~2026 막대. 무대는 680x620, --s 배율로 줄인다.
+   장면은 520x390 으로 그리고 3x2 칸에서는 0.392배(204x153). */
+.vh-hero--abh { background:#f4f3f1; }
+.vh-hero--abh::before { display:none; }
+.vh-hero--abh .vh-inner { position:relative; z-index:2; }
+.vh-hero--abh .vh-glow { position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(42% 60% at 76% 48%,rgba(33,48,111,.10),transparent 70%),radial-gradient(30% 44% at 98% 92%,rgba(217,197,154,.22),transparent 70%),radial-gradient(28% 40% at 56% 4%,rgba(33,48,111,.06),transparent 70%); }
+.abh { --s:.92; position:absolute; top:78px; bottom:0; left:52%; right:0; z-index:1; pointer-events:none; display:flex; align-items:center; justify-content:center; }
+.abh-stage { position:relative; flex:none; width:680px; height:620px; transform:scale(var(--s)); font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif; color:#111318; text-align:left; word-break:keep-all; letter-spacing:normal; line-height:1.35; }
+.abh-stage * { box-sizing:border-box; margin:0; padding:0; list-style:none; }
+.abh-stage u { text-decoration:none; font-variant-numeric:tabular-nums; }
+
+/* 채널 장면 */
+.abh-sc { position:absolute; left:0; top:0; z-index:10; width:520px; height:390px; border:8px solid #fff; border-radius:8px; overflow:hidden; background:#ddd; box-shadow:0 26px 56px rgba(17,19,24,.22); opacity:0; transform-origin:50% 50%; }
+.abh-sc video, .abh-sc img { position:absolute; inset:0; display:block; width:100%; height:100%; object-fit:cover; }
+.abh-chip { position:absolute; left:14px; top:14px; padding:6px 12px !important; border-radius:4px; background:#21306F; color:#fff; font-size:22px; font-weight:800; letter-spacing:-.02em; }
+
+/* 실제 고객 로고 */
+.abh-logos { position:absolute; inset:0; z-index:20; }
+.abh-logos img { position:absolute; left:0; top:0; width:110px; height:41px; border-radius:6px; background:#fff; box-shadow:0 8px 20px rgba(17,19,24,.14); opacity:0; transform-origin:50% 50%; }
+.abh-word { position:absolute; z-index:30; left:0; right:0; top:0; display:flex; flex-direction:column; align-items:center; gap:8px; opacity:0; transform-origin:50% 0; }
+.abh-word b { font-size:58px; font-weight:900; letter-spacing:-.02em; line-height:1; color:#111318; white-space:nowrap; }
+.abh-word span { font-size:19px; font-weight:800; }
+.abh-word u { color:#21306F; }
+
+/* 쌓아 온 시간 */
+.abh-hist { position:absolute; z-index:25; left:40px; right:40px; top:150px; height:430px; opacity:0; }
+.abh-hist-h { font-size:15px; font-weight:800; }
+.abh-bars { position:absolute; left:0; right:0; top:34px; height:330px; display:flex; align-items:flex-end; gap:16px; }
+.abh-bar { flex:1; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:8px; }
+.abh-bar i { display:block; width:100%; height:calc(var(--h) * 2.7px * var(--p, 0)); border-radius:4px 4px 0 0; background:#D9C59A; }
+.abh-bar.is-now i { background:#21306F; }
+.abh-bar span { font-size:13px; font-weight:800; font-variant-numeric:tabular-nums; }
+.abh-hist-f { position:absolute; left:0; right:0; bottom:0; text-align:center; font-size:20px; font-weight:800; letter-spacing:-.02em; opacity:0; }
+.abh-hist-f u, .abh-hist-f b { color:#21306F; font-weight:900; }
+
+@media(max-width:1280px) { .abh { --s:.78; } }
+@media(max-width:1024px) { .abh { --s:.6; } }
+@media(max-width:767px) {
+  .vh-hero--abh { flex-direction:column; align-items:stretch; }
+  .abh { position:relative; left:auto; right:auto; top:auto; bottom:auto; flex:none; height:360px; margin-top:-20px; --s:.52; overflow:hidden; }
+}
