@@ -1,7 +1,8 @@
 /* 인사이트 히어로(상단 좌우 전체, 한 번 재생 후 마지막 문구에서 멈춤 — 뒤 제목 줄만 아주 천천히 계속 흐른다)
-   - 뒤 배경: 광고주 미팅 → PPT 브리핑 → 회의 → 교육 → 시장 분석 장면이 약 0.55초씩 빠르게 바뀐다(장면마다 살짝 다가감). 마지막 장면에서 멈춘다.
+   - 뒤 배경: 광고주 미팅 → PPT 브리핑 → 회의 → 교육 → 시장 분석 장면이 약 0.9초씩 바뀐다. 장면마다 사람이 움직이는 짧은 영상이 처음부터 재생되고
+     (살짝 다가가는 움직임 포함), 마지막 장면 영상은 끝까지 재생된 뒤 마지막 모습에서 멈춘다.
    - 그 위로 실제 글 제목(ishTitles)을 4줄로 나눠 캔버스에 그리고, 줄마다 서로 반대 방향으로 빠르게 흐르다가 약 3초 동안 느려진다. 숫자(47%, 2.4배 …)는 노랑.
-   - 약 2.6초부터 배경이 흐려지고 가운데가 어두워지며, 'IN AD COMPANY INSIGHT'(자간이 좁혀지며) → 제목 두 줄(아래에서 올라옴) → 설명.
+   - 약 4초부터 배경이 흐려지고 가운데가 어두워지며, 'IN AD COMPANY INSIGHT'(자간이 좁혀지며) → 제목 두 줄(아래에서 올라옴) → 설명.
    1600x600 무대를 칸에 꽉 차게(cover) 키운다(--k·--x·--y). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고,
    '움직임 줄이기' 설정이면 마지막 화면으로 바로 그린다. window.ishSeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
@@ -64,15 +65,15 @@
   window.addEventListener('resize', function () { fit(); size(); render(t, 0); });
 
   // 시각표(초)
-  var SC = [0, 0.55, 1.1, 1.65, 2.2];   // 장면마다 시작하는 때
-  var SLOW = [0, 3.2], GLOW = [2.6, 3.3], LINE = [2.85, 3.05, 3.2, 3.55], END = 4.3;
+  var SC = [0, 0.9, 1.8, 2.7, 3.6], RATE = 1;   // 장면마다 시작하는 때, 장면 영상 재생 속도(영상은 1.5~1.6초, 그 뒤 고개를 돌리는 부분은 잘라 냄)
+  var SLOW = [0, 4.4], GLOW = [4.0, 4.7], LINE = [4.25, 4.45, 4.6, 4.95], END = 5.7;
 
   function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
   function seg(l, r) { return clamp((l - r[0]) / (r[1] - r[0])); }
   function ease(x) { return 1 - Math.pow(1 - x, 3); }
 
   function render(l, dt) {
-    // 흐르는 줄: 처음 2.4배 → 3.2초 동안 0.22배까지 느려진다(그 뒤로도 아주 천천히)
+    // 흐르는 줄: 처음 2.4배 → 4.4초 동안 0.22배까지 느려진다(그 뒤로도 아주 천천히)
     var f = 0.22 + 2.18 * (1 - ease(seg(l, SLOW))), dim = ease(seg(l, GLOW));
     var a = 0.26 - 0.12 * dim;
     // 뒤 배경 장면: 다음 장면이 0.1초 만에 앞 장면을 덮고, 장면마다 1.06배에서 1배로 살짝 다가간다
@@ -82,8 +83,9 @@
       var shown = i === cur || (i === cur - 1 && l < SC[cur] + 0.1);
       e.style.opacity = shown ? (i === cur && i > 0 ? seg(l, [SC[i], SC[i] + 0.1]) : 1).toFixed(3) : '0';
       e.style.zIndex = i;
-      if (shown) e.style.transform = 'scale(' + (1.06 - 0.06 * ease(seg(l, [SC[i], SC[i] + 1.2]))).toFixed(4) + ')';
+      if (shown) e.style.transform = 'scale(' + (1.06 - 0.06 * ease(seg(l, [SC[i], SC[i] + 1.6]))).toFixed(4) + ')';
     });
+    if (cur !== playing) { playing = cur; scenes.forEach(function (e, i) { if (i !== cur) e.pause(); }); if (!held) start(scenes[cur]); }
     bg.style.filter = dim > 0.01 ? 'blur(' + (dim * 6).toFixed(2) + 'px)' : 'none';
     cx.setTransform(PR, 0, 0, PR, 0, 0); cx.clearRect(0, 0, 1600, 600);
     cx.font = FONT; cx.textBaseline = 'middle';
@@ -114,17 +116,24 @@
     type.style.transform = 'translate(-50%,-50%) scale(' + (TS * (1 - 0.05 * (1 - ease(seg(l, [LINE[1], LINE[3] + 0.6]))))).toFixed(4) + ')';
   }
 
+  // 장면 영상: 그 장면이 시작될 때 처음부터 재생(소리 없음). 재생이 막히면 첫 장면 사진(poster)이 그대로 보인다
+  var playing = -1;
+  function start(v) { try { v.currentTime = 0; v.playbackRate = RATE; var p = v.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {} }
+
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t = 0, prev = 0, on = true, held = false;
-  window.ishSeek = function (s) { held = true; rows.forEach(function (o, r) { o.x = -((r * 397) % 900) + o.dir * o.v * 2.4 * s; }); t = s; render(t, 0); };
-  window.ishTimes = { SC: SC, SLOW: SLOW, GLOW: GLOW, LINE: LINE, END: END };
-  if (reduce) { t = END; render(t, 0); return; }
+  window.ishSeek = function (s) {
+    held = true; rows.forEach(function (o, r) { o.x = -((r * 397) % 900) + o.dir * o.v * 2.4 * s; }); t = s; render(t, 0);
+    var v = scenes[playing]; if (v) { v.pause(); v.currentTime = Math.min(v.duration || 3, (s - SC[playing]) * RATE); }
+  };
+  window.ishTimes = { SC: SC, RATE: RATE, SLOW: SLOW, GLOW: GLOW, LINE: LINE, END: END };
+  if (reduce) { held = true; t = END; render(t, 0); return; }   // 영상은 재생하지 않고 마지막 장면 사진만
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(root);
-  // 첫 장면 사진이 준비된 뒤에 시작한다(늦게 뜨면 첫 장면을 못 보고 지나가므로). 1.5초가 지나면 그냥 시작
+  // 첫 장면 영상이 재생할 수 있게 된 뒤에 시작한다(늦게 뜨면 첫 장면을 못 보고 지나가므로). 2초가 지나면 그냥 시작
   var ready = false;
-  function go() { ready = true; }
-  if (scenes[0] && scenes[0].decode) scenes[0].decode().then(go, go); else go();
-  setTimeout(go, 1500);
+  function go() { if (!ready) { ready = true; playing = -1; } }
+  if (scenes[0].readyState >= 3) go(); else scenes[0].addEventListener('canplay', go);
+  setTimeout(go, 2000);
   function frame(now) {
     var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 0; prev = now;
     if (held || !ready || !on || document.hidden) dt = 0;

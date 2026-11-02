@@ -32,17 +32,18 @@ export const TITLES = [
 // 글 제목 → 흐르는 줄에 쓸 짧은 제목('—' 앞부분)
 export const shortTitle = (t: string) => t.split(' — ')[0].trim()
 
-// 뒤 배경 장면(나오는 순서): 광고주 미팅, PPT 브리핑, 회의, 교육, 시장 분석. 2000x750, 보이는 얼굴은 흐리게 처리.
+// 뒤 배경 장면(나오는 순서): 광고주 미팅, PPT 브리핑, 회의, 교육, 시장 분석. 장면마다 3초짜리 움직이는 영상(1600x600, AI 사진을 Kling 으로 움직임)과
+// 첫 장면 사진(webp, 영상이 뜨기 전·움직임 줄이기 설정일 때). 얼굴은 보이지 않게.
 // 화면·포스트잇·노트에 한글 마케팅 문구(예시), 교육 장면은 남녀 섞인 뒷모습, 시장 분석은 한국인 남성 뒷모습. 깨진 글자는 지우고 다시 씀
 const SCENES = ['s1', 's2', 's3', 's4', 's5']
-const SV = '20261102c'   // 사진을 바꾸면 올린다(브라우저가 옛 사진을 기억해 재사용하지 않게)
+const SV = '20261102d'   // 영상·사진을 바꾸면 올린다(브라우저가 옛 사진을 기억해 재사용하지 않게)
 
 export const InsightHero = () => (
   <div class="ish" aria-hidden="true" data-ish>
     <script type="application/json" id="ishTitles" dangerouslySetInnerHTML={{ __html: JSON.stringify(TITLES).replace(/</g, '\\u003c') }} />
     <div class="ish-stage" data-ish-stage>
       <div class="ish-bg" data-ish-bg>
-        {SCENES.map((s, i) => <img class="ish-sc" src={`/static/insight-hero/${s}.webp?v=${SV}`} alt="" width={2000} height={750} decoding="async" fetchpriority={i === 0 ? 'high' : 'auto'} data-ish-sc />)}
+        {SCENES.map(s => <video class="ish-sc" src={`/static/insight-hero/${s}.mp4?v=${SV}`} poster={`/static/insight-hero/${s}.webp?v=${SV}`} muted playsinline preload="auto" data-ish-sc />)}
       </div>
       <div class="ish-shade"></div>
       <div class="ish-rows" data-ish-rows></div>
