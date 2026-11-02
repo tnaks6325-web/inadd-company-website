@@ -1,10 +1,10 @@
-/* 아워테크 히어로(상단 전체 화면, 한 바퀴 약 13.8초)
+/* 아워테크 히어로(상단 전체 화면, 한 번만 재생 — 시각표 약 13.4초를 1.5배속으로 약 9초)
    - ① 책상(약 0.9초): 사무실 책상 위 노트북(AI 생성 사진), 꺼진 화면이 켜진다.
    - ② 화면 속으로(약 1.1초): 카메라가 노트북으로 날아 들어가고, 화면의 네 귀퉁이가 무대 네 귀퉁이로 펴진다.
    - ③ 시스템 화면(약 9초): 인트라넷 → 협찬 찾기 → 리뷰 운영 → 카페 운영 → 성과 분석 → 광고주 리포트 센터 → 착수 보고서.
      화면마다 시작된 뒤 몇 초인지(u)에 맞춰 data-a(나타남)·data-n(숫자 세기)·data-w(막대)·data-p(선 그리기)·data-c(상태 바뀜)를 움직인다.
    - ④ 뒤로 빠지며 책상이 다시 보이고, 사진이 어둡고 흐려지며 상자 없이 글자만 'AD TECH AGENCY · 마케팅을 코드로 설계하는 애드테크 에이전시',
-     화면이 꺼지며 처음(꺼진 화면)으로 이어진다.
+     이 마지막 문구 화면에서 멈춘다(처음으로 돌아가 반복하지 않음).
    1600x900 무대를 칸에 꽉 차게(cover) 키운다(--k·--x·--y). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고,
    '움직임 줄이기' 설정이면 마지막 문구 화면에서 멈춘다. window.tchSeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
@@ -25,12 +25,13 @@
     TS = Math.min(2, Math.max(1, 0.42 / k));
     root.classList.toggle('is-small', TS > 1);
   }
-  fit(); window.addEventListener('resize', fit);
+  fit(); window.addEventListener('resize', function () { fit(); render(t); });   // 마지막에 멈춘 뒤에도 크기가 바뀌면 다시 그린다
 
   // 시각표(초)
   var ON = [0.45, 0.8], FLY = [0.9, 2.0];
   var S = [0.8, 2.3, 3.8, 5.3, 6.8, 8.3, 9.4], TAB = [0, 1, 2, 3, 4, 5, 5], TR = 0.25;   // 화면마다 시작하는 때, 위 탭 번호, 넘김 길이
-  var OUT = [10.9, 12.0], DIM = [11.6, 12.1], LINE = [11.85, 12.0, 12.12, 12.4], OFF = [13.4, 13.8], CYCLE = 13.8;   // LINE: 영문 한 줄·제목 두 줄·설명이 시작하는 때
+  var OUT = [10.9, 12.0], DIM = [11.6, 12.1], LINE = [11.85, 12.0, 12.12, 12.4], END = 13.4;   // LINE: 영문 한 줄·제목 두 줄·설명이 시작하는 때, END: 여기서 멈춤
+  var SPEED = 1.5;   // 시각표(초)보다 1.5배 빠르게 재생
   // 사진 속 노트북 화면(베젤 안쪽) 네 귀퉁이(무대 좌표: 왼위·오위·오아래·왼아래), 다 펴졌을 때(위아래 50씩 잘려 가운데 900만 보임)
   var QUAD = [641.0, 138.2, 1177.6, 145.6, 1130.4, 521.1, 596.7, 462.2];
   var FLAT = [0, -50, 1600, -50, 1600, 950, 0, 950];
@@ -71,14 +72,14 @@
   }
 
   function render(t) {
-    var l = t % CYCLE;
+    var l = t;
     // ①② 카메라: 처음엔 아주 천천히 다가가고, 날아 들어갈 때 모니터 가운데가 무대 가운데로 끌려온다(빠질 때는 거꾸로)
     var z = l < OUT[0] ? eio(seg(l, FLY)) : 1 - eio(seg(l, OUT));
     var A0 = 1 + 0.04 * ease(seg(l, [0, FLY[0]])), A = A0 * Math.pow(ZIN / A0, z);
     var BX = F.x + (800 - F.x) * z - F.x * A, BY = F.y + (450 - F.y) * z - F.y * A;
     world.style.transform = 'translate(' + BX.toFixed(2) + 'px,' + BY.toFixed(2) + 'px) scale(' + A.toFixed(5) + ')';
     scr.style.transform = quad3d(QUAD.map(function (v, i) { var p = v * A + (i % 2 ? BY : BX); return p + (FLAT[i] - p) * z; }));
-    scr.style.opacity = (l < OFF[0] ? seg(l, ON) : 1 - seg(l, OFF)).toFixed(3);
+    scr.style.opacity = seg(l, ON).toFixed(3);
     // ③ 시스템 화면: 다음 화면이 오른쪽에서 살짝 밀려 들어오며 덮는다
     var cur = 0;
     for (var i = 0; i < S.length; i++) if (l >= S[i]) cur = i;
@@ -92,15 +93,14 @@
     });
     tabs.forEach(function (b, i) { b.classList.toggle('on', i === TAB[cur]); });
     // ④ 마지막 문구: 뒤를 어둡고 흐리게 → 영문은 자간이 좁혀지며, 제목은 줄마다 아래에서 올라오고, 설명은 천천히 나타난다
-    var dv = ease(seg(l, DIM)) * (1 - seg(l, OFF)), bl = (dv * 7).toFixed(2);
+    var dv = ease(seg(l, DIM)), bl = (dv * 7).toFixed(2);
     dim.style.opacity = dv.toFixed(3);
     world.style.filter = scr.style.filter = dv > 0.01 ? 'blur(' + bl + 'px)' : 'none';
-    var fo = 1 - seg(l, OFF);
     lines.forEach(function (e, i) {
       var p = ease(seg(l, [LINE[i], LINE[i] + (i === 0 || i === 3 ? 0.5 : 0.55)]));
-      if (i === 0) { e.style.opacity = (p * fo).toFixed(3); e.style.letterSpacing = (0.62 - 0.2 * p).toFixed(3) + 'em'; }
-      else if (i === 3) { e.style.opacity = (p * fo * 0.86).toFixed(3); e.style.transform = 'translateY(' + ((1 - p) * 12).toFixed(1) + 'px)'; }
-      else { e.style.transform = 'translateY(' + ((1 - p) * 105).toFixed(1) + '%)'; e.style.opacity = fo.toFixed(3); }
+      if (i === 0) { e.style.opacity = p.toFixed(3); e.style.letterSpacing = (0.62 - 0.2 * p).toFixed(3) + 'em'; }
+      else if (i === 3) { e.style.opacity = (p * 0.86).toFixed(3); e.style.transform = 'translateY(' + ((1 - p) * 12).toFixed(1) + 'px)'; }
+      else { e.style.transform = 'translateY(' + ((1 - p) * 105).toFixed(1) + '%)'; }
     });
     type.style.transform = 'translate(-50%,-50%) scale(' + (Math.min(TS, 1.4) * (1 - 0.06 * (1 - ease(seg(l, [LINE[1], LINE[3] + 0.6]))))).toFixed(4) + ')';
   }
@@ -108,14 +108,14 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t = 0, prev = 0, on = true, held = false;
   window.tchSeek = function (s) { held = true; t = s; render(t); };
-  window.tchTimes = { ON: ON, FLY: FLY, S: S, OUT: OUT, DIM: DIM, LINE: LINE, OFF: OFF, CYCLE: CYCLE };
-  if (reduce) { t = LINE[3] + 0.8; render(t); return; }
+  window.tchTimes = { ON: ON, FLY: FLY, S: S, OUT: OUT, DIM: DIM, LINE: LINE, END: END, SPEED: SPEED };
+  if (reduce) { render(END); return; }
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(root);
   function frame(now) {
     var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 0; prev = now;
-    if (!held && on && !document.hidden) t += dt;
+    if (!held && on && !document.hidden) t = Math.min(END, t + dt * SPEED);
     render(t);
-    requestAnimationFrame(frame);
+    if (t < END || held) requestAnimationFrame(frame);   // 마지막 문구까지 가면 멈춘다
   }
   render(0);
   requestAnimationFrame(frame);
