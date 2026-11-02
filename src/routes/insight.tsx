@@ -1,15 +1,13 @@
+import { InsightHero } from './insight-hero'
 export const InsightPage = () => {
   return (
     <>
-      {/* ── Page Hero ── */}
-      <section class="page-hero insight-hero">
-        <div class="page-hero-img-bg" aria-hidden="true"></div>
-        <div class="page-hero-bg"><div class="hero-glow glow-1"></div></div>
-        <div class="container">
-          <span class="sec-label">[ IN AD COMPANY INSIGHT ]</span>
-          <h1 class="page-title">현장에서<br /><em>쌓인 이야기</em></h1>
-          <p class="page-desc">전략과 실전 사례, 그리고 우리가 일하는 방식까지 — 인애드컴퍼니의 기록.</p>
-        </div>
+      {/* ── Page Hero: 실제 글 제목들이 흐르다 느려지며 '직접 해 보고 쓴 마케팅 기록'이 남는 움직이는 화면(insight-hero). 검색엔진용 제목은 숨겨 둔다 ── */}
+      <link rel="stylesheet" href="/static/insight-hero.css?v=20261102a" />
+      <section class="ish-hero">
+        <h1 class="ish-sr">직접 해 보고 쓴 마케팅 기록 — 인애드컴퍼니 인사이트</h1>
+        <InsightHero />
+        <script src="/static/insight-hero.js?v=20261102a" defer></script>
       </section>
 
       {/* ══ 라이트 테마 콘텐츠 래퍼 (히어로 제외) ══ */}

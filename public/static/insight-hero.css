@@ -1,0 +1,32 @@
+/* 인사이트 히어로: 회사소개·아워테크 히어로와 같은 틀 — 고정 헤더(78px) 아래에서 시작하고 1600x900 무대를 칸에 꽉 차게(cover) 키운다.
+   배율과 위치는 insight-hero.js 가 --k, --x, --y 로 넣는다. 칸은 너비의 16:9(화면 높이를 넘지 않게), 휴대폰도 16:9. */
+.ish-hero { position:relative; padding-top:78px; background:#F4F3F1; }
+.ish-sr { position:absolute; width:1px; height:1px; margin:-1px; padding:0; border:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+.ish { position:relative; width:100%; height:min(56.25vw, calc(100vh - 78px)); min-height:480px; overflow:hidden; background:#F4F3F1; }
+.ish-stage { position:absolute; left:0; top:0; width:1600px; height:900px; transform-origin:0 0; transform:translate(var(--x,0px),var(--y,0px)) scale(var(--k,1)); font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif; color:#111318; word-break:keep-all; letter-spacing:normal; line-height:1.2; }
+.ish-stage * { box-sizing:border-box; margin:0; padding:0; }
+
+/* 흐르는 글 제목 줄: 캔버스 한 장(js가 1600x900 무대 크기로 그림) */
+.ish-rows { position:absolute; inset:0; }
+.ish-cv { position:absolute; left:0; top:0; width:1600px; height:900px; }
+
+/* 제목이 나올 때 뒤 줄을 가리는 부드러운 빛(상자 없이) */
+.ish-glow { position:absolute; inset:0; background:radial-gradient(52% 46% at 50% 50%, rgba(244,243,241,.97) 0%, rgba(244,243,241,.9) 45%, rgba(244,243,241,0) 100%); opacity:0; }
+
+/* 가운데 글자: 상자 없이 — 영문 한 줄, 제목 두 줄(가려진 틀 안에서 아래로부터 올라옴), 설명 한 줄 */
+.ish-type { position:absolute; left:50%; top:50%; display:flex; flex-direction:column; align-items:center; text-align:center; white-space:nowrap; transform:translate(-50%,-50%); }
+.ish-eye { font-size:20px; font-weight:700; letter-spacing:.42em; padding-left:.42em !important; margin-bottom:30px !important; color:#21306F; opacity:0; }
+.ish-ln { display:block; overflow:hidden; padding:0 .08em .06em !important; }
+.ish-ln b { display:block; font-size:104px; font-weight:800; letter-spacing:-.04em; line-height:1.12; transform:translateY(105%); }
+.ish-sub { margin-top:34px !important; font-size:26px; font-weight:500; letter-spacing:-.01em; opacity:0; }
+.ish.is-small .ish-sub { font-size:30px; }
+
+@media(max-width:767px) {
+  .ish-hero { padding-top:64px; }
+  .ish { height:auto; aspect-ratio:16 / 9; min-height:0; }
+}
+
+/* 고정 헤더: 밝은 히어로 위라 다른 라이트 히어로와 같은 글자색 */
+body:has(.ish-hero) .site-header:not(.scrolled) .nav-link { color: var(--gray-1); }
+body:has(.ish-hero) .site-header:not(.scrolled) .nav-link:hover { color: var(--blue); background: rgba(37,70,158,0.08); }
+body:has(.ish-hero) .site-header:not(.scrolled) .header-logo { color: var(--white); }
