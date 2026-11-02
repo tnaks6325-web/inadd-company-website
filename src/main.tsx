@@ -79,6 +79,8 @@ root.get('/insight', async (c) => {
   html = html
     .replace('id="ins2Loading"', 'id="ins2Loading" style="display:none"')
     .replace('<div class="ins2-grid" id="ins2Grid">', `<div class="ins2-grid" id="ins2Grid">${await cards}`)
+    // 첫 화면에서 흐르는 글 제목도 지금 등록된 글로 바꾼다(없으면 insight-hero.tsx 의 예비 목록)
+    .replace(/(<script type="application\/json" id="ishTitles">)[\s\S]*?(<\/script>)/, (_m, a, b) => a + JSON.stringify(posts.map(p => p.title)).replace(/</g, '\\u003c') + b)
   // 글 목록 구조화 데이터 — AI 검색이 어떤 글이 있는지 한 번에 읽도록(제목·주소만)
   const list = JSON.stringify({
     '@context': 'https://schema.org', '@type': 'ItemList', '@id': `${SITE_URL}/insight#posts`, name: '마케팅 인사이트 글 목록',
