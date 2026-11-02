@@ -1,112 +1,15 @@
 import { icon } from '../icons'
+import { TechHero } from './tech-hero'
 export const DevelopmentPage = () => (
   <>
     {/* ════════════════════════════════════════
-        SECTION 1 — HERO
+        SECTION 1 — HERO: 책상 모니터 속으로 들어가 직접 만든 시스템 화면들이 일하는 모습(tech-hero). 검색엔진용 제목은 숨겨 둔다
     ════════════════════════════════════════ */}
-    <section class="dev-hero dev-hero--photo">
-      <div class="dev-photo-bg" aria-hidden="true" style="--hero-photo:url('/static/mkt-images/TECH_HERO.png');--hero-photo-m:url('/static/m/mkt-images/TECH_HERO.webp')"></div>
-      <canvas id="devThreeCanvas" class="dev-three-canvas"></canvas>
-      <div class="dev-hero-bg">
-        <div class="dev-orb dev-orb--1"></div>
-        <div class="dev-orb dev-orb--2"></div>
-        <div class="dev-orb dev-orb--3"></div>
-        <div class="dev-grid"></div>
-        <div class="dev-noise"></div>
-      </div>
-
-      <div class="container dev-hero-inner">
-        {/* 훅 — 기술력 없는 마케팅에 대한 선언 */}
-        <p class="dev-hook" id="devHook">AI 시대의 마케팅은, <em>만들 줄 아는 사람</em>이 합니다</p>
-
-        <h1 class="dev-hero-title">
-          <span class="dev-tline" id="devL1">마케팅을 <em>코드로</em> 설계하는</span>
-          <span class="dev-tline dev-tline--accent" id="devL2">실전 에이전시</span>
-        </h1>
-
-        <div class="dev-sub-wrap" id="devSub">
-          <p class="dev-sub">인애드컴퍼니는 시키는 일만 하는 대행사가 아닌</p>
-          <p class="dev-sub dev-sub--em">마케팅에 필요한 시스템을 직접 개발하고 자동화하고,</p>
-          <p class="dev-sub">기술력을 바탕으로 모든 캠페인을 운영합니다.<span class="dev-cursor"></span></p>
-        </div>
-
-        {/* KPI 스트립 */}
-        <div class="dev-kpi-strip" id="devKpi">
-          <div class="dev-kpi-item">
-            <strong class="dev-kpi-num" data-count="80">0</strong><span class="dev-kpi-unit">%</span>
-            <span class="dev-kpi-label">운영 시간 단축</span>
-          </div>
-          <div class="dev-kpi-sep"></div>
-          <div class="dev-kpi-item">
-            <strong class="dev-kpi-num" data-count="7">0</strong><span class="dev-kpi-unit">년</span>
-            <span class="dev-kpi-label">마케팅 운영 경험</span>
-          </div>
-          <div class="dev-kpi-sep"></div>
-          <div class="dev-kpi-item">
-            <strong class="dev-kpi-num" data-count="6">0</strong><span class="dev-kpi-unit">+</span>
-            <span class="dev-kpi-label">자체 시스템 운영 중</span>
-          </div>
-          <div class="dev-kpi-sep"></div>
-          <div class="dev-kpi-item">
-            <strong class="dev-kpi-num" data-count="365">0</strong><span class="dev-kpi-unit">일</span>
-            <span class="dev-kpi-label">무중단 자동 운영</span>
-          </div>
-        </div>
-
-        <div class="dev-hero-btns vh-btns" id="devBtns">
-          <a href="/contact" class="vh-cta-btn">
-            <span>문의하기</span>
-            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="#dev-systems" class="vh-scroll-btn">
-            <span>자세히 보기</span>
-            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </div>
-
-      <div class="dev-scroll-hint">
-        <div class="dev-scroll-mouse"><div class="dev-scroll-wheel"></div></div>
-      </div>
-
-      {/* Hero JS */}
-      <script dangerouslySetInnerHTML={{__html: `
-(function(){
-  /* ── CSS animation 방식 Hero 등장 ── */
-  var heroItems = [
-    { id: 'devHook',  delay: 0.15 },
-    { id: 'devL1',    delay: 0.30 },
-    { id: 'devL2',    delay: 0.46 },
-    { id: 'devSub',   delay: 0.62 },
-    { id: 'devKpi',   delay: 0.80 },
-    { id: 'devBtns',  delay: 0.94 },
-  ];
-  heroItems.forEach(function(item){
-    var el = document.getElementById(item.id);
-    if(!el) return;
-    el.style.animationDelay = item.delay + 's';
-    el.classList.add('dev-hero-anim');
-  });
-
-  /* ── KPI 카운터업 ── */
-  setTimeout(function(){
-    document.querySelectorAll('.dev-kpi-num[data-count]').forEach(function(el){
-      var target = parseInt(el.getAttribute('data-count'), 10);
-      if(isNaN(target)) return;
-      var duration = 1800, startTime = null;
-      function step(ts){
-        if(!startTime) startTime = ts;
-        var p = Math.min((ts - startTime) / duration, 1);
-        var ease = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.floor(ease * target);
-        if(p < 1) requestAnimationFrame(step);
-        else el.textContent = target;
-      }
-      requestAnimationFrame(step);
-    });
-  }, 900);
-})();
-      `}} />
+    <link rel="stylesheet" href="/static/tech-hero.css?v=20261102a" />
+    <section class="tch-hero">
+      <h1 class="tch-sr">마케팅을 코드로 설계하는 애드테크 에이전시 — 인애드컴퍼니 자체 자동화 기술</h1>
+      <TechHero />
+      <script src="/static/tech-hero.js?v=20261102a" defer></script>
     </section>
 
     {/* ════════════════════════════════════════
