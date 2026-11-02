@@ -5,7 +5,7 @@
 //    인트라넷(할 일 체크·일정) → 협찬 후보 찾기(조건 검색·점수) → 리뷰 운영(진행 현황) → 카페 운영(발행 일정)
 //    → ADFLOW 성과 분석(그래프) → 광고주 리포트 센터(보고서 발행) → 착수 보고서
 //    화면 모양은 실제 시스템을 따르되, 이름·숫자·주소는 모두 지어낸 예시(고객사·직원·연락처 없음)
-// → ④ 뒤로 빠져 책상이 다시 보이고 '마케팅을 코드로 설계하는 실전 에이전시' → 화면이 꺼지며 처음으로.
+// → ④ 뒤로 빠져 책상이 다시 보이고, 사진이 어둡고 흐려지며 'AD TECH AGENCY · 마케팅을 코드로 설계하는 애드테크 에이전시' 글자만 → 화면이 꺼지며 처음으로.
 // 움직임은 tech-hero.js — 화면 속 요소의 data-a(나타나는 때)·data-n(숫자 세기)·data-w/h(막대)·data-p(선 그리기)·data-c(상태 바뀜)는
 // 그 화면이 시작된 뒤 몇 초인지로 적는다.
 const V = '/static/tech-hero/'
@@ -263,10 +263,13 @@ export const TechHero = () => (
           {PANELS.map(P => <div class="th-pane" data-tch-pane><P /></div>)}
         </div>
       </div>
-      <div class="tch-card" data-tch-card>
-        <b>마케팅을 코드로 설계하는</b>
-        <b>실전 에이전시</b>
-        <span>직접 만든 시스템으로 캠페인을 운영합니다</span>
+      {/* 마지막 문구: 상자 없이 글자만 — 뒤 사진을 어둡고 흐리게 한 뒤 줄마다 아래에서 올라온다 */}
+      <div class="tch-dim" data-tch-dim></div>
+      <div class="tch-type" data-tch-type>
+        <p class="tch-eye" data-tch-l>AD TECH AGENCY</p>
+        <span class="tch-ln"><b data-tch-l>마케팅을 코드로 설계하는</b></span>
+        <span class="tch-ln"><b data-tch-l>애드테크 에이전시</b></span>
+        <p class="tch-sub" data-tch-l>캠페인 운영부터 보고서까지, 직접 만든 시스템으로</p>
       </div>
     </div>
   </div>

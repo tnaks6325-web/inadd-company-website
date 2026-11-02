@@ -197,12 +197,14 @@
 .th-tbl--ko th { background:#fff; color:#111318; border-bottom:2px solid #E6E8EE; font-weight:600; }
 .th-tbl--ko td { padding:10px 14px; }
 
-/* 마지막 문구 상자 */
-.tch-card { position:absolute; z-index:10; left:50%; top:74%; display:flex; flex-direction:column; align-items:center; gap:8px; padding:44px 72px !important; border-radius:22px; background:#fff; box-shadow:0 40px 90px rgba(17,19,24,.25); white-space:nowrap; opacity:0; transform:translate(-50%,-50%); }
-.tch-card b { font-size:66px; font-weight:900; letter-spacing:-.03em; line-height:1.15; }
-.tch-card span { margin-top:12px; font-size:26px; font-weight:700; }
-.tch.is-small .tch-card { top:58%; }
-.tch.is-small .tch-card span { font-size:32px; }
+/* 마지막 문구: 상자 없이 글자만. 뒤는 어둡게(.tch-dim) + 사진·화면 흐림(js filter) */
+.tch-dim { position:absolute; inset:0; z-index:9; background:radial-gradient(120% 90% at 50% 55%, rgba(12,14,22,.55), rgba(12,14,22,.78)); opacity:0; }
+.tch-type { position:absolute; z-index:10; left:50%; top:50%; display:flex; flex-direction:column; align-items:center; text-align:center; color:#fff; white-space:nowrap; transform:translate(-50%,-50%); transform-origin:50% 50%; }
+.tch-eye { font-size:20px; font-weight:700; letter-spacing:.42em; margin-bottom:30px !important; padding-left:.42em !important; opacity:0; }
+.tch-ln { display:block; overflow:hidden; padding:0 .08em .06em !important; }
+.tch-ln b { display:block; font-size:92px; font-weight:800; letter-spacing:-.035em; line-height:1.14; transform:translateY(105%); }
+.tch-sub { margin-top:34px !important; font-size:25px; font-weight:500; letter-spacing:-.01em; opacity:0; }
+.tch.is-small .tch-sub { font-size:30px; }
 
 @media(max-width:767px) {
   .tch-hero { padding-top:64px; }

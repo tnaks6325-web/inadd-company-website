@@ -3,7 +3,8 @@
    - ② 화면 속으로(약 1.1초): 카메라가 노트북으로 날아 들어가고, 화면의 네 귀퉁이가 무대 네 귀퉁이로 펴진다.
    - ③ 시스템 화면(약 9초): 인트라넷 → 협찬 찾기 → 리뷰 운영 → 카페 운영 → 성과 분석 → 광고주 리포트 센터 → 착수 보고서.
      화면마다 시작된 뒤 몇 초인지(u)에 맞춰 data-a(나타남)·data-n(숫자 세기)·data-w(막대)·data-p(선 그리기)·data-c(상태 바뀜)를 움직인다.
-   - ④ 뒤로 빠지며 책상이 다시 보이고 '마케팅을 코드로 설계하는 실전 에이전시', 화면이 꺼지며 처음(꺼진 화면)으로 이어진다.
+   - ④ 뒤로 빠지며 책상이 다시 보이고, 사진이 어둡고 흐려지며 상자 없이 글자만 'AD TECH AGENCY · 마케팅을 코드로 설계하는 애드테크 에이전시',
+     화면이 꺼지며 처음(꺼진 화면)으로 이어진다.
    1600x900 무대를 칸에 꽉 차게(cover) 키운다(--k·--x·--y). 히어로가 화면 밖이거나 탭이 숨겨지면 멈추고,
    '움직임 줄이기' 설정이면 마지막 문구 화면에서 멈춘다. window.tchSeek(t) 로 특정 순간을 고정해 볼 수 있다. */
 (function () {
@@ -11,7 +12,7 @@
   if (!root) return;
   function q(k) { return root.querySelector('[data-tch-' + k + ']'); }
   function qa(k, from) { return Array.prototype.slice.call((from || root).querySelectorAll('[data-' + k + ']')); }
-  var world = q('world'), scr = q('scr'), card = q('card');
+  var world = q('world'), scr = q('scr'), dim = q('dim'), type = q('type'), lines = qa('tch-l', type);
   var tabs = qa('tch-tab'), panes = qa('tch-pane');
 
   // 무대 배율: 칸을 빈틈없이 덮게. 무대가 많이 작아지면(휴대폰) 마지막 문구만 TS배 키워 읽히게 한다
@@ -29,7 +30,7 @@
   // 시각표(초)
   var ON = [0.45, 0.8], FLY = [0.9, 2.0];
   var S = [0.8, 2.3, 3.8, 5.3, 6.8, 8.3, 9.4], TAB = [0, 1, 2, 3, 4, 5, 5], TR = 0.25;   // 화면마다 시작하는 때, 위 탭 번호, 넘김 길이
-  var OUT = [10.9, 12.0], CARD = [11.6, 11.9], OFF = [13.4, 13.8], CYCLE = 13.8;
+  var OUT = [10.9, 12.0], DIM = [11.6, 12.1], LINE = [11.85, 12.0, 12.12, 12.4], OFF = [13.4, 13.8], CYCLE = 13.8;   // LINE: 영문 한 줄·제목 두 줄·설명이 시작하는 때
   // 사진 속 노트북 화면(베젤 안쪽) 네 귀퉁이(무대 좌표: 왼위·오위·오아래·왼아래), 다 펴졌을 때(위아래 50씩 잘려 가운데 900만 보임)
   var QUAD = [641.0, 138.2, 1177.6, 145.6, 1130.4, 521.1, 596.7, 462.2];
   var FLAT = [0, -50, 1600, -50, 1600, 950, 0, 950];
@@ -39,7 +40,6 @@
   function seg(l, r) { return clamp((l - r[0]) / (r[1] - r[0])); }
   function ease(x) { return 1 - Math.pow(1 - x, 3); }
   function eio(x) { return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
-  function thud(h) { return Math.sin(Math.PI * h) * (1 - h); }
 
   // 1600x1000 화면을 네 점에 맞추는 원근 변환(matrix3d)
   function quad3d(p) {
@@ -91,17 +91,25 @@
       if (shown) pane(o, l - S[i]);
     });
     tabs.forEach(function (b, i) { b.classList.toggle('on', i === TAB[cur]); });
-    // ④ 마지막 문구
-    var ci = ease(seg(l, CARD)), ch = seg(l, [CARD[1], CARD[1] + 0.25]), co = 1 - seg(l, OFF);
-    card.style.opacity = (ci * co).toFixed(3);
-    card.style.transform = 'translate(-50%,-50%) scale(' + ((0.86 + 0.14 * ci) * (1 + 0.05 * thud(ch)) * (1 + (TS - 1) * 0.6)).toFixed(4) + ')';
+    // ④ 마지막 문구: 뒤를 어둡고 흐리게 → 영문은 자간이 좁혀지며, 제목은 줄마다 아래에서 올라오고, 설명은 천천히 나타난다
+    var dv = ease(seg(l, DIM)) * (1 - seg(l, OFF)), bl = (dv * 7).toFixed(2);
+    dim.style.opacity = dv.toFixed(3);
+    world.style.filter = scr.style.filter = dv > 0.01 ? 'blur(' + bl + 'px)' : 'none';
+    var fo = 1 - seg(l, OFF);
+    lines.forEach(function (e, i) {
+      var p = ease(seg(l, [LINE[i], LINE[i] + (i === 0 || i === 3 ? 0.5 : 0.55)]));
+      if (i === 0) { e.style.opacity = (p * fo).toFixed(3); e.style.letterSpacing = (0.62 - 0.2 * p).toFixed(3) + 'em'; }
+      else if (i === 3) { e.style.opacity = (p * fo * 0.86).toFixed(3); e.style.transform = 'translateY(' + ((1 - p) * 12).toFixed(1) + 'px)'; }
+      else { e.style.transform = 'translateY(' + ((1 - p) * 105).toFixed(1) + '%)'; e.style.opacity = fo.toFixed(3); }
+    });
+    type.style.transform = 'translate(-50%,-50%) scale(' + (Math.min(TS, 1.4) * (1 - 0.06 * (1 - ease(seg(l, [LINE[1], LINE[3] + 0.6]))))).toFixed(4) + ')';
   }
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t = 0, prev = 0, on = true, held = false;
   window.tchSeek = function (s) { held = true; t = s; render(t); };
-  window.tchTimes = { ON: ON, FLY: FLY, S: S, OUT: OUT, CARD: CARD, OFF: OFF, CYCLE: CYCLE };
-  if (reduce) { t = CARD[1] + 0.8; render(t); return; }
+  window.tchTimes = { ON: ON, FLY: FLY, S: S, OUT: OUT, DIM: DIM, LINE: LINE, OFF: OFF, CYCLE: CYCLE };
+  if (reduce) { t = LINE[3] + 0.8; render(t); return; }
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(root);
   function frame(now) {
     var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 0; prev = now;
