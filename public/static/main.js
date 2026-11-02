@@ -799,6 +799,7 @@ function closeCallModal() {
         }
         return;
       }
+      if (typeof window.trackNaverLead === 'function') window.trackNaverLead();
       form.style.display = 'none';
       if (success) success.style.display = 'block';
       var note = document.getElementById('cmBroNote');

@@ -87,6 +87,7 @@
         .then(function (j) {
           var total = Number(j.total) || 0;
           track('estimate_submit', { value: total * 10000, currency: 'KRW', item_count: items.length, capped: total >= PACKAGE, source: source });
+          try { if (typeof window.trackNaverLead === 'function') window.trackNaverLead(); } catch (e) {}
           form.hidden = true;
           q('[data-mte-done-email]').textContent = payload.email;
           done.hidden = false;

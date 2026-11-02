@@ -663,7 +663,7 @@ export const HomePage = () => (
       </div>
     </section>
     <link rel="stylesheet" href="/static/estimate.css?v=20261027p" />
-    <script src="/static/estimate.js?v=20261027c" defer></script>
+    <script src="/static/estimate.js?v=20261102a" defer></script>
 
     {/* ============ HOME PAGE — 인터랙티브 JS (외부 파일로 분리, JSX < > 파싱 에러 방지) ============ */}
     <script src="/static/home.js?v=20261027p" />

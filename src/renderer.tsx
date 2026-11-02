@@ -94,6 +94,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             wcs_add["wa"] = "s_dcdf9038a76";
             wcs_do();
           }
+          /* 네이버 검색광고 전환(lead): 문의·견적 상담 접수에 성공한 뒤에만 부른다(버튼 클릭 시점 아님) */
+          function trackNaverLead() {
+            try {
+              if (window.wcs) {
+                if (!window.wcs_add) window.wcs_add = {};
+                window.wcs_add["wa"] = "s_dcdf9038a76";
+                wcs.trans({ type: "lead" });
+              }
+            } catch (e) {}
+          }
+          window.trackNaverLead = trackNaverLead;
         `}} />
 
         {/* ── 구조화 데이터 (Schema.org JSON-LD) ── */}
@@ -385,7 +396,7 @@ fbq('track', 'PageView');
           </div>
         </div>
 
-        <script src="/static/main.js?v=20261028a"></script>
+        <script src="/static/main.js?v=20261102a"></script>
         {/* ── Ribbons 커서 제거 (파란 줄 트레일 비활성화) ── */}
       </body>
     </html>
