@@ -1,5 +1,6 @@
-// 인사이트 히어로: 회사소개·아워테크처럼 상단 구역 좌우 전체를 채운다. 1600x900 무대를 화면 너비에 맞춰(cover) 키운다.
-// 흐름: 실제 인사이트 글 제목들이 큰 글자로 여러 줄 서로 반대 방향으로 빠르게 흐르다가(숫자는 진하게) 천천히 느려지고,
+// 인사이트 히어로: 회사소개·아워테크처럼 상단 구역 좌우 전체를 채우되, 글 목록이 바로 보이게 높이는 그 3분의 2쯤(1600x600 무대를 cover).
+// 흐름: 뒤 배경으로 광고주 미팅 → PPT 브리핑 → 회의 → 교육 → 시장 분석 장면(AI 생성, 얼굴 없음)이 빠르게 바뀌고,
+// 그 위로 실제 인사이트 글 제목들이 여러 줄 서로 반대 방향으로 흐르다가(숫자는 노랑) 느려진다. 마지막 장면이 흐려지며
 // 가운데에 상자 없이 'IN AD COMPANY INSIGHT · 직접 해 보고 쓴 마케팅 기록'이 줄마다 올라온다. 뒤 제목들은 아주 천천히 계속 흐른다(처음으로 돌아가지 않음).
 // 제목은 아래 TITLES(지금 글 목록, 예비용)로 그리고, 서버(main.tsx /insight)가 관리자에 등록된 최신 글 제목으로 ishTitles 를 바꿔 넣는다.
 // 움직임은 insight-hero.js.
@@ -31,10 +32,17 @@ export const TITLES = [
 // 글 제목 → 흐르는 줄에 쓸 짧은 제목('—' 앞부분)
 export const shortTitle = (t: string) => t.split(' — ')[0].trim()
 
+// 뒤 배경 장면(나오는 순서): 광고주 미팅, PPT 브리핑, 회의, 교육, 시장 분석. 2000x750, 보이는 얼굴은 흐리게 처리
+const SCENES = ['s1', 's2', 's3', 's4', 's5']
+
 export const InsightHero = () => (
   <div class="ish" aria-hidden="true" data-ish>
     <script type="application/json" id="ishTitles" dangerouslySetInnerHTML={{ __html: JSON.stringify(TITLES).replace(/</g, '\\u003c') }} />
     <div class="ish-stage" data-ish-stage>
+      <div class="ish-bg" data-ish-bg>
+        {SCENES.map((s, i) => <img class="ish-sc" src={`/static/insight-hero/${s}.webp`} alt="" width={2000} height={750} decoding="async" fetchpriority={i === 0 ? 'high' : 'auto'} data-ish-sc />)}
+      </div>
+      <div class="ish-shade"></div>
       <div class="ish-rows" data-ish-rows></div>
       <div class="ish-glow" data-ish-glow></div>
       <div class="ish-type">

@@ -2,12 +2,12 @@ import { InsightHero } from './insight-hero'
 export const InsightPage = () => {
   return (
     <>
-      {/* ── Page Hero: 실제 글 제목들이 흐르다 느려지며 '직접 해 보고 쓴 마케팅 기록'이 남는 움직이는 화면(insight-hero). 검색엔진용 제목은 숨겨 둔다 ── */}
-      <link rel="stylesheet" href="/static/insight-hero.css?v=20261102a" />
+      {/* ── Page Hero: 광고주 미팅·브리핑·회의·교육·시장 분석 장면이 빠르게 바뀌고 그 위로 실제 글 제목들이 흐르다 느려지며 '직접 해 보고 쓴 마케팅 기록'이 남는 움직이는 화면(insight-hero). 검색엔진용 제목은 숨겨 둔다 ── */}
+      <link rel="stylesheet" href="/static/insight-hero.css?v=20261102b" />
       <section class="ish-hero">
         <h1 class="ish-sr">직접 해 보고 쓴 마케팅 기록 — 인애드컴퍼니 인사이트</h1>
         <InsightHero />
-        <script src="/static/insight-hero.js?v=20261102a" defer></script>
+        <script src="/static/insight-hero.js?v=20261102b" defer></script>
       </section>
 
       {/* ══ 라이트 테마 콘텐츠 래퍼 (히어로 제외) ══ */}
