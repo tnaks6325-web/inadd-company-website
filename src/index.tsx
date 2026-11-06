@@ -5,7 +5,7 @@ import { renderer } from './renderer'
 import { RenewalHomePage, renewalHomeHead, renewalHomeBody } from './routes/renewal/home' // 개편 홈(2026-11-06). 예전 홈은 ./routes/home(HomePage) — 되돌릴 때 이 줄과 아래 '/' 경로만 바꾸면 됨
 import { RenewalAboutPage, renewalAboutHead, renewalAboutBody } from './routes/renewal/about' // 개편 회사소개(2026-11-06). 예전 회사소개는 ./routes/about(AboutPage) — 되돌릴 때 이 줄과 '/about' 경로만 바꾸면 됨
 import { RenewalSvcPage, renewalSvcHead, renewalSvcBody } from './routes/renewal/svc' // 개편 서비스 8개(2026-11-07). 예전 화면은 ./routes/svc-*.tsx — 되돌릴 때 /marketing/* 경로의 RenewalSvcPage 만 예전 컴포넌트로
-import { WorksPage } from './routes/works'
+import { RenewalWorksPage, renewalWorksHead, renewalWorksBody } from './routes/renewal/works' // 개편 포트폴리오(2026-11-07). 예전은 ./routes/works(WorksPage) — 되돌릴 때 이 줄과 '/works' 경로만 바꾸면 됨
 import { InsightPage } from './routes/insight'
 import { InsightDetailPage } from './routes/insight-detail'
 import { ViralPage } from './routes/viral'
@@ -233,7 +233,10 @@ app.get('/about', (c) => {
 })
 
 app.get('/works', (c) => {
-  return c.render(<WorksPage />, {
+  return c.render(<RenewalWorksPage />, {
+    bare: true,
+    head: renewalWorksHead,
+    bodyAttrs: renewalWorksBody,
     title: '포트폴리오 - 바이럴·광고·인플루언서 캠페인 사례',
     description: '바이럴·인플루언서·체험단·리뷰·광고 캠페인을 어떻게 운영했는지 실제 브랜드 사례로 정리했습니다.',
     canonical: 'https://www.inadcompany.co.kr/works',

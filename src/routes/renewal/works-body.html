@@ -1,0 +1,60 @@
+<!-- 개편 포트폴리오(/works) 원본 — 개편 A안 견본 lab/works.html(2026-11-07 대표 확정)을 옮긴 것. 고친 뒤 node scripts/renewal-home-prerender.mjs 로 works-body.gen.html 을 다시 만든다.
+  비워 두는 자리(사례 목록 안 표식 두 개): works-ads 표식 = 그로스 카드(서버 src/routes/renewal/works.tsx 가 REF_CASES 로), works-cards 표식 = 관리자 등록 사례(서버 src/main.tsx 가 works_items 로).
+  첫 화면 사진판·브랜드 벽·탭은 화면 스크립트(/static/renewal/works.js)가 채운다. -->
+<main>
+  <!-- 1. 첫 화면: 실제 사례 대표 사진이 격자로 열리고 몇 초마다 한 칸씩 바뀜 -->
+  <section class="wk-hero" data-bg="ink">
+    <div class="wk-mosaic" data-mosaic></div>
+    <div class="wk-hero-in">
+      <h1 data-hero-title>브랜드 메시지부터 매출까지,<br />한 흐름으로 키웁니다</h1>
+      <div class="wk-hero-sub" data-hero-sub>
+        <p>페르소나와 카피를 정하고, 후기·바이럴·인플루언서·광고·올리브영을 차례로 쌓습니다.</p>
+        <div class="wk-go"><a href="#cases">사례 보기</a><a href="/contact">문의하기</a></div>
+      </div>
+      <div class="wk-meta mono" data-hero-sub>
+        <span>( PORTFOLIO )</span><span><b data-brand-n>130</b> BRANDS</span><span><b data-camp>38,000+</b> CAMPAIGNS</span><span style="text-align:right">SCROLL ↓</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 12단계 — 금액 없이 단계만(2026-11-07 대표: 어느 단계에서 매출이 얼마 오르는지는 알 수 없음) -->
+  <section class="wk-flow wrap" data-bg="paper">
+    <div class="wk-flow-h">
+      <span class="mono">( 01 ) ONE FLOW</span>
+      <h2 data-reveal>마케팅을 더할 때마다<br />한 칸씩</h2>
+      <p>시장·경쟁사 분석으로 빈자리를 찾고, 브랜드 메시지를 정한 뒤 체험단부터 올리브영·PPL까지 하나씩 더합니다.<small>브랜드마다 필요한 단계와 순서는 다릅니다</small></p>
+    </div>
+    <div class="wk-12" data-flow><div class="wk-fs"><i></i><span class="mono">STEP 01</span><b>시장·경쟁사 분석</b><p>검색량·경쟁 제품·가격을 보고 빈자리를 찾습니다</p></div><div class="wk-fs"><i></i><span class="mono">STEP 02</span><b>브랜드 메시지</b><p>누구에게 무엇을 말할지 정하고 카피를 씁니다</p></div><div class="wk-fs"><i></i><span class="mono">STEP 03</span><b>체험단</b><p>실제로 써 본 후기를 먼저 쌓습니다</p></div><div class="wk-fs"><i></i><span class="mono">STEP 04</span><b>블로그 검색 노출</b><p>검색했을 때 보이는 글을 만듭니다</p></div><div class="wk-fs"><i></i><span class="mono">STEP 05</span><b>구매평·별점</b><p>상세페이지 구매평을 채웁니다</p></div><div class="wk-fs"><i></i><span class="mono">STEP 06</span><b>바이럴·커뮤니티</b><p>카페·커뮤니티에 이야기가 돌게 합니다</p></div><div class="wk-fs"><i></i><span class="mono">STEP 07</span><b>핫딜·공동구매</b><p>기간 한정 판매로 첫 구매를 모읍니다</p></div><div class="wk-fs"><i></i><span class="mono">STEP 08</span><b>인플루언서</b><p>타깃이 보는 크리에이터와 협업합니다</p></div><div class="wk-fs"><i></i><span class="mono">STEP 09</span><b>유튜브·쇼츠</b><p>영상으로 쓰는 장면을 보여 줍니다</p></div><div class="wk-fs"><i></i><span class="mono">STEP 10</span><b>광고</b><p>반응을 확인한 소재로 광고를 키웁니다</p></div><div class="wk-fs"><i></i><span class="mono">STEP 11</span><b>올리브영·PPL</b><p>매장과 방송으로 넓힙니다</p></div><div class="wk-fs"><i></i><span class="mono">STEP 12</span><b>주간 성과 보고서</b><p>숫자를 보고 다음 주 할 일을 정합니다</p></div></div>
+    <div class="wk-flow-end"><p>마지막엔 주간 성과 보고서로 다음 주를 정합니다.</p><span class="mono">STEP 01 시장·경쟁사 분석 → STEP 12 주간 성과 보고서</span></div>
+  </section>
+
+  <!-- 3. 브랜드 벽: 실제 포트폴리오 사진 + 클라이언트의 말(대표 카카오톡 실제 메시지) -->
+  <section class="wk-wall" data-bg="ink">
+    <div class="wk-wall-h wrap">
+      <h2 data-reveal><u data-brand-n>130</u>개 브랜드와 함께</h2>
+      <p data-since>2019년부터 누적 캠페인 38,000+<br /><span class="mono" style="letter-spacing:.04em">PORTFOLIO · REAL BRANDS</span></p>
+    </div>
+    <div class="wk-row" data-row="0"></div>
+    <div class="wk-row" data-row="1"></div>
+  </section>
+
+  <!-- 4. 사례 목록 -->
+  <section class="wk-cases wrap" id="cases" data-bg="paper">
+    <div class="wk-cases-h">
+      <span class="mono">( 02 ) CASES</span>
+      <h2 data-reveal>실제 브랜드 사례</h2>
+    </div>
+    <div class="wk-tabs" data-tabs></div>
+    <div class="wk-grid" data-grid><!--works-ads--><!--works-cards--></div>
+    <div class="wk-more">
+      <button type="button" data-more></button>
+      <div class="wk-end" data-end>
+        <b>지금 보신 레퍼런스가 전부가 아닙니다.</b>
+        <p>브랜드 정책상 공개하지 않은 수많은 캠페인이 함께하고 있습니다.<br />우리 브랜드와 비슷한 사례가 궁금하시다면 <a href="/contact">문의하기</a>에서 확인해 보세요.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 문의 + 바닥(공통) -->
+  <section data-site-end data-num="( 03 ) CONTACT" data-title="다음 성공 케이스는<br />당신의 브랜드입니다" data-desc="인애드컴퍼니 전문가가 브랜드 상황을 보고 무료로 진단해 드립니다."></section>
+</main>

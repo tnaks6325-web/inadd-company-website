@@ -3,7 +3,8 @@ import app from './index'
 import { renderer } from './renderer'
 import { BlogRouter } from './routes/api-blog'
 import { InsightDetailPage } from './routes/insight-detail'
-import { AdCards, WorkCards, visibleWorks, type WorkItem } from './routes/works'
+import { visibleWorks, type WorkItem } from './routes/works'
+import { RenewalWorkCards } from './routes/renewal/works'
 import { kvGet } from './admin/store'
 import { SVC_FAQ_DEFAULTS, VALID_SVC_NAMES, HERO_KPI_DEFAULTS, VALID_HERO_SVCS } from './admin/api'
 import {
@@ -90,19 +91,17 @@ root.get('/insight', async (c) => {
   return c.html(html, 200)
 })
 
-// ── 포트폴리오: 관리자 등록 사례를 서버에서 미리 채운다(페이지 스크립트는 data-ssr 이 있으면 다시 불러오지 않음) ──
+// ── 포트폴리오: 관리자 등록 사례를 서버에서 미리 채운다(개편 화면 스크립트 works.js 는 카드가 있으면 다시 불러오지 않음) ──
 root.get('/works', async (c) => {
   const [res, raw] = await Promise.all([passThrough(c), kvGet(kvOf(c), 'works_items').catch(() => null)])
   if (!res.ok || !raw) return res
   let items: WorkItem[]
   try { items = visibleWorks(JSON.parse(raw)) } catch { return res }
   if (!items.length) return res
-  // 그로스 카드(맨 앞) 바로 뒤에 사례 카드를 채운다. 못 찾으면 그대로 두고 스크립트가 불러온다
-  const open = '<div class="wg-grid" id="worksGrid">'
-  const ads = await (<AdCards />).toString()
-  const html = (await res.text())
-    .replace(open + ads, `<div class="wg-grid" id="worksGrid" data-ssr="1">${ads}${await (<WorkCards items={items} />).toString()}`)
-  return c.html(html, 200)
+  // 그로스 카드 뒤 <!--works-cards--> 자리에 채운다. 못 찾으면 그대로 두고 스크립트가 불러온다
+  const html = await res.text()
+  if (!html.includes('<!--works-cards-->')) return c.html(html, 200)
+  return c.html(html.replace('<!--works-cards-->', await (<RenewalWorkCards items={items} />).toString()), 200)
 })
 
 // 서비스 페이지 자주 묻는 질문 — 화면 스크립트와 같은 모양으로 미리 채운다
