@@ -50,3 +50,16 @@ test('퍼포먼스 자주 묻는 질문이 운영 원문(svc-performance.tsx PM_
   assert.equal(live.length, 8)
   assert.deepEqual(data, live)
 })
+
+// 개편 포트폴리오(2026-11-07)
+test('개편 포트폴리오 미리 채운 HTML이 최신이고, 사례 카드 자리가 있고, 단계별 매출 금액이 없다', async () => {
+  const { PAGES } = await import('../scripts/renewal-home-prerender.mjs')
+  const works = PAGES.find(p => p.name === 'works')
+  const html = readFileSync(works.out, 'utf8')
+  assert.equal(html, generate(works))
+  for (const t of ['<!--works-ads-->', '<!--works-cards-->', 'data-flow', 'STEP 12', '사업자등록번호', 'class="is-cur"']) assert.ok(html.includes(t), t)
+  assert.equal(html.split('<!--works-ads-->').length, 2, '그로스 카드 표식은 한 번만')
+  // 2026-11-07 대표: 어느 단계에서 매출이 얼마 오르는지 알 수 없음 — 금액 계단을 다시 넣지 않는다
+  assert.ok(!/예시 시나리오|월 매출|800만|1\.4억|3억/.test(html))
+  assert.ok(!/시안|가상 예시|고객 후기/.test(html))
+})

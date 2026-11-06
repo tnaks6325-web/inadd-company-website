@@ -1,0 +1,136 @@
+/* 개편 포트폴리오(/works) — 시안 lab/common/works.css 그대로(바꾸면 두 곳). 공통 틀(base.css) 위에 이 페이지 구역만 */
+
+/* 1. 첫 화면: 실제 히어로 장면 6칸이 하나씩 열리고, 스크롤하면 장면판이 천천히 물러남(고정 없음) */
+.wk-hero{position:relative;height:100vh;min-height:640px;overflow:hidden}
+.wk-mosaic{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(3,1fr);gap:2px;will-change:transform}
+.wk-tile{position:relative;overflow:hidden;clip-path:inset(100% 0 0 0);background:var(--ink2)}
+.wk-tile img{width:100%;height:100%;object-fit:cover;filter:brightness(.5) saturate(.8) contrast(1.06);transform:scale(1.12)}
+.wk-tile .mono{position:absolute;left:12px;bottom:10px;color:rgba(245,244,240,.7);z-index:2;text-transform:none;letter-spacing:.02em}
+.wk-tile .mono b{color:var(--butter);font-weight:500;margin-right:8px}
+.wk-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(11,12,16,.45),rgba(11,12,16,0) 28%,rgba(11,12,16,.2) 55%,rgba(11,12,16,.88))}
+.wk-hero-in{position:absolute;left:40px;right:40px;bottom:32px;z-index:3}
+.wk-hero h1{font-size:clamp(40px,5.6vw,92px);font-weight:700;line-height:1.04;letter-spacing:-.045em}
+.wk-hero h1 .ln{padding-bottom:.02em}
+.wk-hero-sub{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-top:28px}
+.wk-hero-sub p{font-size:16px;line-height:1.7;color:rgba(245,244,240,.78);max-width:560px}
+.wk-hero-sub .note{font-size:11px;color:var(--mute)}
+.wk-meta{display:grid;grid-template-columns:repeat(4,1fr);margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--mute)}
+.wk-meta b{color:var(--white);font-weight:500}
+.wk-go{display:inline-flex;gap:28px;align-items:center;white-space:nowrap}
+.wk-go a{font-size:15px;font-weight:600;border-bottom:1px solid currentColor;padding-bottom:3px}
+
+/* 2. 한 흐름: 마케팅을 더할 때마다 한 칸씩 — 12단계가 스크롤에 맞춰 하나씩 켜짐 */
+.wk-flow{padding:20vh 0 18vh}
+.wk-flow-h{display:grid;grid-template-columns:3fr 6fr 3fr;gap:40px;align-items:end;margin-bottom:72px}
+.wk-flow-h .mono{opacity:.6;align-self:start}
+.wk-flow-h h2{font-size:clamp(36px,4.6vw,80px);font-weight:700;letter-spacing:-.055em;line-height:1.04}
+.wk-flow-h p{font-size:15px;line-height:1.7}
+.wk-flow-h p small{display:block;margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;opacity:.6}
+/* 12단계 — 금액·높이 차이 없이 단계만(2026-11-07 대표 A안): 윗선이 차오르고 글이 진해짐 */
+.wk-12{display:grid;grid-template-columns:repeat(6,1fr);gap:36px 18px}
+.wk-fs{position:relative;transition:color .4s}
+.wk-fs .mono{display:block;font-size:10.5px;letter-spacing:.08em;opacity:.55;margin-bottom:8px}
+.wk-fs b{display:block;font-size:clamp(16px,1.25vw,20px);font-weight:700;letter-spacing:-.035em;line-height:1.3}
+.wk-12 .wk-fs{padding-top:18px;border-top:1px solid var(--line-d);opacity:.35;transition:opacity .4s}
+.wk-12 .wk-fs i{position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--ink);transform-origin:left}
+.wk-12 .wk-fs p{margin:8px 0 0;font-size:13.5px;line-height:1.6}
+.wk-12 .wk-fs.on{opacity:1}
+.wk-flow-end{display:flex;justify-content:space-between;align-items:baseline;gap:24px;margin-top:40px}
+.wk-flow-end p{font-size:clamp(22px,2vw,32px);font-weight:600;letter-spacing:-.035em}
+.wk-flow-end .mono{opacity:.6}
+
+/* 3. 브랜드 벽: 실제 포트폴리오 사진 + 실제 고객 후기가 두 줄로 흐름 */
+.wk-wall{padding:18vh 0 20vh;overflow:hidden}
+.wk-wall-h{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:56px}
+.wk-wall-h h2{font-size:clamp(44px,6.4vw,112px);font-weight:700;letter-spacing:-.055em;line-height:1}
+.wk-wall-h h2 u{text-decoration:none;font-variant-numeric:tabular-nums}
+.wk-wall-h p{color:var(--mute);font-size:15px;line-height:1.7;text-align:right}
+.wk-row{display:flex;gap:14px;width:max-content;will-change:transform;margin-bottom:14px}
+.wk-row img{width:220px;height:220px;object-fit:cover;flex:none;filter:saturate(.92)}
+.wk-rv{flex:none;width:300px;height:220px;padding:22px;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}
+.wk-rv .bub{align-self:flex-start;max-width:100%;margin:0;padding:11px 14px;background:#fff;color:#111318;border-radius:3px 14px 14px 14px;font-size:15px;font-weight:500;letter-spacing:-.02em;line-height:1.5}
+.wk-rv span{font-size:12px;color:var(--mute)}
+.wk-rv .mono{color:var(--butter)}
+
+/* 4. 사례 목록: 밑줄 탭으로 거르기, 16개씩 더 보기 */
+.wk-cases{padding:16vh 0 18vh}
+.wk-cases-h{display:grid;grid-template-columns:3fr 9fr;gap:40px;align-items:end;margin-bottom:48px}
+.wk-cases-h .mono{opacity:.6;align-self:start}
+.wk-cases-h h2{font-size:clamp(36px,4.6vw,80px);font-weight:700;letter-spacing:-.055em;line-height:1.04}
+.wk-tabs{display:flex;flex-wrap:wrap;gap:6px 30px;border-bottom:1px solid var(--line-d);margin-bottom:40px;position:sticky;top:0;z-index:5;background:var(--paper);padding-top:14px;transition:top .5s cubic-bezier(.2,.7,.2,1)}
+.wk-tabs button{position:relative;background:none;border:0;color:inherit;font-family:inherit;font-size:16px;font-weight:600;letter-spacing:-.02em;padding:12px 0 14px;cursor:pointer;opacity:.45;transition:opacity .3s}
+.wk-tabs button sup{font-family:var(--mono);font-size:10px;font-weight:500;margin-left:5px;vertical-align:top;position:relative;top:2px}
+.wk-tabs button::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.7,0,.2,1)}
+.wk-tabs button.on{opacity:1}
+.wk-tabs button.on::after{transform:scaleX(1)}
+.wk-tabs button:hover{opacity:1}
+.wk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 20px}
+.wk-card{display:block;position:relative}
+.wk-card[hidden]{display:none}
+.wk-pic{position:relative;aspect-ratio:1;overflow:hidden;background:#d6d4cd}
+.wk-pic img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.wk-pic::after{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleY(0);transform-origin:bottom;transition:transform .6s cubic-bezier(.7,0,.2,1);opacity:.82}
+.wk-pic .ov{position:absolute;left:18px;right:18px;bottom:16px;z-index:2;color:var(--white);font-size:14px;line-height:1.5;opacity:0;transform:translateY(12px);transition:opacity .4s,transform .5s}
+.wk-pic .ov .mono{display:block;color:var(--butter);margin-bottom:6px}
+.wk-card.on .wk-pic img{transform:scale(1.07)}
+.wk-card.on .wk-pic::after{transform:scaleY(.42)}
+.wk-card.on .wk-pic .ov{opacity:1;transform:none}
+.wk-meta2{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:14px}
+.wk-meta2 b{font-size:17px;font-weight:700;letter-spacing:-.03em}
+.wk-meta2 span{font-size:12.5px;opacity:.62;text-align:right;line-height:1.45}
+/* 그로스(광고 성과) 카드 */
+.wk-ad{aspect-ratio:1;background:var(--ink);color:var(--white);padding:20px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;position:relative}
+.wk-ad .md{display:flex;flex-wrap:wrap;gap:4px 12px}
+.wk-ad .md span{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--butter)}
+.wk-ad strong{display:block;font-size:clamp(44px,4.4vw,72px);font-weight:700;letter-spacing:-.06em;line-height:.95;font-variant-numeric:tabular-nums}
+.wk-ad strong.long{font-size:clamp(34px,3.2vw,52px)}
+.wk-ad strong small{font-size:.4em;letter-spacing:-.02em;margin-left:4px}
+.wk-ad .kl{font-size:14px;font-weight:600;margin-top:8px}
+.wk-ad .kd{font-size:12px;color:rgba(245,244,240,.6);margin-top:4px}
+.wk-ad .tt{font-size:14px;line-height:1.45;border-top:1px solid var(--line);padding-top:12px}
+.wk-ad::before{content:"";position:absolute;inset:0;background:var(--navy);transform:scaleY(0);transform-origin:bottom;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+.wk-ad > *{position:relative}
+.wk-card.on .wk-ad::before{transform:scaleY(1)}
+.wk-more{display:flex;flex-direction:column;align-items:center;gap:30px;margin-top:64px}
+.wk-more button{background:none;border:1px solid currentColor;color:inherit;font-family:inherit;font-size:15px;font-weight:600;padding:16px 44px;cursor:pointer;transition:background .3s,color .3s}
+.wk-more button:hover{background:var(--ink);color:var(--white)}
+.wk-end{display:none;text-align:center;border-top:1px solid var(--line-d);padding-top:34px;width:100%}
+.wk-end b{display:block;font-size:20px;letter-spacing:-.03em}
+.wk-end p{margin-top:10px;font-size:14px;line-height:1.7;opacity:.7}
+.wk-end a{text-decoration:underline}
+
+@media (max-width:860px){
+  .wk-mosaic{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr)}
+  .wk-tile .mono{left:8px;bottom:8px;font-size:9.5px}
+  .wk-hero-in{left:20px;right:20px;bottom:22px}
+  .wk-hero-sub{flex-direction:column;align-items:flex-start;gap:20px;margin-top:20px}
+  .wk-hero-sub p{font-size:14.5px}
+  .wk-meta{grid-template-columns:1fr 1fr;row-gap:6px;margin-top:26px}
+  .wk-flow,.wk-cases{padding:12vh 0}
+  .wk-flow-h,.wk-cases-h{grid-template-columns:1fr;gap:14px;margin-bottom:36px}
+  /* 휴대폰은 2열·단계 이름만(2026-11-07 대표: 휴대폰 길이가 너무 김) — 한 줄 설명은 컴퓨터에서만 */
+  .wk-12{grid-template-columns:1fr 1fr;gap:20px 14px}
+  .wk-12 .wk-fs{padding-top:12px}
+  .wk-12 .wk-fs .mono{margin-bottom:4px;font-size:9.5px}
+  .wk-12 .wk-fs b{font-size:15px}
+  .wk-12 .wk-fs p{display:none}
+        .wk-flow-end{flex-direction:column;gap:8px}
+  .wk-wall{padding:12vh 0}
+  .wk-wall-h{flex-direction:column;align-items:flex-start;gap:14px}
+  .wk-wall-h p{text-align:left}
+  .wk-row img{width:140px;height:140px}
+  .wk-rv{width:250px;height:140px;padding:12px 14px}
+  .wk-rv .bub{padding:8px 10px;font-size:12px;line-height:1.45}
+  .wk-tabs{gap:2px 18px;overflow-x:auto;flex-wrap:nowrap;margin:0 -20px 28px;padding:10px 20px 0}
+  .wk-tabs button{font-size:15px;white-space:nowrap;flex:none}
+  .wk-grid{grid-template-columns:1fr 1fr;gap:28px 12px}
+  .wk-meta2{flex-direction:column;gap:4px}
+  .wk-meta2 b{font-size:15px}
+  .wk-meta2 span{text-align:left;font-size:11.5px}
+  .wk-ad{padding:12px}
+  .wk-ad strong{font-size:34px}
+  .wk-ad strong.long{font-size:24px}
+  .wk-ad .kl{font-size:12px}
+  .wk-ad .kd,.wk-ad .tt{display:none}
+  .wk-ad .md span{font-size:9px}
+}
