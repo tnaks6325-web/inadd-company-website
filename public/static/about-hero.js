@@ -17,7 +17,7 @@
   var day = q('day'), dv = q('dv'), night = q('night'), zps = qa('zp'), scr = q('scr');
 
   // 무대 배율: 칸을 빈틈없이 덮게. 무대가 많이 작아지면(휴대폰) 이름표·회사 문구만 TS배 키워 읽히게 한다
-  var TS = 1;
+  var TS = 1, MF = 9;   // MF: 회사 문구 카드가 보이는 폭(무대 단위)의 90%를 넘지 않게 하는 최대 배율(휴대폰에서 'IN AD COMPANY' 잘림 방지, 2026-11-06)
   function fit() {
     var w = root.clientWidth, h = root.clientHeight, k = Math.max(w / 1600, h / 900);
     root.style.setProperty('--k', k.toFixed(5));
@@ -26,8 +26,10 @@
     root.classList.toggle('is-narrow', w / k < 1000);   // 무대 가운데만 보일 만큼 좁으면 글자를 줄인다
     TS = Math.min(2, Math.max(1, 0.42 / k));
     root.classList.toggle('is-small', TS > 1);
+    MF = meet && meet.offsetWidth ? (w / k) * 0.9 / meet.offsetWidth : 9;
   }
   fit(); window.addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
 
   // 시각표(초)
   // ① 사무실의 하루: 타임랩스 영상(VD초, 시간대 5구간)이 끝나면 밤 사진(원본)으로 0.1초 만에 바뀐다
@@ -107,7 +109,7 @@
     });
     var mi = ease(seg(u, MEET_IN)), mh = seg(u, [MEET_IN[1], MEET_IN[1] + 0.25]);
     meet.style.opacity = (u >= 0 ? vis * mi : 0).toFixed(3);
-    meet.style.transform = 'translate(-50%,-50%) scale(' + ((0.86 + 0.14 * mi) * (1 + 0.05 * thud(mh)) * (1 + (TS - 1) * 0.6)).toFixed(4) + ')';
+    meet.style.transform = 'translate(-50%,-50%) scale(' + ((0.86 + 0.14 * mi) * (1 + 0.05 * thud(mh)) * Math.min(1 + (TS - 1) * 0.6, MF)).toFixed(4) + ')';
   }
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -24,7 +24,7 @@ export const RenewalAboutPage = () => (
   <>
     {raw(body)}
     <script dangerouslySetInnerHTML={{ __html: 'window.INAD_LIVE = true;' }} />
-    <script src="/static/about-hero.js?v=20261031m"></script>
+    <script src="/static/about-hero.js?v=20261106a"></script>
     {js('data.js')}
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
