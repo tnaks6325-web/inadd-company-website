@@ -1,0 +1,35 @@
+/* 카카오톡 채팅방 카드 — 실제 모바일 카카오톡(기본 하늘색 배경) 모양을 따름 */
+.kk{--kk-bg:#BACEE0;width:300px;background:var(--kk-bg);color:#191919;border-radius:22px;overflow:hidden;font-family:"Apple SD Gothic Neo","Pretendard Variable",sans-serif;letter-spacing:-.01em;box-shadow:0 30px 60px -24px rgba(11,12,16,.45),0 0 0 1px rgba(11,12,16,.06);display:flex;flex-direction:column}
+.kk svg{width:20px;height:20px;flex:none}
+.kk-top{display:flex;align-items:center;gap:8px;padding:14px 12px 10px;color:#191919;background:var(--kk-bg)}
+.kk-title{flex:1;font-size:15px;font-weight:600;filter:blur(5px);user-select:none}
+.kk-ic{display:flex;gap:12px}
+.kk-body{padding:4px 10px 12px;display:flex;flex-direction:column;gap:3px}
+.kk-date{align-self:center;font-size:11px;color:#fff;background:rgba(0,0,0,.16);padding:4px 12px;border-radius:10px;margin:4px 0 10px}
+.kk-row{display:flex;align-items:flex-start;gap:8px}
+.kk-row.first{margin-top:8px}
+.kk-row.us{justify-content:flex-end}
+.kk-pf{flex:none;width:38px;height:38px;border-radius:15px;background:radial-gradient(circle at 35% 30%,hsl(var(--h) 55% 78%),hsl(var(--h) 35% 52%) 70%);filter:blur(4px)}
+.kk-pf.img{background:#cfd6dd center/cover no-repeat;filter:blur(1.5px)}
+.kk-pf.sp{visibility:hidden;height:1px}
+.kk-col{display:flex;flex-direction:column;gap:4px;min-width:0;max-width:78%}
+.kk-nm{font-size:12px;color:#4a5560;filter:blur(4px);user-select:none}
+.kk-line{display:flex;align-items:flex-end;gap:5px}
+.kk-row.us .kk-line{max-width:80%}
+.kk-line time{flex:none;font-size:10px;color:#556270;white-space:nowrap;padding-bottom:1px}
+.kk-bub{position:relative;background:#fff;padding:8px 10px;border-radius:12px;font-size:13.5px;line-height:1.42;word-break:keep-all;overflow-wrap:anywhere}
+.kk-row.us .kk-bub{background:#FEE500}
+.kk-bub.tail::before{content:"";position:absolute;top:0;width:10px;height:12px;background:inherit}
+.kk-row.them .kk-bub.tail{border-top-left-radius:4px}
+.kk-row.us .kk-bub.tail{border-top-right-radius:4px}
+.kk-file{display:flex;gap:10px;align-items:center;background:#fff;border-radius:12px;padding:10px 12px;min-width:180px}
+.kk-file svg{width:30px;height:30px}
+.kk-file b{display:block;font-size:13px;font-weight:600}
+.kk-file span{display:block;font-size:10.5px;color:#8a949e;margin-top:2px}
+.kk-photo{width:170px;height:118px;border-radius:12px;background:#f4f6f8;padding:14px 12px;display:flex;align-items:flex-end;gap:8px;filter:blur(2.4px);overflow:hidden}
+.kk-photo i{flex:1;background:hsl(var(--h) 45% 62%);border-radius:2px 2px 0 0}
+.kk-photo i:nth-child(1){height:30%}.kk-photo i:nth-child(2){height:48%}.kk-photo i:nth-child(3){height:66%}.kk-photo i:nth-child(4){height:92%}
+.kk-input{margin-top:auto;display:flex;align-items:center;gap:8px;padding:8px 10px 12px;background:#fff;color:#8a949e}
+.kk-field{flex:1;height:30px;border-radius:15px;background:#F2F3F5}
+.kk-hash{font-size:18px;width:20px;text-align:center}
+.kk-ex{align-self:center;font-size:11px;font-weight:700;color:#fff;background:#21306F;padding:5px 10px;margin:4px 0 6px}

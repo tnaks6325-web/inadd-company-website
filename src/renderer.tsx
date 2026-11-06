@@ -2,11 +2,13 @@ import { jsxRenderer } from 'hono/jsx-renderer'
 
 declare module 'hono' {
   interface ContextRenderer {
-    (content: string | Promise<string>, props?: { title?: string; description?: string; canonical?: string; schema?: string }): Response
+    (content: string | Promise<string>, props?: { title?: string; description?: string; canonical?: string; schema?: string; bare?: boolean; head?: any; bodyAttrs?: Record<string, string> }): Response
   }
 }
 
-export const renderer = jsxRenderer(({ children, title, description, canonical, schema }: { children?: any; title?: string; description?: string; canonical?: string; schema?: string }) => {
+// bare: 개편 페이지(2026-11-06 홈부터) — 머리(측정·검색·구조화 데이터)는 그대로 쓰고, 예전 머리 메뉴·바닥·문의 팝업·main.js·style.css 는 넣지 않는다.
+// 개편 페이지가 자기 메뉴·바닥·간편 문의 창을 /static/renewal/base.js 로 그린다. head = 페이지 전용 <link>/<script>, bodyAttrs = <body> 속성(data-nav 등)
+export const renderer = jsxRenderer(({ children, title, description, canonical, schema, bare, head, bodyAttrs }: { children?: any; title?: string; description?: string; canonical?: string; schema?: string; bare?: boolean; head?: any; bodyAttrs?: Record<string, string> }) => {
   // 검색 결과 제목은 60자 안팎에서 잘리므로, 붙이면 60자를 넘는 긴 제목(인사이트 글 등)에는 회사명 꼬리를 생략한다
   const pageTitle = !title ? '인애드컴퍼니 — 실전형 크리에이티브 바이럴 마케팅 에이전시'
     : `${title} | 인애드컴퍼니`.length > 60 ? title : `${title} | 인애드컴퍼니`
@@ -116,7 +118,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
         {/* Pretendard — 전체 폰트 (한국어/영문 통일) */}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-        <link href="/static/style.css?v=20261028a" rel="stylesheet" />
+        {!bare && <link href="/static/style.css?v=20261028a" rel="stylesheet" />}
+        {head}
         {/* ── Meta Pixel Code ── */}
         <script dangerouslySetInnerHTML={{ __html: `
 !function(f,b,e,v,n,t,s)
@@ -133,10 +136,11 @@ fbq('track', 'PageView');
         <noscript dangerouslySetInnerHTML={{ __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=27496919366666410&ev=PageView&noscript=1" />` }} />
         {/* ── End Meta Pixel Code ── */}
       </head>
-      <body>
+      <body {...(bodyAttrs || {})}>
         {/* ── Google Tag Manager (noscript) ── */}
         <noscript dangerouslySetInnerHTML={{ __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T45WR778" height="0" width="0" style="display:none;visibility:hidden"></iframe>` }} />
         {/* ── End Google Tag Manager (noscript) ── */}
+        {bare ? children : <>
         <header class="site-header" id="site-header">
           <div class="header-inner">
             <a href="/" class="logo">
@@ -397,6 +401,7 @@ fbq('track', 'PageView');
         </div>
 
         <script src="/static/main.js?v=20261102a"></script>
+        </>}
         {/* ── Ribbons 커서 제거 (파란 줄 트레일 비활성화) ── */}
       </body>
     </html>
