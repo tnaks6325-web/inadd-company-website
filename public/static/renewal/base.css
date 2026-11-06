@@ -169,6 +169,8 @@ img,video{display:block;max-width:100%}
 .qc-send svg{width:18px;height:18px}
 /* 보내기 줄: PC는 안내 문구 위, 휴대폰은 창 맨 아래에 붙어 스크롤해도 움직이지 않음(2026-11-06 대표) */
 .qc-form{display:flex;flex-direction:column}
+/* 접수 뒤 입력 칸 숨김 — 위 display:flex 가 [hidden]{display:none}(같은 세기, 앞줄)을 덮어 빈 칸이 남고 완료 안내가 아래로 밀렸음(2026-11-07 운영 시험 접수에서 발견) */
+.qc-form[hidden]{display:none}
 .qc-note{order:1}
 .qc-err{font-size:13px;line-height:1.6;color:#B42318;margin-top:14px}
 .qc-err a{color:inherit;font-weight:600;border-bottom:1px solid currentColor}
