@@ -247,8 +247,8 @@
           <div class="qc-row">
             <div class="qc-f"><label for="qc-company">회사 / 브랜드명</label><input id="qc-company" name="company" autocomplete="organization" placeholder="브랜드명 또는 회사명" /></div>
             <div class="qc-f"><label for="qc-name">이름</label><input id="qc-name" name="name" autocomplete="name" placeholder="홍길동" /></div>
+            <div class="qc-f"><label for="qc-phone">연락처</label><input id="qc-phone" name="phone" type="tel" inputmode="numeric" maxlength="13" autocomplete="tel" placeholder="010-0000-0000" /></div>
           </div>
-          <div class="qc-f"><label for="qc-phone">연락처</label><input id="qc-phone" name="phone" type="tel" inputmode="numeric" maxlength="13" autocomplete="tel" placeholder="010-0000-0000" /></div>
           <div class="qc-f"><label>관심 서비스<small>(여러 개 고를 수 있어요)</small></label><div class="qc-pick">${QC_SVC.map(l => `<label class="qc-ck"><input type="checkbox" name="service" value="${l}" /><span class="box">${TICK}</span><span>${l}</span></label>`).join('')}</div></div>
         </div></div>
       </div>
@@ -263,7 +263,7 @@
         <p>동의를 거부할 수 있으며, 거부 시 문의 접수가 제한될 수 있습니다.</p>
       </div></div>
       <p class="qc-err" data-qc-err role="alert" hidden>접수가 완료되지 않았습니다. 입력하신 내용은 그대로 있으니 잠시 후 다시 눌러 주시거나, <a href="tel:010-9186-9944">010-9186-9944</a>로 전화 주세요.</p>
-      <p class="qc-note">문의를 접수하시면 회사소개서도 함께 보내드립니다.<br />메일 입력이 어려우시면 <a href="mailto:${D.email}">${D.email}</a>로 바로 보내셔도 됩니다.</p>
+      <p class="qc-note">문의를 접수하시면 회사소개서도 함께 보내드립니다.<br />메일 입력이 어려우시면 <b>${D.email}</b> 로 바로 보내셔도 됩니다. <button type="button" class="qc-copy" data-qc-copy>주소 복사</button></p>
       <div class="qc-act"><button type="submit" class="qc-send">보내기 ${ARROW}</button></div>
     </form>
     <div class="qc-done" data-qc-done hidden>
@@ -299,6 +299,12 @@
     addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
     const more = $('[data-qc-more]');
     $('.qc-more-t', more).addEventListener('click', e => e.currentTarget.setAttribute('aria-expanded', more.classList.toggle('open')));
+    // 메일 주소 복사(2026-11-06 대표: 누르면 열리는 기본 메일 앱은 거의 안 써서 복사로 제공). 복사 기능이 막힌 브라우저는 주소를 선택해 둠
+    $('[data-qc-copy]').addEventListener('click', async e => {
+      const b = e.currentTarget, done = () => { b.textContent = '복사했어요'; clearTimeout(b._t); b._t = setTimeout(() => { b.textContent = '주소 복사'; }, 2000); };
+      try { await navigator.clipboard.writeText(D.email); done(); }
+      catch (x) { const r = document.createRange(); r.selectNodeContents(b.previousElementSibling); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); try { document.execCommand('copy'); done(); } catch (y) {} }
+    });
     $('[data-qc-prv]').addEventListener('click', e => { const o = $('.qc-prv', qc).classList.toggle('open'); e.currentTarget.setAttribute('aria-expanded', o); e.currentTarget.textContent = o ? '닫기' : '내용 보기'; });
 
     // 메일 칸: 휴대폰 키보드가 끼워 넣는 안 보이는 글자·전각 기호 정리, '@' 뒤 도메인 추천, 1~2글자 틀린 도메인은 고칠 주소 제안(지금 홈페이지와 같음)
