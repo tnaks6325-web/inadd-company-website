@@ -10,6 +10,7 @@ import { PNG } from 'pngjs'
 import pixelmatch from 'pixelmatch'
 import fs from 'node:fs'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const args = Object.fromEntries(
   process.argv.slice(2).reduce((acc, v, i, a) => (v.startsWith('--') ? [...acc, [v.slice(2), a[i + 1]]] : acc), [])
@@ -28,7 +29,8 @@ const DEVICES = [
   { key: 'mobile', label: '휴대폰', viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
 ]
 // 항상 보는 페이지(사이트맵에 없어도). 인사이트 상세는 글 데이터가 로컬에 없어 제외.
-const ALWAYS = ['/', '/marketing/seo']
+// /marketing/seo 는 뺐다 — 2026-07부터 홈(/#services)으로 넘기는 주소라 홈을 중간부터 한 번 더 찍을 뿐이고, 시작 위치가 매번 달라 '달라짐' 잡음만 냈다(2026-11-06 PR #94).
+const ALWAYS = ['/']
 const SKIP = [/^\/insight\/./, /^\/admin/, /^\/api\//]
 // 검사 중 실제 방문 통계에 가짜 방문이 쌓이지 않도록 막는 주소
 const BLOCK_HOSTS = /(^|\.)(googletagmanager\.com|google-analytics\.com|analytics\.google\.com|doubleclick\.net|facebook\.net|facebook\.com|wcs\.naver\.net|wcs\.naver\.com)$/
@@ -48,6 +50,28 @@ async function sitemapPaths(origin) {
   const list = [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map(m => new URL(m[1]).pathname)
   if (!list.length) throw new Error(`사이트맵에 페이지가 없음 (${origin})`)
   return list
+}
+
+// ─────────────── 글꼴 ───────────────
+// 사이트 글꼴 Pretendard 는 jsDelivr 에서 받는데, GitHub 작업 컴퓨터에서 가끔 늦거나 실패해 한쪽만 다른 글꼴로 찍혔다
+// (글자 폭이 달라 숫자 겹침·줄바꿈이 달라짐, 2026-11-06 PR #94). 같은 버전 파일을 npm 패키지에서 바로 내준다.
+const PRETENDARD_DIST = path.join(path.dirname(fileURLToPath(import.meta.url)), 'node_modules/pretendard/dist')
+// 개편 홈·회사소개의 작은 영문 글자(JetBrains Mono, 구글 글꼴)도 같은 이유로 패키지 파일로 내준다(라틴 400·500).
+const MONO_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'node_modules/@fontsource/jetbrains-mono/files')
+const MONO_CSS = [400, 500].map(w => `@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:${w};font-display:swap;src:url(https://fonts.gstatic.com/vd-local/jetbrains-mono-latin-${w}-normal.woff2) format('woff2')}`).join('\n')
+function localFont(u) {
+  if (u.hostname === 'fonts.gstatic.com' && u.pathname.startsWith('/vd-local/')) {
+    const f = path.join(MONO_DIR, path.basename(u.pathname))
+    return fs.existsSync(f) ? f : null
+  }
+  if (u.hostname !== 'cdn.jsdelivr.net') return null
+  const m = u.pathname.match(/^\/(?:gh\/orioncactus\/pretendard@v?|npm\/pretendard@)1\.3\.9\/dist\/(.+)$/)
+  if (!m) return null
+  for (const rel of [m[1], m[1].replace(/\.min\.css$/, '.css')]) {
+    const f = path.join(PRETENDARD_DIST, rel)
+    if (f.startsWith(PRETENDARD_DIST + path.sep) && fs.existsSync(f)) return f
+  }
+  return null
 }
 
 // ─────────────── 캡처 ───────────────
@@ -71,9 +95,12 @@ async function shoot(browser, device, url) {
     Math.random = () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646
   })
   await context.route('**/*', route => {
-    let host = ''
-    try { host = new URL(route.request().url()).hostname } catch {}
-    return BLOCK_HOSTS.test(host) ? route.abort() : route.continue()
+    let u = null
+    try { u = new URL(route.request().url()) } catch {}
+    if (u && BLOCK_HOSTS.test(u.hostname)) return route.abort()
+    if (u && u.hostname === 'fonts.googleapis.com' && /JetBrains\+Mono/.test(u.search)) return route.fulfill({ contentType: 'text/css', body: MONO_CSS })
+    const font = u && localFont(u)
+    return font ? route.fulfill({ path: font }) : route.continue()
   })
   const page = await context.newPage()
   await page.clock.install({ time: FIXED_TIME })
@@ -98,6 +125,29 @@ async function shoot(browser, device, url) {
     await page.evaluate(() => { window.scrollTo(0, 0); window.dispatchEvent(new Event('scroll')) })
     await page.waitForTimeout(120)
     await page.clock.runFor(3000)
+    // 연출 고정은 글꼴·그림 기다리기 '전'에 한다 — 숨어 있던 글자가 나타나며 글꼴 조각(Pretendard 부분 글꼴)을 새로 받기 때문(2026-11-06 PR #94 /marketing/seo 글자 폭 잡음)
+    // GSAP 스크롤 연출(붙잡기·스크럽, 개편 홈·회사소개)은 찍는 순간마다 상태가 달라 '달라짐' 잡음이 났다(2026-11-06 PR #91·#92 홈 PC).
+    // 부드러운 스크롤(Lenis)을 끄고, 붙잡기를 풀어 보통 흐름으로 두고, 연출은 고정 상태로 둔다:
+    // 맨 위에서 이미 걸려 있는 연출(첫 화면)은 처음 상태, 나머지는 끝난 상태(다 나타난 모습), 숫자 세기 같은 짧은 연출도 끝 상태.
+    await page.evaluate(() => {
+      // 맨 위로 '올라간' 상태를 한 번 거쳐 머리 메뉴(내리면 숨음)·구역 바탕색을 맨 위 기준으로 맞춘 뒤 부드러운 스크롤을 끈다
+      const ST = window.ScrollTrigger, G = window.gsap, L = window.__lenis
+      try { L && L.scrollTo(0, { immediate: true, force: true }) } catch {}
+      window.scrollTo(0, 0)
+      try { ST && ST.update() } catch {}
+      try { L && L.destroy() } catch {}
+      if (!ST) return
+      for (const t of ST.getAll()) {
+        const top = t.start <= 1
+        t.disable(true)
+        if (t.animation) t.animation.progress(top ? 0 : 1)
+        else if (!top && t.vars.onEnter) t.vars.onEnter(t)
+      }
+      if (G) for (const tw of G.globalTimeline.getChildren(false, true, true)) {
+        if (!tw.scrollTrigger && tw.repeat() !== -1) tw.progress(1)
+      }
+    }).catch(() => {})
+    await page.clock.runFor(500)
     await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {})
     // 페이지 안 타이머는 멈춰 있으므로, 최대 대기 시간은 페이지 밖(여기)에서 잰다
     let waitTimer
@@ -114,24 +164,6 @@ async function shoot(browser, device, url) {
         v.removeAttribute('autoplay')
         v.pause()
         try { v.currentTime = 0 } catch {}
-      }
-    }).catch(() => {})
-    // GSAP 스크롤 연출(붙잡기·스크럽, 개편 홈·회사소개)은 찍는 순간마다 상태가 달라 '달라짐' 잡음이 났다(2026-11-06 PR #91·#92 홈 PC).
-    // 부드러운 스크롤(Lenis)을 끄고, 붙잡기를 풀어 보통 흐름으로 두고, 연출은 고정 상태로 둔다:
-    // 맨 위에서 이미 걸려 있는 연출(첫 화면)은 처음 상태, 나머지는 끝난 상태(다 나타난 모습), 숫자 세기 같은 짧은 연출도 끝 상태.
-    await page.evaluate(() => {
-      try { window.__lenis && window.__lenis.destroy() } catch {}
-      const ST = window.ScrollTrigger, G = window.gsap
-      if (!ST) return
-      window.scrollTo(0, 0)
-      for (const t of ST.getAll()) {
-        const top = t.start <= 1
-        t.disable(true)
-        if (t.animation) t.animation.progress(top ? 0 : 1)
-        else if (!top && t.vars.onEnter) t.vars.onEnter(t)
-      }
-      if (G) for (const tw of G.globalTimeline.getChildren(false, true, true)) {
-        if (!tw.scrollTrigger && tw.repeat() !== -1) tw.progress(1)
       }
     }).catch(() => {})
     await page.clock.runFor(500)
