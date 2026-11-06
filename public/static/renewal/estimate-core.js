@@ -67,13 +67,13 @@
     <div class="ef-f full"><label for="${id}-m">더 알려 주실 내용</label><textarea id="${id}-m" name="message" rows="2" placeholder="판매 채널, 월 광고비, 고민 중인 점 등"></textarea><i></i></div>
   </div>
   <label class="ef-ck"><input type="checkbox" name="privacy" required /><span class="e-box">${TICK}</span><span>개인정보 수집 및 이용에 동의합니다.<em>*</em></span></label>
-  <div class="ef-send"><p data-ef-sum></p><button type="submit">이 조합으로 상담 신청하고 <span class="nb">추가 혜택 받아보기</span></button></div>
+  <div class="ef-send"><p data-ef-sum></p><button type="submit">이 조합으로 상담 신청</button></div>
   <p class="ef-err" data-ef-err role="alert" hidden></p>
   <div class="ef-sent" data-ef-sent role="status">${window.INAD_LIVE ? '<b>상담 신청이 접수되었습니다</b><p>고르신 조합과 금액을 <span data-ef-mail></span> 로도 보내 드렸습니다. 담당자가 1영업일 이내 연락드립니다.<br />급한 문의: <a href="tel:010-9186-9944">010-9186-9944</a></p>' : '<b>시안이라 실제로 보내지 않았어요</b><p>실제 페이지에서는 고른 조합과 금액이 담당자 메일로 가고, 1영업일 이내 연락드린다는 안내가 나옵니다.</p>'}<pre data-ef-pre></pre></div>
 </form>`;
   }
   // getEst: 지금 조합을 돌려주는 함수. 금액 줄은 조합이 바뀔 때 refresh() 로 다시 그린다
-  function bindForm(root, getEst) {
+  function bindForm(root, getEst, source = 'home') {   // source: 접수 위치(home | subscription) — 서버가 메일 제목·다시 보기 링크를 나눈다
     const f = root.querySelector('[data-ef]'), sum = f.querySelector('[data-ef-sum]');
     const refresh = () => { const e = getEst(); sum.textContent = !e.picked.length ? '항목을 먼저 골라 주세요.' : e.capped ? `팀구독 10가지 전부 · 예상 월 ${won(e.total)} (부가세 별도)` : `${e.picked.length}가지 · 예상 월 ${won(e.total)} (부가세 별도)`; };
     const err = f.querySelector('[data-ef-err]'), btn = f.querySelector('button[type="submit"]'), btnHTML = btn.innerHTML;
@@ -84,7 +84,7 @@
       if (window.INAD_LIVE) {
         if (busy) return;
         const fd = new FormData(f), v = k => String(fd.get(k) || '').trim(), e = getEst();
-        const payload = { items: e.picked.map(it => it.id), company: v('company'), name: v('name'), phone: v('phone'), email: v('email'), message: v('message'), privacy: !!fd.get('privacy'), source: 'home' };
+        const payload = { items: e.picked.map(it => it.id), company: v('company'), name: v('name'), phone: v('phone'), email: v('email'), message: v('message'), privacy: !!fd.get('privacy'), source };
         if (!payload.items.length) return fail('항목을 하나 이상 골라 주세요.');
         if (!payload.company || !payload.name || !payload.phone || !payload.email) return fail('별표(*) 칸을 모두 채워 주세요.');
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) return fail('이메일 주소를 확인해 주세요.');
@@ -94,7 +94,7 @@
           .then(res => res.json().catch(() => ({})).then(j => { if (!res.ok || !j.ok) throw new Error(res.status === 400 || res.status === 429 ? (j.error || '') : ''); return j; }))
           .then(j => {
             const total = Number(j.total) || 0;
-            try { if (typeof window.gtag === 'function') window.gtag('event', 'estimate_submit', { value: total * 10000, currency: 'KRW', item_count: payload.items.length, capped: total >= PACKAGE, source: 'home' }); } catch (x) {}
+            try { if (typeof window.gtag === 'function') window.gtag('event', 'estimate_submit', { value: total * 10000, currency: 'KRW', item_count: payload.items.length, capped: total >= PACKAGE, source }); } catch (x) {}
             try { if (typeof window.trackNaverLead === 'function') window.trackNaverLead(); } catch (x) {}
             const sent = f.querySelector('[data-ef-sent]');
             f.querySelector('[data-ef-pre]').textContent = text(e);
