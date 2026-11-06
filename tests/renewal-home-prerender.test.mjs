@@ -13,3 +13,12 @@ test('미리 채운 HTML에 검색 로봇이 읽을 메뉴·서비스·바닥 �
   for (const t of ['/marketing/viral', '/marketing/subscription', '/about', '/works', '/insight', '사업자등록번호', '경기도 안산시 단원구 고잔로 51', 'data-fcta-dock']) assert.ok(html.includes(t), t)
   assert.ok(!/시안|가상 예시/.test(html))
 })
+
+test('개편 회사소개 미리 채운 HTML이 최신이고, 메뉴·바닥·지도 정보 글자가 있다', async () => {
+  const { PAGES } = await import('../scripts/renewal-home-prerender.mjs')
+  const about = PAGES.find(p => p.name === 'about')
+  const html = readFileSync(about.out, 'utf8')
+  assert.equal(html, generate(about))
+  for (const t of ['/marketing/viral', '사업자등록번호', 'data-loc-map', '고잔로 51', 'class="is-cur"']) assert.ok(html.includes(t), t)
+  assert.ok(!/시안|가상 예시/.test(html))
+})

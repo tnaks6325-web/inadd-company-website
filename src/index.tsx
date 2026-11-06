@@ -3,7 +3,7 @@ import { OFFERS, pageSchema } from './lib/page-schema'
 import { serveStatic } from 'hono/cloudflare-workers'
 import { renderer } from './renderer'
 import { RenewalHomePage, renewalHomeHead, renewalHomeBody } from './routes/renewal/home' // 개편 홈(2026-11-06). 예전 홈은 ./routes/home(HomePage) — 되돌릴 때 이 줄과 아래 '/' 경로만 바꾸면 됨
-import { AboutPage } from './routes/about'
+import { RenewalAboutPage, renewalAboutHead, renewalAboutBody } from './routes/renewal/about' // 개편 회사소개(2026-11-06). 예전 회사소개는 ./routes/about(AboutPage) — 되돌릴 때 이 줄과 '/about' 경로만 바꾸면 됨
 import { WorksPage } from './routes/works'
 import { InsightPage } from './routes/insight'
 import { InsightDetailPage } from './routes/insight-detail'
@@ -219,9 +219,13 @@ app.get('/', (c) => {
 })
 
 app.get('/about', (c) => {
-  return c.render(<AboutPage />, {
-    title: '회사 소개 - 2019년부터 바이럴·광고를 해 온 에이전시',
-    description: '인애드컴퍼니는 2019년 시작해 2022년 법인으로 전환한 마케팅 에이전시입니다. 바이럴과 퍼포먼스 광고를 한 팀에서 운영합니다. 연혁, 비즈니스 파트너, 경기도 안산 사무실 위치를 소개합니다.',
+  // 검색 제목·설명(2026-11-06 대표 확정): 연도·지역은 빼고, 바이럴만 하는 회사처럼 보이지 않게
+  return c.render(<RenewalAboutPage />, {
+    bare: true,
+    head: renewalAboutHead,
+    bodyAttrs: renewalAboutBody,
+    title: '회사 소개 - 시딩부터 PPL까지, 풀퍼널 마케팅 에이전시',
+    description: '인애드컴퍼니는 시딩부터 PPL까지 한 팀에서 운영하는 풀퍼널 마케팅 에이전시입니다. 하라는 대로만 하지 않고 먼저 제안하는 대행사가 되려는 이유와 클라이언트와 일하는 방식을 대표 인터뷰로 소개합니다.',
     canonical: 'https://www.inadcompany.co.kr/about',
     schema: pageSchema('/about', 'about')
   })
