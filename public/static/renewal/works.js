@@ -26,9 +26,9 @@ SITE.boot(ctx => {
   $$('[data-camp]').forEach(el => el.textContent = campText);
   $('[data-since]').innerHTML = `${since.n}년부터 누적 캠페인 ${campText}<br /><span class="mono" style="letter-spacing:.04em">PORTFOLIO · REAL BRANDS</span>`;
 
-  // ── 2. 12단계: 금액 없이 단계만, 스크롤에 맞춰 윗선(휴대폰은 왼쪽 선)이 차오르고 글이 진해짐 ──
+  // ── 2. 12단계: 금액 없이 단계만, 스크롤에 맞춰 윗선이 차오르고 글이 진해짐(휴대폰은 2열·이름만) ──
   const fl = $('[data-flow]'), fss = $$('.wk-fs', fl);
-  const AXIS = mobile ? 'scaleY' : 'scaleX';
+  const AXIS = 'scaleX';
   gsap.set($$('.wk-fs i', fl), { [AXIS]: 0 });
   const flowTl = gsap.timeline({ scrollTrigger: { trigger: fl, start: 'top 78%', end: mobile ? 'bottom 55%' : 'bottom 50%', scrub: .6,
     onUpdate: st => { const n = st.progress * fss.length; fss.forEach((el, i) => el.classList.toggle('on', n > i + .4)); } } });
@@ -98,7 +98,7 @@ SITE.boot(ctx => {
     const cards = $$('.wk-card', grid);
     const count = f => cards.filter(c => f === 'all' || (c.dataset.cat || '').split(' ').includes(f)).length;
     $('[data-tabs]').innerHTML = FILTERS.filter(([f]) => f === 'all' || count(f) > 0).map(([f, n], i) => `<button type="button" class="${i ? '' : 'on'}" data-f="${f}">${n}<sup>${count(f)}</sup></button>`).join('');
-    const STEP = 16; let limit = STEP, cur = 'all';
+    const STEP = mobile ? 8 : 16; let limit = STEP, cur = 'all';
     const moreBtn = $('[data-more]'), endNote = $('[data-end]');
     function apply(animate) {
       let shown = 0, total = 0; const fresh = [];
@@ -123,6 +123,9 @@ SITE.boot(ctx => {
       if (scrollY > top + 200) lenis.scrollTo('#cases', { duration: 1, offset: 40 });
     }));
     moreBtn.addEventListener('click', () => { limit += STEP; apply(true); });
+    // 붙어 있는 탭이 머리 메뉴에 가리지 않게: 메뉴가 보이는 동안(올릴 때)은 메뉴 높이만큼 내려 붙음 — base.js 머리 메뉴 숨김 기준(160px·내릴 때)과 같게
+    const tabsEl = $('[data-tabs]'), hdEl = $('[data-hd]');
+    if (hdEl) lenis.on('scroll', ({ scroll, direction }) => { tabsEl.style.top = (scroll > 160 && direction === 1) ? '0px' : hdEl.offsetHeight + 'px'; });
     apply(false);
     ScrollTrigger.batch(cards.filter(c => !c.hidden), { start: 'top 92%', once: true, onEnter: b => gsap.from(b, { y: 50, opacity: 0, duration: .9, stagger: .06, ease: 'power3.out' }) });
 

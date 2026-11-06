@@ -57,7 +57,7 @@
 .wk-cases-h{display:grid;grid-template-columns:3fr 9fr;gap:40px;align-items:end;margin-bottom:48px}
 .wk-cases-h .mono{opacity:.6;align-self:start}
 .wk-cases-h h2{font-size:clamp(36px,4.6vw,80px);font-weight:700;letter-spacing:-.055em;line-height:1.04}
-.wk-tabs{display:flex;flex-wrap:wrap;gap:6px 30px;border-bottom:1px solid var(--line-d);margin-bottom:40px;position:sticky;top:0;z-index:5;background:var(--paper);padding-top:14px}
+.wk-tabs{display:flex;flex-wrap:wrap;gap:6px 30px;border-bottom:1px solid var(--line-d);margin-bottom:40px;position:sticky;top:0;z-index:5;background:var(--paper);padding-top:14px;transition:top .5s cubic-bezier(.2,.7,.2,1)}
 .wk-tabs button{position:relative;background:none;border:0;color:inherit;font-family:inherit;font-size:16px;font-weight:600;letter-spacing:-.02em;padding:12px 0 14px;cursor:pointer;opacity:.45;transition:opacity .3s}
 .wk-tabs button sup{font-family:var(--mono);font-size:10px;font-weight:500;margin-left:5px;vertical-align:top;position:relative;top:2px}
 .wk-tabs button::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.7,0,.2,1)}
@@ -108,11 +108,12 @@
   .wk-meta{grid-template-columns:1fr 1fr;row-gap:6px;margin-top:26px}
   .wk-flow,.wk-cases{padding:12vh 0}
   .wk-flow-h,.wk-cases-h{grid-template-columns:1fr;gap:14px;margin-bottom:36px}
-  .wk-12{grid-template-columns:1fr;gap:0}
-  .wk-12 .wk-fs{padding:0 0 22px 22px;border-top:0;border-left:1px solid var(--line-d)}
-  .wk-12 .wk-fs i{left:-1px;right:auto;top:0;bottom:0;width:2px;height:auto;transform-origin:top}
-  .wk-12 .wk-fs .mono{margin-bottom:4px}
-  .wk-12 .wk-fs p{margin-top:4px;font-size:13px}
+  /* 휴대폰은 2열·단계 이름만(2026-11-07 대표: 휴대폰 길이가 너무 김) — 한 줄 설명은 컴퓨터에서만 */
+  .wk-12{grid-template-columns:1fr 1fr;gap:20px 14px}
+  .wk-12 .wk-fs{padding-top:12px}
+  .wk-12 .wk-fs .mono{margin-bottom:4px;font-size:9.5px}
+  .wk-12 .wk-fs b{font-size:15px}
+  .wk-12 .wk-fs p{display:none}
         .wk-flow-end{flex-direction:column;gap:8px}
   .wk-wall{padding:12vh 0}
   .wk-wall-h{flex-direction:column;align-items:flex-start;gap:14px}
