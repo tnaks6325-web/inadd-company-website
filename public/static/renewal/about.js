@@ -48,7 +48,7 @@ SITE.boot(ctx => {
   // 휠은 페이지 스크롤에 쓰고(확대는 +/− 버튼), 휴대폰은 한 손가락으로 끌면 페이지가 내려가게 지도 끌기를 끔
   const mapEl = $('[data-loc-map]');
   if (mapEl) {
-    const DEF = { lat: 37.320819, lng: 126.831592 };
+    const DEF = { lat: 37.319580, lng: 126.831978 }; // 고잔로 51 타워아이즈빌(카카오맵·OpenStreetMap 2026-11-06 확인). 관리자 값이 있으면 그것을 씀
     const info = fetch('/api/admin/public/about').then(r => r.json()).catch(() => ({}));
     info.then(d => { if (d && d.address) $('[data-loc-addr]').innerHTML = d.address + (d.addressDetail ? '<br />' + d.addressDetail : ''); });
     const leaflet = () => window.L ? Promise.resolve() : new Promise((ok, no) => {

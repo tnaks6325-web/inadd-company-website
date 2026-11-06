@@ -48,6 +48,7 @@
 .loc{display:grid;grid-template-columns:7fr 5fr;gap:40px;margin-top:8vh;align-items:stretch}
 .loc-map{position:relative;min-height:460px;background:#d9d8d4;border:1px solid var(--ln);overflow:hidden;z-index:0}
 .loc-map .leaflet-tile-pane{filter:grayscale(1) contrast(1.05) brightness(1.02)}
+.loc-map img.leaflet-tile{width:256.5px!important;height:256.5px!important;mix-blend-mode:normal!important} /* 지도 조각 경계에 가는 흰 줄이 보여(Leaflet 기본 plus-lighter 섞기) 보통 섞기 + 반 픽셀 겹침 */
 .loc-map .leaflet-control-attribution{font-size:10px;background:rgba(245,244,240,.8)}
 .loc-map .leaflet-bar a{border-radius:0!important;color:var(--ink)}
 .loc-map .leaflet-bar{border-radius:0;box-shadow:none;border:1px solid rgba(11,12,16,.3)}
