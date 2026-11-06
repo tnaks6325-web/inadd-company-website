@@ -175,6 +175,30 @@ img,video{display:block;max-width:100%}
 .qc-send:disabled{opacity:.6;cursor:default}
 .qc-note{font-size:13px;line-height:1.7;color:rgba(11,12,16,.68);margin-top:14px}
 .qc-note a{color:var(--ink);font-weight:600;border-bottom:1px solid currentColor}
+.qc-note b{color:var(--ink);font-weight:600}
+.qc-copy{margin-left:4px;background:transparent;border:1px solid rgba(11,12,16,.32);border-radius:0;font:600 12px var(--sans);color:var(--ink);padding:3px 8px;cursor:pointer;white-space:nowrap}
+.qc-copy:hover{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.qc-row{grid-template-columns:repeat(3,1fr)}
+/* PC 문의 창 세로 맞춤(2026-11-06 대표: FHD 크롬(보이는 높이 약 950px)에서 추가 정보를 펼쳐도 스크롤 없이 보내기까지 보이게) */
+@media (min-width:861px){
+  .qc-box{width:min(640px,100%);padding:18px 48px 24px}
+  .qc-top{padding-bottom:12px}
+  .qc-t{font-size:38px;margin-top:20px}
+  .qc-d{font-size:14px;line-height:1.55;margin-top:8px}
+  .qc-form > .qc-f:first-of-type{margin-top:20px}
+  .qc-f{margin-bottom:16px}
+  .qc-f label{font-size:13px;margin-bottom:2px}
+  .qc-f input,.qc-f textarea{font-size:17px;padding:6px 0 8px}
+  .qc-f textarea{font-size:15px;line-height:1.55;min-height:72px}
+  .qc-more{margin:0 0 14px}
+  .qc-more-t{padding:12px 0}
+  .qc-pick{grid-template-columns:repeat(3,1fr);gap:0 16px;margin-top:2px}
+  .qc-ck{padding:5px 0;font-size:14px}
+  .qc-f label.qc-ck{font-size:14px}
+  .qc-send{margin-top:14px;padding:16px}
+  .qc-note{margin-top:10px;font-size:12.5px;line-height:1.65}
+  .qc-err{margin-top:10px}
+}
 .qc-done{padding-top:40px}
 .qc-done .mono{opacity:.6}
 .qc-done .qc-t{margin-top:18px}
