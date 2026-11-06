@@ -116,6 +116,24 @@ async function shoot(browser, device, url) {
         try { v.currentTime = 0 } catch {}
       }
     }).catch(() => {})
+    // GSAP 스크롤 연출(붙잡기·스크럽, 개편 홈·회사소개)은 찍는 순간마다 상태가 달라 '달라짐' 잡음이 났다(2026-11-06 PR #91·#92 홈 PC).
+    // 부드러운 스크롤(Lenis)을 끄고, 붙잡기를 풀어 보통 흐름으로 두고, 연출은 고정 상태로 둔다:
+    // 맨 위에서 이미 걸려 있는 연출(첫 화면)은 처음 상태, 나머지는 끝난 상태(다 나타난 모습), 숫자 세기 같은 짧은 연출도 끝 상태.
+    await page.evaluate(() => {
+      try { window.__lenis && window.__lenis.destroy() } catch {}
+      const ST = window.ScrollTrigger, G = window.gsap
+      if (!ST) return
+      window.scrollTo(0, 0)
+      for (const t of ST.getAll()) {
+        const top = t.start <= 1
+        t.disable(true)
+        if (t.animation) t.animation.progress(top ? 0 : 1)
+        else if (!top && t.vars.onEnter) t.vars.onEnter(t)
+      }
+      if (G) for (const tw of G.globalTimeline.getChildren(false, true, true)) {
+        if (!tw.scrollTrigger && tw.repeat() !== -1) tw.progress(1)
+      }
+    }).catch(() => {})
     await page.clock.runFor(500)
     if (process.env.VD_DEBUG) console.log('  ready', Date.now() - t0)
     const title = await page.title()
