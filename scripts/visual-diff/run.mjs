@@ -10,6 +10,7 @@ import { PNG } from 'pngjs'
 import pixelmatch from 'pixelmatch'
 import fs from 'node:fs'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const args = Object.fromEntries(
   process.argv.slice(2).reduce((acc, v, i, a) => (v.startsWith('--') ? [...acc, [v.slice(2), a[i + 1]]] : acc), [])
@@ -51,6 +52,28 @@ async function sitemapPaths(origin) {
   return list
 }
 
+// ─────────────── 글꼴 ───────────────
+// 사이트 글꼴 Pretendard 는 jsDelivr 에서 받는데, GitHub 작업 컴퓨터에서 가끔 늦거나 실패해 한쪽만 다른 글꼴로 찍혔다
+// (글자 폭이 달라 숫자 겹침·줄바꿈이 달라짐, 2026-11-06 PR #94). 같은 버전 파일을 npm 패키지에서 바로 내준다.
+const PRETENDARD_DIST = path.join(path.dirname(fileURLToPath(import.meta.url)), 'node_modules/pretendard/dist')
+// 개편 홈·회사소개의 작은 영문 글자(JetBrains Mono, 구글 글꼴)도 같은 이유로 패키지 파일로 내준다(라틴 400·500).
+const MONO_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'node_modules/@fontsource/jetbrains-mono/files')
+const MONO_CSS = [400, 500].map(w => `@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:${w};font-display:swap;src:url(https://fonts.gstatic.com/vd-local/jetbrains-mono-latin-${w}-normal.woff2) format('woff2')}`).join('\n')
+function localFont(u) {
+  if (u.hostname === 'fonts.gstatic.com' && u.pathname.startsWith('/vd-local/')) {
+    const f = path.join(MONO_DIR, path.basename(u.pathname))
+    return fs.existsSync(f) ? f : null
+  }
+  if (u.hostname !== 'cdn.jsdelivr.net') return null
+  const m = u.pathname.match(/^\/(?:gh\/orioncactus\/pretendard@v?|npm\/pretendard@)1\.3\.9\/dist\/(.+)$/)
+  if (!m) return null
+  for (const rel of [m[1], m[1].replace(/\.min\.css$/, '.css')]) {
+    const f = path.join(PRETENDARD_DIST, rel)
+    if (f.startsWith(PRETENDARD_DIST + path.sep) && fs.existsSync(f)) return f
+  }
+  return null
+}
+
 // ─────────────── 캡처 ───────────────
 // 같은 조건이 되도록: 시계 고정·난수 고정·애니메이션 끔·영상 첫 장면 정지·외부 삽입물(iframe) 가림
 const FREEZE_CSS = `
@@ -72,9 +95,12 @@ async function shoot(browser, device, url) {
     Math.random = () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646
   })
   await context.route('**/*', route => {
-    let host = ''
-    try { host = new URL(route.request().url()).hostname } catch {}
-    return BLOCK_HOSTS.test(host) ? route.abort() : route.continue()
+    let u = null
+    try { u = new URL(route.request().url()) } catch {}
+    if (u && BLOCK_HOSTS.test(u.hostname)) return route.abort()
+    if (u && u.hostname === 'fonts.googleapis.com' && /JetBrains\+Mono/.test(u.search)) return route.fulfill({ contentType: 'text/css', body: MONO_CSS })
+    const font = u && localFont(u)
+    return font ? route.fulfill({ path: font }) : route.continue()
   })
   const page = await context.newPage()
   await page.clock.install({ time: FIXED_TIME })
