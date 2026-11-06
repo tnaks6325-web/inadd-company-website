@@ -4,7 +4,7 @@ import { raw } from 'hono/html'
 // 머리(측정·검색 정보)는 renderer 가 넣고(bare 모드), 예전 메뉴·바닥·문의 팝업은 쓰지 않는다. 예전 회사소개는 ../about(AboutPage).
 import body from './about-body.gen.html?raw' // 미리 채운 HTML(scripts/renewal-home-prerender.mjs 가 about-body.html 에서 만듦)
 
-const V = '20261107a'
+const V = '20261107b'
 const css = (f: string) => <link rel="stylesheet" href={`/static/renewal/${f}?v=${V}`} />
 const js = (f: string) => <script src={`/static/renewal/${f}?v=${V}`}></script>
 

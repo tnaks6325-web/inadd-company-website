@@ -392,6 +392,7 @@
   }
 
   window.SITE = {
+    SVC, ARROW,   // 서비스 페이지 미리 채우기(svc-fill.js)가 같은 서비스 목록·화살표를 쓴다
     labHref,
     fillEnd,
     chromeHTML,

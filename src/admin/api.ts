@@ -277,7 +277,7 @@ admin.get('/insight-img/:key', async (c) => {
 
 // ═══════════════════════ HERO KPI (서비스 히어로 수치) ═══════════════════════
 
-const HERO_KPI_DEFAULTS: Record<string, Array<{num:string, label:string}>> = {
+export const HERO_KPI_DEFAULTS: Record<string, Array<{num:string, label:string}>> = {
   viral: [
     { num: '1억+',   label: '누적 콘텐츠 노출' },
     { num: '48시간', label: '최단 바이럴 달성' },
@@ -314,7 +314,7 @@ const HERO_KPI_DEFAULTS: Record<string, Array<{num:string, label:string}>> = {
   ],
 }
 
-const VALID_HERO_SVCS = ['viral','influencer','seeding','seo','review','ppl','oliveyoung']
+export const VALID_HERO_SVCS = ['viral','influencer','seeding','seo','review','ppl','oliveyoung']
 
 // Auth: 전체 히어로 KPI 조회
 admin.get('/hero-kpi', authMiddleware, async (c) => {

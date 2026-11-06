@@ -21,7 +21,7 @@
           <p class="rc-vat">부가세 별도</p>
           <p class="rc-save" data-save></p>
           <p class="e-note" data-note></p>
-          <a class="rc-btn" href="#apply" data-go>이 조합으로 상담 신청하고 <span class="nb">추가 혜택 받아보기</span></a>
+          <a class="rc-btn" href="#apply" data-go>이 조합으로 상담 신청</a>
         </div>
       </div>
     </div>`;
@@ -85,12 +85,12 @@
       refreshForm && refreshForm();
     }
     boxes.forEach(b => b.addEventListener('change', () => render()));
-    // 운영: 방문 기록(GA4) — 운영 조합기와 같은 이름 estimate_view(구역이 보이면 한 번)·estimate_edit(처음 고칠 때 한 번), source=home
+    // 운영: 방문 기록(GA4) — 운영 조합기와 같은 이름 estimate_view(구역이 보이면 한 번)·estimate_edit(처음 고칠 때 한 번), source=home|subscription(opt.source)
     if (window.INAD_LIVE) {
       const track = (n, p) => { try { if (typeof window.gtag === 'function') window.gtag('event', n, p); } catch (x) {} };
-      let edited = false; const edit = () => { if (!edited) { edited = true; track('estimate_edit', { source: 'home' }); } };
+      let edited = false; const edit = () => { if (!edited) { edited = true; track('estimate_edit', { source: opt.source || 'home' }); } };
       boxes.forEach(b => b.addEventListener('change', edit));
-      ScrollTrigger.create({ trigger: sec, start: 'top 90%', once: true, onEnter: () => track('estimate_view', { source: 'home' }) });
+      ScrollTrigger.create({ trigger: sec, start: 'top 90%', once: true, onEnter: () => track('estimate_view', { source: opt.source || 'home' }) });
     }
     q('[data-all]').addEventListener('click', () => { boxes.forEach(b => b.checked = true); render(); });
     q('[data-clear]').addEventListener('click', () => { boxes.forEach(b => b.checked = false); render(); });
@@ -98,7 +98,7 @@
     q('[data-go]').addEventListener('click', ev => { ev.preventDefault(); rcw.classList.remove('open'); if (apply) lenis.scrollTo(apply, { offset: -40, duration: 1.1 }); });
 
     // ── 신청 칸 ──
-    if (apply) { apply.innerHTML = E.formHTML(opt.id || 'e1'); refreshForm = E.bindForm(apply, () => E.compute(ids())); }
+    if (apply) { apply.innerHTML = E.formHTML(opt.id || 'e1'); refreshForm = E.bindForm(apply, () => E.compute(ids()), opt.source || 'home'); }
     render(true);
 
     // ── 휴대폰: 계산서 띠(조합 구역을 보는 동안만 보임) ──

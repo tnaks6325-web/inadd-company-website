@@ -5,7 +5,7 @@ import { BlogRouter } from './routes/api-blog'
 import { InsightDetailPage } from './routes/insight-detail'
 import { AdCards, WorkCards, visibleWorks, type WorkItem } from './routes/works'
 import { kvGet } from './admin/store'
-import { SVC_FAQ_DEFAULTS, VALID_SVC_NAMES } from './admin/api'
+import { SVC_FAQ_DEFAULTS, VALID_SVC_NAMES, HERO_KPI_DEFAULTS, VALID_HERO_SVCS } from './admin/api'
 import {
   getPosts, realId, postPath, absoluteUrl, plainText, xmlEscape,
   SITE_URL, CAT_LABEL, SUB_LABEL, type InsightPost,
@@ -113,15 +113,46 @@ const attrEscape = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;
 // 구조화 데이터용 글자 — <strong> 같은 강조 태그는 띄어쓰기 없이 벗긴다
 const faqText = (html: string) => html.replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim()
 
+// 개편 서비스 페이지(2026-11-07) — svc-fill.js 가 남긴 <!--faq-->…<!--/faq-->, <!--kpi-->…<!--/kpi--> 사이를 관리자 값으로 바꾼다.
+// 질문 한 줄 모양은 public/static/renewal/svc-fill.js 의 SVC_FAQ_ITEM 과 같게(바꾸면 둘 다)
+const svcFaqItem = (f: { q: string; a: string }, i: number) =>
+  `<div class="fq"><button type="button" aria-expanded="false"><span class="mono">Q${String(i + 1).padStart(2, '0')}</span><b>${f.q}</b><span class="pl"></span></button><div class="a"><div><p>${f.a}</p></div></div></div>`
+const htmlEscape = (s: string) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+const between = (html: string, a: string, b: string, inner: string) => {
+  const i = html.indexOf(a), j = i < 0 ? -1 : html.indexOf(b, i)
+  return i < 0 || j < 0 ? html : html.slice(0, i + a.length) + inner + html.slice(j)
+}
+
 root.get('/marketing/:svc', async (c) => {
   const svc = c.req.param('svc')
   if (!VALID_SVC_NAMES.includes(svc)) return passThrough(c)
-  const [res, raw] = await Promise.all([passThrough(c), kvGet(kvOf(c), `svc_faq_${svc}`).catch(() => null)])
+  const [res, raw, kpiRaw] = await Promise.all([
+    passThrough(c),
+    kvGet(kvOf(c), `svc_faq_${svc}`).catch(() => null),
+    VALID_HERO_SVCS.includes(svc) ? kvGet(kvOf(c), `hero_kpi_${svc}`).catch(() => null) : Promise.resolve(null),
+  ])
   if (!res.ok) return res
   let faq: Array<{ q: string; a: string }>
   try { faq = raw ? JSON.parse(raw) : (SVC_FAQ_DEFAULTS[svc] || []) } catch { return res }
   faq = (faq || []).filter(it => it && it.q && it.a)
-  if (!faq.length) return res
+  let html = await res.text()
+  const ld = () => JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(it => ({ '@type': 'Question', name: faqText(it.q), acceptedAnswer: { '@type': 'Answer', text: faqText(it.a) } })),
+  }).replace(/</g, '\\u003c')
+  // 개편 페이지
+  if (html.includes(`data-svc-faq="${svc}"><!--faq-->`) || html.includes(`data-svc-kpi="${svc}"><!--kpi-->`)) {
+    let kpi: Array<{ num: string; label: string }> | null = null
+    try { kpi = kpiRaw ? JSON.parse(kpiRaw) : (HERO_KPI_DEFAULTS[svc] || null) } catch { kpi = null }
+    if (kpi && kpi.length) html = between(html, `data-svc-kpi="${svc}"><!--kpi-->`, '<!--/kpi-->', kpi.map(x => `<div><b>${htmlEscape(x.num)}</b><span>${htmlEscape(x.label)}</span></div>`).join(''))
+    if (faq.length) {
+      html = between(html, `data-svc-faq="${svc}"><!--faq-->`, '<!--/faq-->', faq.map(svcFaqItem).join(''))
+      html = html.replace('</head>', `<script type="application/ld+json">${ld()}</script></head>`)
+    }
+    return c.html(html, 200)
+  }
+  // 예전 페이지(되돌렸을 때) — 화면 스크립트와 같은 모양으로 미리 채운다
+  if (!faq.length) return c.html(html, 200)
   const open = `<div class="faq-wrap" id="faqWrap" data-service="${svc}">`
   // 질문·답은 관리자 화면에서 넣은 HTML(<strong> 등)이라 화면 스크립트처럼 그대로 넣는다
   const items = faq.map((it, i) =>
@@ -129,15 +160,10 @@ root.get('/marketing/:svc', async (c) => {
     + `<button class="faq-q" type="button" onclick="${attrEscape(FAQ_TOGGLE)}">`
     + `<div class="faq-q-left"><span class="faq-q-badge">Q</span><span class="faq-q-text">${it.q}</span></div>${FAQ_CHEVRON}</button>`
     + `<div class="faq-a"><div class="faq-a-inner">${it.a}</div></div></div>`).join('')
-  const ld = JSON.stringify({
-    '@context': 'https://schema.org', '@type': 'FAQPage',
-    mainEntity: faq.map(it => ({ '@type': 'Question', name: faqText(it.q), acceptedAnswer: { '@type': 'Answer', text: faqText(it.a) } })),
-  }).replace(/</g, '\\u003c')
-  const html = await res.text()
   if (!html.includes(open)) return c.html(html, 200)
   return c.html(html
     .replace(open, open + items)
-    .replace('</head>', `<script type="application/ld+json">${ld}</script></head>`), 200)
+    .replace('</head>', `<script type="application/ld+json">${ld()}</script></head>`), 200)
 })
 
 // ── RSS ──

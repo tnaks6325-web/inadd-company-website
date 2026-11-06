@@ -22,3 +22,31 @@ test('개편 회사소개 미리 채운 HTML이 최신이고, 메뉴·바닥·�
   for (const t of ['/marketing/viral', '사업자등록번호', 'data-loc-map', '고잔로 51', 'class="is-cur"']) assert.ok(html.includes(t), t)
   assert.ok(!/시안|가상 예시/.test(html))
 })
+
+// 개편 서비스 8개(2026-11-07)
+test('개편 서비스 페이지 미리 채운 HTML이 최신이고, 운영 데이터를 끼울 자리가 있다', async () => {
+  const { PAGES, SVC_KEYS } = await import('../scripts/renewal-home-prerender.mjs')
+  for (const k of SVC_KEYS) {
+    const page = PAGES.find(p => p.svc === k)
+    const html = readFileSync(page.out, 'utf8')
+    assert.equal(html, generate(page), k)
+    assert.ok(html.includes(`data-svc="${k}"`), k)
+    assert.ok(html.includes('사업자등록번호') && html.includes('/marketing/viral'), k + ' 메뉴·바닥')
+    if (k !== 'subscription') assert.ok(html.includes('<!--svc-hero-->'), k + ' 첫 화면 장면 자리')
+    if (k !== 'performance') assert.ok(html.includes('<!--svc-terms-->') && html.includes('<!--svc-terms-lead-->'), k + ' 진행 조건 자리')
+    if (k === 'performance' || k === 'subscription') assert.ok(html.includes('<!--svc-cases-->'), k + ' 성과 사례 자리')
+    assert.ok(!/시안|가상 예시|추가 혜택/.test(html), k)
+  }
+})
+
+test('퍼포먼스 자주 묻는 질문이 운영 원문(svc-performance.tsx PM_FAQ)과 같다', async () => {
+  const tsx = readFileSync(new URL('../src/routes/svc-performance.tsx', import.meta.url), 'utf8')
+  const live = [...tsx.slice(tsx.indexOf('const PM_FAQ'), tsx.indexOf(']\n\nexport const SvcPerformancePage')).matchAll(/\['([^']+)', '([^']+)'\]/g)].map(m => [m[1], m[2]])
+  const ctx = { window: {} }
+  const { default: vm } = await import('node:vm')
+  vm.createContext(ctx)
+  vm.runInContext(readFileSync(new URL('../public/static/renewal/svc-data-1.js', import.meta.url), 'utf8'), ctx)
+  const data = JSON.parse(JSON.stringify(ctx.window.SVC_PAGES.performance.faq.map(f => [f.q, f.a])))   // 다른 실행 공간(vm)의 배열이라 일반 배열로
+  assert.equal(live.length, 8)
+  assert.deepEqual(data, live)
+})
