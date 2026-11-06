@@ -1,0 +1,66 @@
+/* 견적 조합기 시안 4종 공통 — 첫 화면 띠, 항목 체크 상자, 신청 칸. 각 시안의 조합 화면 모양은 페이지 안에 따로 */
+[data-bg="ink"]{--ln:rgba(255,255,255,.14);--sub:rgba(245,244,240,.62)}
+[data-bg="paper"]{--ln:rgba(11,12,16,.14);--sub:rgba(11,12,16,.66)}
+
+/* 첫 화면(짧게) */
+.eh{padding:20vh 0 8vh}
+.eh .mono{display:block;opacity:.6;margin-bottom:28px}
+.eh h1{font-size:clamp(44px,7vw,120px);font-weight:800;letter-spacing:-.06em;line-height:.98}
+.eh-row{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end;margin-top:6vh;border-top:1px solid var(--ln);padding-top:24px}
+.eh-row p{font-size:clamp(17px,1.4vw,21px);line-height:1.6;color:var(--sub)}
+.eh-row ul{list-style:none;font-size:14px;color:var(--sub)}
+.eh-row li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--ln)}
+.eh-row li b{color:inherit;font-weight:600}
+.eh-other{font-size:14px;margin-top:16px}
+.eh-other a{border-bottom:1px solid currentColor;margin-right:16px}
+.eh-other a.on{font-weight:700;border-bottom-width:2px}
+
+/* 항목 체크 상자 */
+.e-box{flex:none;width:18px;height:18px;border:1.5px solid currentColor;display:grid;place-items:center;transition:background .25s,border-color .25s}
+.e-box svg{width:12px;height:12px;stroke:var(--paper);opacity:0;transition:opacity .2s}
+input:checked + .e-box{background:currentColor}
+input:checked + .e-box svg{opacity:1}
+input:focus-visible + .e-box{outline:2px solid var(--navy);outline-offset:2px}
+.e-tools{display:flex;gap:20px;font-size:14px}
+.e-tools button{background:none;border:0;padding:2px 0;font:600 14px var(--sans);color:inherit;border-bottom:1px solid currentColor;cursor:pointer}
+.e-note{font-size:14px;line-height:1.6;color:var(--sub)}
+
+/* 신청 칸 */
+.e-apply{padding:14vh 0 16vh}
+.ef{max-width:980px}
+.ef-h{display:flex;align-items:baseline;gap:20px;border-bottom:2px solid currentColor;padding-bottom:18px;margin-bottom:10px}
+.ef-h .mono{opacity:.6}
+.ef-h b{font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em}
+.ef-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
+.ef-f{position:relative;padding-top:20px;margin-bottom:26px}
+.ef-f.full{grid-column:1/-1}
+.ef-f label{display:block;font-size:13px;opacity:.7;margin-bottom:4px}
+.ef-f label em,.ef-ck em{font-style:normal;color:var(--navy);margin-left:3px}
+[data-bg="ink"] .ef-f label em,[data-bg="ink"] .ef-ck em{color:var(--butter)}
+.ef-f input,.ef-f textarea{width:100%;border:0;border-bottom:1px solid var(--ln);background:transparent;font:500 19px/1.4 var(--sans);letter-spacing:-.02em;color:inherit;padding:8px 0 10px;outline:none;border-radius:0;resize:vertical}
+.ef-f i{position:absolute;left:0;right:0;bottom:0;height:2px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.7,0,.2,1)}
+.ef-f:focus-within i{transform:scaleX(1)}
+.ef-f textarea + i{bottom:5px}
+.ef-ck{position:relative;display:flex;align-items:center;gap:12px;font-size:15px;cursor:pointer;margin-top:4px}
+.ef-ck input{position:absolute;opacity:0;width:18px;height:18px}
+.ef-send{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:34px;border-top:1px solid var(--ln);padding-top:24px}
+.ef-send p{font-size:16px;font-weight:600;letter-spacing:-.02em}
+.ef-send button{border:0;cursor:pointer;font:600 16px var(--sans);padding:18px 30px;background:var(--ink);color:var(--white);transition:background .3s}
+[data-bg="ink"] .ef-send button{background:var(--white);color:var(--ink)}
+/* 버튼 문구가 줄바꿈될 때 "추가 혜택 받아보기"는 한 덩어리로 */ .ef-send button .nb,.rc-btn .nb{display:inline-block}
+.ef-send button:hover{background:var(--navy);color:var(--white)}
+.ef-sent{display:none;margin-top:26px;border-top:2px solid currentColor;padding-top:20px}
+.ef-sent.on{display:block}
+.ef-sent b{font-size:22px;letter-spacing:-.03em}
+.ef-sent p{font-size:15px;line-height:1.7;color:var(--sub);margin-top:8px}
+.ef-sent pre{font:13px/1.8 var(--mono);white-space:pre-wrap;margin-top:14px;opacity:.85}
+
+@media (max-width:860px){
+  .eh{padding:16vh 0 6vh}
+  .eh-row{grid-template-columns:1fr;gap:24px}
+  .ef-grid{grid-template-columns:1fr}
+  .ef-send{flex-direction:column;align-items:stretch}
+}
+.ef-err{margin-top:14px;font-size:14px;line-height:1.6;color:#B42318}
+.ef-sent a{color:inherit;font-weight:600;border-bottom:1px solid currentColor}
+.ef button[type="submit"]:disabled{opacity:.6;cursor:default}

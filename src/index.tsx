@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { OFFERS, pageSchema } from './lib/page-schema'
 import { serveStatic } from 'hono/cloudflare-workers'
 import { renderer } from './renderer'
-import { HomePage } from './routes/home'
+import { RenewalHomePage, renewalHomeHead, renewalHomeBody } from './routes/renewal/home' // 개편 홈(2026-11-06). 예전 홈은 ./routes/home(HomePage) — 되돌릴 때 이 줄과 아래 '/' 경로만 바꾸면 됨
 import { AboutPage } from './routes/about'
 import { WorksPage } from './routes/works'
 import { InsightPage } from './routes/insight'
@@ -132,7 +132,10 @@ Sitemap: https://www.inadcompany.co.kr/sitemap.xml`
 
 // Routes
 app.get('/', (c) => {
-  return c.render(<HomePage />, {
+  return c.render(<RenewalHomePage />, {
+    bare: true,
+    head: renewalHomeHead,
+    bodyAttrs: renewalHomeBody,
     title: '풀퍼널 마케팅 에이전시 - 브랜드마케팅 에이스팀',
     description: '바이럴과 광고를 한 팀이 같이 운영하는 풀퍼널 마케팅 에이전시입니다. 커뮤니티 바이럴, 네이버·구글·메타 광고, 인플루언서·체험단, 올리브영, PPL까지 맡길 수 있습니다.',
     canonical: 'https://www.inadcompany.co.kr',
