@@ -7,7 +7,7 @@ export const AboutPage = () => (
     <section class="abh-hero">
       <h1 class="abh-sr">브랜드의 설득력을 설계하는 크리에이티브 퍼포먼스 — 인애드컴퍼니 회사소개</h1>
       <AboutHero />
-      <script src="/static/about-hero.js?v=20261031m" defer></script>
+      <script src="/static/about-hero.js?v=20261106a" defer></script>
     </section>
 
     {/* 밴드 등장 — 뷰포트 진입 시 reveal */}
