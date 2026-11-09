@@ -386,9 +386,12 @@ app.get('/development', (c) => {
 
 {/* 문의 창구 팝업 단일화(2026-08) — /contact 페이지 폐쇄, 홈으로 301 리다이렉트.
     사이트 내 /contact 링크는 main.js가 가로채 팝업으로 열리므로 영향 없음.
-    (직접 주소 입력·검색 유입만 이 경로를 탄다) */}
+    (직접 주소 입력·검색 유입만 이 경로를 탄다)
+    2026-11-09 대표: 개편 때도 문의 페이지는 되살리지 않음 — 홈(/)이 아니라 /#contact 로 보내 홈에서 간편 문의 창이 바로 열리게 함
+    (public/static/renewal/base.js quick(): 주소 끝이 #contact 이면 열림). 쿼리(utm 등)는 그대로 넘김. */}
 app.get('/contact', (c) => {
-  return c.redirect('/', 301)
+  const q = new URL(c.req.url).search
+  return c.redirect('/' + q + '#contact', 301)
 })
 
 // ─────────────────────────────────────────────
