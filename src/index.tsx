@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { newAdminHTML } from './admin/new-admin-html'
 import { OFFERS, pageSchema } from './lib/page-schema'
 import { serveStatic } from 'hono/cloudflare-workers'
 import { renderer } from './renderer'
@@ -77,13 +78,11 @@ app.get('/admin/login', (c) => {
   return c.html(adminLoginHTML())
 })
 
-app.get('/admin', (c) => {
-  return c.html(adminDashboardHTML())
-})
-
-app.get('/admin/*', (c) => {
-  return c.html(adminDashboardHTML())
-})
+// 새 관리자 화면(2026-11-09) — 옛 화면은 /admin/old 에 그대로(되돌릴 때 아래 두 경로를 adminDashboardHTML 로)
+app.get('/admin', (c) => c.html(newAdminHTML()))
+app.get('/admin/old', (c) => c.html(adminDashboardHTML()))
+app.get('/admin/old/*', (c) => c.html(adminDashboardHTML()))
+app.get('/admin/*', (c) => c.html(newAdminHTML()))
 
 // ─────────────────────────────────────────────
 // SEO: sitemap.xml
@@ -403,53 +402,30 @@ function adminLoginHTML(): string {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Login – IN AD COMPANY</title>
+<title>관리자 로그인 – IN AD COMPANY</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
+  /* 2026-11-09 새 관리자 화면과 같은 모양(먹색·종이색·가는 선, 각진 모서리) */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    min-height: 100vh;
-    background: #F1F1F1;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Segoe UI', system-ui, sans-serif;
-  }
-  .login-card {
-    background: #FFFFFF;
-    border: 1px solid #E6E7EA;
-    border-radius: 16px;
-    padding: 48px 40px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 24px 60px rgba(26,31,46,0.45);
-  }
-  .login-logo {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-  .login-logo .brand { color: #285CCC; font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
-  .login-logo h1 { color: #393939; font-size: 22px; font-weight: 700; }
-  .login-logo p { color: #7A7A80; font-size: 13px; margin-top: 6px; }
-  .form-group { margin-bottom: 20px; }
-  .form-group label { display: block; color: #6E6E6E; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
-  .form-group input {
-    width: 100%; padding: 14px 16px;
-    background: #FFFFFF; border: 1px solid #DDDEE2;
-    border-radius: 8px; color: #393939; font-size: 15px;
-    outline: none; transition: border-color .2s;
-  }
-  .form-group input:focus { border-color: #285CCC; }
-  .btn-login {
-    width: 100%; padding: 15px;
-    background: #285CCC; color: #fff;
-    border: none; border-radius: 8px;
-    font-size: 15px; font-weight: 700;
-    cursor: pointer; transition: background .2s;
-    margin-top: 8px;
-  }
-  .btn-login:hover { background: #1E47A0; }
-  .error-msg { color: #DC2626; font-size: 13px; text-align: center; margin-top: 16px; display: none; }
-  .back-link { text-align: center; margin-top: 24px; }
-  .back-link a { color: #8A8A90; font-size: 13px; text-decoration: none; }
-  .back-link a:hover { color: #6E6E6E; }
+  body { min-height: 100vh; background: #0B0C10; display: flex; align-items: center; justify-content: center; padding: 20px;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif; color: #0B0C10; word-break: keep-all; }
+  .login-card { background: #F5F4F0; padding: 44px 40px 34px; width: 100%; max-width: 400px; }
+  .login-logo { margin-bottom: 30px; border-bottom: 1px solid #0B0C10; padding-bottom: 18px; }
+  .login-logo .brand { font-size: 12px; font-weight: 700; letter-spacing: .14em; margin-bottom: 10px; }
+  .login-logo h1 { font-size: 30px; font-weight: 700; letter-spacing: -.045em; }
+  .login-logo p { display: none; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .form-group input { width: 100%; padding: 12px 14px; background: #FBFAF7; border: 1px solid rgba(11,12,16,.18); border-radius: 0;
+    color: #0B0C10; font: inherit; font-size: 15px; outline: none; transition: border-color .2s; }
+  .form-group input:focus { border-color: #0B0C10; }
+  .btn-login { width: 100%; height: 48px; background: #0B0C10; color: #F5F4F0; border: 0; border-radius: 0; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 6px; }
+  .btn-login:hover { background: #14161D; }
+  .error-msg { color: #B3261E; font-size: 13px; margin-top: 14px; display: none; }
+  .back-link { margin-top: 22px; }
+  .back-link a { color: rgba(11,12,16,.62); font-size: 13px; text-decoration: none; border-bottom: 1px solid currentColor; }
+  .back-link a:hover { color: #0B0C10; }
 </style>
 </head>
 <body>
@@ -471,7 +447,7 @@ function adminLoginHTML(): string {
     <button type="submit" class="btn-login">로그인</button>
     <div class="error-msg" id="errorMsg">아이디 또는 비밀번호가 올바르지 않습니다.</div>
   </form>
-  <div class="back-link"><a href="/">← 메인으로 돌아가기</a></div>
+  <div class="back-link"><a href="/">홈페이지로</a></div>
 </div>
 <script>
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
