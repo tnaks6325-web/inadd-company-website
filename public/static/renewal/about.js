@@ -29,6 +29,7 @@ SITE.boot(ctx => {
       const k = Math.floor((+st.projects || 0) / 1000) * 1000;
       if (en === 'CAMPAIGNS' && k > 0) el.dataset.n = k;
       if (en === 'RENEWAL' && +st.contracts > 0) el.dataset.n = +st.contracts;
+      if (en === 'BRANDS' && +st.partners > 0) el.dataset.n = +st.partners; // 2026-11-09 관리자 '함께한 브랜드' 연결
       return base;
     }).then(() => count(el));
   });

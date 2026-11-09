@@ -17,7 +17,7 @@ export const DEFAULT_DATA = {
   ]),
   home_brochure_url: 'https://drive.google.com/file/d/1YsEoDjdrOatvEO1-jQHxoKBEC0vY4ihO/view',
   home_stats: JSON.stringify({
-    projects: 320, contracts: 98, experience: 7, partners: 50
+    projects: 320, contracts: 98, experience: 7, partners: 130 // partners: 사이트 "함께한 브랜드"(2026-11-09 연결, 대표 확정 130)
   }),
   home_slide_interval: '7',
 
