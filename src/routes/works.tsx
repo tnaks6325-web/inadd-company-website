@@ -13,7 +13,7 @@ export const visibleWorks = (items: WorkItem[]) =>
     .sort((a, b) => ((Number(a.item.featuredRank) || 999) - (Number(b.item.featuredRank) || 999)) || a.index - b.index)
     .map(e => e.item)
 
-// 대표이미지 없이 로고(thumb)만 있는 옛 로고 카드 사례 — 개편 포트폴리오 '함께한 브랜드' 로고 칸(등록 순)
+// 대표이미지 없이 로고(thumb)만 있는 옛 로고 카드 사례 — 개편 포트폴리오 '함께한 브랜드' 로고 칸(등록 순). 둘 다 없으면 어디에도 안 나옴
 export const logoWorks = (items: WorkItem[]) => items.filter(w => !w.cover && w.thumb)
 
 export const WorkCards = ({ items }: { items: WorkItem[] }) => (
