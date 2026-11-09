@@ -365,8 +365,8 @@ app.get('/marketing/oliveyoung', (c) => {
 
 app.get('/marketing/ppl', (c) => {
   return c.render(<RenewalSvcPage k="ppl" />, { bare: true, head: renewalSvcHead('ppl'), bodyAttrs: renewalSvcBody,
-    title: 'PPL 마케팅 - 드라마·예능 방송 협찬 기획',
-    description: '드라마·예능 프로그램 선정부터 장면 기획, 방송사·제작사 협찬 계약, 방영 후 리포트까지 PPL 전 과정을 진행합니다.',
+    title: 'PPL 마케팅 - 드라마·예능 PPL 장면 기획', // 2026-11-09 대표: 서비스 페이지에 '협찬' 쓰지 않음(구글 90일 '협찬' 검색 노출 0)
+    description: '드라마·예능 프로그램 선정부터 장면 기획, 방송사·제작사 계약, 방영 후 리포트까지 PPL 전 과정을 진행합니다.',
     canonical: 'https://www.inadcompany.co.kr/marketing/ppl',
     schema: pageSchema('/marketing/ppl', 'service')
   })
