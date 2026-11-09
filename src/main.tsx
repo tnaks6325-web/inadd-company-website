@@ -2,14 +2,14 @@ import { Hono } from 'hono'
 import app from './index'
 import { renderer } from './renderer'
 import { BlogRouter } from './routes/api-blog'
-import { InsightDetailPage } from './routes/insight-detail'
+import { RenewalInsightDetailPage, InsightFeat, InsightRows, renewalInsightHead, renewalInsightBody } from './routes/renewal/insight'
 import { visibleWorks, type WorkItem } from './routes/works'
 import { RenewalWorkCards } from './routes/renewal/works'
 import { kvGet } from './admin/store'
 import { SVC_FAQ_DEFAULTS, VALID_SVC_NAMES, HERO_KPI_DEFAULTS, VALID_HERO_SVCS } from './admin/api'
 import {
   getPosts, realId, postPath, absoluteUrl, plainText, xmlEscape,
-  SITE_URL, CAT_LABEL, SUB_LABEL, type InsightPost,
+  SITE_URL,
 } from './lib/insight-posts'
 
 // ─────────────────────────────────────────────
@@ -48,40 +48,14 @@ function passThrough(c: any): Response | Promise<Response> {
   return app.fetch(c.req.raw, c.env, ctx)
 }
 
-const CONTENT_CSS = '<link href="/static/insight-content.css?v=20261027p" rel="stylesheet" /><script src="/static/insight-content.js?v=20261026a" defer></script>'
-
-// ── 목록: 기존 화면을 그대로 쓰고, 카드만 서버에서 미리 채운다 ──
-const Cards = ({ posts }: { posts: InsightPost[] }) => (
-  <>
-    {posts.map(post => (
-      <a href={postPath(post)} class="ins2-card" data-main-cat={post.mainCategory || ''} data-sub-cat={post.subCategory || ''}>
-        <div class="ins2-thumb">
-          {post.thumbnail
-            ? <img src={post.thumbnail} alt={post.title} class="ins2-thumb-img" loading="lazy" onerror="this.style.display='none'" />
-            : <div class="ins2-thumb-fallback"><i class="fas fa-newspaper"></i></div>}
-          <span class="ins2-tag">{SUB_LABEL[post.subCategory || ''] || CAT_LABEL[post.mainCategory || ''] || '인사이트'}</span>
-        </div>
-        <div class="ins2-body">
-          <h3 class="ins2-title">{post.title}</h3>
-          <p class="ins2-summary">{post.summary || ''}</p>
-          <div class="ins2-meta"><span class="ins2-date">{(post.createdAt || '').slice(0, 10)}</span></div>
-        </div>
-      </a>
-    ))}
-  </>
-)
-
+// ── 목록: 개편 화면(src/routes/renewal/insight-body.html)의 표식 자리에 맨 위 글·글 카드를 서버에서 채운다(검색 로봇이 글을 읽도록) ──
 root.get('/insight', async (c) => {
   const [res, posts] = await Promise.all([passThrough(c), getPosts(kvOf(c))])
   if (!posts.length || !res.ok) return res
   let html = await res.text()
-  const cards = (<Cards posts={posts} />).toString()
-  // 페이지 JS 가 나중에 같은 모양으로 다시 그리므로 화면은 바뀌지 않는다
   html = html
-    .replace('id="ins2Loading"', 'id="ins2Loading" style="display:none"')
-    .replace('<div class="ins2-grid" id="ins2Grid">', `<div class="ins2-grid" id="ins2Grid">${await cards}`)
-    // 첫 화면에서 흐르는 글 제목도 지금 등록된 글로 바꾼다(없으면 insight-hero.tsx 의 예비 목록)
-    .replace(/(<script type="application\/json" id="ishTitles">)[\s\S]*?(<\/script>)/, (_m, a, b) => a + JSON.stringify(posts.map(p => p.title)).replace(/</g, '\\u003c') + b)
+    .replace('<!--ins-feat-->', await (<InsightFeat post={posts[0]} />).toString())
+    .replace('<!--ins-rows-->', await (<InsightRows posts={posts} />).toString())
   // 글 목록 구조화 데이터 — AI 검색이 어떤 글이 있는지 한 번에 읽도록(제목·주소만)
   const list = JSON.stringify({
     '@context': 'https://schema.org', '@type': 'ItemList', '@id': `${SITE_URL}/insight#posts`, name: '마케팅 인사이트 글 목록',
@@ -195,13 +169,15 @@ root.get('/insight/:id', renderer, async (c) => {
   const post = posts.find(p => p.id === id) || null
   if (!post) {
     c.status(404)
-    return c.render(<InsightDetailPage post={null} />, { title: '글을 찾을 수 없습니다' })
+    return c.render(<RenewalInsightDetailPage post={null} posts={posts} />, { title: '글을 찾을 수 없습니다', bare: true, head: renewalInsightHead, bodyAttrs: renewalInsightBody })
   }
   const url = `${SITE_URL}${postPath(post)}`
   const description = post.metaDescription || post.summary || plainText(post.content)
   const image = absoluteUrl(post.thumbnail)
-  const related = posts.filter(p => p.id !== post.id).slice(0, 3)
-  const res = await c.render(<InsightDetailPage post={post} related={related} />, {
+  const res = await c.render(<RenewalInsightDetailPage post={post} posts={posts} />, {
+    bare: true,
+    head: renewalInsightHead,
+    bodyAttrs: renewalInsightBody,
     title: post.title,
     description,
     canonical: url,
@@ -235,7 +211,6 @@ root.get('/insight/:id', renderer, async (c) => {
     html = html.replace(/(<meta (?:property="og:image"|name="twitter:image") content=")[^"]*("\/>)/g, `$1${xmlEscape(image)}$2`)
       .replace(/<meta property="og:image:(?:width|height)" content="\d+"\/>/g, '')
   }
-  html = html.replace('</head>', `${CONTENT_CSS}</head>`)
   return c.html(html, 200)
 })
 

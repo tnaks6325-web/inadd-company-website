@@ -6,7 +6,7 @@ import { RenewalHomePage, renewalHomeHead, renewalHomeBody } from './routes/rene
 import { RenewalAboutPage, renewalAboutHead, renewalAboutBody } from './routes/renewal/about' // 개편 회사소개(2026-11-06). 예전 회사소개는 ./routes/about(AboutPage) — 되돌릴 때 이 줄과 '/about' 경로만 바꾸면 됨
 import { RenewalSvcPage, renewalSvcHead, renewalSvcBody } from './routes/renewal/svc' // 개편 서비스 8개(2026-11-07). 예전 화면은 ./routes/svc-*.tsx — 되돌릴 때 /marketing/* 경로의 RenewalSvcPage 만 예전 컴포넌트로
 import { RenewalWorksPage, renewalWorksHead, renewalWorksBody } from './routes/renewal/works' // 개편 포트폴리오(2026-11-07). 예전은 ./routes/works(WorksPage) — 되돌릴 때 이 줄과 '/works' 경로만 바꾸면 됨
-import { InsightPage } from './routes/insight'
+import { RenewalInsightPage, renewalInsightHead, renewalInsightBody } from './routes/renewal/insight' // 개편 인사이트(2026-11-09). 예전은 ./routes/insight(InsightPage) — 되돌릴 때 이 줄과 '/insight' 경로, src/main.tsx 의 글 경로만 바꾸면 됨
 import { InsightDetailPage } from './routes/insight-detail'
 import { ViralPage } from './routes/viral'
 import { DevelopmentPage } from './routes/development'
@@ -245,7 +245,10 @@ app.get('/works', (c) => {
 })
 
 app.get('/insight', (c) => {
-  return c.render(<InsightPage />, {
+  return c.render(<RenewalInsightPage />, {
+    bare: true,
+    head: renewalInsightHead,
+    bodyAttrs: renewalInsightBody,
     title: '마케팅 인사이트 - 광고·바이럴·올리브영 실무 가이드',
     description: '광고비 계산, 체험단·공동구매 수수료, 올리브영 입점처럼 브랜드 담당자가 자주 묻는 마케팅 질문에 숫자와 출처를 붙여 답합니다.',
     canonical: 'https://www.inadcompany.co.kr/insight',

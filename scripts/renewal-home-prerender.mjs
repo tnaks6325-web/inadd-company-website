@@ -14,6 +14,8 @@ export const PAGES = [
   { name: 'home', src: root + 'src/routes/renewal/home-body.html', out: root + 'src/routes/renewal/home-body.gen.html', nav: '', fill: true },
   { name: 'about', src: root + 'src/routes/renewal/about-body.html', out: root + 'src/routes/renewal/about-body.gen.html', nav: 'about', fill: false },
   { name: 'works', src: root + 'src/routes/renewal/works-body.html', out: root + 'src/routes/renewal/works-body.gen.html', nav: 'works', fill: false },
+  { name: 'insight', src: root + 'src/routes/renewal/insight-body.html', out: root + 'src/routes/renewal/insight-body.gen.html', nav: 'insight', fill: false },
+  { name: 'insight-detail', src: root + 'src/routes/renewal/insight-detail-body.html', out: root + 'src/routes/renewal/insight-detail-body.gen.html', nav: 'insight', fill: false },
   // 서비스 8개(2026-11-07): 원본 HTML 없이 svc-fill.js 의 SVC_FILL(k) 로 본문을 만든다(내용은 svc-data-1·2.js)
   ...SVC_KEYS.map(k => ({ name: 'svc-' + k, svc: k, out: root + `src/routes/renewal/svc-${k}.gen.html`, nav: 'services' })),
 ]
