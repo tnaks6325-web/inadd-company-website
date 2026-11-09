@@ -80,6 +80,30 @@ const FREEZE_CSS = `
   *, *::before, *::after { animation: none !important; transition: none !important; caret-color: transparent !important; }
   html { scroll-behavior: auto !important; }
 `
+// 스크롤 연출 고정(아래 shoot 에서 두 번 부름)
+async function freezeMotion(page) {
+  await page.evaluate(() => {
+    // 맨 위로 '올라간' 상태를 한 번 거쳐 머리 메뉴(내리면 숨음)·구역 바탕색을 맨 위 기준으로 맞춘 뒤 부드러운 스크롤을 끈다
+    const ST = window.ScrollTrigger, G = window.gsap, L = window.__lenis
+    try { L && L.scrollTo(0, { immediate: true, force: true }) } catch {}
+    window.scrollTo(0, 0)
+    try { ST && ST.update() } catch {}
+    try { L && L.destroy() } catch {}
+    if (!ST) return
+    for (const t of ST.getAll()) {
+      if (t._vdFrozen) continue // 두 번째 부를 때는 그사이 새로 생긴 것만(숫자 세기 등 onEnter 가 두 번 돌지 않게)
+      t._vdFrozen = true
+      const top = t.start <= 1
+      t.disable(true)
+      if (t.animation) t.animation.progress(top ? 0 : 1)
+      else if (!top && t.vars.onEnter) t.vars.onEnter(t)
+    }
+    if (G) for (const tw of G.globalTimeline.getChildren(false, true, true)) {
+      if (!tw.scrollTrigger && tw.repeat() !== -1) tw.progress(1)
+    }
+  }).catch(() => {})
+}
+
 async function shoot(browser, device, url) {
   const context = await browser.newContext({
     viewport: device.viewport,
@@ -129,24 +153,7 @@ async function shoot(browser, device, url) {
     // GSAP 스크롤 연출(붙잡기·스크럽, 개편 홈·회사소개)은 찍는 순간마다 상태가 달라 '달라짐' 잡음이 났다(2026-11-06 PR #91·#92 홈 PC).
     // 부드러운 스크롤(Lenis)을 끄고, 붙잡기를 풀어 보통 흐름으로 두고, 연출은 고정 상태로 둔다:
     // 맨 위에서 이미 걸려 있는 연출(첫 화면)은 처음 상태, 나머지는 끝난 상태(다 나타난 모습), 숫자 세기 같은 짧은 연출도 끝 상태.
-    await page.evaluate(() => {
-      // 맨 위로 '올라간' 상태를 한 번 거쳐 머리 메뉴(내리면 숨음)·구역 바탕색을 맨 위 기준으로 맞춘 뒤 부드러운 스크롤을 끈다
-      const ST = window.ScrollTrigger, G = window.gsap, L = window.__lenis
-      try { L && L.scrollTo(0, { immediate: true, force: true }) } catch {}
-      window.scrollTo(0, 0)
-      try { ST && ST.update() } catch {}
-      try { L && L.destroy() } catch {}
-      if (!ST) return
-      for (const t of ST.getAll()) {
-        const top = t.start <= 1
-        t.disable(true)
-        if (t.animation) t.animation.progress(top ? 0 : 1)
-        else if (!top && t.vars.onEnter) t.vars.onEnter(t)
-      }
-      if (G) for (const tw of G.globalTimeline.getChildren(false, true, true)) {
-        if (!tw.scrollTrigger && tw.repeat() !== -1) tw.progress(1)
-      }
-    }).catch(() => {})
+    await freezeMotion(page)
     await page.clock.runFor(500)
     await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {})
     // 페이지 안 타이머는 멈춰 있으므로, 최대 대기 시간은 페이지 밖(여기)에서 잰다
@@ -159,6 +166,9 @@ async function shoot(browser, device, url) {
       }).catch(() => {}),
       new Promise(r => { waitTimer = setTimeout(r, 8000) }),
     ]).finally(() => clearTimeout(waitTimer))
+    // 개편 페이지 제목은 글꼴이 도착하면 줄을 다시 나누고 움직임을 새로 만든다(base.js lines, autoSplit — 2026-11-09).
+    // 위 고정 뒤에 글꼴이 와서 다시 나뉘면 새 움직임은 고정되지 않아 제목이 숨은 채 찍히므로 한 번 더 고정한다.
+    await freezeMotion(page)
     await page.evaluate(() => {
       for (const v of document.querySelectorAll('video')) {
         v.removeAttribute('autoplay')

@@ -50,9 +50,10 @@ SITE.boot(ctx => {
 
   // ── 시작 화면 → 첫 화면 ──
   const cnt = { v: 0 }, cEl = $('[data-count]');
-  const splits = $$('[data-split]').map(el => SplitText.create(el, { type: 'lines', mask: 'lines', linesClass: 'ln' }));
-  const heroSplit = splits[0];
-  gsap.set(heroSplit.lines, { yPercent: 110 });
+  // 제목 줄 나누기는 글꼴이 오면 다시 나뉨(base.js lines). 첫 화면 제목은 시작 화면 타임라인 밖에서 같은 시각(1.55초 = 숫자 1.1 + 막 .9 - .45)에 따로 움직임
+  const splitEls = $$('[data-split]'), t0 = ctx.now();
+  let heroN = 1;
+  ctx.lines(splitEls[0], ls => { heroN = ls.length; return gsap.from(ls, { yPercent: 110, duration: 1.1, stagger: 0.09, ease: 'power4.out', delay: ctx.wait(t0, 1.55) }); });
   const vid = $('[data-hero-video]');
   vid.playbackRate = 0.55;
   // 사무실 하루 영상: 한 번 재생 후 마지막 장면에서 멈추고, 화면은 아주 천천히 다가간다(처음으로 돌아가지 않음)
@@ -61,7 +62,7 @@ SITE.boot(ctx => {
     .to(cnt, { v: 100, duration: 1.1, ease: 'power2.inOut', onUpdate: () => cEl.textContent = String(Math.round(cnt.v)).padStart(3, '0') })
     .add(() => { vid.play().catch(() => {}); })
     .to('[data-loader]', { yPercent: -100, duration: 0.9, ease: 'power4.inOut' })
-    .to(heroSplit.lines, { yPercent: 0, duration: 1.1, stagger: 0.09, ease: 'power4.out' }, '-=.45')
+    .to({}, { duration: 1.1 + 0.09 * (heroN - 1) }, '-=.45') // 제목 줄이 올라오는 동안(움직임은 위 ctx.lines 에서 따로)
     .from('.hero-meta span', { opacity: 0, y: 10, duration: .7, stagger: .06 }, '-=.8')
     .add(() => lenis.start());
 
@@ -89,7 +90,7 @@ SITE.boot(ctx => {
   gsap.to('.stmt .w', { opacity: 1, stagger: .5, ease: 'none', scrollTrigger: { trigger: '.s-statement', start: 'top 70%', end: 'bottom 70%', scrub: true } });
 
   // 제목 줄 올라오기(첫 화면 제외)
-  splits.slice(1).forEach(s => gsap.from(s.lines, { yPercent: 110, duration: 1.1, stagger: .08, ease: 'power4.out', scrollTrigger: { trigger: s.elements[0], start: 'top 82%' } }));
+  splitEls.slice(1).forEach(el => ctx.lines(el, ls => gsap.from(ls, { yPercent: 110, duration: 1.1, stagger: .08, ease: 'power4.out', scrollTrigger: { trigger: el, start: 'top 82%' } })));
 
   // 숫자 세기 + 사진 시차
   // 클라이언트의 말: 화면을 붙잡고(스크롤 2.6화면), 가운데 포트폴리오 카드 → 사방으로 흩어짐 → 카톡 카드 줄이 번갈아 위아래로 비스듬히 흐름

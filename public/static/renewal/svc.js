@@ -20,9 +20,10 @@ SITE.boot(ctx => {
   }
 
   // 첫 화면: 제목 줄이 올라오고, 장면이 아래에서 열림, 스크롤하면 장면이 천천히 올라감
-  const sp = SplitText.create('[data-hero-title]', { type: 'lines', mask: 'lines', linesClass: 'ln' });
+  // 제목 줄은 글꼴이 오면 다시 나뉘므로 타임라인 밖에서 같은 시각(.35초 뒤)에 따로 움직임(base.js lines)
+  const t0 = ctx.now();
+  ctx.lines('[data-hero-title]', ls => gsap.from(ls, { yPercent: 110, duration: 1.1, stagger: .09, ease: 'power4.out', delay: ctx.wait(t0, .35) }));
   gsap.timeline({ delay: .35 })
-    .from(sp.lines, { yPercent: 110, duration: 1.1, stagger: .09, ease: 'power4.out' })
     .to('[data-hero-media]', { clipPath: 'inset(0% 0 0 0)', duration: 1.3, ease: 'power4.inOut' }, 0)
     .from('[data-hero-media] > video, [data-hero-media] > img', { scale: 1.15, duration: 1.6, ease: 'power3.out' }, 0)
     .from('[data-hero-fade]', { opacity: 0, y: 16, duration: .8, stagger: .08, ease: 'power3.out' }, .5);

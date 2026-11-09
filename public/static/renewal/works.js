@@ -62,12 +62,11 @@ SITE.boot(ctx => {
   }).catch(() => {});
 
   // ── 1. 첫 화면 제목·문구(사진판과 따로 바로 시작) ──
-  const title = SplitText.create('[data-hero-title]', { type: 'lines', mask: 'lines', linesClass: 'ln' });
-  gsap.set(title.lines, { yPercent: 110 });
+  // 제목 줄은 글꼴이 오면 다시 나뉘므로 따로 움직이고(base.js lines), 문구는 처음 나눈 줄 수로 같은 시각(제목 끝 .7초 전)에 시작
+  const t0 = ctx.now(); let titleN = 1;
+  ctx.lines('[data-hero-title]', ls => { titleN = ls.length; return gsap.from(ls, { yPercent: 110, duration: 1.1, stagger: .09, ease: 'power4.out', delay: ctx.wait(t0, .9) }); });
   gsap.set('[data-hero-sub]', { opacity: 0, y: 16 });
-  gsap.timeline({ delay: .9 })
-    .to(title.lines, { yPercent: 0, duration: 1.1, stagger: .09, ease: 'power4.out' })
-    .to('[data-hero-sub]', { opacity: 1, y: 0, duration: .8, stagger: .1, ease: 'power3.out' }, '-=.7');
+  gsap.to('[data-hero-sub]', { opacity: 1, y: 0, duration: .8, stagger: .1, ease: 'power3.out', delay: .9 + 1.1 + .09 * (titleN - 1) - .7 });
   gsap.to('[data-mosaic]', { scale: .9, yPercent: 8, opacity: .35, ease: 'none', scrollTrigger: { trigger: '.wk-hero', start: 'top top', end: 'bottom top', scrub: true } });
   gsap.to('.wk-hero-in', { yPercent: -18, ease: 'none', scrollTrigger: { trigger: '.wk-hero', start: 'top top', end: 'bottom top', scrub: true } });
 
