@@ -30,8 +30,8 @@ SITE.boot(ctx => {
     else gsap.to('[data-ih-shade]', { backgroundColor: 'rgba(11,12,16,.3)', duration: 1.6 }); // 마지막 장면은 조금 더 어둡게 눌러 글자가 앞에 서게
   }
   if (vids.length) play(0);
-  const hs = SplitText.create('[data-ih-t]', { type: 'lines', mask: 'lines', linesClass: 'ln' });
-  gsap.from(hs.lines, { yPercent: 110, duration: 1.2, stagger: .1, ease: 'power4.out', delay: .55 });
+  const t0 = ctx.now(); // 제목 줄은 글꼴이 오면 다시 나뉨(base.js lines) — 대기는 남은 만큼만
+  ctx.lines('[data-ih-t]', ls => gsap.from(ls, { yPercent: 110, duration: 1.2, stagger: .1, ease: 'power4.out', delay: ctx.wait(t0, .55) }));
   gsap.from('[data-ih-type] .mono, [data-ih-sub], [data-ih-meta]', { opacity: 0, y: 14, duration: .8, stagger: .08, delay: .9 });
   // 스크롤: 영상은 천천히 밀려 내려가고 글자는 먼저 빠짐(화면을 붙잡지 않음)
   gsap.to('[data-ih-media]', { yPercent: 18, scale: 1.06, ease: 'none', scrollTrigger: { trigger: '.ih', start: 'top top', end: 'bottom top', scrub: true } });

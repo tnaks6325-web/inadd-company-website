@@ -369,12 +369,20 @@
   }
 
 
+  // 제목을 줄 단위로 나눠 움직이는 공통 도우미. make(줄들) 이 만든 움직임을 돌려주면 된다.
+  // 글꼴(Pretendard)이 도착하기 전에 나누면 대체 글꼴 폭으로 줄이 정해져 '체험단 ··· / 패키지 라인업'처럼 엉뚱한 곳에서 끊기고
+  // (운영에서 페이지마다 'SplitText called before fonts loaded' 경고 2~10회, 화면 비교 검사의 제목 줄바꿈 헛경보 원인 — 2026-11-09),
+  // 휴대폰을 돌리거나 창 폭이 바뀌어도 줄이 그대로였다. autoSplit: 글꼴이 오거나 폭이 바뀌면 다시 나누고, 움직임은 진행 시점을 이어 감.
+  // 대기(delay)가 있는 첫 화면 움직임은 wait(시작 시각, 초)로 남은 대기만 넣는다 — 다시 나눌 때 대기가 처음부터 다시 세지지 않게.
+  const now = () => gsap.ticker.time;
+  const wait = (t0, d) => Math.max(0, d - (now() - t0));
+  function lines(target, make) {
+    return SplitText.create(target, { type: 'lines', mask: 'lines', linesClass: 'ln', autoSplit: true, onSplit: self => make(self.lines, self) });
+  }
+
   // 줄 단위로 아래에서 올라오는 제목: data-reveal
   function reveals() {
-    $$('[data-reveal]').forEach(el => {
-      const sp = SplitText.create(el, { type: 'lines', mask: 'lines', linesClass: 'ln' });
-      gsap.from(sp.lines, { yPercent: 110, duration: 1.1, stagger: .08, ease: 'power4.out', scrollTrigger: { trigger: el, start: 'top 85%' } });
-    });
+    $$('[data-reveal]').forEach(el => lines(el, ls => gsap.from(ls, { yPercent: 110, duration: 1.1, stagger: .08, ease: 'power4.out', scrollTrigger: { trigger: el, start: 'top 85%' } })));
     $$('[data-word]').forEach(w => gsap.from(w, { yPercent: 60, ease: 'none', scrollTrigger: { trigger: w, start: 'top bottom', end: 'bottom bottom', scrub: true } }));
   }
 
@@ -407,7 +415,7 @@
       menus(lenis);
       links(lenis);
       QC = quick(lenis);
-      const ctx = { lenis, D, $, $$, mobile: matchMedia('(max-width:860px)').matches, SVC, MENU, ARROW };
+      const ctx = { lenis, D, $, $$, mobile: matchMedia('(max-width:860px)').matches, SVC, MENU, ARROW, lines, now, wait };
       if (page) page(ctx);
       $$('[data-site-end]').forEach(fillEnd);
       floatCta();

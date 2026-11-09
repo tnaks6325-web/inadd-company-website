@@ -6,8 +6,8 @@ SITE.boot(ctx => {
 
   // ── 첫 화면 ──
   if ($('[data-t]')) {
-    const ts = SplitText.create('[data-t]', { type: 'lines', mask: 'lines', linesClass: 'ln' });
-    gsap.from(ts.lines, { yPercent: 110, duration: 1.2, stagger: .09, ease: 'power4.out', delay: .5 });
+    const t0 = ctx.now(); // 제목 줄은 글꼴이 오면 다시 나뉨(base.js lines) — 대기는 남은 만큼만
+    ctx.lines('[data-t]', ls => gsap.from(ls, { yPercent: 110, duration: 1.2, stagger: .09, ease: 'power4.out', delay: ctx.wait(t0, .5) }));
   }
   // 목록으로 돌아가기는 글자 투명도 전환(마우스 올림)이 있어 위치만 움직임
   gsap.from('.back', { y: 14, duration: .8, delay: .8, ease: 'power3.out' });
