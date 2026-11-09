@@ -105,7 +105,7 @@ app.get('/sitemap.xml', (c) => {
     { loc: `${base}/marketing/oliveyoung`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/marketing/ppl`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/development`, priority: '0.8', changefreq: 'monthly' },
-    /* /contact 제외 — 팝업 단일화로 페이지 폐쇄(홈 301) */
+    /* /contact 제외 — 팝업 단일화로 페이지 폐쇄(/#contact 로 301, 홈에서 간편 문의 창) */
   ]
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
