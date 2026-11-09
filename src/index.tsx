@@ -9,7 +9,7 @@ import { RenewalWorksPage, renewalWorksHead, renewalWorksBody } from './routes/r
 import { RenewalInsightPage, renewalInsightHead, renewalInsightBody } from './routes/renewal/insight' // 개편 인사이트(2026-11-09). 예전은 ./routes/insight(InsightPage) — 되돌릴 때 이 줄과 '/insight' 경로, src/main.tsx 의 글 경로만 바꾸면 됨
 import { InsightDetailPage } from './routes/insight-detail'
 import { ViralPage } from './routes/viral'
-import { DevelopmentPage } from './routes/development'
+import { RenewalTechPage, renewalTechHead, renewalTechBody } from './routes/renewal/tech' // 개편 아워테크(2026-11-09). 예전은 ./routes/development(DevelopmentPage) — 되돌릴 때 이 줄과 '/development' 경로만 바꾸면 됨
 import { SvcViralPage } from './routes/svc-viral'
 import { SvcInfluencerPage } from './routes/svc-influencer'
 import { SvcSeedingPage } from './routes/svc-seeding'
@@ -373,7 +373,10 @@ app.get('/marketing/ppl', (c) => {
 })
 
 app.get('/development', (c) => {
-  return c.render(<DevelopmentPage />, {
+  return c.render(<RenewalTechPage />, {
+    bare: true,
+    head: renewalTechHead,
+    bodyAttrs: renewalTechBody,
     title: '마케팅 자동화 개발 - 업무 자동화·운영 시스템',
     description: '캠페인 운영, 체험단·리뷰 진행, 원고 관리, 성과 데이터 수집을 자체 시스템으로 자동화했습니다. 인애드컴퍼니가 직접 만들어 쓰는 마케팅 운영 시스템을 소개합니다.',
     canonical: 'https://www.inadcompany.co.kr/development',

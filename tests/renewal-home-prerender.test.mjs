@@ -77,3 +77,17 @@ test('개편 인사이트 목록·글 틀이 최신이고, 글을 채울 자리�
     assert.ok(!/시안|가상 예시/.test(html), name)
   }
 })
+
+// 개편 아워테크(2026-11-09 대표 1-1·2-1)
+test('개편 아워테크 틀이 최신이고, 히어로 자리가 한 번 있고, 문구가 미리 적혀 있고, 기술 요소 구역이 없다', async () => {
+  const { PAGES } = await import('../scripts/renewal-home-prerender.mjs')
+  const page = PAGES.find(p => p.name === 'tech')
+  const html = readFileSync(page.out, 'utf8')
+  assert.equal(html, generate(page))
+  assert.equal(html.split('<!--tech-hero-->').length, 2, '히어로 표식은 한 번만')
+  // 검색 로봇이 읽도록 서버에서 미리 적어 둔 문구
+  for (const t of ['기술력이 만드는', '캠페인 자동 운영', 'AI 기반 업무 처리', 'STEP 05', 'ADFLOW', '사내 인트라넷', '일반 개발사', 'data-years', '사업자등록번호', 'class="is-cur"']) assert.ok(html.includes(t), t)
+  // 1-1: 기술 요소 구역은 뺐다
+  assert.ok(!/TECH STACK|시스템을 이루는|기술 요소/.test(html))
+  assert.ok(!/시안|가상 예시/.test(html))
+})
