@@ -54,9 +54,10 @@ export async function homeView(el) {
     api('GET', '/hero-kpi').catch(() => null), ...SVC.map(([k]) => api('GET', `/svc-faq/${k}`).catch(() => null)),
   ]);
   if (works) {
-    const hid = (works.items || []).filter(w => !w.cover);
-    if (hid.length) add('!', `사이트에 안 보이는 포트폴리오 사례 ${hid.length}개`, `대표 이미지가 없으면 목록에 나오지 않습니다 — ${esc(hid.slice(0, 3).map(w => w.brand || '이름 없음').join(', '))}${hid.length > 3 ? ' …' : ''}`, '#/works?f=nocover');
-    else add('v', '포트폴리오 사례', (works.items || []).length ? `${works.items.length}개 모두 대표 이미지가 있습니다` : '등록된 사례가 없습니다');
+    // 대표 이미지가 있으면 사례 카드, 로고만 있으면 '함께한 브랜드' 로고 칸으로 나옴. 둘 다 없을 때만 사이트에 안 보임
+    const all = works.items || [], hid = all.filter(w => !w.cover && !w.thumb), logo = all.filter(w => !w.cover && w.thumb).length;
+    if (hid.length) add('!', `사이트에 안 보이는 포트폴리오 사례 ${hid.length}개`, `대표 이미지도 로고도 없으면 사이트에 나오지 않습니다 — ${esc(hid.slice(0, 3).map(w => w.brand || '이름 없음').join(', '))}${hid.length > 3 ? ' …' : ''}`, '#/works?f=hidden');
+    else add('v', '포트폴리오 사례', all.length ? `${all.length}개 모두 사이트에 나옵니다 — 사례 카드 ${all.length - logo}개, 함께한 브랜드 로고 ${logo}개` : '등록된 사례가 없습니다');
   }
   if (ins) {
     const nt = (ins.posts || []).filter(p => !p.thumbnail);

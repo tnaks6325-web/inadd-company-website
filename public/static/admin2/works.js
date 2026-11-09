@@ -23,14 +23,14 @@ export async function worksView(el, sub, query) {
   setDirtyCheck(changed);
 
   function list() {
-    const rows = items.map((w, i) => ({ w, i })).filter(({ w }) => (filter !== 'nocover' || !w.cover) && (!q || (w.brand || '').includes(q)));
+    const rows = items.map((w, i) => ({ w, i })).filter(({ w }) => (filter !== 'logo' || (!w.cover && w.thumb)) && (filter !== 'hidden' || (!w.cover && !w.thumb)) && (!q || (w.brand || '').includes(q)));
     return `<div class="tools" style="margin:18px 0 8px;justify-content:space-between">
-        <div class="tabs" style="border:0;gap:20px"><button type="button" data-flt="" class="${filter ? '' : 'on'}">전체 ${items.length}</button><button type="button" data-flt="nocover" class="${filter === 'nocover' ? 'on' : ''}">사이트에 안 보임(대표 이미지 없음) ${items.filter(w => !w.cover).length}</button></div>
+        <div class="tabs" style="border:0;gap:20px"><button type="button" data-flt="" class="${filter ? '' : 'on'}">전체 ${items.length}</button><button type="button" data-flt="logo" class="${filter === 'logo' ? 'on' : ''}">로고 칸으로 보임 ${items.filter(w => !w.cover && w.thumb).length}</button>${items.some(w => !w.cover && !w.thumb) || filter === 'hidden' ? `<button type="button" data-flt="hidden" class="${filter === 'hidden' ? 'on' : ''}">사이트에 안 보임 ${items.filter(w => !w.cover && !w.thumb).length}</button>` : ''}</div>
         <div class="tools"><input class="in" style="width:200px" placeholder="브랜드 찾기" data-q value="${esc(q)}" /><button type="button" class="btn" data-new>사례 추가</button></div></div>
-      <p class="where">사이트에는 <b>대표 이미지가 있는 사례만</b>, <b>대표 순서(1~8)</b>가 있는 사례가 먼저, 나머지는 이 목록 순서대로 나옵니다.</p>
+      <p class="where">대표 이미지가 있으면 <b>사례 카드</b>로(대표 순서 1~8이 먼저, 나머지는 이 목록 순서), 로고만 있으면 포트폴리오 아래 <b>'함께한 브랜드' 로고 칸</b>으로 나옵니다.</p>
       <table class="log"><tbody>${rows.map(({ w, i }) => `<tr data-i="${i}">
-        <td style="width:84px"><div style="width:72px;height:54px;background:var(--paper) ${w.cover ? `url('${esc(w.cover)}') center/cover` : ''};display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--red)">${w.cover ? '' : '이미지 없음'}</div></td>
-        <td><b>${esc(w.brand || '이름 없음')}</b>${w.featuredRank ? `<span class="tag">대표 ${esc(w.featuredRank)}</span>` : ''}<div class="sub small">${esc(w.services || '')}${(w.tags || []).length ? ' · ' + (w.tags || []).map(t => TAG_NAME[t] || t).join(', ') : ''}</div></td>
+        <td style="width:84px"><div style="width:72px;height:54px;background:${w.cover ? `var(--paper) url('${esc(w.cover)}') center/cover` : w.thumb ? `#fff url('${esc(w.thumb)}') center/80% auto no-repeat` : 'var(--paper)'};border:1px solid var(--ln);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--red)">${w.cover || w.thumb ? '' : '이미지 없음'}</div></td>
+        <td><b>${esc(w.brand || '이름 없음')}</b>${w.featuredRank ? `<span class="tag">대표 ${esc(w.featuredRank)}</span>` : ''}${!w.cover && w.thumb ? '<span class="tag">로고 칸</span>' : ''}<div class="sub small">${esc(w.services || '')}${(w.tags || []).length ? ' · ' + (w.tags || []).map(t => TAG_NAME[t] || t).join(', ') : ''}</div></td>
         <td class="ac" style="width:230px"><span class="mv" style="display:inline-flex;vertical-align:middle;margin-right:10px"><button type="button" data-up ${i ? '' : 'disabled'} aria-label="위로">↑</button><button type="button" data-dn ${i < items.length - 1 ? '' : 'disabled'} aria-label="아래로">↓</button></span><button type="button" class="lnk" data-ed>고치기</button><button type="button" class="lnk red" data-del style="margin-left:12px">삭제</button></td></tr>`).join('') || '<tr><td class="empty">해당하는 사례가 없습니다.</td></tr>'}</tbody></table>`;
   }
   function form() {
@@ -44,7 +44,7 @@ export async function worksView(el, sub, query) {
           <label class="fld"><span>대표 순서<em>1~8 — 숫자가 작을수록 앞. 이미 쓰는 번호는 고를 수 없음</em></span><select data-w="featuredRank"><option value="">없음(목록 순서대로)</option>${[1, 2, 3, 4, 5, 6, 7, 8].map(n => `<option value="${n}" ${String(w.featuredRank || '') === String(n) ? 'selected' : ''} ${ranks.includes(String(n)) ? 'disabled' : ''}>${n}${ranks.includes(String(n)) ? ' (사용 중)' : ''}</option>`).join('')}</select></label>
         </div>
         <div>
-          <div class="fld"><span>대표 이미지 *<em>없으면 사이트에 나오지 않음 · 올리면 800px 안으로 줄여 저장</em></span>
+          <div class="fld"><span>대표 이미지 *<em>있으면 사례 카드로 나옴 · 없으면 로고가 있을 때만 '함께한 브랜드' 로고 칸으로 · 올리면 800px 안으로 줄여 저장</em></span>
             <div style="aspect-ratio:4/3;background:var(--paper) ${w.cover ? `url('${esc(w.cover)}') center/contain no-repeat` : ''};border:1px solid var(--ln);display:flex;align-items:center;justify-content:center" data-cover>${w.cover ? '' : '<span class="sub small">이미지 없음</span>'}</div>
             <div class="tools" style="margin-top:8px"><button type="button" class="btn ghost sm" data-up-cover>이미지 올리기</button>${w.cover ? '<button type="button" class="lnk red" data-rm-cover>이미지 빼기</button>' : ''}</div></div>
           <label class="fld"><span>또는 이미지 주소<em>직접 넣을 때만</em></span><input data-w="cover" value="${esc(w.cover || '')}" placeholder="https://…" /></label>
@@ -92,7 +92,7 @@ export async function worksView(el, sub, query) {
     if (b.hasAttribute('data-apply')) {
       const w = draft.cur; w.brand = (w.brand || '').trim(); w.services = (w.services || '').trim();
       if (!w.brand) { toast('브랜드명을 적어 주세요.', true); return; }
-      if (!w.cover && !await ask({ title: '대표 이미지가 없습니다', body: '대표 이미지가 없으면 사이트 포트폴리오에 나오지 않습니다. 그래도 넣을까요?', ok: '그래도 넣기' })) return;
+      if (!w.cover && !await ask({ title: '대표 이미지가 없습니다', body: w.thumb ? '대표 이미지가 없으면 사례 카드 대신 포트폴리오 아래 \'함께한 브랜드\' 로고 칸에만 나옵니다. 그래도 넣을까요?' : '대표 이미지가 없으면 사이트 포트폴리오에 나오지 않습니다. 그래도 넣을까요?', ok: '그래도 넣기' })) return;
       if (edit === -1) items.unshift(w); else items[edit] = w;
       closeEdit(); toast('목록에 반영했습니다. 저장을 눌러야 사이트에 나갑니다.'); return;
     }
