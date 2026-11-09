@@ -63,3 +63,17 @@ test('개편 포트폴리오 미리 채운 HTML이 최신이고, 사례 카드 �
   assert.ok(!/예시 시나리오|월 매출|800만|1\.4억|3억/.test(html))
   assert.ok(!/시안|가상 예시|고객 후기/.test(html))
 })
+
+// 개편 인사이트(2026-11-09)
+test('개편 인사이트 목록·글 틀이 최신이고, 글을 채울 자리가 한 번씩 있다', async () => {
+  const { PAGES } = await import('../scripts/renewal-home-prerender.mjs')
+  for (const [name, marks] of [['insight', ['<!--ins-feat-->', '<!--ins-rows-->', 'data-tabs', 'data-subtabs', 'data-gal', 'data-lb']], ['insight-detail', ['<!--ins-detail-->', 'data-prog']]]) {
+    const page = PAGES.find(p => p.name === name)
+    const html = readFileSync(page.out, 'utf8')
+    assert.equal(html, generate(page), name)
+    for (const m of marks) assert.ok(html.includes(m), name + ' ' + m)
+    for (const m of marks.filter(m => m.startsWith('<!--'))) assert.equal(html.split(m).length, 2, name + ' 표식은 한 번만 ' + m)
+    assert.ok(html.includes('사업자등록번호') && html.includes('class="is-cur"'), name + ' 메뉴·바닥')
+    assert.ok(!/시안|가상 예시/.test(html), name)
+  }
+})

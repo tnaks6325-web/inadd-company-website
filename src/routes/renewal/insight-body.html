@@ -1,0 +1,52 @@
+<!-- 개편 인사이트 목록(/insight) 원본 — 개편 A안 견본 lab/insight.html(2026-11-09 대표 확정: 썸네일 갤러리형·서비스별 작은 탭·인애드 일상)을 옮긴 것.
+  고친 뒤 node scripts/renewal-home-prerender.mjs 로 insight-body.gen.html 을 다시 만든다.
+  비워 두는 자리(표식 두 개): ins-feat 표식 = 맨 위 글, ins-rows 표식 = 글 목록 — 서버 src/main.tsx 가 관리자 글(insight_posts)로 채운다(src/routes/renewal/insight.tsx).
+  첫 화면 제목 흐름·분류 탭·인애드 일상 사진첩은 화면 스크립트(/static/renewal/insight.js)가 채운다. -->
+<main>
+  <!-- 1. 첫 화면: 업무 장면 영상 5개가 한 번 넘어가고, 실제 글 제목이 세 줄로 흐른다 -->
+  <section class="ih" data-bg="ink">
+    <div class="ih-media" data-ih-media>
+      <video src="/static/insight-hero/s1.mp4" poster="/static/insight-hero/s1.webp" muted playsinline preload="auto" class="on"></video>
+      <video src="/static/insight-hero/s2.mp4" poster="/static/insight-hero/s2.webp" muted playsinline preload="auto"></video>
+      <video src="/static/insight-hero/s3.mp4" poster="/static/insight-hero/s3.webp" muted playsinline preload="auto"></video>
+      <video src="/static/insight-hero/s4.mp4" poster="/static/insight-hero/s4.webp" muted playsinline preload="auto"></video>
+      <video src="/static/insight-hero/s5.mp4" poster="/static/insight-hero/s5.webp" muted playsinline preload="auto"></video>
+    </div>
+    <div class="ih-shade" data-ih-shade></div>
+    <div class="ih-rows" data-ih-rows aria-hidden="true"></div>
+    <div class="ih-type" data-ih-type>
+      <div>
+        <span class="mono">IN AD COMPANY INSIGHT</span>
+        <h1 class="ih-t" data-ih-t>직접 해 보고 쓴<br />마케팅 기록</h1>
+      </div>
+      <p class="ih-sub" data-ih-sub>집행한 캠페인 사례와 광고 규칙, 바로 쓰는 체크리스트까지</p>
+    </div>
+    <div class="ih-meta mono" data-ih-meta><span data-ih-count></span><span data-ih-upd></span><span>SCROLL ↓</span></div>
+  </section>
+
+  <!-- 2. 맨 위 글 하나 크게 -->
+  <section class="feat wrap" data-bg="paper" data-feat-sec><!--ins-feat--></section>
+
+  <!-- 3. 글 목록: 분류 탭(밑줄) + 콘텐츠별 전략일 때 서비스별 작은 탭 + 썸네일 갤러리 / 인애드 일상 사진첩 -->
+  <section class="lst wrap" id="list" data-bg="paper">
+    <div class="lst-h">
+      <span class="mono">( 02 ) ALL POSTS</span>
+      <div class="tabs" data-tabs></div>
+    </div>
+    <div class="subtabs tabs" data-subtabs hidden></div>
+    <div class="irs v-grid" data-irs><!--ins-rows--></div>
+    <div class="gal" data-gal hidden></div>
+    <p class="lst-empty" data-empty>아직 등록된 글이 없습니다.</p>
+  </section>
+
+  <!-- 문의 + 바닥(공통) -->
+  <section data-site-end data-num="( 03 ) CONTACT" data-title="우리 브랜드에 맞는<br />마케팅 전략이 궁금하신가요?" data-desc="인애드컴퍼니 전문가가 무료로 진단해 드립니다."></section>
+</main>
+<!-- 인애드 일상 크게 보기 -->
+<div class="lb" data-lb hidden>
+  <div class="lb-in">
+    <div class="lb-top mono"><span data-lb-n></span><button type="button" data-lb-x>닫기</button></div>
+    <div class="lb-pic"><img alt="" data-lb-img /></div>
+    <div class="lb-bot"><div><span class="mono" data-lb-tag></span><b data-lb-cap></b></div><div class="lb-nav"><button type="button" data-lb-prev aria-label="이전 사진">←</button><button type="button" data-lb-next aria-label="다음 사진">→</button></div></div>
+  </div>
+</div>
