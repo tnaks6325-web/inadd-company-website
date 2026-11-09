@@ -1,0 +1,129 @@
+/* 개편 아워테크(/development) — 시안 lab/tech.html 의 <style> 을 옮긴 것(바꾸면 두 곳). 2026-11-09 대표 1-1(기술 요소 구역 뺌)·2-1(휴대폰 줄인 판) */
+[data-bg="ink"]{--ln:rgba(255,255,255,.14);--sub:rgba(245,244,240,.62)}
+[data-bg="paper"]{--ln:rgba(11,12,16,.14);--sub:rgba(11,12,16,.66)}
+.lbl{display:block;opacity:.6;margin-bottom:34px}
+.h2{font-size:clamp(36px,4.6vw,78px);font-weight:700;letter-spacing:-.05em;line-height:1.06}
+.desc{font-size:17px;line-height:1.7;color:var(--sub);margin-top:26px;max-width:560px}
+.sec{padding:18vh 0}
+
+/* 첫 화면: 실제 히어로를 화면 가득 */
+/* 머리 메뉴가 노트북 화면 속 탭과 겹치지 않게 메뉴 높이만큼 내려서 시작 */
+.t-hero{position:relative;background:var(--ink);padding-top:72px}
+.t-hero .tch{height:calc(100vh - 72px);height:calc(100svh - 72px);min-height:520px}
+.t-hero .tch-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.t-hero-foot{position:absolute;left:40px;right:40px;bottom:26px;display:flex;justify-content:space-between;color:#fff;mix-blend-mode:difference;z-index:3;pointer-events:none}
+
+/* 01 이유 */
+.t-why .top{display:grid;grid-template-columns:4fr 8fr;gap:40px;align-items:start}
+.stmt{font-size:clamp(28px,3.4vw,56px);font-weight:600;line-height:1.3;letter-spacing:-.035em}
+.stmt .w{opacity:.14;display:inline}
+.why4{display:grid;grid-template-columns:repeat(4,1fr);margin-top:16vh;border-top:1px solid var(--ln)}
+.why4 > div{padding:30px 28px 10px 0;border-right:1px solid var(--ln);clip-path:inset(0 0 100% 0)}
+.why4 > div + div{padding-left:28px}
+.why4 > div:last-child{border-right:0}
+.why4 b{display:block;font-size:clamp(22px,1.7vw,28px);letter-spacing:-.04em;margin:18px 0 12px}
+.why4 p{font-size:15px;line-height:1.65;color:var(--sub)}
+
+/* 02 자동화 영역 */
+.t-area .top{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end}
+.stats{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border-top:1px solid var(--ln)}
+.stats div{padding:22px 0 0}
+.stats div + div{padding-left:24px;border-left:1px solid var(--ln)}
+.stats b{display:block;font-size:clamp(40px,4vw,68px);font-weight:700;letter-spacing:-.05em;line-height:1}
+.stats b i{font-style:normal;font-size:.45em;margin-left:4px;color:var(--butter)}
+.stats > div > span{display:block;font-size:14px;margin-top:10px;color:var(--sub)}
+.stats b span{font-variant-numeric:tabular-nums}
+.arows{margin:12vh -40px 0;border-top:1px solid var(--ln)}
+.arow{position:relative;display:grid;grid-template-columns:70px 4fr 4fr 3fr;gap:32px;align-items:center;padding:30px 40px;border-bottom:1px solid var(--ln);isolation:isolate;transition:color .45s}
+.arow::before{content:"";position:absolute;inset:0;background:var(--white);transform:scaleY(0);transform-origin:top;transition:transform .6s cubic-bezier(.7,0,.2,1);z-index:-1}
+.arow .n{opacity:.55}
+.arow .en{display:block;opacity:.55;margin-bottom:8px}
+.arow b{display:block;font-size:clamp(26px,2.6vw,44px);font-weight:700;letter-spacing:-.045em;line-height:1.1;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+.arow p{font-size:15px;line-height:1.65;color:var(--sub);transition:color .45s}
+.arow .tags{font-family:var(--mono);font-size:11px;letter-spacing:.04em;line-height:1.9;color:var(--sub);text-align:right;transition:color .45s}
+@media (hover:hover){
+  .arow.on{color:var(--ink)}
+  .arow.on::before{transform:scaleY(1);transform-origin:bottom}
+  .arow.on b{transform:translateX(14px)}
+  .arow.on p,.arow.on .tags{color:rgba(11,12,16,.7)}
+}
+
+/* 03 운영 방식 */
+.t-how .top{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end}
+.flow{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:28px;margin-top:14vh;padding-top:46px}
+.flow-line{position:absolute;left:0;right:0;top:9px;height:1px;background:var(--ln)}
+.flow-line i{position:absolute;inset:0;background:currentColor;transform:scaleX(0);transform-origin:left}
+.step{position:relative;opacity:.28;transition:opacity .6s}
+.step::before{content:"";position:absolute;left:0;top:-42px;width:10px;height:10px;border:1px solid currentColor;background:var(--paper);transition:background .4s}
+.step.on{opacity:1}
+.step.on::before{background:currentColor}
+.step .mono{opacity:.7}
+.step b{display:block;font-size:clamp(24px,2.1vw,34px);letter-spacing:-.045em;margin:16px 0 14px}
+.step p{font-size:15px;line-height:1.65;color:var(--sub)}
+
+/* 04 ADFLOW */
+.t-sys .top{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end}
+.flag{margin-top:14vh;text-align:center}
+.flag .mono{opacity:.6}
+.flag-name{font-size:clamp(90px,19vw,340px);font-weight:800;letter-spacing:-.07em;line-height:.9;margin:22px 0 30px;background:linear-gradient(90deg,var(--white) 0%,var(--white) 55%,var(--butter) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.flag-desc{font-size:17px;line-height:1.75;color:var(--sub);max-width:680px;margin:0 auto}
+.flag-desc strong{color:var(--white);font-weight:600}
+.flag .stats{margin:10vh auto 0;max-width:980px;text-align:left}
+.systems{display:grid;grid-template-columns:repeat(5,1fr);margin-top:14vh;border-top:1px solid var(--ln)}
+.sys{padding:28px 24px 34px 0;border-right:1px solid var(--ln)}
+.sys + .sys{padding-left:24px}
+.sys:last-child{border-right:0}
+.sys .mono{opacity:.55}
+.sys .mono em{font-style:normal}
+.sys b{display:block;font-size:clamp(20px,1.7vw,26px);font-weight:700;letter-spacing:-.04em;margin:18px 0 12px;white-space:nowrap}
+.sys p{font-size:14px;line-height:1.65;color:var(--sub)}
+.sys .bar{height:1px;background:var(--ln);margin-top:24px;position:relative;overflow:hidden}
+.sys .bar i{position:absolute;inset:0;background:var(--butter);transform:scaleX(0);transform-origin:left;transition:transform .7s cubic-bezier(.7,0,.2,1)}
+@media (hover:hover){ .sys.on .bar i{transform:scaleX(1)} }
+
+
+/* 05 비교 */
+.t-vs .top{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end}
+.vs{width:100%;margin-top:12vh;border-collapse:collapse}
+.vs th,.vs td{padding:24px 20px;border-bottom:1px solid var(--ln);text-align:left;font-weight:500}
+.vs thead th{font-size:15px;color:var(--sub);vertical-align:bottom}
+.vs thead th.us{color:var(--white);font-size:clamp(20px,1.6vw,26px);font-weight:700;letter-spacing:-.03em;border-top:2px solid var(--butter)}
+.vs tbody th{font-size:clamp(18px,1.5vw,24px);letter-spacing:-.03em;font-weight:600}
+.vs td{font-size:15px;color:var(--sub);width:22%}
+.vs td.us{color:var(--white);font-weight:700;background:rgba(255,255,255,.04)}
+.vs td.us span{display:inline-block}
+.vs .no{opacity:.5}
+
+@media (max-width:860px){
+  .t-hero{padding-top:62px}
+  .t-hero .tch{height:min(calc(100svh - 62px),118vw);min-height:0}
+  .t-hero-foot{left:20px;right:20px;bottom:16px}
+  /* 휴대폰: 끝 문구가 화면 밖으로 잘리지 않게 줄여 둠(히어로 js가 넣는 배율보다 우선) */
+  .t-hero .tch-type{transform:translate(-50%,-50%) scale(.7)!important}
+  .sec{padding:12vh 0}
+  .t-why .top,.t-area .top,.t-how .top,.t-sys .top,.t-vs .top{grid-template-columns:1fr;gap:10px}
+  .why4,.systems{grid-template-columns:1fr}
+  .why4 > div,.sys{padding:24px 0;border-right:0;border-bottom:1px solid var(--ln)}
+  .why4 > div + div,.sys + .sys{padding-left:0}
+  .stats div + div{padding-left:14px}
+  .arows{margin:8vh -20px 0}
+  .arow{grid-template-columns:34px 1fr;gap:6px 12px;padding:24px 20px}
+  .arow p,.arow .tags{grid-column:2;text-align:left}
+  .flow{grid-template-columns:1fr;gap:34px;padding-top:0;padding-left:34px}
+  .flow-line{left:4px;right:auto;top:0;bottom:0;width:1px;height:auto}
+  .flow-line i{transform:scaleY(0);transform-origin:top}
+  .step::before{left:-34px;top:4px}
+  .vs th,.vs td{padding:16px 8px}
+  .vs thead th{font-size:12px}
+  .vs thead th.us{font-size:15px}
+  .vs tbody th{font-size:15px}
+  .vs td{font-size:13px}
+  /* 휴대폰은 줄인 판(2026-11-09 대표 2-1): 자동화 영역은 제목만, 시스템은 2열 */
+  .arow{padding:18px 20px}
+  .arow p,.arow .tags{display:none}
+  .systems{grid-template-columns:1fr 1fr;column-gap:14px}
+  .sys{padding:18px 0}
+  .sys b{white-space:normal;font-size:17px;margin:12px 0 8px}
+  .sys p{font-size:13px}
+  .sys .bar{display:none}
+}
