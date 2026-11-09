@@ -45,9 +45,7 @@ SITE.boot(ctx => {
   $('[data-row="0"]').innerHTML = items.slice(0, half).join('');
   $('[data-row="1"]').innerHTML = items.slice(half).join('');
   $$('.wk-row').forEach((r, i) => gsap.fromTo(r, { x: i ? () => -(r.scrollWidth - innerWidth) : 0 }, { x: i ? 0 : () => -(r.scrollWidth - innerWidth), ease: 'none', scrollTrigger: { trigger: '.wk-wall', start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true } }));
-  // 브랜드 수 130(2026-11-04 대표 확정 숫자 — 첫 화면·벽 같은 값)
-  const brandN = 130;
-  $$('.wk-wall [data-brand-n]').forEach(el => { const o = { v: 0 }; ScrollTrigger.create({ trigger: el, start: 'top 90%', once: true, onEnter: () => gsap.to(o, { v: brandN, duration: 1.6, ease: 'power3.out', onUpdate: () => el.textContent = Math.round(o.v), onComplete: () => el.textContent = brandN }) }); });
+  // 브랜드 수는 관리자 '함께한 브랜드'(base.js setNums). 벽 제목 숫자 세기는 제목 줄 나누기 뒤 늘 빈 요소를 잡아 한 번도 움직이지 않던 코드라 뺌(2026-11-09, 화면은 그대로 고정 숫자)
 
   // ── 사례 카드: 서버가 채웠으면 그대로, 못 채웠으면 공개 목록을 불러와 같은 모양으로 그림(src/routes/renewal/works.tsx WorkCards 와 같게) ──
   const grid = $('[data-grid]');

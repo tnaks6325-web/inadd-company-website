@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { kvPut } from '../admin/store'
 import { getPosts, savePosts, postPath, SITE_URL, type InsightPost } from '../lib/insight-posts'
 import { keepCustomMeta } from '../lib/meta-description'
+import { snapshot, record } from '../admin/history'
 
 // ─────────────────────────────────────────────
 //  블로그 자동 발행 API (노션 → 홈페이지 인사이트)
@@ -24,6 +25,19 @@ BlogRouter.use('*', async (c, next) => {
     return c.json({ error: 'Unauthorized' }, 401)
   }
   await next()
+})
+
+// 노션 자동 발행으로 바뀐 글도 관리자 '최근 바뀐 것'에 남긴다(되돌리기용, src/admin/history.ts) — 표시: 노션
+BlogRouter.use('*', async (c, next) => {
+  const kv = (c.env as any)?.ADMIN_KV as KVNamespace | undefined
+  const path = new URL(c.req.url).pathname
+  if (!kv || !['POST', 'PUT'].includes(c.req.method) || !/\/insight(\/[^/]+)?$/.test(path) || /\/insight\/thumb$/.test(path)) return next()
+  const before = await snapshot(kv, ['insight_posts'])
+  const body = await c.req.json().catch(() => null)
+  await next()
+  if (c.res.status < 200 || c.res.status >= 300) return
+  const t = (body && body.title) || ''
+  try { await record(kv, { area: '인사이트', label: `노션 발행: ${t || '글 수정'}`, by: 'notion', before }) } catch (e) { console.error('history record failed', e) }
 })
 
 const MAIN = ['content-strategy', 'case-study', 'resources']

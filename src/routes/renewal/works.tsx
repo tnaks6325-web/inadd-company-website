@@ -7,7 +7,7 @@ import body from './works-body.gen.html?raw'
 import { REF_CASES } from '../svc-performance-ref'
 import type { WorkItem } from '../works'
 
-const V = '20261109b'
+const V = '20261109c'
 const css = (f: string) => <link rel="stylesheet" href={`/static/renewal/${f}?v=${V}`} />
 const js = (f: string) => <script src={`/static/renewal/${f}?v=${V}`}></script>
 

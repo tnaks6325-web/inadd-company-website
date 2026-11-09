@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
-import { kvGet, kvPut, kvDelete, signToken, verifyToken, type Bindings } from './store'
+import { kvGet, kvPut, signToken, verifyToken, type Bindings } from './store'
+import { planFor, noteFrom, snapshot, record, listHistory, getRecord, restore, softDelete, HIST_DAYS } from './history'
 import { MAIL_RECIPIENTS_KEY, MAX_RECIPIENTS, DEFAULT_RECIPIENTS, checkRecipients, parseStoredRecipients, resolveRecipients } from '../routes/mail-recipients'
 import { sendMailTo, internalTemplate } from '../routes/api-mail'
 import { backfillInquiriesToIntranet } from '../routes/intranet-inquiry'
@@ -30,6 +31,23 @@ function getCookie(req: Request, name: string): string | null {
   const match = cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`))
   return match ? decodeURIComponent(match[1]) : null
 }
+
+// ── 변경 기록(되돌리기용) — 저장하는 요청이 성공하면 '바뀌기 전 값'을 남긴다(src/admin/history.ts) ──
+// 인증 전에 지금 값을 읽어 두지만(읽기만), 기록은 요청이 성공(2xx)했을 때만 쓴다 → 로그인 안 된 요청은 기록되지 않음
+admin.use('*', async (c, next) => {
+  const method = c.req.method
+  const kv = (c.env as any)?.ADMIN_KV as KVNamespace | undefined
+  if (!kv || method === 'GET' || method === 'HEAD' || method === 'OPTIONS') return next()
+  const path = new URL(c.req.url).pathname.replace(/^\/api\/admin/, '')
+  const body = method === 'DELETE' ? null : await c.req.json().catch(() => null)
+  const plan = planFor(method, path, body)
+  if (!plan) return next()
+  const before = await snapshot(kv, plan.keys)
+  await next()
+  if (c.res.status < 200 || c.res.status >= 300) return
+  const note = noteFrom(c.req.header('X-Admin-Note'))
+  try { await record(kv, { area: plan.area, label: note || plan.label(before, body), by: 'admin', before }) } catch (e) { console.error('history record failed', e) }
+})
 
 // ═══════════════════════ AUTH ═══════════════════════
 
@@ -148,7 +166,7 @@ admin.post('/about/logo', authMiddleware, async (c) => {
 admin.delete('/about/logo/:key', authMiddleware, async (c) => {
   const kv = (c.env as any)?.ADMIN_KV
   const key = c.req.param('key')
-  await kvDelete(kv, `logo_img_${key}`)
+  await softDelete(kv, `logo_img_${key}`) // 되돌리기용으로 90일 보관(history.ts)
   const logosRaw = await kvGet(kv, 'about_logos')
   const logos: string[] = JSON.parse(logosRaw!).filter((k: string) => k !== key)
   await kvPut(kv, 'about_logos', JSON.stringify(logos))
@@ -345,6 +363,30 @@ admin.get('/public/hero-kpi/:service', async (c) => {
   const raw = await kvGet(kv, `hero_kpi_${service}`)
   const kpi = raw ? JSON.parse(raw) : (HERO_KPI_DEFAULTS[service] || [])
   return c.json({ service, kpi })
+})
+
+// ═══════════════════════ 변경 기록 · 되돌리기 ═══════════════════════
+// 목록: 최신순, 이름·시각·영역만(값은 안 보냄). 하나: 바뀌기 전 값 + 지금 값(화면에서 비교해 보여 줌)
+admin.get('/history', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV as KVNamespace | undefined
+  if (!kv) return c.json({ items: [], cursor: null, days: HIST_DAYS })
+  const limit = Number(c.req.query('limit')) || 50
+  return c.json({ ...(await listHistory(kv, limit, c.req.query('cursor') || undefined)), days: HIST_DAYS })
+})
+
+admin.get('/history/:id', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV as KVNamespace | undefined
+  const rec = kv ? await getRecord(kv, c.req.param('id')) : null
+  if (!rec) return c.json({ error: 'not found' }, 404)
+  return c.json({ record: rec, current: await snapshot(kv!, rec.keys) })
+})
+
+admin.post('/history/:id/restore', authMiddleware, async (c) => {
+  const kv = (c.env as any)?.ADMIN_KV as KVNamespace | undefined
+  const rec = kv ? await getRecord(kv, c.req.param('id')) : null
+  if (!rec) return c.json({ error: '기록을 찾을 수 없습니다(90일이 지났거나 잘못된 번호).' }, 404)
+  const id = await restore(kv!, rec, 'admin')
+  return c.json({ ok: true, id })
 })
 
 // ═══════════════════════ BROCHURE MAIL TEMPLATE ═══════════════════════
@@ -643,7 +685,7 @@ admin.delete('/gallery/:id', authMiddleware, async (c) => {
   // 이미지 KV 정리
   if (target?.images) {
     for (const img of target.images) {
-      if (img.key) await kvDelete(kv, img.key)
+      if (img.key) await softDelete(kv, img.key) // 되돌리기용으로 90일 보관(history.ts)
     }
   }
   const items = all.filter((i: any) => i.id !== id)
@@ -665,7 +707,8 @@ admin.post('/gallery/image', authMiddleware, async (c) => {
 admin.delete('/gallery/image/:key', authMiddleware, async (c) => {
   const kv  = (c.env as any)?.ADMIN_KV
   const key = c.req.param('key')
-  await kvDelete(kv, key)
+  if (!/^gallery_img_/.test(key)) return c.json({ error: 'invalid key' }, 400)
+  await softDelete(kv, key) // 되돌리기용으로 90일 보관(history.ts)
   return c.json({ ok: true })
 })
 

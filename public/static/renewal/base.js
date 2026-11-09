@@ -376,8 +376,23 @@
   // 대기(delay)가 있는 첫 화면 움직임은 wait(시작 시각, 초)로 남은 대기만 넣는다 — 다시 나눌 때 대기가 처음부터 다시 세지지 않게.
   const now = () => gsap.ticker.time;
   const wait = (t0, d) => Math.max(0, d - (now() - t0));
+  const SPLITS = new Map(); // 나눈 제목 → 나누기(아래 setNums 가 씀)
   function lines(target, make) {
-    return SplitText.create(target, { type: 'lines', mask: 'lines', linesClass: 'ln', autoSplit: true, onSplit: self => make(self.lines, self) });
+    const s = SplitText.create(target, { type: 'lines', mask: 'lines', linesClass: 'ln', autoSplit: true, onSplit: self => make(self.lines, self) });
+    s.elements.forEach(el => SPLITS.set(el, s));
+    return s;
+  }
+  // [attr] 글자를 v 로. 줄로 나뉜 제목 안이면 나누기를 잠깐 풀고 바꾼 뒤 다시 나눔 — 그래야 글꼴이 와서 다시 나눌 때도 새 값이 유지됨
+  function setNums(attr, v) {
+    const done = new Set();
+    $$(`[${attr}]`).forEach(el => {
+      const host = [...SPLITS.keys()].find(h => h.contains(el));
+      if (!host) { el.textContent = v; return; }
+      if (done.has(host)) return;
+      done.add(host);
+      const s = SPLITS.get(host);
+      s.revert(); $$(`[${attr}]`, host).forEach(e => { e.textContent = v; }); s.split();
+    });
   }
 
   // 줄 단위로 아래에서 올라오는 제목: data-reveal
@@ -415,8 +430,15 @@
       menus(lenis);
       links(lenis);
       QC = quick(lenis);
-      const ctx = { lenis, D, $, $$, mobile: matchMedia('(max-width:860px)').matches, SVC, MENU, ARROW, lines, now, wait };
+      // 회사 숫자(관리자 '홈 · 회사 숫자' — 2026-11-09 대표: 업력·함께한 브랜드도 관리자 값으로 연결). 운영에서만 불러오고, 실패하면 data.js 값 그대로
+      const stats = LIVE ? fetch('/api/admin/public/home').then(r => r.json()).then(d => (d && d.stats) || {}).catch(() => ({})) : Promise.resolve({});
+      const ctx = { lenis, D, $, $$, mobile: matchMedia('(max-width:860px)').matches, SVC, MENU, ARROW, lines, now, wait, stats };
       if (page) page(ctx);
+      // 업력(data-years)·함께한 브랜드(data-brand-n) 글자를 관리자 값으로(줄로 나뉜 제목 안도 — setNums)
+      stats.then(st => {
+        if (+st.experience > 0) setNums('data-years', +st.experience);
+        if (+st.partners > 0) setNums('data-brand-n', (+st.partners).toLocaleString('ko-KR'));
+      });
       $$('[data-site-end]').forEach(fillEnd);
       floatCta();
       reveals();
