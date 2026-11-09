@@ -3,8 +3,8 @@ import app from './index'
 import { renderer } from './renderer'
 import { BlogRouter } from './routes/api-blog'
 import { RenewalInsightDetailPage, InsightFeat, InsightRows, renewalInsightHead, renewalInsightBody } from './routes/renewal/insight'
-import { visibleWorks, type WorkItem } from './routes/works'
-import { RenewalWorkCards } from './routes/renewal/works'
+import { visibleWorks, logoWorks, type WorkItem } from './routes/works'
+import { RenewalWorkCards, RenewalLogoCells } from './routes/renewal/works'
 import { kvGet } from './admin/store'
 import { SVC_FAQ_DEFAULTS, VALID_SVC_NAMES, HERO_KPI_DEFAULTS, VALID_HERO_SVCS } from './admin/api'
 import {
@@ -69,13 +69,15 @@ root.get('/insight', async (c) => {
 root.get('/works', async (c) => {
   const [res, raw] = await Promise.all([passThrough(c), kvGet(kvOf(c), 'works_items').catch(() => null)])
   if (!res.ok || !raw) return res
-  let items: WorkItem[]
-  try { items = visibleWorks(JSON.parse(raw)) } catch { return res }
+  let all: WorkItem[], items: WorkItem[], logos: WorkItem[]
+  try { all = JSON.parse(raw); items = visibleWorks(all); logos = logoWorks(all) } catch { return res }
   if (!items.length) return res
-  // 그로스 카드 뒤 <!--works-cards--> 자리에 채운다. 못 찾으면 그대로 두고 스크립트가 불러온다
-  const html = await res.text()
+  // 그로스 카드 뒤 <!--works-cards--> 자리에 사례 카드, <!--works-logos--> 자리에 함께한 브랜드 로고. 못 찾으면 그대로 두고 스크립트가 불러온다
+  let html = await res.text()
   if (!html.includes('<!--works-cards-->')) return c.html(html, 200)
-  return c.html(html.replace('<!--works-cards-->', await (<RenewalWorkCards items={items} />).toString()), 200)
+  html = html.replace('<!--works-cards-->', await (<RenewalWorkCards items={items} />).toString())
+  if (logos.length) html = html.replace('<!--works-logos-->', await (<RenewalLogoCells items={logos} />).toString())
+  return c.html(html, 200)
 })
 
 // 서비스 페이지 자주 묻는 질문 — 화면 스크립트와 같은 모양으로 미리 채운다
