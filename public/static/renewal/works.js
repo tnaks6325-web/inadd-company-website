@@ -52,11 +52,15 @@ SITE.boot(ctx => {
   const coverCard = w => `<article class="wk-card" data-cat="${esc((w.tags || []).join(' '))}">
       <div class="wk-pic"><img src="${esc(w.cover)}" alt="${esc(w.brand)}" loading="lazy" onerror="this.style.opacity=0" /><p class="ov"><span class="mono">CASE</span>${esc(svc(w.services))}</p></div>
       <div class="wk-meta2"><b>${esc(w.brand)}</b><span>${esc(svc(w.services))}</span></div></article>`;
+  const logoCell = w => `<li data-cat="${esc((w.tags || []).join(' '))}"><img src="${esc(w.thumb)}" alt="${esc(w.brand)}" loading="lazy" onerror="this.style.opacity=0" /><span>${esc(w.brand)}</span></li>`;
   const loaded = $('article.wk-card', grid) ? Promise.resolve() : fetch('/api/admin/public/works').then(r => r.json()).then(data => {
     // 대표이미지(cover) 있는 항목만, featuredRank 순(없으면 등록 순) — works.tsx visibleWorks 와 같은 기준
     const list = (data.items || []).map((item, index) => ({ item, index })).filter(e => e.item.cover)
       .sort((a, b) => ((Number(a.item.featuredRank) || 999) - (Number(b.item.featuredRank) || 999)) || a.index - b.index).map(e => e.item);
     grid.insertAdjacentHTML('beforeend', list.map(coverCard).join(''));
+    // 함께한 브랜드 로고도 서버가 못 채웠으면 여기서(works.tsx RenewalLogoCells 와 같은 모양)
+    const lg = $('[data-logos]');
+    if (lg && !$('li', lg)) lg.innerHTML = (data.items || []).filter(w => !w.cover && w.thumb).map(logoCell).join('');
   }).catch(() => {});
 
   // ── 1. 첫 화면 제목·문구(사진판과 따로 바로 시작) ──
@@ -125,6 +129,23 @@ SITE.boot(ctx => {
     if (hdEl) lenis.on('scroll', ({ scroll, direction }) => { tabsEl.style.top = (scroll > 160 && direction === 1) ? '0px' : hdEl.offsetHeight + 'px'; });
     apply(false);
     ScrollTrigger.batch(cards.filter(c => !c.hidden), { start: 'top 92%', once: true, onEnter: b => gsap.from(b, { y: 50, opacity: 0, duration: .9, stagger: .06, ease: 'power3.out' }) });
+
+    // ── 5. 함께한 브랜드 로고: 처음엔 몇 줄만(PC 8칸×4줄, 휴대폰 3칸×5줄), 버튼으로 모두 펼침. 칸은 스크롤에 맞춰 차례로 떠오름 ──
+    const lgCells = $$('[data-logos] li'), lgBtn = $('[data-logos-more]');
+    if (!lgCells.length) $('.wk-logos').hidden = true;
+    else {
+      const LG = mobile ? 15 : 32;
+      lgCells.forEach((c, i) => c.hidden = i >= LG);
+      if (lgCells.length > LG) lgBtn.textContent = `브랜드 ${lgCells.length}개 모두 보기`; else lgBtn.parentNode.style.display = 'none';
+      $('.wk-logos-h .mono').textContent = `( 03 ) BRANDS · ${lgCells.length}`;
+      ScrollTrigger.batch(lgCells.filter(c => !c.hidden), { start: 'top 92%', once: true, onEnter: b => gsap.from(b, { y: 24, opacity: 0, duration: .7, stagger: .035, ease: 'power3.out' }) });
+      lgBtn.addEventListener('click', () => {
+        const fresh = lgCells.filter(c => c.hidden); fresh.forEach(c => c.hidden = false);
+        lgBtn.parentNode.style.display = 'none';
+        gsap.fromTo(fresh, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: .7, stagger: .015, ease: 'power3.out' });
+        ScrollTrigger.refresh();
+      });
+    }
 
     // 카드 반응: 마우스를 직접 움직일 때만(스크롤로 카드가 마우스 밑을 지날 때는 반응 없음)
     if (matchMedia('(hover:hover)').matches) {

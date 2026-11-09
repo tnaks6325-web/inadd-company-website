@@ -7,11 +7,13 @@ import body from './works-body.gen.html?raw'
 import { REF_CASES } from '../svc-performance-ref'
 import type { WorkItem } from '../works'
 
-const V = '20261109c'
+const V = '20261109d'
 const css = (f: string) => <link rel="stylesheet" href={`/static/renewal/${f}?v=${V}`} />
 const js = (f: string) => <script src={`/static/renewal/${f}?v=${V}`}></script>
 
 // 서비스 표기의 &·/·, 기호를 가운뎃점으로(보여 줄 때만) — 화면 스크립트 works.js svc 와 같게
+import LOGO_FIT from './works-logos.json'
+
 const svcText = (t?: string) => (t || '').replace(/\s*[&\/,]\s*/g, ' · ')
 
 // 그로스(광고 성과) 카드 — 누르면 퍼포먼스 페이지의 그 사례(#ref-<id>)가 열림
@@ -42,6 +44,24 @@ export const RenewalWorkCards = ({ items }: { items: WorkItem[] }) => (
         <div class="wk-meta2"><b>{w.brand || ''}</b><span>{svcText(w.services)}</span></div>
       </article>
     ))}
+  </>
+)
+
+// 함께한 브랜드 로고 칸 — 화면 스크립트(works.js logoCell)가 직접 불러와 그릴 때와 같은 모양(바꾸면 둘 다)
+// 로고 그림은 여백이 제각각이라 scripts/works-logos-trim.py 로 여백을 자른 사본(/static/works-logos/)과 칸 너비 비율(works-logos.json)을 씀.
+// 사본이 없는 로고(나중에 새로 생긴 것)는 원본 그대로, 칸 기본 크기로
+export const RenewalLogoCells = ({ items }: { items: WorkItem[] }) => (
+  <>
+    {items.map(w => {
+      const key = String(w.thumb || '').replace(/\/+$/, '').split('/').pop() || ''
+      const fit = (LOGO_FIT as Record<string, number>)[key]
+      return (
+        <li data-cat={(w.tags || []).join(' ')}>
+          <img src={fit ? `/static/works-logos/${key}.webp` : w.thumb} alt={w.brand || ''} loading="lazy" style={fit ? `width:${fit}%` : undefined} class={fit ? 'fit' : undefined} onerror="this.style.opacity=0" />
+          <span>{w.brand || ''}</span>
+        </li>
+      )
+    })}
   </>
 )
 

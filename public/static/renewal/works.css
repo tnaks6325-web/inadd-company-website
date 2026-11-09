@@ -134,3 +134,25 @@
   .wk-ad .kd,.wk-ad .tt{display:none}
   .wk-ad .md span{font-size:9px}
 }
+
+/* 5. 함께한 브랜드 — 로고만 등록된 옛 로고 카드 사례. 선으로 나눈 흰 칸(로고 그림 바탕이 흰색이라 칸도 흰색) */
+.wk-logos{padding:0 0 18vh}
+.wk-logos-h{display:grid;grid-template-columns:3fr 6fr 3fr;gap:40px;align-items:end;margin-bottom:48px;border-top:1px solid var(--line-d);padding-top:16vh}
+.wk-logos-h .mono{opacity:.6;align-self:start}
+.wk-logos-h h2{font-size:clamp(36px,4.6vw,80px);font-weight:700;letter-spacing:-.055em;line-height:1.04}
+.wk-logos-h p{font-size:15px;line-height:1.7;opacity:.75}
+.wk-lg{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(8,1fr);gap:1px;background:var(--line-d);border:1px solid var(--line-d)}
+.wk-lg li{position:relative;background:#fff;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.wk-lg li[hidden]{display:none}
+.wk-lg img.fit{max-width:none;max-height:72%}
+.wk-lg img{max-width:72%;max-height:64%;object-fit:contain;height:auto;mix-blend-mode:multiply;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.wk-lg span{position:absolute;left:10px;right:10px;bottom:8px;font-size:11px;letter-spacing:-.01em;color:var(--ink);opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (hover:hover){.wk-lg li:hover img{transform:scale(1.06) translateY(-6px)}.wk-lg li:hover span{opacity:.6;transform:none}}
+.wk-logos .wk-more{margin-top:48px}
+@media (max-width:860px){
+  .wk-logos{padding:0 0 12vh}
+  .wk-logos-h{grid-template-columns:1fr;gap:14px;margin-bottom:32px;padding-top:12vh}
+  .wk-lg{grid-template-columns:repeat(3,1fr)}
+  .wk-lg img{max-width:78%;max-height:66%}
+  .wk-lg img.fit{max-width:none;max-height:72%}
+}
