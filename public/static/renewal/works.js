@@ -132,6 +132,35 @@ SITE.boot(ctx => {
 
     // ── 5. 함께한 브랜드 로고: 처음엔 몇 줄만(PC 8칸×4줄, 휴대폰 3칸×5줄), 버튼으로 모두 펼침. 칸은 스크롤에 맞춰 차례로 떠오름 ──
     const lgCells = $$('[data-logos] li'), lgBtn = $('[data-logos-more]');
+    // 크기 맞춤 목록(works-logos.json)에 없는 로고(새로 추가된 로고 사례 등)는 여기서 여백을 잘라 면적을 맞춤.
+    // scripts/works-logos-trim.py 와 같은 계산: (1,1) 픽셀을 바탕색으로 보고 차이 24 넘는 곳만 남김, 4% 여백, 너비 = sqrt(0.15×가로세로비)
+    const fitLogo = img => {
+      try {
+        const W0 = img.naturalWidth, H0 = img.naturalHeight; if (!W0 || !H0) return;
+        const k = Math.min(1, 600 / W0), w = Math.max(2, Math.round(W0 * k)), h = Math.max(2, Math.round(H0 * k));
+        const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+        const cx = cv.getContext('2d', { willReadFrequently: true }); cx.drawImage(img, 0, 0, w, h);
+        const d = cx.getImageData(0, 0, w, h).data, o = (w + 1) * 4, clear = d[o + 3] < 24;
+        let x0 = w, y0 = h, x1 = -1, y1 = -1;
+        for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+          const i = (y * w + x) * 4;
+          const on = clear ? d[i + 3] > 24 : d[i + 3] > 24 && Math.max(Math.abs(d[i] - d[o]), Math.abs(d[i + 1] - d[o + 1]), Math.abs(d[i + 2] - d[o + 2])) > 24;
+          if (on) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+        }
+        if (x1 < 0) return;
+        const pad = Math.max(2, Math.round(0.04 * Math.max(x1 - x0, y1 - y0)));
+        x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad); x1 = Math.min(w, x1 + pad + 1); y1 = Math.min(h, y1 + pad + 1);
+        const cw = x1 - x0, ch = y1 - y0, out = document.createElement('canvas'); out.width = cw; out.height = ch;
+        out.getContext('2d').drawImage(cv, x0, y0, cw, ch, 0, 0, cw, ch);
+        const r = cw / ch, wid = Math.min(Math.sqrt(0.15 * r), 0.78, 0.62 * (2 / 3) * r);
+        img.src = out.toDataURL('image/png'); img.style.width = (wid * 100).toFixed(1) + '%'; img.classList.add('fit');
+      } catch (e) { /* 다른 주소 그림(캔버스로 못 읽음) 등은 원래 크기로 둠 */ }
+    };
+    lgCells.forEach(li => {
+      const im = $('img', li); if (!im || im.classList.contains('fit')) return;
+      const go = () => { if (im.dataset.fitted) return; im.dataset.fitted = '1'; fitLogo(im); };
+      if (im.complete && im.naturalWidth) go(); else im.addEventListener('load', go, { once: true });
+    });
     if (!lgCells.length) $('.wk-logos').hidden = true;
     else {
       const LG = mobile ? 15 : 32;
