@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import { kvGet, kvPut, signToken, verifyToken, type Bindings } from './store'
+import { kvGet, kvPut, signToken, verifyToken, DEFAULT_DATA, type Bindings } from './store'
 import { planFor, noteFrom, snapshot, record, listHistory, getRecord, restore, softDelete, HIST_DAYS } from './history'
 import { MAIL_RECIPIENTS_KEY, MAX_RECIPIENTS, DEFAULT_RECIPIENTS, checkRecipients, parseStoredRecipients, resolveRecipients } from '../routes/mail-recipients'
 import { sendMailTo, internalTemplate } from '../routes/api-mail'
@@ -378,7 +378,16 @@ admin.get('/history/:id', authMiddleware, async (c) => {
   const kv = (c.env as any)?.ADMIN_KV as KVNamespace | undefined
   const rec = kv ? await getRecord(kv, c.req.param('id')) : null
   if (!rec) return c.json({ error: 'not found' }, 404)
-  return c.json({ record: rec, current: await snapshot(kv!, rec.keys) })
+  // 저장한 적 없는 칸(값 없음)은 사이트가 코드에 든 처음 값을 보여 준다 → 화면이 '(기본값)' 대신 그 값을 보이게 함께 보냄
+  const fallback: Record<string, string | null> = {}
+  for (const k of rec.keys) {
+    let x: RegExpMatchArray | null, v: unknown = null
+    if ((x = k.match(/^hero_kpi_([a-z]+)$/))) v = HERO_KPI_DEFAULTS[x[1]] || null
+    else if ((x = k.match(/^svc_faq_([a-z]+)$/))) v = SVC_FAQ_DEFAULTS[x[1]] || null
+    else v = (DEFAULT_DATA as any)[k] ?? null
+    fallback[k] = v == null ? null : typeof v === 'string' ? v : JSON.stringify(v)
+  }
+  return c.json({ record: rec, current: await snapshot(kv!, rec.keys), fallback })
 })
 
 admin.post('/history/:id/restore', authMiddleware, async (c) => {

@@ -21,7 +21,7 @@ function sumKey(key, cur, old) {
     return out.join('') || '<p>지금과 같음</p>';
   }
   const lines = v => {
-    if (v == null) return ['(기본값)'];
+    if (v == null) return ['(사이트 처음 값)'];
     if (Array.isArray(v)) return v.map(x => x && typeof x === 'object' ? (x.q ? `Q. ${x.q}\nA. ${String(x.a || '').replace(/<[^>]+>/g, '')}` : x.num !== undefined ? `${x.num} · ${x.label}` : JSON.stringify(x)) : String(x));
     if (typeof v === 'object') return Object.entries(v).map(([k, x]) => `${k}: ${x}`);
     return [String(v)];
@@ -66,7 +66,7 @@ export function bindLog(table, getItems, reload) {
       box.innerHTML = '<div class="diff">불러오는 중…</div>';
       try {
         const d = await api('GET', `/history/${it.id}`);
-        box.innerHTML = `<div class="diff"><p class="mono sub" style="margin-bottom:6px">되돌리면 지금 값에서 이렇게 바뀝니다</p>${d.record.keys.map(k => sumKey(k, d.current[k], d.record.before[k])).join('')}</div>`;
+        box.innerHTML = `<div class="diff"><p class="mono sub" style="margin-bottom:6px">되돌리면 지금 값에서 이렇게 바뀝니다</p>${d.record.keys.map(k => sumKey(k, d.current[k] ?? (d.fallback || {})[k], d.record.before[k] ?? (d.fallback || {})[k]) + (d.record.before[k] == null && (d.fallback || {})[k] != null ? '<p class="sub small">이 칸은 그전에 저장한 적이 없어 사이트 처음 값으로 돌아갑니다.</p>' : '')).join('')}</div>`;
       } catch (er) { box.innerHTML = `<div class="diff">${esc(er.message)}</div>`; }
     }
   });
