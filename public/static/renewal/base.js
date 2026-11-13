@@ -403,14 +403,35 @@
 
   // 바탕색 바꾸기 — 고정(pin) 구역들을 다 만든 뒤에 만들어야 위치가 맞는다
   function backgrounds() {
-    const BG = { ink: ['#0B0C10', '#F5F4F0'], paper: ['#E9E8E4', '#0B0C10'] };
-    const first = $('[data-bg]');
+    // 시안(2026-11-13, 어지럽다는 피드백): 주소 끝 ?bg=1 구역마다 고정 색 / ?bg=2 전환 2번(첫 화면·본문·끝) / ?bg=3 밝기 차이 작게·짧게. 없으면 지금 방식
+    const mode = new URLSearchParams(location.search).get('bg') || '';
+    const BG = mode === '3' ? { ink: ['#0B0C10', '#F5F4F0'], paper: ['#2E3038', '#F5F4F0'] } : { ink: ['#0B0C10', '#F5F4F0'], paper: ['#E9E8E4', '#0B0C10'] };
+    const secs = $$('[data-bg]');
+    if (mode === '2' && secs.length > 2) {
+      // 첫 화면은 그대로, 늘 어두운 구역(연혁) 또는 끝 문의 띠부터 끝까지는 어둡게, 그 사이는 모두 밝게 → 전환 2번
+      let k = secs.findIndex((sec, i) => i && (sec.classList.contains('s-hist') || sec.hasAttribute('data-site-end')));
+      if (k < 0) k = secs.length - 1;
+      secs.forEach((sec, i) => { if (!i) return; const to = i >= k ? 'ink' : 'paper'; if (sec.dataset.bg === 'ink' && to === 'paper') sec.dataset.was = 'ink'; sec.dataset.bg = to; });
+      // 어두운 바탕용으로 밝은 글자를 박아 둔 곳(홈 진행 방식·서비스 진행 과정·자주 묻는 질문 등)을 밝은 바탕에서 읽히게
+      document.head.insertAdjacentHTML('beforeend', `<style>
+        [data-was=ink].s-how{--hw-ln:rgba(11,12,16,.14);--hw-sub:rgba(11,12,16,.62)}
+        [data-was=ink] .sv-sub,[data-was=ink] .pt p,[data-was=ink] .st p,[data-was=ink] .fq .a p{color:rgba(11,12,16,.72)}
+        [data-was=ink] .st .no{-webkit-text-stroke-color:rgba(11,12,16,.35)}
+        [data-was=ink] .st.done .no,[data-was=ink] .kpis b,[data-was=ink] .prow.on{color:#0B0C10}</style>`);
+    }
+    const first = secs[0];
     if (first) gsap.set('body', { backgroundColor: BG[first.dataset.bg][0], color: BG[first.dataset.bg][1], '--pg': BG[first.dataset.bg][0], '--fg': BG[first.dataset.bg][1] });
-    $$('[data-bg]').forEach(sec => {
+    secs.forEach(sec => {
       const [bg, fg] = BG[sec.dataset.bg];
       // 화면에 붙잡히는 구역(연혁·클라이언트의 말 등)은 붙잡힌 동안 전체(pin-spacer)를 기준으로 — 구역 자체를 기준으로 하면 위로 올라올 때 바탕이 늦게 바뀌어 글자가 안 보였음(2026-11-06)
       const t = sec.parentElement && sec.parentElement.classList.contains('pin-spacer') ? sec.parentElement : sec;
-      ScrollTrigger.create({ trigger: t, start: 'top 55%', end: 'bottom 55%', onToggle: s => s.isActive && gsap.to('body', { backgroundColor: bg, color: fg, '--pg': bg, '--fg': fg, duration: .9, ease: 'power2.out', overwrite: true }) });
+      if (mode === '1') {
+        // 구역(과 붙잡힘 공간)에 제 색을 칠해 두고 경계가 글과 함께 올라오게. 위쪽 메뉴·떠 있는 버튼 색만 그 아래 구역에 맞춰 바로 바꿈
+        [sec, t].forEach(e => { e.style.backgroundColor = bg; e.style.color = fg; e.style.setProperty('--pg', bg); e.style.setProperty('--fg', fg); });
+        ScrollTrigger.create({ trigger: t, start: 'top 64px', end: 'bottom 64px', onToggle: s => s.isActive && gsap.set('body', { backgroundColor: bg, color: fg, '--pg': bg, '--fg': fg }) });
+        return;
+      }
+      ScrollTrigger.create({ trigger: t, start: 'top 55%', end: 'bottom 55%', onToggle: s => s.isActive && gsap.to('body', { backgroundColor: bg, color: fg, '--pg': bg, '--fg': fg, duration: mode === '3' ? .45 : .9, ease: 'power2.out', overwrite: true }) });
     });
   }
 
