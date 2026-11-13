@@ -14,17 +14,18 @@ SITE.boot(ctx => {
   // 방식 ?hm= : 1 상자는 화면 가득, 멈춰 있는 거리만 줄여 차지하는 높이를 비율만큼 / 2 상자와 멈춰 있는 거리를 같은 비율로 함께 줄임 / 3 멈추지 않고 지나가는 구역(높이 1.2화면 × 비율)
   const HM = ['1', '2', '3'].includes(Q.get('hm')) ? Q.get('hm') : '1';
   const ratio = v => { const m = /^(\d+)x(\d+)$/.exec(v || ''); return Math.min(1, m ? (mobile ? 1 : innerWidth * m[2] / m[1] / innerHeight) : (Math.min(100, +v || 100) / 100)); };
-  const plan = (r, len) => HM === '3' ? { h: Math.round(innerHeight * 1.2 * r), len: 0, pin: false }
-    : HM === '2' ? { h: Math.round(innerHeight * r), len: len * r, pin: true }
-    : { h: innerHeight, len: Math.max(.3, (1 + len) * r - 1), pin: true };
+  const VH = ctx.vh; // 휴대폰 주소창 접힘에 흔들리지 않는 화면 높이(base.js)
+  const plan = (r, len) => HM === '3' ? { h: Math.round(VH() * 1.2 * r), len: 0, pin: false }
+    : HM === '2' ? { h: Math.round(VH() * r), len: len * r, pin: true }
+    : { h: VH(), len: Math.max(.3, (1 + len) * r - 1), pin: true };
   // 연혁 기본 = A+B(auto, 2026-11-06 대표 확정). 비교용: ?hmode=flow(C), ?hmode=pin(예전 붙잡는 방식)
   const HMODE = ['auto', 'flow', 'pin'].includes(Q.get('hmode')) ? Q.get('hmode') : 'auto';
   if (HMODE !== 'pin') $('.s-hist').classList.add(HMODE);
-  const VC = plan(ratio(Q.get('vch')), VC_LEN), HI = { h: innerHeight, len: HIST_LEN, pin: true }; // 연혁: 원래 높이 + 붙잡은 동안 2019~2026(2026-11-06 대표 — 붙잡지 않는 안은 연도가 빨리·화면 밖에서 넘어가 되돌림)
+  const VC = plan(ratio(Q.get('vch')), VC_LEN), HI = { h: VH(), len: HIST_LEN, pin: true }; // 연혁: 원래 높이 + 붙잡은 동안 2019~2026(2026-11-06 대표 — 붙잡지 않는 안은 연도가 빨리·화면 밖에서 넘어가 되돌림)
   $('.s-voices').style.height = VC.h + 'px';
-  const pinAt = h => (h < innerHeight - 2 ? 'center center' : 'top top');
+  const pinAt = h => (h < VH() - 2 ? 'center center' : 'top top');
   // 멈추는 방식이면 붙잡고 그 거리만큼, 멈추지 않으면 구역이 화면을 지나가는 동안 진행
-  const stCfg = (sel, P, a, b) => P.pin ? { trigger: sel, start: pinAt(P.h), end: () => '+=' + Math.round(P.len * innerHeight), pin: true } : { trigger: sel, start: 'top ' + a, end: 'bottom ' + b };
+  const stCfg = (sel, P, a, b) => P.pin ? { trigger: sel, start: pinAt(P.h), end: () => '+=' + Math.round(P.len * VH()), pin: true } : { trigger: sel, start: 'top ' + a, end: 'bottom ' + b };
 
   // ── 내용 채우기 ──
   const F = window.HOME_FILL(D);
@@ -57,7 +58,7 @@ SITE.boot(ctx => {
   const vid = $('[data-hero-video]');
   vid.playbackRate = 0.55;
   // 사무실 하루 영상: 한 번 재생 후 마지막 장면에서 멈추고, 화면은 아주 천천히 다가간다(처음으로 돌아가지 않음)
-  gsap.fromTo('[data-hero-media] video', { scale: 1.12 }, { scale: 1, duration: 9, ease: 'power2.out' });
+  if (!mobile) gsap.fromTo('[data-hero-media] video', { scale: 1.12 }, { scale: 1, duration: 9, ease: 'power2.out' });
   gsap.timeline()
     .to(cnt, { v: 100, duration: 1.1, ease: 'power2.inOut', onUpdate: () => cEl.textContent = String(Math.round(cnt.v)).padStart(3, '0') })
     .add(() => { vid.play().catch(() => {}); })
@@ -73,13 +74,15 @@ SITE.boot(ctx => {
     // 영상 상자를 실제 영상 크기로 두고(가장자리는 바깥 상자가 자름) 줄일 때 잘려 있던 양옆까지 창 안에 들어오게 함 — 휴대폰 세로 화면용
     const v = document.querySelector('[data-hero-media] video'), vidH = vidW * 9 / 16;
     Object.assign(v.style, { position: 'absolute', width: vidW + 'px', height: Math.max(H, vidH) + 'px', left: (W - vidW) / 2 + 'px', top: (H - Math.max(H, vidH)) / 2 + 'px', maxWidth: 'none' });
-    return { clip: `inset(${tb}% ${side * 100}% ${tb}% ${side * 100}%)`, scale: winW / vidW };
+    return { clip: `inset(${tb}% ${side * 100}% ${tb}% ${side * 100}%)`, scale: winW / vidW, fit: W / vidW, lift: -Math.round(H * .1) };
   })();
+  // 휴대폰 첫 화면(2026-11-13 대표: 세로 화면에 가득 채우면 좌우가 많이 잘림): 처음부터 영상 가로 전체가 보이게 화면 폭에 맞추고 제목 위로 조금 올려 둠
+  if (mobile) gsap.fromTo('[data-hero-media] video', { scale: heroWin.fit * 1.05, y: heroWin.lift }, { scale: heroWin.fit, y: heroWin.lift, duration: 9, ease: 'power2.out' });
   // 첫 화면 고정: 영상이 창 크기로 줄고 가운데 문장이 나타남
-  gsap.timeline({ scrollTrigger: { trigger: '.s-hero', start: 'top top', end: '+=110%', scrub: 1, pin: true } })
+  gsap.timeline({ scrollTrigger: { trigger: '.s-hero', start: 'top top', end: () => '+=' + Math.round(VH() * 1.1), scrub: 1, pin: true } })
     // 작은 창은 영상 비율(16:9) 그대로, 영상 전체가 창 안에 들어오게 줄임(2026-11-05 — 마지막 장면의 사람들이 잘리지 않게)
     .to('[data-hero-media]', { clipPath: heroWin.clip, ease: 'none' }, 0)
-    .to('[data-hero-media] video', { scale: heroWin.scale, ease: 'none' }, 0)
+    .to('[data-hero-media] video', { scale: heroWin.scale, y: 0, ease: 'none' }, 0)
     .to('.hero-title, .hero-meta', { opacity: 0, y: -40, ease: 'none' }, 0)
     // 가운데 글자: 줄어들기 시작하자마자 화면 안쪽에서 작고 흐리게 나와 보는 사람 쪽으로 다가옴
     .fromTo('[data-hero-mid]', { opacity: 0, scale: .32, filter: 'blur(10px)' }, { opacity: 1, scale: 1, filter: 'blur(0px)', ease: 'power2.out', duration: .75 }, 0)
@@ -97,10 +100,10 @@ SITE.boot(ctx => {
   (() => {
     const PICK = [1, 2, 12, 5, 6, 15, 7, 8]; // 최종: 실제 메시지 8개, 날짜 줄 없음. 3·4·13·16 버림, 9는 다른 곳. 가상 예시 17·18은 홈에 쓰지 않음(실제 답을 받으면 교체)
     const voices = PICK.map(id => VOICES.find(v => v.id === id)).filter(Boolean);
-    const ncol = mobile ? 2 : 4, cols = Array.from({ length: ncol }, () => []);
+    const ncol = mobile ? 1 : 4, cols = Array.from({ length: ncol }, () => []);
     voices.forEach((v, i) => cols[i % ncol].push(KAKAO.card({ ...v, date: '' }))); // 홈에서는 날짜 줄을 빼 연도가 보이지 않게(실제 날짜를 바꾸지 않음)
     // 줄이 화면 위아래를 다 덮도록 옆 줄 카드를 이어 붙여 길게(같은 줄 안에서는 반복 없음)
-    $('[data-vc-chat]').innerHTML = cols.map((c, i) => `<div class="vc-col">${c.concat(cols[(i + 1) % ncol]).join('')}</div>`).join('');
+    $('[data-vc-chat]').innerHTML = cols.map((c, i) => `<div class="vc-col">${(ncol > 1 ? c.concat(cols[(i + 1) % ncol]) : c).join('')}</div>`).join('');
     const svcName = t => (t || '').replace(/\s*[&\/,]\s*/g, ' · ');
     const works = WORKS.filter(w => w.cover).slice(0, mobile ? 10 : 14);
     $('[data-vc-cards]').innerHTML = works.map(w => `<div class="vc-card"><div class="ph"><img src="${w.cover}" alt="" loading="lazy" onerror="this.style.opacity=0" /></div><span>${svcName(w.services)}</span></div>`).join('');
@@ -117,7 +120,7 @@ SITE.boot(ctx => {
       .to('[data-vc-chat]', { opacity: 1, duration: .12 }, .22);
     // 2) 카톡 카드 줄: 홀수 줄은 아래→위, 짝수 줄은 위→아래
     // 이동 거리는 줄 길이 + 화면 높이 기준(카드 수·길이가 바뀌어도 화면을 끝까지 지나감)
-    colsEl.forEach((c, i) => { const d = () => c.offsetHeight / 2 + innerHeight * .2, s = i % 2 ? -1 : 1; tl.fromTo(c, { y: () => s * d() }, { y: () => -s * d(), ease: 'none', duration: .78 }, .22); });
+    colsEl.forEach((c, i) => { const d = () => mobile ? Math.max(0, c.offsetHeight / 2 - VH() * .45) : c.offsetHeight / 2 + VH() * .2, /* 휴대폰 한 줄: 처음과 끝에도 화면이 비지 않게 */ s = i % 2 ? -1 : 1; tl.fromTo(c, { y: () => s * d() }, { y: () => -s * d(), ease: 'none', duration: .78 }, .22); });
   })();
 
   // 서비스: 줄 목록 — 화면을 붙잡지 않는다. 마우스를 올린 줄이 검게 차오르고, 그 서비스 장면 영상이 이름을 가리지 않게 오른쪽 빈자리에서 마우스 높이를 따라옴(살짝 기울며), 영문은 글자가 섞였다 맞춰짐

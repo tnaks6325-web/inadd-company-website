@@ -6,7 +6,7 @@
 .loader .lt{display:flex;justify-content:space-between}
 
 /* 1. 첫 화면 */
-.s-hero{position:relative;height:100vh;overflow:hidden}
+.s-hero{position:relative;height:calc(100 * var(--vh));overflow:hidden}
 .hero-media{position:absolute;inset:0;overflow:hidden;will-change:clip-path}
 .hero-media video,.hero-media img{width:100%;height:100%;object-fit:cover;filter:brightness(.62) saturate(.78) contrast(1.06)}
 .hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,16,.35),rgba(11,12,16,0) 30%,rgba(11,12,16,.15) 60%,rgba(11,12,16,.75))}
@@ -18,7 +18,7 @@
 .hero-mid .en{font-weight:800;letter-spacing:-.045em;line-height:.95;white-space:nowrap}
 
 /* 2. 문장이 차오름 */
-.s-statement{padding:22vh 0 26vh}
+.s-statement{padding:calc(22 * var(--vh)) 0 calc(26 * var(--vh))}
 .s-statement .mono{color:var(--mute);margin-bottom:40px;display:block}
 .stmt{font-size:clamp(30px,3.9vw,64px);font-weight:600;line-height:1.28;letter-spacing:-.035em;max-width:1280px}
 .stmt .w{opacity:.14;display:inline}
@@ -26,9 +26,9 @@
 
 /* 3. 숫자 격자 */
 /* 3. 클라이언트의 말 */
-.s-voices{position:relative;height:100vh;overflow:hidden}
+.s-voices{position:relative;height:calc(100 * var(--vh));overflow:hidden}
 .vc-stage{position:absolute;inset:0;overflow:hidden}
-.vc-head{position:absolute;left:0;right:0;top:15vh;text-align:center;z-index:3;pointer-events:none}
+.vc-head{position:absolute;left:0;right:0;top:calc(15 * var(--vh));text-align:center;z-index:3;pointer-events:none}
 .vc-head .mono{display:block;opacity:.6;margin-bottom:18px}
 .vc-head h2{font-size:clamp(34px,4.6vw,76px);font-weight:700;letter-spacing:-.05em;line-height:1.08}
 .vc-cards{position:absolute;left:50%;top:62%;z-index:2}
@@ -36,17 +36,17 @@
 .vc-card .ph{aspect-ratio:4/5;overflow:hidden;background:#e9e7e1}
 .vc-card img{width:100%;height:100%;object-fit:cover;display:block}
 .vc-card span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;margin-top:9px;opacity:.7}
-.vc-chat{position:absolute;left:50%;top:50%;width:1500px;height:200vh;margin:-100vh 0 0 -750px;display:flex;justify-content:center;align-items:center;gap:44px;transform:rotate(-12deg);z-index:1;opacity:0}
+.vc-chat{position:absolute;left:50%;top:50%;width:1500px;height:calc(200 * var(--vh));margin:-100vh 0 0 -750px;display:flex;justify-content:center;align-items:center;gap:44px;transform:rotate(-12deg);z-index:1;opacity:0}
 .vc-col{display:flex;flex-direction:column;gap:44px;will-change:transform}
 .vc-col .kk{width:300px}
 
 /* A12 일하는 방식 — 회사소개 1안에서 옮겨 옴. 스크롤에 맞춰 선이 그어지고, 선이 지나간 단계가 켜짐(화면을 붙잡지 않음) */
-.s-how{padding-block:18vh;--hw-ln:rgba(255,255,255,.14);--hw-sub:rgba(245,244,240,.62)}
+.s-how{padding-block:calc(18 * var(--vh));--hw-ln:rgba(255,255,255,.14);--hw-sub:rgba(245,244,240,.62)}
 .hw-top{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end}
 .hw-top .mono{display:block;color:var(--mute);margin-bottom:34px}
 .hw-top h2{font-size:clamp(36px,4.6vw,78px);font-weight:700;letter-spacing:-.05em;line-height:1.06}
 .hw-top p{font-size:17px;line-height:1.7;color:var(--hw-sub);max-width:560px}
-.hw-flow{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:28px;margin-top:14vh;padding-top:46px}
+.hw-flow{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:28px;margin-top:calc(14 * var(--vh));padding-top:46px}
 .hw-line{position:absolute;left:0;right:0;top:9px;height:1px;background:var(--hw-ln)}
 .hw-line i{position:absolute;inset:0;background:currentColor;transform:scaleX(0);transform-origin:left}
 .hw-step{position:relative;opacity:.28;transition:opacity .6s}
@@ -58,7 +58,7 @@
 .hw-step p{font-size:15px;line-height:1.65;color:var(--hw-sub)}
 
 /* 4. 서비스 — 왼쪽 줄 목록 + 오른쪽 세로 장면(목록 높이에 맞춰 늘어남, 화면을 붙잡지 않음). 마우스를 움직여 올린 줄이 검게 차오르고 오른쪽 장면 영상이 아래에서 열리며 바뀜 */
-.s-svc{padding-block:16vh 18vh}
+.s-svc{padding-block:calc(16 * var(--vh)) calc(18 * var(--vh))}
 /* 제목은 아래 목록과 같은 왼쪽 선, 설명은 오른쪽 사진과 같은 시작선(2026-11-06 대표: 왼쪽 정렬) */
 .svc-h{display:grid;grid-template-columns:7fr 5fr;gap:28px 56px;align-items:end;margin-bottom:64px}
 .svc-h .mono{opacity:.6;grid-column:1/-1}
@@ -67,7 +67,7 @@
 .svc-h p{font-size:16px;line-height:1.65}
 .svc-body{display:grid;grid-template-columns:7fr 5fr;gap:56px;align-items:stretch}
 .rows{border-top:1px solid currentColor}
-.row{position:relative;display:grid;grid-template-columns:44px 1fr auto;gap:20px;align-items:center;min-height:11vh;padding:18px 20px;border-bottom:1px solid var(--line-d);overflow:hidden;isolation:isolate;transition:color .45s}
+.row{position:relative;display:grid;grid-template-columns:44px 1fr auto;gap:20px;align-items:center;min-height:calc(11 * var(--vh));padding:18px 20px;border-bottom:1px solid var(--line-d);overflow:hidden;isolation:isolate;transition:color .45s}
 .row::before{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleY(0);transform-origin:top;transition:transform .6s cubic-bezier(.7,0,.2,1);z-index:-1}
 .row .i{opacity:.6}
 .row .nm{font-size:clamp(28px,3.2vw,54px);font-weight:700;letter-spacing:-.05em;line-height:1.05;transition:transform .6s cubic-bezier(.7,0,.2,1)}
@@ -87,9 +87,9 @@
 
 /* 5. 연혁 — 한 화면에 8년이 책등처럼 서 있고, 스크롤하면 한 해씩 넓게 펼쳐짐(고정 구간 1.6화면) */
 /* 2026-11-06 대표: 원래 높이(화면 가득)로 되돌리고, 화면을 붙잡은 동안 스크롤하면 2019~2026이 한 해씩 펼쳐짐(한 해 약 0.3화면) */
-.s-hist{height:100vh;height:100svh}
+.s-hist{height:calc(100 * var(--vh));height:calc(100 * var(--vh))}
 .s-hist{background:var(--ink);color:var(--white)} /* 바탕색이 바뀌는 순간에도 연혁은 늘 어둡게 */
-.hist-in{height:100%;display:flex;flex-direction:column;gap:22px;padding-top:104px;padding-bottom:5vh}
+.hist-in{height:100%;display:flex;flex-direction:column;gap:22px;padding-top:104px;padding-bottom:calc(5 * var(--vh))}
 .hist-head{display:flex;align-items:flex-end;gap:24px}
 .hist-head .mono{color:var(--mute);white-space:nowrap}
 .hist-t{flex:1;font-size:clamp(28px,3vw,48px);font-weight:600;letter-spacing:-.04em;line-height:1.1;margin-left:6vw}
@@ -116,13 +116,13 @@
 /* 연혁 시안(2026-11-06 대표: 스크롤을 붙잡지 않고 다 보여 주기) — 주소 ?hmode=auto | flow
    auto = 화면에 들어오면 한 해씩 저절로 펼쳐짐 + 접힌 칸에도 그 해 한 줄 제목 / flow = 스크롤하는 동안 연도 카드 띠가 옆으로 흐르고 가운데 온 해가 켜짐 */
 .s-hist.auto,.s-hist.flow{height:auto}
-.s-hist.auto .hist-in,.s-hist.flow .hist-in{height:auto;padding-top:12vh;padding-bottom:12vh}
+.s-hist.auto .hist-in,.s-hist.flow .hist-in{height:auto;padding-top:calc(12 * var(--vh));padding-bottom:calc(12 * var(--vh))}
 /* 2026-11-06 대표: 위아래 구역과 바탕 경계선이 보이지 않게 — A+B는 자기 바탕을 칠하지 않고 화면 전체 바탕이 한꺼번에 어두워졌다 밝아지는 전환을 따름.
    바탕이 아직 밝을 때 흰 글자가 비치지 않도록 내용은 바탕이 어두운 동안(.lit)에만 서서히 보임 */
 .s-hist.auto{background:transparent}
 .s-hist.auto .hist-in{opacity:0;transition:opacity .8s}
 .s-hist.auto.lit .hist-in{opacity:1}
-.s-hist.auto .hist-cols{flex:none;height:clamp(460px,62vh,660px)} /* 2026-11-06 대표: 더 높게(400px → 화면의 62%) */
+.s-hist.auto .hist-cols{flex:none;height:clamp(460px,calc(62 * var(--vh)),660px)} /* 2026-11-06 대표: 더 높게(400px → 화면의 62%) */
 .s-hist.auto .hc .sp .lb{display:block;order:1;writing-mode:vertical-rl;font-size:13px;letter-spacing:-.01em;color:rgba(245,244,240,.6);margin:12px 0 0 2px;white-space:nowrap}
 .s-hist.auto .hc .sp b{order:2;margin-top:auto}
 .s-hist.auto .hc.past .sp .lb{color:rgba(217,197,154,.85)}
@@ -143,7 +143,7 @@
 .hist-bar i{position:absolute;left:0;top:0;height:1px;background:var(--white);width:0}
 
 /* 6. 큰 숫자 한 문장 */
-.s-big{padding:24vh 0;text-align:center}
+.s-big{padding:calc(24 * var(--vh)) 0;text-align:center}
 .big{font-size:clamp(48px,9.6vw,176px);font-weight:700;letter-spacing:-.06em;line-height:1.04}
 /* 0에서 38,000까지 빠르게 차오르는 숫자 — 자리 폭을 고정해 줄이 흔들리지 않게 */ .big .bn{display:inline-block;text-align:right;font-variant-numeric:tabular-nums;transform-origin:50% 60%}
 .big .g{background:linear-gradient(90deg,var(--ink) 0%,#8a6b2f 55%,var(--butter) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -151,7 +151,7 @@
 
 /* 7. 채널이 흐르는 구역(Moto) */
 /* 구역 높이를 화면 높이와 같게 — 구역이 화면을 채웠을 때 문장이 정확히 화면 가운데(예전 1.2배라 10% 아래로 처졌음) */
-.s-flow{position:relative;height:100vh;height:100svh;overflow:hidden}
+.s-flow{position:relative;height:calc(100 * var(--vh));height:calc(100 * var(--vh));overflow:hidden}
 .flow-cols{position:absolute;inset:-30% 0;display:grid;grid-template-columns:repeat(5,1fr);gap:20px;padding:0 40px}
 .flow-cols div{display:flex;flex-direction:column;gap:34px;font-size:clamp(20px,1.9vw,30px);font-weight:600;letter-spacing:-.03em;color:rgba(11,12,16,.32)}
 .flow-cols div:nth-child(2),.flow-cols div:nth-child(4){filter:blur(3px);color:rgba(11,12,16,.22)}
@@ -160,7 +160,7 @@
 .flow-c::before{content:"";position:absolute;inset:-14% -6%;background:radial-gradient(closest-side,var(--paper) 55%,rgba(233,232,228,0));z-index:-1}
 
 /* 8. 파트너 */
-.s-partner{padding:18vh 0}
+.s-partner{padding:calc(18 * var(--vh)) 0}
 .pt-grid{display:grid;grid-template-columns:5fr 7fr;gap:60px;align-items:start}
 .pt-photo{position:relative;aspect-ratio:4/5;overflow:hidden;clip-path:inset(100% 0 0 0)}
 .pt-photo img{width:100%;height:120%;object-fit:cover;position:absolute;top:-10%}
@@ -171,7 +171,7 @@
 .pt li p{font-size:15px;line-height:1.65;color:rgba(245,244,240,.7)}
 
 /* 9. 비전 */
-.s-vm{padding:20vh 0}
+.s-vm{padding:calc(20 * var(--vh)) 0}
 .vm{display:grid;grid-template-columns:1fr 1fr;gap:60px}
 .vm p{font-size:clamp(26px,2.6vw,42px);font-weight:600;letter-spacing:-.035em;line-height:1.3;margin-top:22px}
 
@@ -181,11 +181,12 @@
   .hero-meta{left:20px;right:20px;grid-template-columns:1fr 1fr;row-gap:6px}
   .pt-grid,.vm{grid-template-columns:1fr}
   .vc-card{width:140px;margin:-92px 0 0 -70px}
-  .vc-chat{width:760px;margin-left:-380px;gap:24px}
-  .vc-col{gap:24px}
-  .vc-col .kk{width:260px}
-  .s-svc{padding-block:12vh}
-  .s-how{padding-block:12vh}
+  /* 휴대폰: 카톡 카드 한 줄만, 덜 기울여 좌우가 잘리지 않게(2026-11-13 대표) */
+  .vc-chat{width:100vw;margin-left:-50vw;gap:0;transform:rotate(-5deg)}
+  .vc-col{gap:20px}
+  .vc-col .kk{width:min(300px,78vw)}
+  .s-svc{padding-block:calc(12 * var(--vh))}
+  .s-how{padding-block:calc(12 * var(--vh))}
   .hw-top{grid-template-columns:1fr;gap:12px}
   .hw-flow{grid-template-columns:1fr;gap:34px;padding-top:0;padding-left:34px}
   .hw-line{left:4px;right:auto;top:0;bottom:0;width:1px;height:auto}
@@ -199,13 +200,13 @@
   .row .nm{font-size:28px}
   .row .en{display:none}
   .row .ln{display:block;grid-column:2;opacity:.7;font-size:14px;line-height:1.5}
-  .hist-in{padding-top:80px;gap:14px;padding-bottom:3vh}
+  .hist-in{padding-top:80px;gap:14px;padding-bottom:calc(3 * var(--vh))}
   .hist-head{flex-direction:column;align-items:flex-start;gap:8px}
   .hist-t{margin-left:0;font-size:26px}
   .hist-cols{flex-direction:column;border-left:0;border-top:1px solid var(--line)}
   .hc{border-right:0;border-bottom:1px solid var(--line)}
   .hc .sp{flex-direction:row;align-items:center;justify-content:flex-start;gap:14px;padding:0 6px}
-  .s-hist.auto .hist-cols{height:max(470px,64vh)}
+  .s-hist.auto .hist-cols{height:max(470px,calc(64 * var(--vh)))}
   .s-hist.auto .hc .sp .lb{writing-mode:horizontal-tb;margin:0;order:3}
   .s-hist.auto .hc .sp b{margin-top:0}
   .s-hist.flow .hflow{padding:0 11vw;gap:16px}

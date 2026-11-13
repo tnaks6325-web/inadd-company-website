@@ -1,12 +1,12 @@
 .mute{color:var(--mute)}
-.sec{padding:18vh 0}
+.sec{padding:calc(18 * var(--vh)) 0}
 .sec-h{display:grid;grid-template-columns:3fr 9fr;gap:40px;align-items:start;margin-bottom:64px}
 .sec-h .mono{opacity:.6;padding-top:12px}
 .sec-h h2{font-size:clamp(36px,4.6vw,78px);font-weight:700;letter-spacing:-.055em;line-height:1.04}
 .sec-h p{margin-top:22px;font-size:16px;line-height:1.7;max-width:640px;opacity:.75}
 
 /* 1. 첫 화면 — 왼쪽 큰 제목, 오른쪽 세로 장면 */
-.sv-hero{min-height:100vh;min-height:100svh;display:grid;grid-template-columns:7fr 5fr;gap:56px;align-items:stretch;padding-top:110px;padding-bottom:6vh}
+.sv-hero{min-height:calc(100 * var(--vh));min-height:calc(100 * var(--vh));display:grid;grid-template-columns:7fr 5fr;gap:56px;align-items:stretch;padding-top:110px;padding-bottom:calc(6 * var(--vh))}
 .sv-hero .l{display:flex;flex-direction:column;justify-content:space-between;gap:40px}
 .crumb{display:flex;gap:10px;align-items:center;color:var(--mute)}
 .crumb a{border-bottom:1px solid transparent;transition:border-color .3s}
@@ -117,12 +117,12 @@
   .others a:hover::before{transform:scaleY(1);transform-origin:bottom}
 }
 
-.sec-others{min-height:80vh;display:flex;flex-direction:column;justify-content:center}
+.sec-others{min-height:calc(80 * var(--vh));display:flex;flex-direction:column;justify-content:center}
 /* 준비 중 */
-.soon{padding:10vh 0 16vh;font-size:18px;line-height:1.7;opacity:.75}
+.soon{padding:calc(10 * var(--vh)) 0 calc(16 * var(--vh));font-size:18px;line-height:1.7;opacity:.75}
 
 @media (max-width:860px){
-  .sec{padding:12vh 0}
+  .sec{padding:calc(12 * var(--vh)) 0}
   .sec-h{grid-template-columns:1fr;gap:14px;margin-bottom:36px}
   .sec-h .mono{padding-top:0}
   .sv-hero{grid-template-columns:1fr;gap:28px;padding-top:88px}

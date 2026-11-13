@@ -1,7 +1,7 @@
 /* 개편 인사이트 목록·글 — 시안 lab/common/insight.css 그대로(바꾸면 두 곳). 공통 틀(base.css) 위에 이 두 페이지만의 모양 */
 
 /* ── 목록 1. 첫 화면: 업무 장면 영상이 한 번 빠르게 넘어가고, 그 위로 실제 글 제목이 서로 반대 방향으로 흐름 ── */
-.ih{position:relative;height:82vh;min-height:560px;overflow:hidden;background:var(--ink)}
+.ih{position:relative;height:calc(82 * var(--vh));min-height:560px;overflow:hidden;background:var(--ink)}
 .ih-media{position:absolute;inset:0;will-change:transform}
 .ih-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
 .ih-media video.on{opacity:1}
@@ -11,14 +11,14 @@
 .ih-row span{display:inline-block;padding-right:56px}
 .ih-row span::after{content:"/";margin-left:56px;color:rgba(245,244,240,.18);font-weight:400}
 .ih-row .n{color:rgba(217,197,154,.6);font-weight:700}
-.ih-type{position:absolute;left:40px;right:40px;bottom:9vh;display:grid;grid-template-columns:1fr auto;align-items:end;gap:40px}
+.ih-type{position:absolute;left:40px;right:40px;bottom:calc(9 * var(--vh));display:grid;grid-template-columns:1fr auto;align-items:end;gap:40px}
 .ih-type .mono{color:var(--mute);display:block;margin-bottom:22px}
 .ih-t{font-size:clamp(52px,7.6vw,132px);font-weight:700;letter-spacing:-.06em;line-height:.98}
 .ih-sub{font-size:16px;line-height:1.7;color:rgba(245,244,240,.8);max-width:300px;text-align:right}
-.ih-meta{position:absolute;left:40px;right:40px;bottom:3vh;display:flex;justify-content:space-between;color:var(--mute)}
+.ih-meta{position:absolute;left:40px;right:40px;bottom:calc(3 * var(--vh));display:flex;justify-content:space-between;color:var(--mute)}
 
 /* ── 목록 2. 맨 위 글 하나 크게 ── */
-.feat{padding:16vh 0 12vh}
+.feat{padding:calc(16 * var(--vh)) 0 calc(12 * var(--vh))}
 .feat-h{display:flex;justify-content:space-between;align-items:end;margin-bottom:40px}
 .feat-h .mono{opacity:.6}
 .feat-a{display:grid;grid-template-columns:7fr 5fr;gap:56px;align-items:end}
@@ -34,7 +34,7 @@
 .more:hover svg{transform:translateX(5px)}
 
 /* ── 목록 3. 글 목록: 줄 목록 + 분류 글자 탭(밑줄) ── */
-.lst{padding:4vh 0 18vh}
+.lst{padding:calc(4 * var(--vh)) 0 calc(18 * var(--vh))}
 .lst-h{display:flex;justify-content:space-between;align-items:end;gap:30px;border-bottom:1px solid currentColor;padding-bottom:18px}
 .lst-h .mono{opacity:.6}
 .tabs{display:flex;gap:30px;flex-wrap:wrap}
@@ -69,7 +69,7 @@
 
 /* ── 글 상세 ── */
 .prog{position:fixed;left:0;top:0;height:2px;width:100%;z-index:96;background:#fff;mix-blend-mode:difference;transform:scaleX(0);transform-origin:left;pointer-events:none}
-.dh{padding:150px 0 9vh}
+.dh{padding:150px 0 calc(9 * var(--vh))}
 .back{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:600;opacity:.75;transition:opacity .3s}
 .back:hover{opacity:1}
 .back svg{width:16px;height:16px;transition:transform .35s}
@@ -78,9 +78,9 @@
 .dh-meta b{color:var(--butter);font-weight:500}
 .dh-t{font-size:clamp(38px,4.9vw,84px);font-weight:700;letter-spacing:-.055em;line-height:1.06;max-width:1180px}
 .dh-st{font-size:clamp(18px,1.6vw,24px);font-weight:500;letter-spacing:-.03em;line-height:1.45;color:rgba(245,244,240,.72);margin-top:24px;max-width:860px}
-.dh-pic{margin-top:9vh;position:relative;overflow:hidden;aspect-ratio:1200/630;max-height:78vh;clip-path:inset(0 0 100% 0)}
+.dh-pic{margin-top:calc(9 * var(--vh));position:relative;overflow:hidden;aspect-ratio:1200/630;max-height:calc(78 * var(--vh));clip-path:inset(0 0 100% 0)}
 .dh-pic img{width:100%;height:100%;object-fit:cover}
-.read{padding:12vh 0 14vh;display:grid;grid-template-columns:1fr minmax(0,680px) 1fr;gap:40px}
+.read{padding:calc(12 * var(--vh)) 0 calc(14 * var(--vh));display:grid;grid-template-columns:1fr minmax(0,680px) 1fr;gap:40px}
 .toc{position:sticky;top:110px;align-self:start;max-width:230px}
 .toc .mono{display:block;opacity:.55;margin-bottom:14px}
 .toc a{display:block;font-size:13px;line-height:1.45;padding:7px 0 7px 14px;border-left:1px solid var(--line-d);opacity:.5;transition:opacity .3s,border-color .3s}
@@ -109,7 +109,7 @@
 .art ul.ins-checklist{list-style:none;margin-left:0}
 .art ul.ins-checklist li::marker{content:none}
 .art ul.ins-checklist li{padding-left:0}
-.rel{padding:14vh 0 8vh}
+.rel{padding:calc(14 * var(--vh)) 0 calc(8 * var(--vh))}
 .rel-h{display:flex;justify-content:space-between;align-items:end;margin-bottom:40px}
 .rel-h .mono{color:var(--mute)}
 .rel-g{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
@@ -121,13 +121,13 @@
 .rc b{display:block;font-size:20px;font-weight:700;letter-spacing:-.04em;line-height:1.35}
 
 @media (max-width:860px){
-  .ih{height:86vh}
-  .ih-type{left:20px;right:20px;grid-template-columns:1fr;gap:18px;bottom:12vh}
+  .ih{height:calc(86 * var(--vh))}
+  .ih-type{left:20px;right:20px;grid-template-columns:1fr;gap:18px;bottom:calc(12 * var(--vh))}
   .ih-sub{text-align:left;font-size:15px}
   .ih-meta{left:20px;right:20px}
   .ih-meta span:nth-child(2){display:none}
   .ih-row span{padding-right:36px}.ih-row span::after{margin-left:36px}
-  .feat{padding:11vh 0 8vh}
+  .feat{padding:calc(11 * var(--vh)) 0 calc(8 * var(--vh))}
   .feat-a{grid-template-columns:1fr;gap:26px}
   .feat-t{font-size:28px}
   .lst-h{flex-direction:column;align-items:flex-start}
@@ -144,9 +144,9 @@
   .ir .tt small{display:none}
   .ir .ar{display:none}
   .ithumb{display:none}
-  .dh{padding:110px 0 7vh}
+  .dh{padding:110px 0 calc(7 * var(--vh))}
   .dh-meta{margin:36px 0 20px}
-  .read{grid-template-columns:1fr;padding:8vh 0 10vh}
+  .read{grid-template-columns:1fr;padding:calc(8 * var(--vh)) 0 calc(10 * var(--vh))}
   .toc,.read > .sp{display:none}
   .lead{font-size:17px}
   .art{font-size:16px;line-height:1.85}
@@ -167,7 +167,7 @@
 .gc .d{display:block;margin-top:14px;font-size:11px;opacity:.6}
 .gc b{display:block;margin-top:6px;font-size:18px;font-weight:700;letter-spacing:-.03em}
 .lb{position:fixed;inset:0;z-index:200;background:rgba(11,12,16,.94);color:var(--white);display:flex;align-items:center;justify-content:center}
-.lb-in{width:min(1100px,100% - 48px);height:min(88vh,860px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:16px}
+.lb-in{width:min(1100px,100% - 48px);height:min(calc(88 * var(--vh)),860px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:16px}
 .lb-top{display:flex;justify-content:space-between;align-items:center;font-size:12px}
 .lb-top button,.lb-nav button{background:none;border:1px solid rgba(245,244,240,.4);color:inherit;font:inherit;cursor:pointer}
 .lb-top button{font-family:var(--sans,inherit);font-size:13px;font-weight:600;padding:7px 14px}
@@ -184,7 +184,7 @@
   .subtabs button{white-space:nowrap;flex:none;font-size:13px}
   .gal{grid-template-columns:1fr 1fr;gap:24px 12px}
   .gc b{font-size:15px}
-  .lb-in{width:calc(100% - 32px);height:84vh}
+  .lb-in{width:calc(100% - 32px);height:calc(84 * var(--vh))}
 }
 
 /* 목록 모양: 썸네일 갤러리형(2026-11-09 대표 A안, .v-grid 3열 카드). 휴대폰은 썸네일 왼쪽 줄 목록 */

@@ -7,7 +7,7 @@ import listBody from './insight-body.gen.html?raw'
 import detailBody from './insight-detail-body.gen.html?raw'
 import { postPath, plainText, type InsightPost } from '../../lib/insight-posts'
 
-const V = '20261113a'
+const V = '20261113b'
 const css = (f: string) => <link rel="stylesheet" href={`/static/renewal/${f}?v=${V}`} />
 const js = (f: string) => <script src={`/static/renewal/${f}?v=${V}`}></script>
 

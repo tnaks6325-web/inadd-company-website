@@ -3,10 +3,10 @@
 [data-bg="paper"]{--ln:rgba(11,12,16,.14);--sub:rgba(11,12,16,.66)}
 
 /* 첫 화면(짧게) */
-.eh{padding:20vh 0 8vh}
+.eh{padding:calc(20 * var(--vh)) 0 calc(8 * var(--vh))}
 .eh .mono{display:block;opacity:.6;margin-bottom:28px}
 .eh h1{font-size:clamp(44px,7vw,120px);font-weight:800;letter-spacing:-.06em;line-height:.98}
-.eh-row{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end;margin-top:6vh;border-top:1px solid var(--ln);padding-top:24px}
+.eh-row{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end;margin-top:calc(6 * var(--vh));border-top:1px solid var(--ln);padding-top:24px}
 .eh-row p{font-size:clamp(17px,1.4vw,21px);line-height:1.6;color:var(--sub)}
 .eh-row ul{list-style:none;font-size:14px;color:var(--sub)}
 .eh-row li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--ln)}
@@ -26,7 +26,7 @@ input:focus-visible + .e-box{outline:2px solid var(--navy);outline-offset:2px}
 .e-note{font-size:14px;line-height:1.6;color:var(--sub)}
 
 /* 신청 칸 */
-.e-apply{padding:14vh 0 16vh}
+.e-apply{padding:calc(14 * var(--vh)) 0 calc(16 * var(--vh))}
 .ef{max-width:980px}
 .ef-h{display:flex;align-items:baseline;gap:20px;border-bottom:2px solid currentColor;padding-bottom:18px;margin-bottom:10px}
 .ef-h .mono{opacity:.6}
@@ -56,7 +56,7 @@ input:focus-visible + .e-box{outline:2px solid var(--navy);outline-offset:2px}
 .ef-sent pre{font:13px/1.8 var(--mono);white-space:pre-wrap;margin-top:14px;opacity:.85}
 
 @media (max-width:860px){
-  .eh{padding:16vh 0 6vh}
+  .eh{padding:calc(16 * var(--vh)) 0 calc(6 * var(--vh))}
   .eh-row{grid-template-columns:1fr;gap:24px}
   .ef-grid{grid-template-columns:1fr}
   .ef-send{flex-direction:column;align-items:stretch}
