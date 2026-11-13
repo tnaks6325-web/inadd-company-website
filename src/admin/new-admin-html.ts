@@ -1,6 +1,6 @@
 // 새 관리자 화면(2026-11-09 대표: 시안 C 첫 화면 + B 편집 + 되돌리기) — 화면은 /static/admin2/*.js 가 그린다.
 // 옛 관리자 화면은 /admin/old 에 그대로 둔다(새 화면에 문제가 생기면 바로 옛 화면으로 일할 수 있게).
-const V = '20261109b'
+const V = '20261113a'
 // 화면 조각(core.js·home.js …)은 app.js 가 './home.js' 처럼 버전 없이 불러온다. 정적 파일은 4시간 캐시라
 // 배포 직후 옛 조각이 섞이지 않게 import map 으로 같은 버전 꼬리표를 붙인다(파일을 새로 만들면 여기에도 추가)
 const MODS = ['core', 'home', 'services', 'history', 'works', 'insight', 'gallery', 'settings']
