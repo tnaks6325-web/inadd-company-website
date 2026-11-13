@@ -226,7 +226,7 @@ SITE.boot(ctx => {
 
   // 파트너 사진: 아래에서 위로 열림 + 시차
   gsap.to('[data-ptphoto]', { clipPath: 'inset(0% 0 0 0)', duration: 1.4, ease: 'power4.inOut', scrollTrigger: { trigger: '[data-ptphoto]', start: 'top 80%' } });
-  gsap.fromTo('[data-ptphoto] img', { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '[data-ptphoto]', scrub: true } });
+  gsap.fromTo('[data-ptphoto] img, [data-ptphoto] video', { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '[data-ptphoto]', scrub: true } });
   gsap.from('.pt li', { opacity: 0, x: 30, stagger: .1, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: '[data-pt]', start: 'top 80%' } });
 
 
