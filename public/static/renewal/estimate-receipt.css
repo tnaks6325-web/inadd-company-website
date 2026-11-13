@@ -71,3 +71,7 @@
   .rc-bar{display:flex;justify-content:space-between;align-items:center;width:100%;border:0;background:var(--ink);color:var(--white);padding:16px 20px;font:600 15px var(--sans);cursor:pointer}
   .rc-bar b{font-size:20px;letter-spacing:-.03em}
 }
+/* 어두운 바탕 구역(홈 견적 — 2026-11-13 대표)에서는 고른 줄을 밝게 채워 구분 */
+[data-bg=ink] .er-row::before{background:var(--white)}
+[data-bg=ink] .er-row.on{color:var(--ink)}
+[data-bg=ink] .er-row.on .e-box svg{stroke:var(--white)}

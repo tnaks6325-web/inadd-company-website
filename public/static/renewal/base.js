@@ -402,15 +402,22 @@
   }
 
   // 바탕색 바꾸기 — 고정(pin) 구역들을 다 만든 뒤에 만들어야 위치가 맞는다
+  // 바탕색 — 구역마다 제 색(data-bg)을 칠해 두고 경계가 글과 함께 올라오게(2026-11-13 대표: 화면 전체가 한꺼번에 바뀌어 어지럽다는 피드백 → 1번 안).
+  // 고정(pin) 구역들을 다 만든 뒤에 만들어야 위치가 맞는다. 위쪽 메뉴는 그 아래 구역 색, 떠 있는 문의 버튼은 버튼 뒤 구역 색에 맞춰 바로 바꿈
   function backgrounds() {
     const BG = { ink: ['#0B0C10', '#F5F4F0'], paper: ['#E9E8E4', '#0B0C10'] };
-    const first = $('[data-bg]');
+    const secs = $$('[data-bg]');
+    const first = secs[0];
     if (first) gsap.set('body', { backgroundColor: BG[first.dataset.bg][0], color: BG[first.dataset.bg][1], '--pg': BG[first.dataset.bg][0], '--fg': BG[first.dataset.bg][1] });
-    $$('[data-bg]').forEach(sec => {
+    const cta = $('.fcta');
+    const ctaAt = () => cta ? Math.round(innerHeight - cta.getBoundingClientRect().top - cta.offsetHeight / 2) : 120;
+    secs.forEach(sec => {
       const [bg, fg] = BG[sec.dataset.bg];
-      // 화면에 붙잡히는 구역(연혁·클라이언트의 말 등)은 붙잡힌 동안 전체(pin-spacer)를 기준으로 — 구역 자체를 기준으로 하면 위로 올라올 때 바탕이 늦게 바뀌어 글자가 안 보였음(2026-11-06)
+      // 화면에 붙잡히는 구역(연혁·클라이언트의 말 등)은 붙잡힌 동안 전체(pin-spacer)를 기준으로 — 붙잡힌 동안 뒤가 비어 보이지 않게 공간에도 같은 색
       const t = sec.parentElement && sec.parentElement.classList.contains('pin-spacer') ? sec.parentElement : sec;
-      ScrollTrigger.create({ trigger: t, start: 'top 55%', end: 'bottom 55%', onToggle: s => s.isActive && gsap.to('body', { backgroundColor: bg, color: fg, '--pg': bg, '--fg': fg, duration: .9, ease: 'power2.out', overwrite: true }) });
+      [sec, t].forEach(e => { e.style.backgroundColor = bg; e.style.color = fg; e.style.setProperty('--pg', bg); e.style.setProperty('--fg', fg); });
+      ScrollTrigger.create({ trigger: t, start: 'top 64px', end: 'bottom 64px', onToggle: s => s.isActive && gsap.set('body', { backgroundColor: bg, color: fg, '--pg': bg, '--fg': fg }) });
+      if (cta) ScrollTrigger.create({ trigger: t, start: () => `top bottom-=${ctaAt()}`, end: () => `bottom bottom-=${ctaAt()}`, onToggle: s => s.isActive && gsap.set(cta, { '--pg': bg, '--fg': fg }) });
     });
   }
 
