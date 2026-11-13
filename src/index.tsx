@@ -313,8 +313,9 @@ app.get('/marketing/subscription/proposal', (c) => c.render(<SvcSubscriptionPage
 
 app.get('/marketing/viral', (c) => {
   return c.render(<RenewalSvcPage k="viral" />, { bare: true, head: renewalSvcHead('viral'), bodyAttrs: renewalSvcBody,
-    title: '바이럴 마케팅 대행 - 커뮤니티·카페·SNS 입소문',
-    description: '커뮤니티·카페·SNS 기반 바이럴 마케팅. 실제 사용자 후기와 입소문으로 브랜드를 알립니다.',
+    // 검색 결과 제목·설명(2026-11-13 대표 문구: 가격 정보 넣지 않음, 바이럴로 시작한 회사 — 대표 확인)
+    title: '바이럴 마케팅, 어떤 곳을 골라야 할지 모르겠다면?',
+    description: '바이럴로 출발한 종합광고대행사가 플레이하는 제대로 된 바이럴 마케팅. 사람들이 모이는 곳이라면 어디든, 먹히는 공식. 인애드에 있다',
     canonical: 'https://www.inadcompany.co.kr/marketing/viral',
     schema: pageSchema('/marketing/viral', 'service')
   })
