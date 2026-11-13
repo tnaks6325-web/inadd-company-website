@@ -180,11 +180,12 @@
   .hero-title{left:20px;bottom:110px}
   .hero-meta{left:20px;right:20px;grid-template-columns:1fr 1fr;row-gap:6px}
   .pt-grid,.vm{grid-template-columns:1fr}
-  .vc-card{width:140px;margin:-92px 0 0 -70px}
-  /* 휴대폰: 카톡 카드 한 줄만, 덜 기울여 좌우가 잘리지 않게(2026-11-13 대표) */
-  .vc-chat{width:100vw;margin-left:-50vw;gap:0;transform:rotate(-5deg)}
-  .vc-col{gap:20px}
-  .vc-col .kk{width:min(300px,78vw)}
+  /* 휴대폰(2026-11-13 대표: PC처럼 가로 화면에 효과가 다 보이게): PC 화면(1440×900)을 그대로 만들어 휴대폰 폭에 맞게 줄여 가운데 둠 — 배율 --vcs 는 home.js */
+  .vc-stage{inset:auto;left:50%;top:50%;width:1440px;height:900px;transform:translate(-50%,-50%) scale(var(--vcs,.27));transform-origin:50% 50%}
+  .vc-chat{height:1800px;margin-top:-900px}
+  .vc-head{top:135px}
+  .vc-head .mono{font-size:30px;margin-bottom:26px}
+  .vc-head h2{font-size:104px}
   .s-svc{padding-block:calc(12 * var(--vh))}
   .s-how{padding-block:calc(12 * var(--vh))}
   .hw-top{grid-template-columns:1fr;gap:12px}

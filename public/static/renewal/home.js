@@ -100,12 +100,15 @@ SITE.boot(ctx => {
   (() => {
     const PICK = [1, 2, 12, 5, 6, 15, 7, 8]; // 최종: 실제 메시지 8개, 날짜 줄 없음. 3·4·13·16 버림, 9는 다른 곳. 가상 예시 17·18은 홈에 쓰지 않음(실제 답을 받으면 교체)
     const voices = PICK.map(id => VOICES.find(v => v.id === id)).filter(Boolean);
-    const ncol = mobile ? 1 : 4, cols = Array.from({ length: ncol }, () => []);
+    // 휴대폰도 PC 화면(1440×900)을 줄여 보여 줌 — 줄 수·카드 수·움직임 거리 모두 PC 기준
+    const VS = mobile ? { w: 1440, h: 900 } : null;
+    if (VS) { const st = $('[data-vc]'), fit = () => st.style.setProperty('--vcs', innerWidth / VS.w); fit(); addEventListener('resize', fit); }
+    const ncol = 4, cols = Array.from({ length: ncol }, () => []);
     voices.forEach((v, i) => cols[i % ncol].push(KAKAO.card({ ...v, date: '' }))); // 홈에서는 날짜 줄을 빼 연도가 보이지 않게(실제 날짜를 바꾸지 않음)
     // 줄이 화면 위아래를 다 덮도록 옆 줄 카드를 이어 붙여 길게(같은 줄 안에서는 반복 없음)
-    $('[data-vc-chat]').innerHTML = cols.map((c, i) => `<div class="vc-col">${(ncol > 1 ? c.concat(cols[(i + 1) % ncol]) : c).join('')}</div>`).join('');
+    $('[data-vc-chat]').innerHTML = cols.map((c, i) => `<div class="vc-col">${c.concat(cols[(i + 1) % ncol]).join('')}</div>`).join('');
     const svcName = t => (t || '').replace(/\s*[&\/,]\s*/g, ' · ');
-    const works = WORKS.filter(w => w.cover).slice(0, mobile ? 10 : 14);
+    const works = WORKS.filter(w => w.cover).slice(0, 14);
     $('[data-vc-cards]').innerHTML = works.map(w => `<div class="vc-card"><div class="ph"><img src="${w.cover}" alt="" loading="lazy" onerror="this.style.opacity=0" /></div><span>${svcName(w.services)}</span></div>`).join('');
     const cards = $$('.vc-card'), colsEl = $$('.vc-col');
     // 처음: 가운데 겹쳐 쌓임(조금씩 틀어짐)
@@ -113,14 +116,14 @@ SITE.boot(ctx => {
     const tl = gsap.timeline({ scrollTrigger: { ...stCfg('.s-voices', VC, '85%', '15%'), scrub: 1 } });
     // 1) 카드가 사방으로 흩어짐(각자 다른 방향·회전)
     cards.forEach((c, i) => {
-      const a = (i / cards.length) * Math.PI * 2 + gsap.utils.random(-.3, .3), r = Math.max(innerWidth, innerHeight) * gsap.utils.random(.62, .9);
+      const a = (i / cards.length) * Math.PI * 2 + gsap.utils.random(-.3, .3), r = (VS ? Math.max(VS.w, VS.h) : Math.max(innerWidth, innerHeight)) * gsap.utils.random(.62, .9);
       tl.to(c, { x: Math.cos(a) * r, y: Math.sin(a) * r, rotate: gsap.utils.random(-60, 60), scale: gsap.utils.random(.7, 1.05), ease: 'power2.in', duration: .34 }, gsap.utils.random(0, .06));
     });
     tl.to('.vc-head', { opacity: 0, y: -30, duration: .14 }, .2)
       .to('[data-vc-chat]', { opacity: 1, duration: .12 }, .22);
     // 2) 카톡 카드 줄: 홀수 줄은 아래→위, 짝수 줄은 위→아래
     // 이동 거리는 줄 길이 + 화면 높이 기준(카드 수·길이가 바뀌어도 화면을 끝까지 지나감)
-    colsEl.forEach((c, i) => { const d = () => mobile ? Math.max(0, c.offsetHeight / 2 - VH() * .45) : c.offsetHeight / 2 + VH() * .2, /* 휴대폰 한 줄: 처음과 끝에도 화면이 비지 않게 */ s = i % 2 ? -1 : 1; tl.fromTo(c, { y: () => s * d() }, { y: () => -s * d(), ease: 'none', duration: .78 }, .22); });
+    colsEl.forEach((c, i) => { const d = () => c.offsetHeight / 2 + (VS ? VS.h : VH()) * .2, s = i % 2 ? -1 : 1; tl.fromTo(c, { y: () => s * d() }, { y: () => -s * d(), ease: 'none', duration: .78 }, .22); });
   })();
 
   // 서비스: 줄 목록 — 화면을 붙잡지 않는다. 마우스를 올린 줄이 검게 차오르고, 그 서비스 장면 영상이 이름을 가리지 않게 오른쪽 빈자리에서 마우스 높이를 따라옴(살짝 기울며), 영문은 글자가 섞였다 맞춰짐
