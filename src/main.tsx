@@ -235,9 +235,15 @@ root.get('/robots.txt', async (c) => {
   const res = await passThrough(c)
   if (!res.ok) return res
   // 화면이 불러가는 공개 데이터·이미지만 열고 나머지 /api/ 는 그대로 막는다
-  const allow = ['/api/admin/insight-img/', '/api/admin/works-img/', '/api/admin/logo/', '/api/admin/public/'].map(p => `Allow: ${p}`).join('\n')
+  const allow = ['/api/admin/insight-img/', '/api/admin/works-img/', '/api/admin/gallery-img/', '/api/admin/logo/', '/api/admin/public/'].map(p => `Allow: ${p}`).join('\n')
   const txt = (await res.text()).replace('Disallow: /api/', `${allow}\nDisallow: /api/`)
-  return c.body(txt, 200, { 'Content-Type': 'text/plain' })
+  // 네이버(Yeti) 전용: 구글 광고 클릭 꼬리표(gad_source·gbraid·gclid)가 붙은 주소는 수집하지 않음.
+  // canonical 을 꼬리표 없는 주소로 줘도 네이버가 따로 색인해 옛 제목이 중복으로 남았음(2026-11-13 서치어드바이저 확인).
+  // 이름 붙은 그룹이 있으면 Yeti 는 * 그룹을 안 읽으므로 * 그룹 규칙을 복사해 둔다(기본 허용이라 'Allow: /' 는 빼서 꼬리표 Disallow 와 다툼이 없게). 구글(AdsBot 포함)은 영향 없음.
+  const star = (txt.match(/User-agent: \*\n[\s\S]*?(?=\n\n|$)/) || [''])[0]
+  const tags = ['gad_source', 'gad_campaignid', 'gbraid', 'gclid'].flatMap(k => [`Disallow: /*?${k}=`, `Disallow: /*&${k}=`]).join('\n')
+  const out = star ? txt.replace(star, `${star}\n\n${star.replace('User-agent: *', 'User-agent: Yeti').replace('Allow: /\n', '')}\n${tags}`) : txt
+  return c.body(out, 200, { 'Content-Type': 'text/plain' })
 })
 
 // 나머지는 기존 앱

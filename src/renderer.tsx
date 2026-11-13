@@ -133,7 +133,7 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 fbq('init', '27496919366666410');
 fbq('track', 'PageView');
         ` }} />
-        <noscript dangerouslySetInnerHTML={{ __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=27496919366666410&ev=PageView&noscript=1" />` }} />
+        <noscript dangerouslySetInnerHTML={{ __html: `<img alt="" height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=27496919366666410&ev=PageView&noscript=1" />` }} />
         {/* ── End Meta Pixel Code ── */}
       </head>
       <body {...(bodyAttrs || {})}>
