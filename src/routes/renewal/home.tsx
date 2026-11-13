@@ -5,7 +5,7 @@ import { raw } from 'hono/html'
 // 누적 캠페인 숫자는 /api/admin/public/home(관리자 기록). 시안 전용 편집 상자(guide.js)는 넣지 않는다.
 import body from './home-body.gen.html?raw' // 미리 채운 HTML(scripts/renewal-home-prerender.mjs 가 home-body.html 에서 만듦)
 
-const V = '20261113a'
+const V = '20261113b'
 const css = (f: string) => <link rel="stylesheet" href={`/static/renewal/${f}?v=${V}`} />
 const js = (f: string) => <script src={`/static/renewal/${f}?v=${V}`}></script>
 

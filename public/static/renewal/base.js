@@ -421,8 +421,18 @@
     });
   }
 
+  // 화면 높이(붙잡는 길이 계산용) — 터치 기기는 너비가 바뀔 때만 새로 잼(주소창 접힘으로 높이만 바뀌는 건 무시)
+  // (미리 채우기 스크립트는 창 없이 이 파일을 읽으므로 창이 있을 때만)
+  const W0 = typeof window !== 'undefined' && typeof window.innerWidth === 'number';
+  let VW = W0 ? innerWidth : 0, VH = W0 ? innerHeight : 0;
+  const COARSE = W0 && matchMedia('(pointer:coarse)').matches;
+  const setVh = () => { if (COARSE) document.documentElement.style.setProperty('--vh', (VH / 100) + 'px'); };
+  setVh();
+  if (W0) addEventListener('resize', () => { if (innerWidth !== VW || !COARSE) { VW = innerWidth; VH = innerHeight; setVh(); } });
+  const vh = () => VH || innerHeight;
+
   window.SITE = {
-    SVC, ARROW,   // 서비스 페이지 미리 채우기(svc-fill.js)가 같은 서비스 목록·화살표를 쓴다
+    vh, SVC, ARROW,   // 서비스 페이지 미리 채우기(svc-fill.js)가 같은 서비스 목록·화살표를 쓴다
     labHref,
     fillEnd,
     chromeHTML,
@@ -430,6 +440,8 @@
     boot(page) {
       gsap.registerPlugin(ScrollTrigger, SplitText);
       chrome();
+      // 휴대폰 주소창이 접히고 펴질 때(세로 높이만 바뀜) 붙잡히는 구역 길이를 다시 재지 않게 — 다시 재면 아래 내용이 위아래로 튐(2026-11-13 아이폰 녹화: 견적 구역 흔들림)
+      ScrollTrigger.config({ ignoreMobileResize: true });
       const lenis = new Lenis({ lerp: 0.085 });
       lenis.on('scroll', ScrollTrigger.update);
       gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0);
@@ -439,7 +451,7 @@
       QC = quick(lenis);
       // 회사 숫자(관리자 '홈 · 회사 숫자' — 2026-11-09 대표: 업력·함께한 브랜드도 관리자 값으로 연결). 운영에서만 불러오고, 실패하면 data.js 값 그대로
       const stats = LIVE ? fetch('/api/admin/public/home').then(r => r.json()).then(d => (d && d.stats) || {}).catch(() => ({})) : Promise.resolve({});
-      const ctx = { lenis, D, $, $$, mobile: matchMedia('(max-width:860px)').matches, SVC, MENU, ARROW, lines, now, wait, stats };
+      const ctx = { lenis, D, $, $$, mobile: matchMedia('(max-width:860px)').matches, SVC, MENU, ARROW, lines, now, wait, stats, vh };
       if (page) page(ctx);
       // 업력(data-years)·함께한 브랜드(data-brand-n) 글자를 관리자 값으로(줄로 나뉜 제목 안도 — setNums)
       stats.then(st => {

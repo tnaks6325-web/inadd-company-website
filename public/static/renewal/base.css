@@ -1,5 +1,6 @@
 /* 개편 A안 공통 — 모든 페이지가 같이 쓰는 색·글자·머리 메뉴·펼침 메뉴·휴대폰 메뉴·문의 띠·바닥 */
 :root{
+  --vh:1vh; /* 화면 높이 1% — 터치 기기는 처음 연 높이로 고정(base.js, 앱 안 브라우저 주소창 접힘에 페이지가 튀지 않게 2026-11-13) */
   --fg:#F5F4F0; --pg:#0B0C10; /* 지금 구역의 글자색·바탕색(바탕색 전환이 바꿈) */
   --ink:#0B0C10; --ink2:#14161D; --paper:#E9E8E4; --white:#F5F4F0; --line:rgba(255,255,255,.14); --line-d:rgba(11,12,16,.14);
   --navy:#21306F; --butter:#D9C59A; --cream:#FBF0CF; --mute:rgba(245,244,240,.5);
@@ -35,7 +36,7 @@ img,video{display:block;max-width:100%}
    버튼 색은 구역 바탕의 반대(어두운 구역 = 흰 버튼, 밝은 구역 = 검은 버튼) — 바탕색 전환이 넣어 주는 --fg(글자색)·--pg(바탕색)를 씀 */
 .hd .cta{transition:background .3s,color .3s,opacity .4s}
 .hd.fc-on .cta{opacity:0;pointer-events:none}
-.fcta{position:fixed;right:14vw;bottom:calc(36px + 4vh);z-index:85;display:flex;padding:22px 34px;border-radius:2px;background:var(--fg);color:var(--pg);
+.fcta{position:fixed;right:14vw;bottom:calc(36px + calc(4 * var(--vh)));z-index:85;display:flex;padding:22px 34px;border-radius:2px;background:var(--fg);color:var(--pg);
   outline:1.5px solid transparent;outline-offset:0;box-shadow:0 0 0 1px rgba(11,12,16,.12),0 18px 40px -18px rgba(11,12,16,.5);opacity:0;transform:translateY(24px);pointer-events:none;
   transition:opacity .45s,transform .6s cubic-bezier(.2,.8,.2,1),background .35s,color .3s,outline-offset .4s,outline-color .4s}
 .fcta.on{opacity:1;transform:none;pointer-events:auto}
@@ -74,7 +75,7 @@ img,video{display:block;max-width:100%}
 .mnav-top{display:flex;justify-content:space-between;align-items:center;min-height:36px}
 .mnav-top b{font-weight:800;font-size:15px}
 .mnav-top button{background:none;border:0;color:inherit;font-size:14px;font-weight:600;cursor:pointer}
-.mnav-list{margin-top:6vh;border-top:1px solid var(--line)}
+.mnav-list{margin-top:calc(6 * var(--vh));border-top:1px solid var(--line)}
 .mnav-list > div{border-bottom:1px solid var(--line)}
 .mnav-list .big{display:flex;justify-content:space-between;align-items:center;width:100%;background:none;border:0;color:inherit;text-align:left;font-size:34px;font-weight:700;letter-spacing:-.045em;padding:16px 0;cursor:pointer;font-family:inherit}
 .mnav-list .big svg{width:14px;height:9px;transition:transform .4s}
@@ -92,14 +93,14 @@ img,video{display:block;max-width:100%}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 /* 10. 문의 + 바닥 */
-.s-cta{padding:22vh 0 0;position:relative;overflow:hidden}
+.s-cta{padding:calc(22 * var(--vh)) 0 0;position:relative;overflow:hidden}
 .cta-t{font-size:clamp(44px,6.4vw,112px);font-weight:700;letter-spacing:-.055em;line-height:1.02}
 .cta-row{display:flex;justify-content:space-between;align-items:end;margin-top:60px;gap:40px}
 .btn{display:inline-flex;align-items:center;gap:14px;background:var(--white);color:var(--ink);padding:22px 34px;font-weight:700;font-size:17px;border-radius:2px;transition:background .3s}
 .btn:hover{background:var(--cream)}
 .btn svg{width:18px;height:18px;transition:transform .3s}
 .btn:hover svg{transform:translateX(5px)}
-.ft{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:22vh;padding:30px 0;border-top:1px solid var(--line);color:var(--mute);font-size:13px;line-height:1.7}
+.ft{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:calc(22 * var(--vh));padding:30px 0;border-top:1px solid var(--line);color:var(--mute);font-size:13px;line-height:1.7}
 .ft b{display:block;color:var(--white);font-family:var(--mono);font-size:11px;letter-spacing:.08em;font-weight:500;margin-bottom:8px}
 .ft-legal{font-size:12px;line-height:1.6;color:var(--mute);margin-top:28px}
 .word{font-size:calc((100vw - 80px) / 7.05);font-weight:800;letter-spacing:-.075em;line-height:.74;white-space:nowrap;margin:0 0 -3vw;color:var(--white)}
