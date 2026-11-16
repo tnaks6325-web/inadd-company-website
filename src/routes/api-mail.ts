@@ -378,7 +378,7 @@ mail.post('/brochure', async (c) => {
       c.env,
       toEmail,
       mailSubject,
-      brochureReplyTemplate(pdfUrl, downloadUrl, headline, bodyText, tags, [rawAddress, rawAddressDetail].filter(Boolean).join(' '), c.env.MAIL_REPLY_TO || c.env.RESEND_TO || '')
+      brochureReplyTemplate(pdfUrl, downloadUrl, headline, bodyText, tags, [rawAddress, rawAddressDetail].filter(Boolean).join(', '), c.env.MAIL_REPLY_TO || c.env.RESEND_TO || '')
     )
     return c.json({ ok: true })
   } catch (e: any) {
@@ -495,7 +495,7 @@ mail.post('/estimate', async (c) => {
         c.env,
         email,
         `[인애드컴퍼니] ${company} 마케팅 팀구독 견적 조합 내역`,
-estimateReplyTemplate(est, company, [rawAddress, rawAddressDetail].filter(Boolean).join(' '), c.env.MAIL_REPLY_TO || c.env.RESEND_TO || '', source)
+estimateReplyTemplate(est, company, [rawAddress, rawAddressDetail].filter(Boolean).join(', '), c.env.MAIL_REPLY_TO || c.env.RESEND_TO || '', source)
       )
     })().catch((e: any) => console.error('[mail/estimate] 손님 메일 실패', e?.message || e))
     try { c.executionCtx.waitUntil(toCustomer) } catch { await toCustomer }
