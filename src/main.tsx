@@ -26,12 +26,15 @@ import {
 
 const root = new Hono()
 
+const isPagesDev = (u: string) => { try { return new URL(u).hostname.endsWith('.pages.dev') } catch { return false } }
+
 const kvOf = (c: any): KVNamespace | undefined => c.env?.ADMIN_KV
 
 // 테스트 서버(미리보기)는 검색엔진에 잡히지 않게 한다 — index.tsx 와 같은 규칙을 이 진입점 경로에도 적용
 root.use('*', async (c, next) => {
   await next()
-  if ((c.env as any)?.SITE_ENV === 'preview') c.res.headers.set('X-Robots-Tag', 'noindex, nofollow')
+  // 2026-11-18: *.pages.dev 주소(배포별 주소·브랜치 주소·프로젝트 기본 주소)는 운영 사본이라도 검색에 안 잡히게 — 구글에 옛 배포가 색인돼 옛 숫자가 AI 답변에 섞이던 문제
+  if ((c.env as any)?.SITE_ENV === 'preview' || isPagesDev(c.req.url)) c.res.headers.set('X-Robots-Tag', 'noindex, nofollow')
 })
 
 root.route('/api/blog', BlogRouter)

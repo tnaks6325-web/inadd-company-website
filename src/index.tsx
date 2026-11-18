@@ -24,10 +24,13 @@ import { MailRouter } from './routes/api-mail'
 
 const app = new Hono<{ Bindings: { SITE_ENV?: string } }>()
 
+const isPagesDev = (u: string) => { try { return new URL(u).hostname.endsWith('.pages.dev') } catch { return false } }
+
 // 테스트 서버(Cloudflare Pages 미리보기)는 검색엔진에 잡히지 않게 한다. SITE_ENV 는 wrangler.jsonc env.preview 에서만 설정.
 app.use('*', async (c, next) => {
   await next()
-  if (c.env?.SITE_ENV === 'preview') c.res.headers.set('X-Robots-Tag', 'noindex, nofollow')
+  // 2026-11-18: *.pages.dev 주소(배포별 주소·브랜치 주소·프로젝트 기본 주소)는 운영 사본이라도 검색에 안 잡히게 — 구글에 옛 배포가 색인돼 옛 숫자가 AI 답변에 섞이던 문제
+  if (c.env?.SITE_ENV === 'preview' || isPagesDev(c.req.url)) c.res.headers.set('X-Robots-Tag', 'noindex, nofollow')
 })
 
 // Static files
