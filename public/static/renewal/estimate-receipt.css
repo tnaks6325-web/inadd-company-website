@@ -53,6 +53,14 @@
 .rc-btn{display:block;text-align:center;margin-top:18px;font-weight:700;font-size:15px;padding:16px;background:var(--ink);color:var(--white);transition:background .3s}
 .rc-btn:hover{background:var(--navy)}
 .rc-bar{display:none}
+/* 계약 혜택: 제품 기획 이미지 3컷(2026-11-19) — 계산서 안 점선 아래 한 줄(계산서가 화면보다 길어지지 않게), 견본 3장 */
+.rc-gift{display:flex;align-items:center;gap:12px;margin-top:12px;padding-top:12px;border-top:1px dashed rgba(11,12,16,.35)}
+.rc-gift-i{display:flex;gap:3px;flex:none}
+.rc-gift-i img{width:28px;height:37px;object-fit:cover;display:block}
+.rc-gift-t b{display:block;font-size:14px;letter-spacing:-.02em}
+.rc-gift-t b .mono{font-size:10px;letter-spacing:.1em;color:var(--navy);margin-right:6px;font-weight:500}
+.rc-gift-t p{font-size:12.5px;line-height:1.45;margin-top:2px;color:rgba(11,12,16,.72)}
+.rc-gift-t a{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:2px}
 
 @media (max-width:860px){
   .e-top{flex-direction:column;align-items:flex-start}

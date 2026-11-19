@@ -7,7 +7,7 @@ import body from './works-body.gen.html?raw'
 import { REF_CASES } from '../svc-performance-ref'
 import type { WorkItem } from '../works'
 
-const V = '20261113b'
+const V = '20261119a'
 const css = (f: string) => <link rel="stylesheet" href={`/static/renewal/${f}?v=${V}`} />
 const js = (f: string) => <script src={`/static/renewal/${f}?v=${V}`}></script>
 
@@ -89,6 +89,7 @@ export const RenewalWorksPage = () => {
       <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
       {js('base.js')}
+      {js('visuals-data.js')}
       {js('works.js')}
     </>
   )
