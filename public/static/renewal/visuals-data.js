@@ -39,7 +39,7 @@ window.VISUALS = {
     ['appliance', 'kitchenaid-flour', '키친에이드', '밀가루 붓기'],
     ['appliance', 'smeg-toast', '스메그', '튀어 오르는 토스트'],
   ],
-  // 같은 제품을 다시 기획한 짝(처음 → 다시) — 밀어서 비교
+  // 같은 제품의 두 장면 — 밀어서 비교(표기 없이)
   pairs: [
     ['ndp-rice-old', 'ndp-rice-new', 'NDP', '쌀 더미'],
     ['ndp-foam-old', 'ndp-foam-new', 'NDP', '효소 거품'],

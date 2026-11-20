@@ -138,7 +138,7 @@ SITE.boot(ctx => {
     }));
     moreBtn.addEventListener('click', () => { limit += STEP; apply(true); });
 
-    // ── 4-2. 제품 기획 이미지(visuals-data.js) — 업종 밑줄 탭, 견본 격자, 처음→다시 기획 밀어 비교, 제품 릴스 ──
+    // ── 4-2. 제품 기획 이미지(visuals-data.js) — 업종 밑줄 탭, 견본 격자, 같은 제품 두 장면 밀어 비교, 제품 릴스 ──
     const VPATH = '/static/renewal/assets/visuals/';
     let vzBuilt = false, vzCat = 'beauty';
     const vzCard = ([, s, brand, scene]) => `<figure class="vz-card"><div class="vz-pic"><img src="${VPATH}${s}.webp" alt="${esc(brand)} ${esc(scene)} 제품 기획 이미지(인애드 자체 콘셉트)" loading="lazy" width="960" height="1283" /><span class="mono">CONCEPT</span></div><figcaption><b>${esc(brand)}</b><span>${esc(scene)}</span></figcaption></figure>`;
@@ -154,14 +154,13 @@ SITE.boot(ctx => {
       $('[data-vz-cats]').innerHTML = VZ.cats.map(([c, n]) => `<button type="button" data-c="${c}">${n}<sup>${VZ.items.filter(it => it[0] === c).length}</sup></button>`).join('');
       $$('[data-vz-cats] button').forEach(b => b.addEventListener('click', () => { vzCat = b.dataset.c; drawCat(true); }));
       drawCat(true);
-      // 처음 기획 → 다시 기획: 가운데 손잡이를 밀어 비교(짝이 둘이면 아래 버튼으로 바꿈)
+      // 같은 제품 두 장면: 가운데 손잡이를 밀어 비교(2026-11-20 대표: '처음/다시 기획' 표기 없음)(짝이 둘이면 아래 버튼으로 바꿈)
       const P = VZ.pairs;
-      $('[data-vz-pair]').innerHTML = `<div class="vz-sub"><span class="mono">SAME PRODUCT · RE-PLANNED</span><b>같은 제품, 장면만 다시 기획</b></div>
-        <div class="vz-cmp" data-cmp style="--x:50%"><img data-new alt="" /><div class="vz-old"><img data-old alt="" /></div>
-          <span class="vz-lb l">처음 기획</span><span class="vz-lb r">다시 기획</span><i class="vz-knob" aria-hidden="true"></i>
-          <input type="range" min="0" max="100" value="50" aria-label="처음 기획과 다시 기획 비교" data-range /></div>
+      $('[data-vz-pair]').innerHTML = `<div class="vz-sub"><span class="mono">SAME PRODUCT · TWO SCENES</span><b>같은 제품, 다른 장면</b></div>
+        <div class="vz-cmp" data-cmp style="--x:50%"><img data-new alt="" /><div class="vz-old"><img data-old alt="" /></div><i class="vz-knob" aria-hidden="true"></i>
+          <input type="range" min="0" max="100" value="50" aria-label="두 장면 밀어서 비교" data-range /></div>
         <div class="vz-pick">${P.map((p, i) => `<button type="button" data-p="${i}" class="${i ? '' : 'on'}">${esc(p[2])} · ${esc(p[3])}</button>`).join('')}</div>`;
-      const cmp = $('[data-cmp]'), setPair = i => { $('[data-old]', cmp).src = VPATH + P[i][0] + '.webp'; $('[data-new]', cmp).src = VPATH + P[i][1] + '.webp'; $('[data-new]', cmp).alt = `${P[i][2]} ${P[i][3]} 다시 기획한 이미지`; $('[data-old]', cmp).alt = `${P[i][2]} ${P[i][3]} 처음 기획한 이미지`; };
+      const cmp = $('[data-cmp]'), setPair = i => { $('[data-old]', cmp).src = VPATH + P[i][0] + '.webp'; $('[data-new]', cmp).src = VPATH + P[i][1] + '.webp'; $('[data-new]', cmp).alt = `${P[i][2]} ${P[i][3]} 제품 기획 이미지`; $('[data-old]', cmp).alt = `${P[i][2]} ${P[i][3]} 제품 기획 이미지(다른 장면)`; };
       setPair(0);
       $('[data-range]', cmp).addEventListener('input', e => cmp.style.setProperty('--x', e.target.value + '%'));
       $$('[data-p]').forEach(b => b.addEventListener('click', () => { $$('[data-p]').forEach(x => x.classList.toggle('on', x === b)); setPair(+b.dataset.p); }));
