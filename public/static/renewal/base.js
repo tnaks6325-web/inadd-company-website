@@ -175,6 +175,7 @@
       const h = a.getAttribute('href');
       if (h.startsWith('#')) { if (h.length > 1 && $(h)) { e.preventDefault(); lenis.scrollTo(h, { duration: 1.6, offset: -90 }); } return; }
       if (!h.startsWith('/')) return;
+      if (a.target === '_blank') return; // 새 창으로 여는 링크(문의 접수 뒤 소개서 보기 등)는 브라우저에 맡김
       e.preventDefault();
       if (h === '/contact' && QC) { QC(); return; }
       if (LIVE) {
@@ -271,10 +272,13 @@
       <h3 class="qc-t">문의가 접수되었습니다</h3>
       <p class="qc-d">담당자가 <b>1영업일 이내</b> 메일로 연락드립니다.<br />입력하신 메일로 회사소개서도 함께 보내드립니다.</p>
       ${LIVE ? '<p class="qc-d">급한 문의: <a href="tel:010-9186-9944">010-9186-9944</a></p>' : '<p class="qc-lab">시안이라 실제로는 보내지 않았어요.</p>'}
-      <button type="button" class="qc-send" data-qc-x>확인</button>
+      <!-- 2026-11-20 대표: 소개서는 문의 접수 뒤에만 — 메일을 기다리지 않고 여기서 바로 열어 볼 수 있게(새 창, 접수 화면은 그대로) -->
+      <div class="qc-done-act"><a class="qc-bro" href="/company-profile" target="_blank" rel="noopener" data-qc-bro>회사소개서 바로 보기</a><button type="button" class="qc-send" data-qc-x>확인</button></div>
     </div>
   </div>
 </div>`);
+    // 접수 뒤 소개서 바로 보기 — 방문 기록(GA4) brochure_open 한 번씩
+    document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-qc-bro]')) { try { if (typeof window.gtag === 'function') window.gtag('event', 'brochure_open', { source: 'contact_done' }); } catch (x) {} } });
     const qc = $('[data-qc]'), form = $('[data-qc-form]'), done = $('[data-qc-done]'), box = $('.qc-box', qc), email = $('#qc-email'), sug = $('[data-qc-sug]');
     let isOpen = false, hideT;
     function open() {

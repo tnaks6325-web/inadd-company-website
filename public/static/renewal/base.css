@@ -206,7 +206,11 @@ img,video{display:block;max-width:100%}
 .qc-done .mono{opacity:.6}
 .qc-done .qc-t{margin-top:18px}
 .qc-lab{display:inline-block;margin-top:22px;font-size:12px;font-weight:600;color:var(--navy);border:1px solid var(--navy);padding:5px 9px}
-.qc-done .qc-send{margin-top:36px}
+.qc-done-act{display:flex;flex-direction:column;gap:10px;margin-top:36px}
+.qc-done-act .qc-send{margin-top:0}
+/* 접수 뒤 소개서 바로 보기 — '확인'과 같은 크기의 테두리 버튼(각진 모서리) */
+.qc-bro{display:flex;align-items:center;justify-content:center;width:100%;padding:19px;border:1px solid var(--ink);border-radius:2px;color:var(--ink);font:700 17px var(--sans);letter-spacing:-.02em;transition:background .3s,color .3s}
+@media (hover:hover){.qc-bro:hover{background:var(--ink);color:var(--white)}} /* 휴대폰은 누른 뒤 돌아와도 칠해진 채로 남지 않게 */
 
 @media (max-width:860px){
   .wrap{padding-left:20px!important;padding-right:20px!important}
@@ -229,4 +233,6 @@ img,video{display:block;max-width:100%}
   .qc-act{position:sticky;bottom:0;z-index:2;margin:auto -20px 0;padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:var(--white);border-top:1px solid var(--line-d)}
   .qc-act .qc-send{margin-top:0}
   .qc-done{padding-bottom:calc(32px + env(safe-area-inset-bottom))}
+  .qc-bro{padding:15px;font-size:16px}
+  .qc-done-act{margin-top:24px}
 }
