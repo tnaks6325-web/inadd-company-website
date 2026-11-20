@@ -3,6 +3,14 @@
 // 쓰는 법: 페이지에 <section data-est-receipt data-label="( 01 ) BUILD YOUR TEAM" data-title="…">, <section data-est-apply> 를 두고
 //          SITE.boot 안에서 ESTR.mount(ctx, { id: 'e1' }) 를 부른다.
 (() => {
+  // 구독 시작 혜택: 제품 기획 이미지 3컷(2026-11-19 대표, 문구 2026-11-20 확정). 견본 3장은 visuals-data.js gift 와 같은 그림, '견본 보기'는 포트폴리오 제품 기획 이미지 탭
+  const GIFT = ['neogen-orange', 'oreo-dive', 'smeg-toast'];
+  function giftHTML() {
+    return `<div class="rc-gift">
+            <div class="rc-gift-i">${GIFT.map(s => `<img src="/static/renewal/assets/visuals/${s}.webp" alt="" loading="lazy" width="960" height="1283" />`).join('')}</div>
+            <div class="rc-gift-t"><b><span class="mono">GIFT</span>제품 기획 이미지 3컷</b><p>구독을 시작하시면 함께 만들어 드립니다 · <a href="/works#visuals">견본 보기</a></p></div>
+          </div>`;
+  }
   function sectionHTML(label, title) {
     return `
     <div class="e-top">
@@ -21,6 +29,7 @@
           <p class="rc-vat">부가세 별도</p>
           <p class="rc-save" data-save></p>
           <p class="e-note" data-note></p>
+          ${giftHTML()}
           <a class="rc-btn" href="#apply" data-go>이 조합으로 상담 신청</a>
         </div>
       </div>

@@ -1,0 +1,50 @@
+// 제품 기획 이미지 견본(2026-11-19 대표: 포트폴리오 '제품 기획 이미지' 탭 + 견적 혜택 3컷).
+// 협업 디자이너가 만든 인애드 자체 콘셉트 이미지 — 브랜드가 맡긴 작업이 아니므로 화면에 항상 "인애드 자체 제작 콘셉트 · 브랜드 의뢰 작업 아님"을 붙인다.
+// 실제 클라이언트(SNP 등)는 성과 사례 공개 동의 전이라 넣지 않는다. 그림은 /static/renewal/assets/visuals/<s>.webp (가로 960px)
+window.VISUALS = {
+  cats: [['beauty', '뷰티'], ['food', '푸드'], ['appliance', '소형가전']],
+  items: [
+    ['beauty', 'neogen-orange', '네오젠', '오렌지 스플래시'],
+    ['beauty', 'missha-dropper', '미샤', '스포이드 방울'],
+    ['beauty', 'banila-sundae', '바닐라코', '선디 잔에 붓기'],
+    ['beauty', 'goodal-splash', '구달', '청귤즙 스플래시'],
+    ['beauty', 'anua-peach', '아누아', '복숭아 쌓기'],
+    ['beauty', 'lemona-powder', '레모나', '가루가 멈춘 순간'],
+    ['beauty', 'hince-petal', '힌스', '꽃잎 비'],
+    ['beauty', 'laneige-spatula', '라네즈', '스패출러 제형'],
+    ['beauty', 'klairs-float', '디어클레어스', '물방울 위 패드'],
+    ['beauty', 'torriden-pool', '토리든', '세럼 다이빙풀'],
+    ['food', 'coke-open', '코카콜라', '캔 따는 순간'],
+    ['food', 'banana-splash', '바나나맛우유', '바나나 스플래시'],
+    ['food', 'pringles-tower', '프링글스', '칩 타워'],
+    ['food', 'kancho-heart', '칸쵸', '하트 칸쵸'],
+    ['food', 'lindt-shell', '린트', '톡 터지는 쉘'],
+    ['food', 'ferrero-cut', '페레로 로쉐', '반 가른 단면'],
+    ['food', 'oreo-dive', '오레오', '우유 다이브'],
+    ['food', 'seoulmilk-drop', '서울우유', '팩 낙하'],
+    ['food', 'haribo-rows', '하리보', '여섯 색 정렬'],
+    ['food', 'heinz-drop', '하인즈', '케첩 방울'],
+    ['food', 'isigny-croissant', '이즈니', '크루아상 단면'],
+    ['food', 'bonne-spoon', '본마망', '스푼 위 잼'],
+    ['appliance', 'beast-burst', '비스트', '과일 폭발'],
+    ['appliance', 'xgimi-tent', '엑스지미', '텐트 시네마'],
+    ['appliance', 'vornado-paper', '보네이도', '종이 소용돌이'],
+    ['appliance', 'ooni-cheese', '우니', '치즈 늘어나는 순간'],
+    ['appliance', 'fellow-ribbon', '펠로우', '물줄기'],
+    ['appliance', 'moccamaster-shelf', '모카마스터', '아홉 색 선반'],
+    ['appliance', 'sony-steps', '소니', '여섯 색 계단'],
+    ['appliance', 'logitech-emoji', '로지텍 POP', '이모지 키 누르기'],
+    ['appliance', 'instax-print', '인스탁스', '사진 나오는 순간'],
+    ['appliance', 'hue-bulbs', '필립스 휴', '여섯 색 전구'],
+    ['appliance', 'kitchenaid-flour', '키친에이드', '밀가루 붓기'],
+    ['appliance', 'smeg-toast', '스메그', '튀어 오르는 토스트'],
+  ],
+  // 같은 제품의 두 장면 — 밀어서 비교(표기 없이)
+  pairs: [
+    ['ndp-rice-old', 'ndp-rice-new', 'NDP', '쌀 더미'],
+    ['ndp-foam-old', 'ndp-foam-new', 'NDP', '효소 거품'],
+  ],
+  reel: { src: 'tapo-reel.mp4', poster: 'tapo-reel.webp', brand: '타포', scene: '홈카메라 제품 릴스 · 14초' },
+  // 견적 조합기 혜택 칸에 보여 줄 3장
+  gift: ['neogen-orange', 'oreo-dive', 'smeg-toast'],
+};
