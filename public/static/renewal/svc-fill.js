@@ -79,7 +79,7 @@
 
     // ── 4-1. 성과 사례(퍼포먼스·구독) — 사례 목록은 서버가 운영 데이터(REF_CASES)로 끼운다 ──
     if (CASES[k]) sec(lastBg === 'ink' ? 'paper' : 'ink', `
-    <div class="sec-h"><span class="mono">${label('REFERENCE')}</span><div><h2 data-reveal>매체별 광고<br />성과 사례</h2><p>실제 운영 계정 데이터입니다. 광고주명은 업종과 이니셜로 표기했습니다.</p></div></div>
+    <div class="sec-h"><span class="mono">${label('REFERENCE')}</span><div><h2 data-reveal>매체별 광고<br />성과 사례</h2><p>실제 운영 계정 데이터입니다. 클라이언트명은 업종과 이니셜로 표기했습니다.</p></div></div>
     <!--svc-cases-->`, ' id="reference"')
 
     // ── 5. 진행 순서 ──
