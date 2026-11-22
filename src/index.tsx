@@ -139,8 +139,8 @@ app.get('/', (c) => {
     bare: true,
     head: renewalHomeHead,
     bodyAttrs: renewalHomeBody,
-    title: '풀퍼널 마케팅 대행사 - 브랜드마케팅 에이스팀',
-    description: '바이럴과 광고를 한 팀이 같이 운영하는 풀퍼널 마케팅 대행사입니다. 커뮤니티 바이럴, 네이버·구글·메타 광고, 인플루언서·체험단, 올리브영, PPL까지 맡길 수 있습니다.',
+    title: '풀퍼널 마케팅 에이전시 - 브랜드마케팅 에이스팀',
+    description: '바이럴과 광고를 한 팀이 같이 운영하는 풀퍼널 마케팅 에이전시입니다. 커뮤니티 바이럴, 네이버·구글·메타 광고, 인플루언서·체험단, 올리브영, PPL까지 맡길 수 있습니다.',
     canonical: 'https://www.inadcompany.co.kr',
     schema: JSON.stringify({
       "@context": "https://schema.org",
@@ -154,7 +154,7 @@ app.get('/', (c) => {
           "taxID": "311-87-02345",
           "url": "https://www.inadcompany.co.kr",
           "logo": "https://www.inadcompany.co.kr/static/logo.png",
-          "description": "바이럴·인플루언서·체험단·리뷰·올리브영·PPL 마케팅과 네이버·구글·메타 광고 운영을 사내 조직이 직접 수행하는 풀퍼널 그로스 마케팅 대행사. 온라인으로 판매하는 브랜드를 대상으로 전국 비대면으로 진행합니다.",
+          "description": "바이럴·인플루언서·체험단·리뷰·올리브영·PPL 마케팅과 네이버·구글·메타 광고 운영을 사내 조직이 직접 수행하는 풀퍼널 그로스 마케팅 에이전시. 온라인으로 판매하는 브랜드를 대상으로 전국 비대면으로 진행합니다.",
           "areaServed": { "@type": "Country", "name": "대한민국" },
           "knowsAbout": ["바이럴 마케팅", "인플루언서 마케팅", "체험단 마케팅", "리뷰 마케팅", "올리브영 마케팅", "PPL", "퍼포먼스 마케팅", "네이버 검색광고", "구글 광고", "메타 광고"],
           "hasOfferCatalog": {
@@ -214,7 +214,7 @@ app.get('/', (c) => {
           "@id": "https://www.inadcompany.co.kr/#website",
           "url": "https://www.inadcompany.co.kr",
           "name": "인애드컴퍼니",
-          "description": "온라인 브랜드를 위한 풀퍼널 그로스 마케팅 대행사",
+          "description": "온라인 브랜드를 위한 풀퍼널 그로스 마케팅 에이전시",
           "publisher": { "@id": "https://www.inadcompany.co.kr/#organization" }
         }
       ]
@@ -228,8 +228,8 @@ app.get('/about', (c) => {
     bare: true,
     head: renewalAboutHead,
     bodyAttrs: renewalAboutBody,
-    title: '회사 소개 - 시딩부터 PPL까지, 풀퍼널 마케팅 대행사',
-    description: '인애드컴퍼니는 시딩부터 PPL까지 한 팀에서 운영하는 풀퍼널 마케팅 대행사입니다. 하라는 대로만 하지 않고 먼저 제안하려는 이유와 클라이언트와 일하는 방식을 대표 인터뷰로 소개합니다.',
+    title: '회사 소개 - 시딩부터 PPL까지, 풀퍼널 마케팅 에이전시',
+    description: '인애드컴퍼니는 시딩부터 PPL까지 한 팀에서 운영하는 풀퍼널 마케팅 에이전시입니다. 하라는 대로만 하지 않고 먼저 제안하는 대행사가 되려는 이유와 클라이언트와 일하는 방식을 대표 인터뷰로 소개합니다.',
     canonical: 'https://www.inadcompany.co.kr/about',
     schema: pageSchema('/about', 'about')
   })
