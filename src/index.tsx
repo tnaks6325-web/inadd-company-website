@@ -180,7 +180,8 @@ app.get('/', (c) => {
             "https://www.jobkorea.co.kr/company/49001197",
             "https://www.instagram.com/inadcompany.official/",
             "https://map.naver.com/p/entry/place/1857048028",
-            "https://place.map.kakao.com/942705107"
+            "https://place.map.kakao.com/942705107",
+            "https://maps.google.com/?cid=2818450205848220781"
           ]
         },
         {
