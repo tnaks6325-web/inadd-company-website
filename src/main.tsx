@@ -9,7 +9,7 @@ import { kvGet } from './admin/store'
 import { SVC_FAQ_DEFAULTS, VALID_SVC_NAMES, HERO_KPI_DEFAULTS, VALID_HERO_SVCS } from './admin/api'
 import {
   getPosts, realId, postPath, absoluteUrl, plainText, xmlEscape,
-  SITE_URL,
+  SITE_URL, type InsightPost,
 } from './lib/insight-posts'
 
 // ─────────────────────────────────────────────
@@ -101,13 +101,68 @@ const between = (html: string, a: string, b: string, inner: string) => {
   return i < 0 || j < 0 ? html : html.slice(0, i + a.length) + inner + html.slice(j)
 }
 
+// ── 서비스 페이지 '함께 읽으면 좋은 글'(2026-11-23) ──
+// 서비스 페이지 → 인사이트 글 연결이 0개라(글 → 서비스만 있었음) 검색로봇·AI 검색이 서비스와 근거 글을 함께 못 읽던 문제.
+// 고르는 순서: 글 분류(subCategory)가 같은 글 → 제목에 서비스 말이 든 글 → 단계·대행사 고르기 같은 공통 안내 글. 같은 점수면 최신 글. 3편.
+// 퍼포먼스·구독은 글 분류가 없어 제목 말로만 고른다. 자리 표식은 public/static/renewal/svc-fill.js 의 <!--reads-block-->.
+const READS_RULE: Record<string, { sub?: string; re: RegExp }> = {
+  performance: { re: /파워링크|메타 광고|광고비|ROAS|퍼포먼스|광고 소재/ },
+  subscription: { re: /구독|마케터 채용/ },
+  viral: { sub: 'viral', re: /바이럴|카페/ },
+  influencer: { sub: 'influencer', re: /인플루언서|공동구매|릴스/ },
+  seeding: { sub: 'seeding', re: /체험단/ },
+  review: { sub: 'review', re: /리뷰|상세페이지/ },
+  oliveyoung: { sub: 'oliveyoung', re: /올리브영|화장품|상세페이지/ },
+  ppl: { sub: 'ppl', re: /PPL|협찬|뒷광고/ },
+}
+const READS_GENERAL = /뭐부터|광고대행사 고르/
+const READS_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>'
+const READS_SUB: Record<string, string> = { viral: '바이럴 마케팅', influencer: '인플루언서', seeding: '체험단', seo: 'SEO', review: '리뷰', oliveyoung: '올리브영', ppl: 'PPL' }
+function pickReads(posts: InsightPost[], svc: string, n = 3): InsightPost[] {
+  const r = READS_RULE[svc]
+  if (!r) return []
+  const score = (p: InsightPost) => {
+    const t = p.title || ''
+    return (r.sub && p.subCategory === r.sub ? 4 : 0) + (r.re.test(t) ? 2 : 0) + (READS_GENERAL.test(t) ? 1 : 0)
+  }
+  return posts
+    .map(p => ({ p, s: score(p) }))
+    .filter(x => x.s > 0 && x.p.title)
+    .sort((a, b) => b.s - a.s || String(b.p.createdAt || '').localeCompare(String(a.p.createdAt || '')))
+    .slice(0, n)
+    .map(x => x.p)
+}
+const readCard = (p: InsightPost) => {
+  const title = htmlEscape((p.title || '').split(' — ')[0].trim())
+  const sum = htmlEscape(plainText(p.summary || p.metaDescription || p.content, 120))
+  const tag = (p.subCategory && READS_SUB[p.subCategory]) || '인사이트'
+  const d = String(p.createdAt || '').slice(0, 10).replace(/-/g, '.')
+  return `<a href="${postPath(p)}"><span class="mono">${tag}${d ? ` · ${d}` : ''}</span><b>${title}</b>${sum ? `<p>${sum}</p>` : ''}<span class="more">글 읽기 ${READS_ARROW}</span></a>`
+}
+function fillReads(html: string, svc: string, posts: InsightPost[]): string {
+  if (!html.includes('<!--reads-block-->')) return html
+  const picks = pickReads(posts, svc)
+  if (!picks.length) {
+    const i = html.indexOf('<!--reads-block-->'), j = html.indexOf('<!--/reads-block-->')
+    return i < 0 || j < 0 ? html : html.slice(0, i) + html.slice(j + '<!--/reads-block-->'.length)
+  }
+  return between(html, `data-svc-reads="${svc}"><!--reads-->`, '<!--/reads-->', picks.map(readCard).join(''))
+}
+
 root.get('/marketing/:svc', async (c) => {
   const svc = c.req.param('svc')
-  if (!VALID_SVC_NAMES.includes(svc)) return passThrough(c)
-  const [res, raw, kpiRaw] = await Promise.all([
+  if (!VALID_SVC_NAMES.includes(svc)) {
+    // 퍼포먼스·구독(FAQ 관리 대상이 아닌 개편 페이지) — 관련 글만 채운다
+    if (!READS_RULE[svc]) return passThrough(c)
+    const [res, posts] = await Promise.all([passThrough(c), getPosts(kvOf(c))])
+    if (!res.ok || !(res.headers.get('content-type') || '').includes('text/html')) return res
+    return c.html(fillReads(await res.text(), svc, posts), 200)
+  }
+  const [res, raw, kpiRaw, posts] = await Promise.all([
     passThrough(c),
     kvGet(kvOf(c), `svc_faq_${svc}`).catch(() => null),
     VALID_HERO_SVCS.includes(svc) ? kvGet(kvOf(c), `hero_kpi_${svc}`).catch(() => null) : Promise.resolve(null),
+    getPosts(kvOf(c)),
   ])
   if (!res.ok) return res
   let faq: Array<{ q: string; a: string }>
@@ -127,7 +182,7 @@ root.get('/marketing/:svc', async (c) => {
       html = between(html, `data-svc-faq="${svc}"><!--faq-->`, '<!--/faq-->', faq.map(svcFaqItem).join(''))
       html = html.replace('</head>', `<script type="application/ld+json">${ld()}</script></head>`)
     }
-    return c.html(html, 200)
+    return c.html(fillReads(html, svc, posts), 200)
   }
   // 예전 페이지(되돌렸을 때) — 화면 스크립트와 같은 모양으로 미리 채운다
   if (!faq.length) return c.html(html, 200)
