@@ -6,7 +6,7 @@ import { raw } from 'hono/html'
 import body from './tech-body.gen.html?raw'
 import { TechHero } from '../tech-hero'
 
-const V = '20261123d'
+const V = '20261123g'
 const HERO_V = '20261123a' // 히어로 파일은 예전 페이지와 같은 것
 const css = (f: string) => <link rel="stylesheet" href={`/static/renewal/${f}?v=${V}`} />
 const js = (f: string) => <script src={`/static/renewal/${f}?v=${V}`}></script>

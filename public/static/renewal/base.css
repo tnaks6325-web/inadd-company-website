@@ -227,7 +227,8 @@ img,video{display:block;max-width:100%}
   body[data-float-cta] .hero-meta,body[data-float-cta] .ab-foot,body[data-float-cta] .ih-meta{bottom:calc(88px + env(safe-area-inset-bottom))}
   body[data-float-cta] .wk-hero-in{bottom:calc(84px + env(safe-area-inset-bottom))}
   /* 줄을 올린 만큼 그 위 큰 제목 묶음도 같이 올려 겹치지 않게(홈 제목·인사이트 제목) */
-  body[data-float-cta] .hero-title{bottom:calc(166px + env(safe-area-inset-bottom))}
+  body[data-float-cta] .hero-title{bottom:calc(180px + env(safe-area-inset-bottom))}
+  body[data-float-cta] .hero-what{bottom:calc(140px + env(safe-area-inset-bottom))}
   body[data-float-cta] .ih-type{bottom:calc(calc(12 * var(--vh)) + 56px + env(safe-area-inset-bottom))}
   .mega,.mini{display:none}
   .cta-row{flex-direction:column;align-items:stretch}
