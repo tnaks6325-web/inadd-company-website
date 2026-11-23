@@ -6,8 +6,8 @@ import { raw } from 'hono/html'
 import body from './tech-body.gen.html?raw'
 import { TechHero } from '../tech-hero'
 
-const V = '20261120a'
-const HERO_V = '20261102a' // 히어로 파일은 예전 페이지와 같은 것
+const V = '20261123h'
+const HERO_V = '20261123a' // 히어로 파일은 예전 페이지와 같은 것
 const css = (f: string) => <link rel="stylesheet" href={`/static/renewal/${f}?v=${V}`} />
 const js = (f: string) => <script src={`/static/renewal/${f}?v=${V}`}></script>
 
@@ -21,7 +21,7 @@ export const renewalTechHead = (
   </>
 )
 
-export const renewalTechBody = { 'data-nav': 'about' }
+export const renewalTechBody = { 'data-nav': 'tech', 'data-float-cta': '' }
 
 export const RenewalTechPage = () => {
   const [before, after] = body.split('<!--tech-hero-->')

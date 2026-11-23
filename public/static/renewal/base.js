@@ -35,7 +35,7 @@
 <header class="hd" data-hd>
   <a class="logo" href="/">IN AD COMPANY</a>
   <nav>
-    <a href="/about" class="${nav === 'about' ? 'is-cur' : ''}" data-mini-t>회사소개</a>
+    <a href="/about" class="${nav === 'about' || nav === 'tech' ? 'is-cur' : ''}" data-mini-t>회사소개</a>
     <a href="/#services" class="${nav === 'services' ? 'is-cur' : ''}" data-mega-t>서비스 ${CHEV}</a>
     <a href="/works" class="${nav === 'works' ? 'is-cur' : ''}">포트폴리오</a>
     <a href="/insight" class="${nav === 'insight' ? 'is-cur' : ''}">인사이트</a>
@@ -43,8 +43,8 @@
   <div class="r"><a class="cta" href="/contact">문의하기</a><button class="mbtn" type="button" data-mopen>메뉴</button></div>
 </header>
 <div class="mini" data-mini>
-  <a href="/about">회사 이야기<em>대표 인터뷰 · 사무실</em></a>
-  <a href="/development">아워테크<em>자체 자동화 기술</em></a>
+  <a href="/about" class="${nav === 'about' ? 'is-cur' : ''}">회사 이야기<em>대표 인터뷰 · 사무실</em></a>
+  <a href="/development" class="${nav === 'tech' ? 'is-cur' : ''}">아워테크<em>자체 자동화 기술</em></a>
 </div>
 <div class="mega" data-mega>
   <div class="mega-in">
@@ -56,7 +56,7 @@
 <div class="mnav" data-mnav>
   <div class="mnav-top"><b>IN AD COMPANY</b><button type="button" data-mclose>닫기</button></div>
   <div class="mnav-list">
-    <div><a class="big" href="/about">회사소개</a><a href="/development" style="display:block;font-size:15px;color:rgba(245,244,240,.7);padding:0 0 16px">아워테크 · 자체 자동화 기술</a></div>
+    <div><a class="big" href="/about">회사소개</a><a href="/development" class="msub${nav === 'tech' ? ' is-cur' : ''}">아워테크 · 자체 자동화 기술</a></div>
     <div data-macc><button class="big" type="button" data-macc-t>서비스 ${CHEV}</button><div class="mnav-sub"><div>${MENU.map(m => `<span class="mono">${m.g}</span>${m.items.map(([k]) => `<a href="${SVC[k].href}">${SVC[k].name}</a>`).join('')}`).join('')}</div></div></div>
     <div><a class="big" href="/works">포트폴리오</a></div>
     <div><a class="big" href="/insight">인사이트</a></div>
@@ -76,7 +76,7 @@
   // 문의 띠 + 바닥(HTML 글자). ds = 구역의 data-* (num·title·desc), floatCta = 떠 있는 문의 버튼이 내려앉을 자리를 둘지
   function endHTML(ds, floatCta) {
     return `
-    <span class="mono" style="color:var(--mute)">${ds.num || 'CONTACT'}</span>
+    <span class="mono" style="color:var(--mute-s)">${ds.num || 'CONTACT'}</span>
     <p class="cta-t" data-reveal style="margin-top:30px">${ds.title || '브랜드의 다음 장면,<br />같이 만들겠습니다'}</p>
     <div class="cta-row">
       <p style="color:var(--mute);font-size:16px;line-height:1.7">${ds.desc || '인애드컴퍼니 전문가가 브랜드 상황을 보고 무료로 진단해 드립니다.'}<br /><span class="mono" style="letter-spacing:.04em">${D.hours}</span></p>
@@ -414,14 +414,28 @@
     const first = secs[0];
     if (first) gsap.set('body', { backgroundColor: BG[first.dataset.bg][0], color: BG[first.dataset.bg][1], '--pg': BG[first.dataset.bg][0], '--fg': BG[first.dataset.bg][1] });
     const cta = $('.fcta');
-    const ctaAt = () => cta ? Math.round(innerHeight - cta.getBoundingClientRect().top - cta.offsetHeight / 2) : 120;
+    // 떠 있는 문의 버튼 색: 스크롤할 때마다 버튼 가운데 바로 뒤에 있는 구역을 직접 찾아 그 반대색으로(2026-11-23).
+    // 예전에는 구역마다 'top bottom-=버튼높이' 구간을 미리 계산했는데, 안드로이드 크롬은 주소창이 접힌 높이(예: 839px)로 계산해
+    // 실제 화면(783px)과 어긋나 첫 화면에서 다음 구역 색(어두운 바탕 위 어두운 버튼)이 됨 → 실제 위치를 직접 비교
+    if (cta) {
+      const areas = secs.map(sec => [sec, sec.parentElement && sec.parentElement.classList.contains('pin-spacer') ? sec.parentElement : sec]);
+      let cur = null;
+      const pick = () => {
+        const r = cta.getBoundingClientRect(), y = r.top + r.height / 2;
+        for (const [sec, t] of areas) {
+          const q = t.getBoundingClientRect();
+          if (q.top <= y && q.bottom > y) { if (cur !== sec) { cur = sec; const [bg, fg] = BG[sec.dataset.bg]; gsap.set(cta, { '--pg': bg, '--fg': fg }); } return; }
+        }
+      };
+      ScrollTrigger.create({ start: 0, end: 'max', onUpdate: pick, onRefresh: pick });
+      pick();
+    }
     secs.forEach(sec => {
       const [bg, fg] = BG[sec.dataset.bg];
       // 화면에 붙잡히는 구역(연혁·클라이언트의 말 등)은 붙잡힌 동안 전체(pin-spacer)를 기준으로 — 붙잡힌 동안 뒤가 비어 보이지 않게 공간에도 같은 색
       const t = sec.parentElement && sec.parentElement.classList.contains('pin-spacer') ? sec.parentElement : sec;
       [sec, t].forEach(e => { e.style.backgroundColor = bg; e.style.color = fg; e.style.setProperty('--pg', bg); e.style.setProperty('--fg', fg); });
       ScrollTrigger.create({ trigger: t, start: 'top 64px', end: 'bottom 64px', onToggle: s => s.isActive && gsap.set('body', { backgroundColor: bg, color: fg, '--pg': bg, '--fg': fg }) });
-      if (cta) ScrollTrigger.create({ trigger: t, start: () => `top bottom-=${ctaAt()}`, end: () => `bottom bottom-=${ctaAt()}`, onToggle: s => s.isActive && gsap.set(cta, { '--pg': bg, '--fg': fg }) });
     });
   }
 

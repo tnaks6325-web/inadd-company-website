@@ -14,7 +14,7 @@
 .wk-hero-sub{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-top:28px}
 .wk-hero-sub p{font-size:16px;line-height:1.7;color:rgba(245,244,240,.78);max-width:560px}
 .wk-hero-sub .note{font-size:11px;color:var(--mute)}
-.wk-meta{display:grid;grid-template-columns:repeat(4,1fr);margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--mute)}
+.wk-meta{display:grid;grid-template-columns:repeat(4,1fr);margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--mute-s)}
 .wk-meta b{color:var(--white);font-weight:500}
 .wk-go{display:inline-flex;gap:28px;align-items:center;white-space:nowrap}
 .wk-go a{font-size:15px;font-weight:600;border-bottom:1px solid currentColor;padding-bottom:3px}
@@ -22,10 +22,10 @@
 /* 2. 한 흐름: 마케팅을 더할 때마다 한 칸씩 — 12단계가 스크롤에 맞춰 하나씩 켜짐 */
 .wk-flow{padding:calc(20 * var(--vh)) 0 calc(18 * var(--vh))}
 .wk-flow-h{display:grid;grid-template-columns:3fr 6fr 3fr;gap:40px;align-items:end;margin-bottom:72px}
-.wk-flow-h .mono{opacity:.6;align-self:start}
+.wk-flow-h .mono{opacity:.82;align-self:start}
 .wk-flow-h h2{font-size:clamp(36px,4.6vw,80px);font-weight:700;letter-spacing:-.055em;line-height:1.04}
 .wk-flow-h p{font-size:15px;line-height:1.7}
-.wk-flow-h p small{display:block;margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;opacity:.6}
+.wk-flow-h p small{display:block;margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;opacity:.82}
 /* 12단계 — 금액·높이 차이 없이 단계만(2026-11-07 대표 A안): 윗선이 차오르고 글이 진해짐 */
 .wk-12{display:grid;grid-template-columns:repeat(6,1fr);gap:36px 18px}
 .wk-fs{position:relative;transition:color .4s}
@@ -37,25 +37,25 @@
 .wk-12 .wk-fs.on{opacity:1}
 .wk-flow-end{display:flex;justify-content:space-between;align-items:baseline;gap:24px;margin-top:40px}
 .wk-flow-end p{font-size:clamp(22px,2vw,32px);font-weight:600;letter-spacing:-.035em}
-.wk-flow-end .mono{opacity:.6}
+.wk-flow-end .mono{opacity:.82}
 
 /* 3. 브랜드 벽: 실제 포트폴리오 사진 + 실제 고객 후기가 두 줄로 흐름 */
 .wk-wall{padding:calc(18 * var(--vh)) 0 calc(20 * var(--vh));overflow:hidden}
 .wk-wall-h{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:56px}
 .wk-wall-h h2{font-size:clamp(44px,6.4vw,112px);font-weight:700;letter-spacing:-.055em;line-height:1}
 .wk-wall-h h2 u{text-decoration:none;font-variant-numeric:tabular-nums}
-.wk-wall-h p{color:var(--mute);font-size:15px;line-height:1.7;text-align:right}
+.wk-wall-h p{color:var(--mute-s);font-size:15px;line-height:1.7;text-align:right}
 .wk-row{display:flex;gap:14px;width:max-content;will-change:transform;margin-bottom:14px}
 .wk-row img{width:220px;height:220px;object-fit:cover;flex:none;filter:saturate(.92)}
 .wk-rv{flex:none;width:300px;height:220px;padding:22px;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}
 .wk-rv .bub{align-self:flex-start;max-width:100%;margin:0;padding:11px 14px;background:#fff;color:#111318;border-radius:3px 14px 14px 14px;font-size:15px;font-weight:500;letter-spacing:-.02em;line-height:1.5}
-.wk-rv span{font-size:12px;color:var(--mute)}
+.wk-rv span{font-size:12px;color:var(--mute-s)}
 .wk-rv .mono{color:var(--butter)}
 
 /* 4. 사례 목록: 밑줄 탭으로 거르기, 16개씩 더 보기 */
 .wk-cases{padding:calc(16 * var(--vh)) 0 calc(18 * var(--vh))}
 .wk-cases-h{display:grid;grid-template-columns:3fr 9fr;gap:40px;align-items:end;margin-bottom:48px}
-.wk-cases-h .mono{opacity:.6;align-self:start}
+.wk-cases-h .mono{opacity:.82;align-self:start}
 .wk-cases-h h2{font-size:clamp(36px,4.6vw,80px);font-weight:700;letter-spacing:-.055em;line-height:1.04}
 .wk-tabs{display:flex;flex-wrap:wrap;gap:6px 30px;border-bottom:1px solid var(--line-d);margin-bottom:40px;position:sticky;top:0;z-index:5;background:var(--paper);padding-top:14px;transition:top .5s cubic-bezier(.2,.7,.2,1)}
 .wk-tabs button{position:relative;background:none;border:0;color:inherit;font-family:inherit;font-size:16px;font-weight:600;letter-spacing:-.02em;padding:12px 0 14px;cursor:pointer;opacity:.45;transition:opacity .3s}
@@ -77,7 +77,7 @@
 .wk-card.on .wk-pic .ov{opacity:1;transform:none}
 .wk-meta2{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:14px}
 .wk-meta2 b{font-size:17px;font-weight:700;letter-spacing:-.03em}
-.wk-meta2 span{font-size:12.5px;opacity:.62;text-align:right;line-height:1.45}
+.wk-meta2 span{font-size:12.5px;opacity:.82;text-align:right;line-height:1.45}
 /* 그로스(광고 성과) 카드 */
 .wk-ad{aspect-ratio:1;background:var(--ink);color:var(--white);padding:20px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;position:relative}
 .wk-ad .md{display:flex;flex-wrap:wrap;gap:4px 12px}
@@ -86,7 +86,7 @@
 .wk-ad strong.long{font-size:clamp(34px,3.2vw,52px)}
 .wk-ad strong small{font-size:.4em;letter-spacing:-.02em;margin-left:4px}
 .wk-ad .kl{font-size:14px;font-weight:600;margin-top:8px}
-.wk-ad .kd{font-size:12px;color:rgba(245,244,240,.6);margin-top:4px}
+.wk-ad .kd{font-size:12px;color:rgba(245,244,240,.82);margin-top:4px}
 .wk-ad .tt{font-size:14px;line-height:1.45;border-top:1px solid var(--line);padding-top:12px}
 .wk-ad::before{content:"";position:absolute;inset:0;background:var(--navy);transform:scaleY(0);transform-origin:bottom;transition:transform .6s cubic-bezier(.7,0,.2,1)}
 .wk-ad > *{position:relative}
@@ -138,7 +138,7 @@
 /* 5. 함께한 브랜드 — 로고만 등록된 옛 로고 카드 사례. 선으로 나눈 흰 칸(로고 그림 바탕이 흰색이라 칸도 흰색) */
 .wk-logos{padding:0 0 calc(18 * var(--vh))}
 .wk-logos-h{display:grid;grid-template-columns:3fr 6fr 3fr;gap:40px;align-items:end;margin-bottom:48px;border-top:1px solid var(--line-d);padding-top:calc(16 * var(--vh))}
-.wk-logos-h .mono{opacity:.6;align-self:start}
+.wk-logos-h .mono{opacity:.82;align-self:start}
 .wk-logos-h h2{font-size:clamp(36px,4.6vw,80px);font-weight:700;letter-spacing:-.055em;line-height:1.04}
 .wk-logos-h p{font-size:15px;line-height:1.7;opacity:.75}
 .wk-lg{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(8,1fr);gap:1px;background:var(--line-d);border:1px solid var(--line-d)}

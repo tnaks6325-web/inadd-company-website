@@ -1,7 +1,7 @@
 /* 개편 아워테크(/development) — 시안 lab/tech.html 의 <style> 을 옮긴 것(바꾸면 두 곳). 2026-11-09 대표 1-1(기술 요소 구역 뺌)·2-1(휴대폰 줄인 판) */
-[data-bg="ink"]{--ln:rgba(255,255,255,.14);--sub:rgba(245,244,240,.62)}
-[data-bg="paper"]{--ln:rgba(11,12,16,.14);--sub:rgba(11,12,16,.66)}
-.lbl{display:block;opacity:.6;margin-bottom:34px}
+[data-bg="ink"]{--ln:rgba(255,255,255,.14);--sub:rgba(245,244,240,.62);--sub-s:rgba(245,244,240,.82)}
+[data-bg="paper"]{--ln:rgba(11,12,16,.14);--sub:rgba(11,12,16,.66);--sub-s:rgba(11,12,16,.82)}
+.lbl{display:block;opacity:.82;margin-bottom:34px}
 .h2{font-size:clamp(36px,4.6vw,78px);font-weight:700;letter-spacing:-.05em;line-height:1.06}
 .desc{font-size:17px;line-height:1.7;color:var(--sub);margin-top:26px;max-width:560px}
 .sec{padding:calc(18 * var(--vh)) 0}
@@ -36,11 +36,11 @@
 .arows{margin:calc(12 * var(--vh)) -40px 0;border-top:1px solid var(--ln)}
 .arow{position:relative;display:grid;grid-template-columns:70px 4fr 4fr 3fr;gap:32px;align-items:center;padding:30px 40px;border-bottom:1px solid var(--ln);isolation:isolate;transition:color .45s}
 .arow::before{content:"";position:absolute;inset:0;background:var(--white);transform:scaleY(0);transform-origin:top;transition:transform .6s cubic-bezier(.7,0,.2,1);z-index:-1}
-.arow .n{opacity:.55}
-.arow .en{display:block;opacity:.55;margin-bottom:8px}
+.arow .n{opacity:.82}
+.arow .en{display:block;opacity:.82;margin-bottom:8px}
 .arow b{display:block;font-size:clamp(26px,2.6vw,44px);font-weight:700;letter-spacing:-.045em;line-height:1.1;transition:transform .6s cubic-bezier(.7,0,.2,1)}
 .arow p{font-size:15px;line-height:1.65;color:var(--sub);transition:color .45s}
-.arow .tags{font-family:var(--mono);font-size:11px;letter-spacing:.04em;line-height:1.9;color:var(--sub);text-align:right;transition:color .45s}
+.arow .tags{font-family:var(--mono);font-size:11px;letter-spacing:.04em;line-height:1.9;color:var(--sub-s);text-align:right;transition:color .45s}
 @media (hover:hover){
   .arow.on{color:var(--ink)}
   .arow.on::before{transform:scaleY(1);transform-origin:bottom}
@@ -57,14 +57,14 @@
 .step::before{content:"";position:absolute;left:0;top:-42px;width:10px;height:10px;border:1px solid currentColor;background:var(--paper);transition:background .4s}
 .step.on{opacity:1}
 .step.on::before{background:currentColor}
-.step .mono{opacity:.7}
+.step .mono{opacity:.82}
 .step b{display:block;font-size:clamp(24px,2.1vw,34px);letter-spacing:-.045em;margin:16px 0 14px}
 .step p{font-size:15px;line-height:1.65;color:var(--sub)}
 
 /* 04 ADFLOW */
 .t-sys .top{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end}
 .flag{margin-top:calc(14 * var(--vh));text-align:center}
-.flag .mono{opacity:.6}
+.flag .mono{opacity:.82}
 .flag-name{font-size:clamp(90px,19vw,340px);font-weight:800;letter-spacing:-.07em;line-height:.9;margin:22px 0 30px;background:linear-gradient(90deg,var(--white) 0%,var(--white) 55%,var(--butter) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .flag-desc{font-size:17px;line-height:1.75;color:var(--sub);max-width:680px;margin:0 auto}
 .flag-desc strong{color:var(--white);font-weight:600}
@@ -73,10 +73,10 @@
 .sys{padding:28px 24px 34px 0;border-right:1px solid var(--ln)}
 .sys + .sys{padding-left:24px}
 .sys:last-child{border-right:0}
-.sys .mono{opacity:.55}
+.sys .mono{opacity:.82}
 .sys .mono em{font-style:normal}
 .sys b{display:block;font-size:clamp(20px,1.7vw,26px);font-weight:700;letter-spacing:-.04em;margin:18px 0 12px;white-space:nowrap}
-.sys p{font-size:14px;line-height:1.65;color:var(--sub)}
+.sys p{font-size:14px;line-height:1.65;color:var(--sub-s)}
 .sys .bar{height:1px;background:var(--ln);margin-top:24px;position:relative;overflow:hidden}
 .sys .bar i{position:absolute;inset:0;background:var(--butter);transform:scaleX(0);transform-origin:left;transition:transform .7s cubic-bezier(.7,0,.2,1)}
 @media (hover:hover){ .sys.on .bar i{transform:scaleX(1)} }
@@ -86,17 +86,18 @@
 .t-vs .top{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end}
 .vs{width:100%;margin-top:calc(12 * var(--vh));border-collapse:collapse}
 .vs th,.vs td{padding:24px 20px;border-bottom:1px solid var(--ln);text-align:left;font-weight:500}
-.vs thead th{font-size:15px;color:var(--sub);vertical-align:bottom}
+.vs thead th{font-size:15px;color:var(--sub-s);vertical-align:bottom}
 .vs thead th.us{color:var(--white);font-size:clamp(20px,1.6vw,26px);font-weight:700;letter-spacing:-.03em;border-top:2px solid var(--butter)}
 .vs tbody th{font-size:clamp(18px,1.5vw,24px);letter-spacing:-.03em;font-weight:600}
-.vs td{font-size:15px;color:var(--sub);width:22%}
+.vs td{font-size:15px;color:var(--sub-s);width:22%}
 .vs td.us{color:var(--white);font-weight:700;background:rgba(255,255,255,.04)}
 .vs td.us span{display:inline-block}
 .vs .no{opacity:.5}
 
 @media (max-width:860px){
   .t-hero{padding-top:62px}
-  .t-hero .tch{height:min(calc(calc(100 * var(--vh)) - 62px),118vw);min-height:0}
+  /* 휴대폰: 무대(16:9)를 너비에 맞춰 통째로 보여 주고, 위아래에 끝 문구가 들어갈 여유만 둠 */
+  .t-hero .tch{height:calc(56.25vw + 150px);min-height:0}
   .t-hero-foot{left:20px;right:20px;bottom:16px}
   /* 휴대폰: 끝 문구가 화면 밖으로 잘리지 않게 줄여 둠(히어로 js가 넣는 배율보다 우선) */
   .t-hero .tch-type{transform:translate(-50%,-50%) scale(.7)!important}

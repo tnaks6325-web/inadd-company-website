@@ -7,7 +7,7 @@ import listBody from './insight-body.gen.html?raw'
 import detailBody from './insight-detail-body.gen.html?raw'
 import { postPath, plainText, type InsightPost } from '../../lib/insight-posts'
 
-const V = '20261120a'
+const V = '20261123h'
 const css = (f: string) => <link rel="stylesheet" href={`/static/renewal/${f}?v=${V}`} />
 const js = (f: string) => <script src={`/static/renewal/${f}?v=${V}`}></script>
 
@@ -138,7 +138,7 @@ export const renewalInsightHead = (
   </>
 )
 
-export const renewalInsightBody = { 'data-nav': 'insight' }
+export const renewalInsightBody = { 'data-nav': 'insight', 'data-float-cta': '' }
 
 // 목록 — 글은 src/main.tsx 가 표식 자리에 채운다(못 채우면 '아직 등록된 글이 없습니다')
 export const RenewalInsightPage = () => (

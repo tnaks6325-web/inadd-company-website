@@ -64,7 +64,8 @@ SITE.boot(ctx => {
     .add(() => { vid.play().catch(() => {}); })
     .to('[data-loader]', { yPercent: -100, duration: 0.9, ease: 'power4.inOut' })
     .to({}, { duration: 1.1 + 0.09 * (heroN - 1) }, '-=.45') // 제목 줄이 올라오는 동안(움직임은 위 ctx.lines 에서 따로)
-    .from('.hero-meta span', { opacity: 0, y: 10, duration: .7, stagger: .06 }, '-=.8')
+    .from('.hero-what span', { opacity: 0, y: 12, duration: .7 }, '-=.9') // 안쪽 글자만 — 바깥(.hero-what)은 아래 스크롤 때 제목과 같이 사라짐
+    .from('.hero-meta span', { opacity: 0, y: 10, duration: .7, stagger: .06 }, '-=.6')
     .add(() => lenis.start());
 
   const heroWin = (() => {
@@ -83,7 +84,7 @@ SITE.boot(ctx => {
     // 작은 창은 영상 비율(16:9) 그대로, 영상 전체가 창 안에 들어오게 줄임(2026-11-05 — 마지막 장면의 사람들이 잘리지 않게)
     .to('[data-hero-media]', { clipPath: heroWin.clip, ease: 'none' }, 0)
     .to('[data-hero-media] video', { scale: heroWin.scale, y: 0, ease: 'none' }, 0)
-    .to('.hero-title, .hero-meta', { opacity: 0, y: -40, ease: 'none' }, 0)
+    .to('.hero-title, .hero-what, .hero-meta', { opacity: 0, y: -40, ease: 'none' }, 0)
     // 가운데 글자: 줄어들기 시작하자마자 화면 안쪽에서 작고 흐리게 나와 보는 사람 쪽으로 다가옴
     .fromTo('[data-hero-mid]', { opacity: 0, scale: .32, filter: 'blur(10px)' }, { opacity: 1, scale: 1, filter: 'blur(0px)', ease: 'power2.out', duration: .75 }, 0)
     .to('[data-hero-mid]', { scale: 1.06, ease: 'none', duration: .25 }, .75)
