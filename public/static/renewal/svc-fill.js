@@ -118,10 +118,15 @@
     <div class="sec-h"><span class="mono">${label('FAQ')}</span><div><h2 data-reveal>자주 하는 질문</h2></div></div>
     <div class="faq" data-svc-faq="${k}"><!--faq-->${P.faq.map((f, i) => window.SVC_FAQ_ITEM(f, i)).join('')}<!--/faq--></div>`)
 
-    // ── 8. 다른 서비스 ──
+    // ── 8. 함께 읽으면 좋은 글 + 다른 서비스(한 구역, 2026-11-23) ──
+    // 글 카드는 서버(src/main.tsx svcReads)가 관리자 인사이트 글로 <!--reads--> 자리에 채운다. 맞는 글이 없으면 서버가 <!--reads-block-->…<!--/reads-block--> 를 통째로 뺀다.
     const rest = D.services.filter(s => s.k !== k)
     html.push(`
   <section class="sec wrap sec-others" data-bg="paper">
+    <!--reads-block--><div class="reads-b">
+    <div class="sec-h" style="margin-bottom:36px"><span class="mono">${label('READ MORE')}</span><div><h2 data-reveal>함께 읽으면 좋은 글</h2></div></div>
+    <div class="reads" data-svc-reads="${k}"><!--reads--><!--/reads--></div>
+    </div><!--/reads-block-->
     <div class="sec-h" style="margin-bottom:36px"><span class="mono">${label('OTHER SERVICES')}</span><div><h2 data-reveal>다른 서비스</h2></div></div>
     <div class="others">${rest.map(s => `<a href="${s.href}"><span class="mono">${no(SVC[s.k].i)} ${s.en}</span><b>${s.name}</b></a>`).join('')}</div>
   </section>`)

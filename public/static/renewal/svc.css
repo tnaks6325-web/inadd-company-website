@@ -118,6 +118,28 @@
 }
 
 .sec-others{min-height:calc(80 * var(--vh));display:flex;flex-direction:column;justify-content:center}
+
+/* 8-1. 함께 읽으면 좋은 글(2026-11-23) — 서버(src/main.tsx svcReads)가 인사이트 글 3편을 채운다. 선·눌렀을 때 채움은 '다른 서비스' 띠와 같게 */
+.reads-b{margin-bottom:calc(12 * var(--vh))}
+.reads{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid currentColor;border-bottom:1px solid var(--line-d)}
+.reads a{position:relative;display:flex;flex-direction:column;gap:14px;min-height:230px;padding:20px 22px 24px;isolation:isolate;overflow:hidden;transition:color .45s}
+.reads a + a{border-left:1px solid var(--line-d)}
+.reads a::before{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleY(0);transform-origin:top;transition:transform .55s cubic-bezier(.7,0,.2,1);z-index:-1}
+.reads .mono{opacity:.55}
+.reads b{font-size:clamp(18px,1.4vw,22px);font-weight:700;letter-spacing:-.035em;line-height:1.35;word-break:keep-all}
+.reads p{font-size:15px;line-height:1.65;opacity:.72;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all}
+.reads .more{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+.reads .more svg{width:16px;height:16px}
+@media (hover:hover){
+  .reads a:hover{color:var(--white)}
+  .reads a:hover::before{transform:scaleY(1);transform-origin:bottom}
+}
+@media (max-width:860px){
+  .reads-b{margin-bottom:calc(9 * var(--vh))}
+  .reads{grid-template-columns:1fr;border-bottom:0}
+  .reads a{min-height:0;padding:20px 0 22px;border-bottom:1px solid var(--line-d)}
+  .reads a + a{border-left:0}
+}
 /* 준비 중 */
 .soon{padding:calc(10 * var(--vh)) 0 calc(16 * var(--vh));font-size:18px;line-height:1.7;opacity:.75}
 
