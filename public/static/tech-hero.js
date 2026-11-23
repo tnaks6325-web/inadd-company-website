@@ -18,7 +18,9 @@
   // 무대 배율: 칸을 빈틈없이 덮게. 무대가 많이 작아지면(휴대폰) 마지막 문구만 TS배 키워 읽히게 한다
   var TS = 1;
   function fit() {
-    var w = root.clientWidth, h = root.clientHeight, k = Math.max(w / 1600, h / 900);
+    var w = root.clientWidth, h = root.clientHeight;
+    // 휴대폰 세로 화면: 덮어 채우면 시스템 화면 양옆이 잘려 '8원'·'l 운영'처럼 보임 → 무대 전체가 보이게 너비에 맞춤(위아래는 검정)(2026-11-23 평가 7번)
+    var k = (w < 861 && h > w * 0.62) ? w / 1600 : Math.max(w / 1600, h / 900);
     root.style.setProperty('--k', k.toFixed(5));
     root.style.setProperty('--x', ((w - 1600 * k) / 2).toFixed(1) + 'px');
     root.style.setProperty('--y', ((h - 900 * k) / 2).toFixed(1) + 'px');

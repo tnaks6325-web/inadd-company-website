@@ -96,7 +96,8 @@
 
 @media (max-width:860px){
   .t-hero{padding-top:62px}
-  .t-hero .tch{height:min(calc(calc(100 * var(--vh)) - 62px),118vw);min-height:0}
+  /* 휴대폰: 무대(16:9)를 너비에 맞춰 통째로 보여 주고, 위아래에 끝 문구가 들어갈 여유만 둠 */
+  .t-hero .tch{height:calc(56.25vw + 150px);min-height:0}
   .t-hero-foot{left:20px;right:20px;bottom:16px}
   /* 휴대폰: 끝 문구가 화면 밖으로 잘리지 않게 줄여 둠(히어로 js가 넣는 배율보다 우선) */
   .t-hero .tch-type{transform:translate(-50%,-50%) scale(.7)!important}

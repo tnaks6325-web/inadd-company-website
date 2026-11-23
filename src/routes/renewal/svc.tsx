@@ -24,7 +24,7 @@ import { PplOnAir } from '../ppl-onair'
 export type SvcKey = 'subscription' | 'performance' | 'viral' | 'influencer' | 'seeding' | 'review' | 'oliveyoung' | 'ppl'
 const BODY: Record<SvcKey, string> = { subscription, performance, viral, influencer, seeding, review, oliveyoung, ppl }
 
-const V = '20261123a'
+const V = '20261123d'
 const css = (f: string) => <link rel="stylesheet" href={`/static/renewal/${f}?v=${V}`} />
 const js = (f: string) => <script src={`/static/renewal/${f}?v=${V}`}></script>
 
@@ -71,7 +71,7 @@ export const renewalSvcHead = (k: SvcKey) => (
   </>
 )
 
-export const renewalSvcBody = { 'data-nav': 'services' }
+export const renewalSvcBody = { 'data-nav': 'services', 'data-float-cta': '' }
 
 export const RenewalSvcPage = ({ k }: { k: SvcKey }) => {
   const H = HERO[k]

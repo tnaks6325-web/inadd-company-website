@@ -70,6 +70,10 @@ img,video{display:block;max-width:100%}
 .mini a{display:block;padding:12px 20px;font-size:14px}
 .mini a em{display:block;font-style:normal;font-size:12px;color:rgba(245,244,240,.55);margin-top:3px}
 .mini a:hover{background:var(--ink2)}
+/* 지금 보고 있는 하위 페이지(아워테크 등) — 펼침 메뉴·휴대폰 메뉴에서 굵게 */
+.mini a.is-cur{background:var(--ink2);font-weight:700}
+.mnav .msub{display:block;font-size:15px;color:rgba(245,244,240,.7);padding:0 0 16px}
+.mnav .msub.is-cur{color:#F5F4F0;font-weight:700;text-decoration:underline;text-underline-offset:5px}
 /* 휴대폰 전체 메뉴 */
 .mnav{position:fixed;inset:0;z-index:95;background:var(--ink);color:var(--white);display:flex;flex-direction:column;padding:16px 20px 24px;clip-path:inset(0 0 100% 0);visibility:hidden;overflow-y:auto}
 .mnav-top{display:flex;justify-content:space-between;align-items:center;min-height:36px}
@@ -219,6 +223,12 @@ img,video{display:block;max-width:100%}
   .hd .mbtn{display:block}
   .fcta{right:12vw;bottom:calc(28px + env(safe-area-inset-bottom));padding:15px 22px}.fcta .fc-t{font-size:15px}
   .fcta-dock{margin-right:calc(12vw - 20px)}
+  /* 떠 있는 문의 버튼(아래 28px·높이 약 48px)이 첫 화면 맨 아래 줄(ANSAN·SCROLL·BRANDS 등)을 덮지 않게 그 줄을 버튼 위로 올림(2026-11-23 평가 1번) */
+  body[data-float-cta] .hero-meta,body[data-float-cta] .ab-foot,body[data-float-cta] .ih-meta{bottom:calc(88px + env(safe-area-inset-bottom))}
+  body[data-float-cta] .wk-hero-in{bottom:calc(84px + env(safe-area-inset-bottom))}
+  /* 줄을 올린 만큼 그 위 큰 제목 묶음도 같이 올려 겹치지 않게(홈 제목·인사이트 제목) */
+  body[data-float-cta] .hero-title{bottom:calc(166px + env(safe-area-inset-bottom))}
+  body[data-float-cta] .ih-type{bottom:calc(calc(12 * var(--vh)) + 56px + env(safe-area-inset-bottom))}
   .mega,.mini{display:none}
   .cta-row{flex-direction:column;align-items:stretch}
   .btn{justify-content:center}
