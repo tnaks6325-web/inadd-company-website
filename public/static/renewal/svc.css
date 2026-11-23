@@ -13,6 +13,7 @@
 .crumb a:hover{border-color:currentColor}
 .sv-kicker{display:block;font-size:15px;font-weight:600;margin-bottom:22px;color:var(--butter)}
 /* 2026-11-23 대표 결정(평가 4번): PC에서 제목(약 89px)이 제목 칸(652px)보다 커서 원래 나눈 두 줄이 끝 단어 하나씩 밀려 내려감('심어'·'통째로'·'만듭니다.') → 68px 상한 + 균형 줄바꿈. 휴대폰 크기는 아래 860px 규칙 그대로 */
+.sv-title .nw{white-space:nowrap}
 .sv-title{font-size:clamp(40px,4.6vw,68px);font-weight:700;letter-spacing:-.06em;line-height:1.02;text-wrap:balance}
 .sv-sub{margin-top:28px;font-size:17px;line-height:1.7;max-width:560px;color:rgba(245,244,240,.78)}
 .sv-act{display:flex;gap:22px;align-items:center;margin-top:36px;flex-wrap:wrap}
@@ -149,7 +150,8 @@
   .sec-h{grid-template-columns:1fr;gap:14px;margin-bottom:36px}
   .sec-h .mono{padding-top:0}
   .sv-hero{grid-template-columns:1fr;gap:28px;padding-top:88px}
-  .sv-title{font-size:clamp(38px,11vw,56px)}
+  /* 2026-11-23: 11vw 이면 412px 폭에서 '통째로'·'만듭니다.'·'각인'이 한 단어 줄로 떨어짐 → 10vw. PPL 은 끝 두 단어를 .nw 로 묶고, 올리브영은 휴대폰 전용 줄 나눔(svc-data-2 titleMo → svc.js) — SplitText 로 쪼갠 제목에는 text-wrap:balance·&nbsp; 가 듣지 않음 */
+  .sv-title{font-size:clamp(34px,10vw,56px)}
   .sv-sub{font-size:16px}
   .sv-media{min-height:0;aspect-ratio:4/5}
   .sv-hero.has-real{grid-template-columns:1fr}

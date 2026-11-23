@@ -442,6 +442,7 @@ window.SVC_PAGES = Object.assign(window.SVC_PAGES || {}, {
   "hero": {
    "kicker": "올리브영 마케팅",
    "title": "올리브영에서<br />팔리는 브랜드를 만듭니다.",
+   "titleMo": "올리브영에서 팔리는|브랜드를 만듭니다.",
    "sub": "국내 최대 H&B 스토어 올리브영에서, 리뷰부터 검색 노출·랭킹까지 순서대로 올립니다.",
    "media": {
     "type": "video",
@@ -614,7 +615,7 @@ window.SVC_PAGES = Object.assign(window.SVC_PAGES || {}, {
   "k": "ppl",
   "hero": {
    "kicker": "PPL 마케팅",
-   "title": "방송 콘텐츠 속,<br />브랜드를 자연스럽게 각인",
+   "title": "방송 콘텐츠 속,<br />브랜드를 <span class='nw'>자연스럽게 각인</span>",
    "sub": "광고인 걸 아는 순간 마음을 닫습니다. 드라마·예능의 흐름에 브랜드를 얹어 거부감 없이 기억에 남기는 방식입니다. 드라마 · 예능 · 교양 — 타깃이 분명한 프로그램에 맞춰 붙입니다.",
    "media": {
     "type": "video",

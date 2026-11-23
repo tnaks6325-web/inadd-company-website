@@ -30,7 +30,7 @@
         <div class="crumb mono"><a href="/#services">SERVICES</a><span>/</span><span>${no(S.i)} ${S.en}</span></div>
         <div style="margin-top:calc(9 * var(--vh))">
           <span class="sv-kicker">${H.kicker || S.name}</span>
-          <h1 class="sv-title" data-hero-title>${H.title || S.name}</h1>
+          <h1 class="sv-title" data-hero-title${H.titleMo ? ` data-title-mo="${H.titleMo}"` : ''}>${H.title || S.name}</h1>
           <p class="sv-sub" data-hero-fade>${H.sub || S.line}</p>
           <div class="sv-act" data-hero-fade>
             <a class="btn" href="/contact">문의하기 ${ARROW}</a>
