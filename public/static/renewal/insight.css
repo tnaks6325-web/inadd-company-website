@@ -12,15 +12,15 @@
 .ih-row span::after{content:"/";margin-left:56px;color:rgba(245,244,240,.18);font-weight:400}
 .ih-row .n{color:rgba(217,197,154,.6);font-weight:700}
 .ih-type{position:absolute;left:40px;right:40px;bottom:calc(9 * var(--vh));display:grid;grid-template-columns:1fr auto;align-items:end;gap:40px}
-.ih-type .mono{color:var(--mute);display:block;margin-bottom:22px}
+.ih-type .mono{color:var(--mute-s);display:block;margin-bottom:22px}
 .ih-t{font-size:clamp(52px,7.6vw,132px);font-weight:700;letter-spacing:-.06em;line-height:.98}
 .ih-sub{font-size:16px;line-height:1.7;color:rgba(245,244,240,.8);max-width:300px;text-align:right}
-.ih-meta{position:absolute;left:40px;right:40px;bottom:calc(3 * var(--vh));display:flex;justify-content:space-between;color:var(--mute)}
+.ih-meta{position:absolute;left:40px;right:40px;bottom:calc(3 * var(--vh));display:flex;justify-content:space-between;color:var(--mute-s)}
 
 /* ── 목록 2. 맨 위 글 하나 크게 ── */
 .feat{padding:calc(16 * var(--vh)) 0 calc(12 * var(--vh))}
 .feat-h{display:flex;justify-content:space-between;align-items:end;margin-bottom:40px}
-.feat-h .mono{opacity:.6}
+.feat-h .mono{opacity:.82}
 .feat-a{display:grid;grid-template-columns:7fr 5fr;gap:56px;align-items:end}
 .feat-pic{position:relative;overflow:hidden;aspect-ratio:1200/630;clip-path:inset(100% 0 0 0);background:#cfcdc6}
 .feat-pic img{width:100%;height:100%;object-fit:cover;transform:scale(1.12);transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
@@ -36,7 +36,7 @@
 /* ── 목록 3. 글 목록: 줄 목록 + 분류 글자 탭(밑줄) ── */
 .lst{padding:calc(4 * var(--vh)) 0 calc(18 * var(--vh))}
 .lst-h{display:flex;justify-content:space-between;align-items:end;gap:30px;border-bottom:1px solid currentColor;padding-bottom:18px}
-.lst-h .mono{opacity:.6}
+.lst-h .mono{opacity:.82}
 .tabs{display:flex;gap:30px;flex-wrap:wrap}
 .tabs button{position:relative;background:none;border:0;color:inherit;font:inherit;font-size:15px;font-weight:600;padding:6px 0;cursor:pointer;opacity:.45;transition:opacity .3s}
 .tabs button sup{font-family:var(--mono);font-size:10px;margin-left:4px;font-weight:500}
@@ -47,10 +47,10 @@
 .irs{margin:0 -16px}
 .ir{position:relative;display:grid;grid-template-columns:110px 150px minmax(0,1fr) 40px;gap:24px;align-items:center;padding:26px 16px;border-bottom:1px solid var(--line-d);overflow:hidden;isolation:isolate;transition:color .45s}
 .ir::before{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleY(0);transform-origin:top;transition:transform .6s cubic-bezier(.7,0,.2,1);z-index:-1}
-.ir .d,.ir .c{opacity:.6}
+.ir .d,.ir .c{opacity:.82}
 .ir .c small{display:block;font-size:.85em;margin-top:2px}
 .ir .tt{font-size:clamp(20px,1.75vw,28px);font-weight:700;letter-spacing:-.04em;line-height:1.3;max-width:44vw;transition:transform .6s cubic-bezier(.7,0,.2,1)}
-.ir .tt small{display:block;font-size:14px;font-weight:500;letter-spacing:-.01em;margin-top:6px;opacity:.6}
+.ir .tt small{display:block;font-size:14px;font-weight:500;letter-spacing:-.01em;margin-top:6px;opacity:.82}
 .ir .th{display:none}
 .ir .ar{justify-self:end;width:18px;height:18px;opacity:.5;transition:transform .45s,opacity .3s}
 .ir.gone{display:none}
@@ -74,7 +74,7 @@
 .back:hover{opacity:1}
 .back svg{width:16px;height:16px;transition:transform .35s}
 .back:hover svg{transform:translateX(-4px)}
-.dh-meta{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--mute);margin:56px 0 26px}
+.dh-meta{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--mute-s);margin:56px 0 26px}
 .dh-meta b{color:var(--butter);font-weight:500}
 .dh-t{font-size:clamp(38px,4.9vw,84px);font-weight:700;letter-spacing:-.055em;line-height:1.06;max-width:1180px}
 .dh-st{font-size:clamp(18px,1.6vw,24px);font-weight:500;letter-spacing:-.03em;line-height:1.45;color:rgba(245,244,240,.72);margin-top:24px;max-width:860px}
@@ -82,7 +82,7 @@
 .dh-pic img{width:100%;height:100%;object-fit:cover}
 .read{padding:calc(12 * var(--vh)) 0 calc(14 * var(--vh));display:grid;grid-template-columns:1fr minmax(0,680px) 1fr;gap:40px}
 .toc{position:sticky;top:110px;align-self:start;max-width:230px}
-.toc .mono{display:block;opacity:.55;margin-bottom:14px}
+.toc .mono{display:block;opacity:.82;margin-bottom:14px}
 .toc a{display:block;font-size:13px;line-height:1.45;padding:7px 0 7px 14px;border-left:1px solid var(--line-d);opacity:.5;transition:opacity .3s,border-color .3s}
 .toc a.on{opacity:1;border-left-color:currentColor}
 .lead{font-size:19px;line-height:1.8;font-weight:500;letter-spacing:-.02em;padding-bottom:36px;margin-bottom:44px;border-bottom:1px solid var(--line-d)}
@@ -97,7 +97,7 @@
 .art ul li::marker{content:"— ";color:var(--navy)}
 .art figure{margin:2.2em 0}
 .art figure img{width:100%;height:auto;border:1px solid var(--line-d)}
-.art figcaption{font-family:var(--mono);font-size:11px;letter-spacing:.02em;line-height:1.6;opacity:.6;margin-top:10px}
+.art figcaption{font-family:var(--mono);font-size:11px;letter-spacing:.02em;line-height:1.6;opacity:.82;margin-top:10px}
 .art table{width:100%;border-collapse:collapse;margin:1.6em 0 2em;font-size:14px;line-height:1.6;display:block;overflow-x:auto}
 .art th{background:var(--navy);color:#fff;font-weight:700;text-align:left;padding:10px 12px;white-space:nowrap}
 .art td{padding:10px 12px;border-bottom:1px solid var(--line-d);vertical-align:top}
@@ -111,13 +111,13 @@
 .art ul.ins-checklist li{padding-left:0}
 .rel{padding:calc(14 * var(--vh)) 0 calc(8 * var(--vh))}
 .rel-h{display:flex;justify-content:space-between;align-items:end;margin-bottom:40px}
-.rel-h .mono{color:var(--mute)}
+.rel-h .mono{color:var(--mute-s)}
 .rel-g{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
 .rc{display:block}
 .rc .pic{overflow:hidden;aspect-ratio:1200/630;clip-path:inset(100% 0 0 0)}
 .rc .pic img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
 .rc:hover .pic img{transform:scale(1.06)}
-.rc .m{display:flex;gap:14px;color:var(--mute);margin:18px 0 10px}
+.rc .m{display:flex;gap:14px;color:var(--mute-s);margin:18px 0 10px}
 .rc b{display:block;font-size:20px;font-weight:700;letter-spacing:-.04em;line-height:1.35}
 
 @media (max-width:860px){

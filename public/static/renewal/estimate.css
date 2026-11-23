@@ -29,12 +29,12 @@ input:focus-visible + .e-box{outline:2px solid var(--navy);outline-offset:2px}
 .e-apply{padding:calc(14 * var(--vh)) 0 calc(16 * var(--vh))}
 .ef{max-width:980px}
 .ef-h{display:flex;align-items:baseline;gap:20px;border-bottom:2px solid currentColor;padding-bottom:18px;margin-bottom:10px}
-.ef-h .mono{opacity:.6}
+.ef-h .mono{opacity:.82}
 .ef-h b{font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em}
 .ef-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
 .ef-f{position:relative;padding-top:20px;margin-bottom:26px}
 .ef-f.full{grid-column:1/-1}
-.ef-f label{display:block;font-size:13px;opacity:.7;margin-bottom:4px}
+.ef-f label{display:block;font-size:13px;opacity:.82;margin-bottom:4px}
 .ef-f label em,.ef-ck em{font-style:normal;color:var(--navy);margin-left:3px}
 [data-bg="ink"] .ef-f label em,[data-bg="ink"] .ef-ck em{color:var(--butter)}
 .ef-f input,.ef-f textarea{width:100%;border:0;border-bottom:1px solid var(--ln);background:transparent;font:500 19px/1.4 var(--sans);letter-spacing:-.02em;color:inherit;padding:8px 0 10px;outline:none;border-radius:0;resize:vertical}

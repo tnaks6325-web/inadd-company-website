@@ -14,7 +14,7 @@
 /* 제목 아래 '무슨 회사인지' 한 줄(2026-11-23) — 제목·아래 줄 사이 */
 .hero-what{position:absolute;left:40px;bottom:94px;font-size:19px;font-weight:500;letter-spacing:-.02em;line-height:1.5;color:rgba(245,244,240,.88);z-index:2}
 .hero-what span{display:inline-block}
-.hero-meta{position:absolute;left:40px;right:40px;bottom:32px;display:grid;grid-template-columns:repeat(4,1fr);color:var(--mute)}
+.hero-meta{position:absolute;left:40px;right:40px;bottom:32px;display:grid;grid-template-columns:repeat(4,1fr);color:var(--mute-s)}
 .hero-meta b{color:var(--white);font-weight:500}
 .hero-mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:clamp(40px,7.4vw,132px);opacity:0;pointer-events:none;text-shadow:0 2px 30px rgba(0,0,0,.35);will-change:transform,opacity,filter}
 /* 영상이 줄어들기 시작하면 가운데에서 다가오는 글자(2026-11-05 대표: 영문을 크게, 한글은 작게) */ .hero-mid .ko{font-size:.3em;font-weight:600;letter-spacing:-.02em;margin-bottom:.3em}
@@ -22,7 +22,7 @@
 
 /* 2. 문장이 차오름 */
 .s-statement{padding:calc(22 * var(--vh)) 0 calc(26 * var(--vh))}
-.s-statement .mono{color:var(--mute);margin-bottom:40px;display:block}
+.s-statement .mono{color:var(--mute-s);margin-bottom:40px;display:block}
 .stmt{font-size:clamp(30px,3.9vw,64px);font-weight:600;line-height:1.28;letter-spacing:-.035em;max-width:1280px}
 .stmt .w{opacity:.14;display:inline}
 @media (max-width:860px){.stmt br.lb{display:none}}
@@ -32,13 +32,13 @@
 .s-voices{position:relative;height:calc(100 * var(--vh));overflow:hidden}
 .vc-stage{position:absolute;inset:0;overflow:hidden}
 .vc-head{position:absolute;left:0;right:0;top:calc(15 * var(--vh));text-align:center;z-index:3;pointer-events:none}
-.vc-head .mono{display:block;opacity:.6;margin-bottom:18px}
+.vc-head .mono{display:block;opacity:.82;margin-bottom:18px}
 .vc-head h2{font-size:clamp(34px,4.6vw,76px);font-weight:700;letter-spacing:-.05em;line-height:1.08}
 .vc-cards{position:absolute;left:50%;top:62%;z-index:2}
 .vc-card{position:absolute;left:0;top:0;width:200px;margin:-130px 0 0 -100px;background:#fff;box-shadow:0 24px 50px -22px rgba(11,12,16,.45);padding:8px 8px 12px;will-change:transform}
 .vc-card .ph{aspect-ratio:4/5;overflow:hidden;background:#e9e7e1}
 .vc-card img{width:100%;height:100%;object-fit:cover;display:block}
-.vc-card span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;margin-top:9px;opacity:.7}
+.vc-card span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;margin-top:9px;opacity:.82}
 .vc-chat{position:absolute;left:50%;top:50%;width:1500px;height:calc(200 * var(--vh));margin:-100vh 0 0 -750px;display:flex;justify-content:center;align-items:center;gap:44px;transform:rotate(-12deg);z-index:1;opacity:0}
 .vc-col{display:flex;flex-direction:column;gap:44px;will-change:transform}
 .vc-col .kk{width:300px}
@@ -46,7 +46,7 @@
 /* A12 일하는 방식 — 회사소개 1안에서 옮겨 옴. 스크롤에 맞춰 선이 그어지고, 선이 지나간 단계가 켜짐(화면을 붙잡지 않음) */
 .s-how{padding-block:calc(18 * var(--vh));--hw-ln:rgba(255,255,255,.14);--hw-sub:rgba(245,244,240,.62)}
 .hw-top{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end}
-.hw-top .mono{display:block;color:var(--mute);margin-bottom:34px}
+.hw-top .mono{display:block;color:var(--mute-s);margin-bottom:34px}
 .hw-top h2{font-size:clamp(36px,4.6vw,78px);font-weight:700;letter-spacing:-.05em;line-height:1.06}
 .hw-top p{font-size:17px;line-height:1.7;color:var(--hw-sub);max-width:560px}
 .hw-flow{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:28px;margin-top:calc(14 * var(--vh));padding-top:46px}
@@ -56,7 +56,7 @@
 .hw-step::before{content:"";position:absolute;left:0;top:-42px;width:10px;height:10px;border:1px solid currentColor;background:var(--ink);transition:background .4s}
 .hw-step.on{opacity:1}
 .hw-step.on::before{background:currentColor}
-.hw-step .mono{opacity:.7}
+.hw-step .mono{opacity:.82}
 .hw-step b{display:block;font-size:clamp(24px,2.1vw,34px);letter-spacing:-.045em;margin:16px 0 14px}
 .hw-step p{font-size:15px;line-height:1.65;color:var(--hw-sub)}
 
@@ -64,7 +64,7 @@
 .s-svc{padding-block:calc(16 * var(--vh)) calc(18 * var(--vh))}
 /* 제목은 아래 목록과 같은 왼쪽 선, 설명은 오른쪽 사진과 같은 시작선(2026-11-06 대표: 왼쪽 정렬) */
 .svc-h{display:grid;grid-template-columns:7fr 5fr;gap:28px 56px;align-items:end;margin-bottom:64px}
-.svc-h .mono{opacity:.6;grid-column:1/-1}
+.svc-h .mono{opacity:.82;grid-column:1/-1}
 .svc-h p{max-width:420px}
 .svc-h h2{font-size:clamp(40px,5.2vw,88px);font-weight:700;letter-spacing:-.055em;line-height:1.02}
 .svc-h p{font-size:16px;line-height:1.65}
@@ -72,7 +72,7 @@
 .rows{border-top:1px solid currentColor}
 .row{position:relative;display:grid;grid-template-columns:44px 1fr auto;gap:20px;align-items:center;min-height:calc(11 * var(--vh));padding:18px 20px;border-bottom:1px solid var(--line-d);overflow:hidden;isolation:isolate;transition:color .45s}
 .row::before{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleY(0);transform-origin:top;transition:transform .6s cubic-bezier(.7,0,.2,1);z-index:-1}
-.row .i{opacity:.6}
+.row .i{opacity:.82}
 .row .nm{font-size:clamp(28px,3.2vw,54px);font-weight:700;letter-spacing:-.05em;line-height:1.05;transition:transform .6s cubic-bezier(.7,0,.2,1)}
 .row .ln{display:none}
 @media (hover:hover){
@@ -86,7 +86,7 @@
 .svc-pic video.on{z-index:2}
 .svc-pic video.shown{clip-path:inset(0 0 0 0)}
 .svc-cap{display:flex;justify-content:space-between;gap:20px;margin-top:16px;font-size:15px;line-height:1.55}
-.svc-cap .mono{white-space:nowrap;opacity:.7}
+.svc-cap .mono{white-space:nowrap;opacity:.82}
 
 /* 5. 연혁 — 한 화면에 8년이 책등처럼 서 있고, 스크롤하면 한 해씩 넓게 펼쳐짐(고정 구간 1.6화면) */
 /* 2026-11-06 대표: 원래 높이(화면 가득)로 되돌리고, 화면을 붙잡은 동안 스크롤하면 2019~2026이 한 해씩 펼쳐짐(한 해 약 0.3화면) */
@@ -94,7 +94,7 @@
 .s-hist{background:var(--ink);color:var(--white)} /* 바탕색이 바뀌는 순간에도 연혁은 늘 어둡게 */
 .hist-in{height:100%;display:flex;flex-direction:column;gap:22px;padding-top:104px;padding-bottom:calc(5 * var(--vh))}
 .hist-head{display:flex;align-items:flex-end;gap:24px}
-.hist-head .mono{color:var(--mute);white-space:nowrap}
+.hist-head .mono{color:var(--mute-s);white-space:nowrap}
 .hist-t{flex:1;font-size:clamp(28px,3vw,48px);font-weight:600;letter-spacing:-.04em;line-height:1.1;margin-left:6vw}
 .hist-cols{flex:1;min-height:0;display:flex;border-left:1px solid var(--line)}
 .hc{flex:1 1 0;min-width:0;position:relative;overflow:hidden;border-right:1px solid var(--line);cursor:pointer;transition:background-color .6s}
@@ -102,14 +102,14 @@
 .hc.past::before,.hc.on::before{transform:scaleX(1)}
 .hc.on{background:var(--ink2);cursor:default}
 .hc .sp{position:absolute;inset:0;padding:22px 16px;display:flex;flex-direction:column;justify-content:space-between;transition:opacity .45s}
-.hc .sp .mono{color:var(--mute)}
+.hc .sp .mono{color:var(--mute-s)}
 .hc .sp .lb{display:none}
 .hc .sp b{font-size:clamp(56px,5.6vw,96px);font-weight:700;letter-spacing:-.05em;line-height:.8;color:transparent;-webkit-text-stroke:1px rgba(245,244,240,.4);writing-mode:vertical-rl;transform:rotate(180deg);align-self:flex-start;transition:-webkit-text-stroke-color .5s}
 .hc.past .sp b{-webkit-text-stroke-color:var(--butter)}
 .hc.on .sp{opacity:0}
 .hc .bd{position:absolute;top:0;bottom:0;left:0;width:38vw;padding:22px 28px 26px;display:flex;flex-direction:column;justify-content:space-between;opacity:0;transition:opacity .45s;pointer-events:none}
 .hc.on .bd{opacity:1}
-.bd .mono{color:var(--mute)}
+.bd .mono{color:var(--mute-s)}
 .bd .yb{display:block;font-size:clamp(96px,10vw,176px);font-weight:700;letter-spacing:-.07em;line-height:.82;font-variant-numeric:tabular-nums}
 .bd .mk{overflow:hidden;display:block}
 .bd h3{font-size:clamp(24px,2.2vw,36px);font-weight:600;letter-spacing:-.04em;margin:20px 0 14px}
@@ -126,10 +126,10 @@
 .s-hist.auto .hist-in{opacity:0;transition:opacity .8s}
 .s-hist.auto.lit .hist-in{opacity:1}
 .s-hist.auto .hist-cols{flex:none;height:clamp(460px,calc(62 * var(--vh)),660px)} /* 2026-11-06 대표: 더 높게(400px → 화면의 62%) */
-.s-hist.auto .hc .sp .lb{display:block;order:1;writing-mode:vertical-rl;font-size:13px;letter-spacing:-.01em;color:rgba(245,244,240,.6);margin:12px 0 0 2px;white-space:nowrap}
+.s-hist.auto .hc .sp .lb{display:block;order:1;writing-mode:vertical-rl;font-size:13px;letter-spacing:-.01em;color:rgba(245,244,240,.82);margin:12px 0 0 2px;white-space:nowrap}
 .s-hist.auto .hc .sp b{order:2;margin-top:auto}
 .s-hist.auto .hc.past .sp .lb{color:rgba(217,197,154,.85)}
-.hist-auto{display:none;align-items:center;gap:14px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--mute)}
+.hist-auto{display:none;align-items:center;gap:14px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--mute-s)}
 .s-hist.auto .hist-auto{display:flex}
 .hist-auto button{all:unset;cursor:pointer;color:var(--white);border-bottom:1px solid currentColor}
 .hflow{display:none}
@@ -150,7 +150,7 @@
 .big{font-size:clamp(48px,9.6vw,176px);font-weight:700;letter-spacing:-.06em;line-height:1.04}
 /* 0에서 38,000까지 빠르게 차오르는 숫자 — 자리 폭을 고정해 줄이 흔들리지 않게 */ .big .bn{display:inline-block;text-align:right;font-variant-numeric:tabular-nums;transform-origin:50% 60%}
 .big .g{background:linear-gradient(90deg,var(--ink) 0%,#8a6b2f 55%,var(--butter) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.s-big .mono{margin-top:34px;display:block;opacity:.6}
+.s-big .mono{margin-top:34px;display:block;opacity:.82}
 
 /* 7. 채널이 흐르는 구역(Moto) */
 /* 구역 높이를 화면 높이와 같게 — 구역이 화면을 채웠을 때 문장이 정확히 화면 가운데(예전 1.2배라 10% 아래로 처졌음) */

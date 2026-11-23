@@ -76,7 +76,7 @@
   // 문의 띠 + 바닥(HTML 글자). ds = 구역의 data-* (num·title·desc), floatCta = 떠 있는 문의 버튼이 내려앉을 자리를 둘지
   function endHTML(ds, floatCta) {
     return `
-    <span class="mono" style="color:var(--mute)">${ds.num || 'CONTACT'}</span>
+    <span class="mono" style="color:var(--mute-s)">${ds.num || 'CONTACT'}</span>
     <p class="cta-t" data-reveal style="margin-top:30px">${ds.title || '브랜드의 다음 장면,<br />같이 만들겠습니다'}</p>
     <div class="cta-row">
       <p style="color:var(--mute);font-size:16px;line-height:1.7">${ds.desc || '인애드컴퍼니 전문가가 브랜드 상황을 보고 무료로 진단해 드립니다.'}<br /><span class="mono" style="letter-spacing:.04em">${D.hours}</span></p>
