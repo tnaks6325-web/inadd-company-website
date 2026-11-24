@@ -68,7 +68,11 @@ SITE.boot(ctx => {
     .from('.hero-meta span', { opacity: 0, y: 10, duration: .7, stagger: .06 }, '-=.6')
     .add(() => lenis.start());
 
-  const heroWin = (() => {
+  // 창 크기로 영상 상자·줄어들 창을 계산. 창 폭이 바뀌면 다시 계산(2026-11-24 — 연 뒤 창을 넓히면 영상이 옛 크기로 왼쪽에 남던 문제). 휴대폰 주소창 접힘(높이만 바뀜)에는 다시 계산하지 않음
+  let heroWin, heroW = 0;
+  const calcHeroWin = () => {
+    heroW = innerWidth;
+    heroWin = (() => {
     const W = innerWidth, H = innerHeight, side = mobile ? .08 : .3;
     const winW = W * (1 - side * 2), winH = winW * 9 / 16, vidW = Math.max(W, H * 16 / 9);
     const tb = Math.max(0, (H - winH) / 2 / H * 100);
@@ -76,14 +80,18 @@ SITE.boot(ctx => {
     const v = document.querySelector('[data-hero-media] video'), vidH = vidW * 9 / 16;
     Object.assign(v.style, { position: 'absolute', width: vidW + 'px', height: Math.max(H, vidH) + 'px', left: (W - vidW) / 2 + 'px', top: (H - Math.max(H, vidH)) / 2 + 'px', maxWidth: 'none' });
     return { clip: `inset(${tb}% ${side * 100}% ${tb}% ${side * 100}%)`, scale: winW / vidW, fit: W / vidW, lift: -Math.round(H * .1) };
-  })();
+    })();
+  };
+  calcHeroWin();
+  ScrollTrigger.addEventListener('refreshInit', () => { if (innerWidth !== heroW) calcHeroWin(); });
   // 휴대폰 첫 화면(2026-11-13 대표: 세로 화면에 가득 채우면 좌우가 많이 잘림): 처음부터 영상 가로 전체가 보이게 화면 폭에 맞추고 제목 위로 조금 올려 둠
   if (mobile) gsap.fromTo('[data-hero-media] video', { scale: heroWin.fit * 1.05, y: heroWin.lift }, { scale: heroWin.fit, y: heroWin.lift, duration: 9, ease: 'power2.out' });
   // 첫 화면 고정: 영상이 창 크기로 줄고 가운데 문장이 나타남
-  gsap.timeline({ scrollTrigger: { trigger: '.s-hero', start: 'top top', end: () => '+=' + Math.round(VH() * 1.1), scrub: 1, pin: true } })
+  gsap.timeline({ scrollTrigger: { trigger: '.s-hero', start: 'top top', end: () => '+=' + Math.round(VH() * 1.1), scrub: 1, pin: true, invalidateOnRefresh: true } })
     // 작은 창은 영상 비율(16:9) 그대로, 영상 전체가 창 안에 들어오게 줄임(2026-11-05 — 마지막 장면의 사람들이 잘리지 않게)
-    .to('[data-hero-media]', { clipPath: heroWin.clip, ease: 'none' }, 0)
-    .to('[data-hero-media] video', { scale: heroWin.scale, y: 0, ease: 'none' }, 0)
+    .to('[data-hero-media]', { clipPath: () => heroWin.clip, ease: 'none' }, 0)
+    // 시작값을 명시: 창 폭이 바뀌어 다시 계산해도 옛 크기가 시작값으로 남지 않게(컴퓨터는 1, 휴대폰은 화면 폭 맞춤)
+    .fromTo('[data-hero-media] video', { scale: () => mobile ? heroWin.fit : 1, y: () => mobile ? heroWin.lift : 0 }, { scale: () => heroWin.scale, y: 0, ease: 'none', immediateRender: false }, 0)
     .to('.hero-title, .hero-what, .hero-meta', { opacity: 0, y: -40, ease: 'none' }, 0)
     // 가운데 글자: 줄어들기 시작하자마자 화면 안쪽에서 작고 흐리게 나와 보는 사람 쪽으로 다가옴
     .fromTo('[data-hero-mid]', { opacity: 0, scale: .32, filter: 'blur(10px)' }, { opacity: 1, scale: 1, filter: 'blur(0px)', ease: 'power2.out', duration: .75 }, 0)
