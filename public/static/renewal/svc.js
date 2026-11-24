@@ -22,6 +22,9 @@ SITE.boot(ctx => {
   // 첫 화면: 제목 줄이 올라오고, 장면이 아래에서 열림, 스크롤하면 장면이 천천히 올라감
   // 제목 줄은 글꼴이 오면 다시 나뉘므로 타임라인 밖에서 같은 시각(.35초 뒤)에 따로 움직임(base.js lines)
   const t0 = ctx.now();
+  // 휴대폰 전용 줄 나눔(svc-data titleMo, '|' = 줄바꿈) — PC 줄 나눔대로면 휴대폰에서 한 단어 줄이 생기는 제목만(2026-11-23 올리브영). 쪼개기(SplitText) 전에 바꿔야 함
+  const ht = document.querySelector('[data-hero-title][data-title-mo]');
+  if (ht && ctx.mobile) ht.innerHTML = ht.dataset.titleMo.split('|').join('<br />');
   ctx.lines('[data-hero-title]', ls => gsap.from(ls, { yPercent: 110, duration: 1.1, stagger: .09, ease: 'power4.out', delay: ctx.wait(t0, .35) }));
   gsap.timeline({ delay: .35 })
     .to('[data-hero-media]', { clipPath: 'inset(0% 0 0 0)', duration: 1.3, ease: 'power4.inOut' }, 0)

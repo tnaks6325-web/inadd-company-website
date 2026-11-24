@@ -284,6 +284,8 @@
     function open() {
       clearTimeout(hideT);
       if (isOpen) return; isOpen = true;
+      // 휴대폰 뒤로 키·아이폰 가장자리 밀기 = 창 닫기(2026-11-23). 열 때 같은 주소로 기록 한 칸을 쌓고, 뒤로 가면(popstate) 그 칸이 빠지며 창만 닫힘
+      if (!(history.state && history.state.qc)) { try { history.pushState(Object.assign({}, history.state, { qc: 1 }), ''); } catch (x) {} }
       // 휴대폰 전체 메뉴에서 눌렀으면 메뉴를 닫고 열림(메뉴가 닫히며 스크롤을 다시 켜므로 잠시 뒤 한 번 더 멈춤)
       if ($('[data-mnav]').style.visibility === 'visible') { $('[data-mclose]').click(); setTimeout(() => isOpen && lenis.stop(), 500); }
       qc.hidden = false; lenis.stop();
@@ -291,8 +293,10 @@
       // 마우스로 쓰는 화면만 메일 칸에 바로 커서(휴대폰은 키보드가 갑자기 올라오지 않게)
       if (matchMedia('(pointer:fine)').matches && done.hidden) setTimeout(() => email.focus({ preventScroll: true }), 450);
     }
-    function close() {
+    function close(fromBack) {
       if (!isOpen) return; isOpen = false;
+      // 닫기 단추·Esc·확인으로 닫으면 열 때 쌓은 기록 칸을 되돌려, 그다음 뒤로가기가 진짜 이전 페이지로 가게
+      if (fromBack !== true && history.state && history.state.qc) history.back();
       qc.classList.remove('on'); lenis.start();
       hideT = setTimeout(() => {
         qc.hidden = true;
@@ -300,6 +304,9 @@
       }, 600);
     }
     $$('[data-qc-x]', qc).forEach(b => b.addEventListener('click', close));
+    addEventListener('popstate', () => { if (isOpen && !(history.state && history.state.qc)) close(true); });
+    // 창을 연 채 다른 페이지로 갔다가 새로 불러온 경우 남은 표시만 지움(창은 닫힌 채 시작)
+    if (history.state && history.state.qc && !isOpen) { try { const st = Object.assign({}, history.state); delete st.qc; history.replaceState(st, ''); } catch (x) {} }
     addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
     const more = $('[data-qc-more]');
     $('.qc-more-t', more).addEventListener('click', e => e.currentTarget.setAttribute('aria-expanded', more.classList.toggle('open')));
