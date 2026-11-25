@@ -377,11 +377,11 @@ app.get('/marketing/ppl', (c) => {
   })
 })
 
-// 제품 콘텐츠 제작(2026-11-25 대표 신설) — 제품 기획 이미지·같은 제품, 다른 장면·제품 3D 영상. 가격은 상담 후 견적
+// 제품 콘텐츠 제작(2026-11-25 대표 신설) — 제품 기획 이미지·제품 연출컷·제품 3D 영상. 가격은 상담 후 견적
 app.get('/marketing/product', (c) => {
   return c.render(<RenewalSvcPage k="product" />, { bare: true, head: renewalSvcHead('product'), bodyAttrs: renewalSvcBody,
-    title: '제품 콘텐츠 제작 - 제품 기획 이미지·3D 영상',
-    description: '상세페이지 첫 장, 광고 소재, SNS 피드에 쓸 제품 장면을 기획해 제품 기획 이미지와 제품 3D 영상으로 만듭니다. 같은 제품을 다른 장면으로 다시 기획하는 작업도 진행합니다.',
+    title: '제품 콘텐츠 제작 - 제품 기획 이미지·연출컷·3D 영상',
+    description: '상세페이지 첫 장, 광고 소재, SNS 피드에 쓸 제품 장면을 기획해 제품 기획 이미지, 제품 연출컷, 제품 3D 영상으로 만듭니다. 견본은 인애드 자체 제작 콘셉트입니다.',
     canonical: 'https://www.inadcompany.co.kr/marketing/product',
     schema: pageSchema('/marketing/product', 'service')
   })

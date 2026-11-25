@@ -17,7 +17,7 @@ window.INAD = {
     { k: 'ppl', name: 'PPL 광고', en: 'PPL', line: '드라마·예능 장면 속에 브랜드를 자연스럽게', href: '/marketing/ppl' },
     { k: 'performance', name: '퍼포먼스 마케팅', en: 'PERFORMANCE', line: '광고비 한 푼이 어디서 매출이 되는지 봅니다', href: '/marketing/performance' },
     { k: 'subscription', name: '마케팅팀 구독', en: 'SUBSCRIPTION', line: '우리 회사 마케팅팀처럼, 매달 같이 계획하고 실행합니다', href: '/marketing/subscription' },
-    // 2026-11-25 대표: 제품 기획 이미지·같은 제품, 다른 장면·제품 3D 영상을 서비스 상품으로 신설(한 페이지에 3개, 가격은 상담 후 견적)
+    // 2026-11-25 대표: 제품 기획 이미지·제품 연출컷·제품 3D 영상을 서비스 상품으로 신설(한 페이지에 3개, 가격은 상담 후 견적)
     { k: 'product', name: '제품 콘텐츠 제작', en: 'PRODUCT CONTENT', line: '제품이 가장 돋보이는 장면을 이미지와 3D 영상으로 만듭니다', href: '/marketing/product' },
   ],
   history: [

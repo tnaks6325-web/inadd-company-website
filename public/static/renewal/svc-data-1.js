@@ -295,7 +295,7 @@ window.SVC_PAGES = Object.assign(window.SVC_PAGES || {}, {
     },
     cta: { title: '채용 공고 올리기 전에,<br />무료 진단부터 받아 보세요', desc: '신청하시면 담당자가 연락드려요.' },
   },
-  // 제품 콘텐츠 제작(2026-11-25 대표 신설) — 상품 3개를 한 페이지에. 가격은 상담 후 견적, 견본은 '인애드 자체 제작 콘셉트 · 브랜드 의뢰 작업 아님' 표기 유지.
+  // 제품 콘텐츠 제작(2026-11-25 대표 신설) — 상품 3개를 한 페이지에('같은 제품, 다른 장면'은 같은 날 '제품 연출컷'으로 이름 변경 — 업계 통용어, 누끼컷의 짝). 가격은 상담 후 견적, 견본은 '인애드 자체 제작 콘셉트 · 브랜드 의뢰 작업 아님' 표기 유지.
   // 견본 그림·영상은 포트폴리오 제품 기획 이미지(visuals-data.js)와 같은 파일. 성과 숫자는 근거가 없어 넣지 않고 견본 개수만 적는다.
   // 고민·진행 순서 문구는 Claude 초안(대표 확인 전) — 실제 작업 방식과 다르면 여기만 고치고 node scripts/renewal-home-prerender.mjs
   product: {
@@ -305,7 +305,7 @@ window.SVC_PAGES = Object.assign(window.SVC_PAGES || {}, {
       title: '제품이 가장 돋보이는 장면,<br />기획부터 만들어 드립니다',
       titleMo: '제품이 가장|돋보이는 장면,|기획부터|만들어 드립니다',   // 휴대폰에서 '드립니다' 한 단어 줄이 생겨 따로 나눔
       sub: '상세페이지 첫 장, 광고 소재, SNS 피드에 쓸 제품 장면을 기획해 이미지와 3D 영상으로 만듭니다.',
-      kpi: [{ num: '34컷', label: '제품 기획 이미지 견본' }, { num: '2쌍', label: '같은 제품, 다른 장면' }, { num: '1편', label: '제품 3D 영상 견본' }],
+      kpi: [{ num: '34컷', label: '제품 기획 이미지 견본' }, { num: '2쌍', label: '제품 연출컷 견본' }, { num: '1편', label: '제품 3D 영상 견본' }],
     },
     pains: {
       title: '제품은 좋은데<br />보여 줄 장면이 없을 때',
@@ -321,8 +321,8 @@ window.SVC_PAGES = Object.assign(window.SVC_PAGES || {}, {
       lead: '아래 견본은 인애드 자체 제작 콘셉트입니다. 견본에 나온 브랜드와는 거래하거나 협업하지 않았습니다.',
       n3: true, tall: true,
       items: [
-        { t: '제품 기획 이미지', d: '제품이 가장 돋보이는 순간을 골라 한 장면으로 만듭니다. 상세페이지 첫 장, 광고 소재, SNS 피드에 씁니다.', img: '/static/renewal/assets/visuals/neogen-orange.webp', alt: '오렌지 스플래시 장면의 제품 기획 이미지 견본(인애드 자체 콘셉트)', tag: 'CONCEPT', href: '/works#visuals', link: '견본 34컷 보기' },
-        { t: '같은 제품, 다른 장면', d: '같은 제품을 다른 배경과 연출로 다시 기획합니다. 채널이나 시즌에 따라 장면을 바꿔 쓸 수 있습니다.', img: '/static/renewal/assets/visuals/ndp-rice-split.webp', alt: '같은 제품을 두 장면으로 나란히 보여 준 견본(인애드 자체 콘셉트)', tag: 'CONCEPT', href: '/works#visuals-pair', link: '두 장면 밀어서 비교하기' },
+        { t: '제품 기획 이미지', d: '제품이 가장 돋보이는 순간을 골라 광고용 콘셉트 장면으로 만듭니다. 상세페이지 첫 장, 광고 소재, SNS 피드에 씁니다.', img: '/static/renewal/assets/visuals/neogen-orange.webp', alt: '오렌지 스플래시 장면의 제품 기획 이미지 견본(인애드 자체 콘셉트)', tag: 'CONCEPT', href: '/works#visuals', link: '견본 34컷 보기' },
+        { t: '제품 연출컷', d: '흰 배경 제품 사진(누끼컷)을 실제로 쓰는 공간이나 원료 위에 놓인 장면으로 만듭니다. 같은 제품도 배경과 연출을 바꿔 채널·시즌마다 다르게 쓸 수 있습니다.', img: '/static/renewal/assets/visuals/ndp-rice-split.webp', alt: '같은 제품의 연출컷 두 장면을 나란히 보여 준 견본(인애드 자체 콘셉트)', tag: 'CONCEPT', href: '/works#visuals-pair', link: '두 장면 밀어서 비교하기' },
         { t: '제품 3D 영상', d: '제품을 3D로 만들어 부품이 떠오르고 돌아가는 장면처럼, 실물 촬영으로 담기 어려운 움직임을 영상으로 보여 줍니다.', img: '/static/renewal/assets/visuals/tapo-reel.webp', vid: '/static/renewal/assets/visuals/tapo-reel.mp4', alt: '홈카메라 제품 3D 영상 견본의 첫 장면(인애드 자체 콘셉트)', tag: 'CONCEPT', href: '/works#visuals-3d', link: '영상 보기' },
       ],
     },
@@ -343,7 +343,7 @@ window.SVC_PAGES = Object.assign(window.SVC_PAGES || {}, {
       head: ['상품', '형태', '금액'],
       rows: [
         { plan: '제품 기획 이미지', desc: '이미지', price: '상담 후 견적' },
-        { plan: '같은 제품, 다른 장면', desc: '이미지', price: '상담 후 견적' },
+        { plan: '제품 연출컷', desc: '이미지', price: '상담 후 견적' },
         { plan: '제품 3D 영상', desc: '영상', price: '상담 후 견적' },
       ],
       terms: [

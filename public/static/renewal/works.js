@@ -100,8 +100,8 @@ SITE.boot(ctx => {
     const count = f => cards.filter(c => f === 'all' || (c.dataset.cat || '').split(' ').includes(f)).length;
     const VZ = window.VISUALS;
     $('[data-tabs]').innerHTML = FILTERS.filter(([f]) => f === 'all' || count(f) > 0).map(([f, n], i) => `<button type="button" class="${i ? '' : 'on'}" data-f="${f}">${n}<sup>${count(f)}</sup></button>`).join('')
-      // 2026-11-25 대표: 제품 기획 이미지 · 같은 제품, 다른 장면 · 제품 3D 영상을 각각 따로 된 탭으로(같은 견본 칸에서 해당 부분만 보여 줌)
-      + (VZ ? [['img', '제품 기획 이미지', VZ.items.length], ['pair', '같은 제품, 다른 장면', VZ.pairs.length], ['3d', '제품 3D 영상', 1]]
+      // 2026-11-25 대표: 제품 기획 이미지 · 제품 연출컷(처음 이름 '같은 제품, 다른 장면') · 제품 3D 영상을 각각 따로 된 탭으로(같은 견본 칸에서 해당 부분만 보여 줌)
+      + (VZ ? [['img', '제품 기획 이미지', VZ.items.length], ['pair', '제품 연출컷', VZ.pairs.length], ['3d', '제품 3D 영상', 1]]
         .map(([v, n, k], i) => `<button type="button" class="vz-tab${i ? '' : ' vz-first'}" data-f="visuals" data-v="${v}">${n}<sup>${k}</sup></button>`).join('') : '');
     const STEP = mobile ? 8 : 16; let limit = STEP, cur = 'all';
     const moreBtn = $('[data-more]'), endNote = $('[data-end]');
@@ -120,7 +120,7 @@ SITE.boot(ctx => {
       ScrollTrigger.refresh();
     }
     const vzBox = $('[data-visuals]'), moreBox = moreBtn.parentNode;
-    // 제품 기획 이미지·같은 제품, 다른 장면·제품 3D 영상 탭: 사례 카드·더 보기 대신 견본 칸에서 고른 부분만 보여 줌(처음 열 때 그림을 채움)
+    // 제품 기획 이미지·제품 연출컷·제품 3D 영상 탭: 사례 카드·더 보기 대신 견본 칸에서 고른 부분만 보여 줌(처음 열 때 그림을 채움)
     let vzPart = 'img';
     function showVisuals(on, part) {
       if (!vzBox) return;
@@ -144,7 +144,7 @@ SITE.boot(ctx => {
     }));
     moreBtn.addEventListener('click', () => { limit += STEP; apply(true); });
 
-    // ── 4-2. 제품 기획 이미지(visuals-data.js) — 업종 밑줄 탭, 견본 격자, 같은 제품 두 장면 밀어 비교, 제품 3D 영상 ──
+    // ── 4-2. 제품 기획 이미지(visuals-data.js) — 업종 밑줄 탭, 견본 격자, 제품 연출컷(같은 제품 두 장면 밀어 비교), 제품 3D 영상 ──
     const VPATH = '/static/renewal/assets/visuals/';
     let vzBuilt = false, vzCat = 'beauty';
     const vzCard = ([, s, brand, scene]) => `<figure class="vz-card"><div class="vz-pic"><img src="${VPATH}${s}.webp" alt="${esc(brand)} ${esc(scene)} 제품 기획 이미지(인애드 자체 콘셉트)" loading="lazy" width="960" height="1283" /><span class="mono">CONCEPT</span></div><figcaption><b>${esc(brand)}</b><span>${esc(scene)}</span></figcaption></figure>`;
@@ -162,7 +162,7 @@ SITE.boot(ctx => {
       drawCat(true);
       // 같은 제품 두 장면: 가운데 손잡이를 밀어 비교(2026-11-20 대표: '처음/다시 기획' 표기 없음)(짝이 둘이면 아래 버튼으로 바꿈)
       const P = VZ.pairs;
-      $('[data-vz-pair]').innerHTML = `<div class="vz-sub"><span class="mono">SAME PRODUCT · TWO SCENES</span><b>같은 제품, 다른 장면</b></div>
+      $('[data-vz-pair]').innerHTML = `<div class="vz-sub"><span class="mono">PRODUCT STYLED SHOT</span><b>제품 연출컷</b></div>
         <div class="vz-cmp" data-cmp style="--x:50%"><img data-new alt="" /><div class="vz-old"><img data-old alt="" /></div><i class="vz-knob" aria-hidden="true"></i>
           <input type="range" min="0" max="100" value="50" aria-label="두 장면 밀어서 비교" data-range /></div>
         <div class="vz-pick">${P.map((p, i) => `<button type="button" data-p="${i}" class="${i ? '' : 'on'}">${esc(p[2])} · ${esc(p[3])}</button>`).join('')}</div>`;
