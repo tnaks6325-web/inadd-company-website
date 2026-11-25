@@ -59,7 +59,7 @@
       const cols = !withImg && its.length % 3 === 0 ? ' n3' : ''
       sec('ink', `
     <div class="sec-h"><span class="mono">${label('POINT')}</span><div><h2 data-reveal>${P.points.title}</h2></div></div>
-    <div class="pts${cols}">${its.map((x, i) => `<div class="pt">${x.img ? `<div class="ph" data-ph><img src="${x.img}" alt="" loading="lazy" /></div>` : ''}<span class="mono">${no(i)}</span><h3>${x.t}</h3><p>${x.d}</p></div>`).join('')}</div>`)
+    <div class="pts${cols}">${its.map((x, i) => `<div class="pt">${x.img ? `<div class="ph" data-ph><img src="${x.img}" alt="" loading="lazy" />${x.vid ? `<video data-src="${x.vid}" muted playsinline preload="none" aria-hidden="true"></video>` : ''}</div>` : ''}<span class="mono">${no(i)}</span><h3>${x.t}</h3><p>${x.d}</p></div>`).join('')}</div>`)
     }
 
     // ── 3-1. 더 보기 묶음(운영 페이지의 세부 목록을 줄여 옮긴 것 — 인플루언서 섭외·콘텐츠 유형 등) ──

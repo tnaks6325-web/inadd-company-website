@@ -23,7 +23,7 @@ window.SVC_PAGES = Object.assign(window.SVC_PAGES || {}, {
     points: {
       title: '바이럴 마케팅 상품 라인업',
       items: [
-        { t: '카페 바이럴', d: '맘카페·육아·뷰티 등 타깃이 모인 카페에 글을 올리고 싶을 때. 글을 올릴 수 있는 카페 1,965곳 가운데 브랜드 타깃이 모인 카페를 골라 경험형 글을 올립니다.', img: '/static/viral-products/lineup2-cafe.jpg' },
+        { t: '카페 바이럴', d: '맘카페·육아·뷰티 등 타깃이 모인 카페에 글을 올리고 싶을 때. 글을 올릴 수 있는 카페 1,965곳 가운데 브랜드 타깃이 모인 카페를 골라 경험형 글을 올립니다.', img: '/static/viral-products/lineup3-cafe.jpg', vid: '/static/viral-products/lineup3-cafe.mp4' },
         { t: '커뮤니티 바이럴', d: '관심사 커뮤니티에 글을 올리고 싶을 때. 관심사가 분명한 커뮤니티에서 화제를 만듭니다.', img: '/static/viral-products/lineup2-community.jpg' },
         { t: 'SNS 바이럴', d: '해시태그·탐색탭에서 발견되고 싶을 때. 해시태그·탐색탭에 노출되는 콘텐츠를 올립니다.', img: '/static/viral-products/lineup2-sns.jpg' },
         { t: '언론 바이럴', d: '브랜드 공신력·신뢰도가 필요할 때. 네이버 뉴스 검색 제휴 매체에 송출합니다.', img: '/static/viral-products/lineup2-press.jpg' },
