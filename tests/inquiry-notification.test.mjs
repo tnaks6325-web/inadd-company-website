@@ -53,21 +53,37 @@ async function submit(t, route, body, options = {}) {
   return { response, mails, leads, forwarded }
 }
 
-function notification(mail) {
-  assert.equal(mail.subject, '[홈페이지 문의] 새 문의가 접수되었습니다')
-  assert.match(mail.htmlContent, /새 문의가 접수되었습니다/)
-  assert.match(mail.htmlContent, /문의 내용 확인과 담당자 배정은 인트라넷 공식 문의에서 진행해 주세요\./)
-  assert.match(mail.htmlContent, /<a\s+href="https:\/\/inadd-system\.pages\.dev\/\?tab=homepage_inquiries"[^>]*>\s*인트라넷 공식 문의 바로가기\s*<\/a>/)
-  assert.equal((mail.htmlContent.match(/<a\s/g) || []).length, 1)
-  assert.equal(mail.htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim(),
-    '새 문의가 접수되었습니다 문의 내용 확인과 담당자 배정은 인트라넷 공식 문의에서 진행해 주세요. 인트라넷 공식 문의 바로가기')
-  for (const value of Object.values(contact)) {
-    assert.ok(!(mail.subject + mail.htmlContent).includes(value), `private field leaked: ${value}`)
-  }
-  assert.doesNotMatch(mail.htmlContent, /견적 조합|만 원|접수 위치|폼 유형/)
+// Staff mail shares only basic metadata (사용자 결정 2026-11-25): company·brand, source, services,
+// budget, receipt time. Name, position, phone, email, URLs, inquiry text and estimate items stay in the intranet.
+const PRIVATE_KEYS = ['name', 'position', 'phone', 'email', 'companyUrl', 'brandUrl', 'message']
+const RECEIVED = /접수 시각 (\d{4}\.\d{2}\.\d{2} \d{2}:\d{2}) \(한국시간\)/
+
+function visibleText(html) {
+  return html.replace(/<[^>]*>/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim()
 }
 
-test('contact handler sends only a generic intranet notification while preserving backup and forwarding', async t => {
+function notification(mail, expected, sent = contact) {
+  assert.equal(mail.subject, `[공식 문의] ${expected.companyBrand} · 홈페이지`)
+  assert.match(mail.htmlContent, /<a\s+href="https:\/\/inadd-system\.pages\.dev\/\?tab=homepage_inquiries"[^>]*>\s*인트라넷 공식 문의 바로가기\s*<\/a>/)
+  assert.equal((mail.htmlContent.match(/<a\s/g) || []).length, 1)
+  const text = visibleText(mail.htmlContent)
+  const received = text.match(RECEIVED)
+  assert.ok(received, 'receipt time in KST')
+  assert.equal(text,
+    `새 문의가 접수되었습니다 회사·브랜드 ${expected.companyBrand} 유입경로 홈페이지 관심 서비스 ${expected.services} ` +
+    `예상 예산 ${expected.budget} 접수 시각 ${received[1]} (한국시간) ` +
+    '문의 내용과 연락처는 인트라넷에서 확인해 주세요. 광고 문의는 담당자를 배정하고, 협업 제안은 별도로 처리해 주세요. 인트라넷 공식 문의 바로가기')
+  for (const key of PRIVATE_KEYS) {
+    if (!sent[key]) continue
+    assert.ok(!(mail.subject + mail.htmlContent).includes(sent[key]), `private field leaked: ${key}`)
+  }
+  assert.doesNotMatch(mail.htmlContent, /<script>|<b>/)
+}
+
+const contactExpected = { companyBrand: 'FAKE_COMPANY_782 · FAKE_BRAND_782', services: 'FAKE SERVICE 782', budget: 'FAKE_BUDGET_782' }
+const estimateExpected = { companyBrand: 'FAKE_COMPANY_782', services: '마케팅팀 구독(견적 조합)', budget: '월 180만 원(부가세 별도, 견적 조합)' }
+
+test('contact handler shares only basic info with staff while preserving backup and forwarding', async t => {
   const { response, mails, leads, forwarded } = await submit(t, 'contact', contact)
   assert.equal(response.status, 200)
   assert.deepEqual(await response.json(), { ok: true })
@@ -81,7 +97,7 @@ test('contact handler sends only a generic intranet notification while preservin
   assert.deepEqual(forwarded[0].body.data, contact)
   assert.equal(forwarded[0].body.external_id, leads[0].key)
   assert.equal(forwarded[0].headers['X-Inquiry-Key'], 'fake-intranet-key')
-  notification(mails[0])
+  notification(mails[0], contactExpected)
 })
 
 const estimate = {
@@ -91,7 +107,7 @@ const estimate = {
 }
 
 for (const source of ['home', 'subscription']) {
-  test(`estimate ${source} preserves customer quote, backup and forwarding but sends staff only a notification`, async t => {
+  test(`estimate ${source} preserves customer quote, backup and forwarding but sends staff only basic info`, async t => {
     const { response, mails, leads, forwarded } = await submit(t, 'estimate', { ...estimate, source })
     assert.equal(response.status, 200)
     assert.deepEqual(await response.json(), { ok: true, total: 180 })
@@ -120,17 +136,22 @@ for (const source of ['home', 'subscription']) {
     assert.deepEqual(forwarded[0].body.data, leads[0].data)
     assert.equal(forwarded[0].body.external_id, leads[0].key)
     assert.deepEqual(internal.to, staff.map(email => ({ email })))
-    notification(internal)
+    notification(internal, estimateExpected, estimate)
   })
 }
 
-test('brand and minimal contact submissions use the identical generic notification', async t => {
-  const first = await submit(t, 'contact', { ...contact, formType: 'brand', name: 'OTHER_FAKE_PERSON', company: 'OTHER_FAKE_COMPANY' })
-  notification(first.mails[0])
-  const second = await submit(t, 'contact', { email: 'minimal@example.test' })
-  assert.deepEqual(await second.response.json(), { ok: true })
-  assert.equal(first.mails[0].subject, second.mails[0].subject)
-  assert.equal(first.mails[0].htmlContent, second.mails[0].htmlContent)
+test('missing basic info is shown as 미기재, duplicate brand is collapsed and markup is escaped', async t => {
+  const minimal = { email: 'minimal@example.test' }
+  const first = await submit(t, 'contact', minimal)
+  assert.deepEqual(await first.response.json(), { ok: true })
+  notification(first.mails[0], { companyBrand: '미기재', services: '미기재', budget: '미기재' }, minimal)
+  const same = { ...contact, brand: contact.company, budget: '100만_원_미만', budgetCustom: '' }
+  const second = await submit(t, 'contact', same)
+  notification(second.mails[0], { companyBrand: 'FAKE_COMPANY_782', services: 'FAKE SERVICE 782', budget: '100만 원 미만' }, same)
+  const hostile = { ...contact, company: '<b>ACME</b> & Co', brand: '' }
+  const third = await submit(t, 'contact', hostile)
+  assert.ok(third.mails[0].htmlContent.includes('&lt;b&gt;ACME&lt;/b&gt; &amp; Co'))
+  notification(third.mails[0], { ...contactExpected, companyBrand: '<b>ACME</b> & Co' }, hostile)
 })
 
 test('customer mail failure still accepts estimate and sends the staff notification', async t => {
@@ -139,14 +160,14 @@ test('customer mail failure still accepts estimate and sends the staff notificat
   assert.deepEqual(await response.json(), { ok: true, total: 180 })
   assert.equal(leads.length, 1)
   assert.equal(forwarded.length, 1)
-  notification(mails.find(mail => mail.to[0].email === staff[0]))
+  notification(mails.find(mail => mail.to[0].email === staff[0]), estimateExpected, estimate)
 })
 
 test('intranet failure does not prevent contact backup or notification', async t => {
   const { response, mails, leads } = await submit(t, 'contact', contact, { failIntranet: true })
   assert.equal(response.status, 200)
   assert.equal(leads.length, 1)
-  notification(mails[0])
+  notification(mails[0], contactExpected)
 })
 
 test('staff provider failure still returns 500 while preserving backup and forwarding', async t => {
@@ -163,7 +184,7 @@ test('preview redirection remains intact and skips intranet forwarding', async t
   })
   assert.equal(response.status, 200)
   assert.deepEqual(mails[0].to, [{ email: 'preview@example.test' }])
-  assert.equal(mails[0].subject, '[테스트서버] [홈페이지 문의] 새 문의가 접수되었습니다')
+  assert.equal(mails[0].subject, '[테스트서버] [공식 문의] FAKE_COMPANY_782 · FAKE_BRAND_782 · 홈페이지')
   assert.match(mails[0].htmlContent, /\[테스트 서버\] 원래 받는 사람: staff-one@example.test, staff-two@example.test/)
   assert.equal(forwarded.length, 0)
 })
