@@ -47,8 +47,26 @@ SITE.boot(ctx => {
   // 특징 사진: 아래에서 열리고 살짝 시차
   $$('[data-ph]').forEach(ph => {
     gsap.to(ph, { clipPath: 'inset(0% 0 0 0)', duration: 1.2, ease: 'power4.inOut', scrollTrigger: { trigger: ph, start: 'top 85%' } });
-    gsap.fromTo($('img', ph), { yPercent: -5 }, { yPercent: 5, ease: 'none', scrollTrigger: { trigger: ph, scrub: true } });
+    gsap.fromTo(ph.querySelectorAll('img, video'), { yPercent: -5 }, { yPercent: 5, ease: 'none', scrollTrigger: { trigger: ph, scrub: true } });
   });
+  // 특징 사진에 영상이 붙어 있으면(바이럴 라인업): 마우스를 0.3초 올려 두면 첫 장면부터 한 번 재생하고 마지막 장면에서 멈춘다.
+  // 마우스를 떼면 사진으로 돌아간다. 터치 기기·움직임 줄이기 설정에서는 사진만. 영상 파일은 컴퓨터에서 카드가 가까워질 때 받는다.
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    $$('[data-ph] video[data-src]').forEach(v => {
+      const ph = v.parentElement; let wait;
+      const load = () => { if (!v.getAttribute('src')) { v.src = v.dataset.src; v.preload = 'auto'; } };
+      ScrollTrigger.create({ trigger: ph, start: 'top 150%', once: true, onEnter: load });
+      ph.addEventListener('pointerenter', e => {
+        if (e.pointerType !== 'mouse') return;
+        load(); clearTimeout(wait);
+        wait = setTimeout(() => { v.currentTime = 0; v.play().then(() => ph.classList.add('play')).catch(() => {}); }, 300);
+      });
+      ph.addEventListener('pointerleave', () => {
+        clearTimeout(wait); ph.classList.remove('play');
+        wait = setTimeout(() => v.pause(), 450);
+      });
+    });
+  }
   $$('.pt').forEach(p => gsap.from(p.querySelectorAll('.mono, h3, p'), { opacity: 0, y: 18, duration: .7, stagger: .06, ease: 'power3.out', scrollTrigger: { trigger: p, start: 'top 85%' } }));
 
   // 숫자: 처음에는 실제 값을 그대로 둔다(움직임이 안 돌아도 빈칸이 되지 않게). 화면에 들어오는 순간 0부터 다시 올라감

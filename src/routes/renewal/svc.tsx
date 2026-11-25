@@ -24,7 +24,7 @@ import { PplOnAir } from '../ppl-onair'
 export type SvcKey = 'subscription' | 'performance' | 'viral' | 'influencer' | 'seeding' | 'review' | 'oliveyoung' | 'ppl'
 const BODY: Record<SvcKey, string> = { subscription, performance, viral, influencer, seeding, review, oliveyoung, ppl }
 
-const V = '20261124c'
+const V = '20261125a'
 const css = (f: string) => <link rel="stylesheet" href={`/static/renewal/${f}?v=${V}`} />
 const js = (f: string) => <script src={`/static/renewal/${f}?v=${V}`}></script>
 
