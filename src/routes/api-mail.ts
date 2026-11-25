@@ -118,6 +118,56 @@ function escapeHtml(value: unknown): string {
   }[ch]!))
 }
 
+// 직원 알림 메일에는 기본정보(회사·브랜드, 유입경로, 관심 서비스, 예상 예산, 접수 시각)만 싣는다(사용자 결정 2026-11-25).
+// 이름·직함·연락처·URL·문의 내용·견적 항목은 넣지 않는다 — 인증된 인트라넷에서 확인하고 담당자를 배정한다.
+type InquiryBasics = { companyBrand: string; services: string; budget: string; received: string }
+
+function readableValue(value: unknown, max = 200, codeLabel = false): string {
+  const raw = String(value ?? '')
+  // 선택지 값(예: 100만_원_미만)만 사람이 읽는 말로 바꾼다. 회사·브랜드명은 적은 그대로 둔다.
+  return (codeLabel ? raw.replace(/_/g, ' ') : raw).replace(/\s+/g, ' ').trim().slice(0, max)
+}
+
+function inquiryBasics(data: Record<string, unknown>, receivedAt = Date.now()): InquiryBasics {
+  const names = [readableValue(data.company, 100), readableValue(data.brand, 100)].filter(Boolean)
+  const budget = data.budget === 'custom' ? readableValue(data.budgetCustom) : readableValue(data.budget || data.budgetCustom, 200, true)
+  const k = new Date(receivedAt + 9 * 60 * 60 * 1000).toISOString()
+  return {
+    companyBrand: [...new Set(names)].join(' · ') || '미기재',
+    services: readableValue(data.services, 200, true) || '미기재',
+    budget: budget || '미기재',
+    received: `${k.slice(0, 4)}.${k.slice(5, 7)}.${k.slice(8, 10)} ${k.slice(11, 16)} (한국시간)`,
+  }
+}
+
+function inquiryNotificationSubject(b: InquiryBasics): string {
+  return `[공식 문의] ${b.companyBrand} · 홈페이지`.replace(/[\r\n]+/g, ' ').slice(0, 200)
+}
+
+function inquiryNotificationTemplate(b: InquiryBasics): string {
+  const rows = [['회사·브랜드', b.companyBrand], ['유입경로', '홈페이지'], ['관심 서비스', b.services], ['예상 예산', b.budget], ['접수 시각', b.received]]
+    .map(([label, value]) => `<tr><td style="width:90px;padding:10px 12px 10px 0;border-bottom:1px solid #e8e8ed;vertical-align:top;color:#666;font-size:13px;line-height:1.6;">${escapeHtml(label)}</td><td style="padding:10px 0;border-bottom:1px solid #e8e8ed;color:#222;font-size:14px;line-height:1.6;overflow-wrap:anywhere;word-break:break-word;">${escapeHtml(value)}</td></tr>`)
+    .join('')
+  return `<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background:#f1f3f5;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 16px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#fff;border-radius:12px;">
+        <tr><td style="padding:32px;">
+          <h1 style="margin:0 0 20px;font-size:22px;color:#212529;">새 문의가 접수되었습니다</h1>
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 22px;border-top:1px solid #e8e8ed;table-layout:fixed;">${rows}</table>
+          <p style="margin:0 0 20px;font-size:14px;line-height:1.7;color:#555;">문의 내용과 연락처는 인트라넷에서 확인해 주세요.<br>광고 문의는 담당자를 배정하고, 협업 제안은 별도로 처리해 주세요.</p>
+          <a href="https://inadd-system.pages.dev/?tab=homepage_inquiries" style="display:inline-block;padding:14px 24px;background:#21306f;color:#fff;font-size:15px;font-weight:700;text-decoration:none;border-radius:6px;">인트라넷 공식 문의 바로가기</a>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+}
+
 export function internalTemplate(title: string, rows: { label: string; value: string }[]): string {
   const rowsHtml = rows
     .filter(r => r.value && r.value.trim())
@@ -307,28 +357,11 @@ mail.post('/contact', async (c) => {
     // 인트라넷에도 쌓는다(회신 담당자 배치·리드 관리). 응답·메일을 기다리게 하지 않고, 실패해도 접수는 그대로 진행한다.
     const toIntranet = forwardInquiryToIntranet(c.env, leadKey, data)
     try { c.executionCtx.waitUntil(toIntranet) } catch { await toIntranet }
-    const formType = data.formType === 'agency' ? '에이전시' : data.formType === 'brand' ? '브랜드' : ''
-
-    const rows = [
-      { label: '폼 유형',      value: formType },
-      { label: '이름',         value: data.name },
-      { label: '직급',         value: data.position },
-      { label: '연락처',       value: data.phone },
-      { label: '이메일',       value: data.email },
-      { label: '회사명',       value: data.company },
-      { label: '회사 URL',     value: data.companyUrl },
-      { label: '담당 브랜드',  value: data.brand },
-      { label: '브랜드 URL',   value: data.brandUrl },
-      { label: '관심 서비스',  value: data.services },
-      { label: '예상 예산',    value: data.budget === 'custom' ? (data.budgetCustom || '직접 입력') : data.budget },
-      { label: '직접 입력 예산', value: data.budgetCustom },
-      { label: '문의 내용',    value: data.message },
-    ]
-
+    const basics = inquiryBasics(data)
     await sendMail(
       c.env,
-      `[상담 신청] ${data.name || data.company || data.email || '간편 문의'}`,
-      internalTemplate('📋 새 상담 신청이 접수됐습니다', rows)
+      inquiryNotificationSubject(basics),
+      inquiryNotificationTemplate(basics)
     )
     return c.json({ ok: true })
   } catch (e: any) {
@@ -460,7 +493,7 @@ mail.post('/estimate', async (c) => {
   const email = str(body?.email, 120)
   const message = str(body?.message, 2000)
   const est = computeEstimate(body?.items)
-  // 어느 화면의 조합기에서 왔는지(구독 페이지·홈 하단) — 담당자 메일·인트라넷 문의 내용에 적는다
+  // 어느 화면의 조합기에서 왔는지(구독 페이지·홈 하단) — 백업·인트라넷 문의 내용에 적는다
   const source = body?.source === 'home' ? 'home' : 'subscription'
   const sourceLabel = source === 'home' ? '홈 화면 하단' : '마케팅팀 구독 페이지'
   if (!est.picked.length) return c.json({ ok: false, error: '항목을 하나 이상 골라 주세요.' }, 400)
@@ -500,19 +533,11 @@ estimateReplyTemplate(est, company, [rawAddress, rawAddressDetail].filter(Boolea
     })().catch((e: any) => console.error('[mail/estimate] 손님 메일 실패', e?.message || e))
     try { c.executionCtx.waitUntil(toCustomer) } catch { await toCustomer }
 
+    const basics = inquiryBasics(data)
     await sendMail(
       c.env,
-      `[견적 조합] ${company} · 월 ${est.total.toLocaleString('ko-KR')}만 원`,
-      internalTemplate('🧮 견적 조합 상담 신청이 접수됐습니다', [
-        { label: '폼 유형', value: '마케팅팀 구독 견적 조합' },
-        { label: '접수 위치', value: sourceLabel },
-        { label: '회사명', value: company },
-        { label: '이름', value: name },
-        { label: '연락처', value: phone },
-        { label: '이메일', value: email },
-        { label: '견적 조합', value: summary },
-        { label: '문의 내용', value: message },
-      ])
+      inquiryNotificationSubject(basics),
+      inquiryNotificationTemplate(basics)
     )
     return c.json({ ok: true, total: est.total })
   } catch (e: any) {
