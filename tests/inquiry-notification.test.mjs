@@ -118,10 +118,10 @@ for (const source of ['home', 'subscription']) {
     assert.match(customer.htmlContent, /180만 원/)
     assert.match(customer.htmlContent, /퍼포먼스 마케팅/)
     assert.ok(customer.htmlContent.includes(source === 'home' ? '/#homeEstimate' : '/marketing/subscription#estimate'))
-    // SHA-256 of real handler output at baseline 596c98cc (fake inputs above).
+    // SHA-256 of real handler output on origin/main 868e375 (회사 주소 표기 통일 이후, fake inputs above). 이 변경은 손님 메일을 바꾸지 않는다.
     const baseline = {
-      home: '813bba95d223bb725fd4011953378dbfe8cba3b4e1c2ce6d63888f5db8c27798',
-      subscription: '6f04a5794b003ed6d33178dd230aa046f317f5191cefd99f933aeced17d1dd20',
+      home: 'ead82a31ae4f5fe58d3615d41003ab12c1dfb1f25c698579d11bf4ebd84f02fe',
+      subscription: '3b6083def3e11fbbd86205ee78a19c16bcd3d59d19eae9d573f564fbef8138c0',
     }
     assert.equal(createHash('sha256').update(customer.htmlContent).digest('hex'), baseline[source])
     assert.equal(leads.length, 1)
