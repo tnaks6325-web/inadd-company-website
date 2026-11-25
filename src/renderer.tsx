@@ -230,6 +230,12 @@ fbq('track', 'PageView');
                         <em>콘텐츠 속 자연스러운 노출</em>
                       </span>
                     </a>
+                    <a href="/marketing/product" class="ndm-item">
+                      <span class="ndm-text">
+                        <strong>제품 콘텐츠 제작</strong>
+                        <em>제품 기획 이미지·3D 영상</em>
+                      </span>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -259,6 +265,7 @@ fbq('track', 'PageView');
                 <a href="/marketing/review">리뷰 마케팅</a>
                 <a href="/marketing/oliveyoung">올리브영 마케팅</a>
                 <a href="/marketing/ppl">PPL 마케팅</a>
+                <a href="/marketing/product">제품 콘텐츠 제작</a>
               </div>
               <div class="footer-col">
                 <h4>Company</h4>

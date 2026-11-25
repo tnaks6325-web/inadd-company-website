@@ -29,6 +29,7 @@
 /* 실제 사이트 장면을 넣은 경우: 실제 사이트처럼 밝은 바탕 위에서 움직이고, 크기는 상자에 맞춰 줄인다(--s 는 스크립트가 넣음) */
 .sv-hero.has-real{grid-template-columns:1fr 1fr}
 .sv-media.is-real{background:#EEF0F4}
+.sv-media .sv-concept{position:absolute;left:14px;top:14px;z-index:2;font-size:10px;letter-spacing:.08em;padding:4px 7px;background:rgba(11,12,16,.72);color:#fff}
 .sv-media.is-real .tag{color:var(--ink);text-shadow:none}
 .sv-media.is-real :is(.vb,.vp,.ip,.ss,.rc,.oys,.pon,.pm-vault){position:absolute!important;inset:0!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:auto!important;height:auto!important;margin:0!important}
 .sv-media.is-real .pm-vault{--cx:50%;--card-w:132px;--card-h:165px;--gap:14px}
@@ -57,6 +58,9 @@
 .pt .ph video{opacity:0;transition:opacity .4s ease}
 .pt .ph.play video{opacity:1}
 .pt .mono{color:var(--butter)}
+.pts.tall .pt .ph{aspect-ratio:3/4}
+.pt .ph .pt-tag{position:absolute;left:10px;top:10px;z-index:2;font-size:10px;letter-spacing:.08em;padding:4px 7px;background:rgba(11,12,16,.72);color:var(--white)}
+.pt .pt-lk{display:inline-block;margin-top:18px;font-size:15px;border-bottom:1px solid currentColor;padding-bottom:3px}
 .pt h3{font-size:clamp(24px,2.3vw,38px);font-weight:700;letter-spacing:-.045em;line-height:1.15;margin:14px 0 12px}
 .pt p{font-size:16px;line-height:1.7;color:rgba(245,244,240,.75);max-width:560px}
 
@@ -110,9 +114,12 @@
 .fq .a p{padding:0 48px 30px 90px;font-size:16px;line-height:1.75;color:rgba(245,244,240,.78);max-width:980px}
 
 /* 8. 다른 서비스 — 가로 띠 */
-.others{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid currentColor;border-bottom:1px solid var(--line-d)}
+.others{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid currentColor;border-bottom:1px solid var(--line-d)}
 .others a{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:28px;min-height:150px;padding:18px 16px 20px;isolation:isolate;overflow:hidden;transition:color .45s}
 .others a + a{border-left:1px solid var(--line-d)}
+/* 다른 서비스 8개 = 4칸 2줄(2026-11-25 제품 콘텐츠 제작 추가로 9개가 됨) */
+.others a:nth-child(4n+1){border-left:0}
+.others a:nth-child(n+5){border-top:1px solid var(--line-d)}
 .others a::before{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleY(0);transform-origin:top;transition:transform .55s cubic-bezier(.7,0,.2,1);z-index:-1}
 .others a .mono{opacity:.82}
 .others a b{font-size:clamp(17px,1.35vw,22px);font-weight:700;letter-spacing:-.035em;line-height:1.25}
@@ -161,6 +168,7 @@
   .kpis div:nth-child(3){border-left:0;padding-left:0}
   .prow{grid-template-columns:1fr;gap:6px;padding:22px 20px;margin:0 -20px}
   .pts,.pts.n3{grid-template-columns:1fr}
+  .pts.tall .pt .ph{aspect-ratio:4/5}
   .nums,.nums.n3{grid-template-columns:1fr 1fr}
   .nums div:nth-child(odd){border-left:0;padding-left:0}
   .nums div:nth-child(even){padding-left:16px}
@@ -177,6 +185,7 @@
   .others a{min-height:96px;border-bottom:1px solid var(--line-d)}
   .others a + a{border-left:0}
   .others a:nth-child(even){border-left:1px solid var(--line-d)}
+  .others a:nth-child(n+5){border-top:0}
 }
 
 /* ── 2026-11-07 운영 이식에서 더한 것 ── */

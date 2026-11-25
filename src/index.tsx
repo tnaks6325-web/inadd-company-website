@@ -106,6 +106,7 @@ app.get('/sitemap.xml', (c) => {
     { loc: `${base}/marketing/review`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/marketing/oliveyoung`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/marketing/ppl`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${base}/marketing/product`, priority: '0.8', changefreq: 'monthly' },
     { loc: `${base}/development`, priority: '0.8', changefreq: 'monthly' },
     /* /contact 제외 — 팝업 단일화로 페이지 폐쇄(/#contact 로 301, 홈에서 간편 문의 창) */
   ]
@@ -373,6 +374,16 @@ app.get('/marketing/ppl', (c) => {
     description: '드라마·예능 프로그램 선정부터 장면 기획, 방송사·제작사 계약, 방영 후 리포트까지 PPL 전 과정을 진행합니다.',
     canonical: 'https://www.inadcompany.co.kr/marketing/ppl',
     schema: pageSchema('/marketing/ppl', 'service')
+  })
+})
+
+// 제품 콘텐츠 제작(2026-11-25 대표 신설) — 제품 기획 이미지·같은 제품, 다른 장면·제품 3D 영상. 가격은 상담 후 견적
+app.get('/marketing/product', (c) => {
+  return c.render(<RenewalSvcPage k="product" />, { bare: true, head: renewalSvcHead('product'), bodyAttrs: renewalSvcBody,
+    title: '제품 콘텐츠 제작 - 제품 기획 이미지·3D 영상',
+    description: '상세페이지 첫 장, 광고 소재, SNS 피드에 쓸 제품 장면을 기획해 제품 기획 이미지와 제품 3D 영상으로 만듭니다. 같은 제품을 다른 장면으로 다시 기획하는 작업도 진행합니다.',
+    canonical: 'https://www.inadcompany.co.kr/marketing/product',
+    schema: pageSchema('/marketing/product', 'service')
   })
 })
 

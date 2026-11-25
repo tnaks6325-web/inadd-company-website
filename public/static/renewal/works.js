@@ -179,8 +179,9 @@ SITE.boot(ctx => {
     }
     let vzSeen = false;
     function vzPlay() { const v = $('[data-vid]'); if (!v) return; if (vzSeen && vzBox && !vzBox.hidden && vzPart === '3d') v.play().catch(() => {}); else v.pause(); }
-    // 다른 페이지(견적 혜택의 '견본 보기')에서 #visuals 로 들어오면 이 탭을 열어 둠
-    if (VZ && location.hash === '#visuals') { const b = $('[data-tabs] [data-v="img"]'); $$('[data-tabs] button').forEach(x => x.classList.toggle('on', x === b)); showVisuals(true, 'img'); requestAnimationFrame(() => lenis.scrollTo('#cases', { immediate: true, offset: 40 })); }
+    // 다른 페이지(견적 혜택의 '견본 보기', 제품 콘텐츠 제작 서비스)에서 #visuals·#visuals-pair·#visuals-3d 로 들어오면 그 탭을 열어 둠
+    const vzHash = { '#visuals': 'img', '#visuals-pair': 'pair', '#visuals-3d': '3d' }[location.hash];
+    if (VZ && vzHash) { const b = $(`[data-tabs] [data-v="${vzHash}"]`); $$('[data-tabs] button').forEach(x => x.classList.toggle('on', x === b)); showVisuals(true, vzHash); requestAnimationFrame(() => lenis.scrollTo('#cases', { immediate: true, offset: 40 })); }
     // 붙어 있는 탭이 머리 메뉴에 가리지 않게: 메뉴가 보이는 동안(올릴 때)은 메뉴 높이만큼 내려 붙음 — base.js 머리 메뉴 숨김 기준(160px·내릴 때)과 같게
     const tabsEl = $('[data-tabs]'), hdEl = $('[data-hd]');
     if (hdEl) lenis.on('scroll', ({ scroll, direction }) => { tabsEl.style.top = (scroll > 160 && direction === 1) ? '0px' : hdEl.offsetHeight + 'px'; });

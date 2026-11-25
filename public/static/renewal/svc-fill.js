@@ -4,8 +4,10 @@
 // data-svc-kpi(맨 위 숫자)·data-svc-faq(자주 묻는 질문)는 관리자 화면 값으로 서버(src/main.tsx)가 바꿔 넣는다. 여기 글은 관리자 값이 없을 때의 기본값.
 (() => {
   const HERO_IMG = { subscription: '/static/subscription/hero-new-marketer.webp' }   // 운영 구독 페이지 첫 화면도 사진 한 장(신입 마케터)
+  // 첫 화면 영상(제품 콘텐츠 제작: 견본 3D 영상 — 바탕이 어두워 is-real(밝은 바탕) 을 쓰지 않음)
+  const HERO_VID = { product: { src: '/static/renewal/assets/visuals/tapo-reel.mp4', poster: '/static/renewal/assets/visuals/tapo-reel.webp' } }
   const CASES = { performance: 1, subscription: 1 }
-  const TERMS_LIVE = k => k !== 'performance'   // 진행 조건은 운영 원본(src/routes/svc-terms.tsx SVC_TERMS)을 서버가 끼운다. 퍼포먼스 운영 조건만 여기 글(운영 페이지와 같음)   // 매체별 광고 성과 사례(운영 svc-performance-ref.tsx)를 넣는 서비스
+  const TERMS_LIVE = k => k !== 'performance' && k !== 'product'   // 진행 조건은 운영 원본(src/routes/svc-terms.tsx SVC_TERMS)을 서버가 끼운다. 퍼포먼스 운영 조건만 여기 글(운영 페이지와 같음)   // 매체별 광고 성과 사례(운영 svc-performance-ref.tsx)를 넣는 서비스
   const esc = s => String(s).replace(/"/g, '&quot;')
 
   // 질문 한 줄 — 서버(src/main.tsx svcFaqItem)가 관리자 값으로 바꿔 넣을 때도 같은 모양(바꾸면 둘 다)
@@ -22,7 +24,7 @@
     const sec = (bg, inner, attrs = '') => { lastBg = bg; html.push(`\n  <section class="sec wrap"${attrs} data-bg="${bg}">${inner}\n  </section>`) }
 
     // ── 1. 첫 화면 ──
-    const H = P.hero || {}, img = HERO_IMG[k]
+    const H = P.hero || {}, img = HERO_IMG[k], vid = HERO_VID[k]
     html.push(`
   <section class="sv-hero wrap has-real" data-bg="ink">
     <div class="l">
@@ -42,8 +44,8 @@
       </div>
       ${H.kpi && H.kpi.length ? `<div class="kpis" data-hero-fade data-svc-kpi="${k}"><!--kpi-->${H.kpi.map(x => `<div><b>${x.num}</b><span>${x.label}</span></div>`).join('')}<!--/kpi--></div>` : ''}
     </div>
-    <div class="sv-media is-real" data-hero-media>
-      ${img ? `<img src="${img}" alt="" />` : '<!--svc-hero-->'}
+    <div class="sv-media${vid ? '' : ' is-real'}" data-hero-media>
+      ${vid ? `<video src="${vid.src}" poster="${vid.poster}" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video><span class="mono sv-concept">CONCEPT · 인애드 자체 제작 견본</span>` : img ? `<img src="${img}" alt="" />` : '<!--svc-hero-->'}
       <span class="mono tag">${no(S.i)} — ${S.en}</span>
     </div>
   </section>`)
@@ -56,10 +58,11 @@
     // ── 3. 특징 ──
     if (P.points && P.points.items && P.points.items.length) {
       const its = P.points.items, withImg = its.some(x => x.img)
-      const cols = !withImg && its.length % 3 === 0 ? ' n3' : ''
+      // n3: 사진 칸도 3열로, tall: 세로(3:4) 사진 칸, tag: 사진 위 작은 표시(예: CONCEPT), href: 칸 아래 '견본 보기' 같은 링크
+      const cols = (P.points.n3 || (!withImg && its.length % 3 === 0) ? ' n3' : '') + (P.points.tall ? ' tall' : '')
       sec('ink', `
-    <div class="sec-h"><span class="mono">${label('POINT')}</span><div><h2 data-reveal>${P.points.title}</h2></div></div>
-    <div class="pts${cols}">${its.map((x, i) => `<div class="pt">${x.img ? `<div class="ph" data-ph><img src="${x.img}" alt="" loading="lazy" />${x.vid ? `<video data-src="${x.vid}" muted playsinline preload="none" aria-hidden="true"></video>` : ''}</div>` : ''}<span class="mono">${no(i)}</span><h3>${x.t}</h3><p>${x.d}</p></div>`).join('')}</div>`)
+    <div class="sec-h"><span class="mono">${label('POINT')}</span><div><h2 data-reveal>${P.points.title}</h2>${P.points.lead ? `<p>${P.points.lead}</p>` : ''}</div></div>
+    <div class="pts${cols}">${its.map((x, i) => `<div class="pt">${x.img ? `<div class="ph" data-ph><img src="${x.img}" alt="${x.alt || ''}" loading="lazy" />${x.vid ? `<video data-src="${x.vid}" muted playsinline preload="none" aria-hidden="true"></video>` : ''}${x.tag ? `<span class="mono pt-tag">${x.tag}</span>` : ''}</div>` : ''}<span class="mono">${no(i)}</span><h3>${x.t}</h3><p>${x.d}</p>${x.href ? `<a class="lk pt-lk" href="${x.href}">${x.link || '견본 보기'}</a>` : ''}</div>`).join('')}</div>`)
     }
 
     // ── 3-1. 더 보기 묶음(운영 페이지의 세부 목록을 줄여 옮긴 것 — 인플루언서 섭외·콘텐츠 유형 등) ──
