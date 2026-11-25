@@ -49,9 +49,10 @@ img,video{display:block;max-width:100%}
 .fcta .fc-t{display:inline-flex;align-items:center;gap:14px;font-size:17px;font-weight:700;letter-spacing:-.02em}
 .fcta svg{width:18px;height:18px;flex:none}
 /* 서비스 펼침 판 */
-.mega{position:fixed;left:0;right:0;top:0;z-index:79;background:var(--ink);color:var(--white);padding:96px 40px 40px;clip-path:inset(0 0 100% 0);visibility:hidden}
+.mega{position:fixed;left:0;right:0;top:0;z-index:79;background:var(--ink);color:var(--white);padding:96px 40px 40px;clip-path:inset(0 0 100% 0);visibility:hidden;max-height:100vh;overflow-y:auto;overscroll-behavior:contain}
 .mega-in{display:grid;grid-template-columns:8fr 4fr;gap:56px;align-items:stretch}
 .mega-groups{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;border-top:1px solid var(--line);padding-top:24px}
+.mgc .mg + .mg{margin-top:34px}
 .mg .mono{display:block;color:var(--mute-s);margin-bottom:18px}
 .mg a{display:block;padding:10px 0 14px;border-bottom:1px solid var(--line)}
 .mg a b{display:block;font-size:clamp(22px,1.9vw,32px);font-weight:700;letter-spacing:-.045em;line-height:1.15;transition:transform .5s cubic-bezier(.7,0,.2,1),opacity .35s}

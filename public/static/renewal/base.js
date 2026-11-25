@@ -12,6 +12,7 @@
     { g: '전담·성과', items: [['subscription', '신입 1명 비용으로 전담 TF팀'], ['performance', '광고 운영부터 전환 데이터 분석까지']] },
     { g: '입소문·후기', items: [['viral', '커뮤니티 기반 자연확산'], ['influencer', '1,520+ 크리에이터 네트워크'], ['seeding', '샘플 배포·후기 수집'], ['review', '브랜드 신뢰·전환율 향상']] },
     { g: '채널·노출', items: [['oliveyoung', 'H&B 채널 랭킹 최적화'], ['ppl', '콘텐츠 속 자연스러운 노출']] },
+    { g: '콘텐츠 제작', col: 3, items: [['product', '제품 기획 이미지·3D 영상']] },   // col: 그 열에 이어 붙임(메뉴가 3열 한 줄을 넘지 않게 — 낮은 노트북 화면에서 아래로 잘리지 않도록)
   ];
   const SVC = Object.fromEntries(D.services.map((s, i) => [s.k, { ...s, i }]));
 
@@ -48,7 +49,7 @@
 </div>
 <div class="mega" data-mega>
   <div class="mega-in">
-    <div class="mega-groups">${MENU.map(m => `<div class="mg"><span class="mono">${m.g}</span>${m.items.map(([k, d]) => `<a href="${SVC[k].href}" data-mi="${SVC[k].i}"><b>${SVC[k].name}</b><em>${d}</em></a>`).join('')}</div>`).join('')}</div>
+    <div class="mega-groups">${MENU.reduce((cols, m, i) => { const c = (m.col || i + 1) - 1; (cols[c] = cols[c] || []).push(m); return cols; }, []).map(col => `<div class="mgc">${col.map(m => `<div class="mg"><span class="mono">${m.g}</span>${m.items.map(([k, d]) => `<a href="${SVC[k].href}" data-mi="${SVC[k].i}"><b>${SVC[k].name}</b><em>${d}</em></a>`).join('')}</div>`).join('')}</div>`).join('')}</div>
     <div class="mega-view"><div class="mega-pic" data-mpic></div><div class="mega-cap"><span class="mono" data-mcap-n></span><span data-mcap-t></span></div></div>
     <div class="mega-foot"><span>상황에 맞는 서비스를 모르겠다면, 문의 한 번이면 같이 골라 드립니다.</span><a href="/contact">문의하기</a></div>
   </div>
@@ -227,7 +228,7 @@
   // 지금 홈페이지 팝업(src/renderer.tsx #cmodal)과 같은 구성: 필수는 메일 주소·문의 내용 둘, 회사·이름·연락처·관심 서비스는 '추가 정보(선택)'에 접어 둠,
   // 메일 '@' 뒤 도메인 추천·오타 안내, 연락처 하이픈 자동. 문의 페이지(contact.html) 자체에서는 만들지 않음(그 페이지의 전체 양식을 씀).
   // 시안이라 보내기를 눌러도 아무것도 보내지 않음. 닫았다 다시 열어도 적던 내용은 남고, 보낸 뒤에만 비움.
-  const QC_SVC = ['마케팅팀 구독', '퍼포먼스 마케팅', '바이럴 마케팅', '인플루언서·유튜브', '체험단', '고객 리뷰', '올리브영', 'PPL', '미디어 믹스', '기타'];
+  const QC_SVC = ['마케팅팀 구독', '퍼포먼스 마케팅', '바이럴 마케팅', '인플루언서·유튜브', '체험단', '고객 리뷰', '올리브영', 'PPL', '제품 콘텐츠 제작', '미디어 믹스', '기타'];
   const QC_DOM = ['naver.com', 'gmail.com', 'daum.net', 'hanmail.net', 'nate.com', 'kakao.com'];
   const TICK = '<svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   function quick(lenis) {

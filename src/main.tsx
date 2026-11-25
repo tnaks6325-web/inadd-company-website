@@ -114,6 +114,7 @@ const READS_RULE: Record<string, { sub?: string; re: RegExp }> = {
   review: { sub: 'review', re: /리뷰|상세페이지/ },
   oliveyoung: { sub: 'oliveyoung', re: /올리브영|화장품|상세페이지/ },
   ppl: { sub: 'ppl', re: /PPL|협찬|뒷광고/ },
+  product: { re: /상세페이지|제품 사진|제품 촬영|3D/ },
 }
 const READS_GENERAL = /뭐부터|광고대행사 고르/
 const READS_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>'

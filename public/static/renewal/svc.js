@@ -30,6 +30,13 @@ SITE.boot(ctx => {
     .to('[data-hero-media]', { clipPath: 'inset(0% 0 0 0)', duration: 1.3, ease: 'power4.inOut' }, 0)
     .from('[data-hero-media] > video, [data-hero-media] > img', { scale: 1.15, duration: 1.6, ease: 'power3.out' }, 0)
     .from('[data-hero-fade]', { opacity: 0, y: 16, duration: .8, stagger: .08, ease: 'power3.out' }, .5);
+  // 첫 화면 영상(제품 콘텐츠 제작): 사파리는 가려진(clip-path) 채로 시작한 영상을 자동 재생하지 않아, 열릴 때·화면에 다시 들어올 때 직접 재생
+  const heroVid = $('[data-hero-media] > video');
+  if (heroVid) {
+    const play = () => heroVid.play().catch(() => {});
+    play(); setTimeout(play, 1700);
+    ScrollTrigger.create({ trigger: '.sv-hero', start: 'top bottom', end: 'bottom top', onToggle: st => st.isActive ? play() : heroVid.pause() });
+  }
   gsap.to('[data-hero-media] > video, [data-hero-media] > img', { yPercent: 5, ease: 'none', scrollTrigger: { trigger: '.sv-hero', start: 'top top', end: 'bottom top', scrub: true } });
 
   // 고민 줄: 마우스를 직접 움직였을 때만 차오름(스크롤로 지나갈 때는 반응 없음)

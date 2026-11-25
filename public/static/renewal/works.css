@@ -159,7 +159,13 @@
 
 /* 4-2. 제품 기획 이미지 탭(2026-11-19 대표) — 사례 탭 줄 끝 '제품 기획 이미지'. 인애드 자체 콘셉트임을 머리와 카드마다 밝힘 */
 .wk-grid[hidden],.wk-cases .wk-more[hidden],.vz[hidden]{display:none}
-.wk-tabs .vz-tab{margin-left:auto}
+.wk-tabs .vz-first{margin-left:auto}
+/* 세 탭이 같은 견본 칸을 나눠 씀: 고른 탭의 부분만 보임 */
+.vz[data-part="pair"] :is(.vz-cats,.vz-grid,.vz-reel),.vz[data-part="3d"] :is(.vz-cats,.vz-grid,.vz-pair){display:none}
+.vz:is([data-part="img"],:not([data-part])) .vz-more{display:none}
+.vz:is([data-part="pair"],[data-part="3d"]) .vz-more{grid-template-columns:1fr;margin-top:0;padding-top:0;border-top:0}
+.vz:is([data-part="pair"],[data-part="3d"]) :is(.vz-pair,.vz-reel){width:100%;max-width:calc(78vh * 3 / 4);margin:0 auto}
+.vz[data-part="3d"] .vz-reel{max-width:calc(78vh * 9 / 16)}
 .vz-h{display:grid;grid-template-columns:3fr 9fr;gap:12px 40px;align-items:start;margin-bottom:36px}
 .vz-tag{grid-column:1 / -1;justify-self:start;margin:0;font-size:13px;font-weight:700;letter-spacing:-.01em;padding:7px 12px;background:var(--ink);color:var(--white)}
 .vz-h h3{grid-column:2;font-size:clamp(26px,2.6vw,42px);font-weight:700;letter-spacing:-.045em;line-height:1.18;margin:14px 0 0}

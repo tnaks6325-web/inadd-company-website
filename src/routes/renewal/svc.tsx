@@ -11,6 +11,7 @@ import seeding from './svc-seeding.gen.html?raw'
 import review from './svc-review.gen.html?raw'
 import oliveyoung from './svc-oliveyoung.gen.html?raw'
 import ppl from './svc-ppl.gen.html?raw'
+import product from './svc-product.gen.html?raw'
 import { SvcCases } from './svc-cases'
 import { SVC_TERMS } from '../svc-terms'
 import { VaultCards } from '../svc-performance'
@@ -21,10 +22,10 @@ import { ReviewCompare } from '../review-compare'
 import { OyShelf } from '../oy-shelf'
 import { PplOnAir } from '../ppl-onair'
 
-export type SvcKey = 'subscription' | 'performance' | 'viral' | 'influencer' | 'seeding' | 'review' | 'oliveyoung' | 'ppl'
-const BODY: Record<SvcKey, string> = { subscription, performance, viral, influencer, seeding, review, oliveyoung, ppl }
+export type SvcKey = 'subscription' | 'performance' | 'viral' | 'influencer' | 'seeding' | 'review' | 'oliveyoung' | 'ppl' | 'product'
+const BODY: Record<SvcKey, string> = { subscription, performance, viral, influencer, seeding, review, oliveyoung, ppl, product }
 
-const V = '20261125a'
+const V = '20261125b'
 const css = (f: string) => <link rel="stylesheet" href={`/static/renewal/${f}?v=${V}`} />
 const js = (f: string) => <script src={`/static/renewal/${f}?v=${V}`}></script>
 

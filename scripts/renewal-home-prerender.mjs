@@ -9,7 +9,7 @@ import vm from 'node:vm'
 const root = fileURLToPath(new URL('..', import.meta.url))
 const R = root + 'public/static/renewal/'
 // 페이지별: 원본 → 미리 채운 파일, 머리 메뉴에서 켜 둘 메뉴(nav), 내용 채우기(home 만)
-export const SVC_KEYS = ['subscription', 'performance', 'viral', 'influencer', 'seeding', 'review', 'oliveyoung', 'ppl']
+export const SVC_KEYS = ['subscription', 'performance', 'viral', 'influencer', 'seeding', 'review', 'oliveyoung', 'ppl', 'product']
 export const PAGES = [
   { name: 'home', src: root + 'src/routes/renewal/home-body.html', out: root + 'src/routes/renewal/home-body.gen.html', nav: '', fill: true },
   { name: 'about', src: root + 'src/routes/renewal/about-body.html', out: root + 'src/routes/renewal/about-body.gen.html', nav: 'about', fill: false },

@@ -148,6 +148,7 @@ const NAMES: Record<string, string> = {
   '/marketing/review': '리뷰 마케팅',
   '/marketing/oliveyoung': '올리브영 마케팅',
   '/marketing/ppl': 'PPL 마케팅',
+  '/marketing/product': '제품 콘텐츠 제작',
 }
 
 export function pageSchema(path: string, kind: Kind): string {

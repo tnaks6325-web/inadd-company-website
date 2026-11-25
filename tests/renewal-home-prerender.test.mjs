@@ -23,7 +23,7 @@ test('개편 회사소개 미리 채운 HTML이 최신이고, 메뉴·바닥·�
   assert.ok(!/시안|가상 예시/.test(html))
 })
 
-// 개편 서비스 8개(2026-11-07)
+// 개편 서비스 8개(2026-11-07) + 제품 콘텐츠 제작(2026-11-25, 첫 화면은 견본 영상·진행 조건은 페이지 자체 글)
 test('개편 서비스 페이지 미리 채운 HTML이 최신이고, 운영 데이터를 끼울 자리가 있다', async () => {
   const { PAGES, SVC_KEYS } = await import('../scripts/renewal-home-prerender.mjs')
   for (const k of SVC_KEYS) {
@@ -32,8 +32,9 @@ test('개편 서비스 페이지 미리 채운 HTML이 최신이고, 운영 데�
     assert.equal(html, generate(page), k)
     assert.ok(html.includes(`data-svc="${k}"`), k)
     assert.ok(html.includes('사업자등록번호') && html.includes('/marketing/viral'), k + ' 메뉴·바닥')
-    if (k !== 'subscription') assert.ok(html.includes('<!--svc-hero-->'), k + ' 첫 화면 장면 자리')
-    if (k !== 'performance') assert.ok(html.includes('<!--svc-terms-->') && html.includes('<!--svc-terms-lead-->'), k + ' 진행 조건 자리')
+    if (k !== 'subscription' && k !== 'product') assert.ok(html.includes('<!--svc-hero-->'), k + ' 첫 화면 장면 자리')
+    if (k === 'product') assert.ok(html.includes('tapo-reel.mp4') && html.includes('상담 후 견적') && html.includes('인애드 자체 제작 콘셉트'), k + ' 첫 화면 영상·견적·견본 표기')
+    if (k !== 'performance' && k !== 'product') assert.ok(html.includes('<!--svc-terms-->') && html.includes('<!--svc-terms-lead-->'), k + ' 진행 조건 자리')
     if (k === 'performance' || k === 'subscription') assert.ok(html.includes('<!--svc-cases-->'), k + ' 성과 사례 자리')
     assert.ok(!/시안|가상 예시|추가 혜택/.test(html), k)
   }
