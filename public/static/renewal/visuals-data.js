@@ -44,7 +44,7 @@ window.VISUALS = {
     ['ndp-rice-old', 'ndp-rice-new', 'NDP', '쌀 더미'],
     ['ndp-foam-old', 'ndp-foam-new', 'NDP', '효소 거품'],
   ],
-  reel: { src: 'tapo-reel.mp4', poster: 'tapo-reel.webp', brand: '타포', scene: '홈카메라 제품 릴스 · 14초' },
+  reel: { src: 'tapo-reel.mp4', poster: 'tapo-reel.webp', brand: '타포', scene: '홈카메라 제품 3D 영상 · 14초' },
   // 견적 조합기 혜택 칸에 보여 줄 3장
   gift: ['neogen-orange', 'oreo-dive', 'smeg-toast'],
 };

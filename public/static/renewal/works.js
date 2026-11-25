@@ -100,7 +100,9 @@ SITE.boot(ctx => {
     const count = f => cards.filter(c => f === 'all' || (c.dataset.cat || '').split(' ').includes(f)).length;
     const VZ = window.VISUALS;
     $('[data-tabs]').innerHTML = FILTERS.filter(([f]) => f === 'all' || count(f) > 0).map(([f, n], i) => `<button type="button" class="${i ? '' : 'on'}" data-f="${f}">${n}<sup>${count(f)}</sup></button>`).join('')
-      + (VZ ? `<button type="button" class="vz-tab" data-f="visuals">제품 기획 이미지<sup>${VZ.items.length}</sup></button>` : '');
+      // 2026-11-25 대표: 제품 기획 이미지 · 같은 제품, 다른 장면 · 제품 3D 영상을 각각 따로 된 탭으로(같은 견본 칸에서 해당 부분만 보여 줌)
+      + (VZ ? [['img', '제품 기획 이미지', VZ.items.length], ['pair', '같은 제품, 다른 장면', VZ.pairs.length], ['3d', '제품 3D 영상', 1]]
+        .map(([v, n, k], i) => `<button type="button" class="vz-tab${i ? '' : ' vz-first'}" data-f="visuals" data-v="${v}">${n}<sup>${k}</sup></button>`).join('') : '');
     const STEP = mobile ? 8 : 16; let limit = STEP, cur = 'all';
     const moreBtn = $('[data-more]'), endNote = $('[data-end]');
     function apply(animate) {
@@ -118,17 +120,21 @@ SITE.boot(ctx => {
       ScrollTrigger.refresh();
     }
     const vzBox = $('[data-visuals]'), moreBox = moreBtn.parentNode;
-    // 제품 기획 이미지 탭: 사례 카드·더 보기 대신 견본 칸을 보여 줌(처음 열 때 그림을 채움)
-    function showVisuals(on) {
+    // 제품 기획 이미지·같은 제품, 다른 장면·제품 3D 영상 탭: 사례 카드·더 보기 대신 견본 칸에서 고른 부분만 보여 줌(처음 열 때 그림을 채움)
+    let vzPart = 'img';
+    function showVisuals(on, part) {
       if (!vzBox) return;
+      if (part) vzPart = vzBox.dataset.part = part;
       grid.hidden = on; moreBox.hidden = on; vzBox.hidden = !on;
       if (on) { buildVisuals(); ScrollTrigger.refresh(); }
       vzPlay();
     }
     $$('[data-tabs] button').forEach(b => b.addEventListener('click', () => {
       $$('[data-tabs] button').forEach(x => x.classList.toggle('on', x === b));
+      // 휴대폰처럼 탭 줄이 옆으로 넘치면 누른 탭을 가운데로 끌어와 끝이 잘려 보이지 않게
+      const t = b.parentNode; if (t.scrollWidth > t.clientWidth) t.scrollTo({ left: Math.max(0, t.scrollLeft + b.getBoundingClientRect().left - t.getBoundingClientRect().left - (t.clientWidth - b.offsetWidth) / 2), behavior: 'smooth' });
       const goTop = () => { const top = $('#cases').getBoundingClientRect().top + scrollY; if (scrollY > top + 200) lenis.scrollTo('#cases', { duration: 1, offset: 40 }); };
-      if (b.dataset.f === 'visuals') { showVisuals(true); goTop(); return; }
+      if (b.dataset.f === 'visuals') { showVisuals(true, b.dataset.v); goTop(); return; }
       showVisuals(false);
       cur = b.dataset.f; limit = STEP;
       cards.forEach(c => c.hidden = true);
@@ -138,7 +144,7 @@ SITE.boot(ctx => {
     }));
     moreBtn.addEventListener('click', () => { limit += STEP; apply(true); });
 
-    // ── 4-2. 제품 기획 이미지(visuals-data.js) — 업종 밑줄 탭, 견본 격자, 같은 제품 두 장면 밀어 비교, 제품 릴스 ──
+    // ── 4-2. 제품 기획 이미지(visuals-data.js) — 업종 밑줄 탭, 견본 격자, 같은 제품 두 장면 밀어 비교, 제품 3D 영상 ──
     const VPATH = '/static/renewal/assets/visuals/';
     let vzBuilt = false, vzCat = 'beauty';
     const vzCard = ([, s, brand, scene]) => `<figure class="vz-card"><div class="vz-pic"><img src="${VPATH}${s}.webp" alt="${esc(brand)} ${esc(scene)} 제품 기획 이미지(인애드 자체 콘셉트)" loading="lazy" width="960" height="1283" /><span class="mono">CONCEPT</span></div><figcaption><b>${esc(brand)}</b><span>${esc(scene)}</span></figcaption></figure>`;
@@ -164,17 +170,17 @@ SITE.boot(ctx => {
       setPair(0);
       $('[data-range]', cmp).addEventListener('input', e => cmp.style.setProperty('--x', e.target.value + '%'));
       $$('[data-p]').forEach(b => b.addEventListener('click', () => { $$('[data-p]').forEach(x => x.classList.toggle('on', x === b)); setPair(+b.dataset.p); }));
-      // 제품 릴스: 보일 때만 소리 없이 재생
+      // 제품 3D 영상: 보일 때만 소리 없이 재생
       const R = VZ.reel;
-      $('[data-vz-reel]').innerHTML = `<div class="vz-sub"><span class="mono">PRODUCT REELS</span><b>제품 릴스</b></div>
+      $('[data-vz-reel]').innerHTML = `<div class="vz-sub"><span class="mono">PRODUCT 3D VIDEO</span><b>제품 3D 영상</b></div>
         <div class="vz-vid"><video muted loop playsinline preload="none" poster="${VPATH}${R.poster}" data-vid><source src="${VPATH}${R.src}" type="video/mp4" /></video><span class="mono">CONCEPT</span></div>
         <p class="vz-cap"><b>${esc(R.brand)}</b><span>${esc(R.scene)}</span></p>`;
       ScrollTrigger.create({ trigger: '[data-vz-reel]', start: 'top 85%', end: 'bottom 15%', onToggle: st => { vzSeen = st.isActive; vzPlay(); } });
     }
     let vzSeen = false;
-    function vzPlay() { const v = $('[data-vid]'); if (!v) return; if (vzSeen && vzBox && !vzBox.hidden) v.play().catch(() => {}); else v.pause(); }
+    function vzPlay() { const v = $('[data-vid]'); if (!v) return; if (vzSeen && vzBox && !vzBox.hidden && vzPart === '3d') v.play().catch(() => {}); else v.pause(); }
     // 다른 페이지(견적 혜택의 '견본 보기')에서 #visuals 로 들어오면 이 탭을 열어 둠
-    if (VZ && location.hash === '#visuals') { const b = $('[data-tabs] [data-f="visuals"]'); $$('[data-tabs] button').forEach(x => x.classList.toggle('on', x === b)); showVisuals(true); requestAnimationFrame(() => lenis.scrollTo('#cases', { immediate: true, offset: 40 })); }
+    if (VZ && location.hash === '#visuals') { const b = $('[data-tabs] [data-v="img"]'); $$('[data-tabs] button').forEach(x => x.classList.toggle('on', x === b)); showVisuals(true, 'img'); requestAnimationFrame(() => lenis.scrollTo('#cases', { immediate: true, offset: 40 })); }
     // 붙어 있는 탭이 머리 메뉴에 가리지 않게: 메뉴가 보이는 동안(올릴 때)은 메뉴 높이만큼 내려 붙음 — base.js 머리 메뉴 숨김 기준(160px·내릴 때)과 같게
     const tabsEl = $('[data-tabs]'), hdEl = $('[data-hd]');
     if (hdEl) lenis.on('scroll', ({ scroll, direction }) => { tabsEl.style.top = (scroll > 160 && direction === 1) ? '0px' : hdEl.offsetHeight + 'px'; });
