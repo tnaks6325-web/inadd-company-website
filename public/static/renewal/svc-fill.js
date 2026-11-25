@@ -61,7 +61,7 @@
       // n3: 사진 칸도 3열로, tall: 세로(3:4) 사진 칸, tag: 사진 위 작은 표시(예: CONCEPT), href: 칸 아래 '견본 보기' 같은 링크
       const cols = (P.points.n3 || (!withImg && its.length % 3 === 0) ? ' n3' : '') + (P.points.tall ? ' tall' : '')
       sec('ink', `
-    <div class="sec-h"><span class="mono">${label('POINT')}</span><div><h2 data-reveal>${P.points.title}</h2>${P.points.lead ? `<p>${P.points.lead}</p>` : ''}</div></div>
+    <div class="sec-h"><span class="mono">${label('POINT')}</span><div>${P.points.title ? `<h2 data-reveal>${P.points.title}</h2>` : ''}${P.points.lead ? `<p>${P.points.lead}</p>` : ''}</div></div>
     <div class="pts${cols}">${its.map((x, i) => `<div class="pt">${x.img ? `<div class="ph" data-ph><img src="${x.img}" alt="${x.alt || ''}" loading="lazy" />${x.vid ? `<video data-src="${x.vid}" muted playsinline preload="none" aria-hidden="true"></video>` : ''}${x.tag ? `<span class="mono pt-tag">${x.tag}</span>` : ''}</div>` : ''}<span class="mono">${no(i)}</span><h3>${x.t}</h3><p>${x.d}</p>${x.href ? `<a class="lk pt-lk" href="${x.href}">${x.link || '견본 보기'}</a>` : ''}</div>`).join('')}</div>`)
     }
 

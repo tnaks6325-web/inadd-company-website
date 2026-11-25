@@ -317,7 +317,7 @@ window.SVC_PAGES = Object.assign(window.SVC_PAGES || {}, {
       ],
     },
     points: {
-      title: '상품 3가지',
+      title: '',   // 2026-11-25 대표: '상품 3가지' 제목 제거
       lead: '아래 견본은 인애드 자체 제작 콘셉트입니다. 견본에 나온 브랜드와는 거래하거나 협업하지 않았습니다.',
       n3: true, tall: true,
       items: [

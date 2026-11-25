@@ -4,6 +4,7 @@
 .sec-h .mono{opacity:.82;padding-top:12px}
 .sec-h h2{font-size:clamp(36px,4.6vw,78px);font-weight:700;letter-spacing:-.055em;line-height:1.04}
 .sec-h p{margin-top:22px;font-size:16px;line-height:1.7;max-width:640px;opacity:.75}
+.sec-h > div > p:first-child{margin-top:0}
 
 /* 1. 첫 화면 — 왼쪽 큰 제목, 오른쪽 세로 장면 */
 .sv-hero{min-height:calc(100 * var(--vh));min-height:calc(100 * var(--vh));display:grid;grid-template-columns:7fr 5fr;gap:56px;align-items:stretch;padding-top:110px;padding-bottom:calc(6 * var(--vh))}
