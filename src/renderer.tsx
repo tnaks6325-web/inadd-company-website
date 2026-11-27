@@ -75,8 +75,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* ── 네이버 웹마스터 인증 ── */}
         <meta name="naver-site-verification" content="9d12802cf3021d63f7403fd275a35888ecc26ec0" />
 
-        {/* ── Google Analytics (GA4) ── */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XFPHBJNW38"></script>
+        {/* ── Google Analytics (GA4) ──
+             gtag.js는 구글 첫 주소가 아니라 자사 퍼스트파티 경로(/metrics)로 불러온다.
+             Cloudflare 게이트웨이가 gtag/js·g/collect를 대신 중계하며, Google Ads 태그 게이트웨이
+             상태 확인 요건(광고 계정 133-399-0497 · ₩350,000 크레딧)을 충족하기 위한 경로다.
+             외부 확인: /metrics/gtag/js → 200, /metrics/g/collect → 204 */}
+        <script async src="https://www.inadcompany.co.kr/metrics/gtag/js?id=G-XFPHBJNW38"></script>
         <script dangerouslySetInnerHTML={{ __html: `
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
